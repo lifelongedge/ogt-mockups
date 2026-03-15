@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OWL GROUP TRADING — Weekly Briefing</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:#0d1117;color:#c9d1d9;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica Neue,sans-serif;
+  line-height:1.6;-webkit-font-smoothing:antialiased;
+}
+.container{max-width:1200px;margin:0 auto;padding:24px 16px}
+a{color:#58a6ff;text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* -- Cards -- */
+.card{
+  background:#161b22;border:1px solid #30363d;border-radius:12px;
+  padding:24px;margin-bottom:24px;
+  box-shadow:0 1px 3px rgba(0,0,0,.3);
+  transition:box-shadow .2s ease;
+}
+.card:hover{box-shadow:0 4px 12px rgba(0,0,0,.5)}
+.card-title{
+  font-size:1.1rem;font-weight:600;color:#e6edf3;margin-bottom:16px;
+  display:flex;align-items:center;gap:8px;
+  border-bottom:1px solid #30363d;padding-bottom:12px;
+}
+.card-title .icon{font-size:1.3rem}
+
+/* -- Header -- */
+.header{text-align:center;padding:32px 0 16px}
+.header h1{font-size:1.6rem;color:#e6edf3;letter-spacing:1px;font-weight:700}
+.header .subtitle{color:#8b949e;font-size:.95rem;margin-top:4px}
+.header .date-badge{
+  display:inline-block;background:#1f6feb22;color:#58a6ff;
+  padding:4px 14px;border-radius:20px;font-size:.85rem;margin-top:10px;
+  border:1px solid #1f6feb44;
+}
+
+/* -- Morning Brief -- */
+.brief-item{
+  background:#0d1117;border:1px solid #30363d;border-radius:8px;
+  padding:14px 18px;margin-bottom:10px;
+}
+.brief-item strong{color:#e6edf3}
+.brief-watch{
+  background:#d2992215;border-left:3px solid #d29922;
+  padding:12px 18px;border-radius:0 8px 8px 0;margin-top:14px;
+  color:#d29922;
+}
+.human-note{
+  color:#8b949e;font-style:italic;font-size:.85rem;margin-top:14px;
+  border-top:1px dashed #30363d;padding-top:10px;
+}
+
+/* -- What Changed -- */
+.change-row{
+  display:flex;align-items:flex-start;gap:4px;
+  padding:10px 0;border-bottom:1px solid #21262d;
+}
+.change-row:last-child{border-bottom:none}
+.change-row .text{flex:1;color:#c9d1d9;font-size:.93rem}
+.change-row .arrow{color:#58a6ff;font-size:.85rem;flex-shrink:0;margin-top:2px}
+
+/* -- Sector Map -- */
+.sector-grid{
+  display:grid;gap:6px;
+  grid-template-columns:repeat(auto-fill,minmax(120px,1fr));
+}
+.sector-tile{
+  border-radius:8px;padding:14px 10px;text-align:center;
+  transition:transform .15s;cursor:default;position:relative;overflow:hidden;
+  border:1px solid #30363d;
+}
+.sector-tile:hover{transform:scale(1.04)}
+.sector-tile .sym{font-weight:700;font-size:1rem;color:#e6edf3}
+.sector-tile .pct{font-size:.85rem;margin-top:4px;font-weight:600}
+
+/* -- Tables -- */
+.port-table{width:100%;border-collapse:collapse;font-size:.88rem}
+.port-table th{
+  text-align:left;color:#8b949e;font-weight:600;padding:8px 10px;
+  border-bottom:2px solid #30363d;cursor:pointer;user-select:none;
+  white-space:nowrap;
+}
+.port-table th:hover{color:#e6edf3}
+.port-table td{padding:8px 10px;border-bottom:1px solid #21262d;color:#c9d1d9}
+.port-table tr:hover td{background:#1c2129}
+.port-table tr.signal-flip td{background:#d299220d;border-left:3px solid #d29922}
+.badge{
+  display:inline-block;padding:2px 10px;border-radius:12px;
+  font-size:.75rem;font-weight:700;letter-spacing:.5px;
+}
+.badge-buy{background:#3fb95020;color:#3fb950;border:1px solid #3fb95044}
+.badge-cash{background:#8b949e20;color:#8b949e;border:1px solid #8b949e44}
+.rank-up{color:#3fb950;font-weight:600}
+.rank-down{color:#f85149;font-weight:600}
+.rank-flat{color:#8b949e}
+.sort-arrow{font-size:.7rem;margin-left:3px}
+
+/* -- Risk Dashboard -- */
+.risk-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.gauge-card{
+  background:#0d1117;border:1px solid #30363d;border-radius:10px;
+  padding:20px;text-align:center;
+}
+.gauge-card .label{color:#8b949e;font-size:.8rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.gauge-card .value{font-size:2rem;font-weight:700;color:#e6edf3}
+.gauge-card .context{color:#8b949e;font-size:.8rem;margin-top:6px}
+.gauge-bar{
+  height:8px;border-radius:4px;background:#21262d;margin-top:12px;position:relative;overflow:hidden;
+}
+.gauge-bar .fill{height:100%;border-radius:4px;transition:width .6s ease}
+.regime-badge{
+  display:inline-block;padding:6px 18px;border-radius:20px;
+  font-weight:700;font-size:.9rem;letter-spacing:.5px;
+}
+
+/* -- MACD Season Garden -- */
+.season-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.season-quad{border-radius:10px;padding:16px;min-height:100px}
+.season-quad .quad-title{font-weight:700;font-size:.9rem;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.season-badges{display:flex;flex-wrap:wrap;gap:6px}
+.season-sym{
+  display:inline-block;padding:3px 10px;border-radius:6px;
+  font-size:.78rem;font-weight:600;border:1px solid;
+  transition:transform .1s;
+}
+.season-sym:hover{transform:scale(1.08)}
+.season-sym.transitioned{
+  box-shadow:0 0 0 2px #d29922;
+}
+
+/* -- Signal Summary -- */
+.signal-row{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.signal-label{width:80px;font-weight:600;color:#e6edf3;font-size:.9rem;flex-shrink:0}
+.signal-bar-wrap{flex:1;display:flex;align-items:center;gap:10px}
+.signal-bar{height:26px;border-radius:6px;display:flex;overflow:hidden;flex:1}
+.signal-bar .buy-seg{background:#3fb95044;transition:width .4s}
+.signal-bar .cash-seg{background:#8b949e22;transition:width .4s}
+.signal-counts{font-size:.82rem;color:#8b949e;white-space:nowrap}
+.signal-delta{font-size:.78rem;margin-left:6px}
+
+/* -- Needs Human -- */
+.human-callout{
+  background:#d299220a;border:1px solid #d2992233;border-radius:10px;
+  padding:20px 24px;
+}
+.human-callout h3{color:#d29922;font-size:.95rem;margin-bottom:12px}
+.human-callout ul{list-style:disc;padding-left:20px}
+.human-callout li{color:#8b949e;font-size:.88rem;margin-bottom:6px}
+
+/* -- Footer -- */
+.footer{text-align:center;color:#484f58;font-size:.8rem;padding:24px 0 12px;border-top:1px solid #21262d;margin-top:8px}
+
+/* -- Responsive -- */
+@media(max-width:768px){
+  .container{padding:12px 8px}
+  .season-grid{grid-template-columns:1fr}
+  .risk-grid{grid-template-columns:1fr 1fr}
+  .sector-grid{grid-template-columns:repeat(auto-fill,minmax(90px,1fr))}
+}
+
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+  <h1>OWL GROUP TRADING</h1>
+  <div class="subtitle">Weekly Briefing</div>
+  <div class="date-badge">March 14, 2026</div>
+</div>
+  <div class="card">
+  <div class="card-title"><span class="icon">&#x2615;</span> Morning Brief — AI Ken</div>
+  <div style="color:#8b949e;font-size:.9rem;margin-bottom:14px">Three things that matter this week:</div>
+  <div class="brief-item">
+  <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#58a6ff;margin-right:8px;flex-shrink:0"></span><strong>1. Exposure target changed: 90% -&gt; 20%</strong>
+  <div style="margin-top:6px;color:#8b949e;font-size:.9rem">Recommended exposure band changed from 90-90% to 50-20%.</div>
+</div>
+<div class="brief-item">
+  <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#58a6ff;margin-right:8px;flex-shrink:0"></span><strong>2. Market regime shifted: Bullish -&gt; Sideways</strong>
+  <div style="margin-top:6px;color:#8b949e;font-size:.9rem">The trend classification changed from Bullish to Sideways. DMA200% moved from 4.81 to 0.56.</div>
+</div>
+<div class="brief-item">
+  <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#58a6ff;margin-right:8px;flex-shrink:0"></span><strong>3. Sector divergence: 1 ETFs moving opposite to SPY</strong>
+  <div style="margin-top:6px;color:#8b949e;font-size:.9rem">SPY is down -1.50% this week, but these sectors diverge: XLE. Divergence may indicate rotation or sector-specific catalysts.</div>
+</div>
+  <div class="brief-watch"><strong>Watch for:</strong> No major inflection signals detected. Continue monitoring portfolio signals for emerging trends..</div>
+  <!-- HUMAN_INPUT: Dr. Long's editorial commentary would go here -->
+  <div class="human-note">Editorial slot: Dr. Long's market commentary will appear here when available.</div>
+</div>
+  <div class="card">
+  <div class="card-title"><span class="icon">&#x1F504;</span> What Changed</div>
+  <div class="change-row">
+  <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#58a6ff;margin-right:8px;flex-shrink:0"></span>
+  <div class="text">Exposure target changed: 90% -&gt; 20%</div>
+  <div class="arrow">&#x2192;</div>
+</div>
+<div class="change-row">
+  <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#58a6ff;margin-right:8px;flex-shrink:0"></span>
+  <div class="text">Market regime shifted: Bullish -&gt; Sideways</div>
+  <div class="arrow">&#x2192;</div>
+</div>
+<div class="change-row">
+  <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#58a6ff;margin-right:8px;flex-shrink:0"></span>
+  <div class="text">Sector divergence: 1 ETFs moving opposite to SPY</div>
+  <div class="arrow">&#x2192;</div>
+</div>
+<div class="change-row">
+  <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#58a6ff;margin-right:8px;flex-shrink:0"></span>
+  <div class="text">Leadership changed in ETF200: XES, XME, XLE, EWW, XLB -&gt; XES, XLE, XOP, XME, XLB</div>
+  <div class="arrow">&#x2192;</div>
+</div>
+<div class="change-row">
+  <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#58a6ff;margin-right:8px;flex-shrink:0"></span>
+  <div class="text">Leadership reordered in ETF22: ILF, XLE, XLB -&gt; XLE, ILF, XLB</div>
+  <div class="arrow">&#x2192;</div>
+</div>
+<div class="change-row">
+  <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#58a6ff;margin-right:8px;flex-shrink:0"></span>
+  <div class="text">Leadership changed in ETFMAX: SLV, EWY, GDX, XES, IEZ -&gt; USO, DBO, SLV, DBE, EWY</div>
+  <div class="arrow">&#x2192;</div>
+</div>
+<div class="change-row">
+  <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#58a6ff;margin-right:8px;flex-shrink:0"></span>
+  <div class="text">BA rank moved down 7 in DOW30 (9 -&gt; 16)</div>
+  <div class="arrow">&#x2192;</div>
+</div>
+<div class="change-row">
+  <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#58a6ff;margin-right:8px;flex-shrink:0"></span>
+  <div class="text">DBC rank moved up 15 in ETF32 (19 -&gt; 4)</div>
+  <div class="arrow">&#x2192;</div>
+</div>
+</div>
+  <div class="card">
+  <div class="card-title"><span class="icon">&#x1F5FA;</span> Sector Map</div>
+  <div class="sector-grid">
+    <div class="sector-tile" style="background:rgba(248,81,73,0.18);min-height:135px">
+  <div class="sym">XLK</div>
+  <div class="pct" style="color:#f85149">-0.4%</div>
+</div>
+<div class="sector-tile" style="background:rgba(248,81,73,0.33);min-height:60px">
+  <div class="sym">XLF</div>
+  <div class="pct" style="color:#f85149">-3.3%</div>
+</div>
+<div class="sector-tile" style="background:rgba(248,81,73,0.18);min-height:60px">
+  <div class="sym">XLV</div>
+  <div class="pct" style="color:#f85149">-1.9%</div>
+</div>
+<div class="sector-tile" style="background:rgba(248,81,73,0.33);min-height:60px">
+  <div class="sym">XLY</div>
+  <div class="pct" style="color:#f85149">-3.1%</div>
+</div>
+<div class="sector-tile" style="background:#161b22;min-height:60px">
+  <div class="sym">XLC</div>
+  <div class="pct" style="color:#8b949e">—</div>
+</div>
+<div class="sector-tile" style="background:rgba(248,81,73,0.33);min-height:60px">
+  <div class="sym">XLI</div>
+  <div class="pct" style="color:#f85149">-3.1%</div>
+</div>
+<div class="sector-tile" style="background:rgba(248,81,73,0.18);min-height:60px">
+  <div class="sym">XLP</div>
+  <div class="pct" style="color:#f85149">-1.2%</div>
+</div>
+<div class="sector-tile" style="background:rgba(63,185,80,0.18);min-height:60px">
+  <div class="sym">XLE</div>
+  <div class="pct" style="color:#3fb950">+2.0%</div>
+</div>
+<div class="sector-tile" style="background:rgba(63,185,80,0.18);min-height:60px">
+  <div class="sym">XLU</div>
+  <div class="pct" style="color:#3fb950">+0.5%</div>
+</div>
+<div class="sector-tile" style="background:rgba(248,81,73,0.18);min-height:60px">
+  <div class="sym">XLB</div>
+  <div class="pct" style="color:#f85149">-1.3%</div>
+</div>
+<div class="sector-tile" style="background:#161b22;min-height:60px">
+  <div class="sym">XLRE</div>
+  <div class="pct" style="color:#8b949e">—</div>
+</div>
+  </div>
+</div>
+  <div class="card">
+  <div class="card-title"><span class="icon">&#x1F4CA;</span> ETF13 Portfolio</div>
+  <table class="port-table">
+    <thead>
+      <tr>
+        <th data-sort="0" data-type="num">Rank <span class="sort-arrow"></span></th>
+        <th data-sort="1">Symbol <span class="sort-arrow"></span></th>
+        <th data-sort="2" data-type="num">Price <span class="sort-arrow"></span></th>
+        <th data-sort="3">Signal <span class="sort-arrow"></span></th>
+        <th data-sort="4" data-type="num">1wk% <span class="sort-arrow"></span></th>
+        <th data-sort="5" data-type="num">Blend% <span class="sort-arrow"></span></th>
+        <th data-sort="6" data-type="num">Chg <span class="sort-arrow"></span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+  <td>1</td>
+  <td style="font-weight:600">ILF</td>
+  <td>$33.15</td>
+  <td><span class="badge badge-buy">BUY</span></td>
+  <td style="color:#f85149">-1.9%</td>
+  <td style="color:#3fb950">+12.2%</td>
+  <td><span class="rank-flat">—</span></td>
+</tr>
+<tr>
+  <td>2</td>
+  <td style="font-weight:600">EEM</td>
+  <td>$56.80</td>
+  <td><span class="badge badge-cash">CASH</span></td>
+  <td style="color:#f85149">-0.9%</td>
+  <td style="color:#3fb950">+7.0%</td>
+  <td><span class="rank-flat">—</span></td>
+</tr>
+<tr>
+  <td>3</td>
+  <td style="font-weight:600">EWA</td>
+  <td>$27.98</td>
+  <td><span class="badge badge-buy">BUY</span></td>
+  <td style="color:#f85149">-1.2%</td>
+  <td style="color:#3fb950">+5.8%</td>
+  <td><span class="rank-flat">—</span></td>
+</tr>
+<tr>
+  <td>4</td>
+  <td style="font-weight:600">EPP</td>
+  <td>$52.99</td>
+  <td><span class="badge badge-buy">BUY</span></td>
+  <td style="color:#f85149">-1.4%</td>
+  <td style="color:#3fb950">+4.1%</td>
+  <td><span class="rank-flat">—</span></td>
+</tr>
+<tr>
+  <td>5</td>
+  <td style="font-weight:600">IYR</td>
+  <td>$97.50</td>
+  <td><span class="badge badge-buy">BUY</span></td>
+  <td style="color:#f85149">-1.5%</td>
+  <td style="color:#3fb950">+2.4%</td>
+  <td><span class="rank-flat">—</span></td>
+</tr>
+<tr>
+  <td>6</td>
+  <td style="font-weight:600">EFA</td>
+  <td>$96.30</td>
+  <td><span class="badge badge-cash">CASH</span></td>
+  <td style="color:#f85149">-2.0%</td>
+  <td style="color:#3fb950">+2.2%</td>
+  <td><span class="rank-flat">—</span></td>
+</tr>
+<tr>
+  <td>7</td>
+  <td style="font-weight:600">EWJ</td>
+  <td>$83.36</td>
+  <td><span class="badge badge-cash">CASH</span></td>
+  <td style="color:#f85149">-1.7%</td>
+  <td style="color:#3fb950">+1.9%</td>
+  <td><span class="rank-flat">—</span></td>
+</tr>
+<tr>
+  <td>8</td>
+  <td style="font-weight:600">MDY</td>
+  <td>$611.01</td>
+  <td><span class="badge badge-cash">CASH</span></td>
+  <td style="color:#f85149">-1.9%</td>
+  <td style="color:#3fb950">+1.3%</td>
+  <td><span class="rank-flat">—</span></td>
+</tr>
+<tr>
+  <td>9</td>
+  <td style="font-weight:600">IWM</td>
+  <td>$246.59</td>
+  <td><span class="badge badge-cash">CASH</span></td>
+  <td style="color:#f85149">-1.7%</td>
+  <td style="color:#3fb950">+0.1%</td>
+  <td><span class="rank-flat">—</span></td>
+</tr>
+<tr>
+  <td>10</td>
+  <td style="font-weight:600">DIA</td>
+  <td>$466.41</td>
+  <td><span class="badge badge-cash">CASH</span></td>
+  <td style="color:#f85149">-1.9%</td>
+  <td style="color:#f85149">-1.1%</td>
+  <td><span class="rank-flat">—</span></td>
+</tr>
+<tr>
+  <td>11</td>
+  <td style="font-weight:600">TLT</td>
+  <td>$86.54</td>
+  <td><span class="badge badge-cash">CASH</span></td>
+  <td style="color:#f85149">-2.2%</td>
+  <td style="color:#f85149">-1.3%</td>
+  <td><span class="rank-flat">—</span></td>
+</tr>
+<tr>
+  <td>12</td>
+  <td style="font-weight:600">SPY</td>
+  <td>$662.29</td>
+  <td><span class="badge badge-cash">CASH</span></td>
+  <td style="color:#f85149">-1.5%</td>
+  <td style="color:#f85149">-1.6%</td>
+  <td><span class="rank-flat">—</span></td>
+</tr>
+<tr>
+  <td>13</td>
+  <td style="font-weight:600">QQQ</td>
+  <td>$593.72</td>
+  <td><span class="badge badge-cash">CASH</span></td>
+  <td style="color:#f85149">-1.0%</td>
+  <td style="color:#f85149">-2.5%</td>
+  <td><span class="rank-flat">—</span></td>
+</tr>
+    </tbody>
+  </table>
+</div>
+<div class="card">
+  <div class="card-title"><span class="icon">&#x1F4CA;</span> ETF22 Portfolio</div>
+  <table class="port-table">
+    <thead>
+      <tr>
+        <th data-sort="0" data-type="num">Rank <span class="sort-arrow"></span></th>
+        <th data-sort="1">Symbol <span class="sort-arrow"></span></th>
+        <th data-sort="2" data-type="num">Price <span class="sort-arrow"></span></th>
+        <th data-sort="3">Signal <span class="sort-arrow"></span></th>
+        <th data-sort="4" data-type="num">1wk% <span class="sort-arrow"></span></th>
+        <th data-sort="5" data-type="num">Blend% <span class="sort-arrow"></span></th>
+        <th data-sort="6" data-type="num">Chg <span class="sort-arrow"></span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+  <td>1</td>
+  <td style="font-weight:600">XLE</td>
+  <td>$57.70</td>
+  <td><span class="badge badge-buy">BUY</span></td>
+  <td style="color:#3fb950">+2.0%</td>
+  <td style="color:#3fb950">+27.8%</td>
+  <td><span class="rank-flat">—</span></td>
+</tr>
+<tr>
+  <td>2</td>
+  <td style="font-weight:600">ILF</td>
+  <td>$33.15</td>
+  <td><span class="badge badge-buy">BUY</span></td>
+  <td style="color:#f85149">-1.9%</td>
+  <td style="color:#3fb950">+12.2%</td>
+  <td><span class="rank-flat">—</span></td>
+</tr>
+<tr>
+  <td>3</td>
+  <td style="font-weight:600">XLB</td>
+  <td>$49.19</td>
+  <td><span class="badge badge-buy">BUY</span></td>
+  <td style="color:#f85149">-1.3%</td>
+  <td style="color:#3fb950">+11.5%</td>
+  <td><span class="rank-flat">—</span></td>
+</tr>
+<tr>
+  <td>4</td>
+  <td style="font-weight:600">XLU</td>
+  <td>$46.96</td>
+  <td><span class="badge badge-buy">BUY</span></td>
+  <td style="color:#3fb950">+0.5%</td>
+  <td style="color:#3fb950">+10.6%</td>
+  <td><span class="rank-flat">—</span></td>
+</tr>
+<tr>
+  <td>5</td>
+  <td style="font-weight:600">XLP</td>
+  <td>$84.74</td>
+  <td><span class="badge badge-buy">BUY</span></td>
+  <td style="color:#f85149">-1.2%</td>
+  <td style="color:#3fb950">+7.8%</td>
+  <td><span class="rank-flat">—</span></td>
+</tr>
+<tr>
+  <td>6</td>
+  <td style="font-weight:600">XLI</td>
+  <td>$164.65</td>
+  <td><span class="badge badge-buy">BUY</span></td>
+  <td style="color:#f85149">-3.1%</td>
+  <td style="color:#3fb950">+7.3%</td>
+  <td><span class="rank-flat">—</span></td>
+</tr>
+<tr>
+  <td>7</td>
+  <td style="font-weight:600">EEM</td>
+  <td>$56.80</td>
+  <td><span class="badge badge-cash">CASH</span></td>
+  <td style="color:#f85149">-0.9%</td>
+  <td style="color:#3fb950">+7.0%</td>
+  <td><span class="rank-flat">—</span></td>
+</tr>
+<tr>
+  <td>8</td>
+  <td style="font-weight:600">EWA</td>
+  <td>$27.98</td>
+  <td><span class="badge badge-buy">BUY</span></td>
+  <td style="color:#f85149">-1.2%</td>
+  <td style="color:#3fb950">+5.8%</td>
+  <td><span class="rank-flat">—</span></td>
+</tr>
+<tr>
+  <td>9</td>
+  <td style="font-weight:600">EPP</td>
+  <td>$52.99</td>
+  <td><span class="badge badge-buy">BUY</span></td>
+  <td style="color:#f85149">-1.4%</td>
+  <td style="color:#3fb950">+4.1%</td>
+  <td><span class="rank-flat">—</span></td>
+</tr>
+<tr>
+  <td>10</td>
+  <td style="font-weight:600">IYR</td>
+  <td>$97.50</td>
+  <td><span class="badge badge-buy">BUY</span></td>
+  <td style="color:#f85149">-1.5%</td>
+  <td style="color:#3fb950">+2.4%</td>
+  <td><span class="rank-flat">—</span></td>
+</tr>
+<tr>
+  <td>11</td>
+  <td style="font-weight:600">EFA</td>
+  <td>$96.30</td>
+  <td><span class="badge badge-cash">CASH</span></td>
+  <td style="color:#f85149">-2.0%</td>
+  <td style="color:#3fb950">+2.2%</td>
+  <td><span class="rank-flat">—</span></td>
+</tr>
+<tr>
+  <td>12</td>
+  <td style="font-weight:600">XLV</td>
+  <td>$149.79</td>
+  <td><span class="badge badge-cash">CASH</span></td>
+  <td style="color:#f85149">-1.9%</td>
+  <td style="color:#3fb950">+1.9%</td>
+  <td><span class="rank-flat">—</span></td>
+</tr>
+<tr>
+  <td>13</td>
+  <td style="font-weight:600">EWJ</td>
+  <td>$83.36</td>
+  <td><span class="badge badge-cash">CASH</span></td>
+  <td style="color:#f85149">-1.7%</td>
+  <td style="color:#3fb950">+1.9%</td>
+  <td><span class="rank-flat">—</span></td>
+</tr>
+<tr>
+  <td>14</td>
+  <td style="font-weight:600">MDY</td>
+  <td>$611.01</td>
+  <td><span class="badge badge-cash">CASH</span></td>
+  <td style="color:#f85149">-1.9%</td>
+  <td style="color:#3fb950">+1.3%</td>
+  <td><span class="rank-flat">—</span></td>
+</tr>
+<tr>
+  <td>15</td>
+  <td style="font-weight:600">IWM</td>
+  <td>$246.59</td>
+  <td><span class="badge badge-cash">CASH</span></td>
+  <td style="color:#f85149">-1.7%</td>
+  <td style="color:#3fb950">+0.1%</td>
+  <td><span class="rank-flat">—</span></td>
+</tr>
+<tr>
+  <td>16</td>
+  <td style="font-weight:600">DIA</td>
+  <td>$466.41</td>
+  <td><span class="badge badge-cash">CASH</span></td>
+  <td style="color:#f85149">-1.9%</td>
+  <td style="color:#f85149">-1.1%</td>
+  <td><span class="rank-flat">—</span></td>
+</tr>
+<tr>
+  <td>17</td>
+  <td style="font-weight:600">TLT</td>
+  <td>$86.54</td>
+  <td><span class="badge badge-cash">CASH</span></td>
+  <td style="color:#f85149">-2.2%</td>
+  <td style="color:#f85149">-1.3%</td>
+  <td><span class="rank-flat">—</span></td>
+</tr>
+<tr>
+  <td>18</td>
+  <td style="font-weight:600">SPY</td>
+  <td>$662.29</td>
+  <td><span class="badge badge-cash">CASH</span></td>
+  <td style="color:#f85149">-1.5%</td>
+  <td style="color:#f85149">-1.6%</td>
+  <td><span class="rank-flat">—</span></td>
+</tr>
+<tr>
+  <td>19</td>
+  <td style="font-weight:600">QQQ</td>
+  <td>$593.72</td>
+  <td><span class="badge badge-cash">CASH</span></td>
+  <td style="color:#f85149">-1.0%</td>
+  <td style="color:#f85149">-2.5%</td>
+  <td><span class="rank-flat">—</span></td>
+</tr>
+<tr>
+  <td>20</td>
+  <td style="font-weight:600">XLK</td>
+  <td>$136.80</td>
+  <td><span class="badge badge-cash">CASH</span></td>
+  <td style="color:#f85149">-0.4%</td>
+  <td style="color:#f85149">-3.9%</td>
+  <td><span class="rank-flat">—</span></td>
+</tr>
+<tr>
+  <td>21</td>
+  <td style="font-weight:600">XLY</td>
+  <td>$110.86</td>
+  <td><span class="badge badge-cash">CASH</span></td>
+  <td style="color:#f85149">-3.1%</td>
+  <td style="color:#f85149">-5.9%</td>
+  <td><span class="rank-flat">—</span></td>
+</tr>
+<tr>
+  <td>22</td>
+  <td style="font-weight:600">XLF</td>
+  <td>$48.89</td>
+  <td><span class="badge badge-cash">CASH</span></td>
+  <td style="color:#f85149">-3.3%</td>
+  <td style="color:#f85149">-8.9%</td>
+  <td><span class="rank-flat">—</span></td>
+</tr>
+    </tbody>
+  </table>
+</div>
+  <div class="card">
+  <div class="card-title"><span class="icon">&#x1F6E1;</span> Risk Dashboard</div>
+  <div class="risk-grid">
+    <div class="gauge-card">
+      <div class="label">VIX</div>
+      <div class="value" style="color:#3fb950">—</div>
+      <div class="gauge-bar"><div class="fill" style="width:0%;background:#3fb950"></div></div>
+      <div class="context">Volatility index</div>
+    </div>
+    <div class="gauge-card">
+      <div class="label">Risk Z-Score</div>
+      <div class="value" style="color:#3fb950">—</div>
+      <div class="gauge-bar"><div class="fill" style="width:50%;background:#3fb950"></div></div>
+      <div class="context">Normal range: -1.0 to +1.0</div>
+    </div>
+    <div class="gauge-card">
+      <div class="label">Market Regime</div>
+      <div class="regime-badge" style="color:#8b949e;background:#8b949e20;border:1px solid #8b949e44">Unknown</div>
+      <div class="context" style="margin-top:8px"></div>
+    </div>
+    
+  </div>
+</div>
+  <div class="card">
+  <div class="card-title"><span class="icon">&#x1F33B;</span> MACD Season Garden</div>
+  <div style="margin-bottom:8px;color:#8b949e;font-size:.85rem;font-weight:600">Stocks</div>
+<div class="season-grid">
+  <div class="season-quad" style="background:rgba(63,185,80,0.10);border:1px solid #3fb95022">
+  <div class="quad-title" style="color:#3fb950">&#x1F331; Spring</div>
+  <div class="season-badges">
+    <span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;AXP&#x27;, &#x27;SEASON&#x27;: &#x27;SPRING&#x27;, &#x27;MACD_Z&#x27;: -1.37}</span>
+<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;NVDA&#x27;, &#x27;SEASON&#x27;: &#x27;SPRING&#x27;, &#x27;MACD_Z&#x27;: -1.15}</span>
+<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;INTC&#x27;, &#x27;SEASON&#x27;: &#x27;SPRING&#x27;, &#x27;MACD_Z&#x27;: -0.57}</span>
+<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;GOOG&#x27;, &#x27;SEASON&#x27;: &#x27;SPRING&#x27;, &#x27;MACD_Z&#x27;: -0.29}</span>
+<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;AMD&#x27;, &#x27;SEASON&#x27;: &#x27;SPRING&#x27;, &#x27;MACD_Z&#x27;: 0.07}</span>
+  </div>
+</div>
+<div class="season-quad" style="background:rgba(88,166,255,0.10);border:1px solid #58a6ff22">
+  <div class="quad-title" style="color:#58a6ff">&#x2600;&#xFE0F; Summer</div>
+  <div class="season-badges">
+    <span class="season-sym" style="color:#58a6ff;border-color:#58a6ff44;background:rgba(88,166,255,0.10)">{&#x27;SYMBOL&#x27;: &#x27;CVX&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: -1.21}</span>
+<span class="season-sym" style="color:#58a6ff;border-color:#58a6ff44;background:rgba(88,166,255,0.10)">{&#x27;SYMBOL&#x27;: &#x27;AMZN&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 1.14}</span>
+<span class="season-sym" style="color:#58a6ff;border-color:#58a6ff44;background:rgba(88,166,255,0.10)">{&#x27;SYMBOL&#x27;: &#x27;ORCL&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 1.92}</span>
+<span class="season-sym" style="color:#58a6ff;border-color:#58a6ff44;background:rgba(88,166,255,0.10)">{&#x27;SYMBOL&#x27;: &#x27;MSFT&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 1.97}</span>
+<span class="season-sym" style="color:#58a6ff;border-color:#58a6ff44;background:rgba(88,166,255,0.10)">{&#x27;SYMBOL&#x27;: &#x27;PLTR&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 2.02}</span>
+  </div>
+</div>
+<div class="season-quad" style="background:rgba(210,153,34,0.10);border:1px solid #d2992222">
+  <div class="quad-title" style="color:#d29922">&#x1F342; Fall</div>
+  <div class="season-badges">
+    <span class="season-sym" style="color:#d29922;border-color:#d2992244;background:rgba(210,153,34,0.10)">{&#x27;SYMBOL&#x27;: &#x27;JNJ&#x27;, &#x27;SEASON&#x27;: &#x27;FALL&#x27;, &#x27;MACD_Z&#x27;: -2.2}</span>
+<span class="season-sym" style="color:#d29922;border-color:#d2992244;background:rgba(210,153,34,0.10)">{&#x27;SYMBOL&#x27;: &#x27;XOM&#x27;, &#x27;SEASON&#x27;: &#x27;FALL&#x27;, &#x27;MACD_Z&#x27;: -1.54}</span>
+<span class="season-sym" style="color:#d29922;border-color:#d2992244;background:rgba(210,153,34,0.10)">{&#x27;SYMBOL&#x27;: &#x27;UNH&#x27;, &#x27;SEASON&#x27;: &#x27;FALL&#x27;, &#x27;MACD_Z&#x27;: 1.25}</span>
+  </div>
+</div>
+<div class="season-quad" style="background:rgba(139,148,158,0.10);border:1px solid #8b949e22">
+  <div class="quad-title" style="color:#8b949e">&#x2744;&#xFE0F; Winter</div>
+  <div class="season-badges">
+    <span class="season-sym" style="color:#8b949e;border-color:#8b949e44;background:rgba(139,148,158,0.10)">{&#x27;SYMBOL&#x27;: &#x27;PG&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -2.67}</span>
+<span class="season-sym" style="color:#8b949e;border-color:#8b949e44;background:rgba(139,148,158,0.10)">{&#x27;SYMBOL&#x27;: &#x27;NKE&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -2.57}</span>
+<span class="season-sym" style="color:#8b949e;border-color:#8b949e44;background:rgba(139,148,158,0.10)">{&#x27;SYMBOL&#x27;: &#x27;KO&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -2.37}</span>
+<span class="season-sym" style="color:#8b949e;border-color:#8b949e44;background:rgba(139,148,158,0.10)">{&#x27;SYMBOL&#x27;: &#x27;MCD&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -2.31}</span>
+<span class="season-sym" style="color:#8b949e;border-color:#8b949e44;background:rgba(139,148,158,0.10)">{&#x27;SYMBOL&#x27;: &#x27;CAT&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -2.23}</span>
+<span class="season-sym" style="color:#8b949e;border-color:#8b949e44;background:rgba(139,148,158,0.10)">{&#x27;SYMBOL&#x27;: &#x27;MRK&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -2.23}</span>
+<span class="season-sym" style="color:#8b949e;border-color:#8b949e44;background:rgba(139,148,158,0.10)">{&#x27;SYMBOL&#x27;: &#x27;GS&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -2.18}</span>
+<span class="season-sym" style="color:#8b949e;border-color:#8b949e44;background:rgba(139,148,158,0.10)">{&#x27;SYMBOL&#x27;: &#x27;HD&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -2.08}</span>
+<span class="season-sym" style="color:#8b949e;border-color:#8b949e44;background:rgba(139,148,158,0.10)">{&#x27;SYMBOL&#x27;: &#x27;PFE&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -1.97}</span>
+<span class="season-sym" style="color:#8b949e;border-color:#8b949e44;background:rgba(139,148,158,0.10)">{&#x27;SYMBOL&#x27;: &#x27;MMM&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -1.93}</span>
+<span class="season-sym" style="color:#8b949e;border-color:#8b949e44;background:rgba(139,148,158,0.10)">{&#x27;SYMBOL&#x27;: &#x27;AAPL&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -1.79}</span>
+<span class="season-sym" style="color:#8b949e;border-color:#8b949e44;background:rgba(139,148,158,0.10)">{&#x27;SYMBOL&#x27;: &#x27;WMT&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -1.66}</span>
+<span class="season-sym" style="color:#8b949e;border-color:#8b949e44;background:rgba(139,148,158,0.10)">{&#x27;SYMBOL&#x27;: &#x27;JPM&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -1.62}</span>
+<span class="season-sym" style="color:#8b949e;border-color:#8b949e44;background:rgba(139,148,158,0.10)">{&#x27;SYMBOL&#x27;: &#x27;BA&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -1.55}</span>
+<span class="season-sym" style="color:#8b949e;border-color:#8b949e44;background:rgba(139,148,158,0.10)">{&#x27;SYMBOL&#x27;: &#x27;CSCO&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -1.15}</span>
+<span class="season-sym" style="color:#8b949e;border-color:#8b949e44;background:rgba(139,148,158,0.10)">{&#x27;SYMBOL&#x27;: &#x27;DIS&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -0.47}</span>
+<span class="season-sym" style="color:#8b949e;border-color:#8b949e44;background:rgba(139,148,158,0.10)">{&#x27;SYMBOL&#x27;: &#x27;TSLA&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: 1.01}</span>
+  </div>
+</div>
+</div><div style="margin-top:16px;margin-bottom:8px;color:#8b949e;font-size:.85rem;font-weight:600">ETFs</div>
+<div class="season-grid">
+  <div class="season-quad" style="background:rgba(63,185,80,0.10);border:1px solid #3fb95022">
+  <div class="quad-title" style="color:#3fb950">&#x1F331; Spring</div>
+  <div class="season-badges">
+    <span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;XLK&#x27;, &#x27;SEASON&#x27;: &#x27;SPRING&#x27;, &#x27;MACD_Z&#x27;: 0.56}</span>
+  </div>
+</div>
+<div class="season-quad" style="background:rgba(88,166,255,0.10);border:1px solid #58a6ff22">
+  <div class="quad-title" style="color:#58a6ff">&#x2600;&#xFE0F; Summer</div>
+  <div class="season-badges">
+    <span class="season-sym" style="color:#58a6ff;border-color:#58a6ff44;background:rgba(88,166,255,0.10)">{&#x27;SYMBOL&#x27;: &#x27;USO&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 2.87}</span>
+  </div>
+</div>
+<div class="season-quad" style="background:rgba(210,153,34,0.10);border:1px solid #d2992222">
+  <div class="quad-title" style="color:#d29922">&#x1F342; Fall</div>
+  <div class="season-badges">
+    <span class="season-sym" style="color:#d29922;border-color:#d2992244;background:rgba(210,153,34,0.10)">{&#x27;SYMBOL&#x27;: &#x27;XLE&#x27;, &#x27;SEASON&#x27;: &#x27;FALL&#x27;, &#x27;MACD_Z&#x27;: -1.85}</span>
+<span class="season-sym" style="color:#d29922;border-color:#d2992244;background:rgba(210,153,34,0.10)">{&#x27;SYMBOL&#x27;: &#x27;GLD&#x27;, &#x27;SEASON&#x27;: &#x27;FALL&#x27;, &#x27;MACD_Z&#x27;: -1.16}</span>
+<span class="season-sym" style="color:#d29922;border-color:#d2992244;background:rgba(210,153,34,0.10)">{&#x27;SYMBOL&#x27;: &#x27;XLU&#x27;, &#x27;SEASON&#x27;: &#x27;FALL&#x27;, &#x27;MACD_Z&#x27;: -0.35}</span>
+<span class="season-sym" style="color:#d29922;border-color:#d2992244;background:rgba(210,153,34,0.10)">{&#x27;SYMBOL&#x27;: &#x27;SLV&#x27;, &#x27;SEASON&#x27;: &#x27;FALL&#x27;, &#x27;MACD_Z&#x27;: 0.24}</span>
+  </div>
+</div>
+<div class="season-quad" style="background:rgba(139,148,158,0.10);border:1px solid #8b949e22">
+  <div class="quad-title" style="color:#8b949e">&#x2744;&#xFE0F; Winter</div>
+  <div class="season-badges">
+    <span class="season-sym" style="color:#8b949e;border-color:#8b949e44;background:rgba(139,148,158,0.10)">{&#x27;SYMBOL&#x27;: &#x27;MDY&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -2.88}</span>
+<span class="season-sym" style="color:#8b949e;border-color:#8b949e44;background:rgba(139,148,158,0.10)">{&#x27;SYMBOL&#x27;: &#x27;XLI&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -2.83}</span>
+<span class="season-sym" style="color:#8b949e;border-color:#8b949e44;background:rgba(139,148,158,0.10)">{&#x27;SYMBOL&#x27;: &#x27;EPP&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -2.64}</span>
+<span class="season-sym" style="color:#8b949e;border-color:#8b949e44;background:rgba(139,148,158,0.10)">{&#x27;SYMBOL&#x27;: &#x27;EEM&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -2.59}</span>
+<span class="season-sym" style="color:#8b949e;border-color:#8b949e44;background:rgba(139,148,158,0.10)">{&#x27;SYMBOL&#x27;: &#x27;EFA&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -2.59}</span>
+<span class="season-sym" style="color:#8b949e;border-color:#8b949e44;background:rgba(139,148,158,0.10)">{&#x27;SYMBOL&#x27;: &#x27;IEV&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -2.58}</span>
+<span class="season-sym" style="color:#8b949e;border-color:#8b949e44;background:rgba(139,148,158,0.10)">{&#x27;SYMBOL&#x27;: &#x27;XLB&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -2.53}</span>
+<span class="season-sym" style="color:#8b949e;border-color:#8b949e44;background:rgba(139,148,158,0.10)">{&#x27;SYMBOL&#x27;: &#x27;XLV&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -2.5}</span>
+<span class="season-sym" style="color:#8b949e;border-color:#8b949e44;background:rgba(139,148,158,0.10)">{&#x27;SYMBOL&#x27;: &#x27;DIA&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -2.46}</span>
+<span class="season-sym" style="color:#8b949e;border-color:#8b949e44;background:rgba(139,148,158,0.10)">{&#x27;SYMBOL&#x27;: &#x27;XOP&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -2.46}</span>
+<span class="season-sym" style="color:#8b949e;border-color:#8b949e44;background:rgba(139,148,158,0.10)">{&#x27;SYMBOL&#x27;: &#x27;SPY&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -2.43}</span>
+<span class="season-sym" style="color:#8b949e;border-color:#8b949e44;background:rgba(139,148,158,0.10)">{&#x27;SYMBOL&#x27;: &#x27;XLP&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -2.42}</span>
+<span class="season-sym" style="color:#8b949e;border-color:#8b949e44;background:rgba(139,148,158,0.10)">{&#x27;SYMBOL&#x27;: &#x27;EWJ&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -2.39}</span>
+<span class="season-sym" style="color:#8b949e;border-color:#8b949e44;background:rgba(139,148,158,0.10)">{&#x27;SYMBOL&#x27;: &#x27;XLF&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -2.32}</span>
+<span class="season-sym" style="color:#8b949e;border-color:#8b949e44;background:rgba(139,148,158,0.10)">{&#x27;SYMBOL&#x27;: &#x27;EWW&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -2.32}</span>
+<span class="season-sym" style="color:#8b949e;border-color:#8b949e44;background:rgba(139,148,158,0.10)">{&#x27;SYMBOL&#x27;: &#x27;IWM&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -2.3}</span>
+<span class="season-sym" style="color:#8b949e;border-color:#8b949e44;background:rgba(139,148,158,0.10)">{&#x27;SYMBOL&#x27;: &#x27;EWZ&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -1.98}</span>
+<span class="season-sym" style="color:#8b949e;border-color:#8b949e44;background:rgba(139,148,158,0.10)">{&#x27;SYMBOL&#x27;: &#x27;ILF&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -1.92}</span>
+<span class="season-sym" style="color:#8b949e;border-color:#8b949e44;background:rgba(139,148,158,0.10)">{&#x27;SYMBOL&#x27;: &#x27;IYR&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -1.87}</span>
+<span class="season-sym" style="color:#8b949e;border-color:#8b949e44;background:rgba(139,148,158,0.10)">{&#x27;SYMBOL&#x27;: &#x27;TLT&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -1.51}</span>
+<span class="season-sym" style="color:#8b949e;border-color:#8b949e44;background:rgba(139,148,158,0.10)">{&#x27;SYMBOL&#x27;: &#x27;XME&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -0.92}</span>
+<span class="season-sym" style="color:#8b949e;border-color:#8b949e44;background:rgba(139,148,158,0.10)">{&#x27;SYMBOL&#x27;: &#x27;XLY&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -0.42}</span>
+  </div>
+</div>
+</div>
+</div>
+  <div class="card">
+  <div class="card-title"><span class="icon">&#x1F4F6;</span> Signal Summary</div>
+  <div class="signal-row">
+  <div class="signal-label">ETF13</div>
+  <div class="signal-bar-wrap">
+    <div class="signal-bar" style="width:100%">
+      <div class="buy-seg" style="width:31%"></div>
+      <div class="cash-seg" style="width:69%"></div>
+    </div>
+    <div class="signal-counts">4 Buy / 9 Cash </div>
+  </div>
+</div>
+<div class="signal-row">
+  <div class="signal-label">ETF22</div>
+  <div class="signal-bar-wrap">
+    <div class="signal-bar" style="width:100%">
+      <div class="buy-seg" style="width:41%"></div>
+      <div class="cash-seg" style="width:59%"></div>
+    </div>
+    <div class="signal-counts">9 Buy / 13 Cash </div>
+  </div>
+</div>
+<div class="signal-row">
+  <div class="signal-label">Dow30</div>
+  <div class="signal-bar-wrap">
+    <div class="signal-bar" style="width:100%">
+      <div class="buy-seg" style="width:40%"></div>
+      <div class="cash-seg" style="width:60%"></div>
+    </div>
+    <div class="signal-counts">12 Buy / 18 Cash </div>
+  </div>
+</div>
+</div>
+  <div class="card">
+  <div class="human-callout">
+    <h3>Needs Human Input</h3>
+    <p style="color:#8b949e;font-size:.88rem;margin-bottom:10px">
+      This briefing was auto-generated from report data. The following would be enhanced with Dr. Long's editorial:
+    </p>
+    <ul>
+      <li><strong>Sniper Trade of the Day (STOD)</strong> — Dr. Long's discretionary pick</li>
+      <li><strong>Market commentary</strong> — Dr. Long's read on conditions</li>
+      <li><strong>Exposure recommendation</strong> — his risk model call</li>
+    </ul>
+  </div>
+</div>
+  <div class="footer">
+  Powered by Edge S2 &bull; AI grounded in Dr. Ken Long's methodology &bull; Educational use only
+</div>
+</div>
+<script>
+document.querySelectorAll('.port-table').forEach(function(table){
+  var headers = table.querySelectorAll('th[data-sort]');
+  headers.forEach(function(th, idx){
+    th.addEventListener('click', function(){
+      var tbody = table.querySelector('tbody');
+      var rows = Array.from(tbody.querySelectorAll('tr'));
+      var col = parseInt(th.dataset.sort);
+      var type = th.dataset.type || 'string';
+      var asc = th.dataset.asc !== 'true';
+      th.dataset.asc = asc;
+      headers.forEach(function(h){
+        var arrow = h.querySelector('.sort-arrow');
+        if(arrow) arrow.textContent = '';
+      });
+      var arrow = th.querySelector('.sort-arrow');
+      if(arrow) arrow.textContent = asc ? '\u25B2' : '\u25BC';
+      rows.sort(function(a, b){
+        var av = a.children[col] ? a.children[col].textContent.trim() : '';
+        var bv = b.children[col] ? b.children[col].textContent.trim() : '';
+        if(type === 'num'){
+          av = parseFloat(av.replace(/[^\d.\-]/g,'')) || 0;
+          bv = parseFloat(bv.replace(/[^\d.\-]/g,'')) || 0;
+        }
+        if(av < bv) return asc ? -1 : 1;
+        if(av > bv) return asc ? 1 : -1;
+        return 0;
+      });
+      rows.forEach(function(r){ tbody.appendChild(r); });
+    });
+  });
+});
+
+</script>
+</body>
+</html>
