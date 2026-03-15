@@ -7,6 +7,7 @@
 | [Weekly Briefing](https://lifelongedge.github.io/ogt-mockups/weekly-briefing.html) | What subscribers see when they click through from email |
 | [AI Learning Assistant](https://lifelongedge.github.io/ogt-mockups/ai-learning-assistant.html) | Chat interface grounded in Dr. Long's 2M word library |
 | [Trade Review Dashboard](https://lifelongedge.github.io/ogt-mockups/trade-review-dashboard.html) | Personalized AI trade analysis with coaching |
+| **[Edge S2 Briefing View](https://lifelongedge.github.io/ogt-mockups/edge-s2-briefing-view.html)** | **THE PRODUCT VISION** — three-pane app with contextual guide |
 
 ## Real-Data Weekly Briefings
 
