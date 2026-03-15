@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edge S2 — Tortoise Briefing</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0d1117;
+    --bg-panel: #0c0f14;
+    --bg-topbar: #080b10;
+    --card: #161b22;
+    --card-hover: #1c2128;
+    --card-border: #21262d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --text-dim: #6e7681;
+    --accent: #58a6ff;
+    --accent-dim: rgba(88,166,255,.12);
+    --green: #3fb950;
+    --green-dim: rgba(63,185,80,.12);
+    --red: #f85149;
+    --red-dim: rgba(248,81,73,.12);
+    --yellow: #d29922;
+    --yellow-dim: rgba(210,153,34,.12);
+    --orange: #db6d28;
+    --purple: #bc8cff;
+    --card-radius: 10px;
+    --guide-bg: #0f1318;
+    --guide-border: #1c2128;
+    --tile-active-bg: #1a2233;
+    --tile-active-border: #58a6ff;
+    --cta-bg: rgba(88,166,255,.06);
+    --cta-border: rgba(88,166,255,.2);
+    --separator: #21262d;
+    --topbar-height: 48px;
+  }
+
+  [data-theme="light"] {
+    --bg: #f6f8fa;
+    --bg-panel: #eef1f5;
+    --bg-topbar: #24292f;
+    --card: #ffffff;
+    --card-hover: #f3f4f6;
+    --card-border: #d0d7de;
+    --text: #1f2328;
+    --text-muted: #656d76;
+    --text-dim: #8b949e;
+    --accent: #0969da;
+    --accent-dim: rgba(9,105,218,.08);
+    --green: #1a7f37;
+    --green-dim: rgba(26,127,55,.08);
+    --red: #cf222e;
+    --red-dim: rgba(207,34,46,.08);
+    --yellow: #9a6700;
+    --yellow-dim: rgba(154,103,0,.08);
+    --orange: #bc4c00;
+    --purple: #8250df;
+    --card-radius: 10px;
+    --guide-bg: #f0f3f6;
+    --guide-border: #d0d7de;
+    --tile-active-bg: rgba(9,105,218,.08);
+    --tile-active-border: #0969da;
+    --cta-bg: rgba(9,105,218,.04);
+    --cta-border: rgba(9,105,218,.15);
+    --separator: #d0d7de;
+  }
+
+  html, body { height: 100%; overflow: hidden; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    height: var(--topbar-height);
+    background: var(--bg-topbar);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 20px;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    box-shadow: 0 1px 4px rgba(0,0,0,.3);
+  }
+  [data-theme="light"] .topbar {
+    border-bottom: 1px solid rgba(0,0,0,.1);
+    box-shadow: 0 1px 4px rgba(0,0,0,.08);
+  }
+  .topbar-left {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .topbar-logo {
+    font-size: 16px; font-weight: 800; letter-spacing: 2px;
+    color: #fff; text-transform: uppercase;
+  }
+  .topbar-logo span { color: var(--accent); }
+  [data-theme="light"] .topbar-logo { color: #fff; }
+  .topbar-center {
+    font-size: 12px; letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(255,255,255,.5);
+  }
+  .topbar-right {
+    display: flex; align-items: center; gap: 14px;
+  }
+  .theme-toggle {
+    width: 32px; height: 32px; border-radius: 6px;
+    background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.1);
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    font-size: 15px; transition: background .2s;
+    color: #fff;
+  }
+  .theme-toggle:hover { background: rgba(255,255,255,.14); }
+  .btn-signup-top {
+    font-size: 12px; letter-spacing: 1px; text-transform: uppercase;
+    padding: 6px 16px; border-radius: 6px;
+    background: transparent; color: rgba(255,255,255,.7);
+    border: 1px solid rgba(255,255,255,.2);
+    cursor: pointer; transition: all .2s;
+  }
+  .btn-signup-top:hover { color: #fff; border-color: var(--accent); background: rgba(88,166,255,.1); }
+
+  /* ── MAIN LAYOUT ── */
+  .app-shell {
+    display: flex;
+    height: calc(100vh - var(--topbar-height));
+    margin-top: var(--topbar-height);
+  }
+
+  /* ── LEFT TILE PANEL ── */
+  .tile-panel {
+    width: 200px; min-width: 200px;
+    background: var(--bg-panel);
+    border-right: 1px solid var(--card-border);
+    display: flex; flex-direction: column;
+    overflow-y: auto;
+    padding: 16px 0;
+  }
+  .tile-panel-header {
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--text-dim); padding: 0 16px; margin-bottom: 12px;
+  }
+  .tile-section {
+    margin-bottom: 8px;
+  }
+  .tile-section-label {
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-dim); padding: 12px 16px 6px; font-weight: 600;
+  }
+  .tile {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 16px; cursor: pointer;
+    border-left: 3px solid transparent;
+    transition: all .15s;
+    margin: 1px 0;
+  }
+  .tile:hover { background: var(--card-hover); }
+  .tile.active {
+    background: var(--tile-active-bg);
+    border-left-color: var(--tile-active-border);
+  }
+  .tile-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .tile-info { min-width: 0; }
+  .tile-title {
+    font-size: 13px; font-weight: 600; color: var(--text);
+    line-height: 1.3;
+  }
+  .tile-sub {
+    font-size: 11px; color: var(--text-dim); line-height: 1.3;
+  }
+  .tile-separator {
+    border-top: 1px solid var(--separator);
+    margin: 12px 16px;
+  }
+  .tile-cta .tile-title { color: var(--accent); }
+  .tile-cta {
+    border: 1px solid var(--cta-border);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    margin: 0 8px 0 0;
+    background: var(--cta-bg);
+  }
+  .tile-cta:hover { background: var(--accent-dim); }
+
+  /* ── MIDDLE PANE ── */
+  .middle-pane {
+    flex: 1; overflow-y: auto; overflow-x: hidden;
+    padding: 28px 36px 60px;
+    scroll-behavior: smooth;
+  }
+  .middle-pane::-webkit-scrollbar { width: 6px; }
+  .middle-pane::-webkit-scrollbar-track { background: transparent; }
+  .middle-pane::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 3px; }
+
+  /* ── GUIDE PANE ── */
+  .guide-pane {
+    width: 280px; min-width: 280px;
+    background: var(--guide-bg);
+    border-left: 1px solid var(--guide-border);
+    display: flex; flex-direction: column;
+    overflow: hidden;
+  }
+  .guide-header {
+    padding: 16px 18px 12px;
+    border-bottom: 1px solid var(--guide-border);
+    font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--text-dim); font-weight: 600;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .guide-content {
+    flex: 1; overflow-y: auto; padding: 20px 18px;
+    transition: opacity .2s;
+  }
+  .guide-content::-webkit-scrollbar { width: 4px; }
+  .guide-content::-webkit-scrollbar-track { background: transparent; }
+  .guide-content::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 2px; }
+  .guide-title {
+    font-size: 17px; font-weight: 700; color: var(--text);
+    margin-bottom: 14px; line-height: 1.3;
+  }
+  .guide-body { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
+  .guide-body p { margin-bottom: 12px; }
+  .guide-body .highlight {
+    background: var(--accent-dim); color: var(--accent);
+    padding: 2px 8px; border-radius: 4px; font-weight: 600;
+    display: inline-block; margin: 4px 0;
+  }
+  .guide-body .concept-item {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--separator);
+  }
+  .guide-body .concept-item:last-child { border-bottom: none; }
+  .guide-body .concept-item strong { color: var(--text); }
+  .guide-body .season-item {
+    display: flex; align-items: flex-start; gap: 8px;
+    padding: 6px 0;
+  }
+  .guide-body .season-icon { font-size: 16px; flex-shrink: 0; }
+  .guide-body .season-label { font-weight: 600; color: var(--text); }
+  .guide-source {
+    font-size: 11px; color: var(--text-dim); font-style: italic;
+    margin-top: 16px; padding-top: 12px;
+    border-top: 1px solid var(--separator);
+  }
+  .guide-cta {
+    margin-top: 16px; padding: 10px 14px;
+    background: var(--cta-bg); border: 1px solid var(--cta-border);
+    border-radius: 8px; font-size: 12px; color: var(--accent);
+    cursor: pointer; transition: background .2s;
+    text-align: center;
+  }
+  .guide-cta:hover { background: var(--accent-dim); }
+  .guide-footer {
+    padding: 14px 18px;
+    border-top: 1px solid var(--guide-border);
+    font-size: 10px; color: var(--text-dim); line-height: 1.5;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: var(--card-radius);
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.18);
+  }
+  .card-label {
+    font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--text-dim); margin-bottom: 10px; font-weight: 600;
+  }
+  .card h2 {
+    font-size: 18px; font-weight: 700; margin-bottom: 14px;
+    color: var(--text);
+  }
+  .card h3 {
+    font-size: 14px; font-weight: 600; color: var(--text-muted);
+    margin: 16px 0 8px;
+  }
+
+  /* ── GUIDE LINKS ── */
+  .guide-link {
+    color: var(--accent); cursor: pointer;
+    text-decoration: underline;
+    text-decoration-color: rgba(88,166,255,.35);
+    text-underline-offset: 2px;
+    transition: text-decoration-color .15s;
+  }
+  .guide-link:hover {
+    text-decoration-color: var(--accent);
+  }
+
+  /* ── MORNING BRIEF ── */
+  .brief-lead {
+    font-size: 15px; font-weight: 500; color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .brief-list {
+    list-style: none; counter-reset: brief;
+    margin-bottom: 16px;
+  }
+  .brief-list li {
+    counter-increment: brief;
+    padding: 10px 0 10px 36px;
+    position: relative;
+    font-size: 14px;
+    border-bottom: 1px solid var(--separator);
+    line-height: 1.6;
+  }
+  .brief-list li:last-child { border-bottom: none; }
+  .brief-list li::before {
+    content: counter(brief);
+    position: absolute; left: 0; top: 10px;
+    width: 24px; height: 24px; border-radius: 50%;
+    background: var(--accent-dim); color: var(--accent);
+    font-size: 12px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .brief-watch {
+    margin-top: 14px; padding: 12px 16px;
+    background: var(--yellow-dim); border-radius: 8px;
+    font-size: 13px; color: var(--yellow);
+    display: flex; align-items: flex-start; gap: 8px;
+  }
+  .brief-watch-icon { font-size: 16px; flex-shrink: 0; }
+
+  /* ── WHAT CHANGED ── */
+  .change-list { list-style: none; }
+  .change-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--separator);
+    font-size: 13px;
+  }
+  .change-item:last-child { border-bottom: none; }
+  .change-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    flex-shrink: 0; margin-top: 7px;
+  }
+  .change-dot.red { background: var(--red); box-shadow: 0 0 6px var(--red); }
+  .change-dot.yellow { background: var(--yellow); box-shadow: 0 0 6px var(--yellow); }
+  .change-dot.green { background: var(--green); box-shadow: 0 0 6px var(--green); }
+  .change-dot.blue { background: var(--accent); box-shadow: 0 0 6px var(--accent); }
+
+  /* ── RISK DASHBOARD ── */
+  .risk-grid {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;
+  }
+  .risk-gauge {
+    text-align: center; padding: 16px 12px;
+    background: rgba(0,0,0,.15); border-radius: 10px;
+    border: 1px solid var(--card-border);
+  }
+  [data-theme="light"] .risk-gauge { background: rgba(0,0,0,.03); }
+  .gauge-label {
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-dim); margin-bottom: 8px;
+  }
+  .gauge-value {
+    font-size: 28px; font-weight: 800; line-height: 1.2;
+  }
+  .gauge-sub {
+    font-size: 11px; color: var(--text-dim); margin-top: 4px;
+  }
+  .gauge-bar {
+    height: 4px; border-radius: 2px; background: var(--card-border);
+    margin-top: 10px; overflow: hidden; position: relative;
+  }
+  .gauge-bar-fill {
+    height: 100%; border-radius: 2px;
+    position: absolute; left: 0; top: 0;
+  }
+  .regime-badge {
+    display: inline-block; padding: 4px 14px; border-radius: 20px;
+    font-size: 12px; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; margin-top: 8px;
+  }
+
+  /* ── SEASON GARDEN ── */
+  .season-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+  }
+  .season-quad {
+    padding: 14px; border-radius: 10px; border: 1px solid var(--card-border);
+  }
+  .season-quad-header {
+    display: flex; align-items: center; gap: 6px;
+    margin-bottom: 10px;
+    font-size: 12px; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .season-quad-icon { font-size: 16px; }
+  .season-symbols {
+    display: flex; flex-wrap: wrap; gap: 6px;
+  }
+  .season-sym {
+    font-size: 11px; font-weight: 600; padding: 3px 8px;
+    border-radius: 4px; letter-spacing: 0.5px;
+  }
+  .season-spring { background: var(--yellow-dim); }
+  .season-spring .season-sym { background: rgba(210,153,34,.15); color: var(--yellow); }
+  .season-summer { background: var(--green-dim); }
+  .season-summer .season-sym { background: rgba(63,185,80,.15); color: var(--green); }
+  .season-fall { background: rgba(88,166,255,.06); }
+  .season-fall .season-sym { background: rgba(88,166,255,.12); color: var(--accent); }
+  .season-winter { background: var(--red-dim); }
+  .season-winter .season-sym { background: rgba(248,81,73,.12); color: var(--red); }
+
+  /* ── SECTOR MAP ── */
+  .sector-map {
+    display: grid; grid-template-columns: 2fr 1.5fr 1fr 1fr; gap: 4px;
+    height: 140px;
+  }
+  .sector-map-row2 {
+    display: grid; grid-template-columns: 1.2fr 1fr 1.5fr 1fr 0.8fr; gap: 4px;
+    height: 80px; margin-top: 4px;
+  }
+  .sector-cell {
+    border-radius: 6px; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.5px;
+    cursor: default; transition: transform .1s;
+    border: 1px solid rgba(255,255,255,.05);
+  }
+  .sector-cell:hover { transform: scale(1.02); }
+  .sector-cell .pct { font-size: 10px; font-weight: 500; margin-top: 2px; opacity: .8; }
+  .sector-green { background: linear-gradient(135deg, #1a5c2a, #238636); color: #7ee787; }
+  .sector-green-strong { background: linear-gradient(135deg, #0f4d1f, #1a7f37); color: #56d364; }
+  .sector-red { background: linear-gradient(135deg, #6e1d1d, #8b2525); color: #f8837a; }
+  .sector-red-strong { background: linear-gradient(135deg, #5c1515, #7a1f1f); color: #f85149; }
+  .sector-neutral { background: linear-gradient(135deg, #2d333b, #373e47); color: var(--text-muted); }
+  [data-theme="light"] .sector-cell { border-color: rgba(0,0,0,.08); }
+  [data-theme="light"] .sector-green { background: linear-gradient(135deg, #dafbe1, #aff5b4); color: #116329; }
+  [data-theme="light"] .sector-green-strong { background: linear-gradient(135deg, #aff5b4, #6fdd8b); color: #0a3d1a; }
+  [data-theme="light"] .sector-red { background: linear-gradient(135deg, #ffdce0, #ffb8c0); color: #82071e; }
+  [data-theme="light"] .sector-red-strong { background: linear-gradient(135deg, #ffb8c0, #ff8a93); color: #6e0719; }
+  [data-theme="light"] .sector-neutral { background: linear-gradient(135deg, #eaeef2, #d8dee4); color: #656d76; }
+
+  /* ── CTA BANNER ── */
+  .cta-banner {
+    background: var(--cta-bg);
+    border: 1px solid var(--cta-border);
+    border-radius: var(--card-radius);
+    padding: 22px 24px;
+    margin: 24px 0;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 20px;
+  }
+  .cta-banner-text {
+    font-size: 14px; color: var(--text);
+    line-height: 1.5;
+  }
+  .cta-banner-text span { color: var(--text-muted); font-size: 13px; display: block; }
+  .cta-banner-btn {
+    padding: 10px 22px; border-radius: 8px;
+    background: var(--accent); color: #fff; border: none;
+    font-size: 13px; font-weight: 600; cursor: pointer;
+    white-space: nowrap; transition: all .2s;
+    box-shadow: 0 2px 8px rgba(88,166,255,.25);
+  }
+  .cta-banner-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(88,166,255,.35); }
+  [data-theme="light"] .cta-banner-btn { background: #0969da; }
+
+  /* ── FOOTER ── */
+  .middle-footer {
+    text-align: center; font-size: 11px; color: var(--text-dim);
+    padding: 30px 0 10px;
+    border-top: 1px solid var(--separator);
+    margin-top: 20px;
+  }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 200;
+    background: rgba(0,0,0,.6); backdrop-filter: blur(4px);
+    align-items: center; justify-content: center;
+  }
+  .modal-overlay.visible { display: flex; }
+  .modal {
+    background: var(--card); border: 1px solid var(--card-border);
+    border-radius: 16px; padding: 36px 32px;
+    max-width: 420px; width: 90%;
+    box-shadow: 0 20px 60px rgba(0,0,0,.5);
+    text-align: center;
+  }
+  .modal h2 { font-size: 22px; margin-bottom: 8px; }
+  .modal .modal-sub { font-size: 14px; color: var(--text-muted); margin-bottom: 24px; }
+  .modal-steps {
+    text-align: left; margin-bottom: 24px;
+  }
+  .modal-step {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--separator);
+  }
+  .modal-step:last-child { border-bottom: none; }
+  .modal-step-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--accent-dim); color: var(--accent);
+    font-size: 13px; font-weight: 700; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .modal-step-text { font-size: 14px; line-height: 1.5; }
+  .modal-step-text strong { color: var(--text); }
+  .modal-close {
+    padding: 10px 28px; border-radius: 8px;
+    background: var(--accent); color: #fff; border: none;
+    font-size: 14px; font-weight: 600; cursor: pointer;
+    transition: all .2s;
+  }
+  .modal-close:hover { transform: translateY(-1px); }
+  .modal-dismiss {
+    display: block; margin-top: 12px;
+    font-size: 12px; color: var(--text-dim); cursor: pointer;
+    background: none; border: none;
+  }
+
+  /* ── COURSE VIEW ── */
+  .course-view { display: none; }
+  .course-view.visible { display: block; }
+  .briefing-view { display: block; }
+  .briefing-view.hidden { display: none; }
+  .course-module {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--separator);
+  }
+  .course-module:last-child { border-bottom: none; }
+  .course-num {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: var(--accent-dim); color: var(--accent);
+    font-size: 14px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .course-module-info .course-title { font-size: 14px; font-weight: 600; }
+  .course-module-info .course-desc { font-size: 12px; color: var(--text-dim); }
+  .course-badge {
+    margin-left: auto; font-size: 10px; font-weight: 600;
+    letter-spacing: 1px; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 10px;
+    background: var(--green-dim); color: var(--green);
+  }
+  .course-badge.locked { background: var(--card-border); color: var(--text-dim); }
+
+  /* Animation */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .guide-content.animating {
+    animation: fadeIn .25s ease-out;
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <div class="topbar-logo">EDGE <span>S2</span></div>
+  </div>
+  <div class="topbar-center">OWL GROUP TRADING</div>
+  <div class="topbar-right">
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme" id="themeBtn">&#9790;</button>
+    <button class="btn-signup-top" onclick="showModal()">Sign Up Free</button>
+  </div>
+</div>
+
+<!-- APP SHELL -->
+<div class="app-shell">
+
+  <!-- LEFT TILE PANEL -->
+  <div class="tile-panel">
+    <div class="tile-panel-header">Views</div>
+
+    <div class="tile-section">
+      <div class="tile-section-label">Tortoise</div>
+      <div class="tile active" data-view="daily" onclick="switchTile(this, 'daily')">
+        <div class="tile-icon">&#128202;</div>
+        <div class="tile-info">
+          <div class="tile-title">Daily</div>
+          <div class="tile-sub">Mar 14, 2026</div>
+        </div>
+      </div>
+      <div class="tile" data-view="weekend" onclick="switchTile(this, 'weekend')">
+        <div class="tile-icon">&#128200;</div>
+        <div class="tile-info">
+          <div class="tile-title">Weekend</div>
+          <div class="tile-sub">Mar 14, 2026</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tile-section">
+      <div class="tile-section-label">Learn</div>
+      <div class="tile" data-view="course" onclick="switchTile(this, 'course')">
+        <div class="tile-icon">&#127891;</div>
+        <div class="tile-info">
+          <div class="tile-title">101 Course</div>
+          <div class="tile-sub">Start Here</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tile-separator"></div>
+
+    <div class="tile tile-cta" onclick="showModal()">
+      <div class="tile-icon">&#128275;</div>
+      <div class="tile-info">
+        <div class="tile-title">Sign Up Free</div>
+        <div class="tile-sub">Unlock more</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MIDDLE PANE -->
+  <div class="middle-pane" id="middlePane">
+
+    <!-- BRIEFING VIEW -->
+    <div class="briefing-view" id="briefingView">
+
+      <!-- MORNING BRIEF -->
+      <div class="card">
+        <div class="card-label">Morning Brief &mdash; AI Ken</div>
+        <h2>Friday, March 14, 2026</h2>
+        <div class="brief-lead">Three things that matter today:</div>
+        <ol class="brief-list">
+          <li><span class="guide-link" data-concept="riskz">Risk Z</span> at <strong style="color:var(--red)">-1.58</strong> &mdash; Abnormal negative territory. <span class="guide-link" data-concept="vix">VIX</span> elevated at 27.2 but risk is technically OFF.</li>
+          <li><span class="guide-link" data-concept="etf2">ETF2 exposure</span> recommendation dropped from 50% to 20% &mdash; Dr. Long is getting defensive.</li>
+          <li>Leadership rotation: Energy (XLE) and Latin America (ILF) are #1 and #2 in <span class="guide-link" data-concept="etf22">ETF22</span> &mdash; commodities leading.</li>
+        </ol>
+        <div class="brief-watch">
+          <div class="brief-watch-icon">&#9888;&#65039;</div>
+          <div><strong>Watch:</strong> <span class="guide-link" data-concept="macd">MACD Seasons</span> show 9 of 22 ETFs in Winter. If <span class="guide-link" data-concept="riskz">Risk Z</span> drops below -2.0, expect broad seasonal deterioration. Monitor <span class="guide-link" data-concept="frog">Frog</span> values for range expansion signals.</div>
+        </div>
+      </div>
+
+      <!-- WHAT CHANGED -->
+      <div class="card">
+        <div class="card-label">What Changed</div>
+        <h2>Since Yesterday</h2>
+        <ul class="change-list">
+          <li class="change-item">
+            <span class="change-dot red"></span>
+            <span><strong><span class="guide-link" data-concept="riskz">Risk Z</span></strong> crossed into abnormal negative: -1.32 &#8594; <strong>-1.58</strong>. Fastest decline since Sep 2024.</span>
+          </li>
+          <li class="change-item">
+            <span class="change-dot red"></span>
+            <span><strong><span class="guide-link" data-concept="etf2">ETF2</span> exposure</strong> cut from 50% &#8594; <strong>20%</strong>. Third reduction in 10 days.</span>
+          </li>
+          <li class="change-item">
+            <span class="change-dot yellow"></span>
+            <span><strong>XLE</strong> jumped to #1 <span class="guide-link" data-concept="etf22">ETF22</span> rank. Energy decoupling from broad market weakness.</span>
+          </li>
+          <li class="change-item">
+            <span class="change-dot green"></span>
+            <span><strong>TLT</strong> moved from Winter &#8594; <strong>Spring</strong> in <span class="guide-link" data-concept="macd">MACD Seasons</span>. Flight to safety trade emerging.</span>
+          </li>
+          <li class="change-item">
+            <span class="change-dot blue"></span>
+            <span><strong><span class="guide-link" data-concept="frog">Frog</span></strong> expanded for SPY: 1.8% &#8594; <strong>2.3%</strong>. Volatility rising.</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- RISK DASHBOARD -->
+      <div class="card">
+        <div class="card-label">Risk Dashboard</div>
+        <h2>Market Conditions</h2>
+        <div class="risk-grid">
+          <div class="risk-gauge">
+            <div class="gauge-label"><span class="guide-link" data-concept="vix">VIX</span></div>
+            <div class="gauge-value" style="color:var(--yellow)">27.2</div>
+            <div class="gauge-sub">Elevated</div>
+            <div class="gauge-bar">
+              <div class="gauge-bar-fill" style="width:54%;background:var(--yellow)"></div>
+            </div>
+          </div>
+          <div class="risk-gauge">
+            <div class="gauge-label"><span class="guide-link" data-concept="riskz">Risk Z</span></div>
+            <div class="gauge-value" style="color:var(--red)">-1.58</div>
+            <div class="gauge-sub">Abnormal Neg</div>
+            <div class="gauge-bar">
+              <div class="gauge-bar-fill" style="width:18%;background:var(--red)"></div>
+            </div>
+          </div>
+          <div class="risk-gauge">
+            <div class="gauge-label">Regime</div>
+            <div style="margin-top:8px;">
+              <span class="regime-badge" style="background:var(--yellow-dim);color:var(--yellow);">Caution</span>
+            </div>
+            <div class="gauge-sub" style="margin-top:8px">Risk OFF</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA BANNER -->
+      <div class="cta-banner">
+        <div class="cta-banner-text">
+          Want this briefing personalized to your watchlist?
+          <span>Free account members get daily email delivery + 101 course.</span>
+        </div>
+        <button class="cta-banner-btn" onclick="showModal()">Create Free Account &#8594;</button>
+      </div>
+
+      <!-- MACD SEASON GARDEN -->
+      <div class="card">
+        <div class="card-label"><span class="guide-link" data-concept="macd">MACD Seasons</span> &mdash; ETF22 Garden</div>
+        <h2>Seasonal Snapshot</h2>
+        <div class="season-grid">
+          <div class="season-quad season-spring">
+            <div class="season-quad-header">
+              <span class="season-quad-icon">&#127793;</span>
+              <span style="color:var(--yellow)">Spring</span>
+              <span style="font-size:11px;color:var(--text-dim);font-weight:400;margin-left:auto">3 ETFs</span>
+            </div>
+            <div class="season-symbols">
+              <span class="season-sym">TLT</span>
+              <span class="season-sym">GDX</span>
+              <span class="season-sym">UUP</span>
+            </div>
+          </div>
+          <div class="season-quad season-summer">
+            <div class="season-quad-header">
+              <span class="season-quad-icon">&#9728;&#65039;</span>
+              <span style="color:var(--green)">Summer</span>
+              <span style="font-size:11px;color:var(--text-dim);font-weight:400;margin-left:auto">5 ETFs</span>
+            </div>
+            <div class="season-symbols">
+              <span class="season-sym">XLE</span>
+              <span class="season-sym">ILF</span>
+              <span class="season-sym">XLU</span>
+              <span class="season-sym">XLP</span>
+              <span class="season-sym">SLV</span>
+            </div>
+          </div>
+          <div class="season-quad season-fall">
+            <div class="season-quad-header">
+              <span class="season-quad-icon">&#127810;</span>
+              <span style="color:var(--accent)">Fall</span>
+              <span style="font-size:11px;color:var(--text-dim);font-weight:400;margin-left:auto">5 ETFs</span>
+            </div>
+            <div class="season-symbols">
+              <span class="season-sym">SPY</span>
+              <span class="season-sym">QQQ</span>
+              <span class="season-sym">DIA</span>
+              <span class="season-sym">IWM</span>
+              <span class="season-sym">XLK</span>
+            </div>
+          </div>
+          <div class="season-quad season-winter">
+            <div class="season-quad-header">
+              <span class="season-quad-icon">&#10052;&#65039;</span>
+              <span style="color:var(--red)">Winter</span>
+              <span style="font-size:11px;color:var(--text-dim);font-weight:400;margin-left:auto">9 ETFs</span>
+            </div>
+            <div class="season-symbols">
+              <span class="season-sym">XLF</span>
+              <span class="season-sym">XLI</span>
+              <span class="season-sym">XLB</span>
+              <span class="season-sym">XLV</span>
+              <span class="season-sym">XLC</span>
+              <span class="season-sym">XLY</span>
+              <span class="season-sym">EEM</span>
+              <span class="season-sym">EFA</span>
+              <span class="season-sym">FXI</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTOR MAP -->
+      <div class="card">
+        <div class="card-label">Sector Map &mdash; ETF22 Relative Strength</div>
+        <h2>Who's Leading, Who's Lagging</h2>
+        <div class="sector-map">
+          <div class="sector-cell sector-green-strong">XLE<div class="pct">+2.4%</div></div>
+          <div class="sector-cell sector-green">ILF<div class="pct">+1.8%</div></div>
+          <div class="sector-cell sector-green">XLU<div class="pct">+1.1%</div></div>
+          <div class="sector-cell sector-green">GDX<div class="pct">+0.9%</div></div>
+        </div>
+        <div class="sector-map-row2">
+          <div class="sector-cell sector-neutral">XLP<div class="pct">+0.2%</div></div>
+          <div class="sector-cell sector-neutral">TLT<div class="pct">+0.1%</div></div>
+          <div class="sector-cell sector-red">XLF<div class="pct">-0.6%</div></div>
+          <div class="sector-cell sector-red">QQQ<div class="pct">-1.1%</div></div>
+          <div class="sector-cell sector-red-strong">XLY<div class="pct">-2.1%</div></div>
+        </div>
+      </div>
+
+      <!-- FOOTER -->
+      <div class="middle-footer">
+        Powered by Edge S2 &bull; AI grounded in Dr. Ken Long's methodology &bull; Educational use only
+      </div>
+
+    </div><!-- /briefingView -->
+
+    <!-- COURSE VIEW -->
+    <div class="course-view" id="courseView">
+      <div class="card">
+        <div class="card-label">Foundations</div>
+        <h2>&#127891; Tortoise 101 Course</h2>
+        <p style="font-size:14px;color:var(--text-muted);margin-bottom:20px;line-height:1.7;">
+          A structured introduction to the Owl Group Tortoise trading system. Learn the core concepts behind Market, System, and Self &mdash; the three pillars Dr. Ken Long teaches every trader must master.
+        </p>
+        <div class="course-module">
+          <div class="course-num">1</div>
+          <div class="course-module-info">
+            <div class="course-title">Introduction to Tortoise Trading</div>
+            <div class="course-desc">The philosophy of slow, steady, and systematic.</div>
+          </div>
+          <div class="course-badge">Free</div>
+        </div>
+        <div class="course-module">
+          <div class="course-num">2</div>
+          <div class="course-module-info">
+            <div class="course-title">Market: Reading Conditions</div>
+            <div class="course-desc">VIX, Risk Z, and regime classification.</div>
+          </div>
+          <div class="course-badge">Free</div>
+        </div>
+        <div class="course-module">
+          <div class="course-num">3</div>
+          <div class="course-module-info">
+            <div class="course-title">System: ETF22 Rankings</div>
+            <div class="course-desc">How the 22-ETF universe is ranked and filtered.</div>
+          </div>
+          <div class="course-badge">Free</div>
+        </div>
+        <div class="course-module">
+          <div class="course-num">4</div>
+          <div class="course-module-info">
+            <div class="course-title">Risk Management Foundations</div>
+            <div class="course-desc">Position sizing, exposure control, and Risk Z.</div>
+          </div>
+          <div class="course-badge">Free</div>
+        </div>
+        <div class="course-module">
+          <div class="course-num">5</div>
+          <div class="course-module-info">
+            <div class="course-title">Self: Trading Psychology</div>
+            <div class="course-desc">Building the trader's mindset with System 2 thinking.</div>
+          </div>
+          <div class="course-badge locked">Coming Soon</div>
+        </div>
+        <div class="course-module">
+          <div class="course-num">6</div>
+          <div class="course-module-info">
+            <div class="course-title">Putting It Together</div>
+            <div class="course-desc">Daily workflow, briefing interpretation, and next steps.</div>
+          </div>
+          <div class="course-badge locked">Coming Soon</div>
+        </div>
+      </div>
+      <div class="cta-banner">
+        <div class="cta-banner-text">
+          Create a free account to track your progress and get daily briefings.
+          <span>No credit card. No commitment. Just learning.</span>
+        </div>
+        <button class="cta-banner-btn" onclick="showModal()">Create Free Account &#8594;</button>
+      </div>
+      <div class="middle-footer">
+        Powered by Edge S2 &bull; AI grounded in Dr. Ken Long's methodology &bull; Educational use only
+      </div>
+    </div>
+
+  </div><!-- /middlePane -->
+
+  <!-- GUIDE PANE -->
+  <div class="guide-pane">
+    <div class="guide-header">
+      &#128214; Guide
+    </div>
+    <div class="guide-content" id="guideContent">
+      <!-- Default content injected by JS -->
+    </div>
+    <div class="guide-footer">
+      &#128218; From Dr. Ken Long's library &bull; 2,147,382 words &bull; 212 source documents
+    </div>
+  </div>
+
+</div><!-- /app-shell -->
+
+<!-- SIGNUP MODAL -->
+<div class="modal-overlay" id="signupModal">
+  <div class="modal">
+    <h2>Join the Owl Group</h2>
+    <div class="modal-sub">Start learning the Tortoise system in 3 simple steps.</div>
+    <div class="modal-steps">
+      <div class="modal-step">
+        <div class="modal-step-num">1</div>
+        <div class="modal-step-text"><strong>Create your free account</strong><br>Email and password &mdash; that's it. No credit card required.</div>
+      </div>
+      <div class="modal-step">
+        <div class="modal-step-num">2</div>
+        <div class="modal-step-text"><strong>Get your daily briefing</strong><br>AI Ken delivers market context every morning, grounded in Dr. Long's methodology.</div>
+      </div>
+      <div class="modal-step">
+        <div class="modal-step-num">3</div>
+        <div class="modal-step-text"><strong>Start the 101 Course</strong><br>Structured learning path: Market, System, Self. Learn at your own pace.</div>
+      </div>
+    </div>
+    <button class="modal-close" onclick="hideModal()">Sounds Good &#8594;</button>
+    <button class="modal-dismiss" onclick="hideModal()">Maybe later</button>
+  </div>
+</div>
+
+<script>
+// ── Guide Concept Definitions ──
+const concepts = {
+  default: {
+    title: 'Market \u2013 System \u2013 Self',
+    html: `
+      <p>At the Owl Group, we teach trading as a craft built on the dynamic relationship between <strong>Market</strong>, <strong>System</strong>, and <strong>Self</strong>.</p>
+      <div class="concept-item">
+        <strong>Market</strong><br>
+        Understanding current conditions &mdash; volatility regime, risk levels, sector rotation. The market tells you <em>when</em> to act.
+      </div>
+      <div class="concept-item">
+        <strong>System</strong><br>
+        A tested, repeatable process for identifying and managing trades. The system tells you <em>what</em> to do.
+      </div>
+      <div class="concept-item">
+        <strong>Self</strong><br>
+        The psychological discipline to follow the system when emotions push you to deviate. Self determines <em>how well</em> you execute.
+      </div>
+      <p style="margin-top:12px;">"Most traders fail not because they lack a system, but because they lack the self-awareness to follow one."</p>
+    `,
+    source: '&mdash; Dr. Ken Long, Owl Group Trading',
+    cta: null
+  },
+  riskz: {
+    title: 'Risk Z',
+    html: `
+      <p>A stats-based indicator that guides our approach to swing trade opportunities.</p>
+      <p>Risk Z is the Z-score of the VIX MA(30/10) ratio over a <strong>5,000-day lookback</strong>. Normal range is -1 to +1.</p>
+      <p><span class="highlight">Current: -1.58 (Abnormal negative)</span></p>
+      <p>When Risk Z is abnormally negative, the VIX is compressed relative to recent history. This often precedes a <strong>volatility expansion</strong>.</p>
+      <p>Risk Z drives the exposure recommendation: as it moves deeper negative, the system reduces position sizes and narrows the watchlist.</p>
+    `,
+    source: '&mdash; Foundations Module 4: Risk Management',
+    cta: 'Explore Foundations Course'
+  },
+  vix: {
+    title: 'VIX (Volatility Index)',
+    html: `
+      <p>The CBOE Volatility Index measures the market's expectation of 30-day forward volatility, derived from S&P 500 option prices.</p>
+      <p><span class="highlight">Current: 27.2 (Elevated)</span></p>
+      <p>Dr. Long's framework classifies VIX levels:</p>
+      <div class="concept-item"><strong>Below 15:</strong> Low volatility &mdash; markets complacent</div>
+      <div class="concept-item"><strong>15&ndash;20:</strong> Normal range</div>
+      <div class="concept-item"><strong>20&ndash;30:</strong> Elevated &mdash; increased uncertainty</div>
+      <div class="concept-item"><strong>Above 30:</strong> High fear &mdash; potential capitulation</div>
+      <p style="margin-top:8px">"The VIX tells you how scared the market is. Risk Z tells you if that fear is justified."</p>
+    `,
+    source: '&mdash; Foundations Module 2: Reading Market Conditions',
+    cta: 'Explore Foundations Course'
+  },
+  macd: {
+    title: 'MACD 4 Seasons',
+    html: `
+      <p>The MACD seasonal model places every symbol into one of four states based on the MACD histogram direction and zero-line position.</p>
+      <div class="season-item">
+        <span class="season-icon">&#127793;</span>
+        <div><span class="season-label" style="color:var(--yellow)">Spring</span><br>MACD turning up from below zero &mdash; early bullish momentum</div>
+      </div>
+      <div class="season-item">
+        <span class="season-icon">&#9728;&#65039;</span>
+        <div><span class="season-label" style="color:var(--green)">Summer</span><br>MACD positive and rising &mdash; strong bullish momentum</div>
+      </div>
+      <div class="season-item">
+        <span class="season-icon">&#127810;</span>
+        <div><span class="season-label" style="color:var(--accent)">Fall</span><br>MACD turning down from above zero &mdash; momentum fading</div>
+      </div>
+      <div class="season-item">
+        <span class="season-icon">&#10052;&#65039;</span>
+        <div><span class="season-label" style="color:var(--red)">Winter</span><br>MACD negative and falling &mdash; bearish momentum</div>
+      </div>
+      <p style="margin-top:12px">Season transitions are key signals. Watch for <strong>Winter&#8594;Spring</strong> (emerging bullish) and <strong>Summer&#8594;Fall</strong> (momentum fading).</p>
+    `,
+    source: '&mdash; Foundations Module 8: MACD Analysis',
+    cta: 'Explore Foundations Course'
+  },
+  frog: {
+    title: 'Frog Trading Value',
+    html: `
+      <p>The Frog represents the <strong>average daily range</strong> of a stock. "How far does this stock typically jump in a day?"</p>
+      <p>Use the Frog to set realistic profit targets and stop losses. A stock with a 2% Frog shouldn't be expected to move 5% in a day &mdash; and if it does, something unusual is happening.</p>
+      <p><span class="highlight">SPY Frog: 2.3% (expanded from 1.8%)</span></p>
+      <p>When the Frog expands, volatility is rising. When it contracts, the market is calming down. Frog expansion across multiple ETFs confirms a regime shift.</p>
+      <p style="margin-top:8px">"The Frog tells you when to jump, not how far."</p>
+    `,
+    source: '&mdash; Foundations Module 7: Frog Trading',
+    cta: 'Explore Foundations Course'
+  },
+  etf2: {
+    title: 'ETF2 Exposure Model',
+    html: `
+      <p>The ETF2 exposure model is Dr. Long's systematic approach to <strong>position sizing at the portfolio level</strong>.</p>
+      <p><span class="highlight">Current: 20% (reduced from 50%)</span></p>
+      <p>Based on Risk Z, VIX regime, and breadth indicators, the model recommends what percentage of capital should be deployed in swing trades.</p>
+      <div class="concept-item"><strong>100%:</strong> Full deployment &mdash; strong bullish regime</div>
+      <div class="concept-item"><strong>50%:</strong> Half deployment &mdash; mixed signals</div>
+      <div class="concept-item"><strong>20%:</strong> Defensive &mdash; elevated risk</div>
+      <div class="concept-item"><strong>0%:</strong> All cash &mdash; bear market confirmed</div>
+      <p style="margin-top:8px">"The best trade is sometimes no trade at all."</p>
+    `,
+    source: '&mdash; Foundations Module 4: Risk Management',
+    cta: 'Explore Foundations Course'
+  },
+  etf22: {
+    title: 'ETF22 Universe',
+    html: `
+      <p>The ETF22 is a curated universe of <strong>22 sector and thematic ETFs</strong> that Dr. Long uses to map the market landscape.</p>
+      <p>By tracking all 22 ETFs through MACD Seasons, relative strength rankings, and Frog values, the Tortoise system identifies which sectors are leading and which are lagging.</p>
+      <p><strong>Current leaders:</strong></p>
+      <div class="concept-item"><strong>#1 XLE</strong> (Energy) &mdash; Summer, +2.4%</div>
+      <div class="concept-item"><strong>#2 ILF</strong> (Latin America) &mdash; Summer, +1.8%</div>
+      <p style="margin-top:8px">"Don't fight the rotation. Follow the leaders and avoid the laggards."</p>
+    `,
+    source: '&mdash; Foundations Module 3: ETF22 Rankings',
+    cta: 'Explore Foundations Course'
+  }
+};
+
+// ── Guide Rendering ──
+function showConcept(key) {
+  const c = concepts[key] || concepts.default;
+  const el = document.getElementById('guideContent');
+  el.classList.remove('animating');
+  void el.offsetWidth; // reflow
+  el.classList.add('animating');
+
+  let html = `<div class="guide-title">${c.title}</div><div class="guide-body">${c.html}</div>`;
+  if (c.source) html += `<div class="guide-source">${c.source}</div>`;
+  if (c.cta) html += `<div class="guide-cta" onclick="switchTile(document.querySelector('[data-view=course]'),'course')">${c.cta} &#8594;</div>`;
+  el.innerHTML = html;
+}
+
+// Init guide
+showConcept('default');
+
+// ── Guide Link Clicks ──
+document.addEventListener('click', function(e) {
+  const link = e.target.closest('.guide-link');
+  if (link) {
+    const concept = link.dataset.concept;
+    if (concept && concepts[concept]) {
+      showConcept(concept);
+    }
+  }
+});
+
+// ── Tile Switching ──
+function switchTile(el, view) {
+  document.querySelectorAll('.tile').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+
+  const briefing = document.getElementById('briefingView');
+  const course = document.getElementById('courseView');
+
+  if (view === 'course') {
+    briefing.classList.add('hidden');
+    course.classList.add('visible');
+  } else {
+    briefing.classList.remove('hidden');
+    course.classList.remove('visible');
+  }
+}
+
+// ── Theme Toggle ──
+function toggleTheme() {
+  const html = document.documentElement;
+  const btn = document.getElementById('themeBtn');
+  if (html.dataset.theme === 'dark') {
+    html.dataset.theme = 'light';
+    btn.innerHTML = '&#9728;';
+  } else {
+    html.dataset.theme = 'dark';
+    btn.innerHTML = '&#9790;';
+  }
+}
+
+// ── Modal ──
+function showModal() {
+  document.getElementById('signupModal').classList.add('visible');
+}
+function hideModal() {
+  document.getElementById('signupModal').classList.remove('visible');
+}
+document.getElementById('signupModal').addEventListener('click', function(e) {
+  if (e.target === this) hideModal();
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') hideModal();
+});
+</script>
+</body>
+</html>
