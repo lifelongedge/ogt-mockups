@@ -201,12 +201,69 @@ a:hover{text-decoration:underline}
 /* -- Footer -- */
 .footer{text-align:center;color:var(--ogt-text-faint);font-size:.8rem;padding:24px 0 12px;border-top:1px solid var(--ogt-border-subtle);margin-top:8px}
 
+/* -- Holding X Days Z-Score Table -- */
+.zscore-table{width:100%;border-collapse:collapse;font-size:.88rem}
+.zscore-table th{
+  text-align:center;color:var(--ogt-text-muted);font-weight:600;padding:8px 10px;
+  border-bottom:2px solid var(--ogt-border);white-space:nowrap;
+}
+.zscore-table th:first-child{text-align:left}
+.zscore-table td{padding:8px 10px;border-bottom:1px solid var(--ogt-border-subtle);text-align:center}
+.zscore-table td:first-child{text-align:left;font-weight:600;color:var(--ogt-text-heading)}
+.zscore-table tr:hover td{background:var(--ogt-row-hover)}
+.z-chip{
+  display:inline-block;padding:2px 8px;border-radius:6px;
+  font-size:.8rem;font-weight:600;min-width:50px;text-align:center;
+}
+.z-green{background:rgba(63,185,80,0.18);color:var(--ogt-positive)}
+.z-red{background:rgba(248,81,73,0.18);color:var(--ogt-negative)}
+.z-yellow{background:rgba(210,153,34,0.18);color:var(--ogt-warning)}
+.z-gray{background:var(--ogt-muted-bg);color:var(--ogt-text-muted)}
+
+/* -- Gap Stats -- */
+.gap-row{
+  display:flex;align-items:center;gap:12px;
+  padding:10px 0;border-bottom:1px solid var(--ogt-border-subtle);
+}
+.gap-row:last-child{border-bottom:none}
+.gap-label{width:160px;font-weight:600;color:var(--ogt-text-heading);font-size:.88rem;flex-shrink:0}
+.gap-bar-wrap{flex:1;display:flex;align-items:center;gap:10px}
+.gap-bar{height:18px;border-radius:4px;transition:width .4s}
+.gap-stats-text{font-size:.82rem;color:var(--ogt-text-muted);white-space:nowrap}
+
+/* -- Pivot Points Table -- */
+.pivot-table{width:100%;border-collapse:collapse;font-size:.88rem}
+.pivot-table th{
+  text-align:center;color:var(--ogt-text-muted);font-weight:600;padding:8px 10px;
+  border-bottom:2px solid var(--ogt-border);
+}
+.pivot-table th:first-child{text-align:left}
+.pivot-table td{padding:8px 10px;border-bottom:1px solid var(--ogt-border-subtle);text-align:center}
+.pivot-table td:first-child{text-align:left;font-weight:600;color:var(--ogt-text-heading)}
+.pivot-table tr:hover td{background:var(--ogt-row-hover)}
+.pivot-highlight{background:var(--ogt-date-bg);font-weight:700;color:var(--ogt-link)}
+
+/* -- Pain Extremes -- */
+.pain-section{margin-bottom:16px}
+.pain-section:last-child{margin-bottom:0}
+.pain-section-title{font-weight:600;font-size:.9rem;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.pain-badges{display:flex;flex-wrap:wrap;gap:6px}
+.pain-pill{
+  display:inline-block;padding:4px 12px;border-radius:14px;
+  font-size:.78rem;font-weight:600;border:1px solid;
+}
+.pain-pill-green{color:var(--ogt-positive);border-color:var(--ogt-positive-border);background:var(--ogt-positive-bg)}
+.pain-pill-red{color:var(--ogt-negative);border-color:rgba(248,81,73,0.27);background:rgba(248,81,73,0.13)}
+.pain-sub{color:var(--ogt-text-muted);font-size:.8rem;font-weight:600;margin-bottom:6px;margin-top:8px}
+
 /* -- Responsive -- */
 @media(max-width:768px){
   .container{padding:12px 8px}
   .season-grid{grid-template-columns:1fr}
   .risk-grid{grid-template-columns:1fr 1fr}
   .sector-grid{grid-template-columns:repeat(auto-fill,minmax(90px,1fr))}
+  .gap-row{flex-direction:column;align-items:flex-start;gap:6px}
+  .gap-label{width:auto}
 }
 
 </style>
@@ -230,6 +287,63 @@ a:hover{text-decoration:underline}
   <div class="card">
   <div class="card-title"><span class="icon">&#x1F504;</span> What Changed</div>
   <div style="color:#8b949e">No changes detected between reports.</div>
+</div>
+  
+  <div class="card">
+  <div class="card-title"><span class="icon">&#x1F6E1;</span> Risk Dashboard</div>
+  <div class="risk-grid">
+    <div class="gauge-card">
+      <div class="label">VIX</div>
+      <div class="value" style="color:#3fb950">—</div>
+      <div class="gauge-bar"><div class="fill" style="width:0%;background:#3fb950"></div></div>
+      <div class="context">Volatility index</div>
+    </div>
+    <div class="gauge-card">
+      <div class="label">Risk Z-Score</div>
+      <div class="value" style="color:#3fb950">—</div>
+      <div class="gauge-bar"><div class="fill" style="width:50%;background:#3fb950"></div></div>
+      <div class="context">Normal range: -1.0 to +1.0</div>
+    </div>
+    <div class="gauge-card">
+      <div class="label">Market Regime</div>
+      <div class="regime-badge" style="color:#8b949e;background:#8b949e20;border:1px solid #8b949e44">Unknown</div>
+      <div class="context" style="margin-top:8px"></div>
+    </div>
+    
+  </div>
+</div>
+  <div class="card">
+  <div class="card-title"><span class="icon">&#x1F4F6;</span> Signal Summary</div>
+  <div class="signal-row">
+  <div class="signal-label">ETF13</div>
+  <div class="signal-bar-wrap">
+    <div class="signal-bar" style="width:100%">
+      <div class="buy-seg" style="width:85%"></div>
+      <div class="cash-seg" style="width:15%"></div>
+    </div>
+    <div class="signal-counts">11 Buy / 2 Cash </div>
+  </div>
+</div>
+<div class="signal-row">
+  <div class="signal-label">ETF22</div>
+  <div class="signal-bar-wrap">
+    <div class="signal-bar" style="width:100%">
+      <div class="buy-seg" style="width:77%"></div>
+      <div class="cash-seg" style="width:23%"></div>
+    </div>
+    <div class="signal-counts">17 Buy / 5 Cash </div>
+  </div>
+</div>
+<div class="signal-row">
+  <div class="signal-label">Dow30</div>
+  <div class="signal-bar-wrap">
+    <div class="signal-bar" style="width:100%">
+      <div class="buy-seg" style="width:67%"></div>
+      <div class="cash-seg" style="width:33%"></div>
+    </div>
+    <div class="signal-counts">20 Buy / 10 Cash </div>
+  </div>
+</div>
 </div>
   <div class="card">
   <div class="card-title"><span class="icon">&#x1F5FA;</span> Sector Map</div>
@@ -279,6 +393,112 @@ a:hover{text-decoration:underline}
   <div class="pct" style="color:#8b949e">—</div>
 </div>
   </div>
+</div>
+  <div class="card">
+  <div class="card-title"><span class="icon">&#x1F33B;</span> MACD Season Garden</div>
+  <div style="margin-bottom:8px;color:#8b949e;font-size:.85rem;font-weight:600">Stocks</div>
+<div class="season-grid">
+  <div class="season-quad" style="background:rgba(210,153,34,0.10);border:1px solid #d2992222">
+  <div class="quad-title" style="color:#d29922">&#x1F331; Spring</div>
+  <div class="season-badges">
+    <span class="season-sym" style="color:#d29922;border-color:#d2992244;background:rgba(210,153,34,0.10)">{&#x27;SYMBOL&#x27;: &#x27;JPM&#x27;, &#x27;SEASON&#x27;: &#x27;SPRING&#x27;, &#x27;MACD_Z&#x27;: -0.42}</span>
+<span class="season-sym" style="color:#d29922;border-color:#d2992244;background:rgba(210,153,34,0.10)">{&#x27;SYMBOL&#x27;: &#x27;MMM&#x27;, &#x27;SEASON&#x27;: &#x27;SPRING&#x27;, &#x27;MACD_Z&#x27;: -0.02}</span>
+<span class="season-sym" style="color:#d29922;border-color:#d2992244;background:rgba(210,153,34,0.10)">{&#x27;SYMBOL&#x27;: &#x27;AXP&#x27;, &#x27;SEASON&#x27;: &#x27;SPRING&#x27;, &#x27;MACD_Z&#x27;: -0.74}</span>
+  </div>
+</div>
+<div class="season-quad" style="background:rgba(63,185,80,0.10);border:1px solid #3fb95022">
+  <div class="quad-title" style="color:#3fb950">&#x2600;&#xFE0F; Summer</div>
+  <div class="season-badges">
+    <span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;INTC&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 0.12}</span>
+<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;MRK&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 0.48}</span>
+<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;CVX&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 1.13}</span>
+<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;CAT&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 1.61}</span>
+<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;WMT&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 1.93}</span>
+<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;PFE&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 1.73}</span>
+<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;XOM&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 1.66}</span>
+<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;JNJ&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 1.94}</span>
+<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;MCD&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 2.15}</span>
+<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;PG&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 2.0}</span>
+<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;KO&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 2.09}</span>
+<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;AAPL&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 2.42}</span>
+<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;CSCO&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 2.52}</span>
+  </div>
+</div>
+<div class="season-quad" style="background:rgba(88,166,255,0.10);border:1px solid #58a6ff22">
+  <div class="quad-title" style="color:#58a6ff">&#x1F342; Fall</div>
+  <div class="season-badges">
+    <span class="season-sym" style="color:#58a6ff;border-color:#58a6ff44;background:rgba(88,166,255,0.10)">{&#x27;SYMBOL&#x27;: &#x27;BA&#x27;, &#x27;SEASON&#x27;: &#x27;FALL&#x27;, &#x27;MACD_Z&#x27;: -2.49}</span>
+<span class="season-sym" style="color:#58a6ff;border-color:#58a6ff44;background:rgba(88,166,255,0.10)">{&#x27;SYMBOL&#x27;: &#x27;AMD&#x27;, &#x27;SEASON&#x27;: &#x27;FALL&#x27;, &#x27;MACD_Z&#x27;: -0.37}</span>
+<span class="season-sym" style="color:#58a6ff;border-color:#58a6ff44;background:rgba(88,166,255,0.10)">{&#x27;SYMBOL&#x27;: &#x27;HD&#x27;, &#x27;SEASON&#x27;: &#x27;FALL&#x27;, &#x27;MACD_Z&#x27;: 0.22}</span>
+<span class="season-sym" style="color:#58a6ff;border-color:#58a6ff44;background:rgba(88,166,255,0.10)">{&#x27;SYMBOL&#x27;: &#x27;GOOG&#x27;, &#x27;SEASON&#x27;: &#x27;FALL&#x27;, &#x27;MACD_Z&#x27;: 0.04}</span>
+  </div>
+</div>
+<div class="season-quad" style="background:rgba(248,81,73,0.10);border:1px solid #f8514922">
+  <div class="quad-title" style="color:#f85149">&#x2744;&#xFE0F; Winter</div>
+  <div class="season-badges">
+    <span class="season-sym" style="color:#f85149;border-color:#f8514944;background:rgba(248,81,73,0.10)">{&#x27;SYMBOL&#x27;: &#x27;UNH&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -2.83}</span>
+<span class="season-sym" style="color:#f85149;border-color:#f8514944;background:rgba(248,81,73,0.10)">{&#x27;SYMBOL&#x27;: &#x27;GS&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -2.08}</span>
+<span class="season-sym" style="color:#f85149;border-color:#f8514944;background:rgba(248,81,73,0.10)">{&#x27;SYMBOL&#x27;: &#x27;ORCL&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -2.3}</span>
+<span class="season-sym" style="color:#f85149;border-color:#f8514944;background:rgba(248,81,73,0.10)">{&#x27;SYMBOL&#x27;: &#x27;MSFT&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -2.28}</span>
+<span class="season-sym" style="color:#f85149;border-color:#f8514944;background:rgba(248,81,73,0.10)">{&#x27;SYMBOL&#x27;: &#x27;DIS&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -1.65}</span>
+<span class="season-sym" style="color:#f85149;border-color:#f8514944;background:rgba(248,81,73,0.10)">{&#x27;SYMBOL&#x27;: &#x27;PLTR&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -1.63}</span>
+<span class="season-sym" style="color:#f85149;border-color:#f8514944;background:rgba(248,81,73,0.10)">{&#x27;SYMBOL&#x27;: &#x27;NVDA&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -1.38}</span>
+<span class="season-sym" style="color:#f85149;border-color:#f8514944;background:rgba(248,81,73,0.10)">{&#x27;SYMBOL&#x27;: &#x27;AMZN&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -2.05}</span>
+<span class="season-sym" style="color:#f85149;border-color:#f8514944;background:rgba(248,81,73,0.10)">{&#x27;SYMBOL&#x27;: &#x27;TSLA&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -0.7}</span>
+<span class="season-sym" style="color:#f85149;border-color:#f8514944;background:rgba(248,81,73,0.10)">{&#x27;SYMBOL&#x27;: &#x27;NKE&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -0.58}</span>
+  </div>
+</div>
+</div><div style="margin-top:16px;margin-bottom:8px;color:#8b949e;font-size:.85rem;font-weight:600">ETFs</div>
+<div class="season-grid">
+  <div class="season-quad" style="background:rgba(210,153,34,0.10);border:1px solid #d2992222">
+  <div class="quad-title" style="color:#d29922">&#x1F331; Spring</div>
+  <div class="season-badges">
+    <span class="season-sym" style="color:#d29922;border-color:#d2992244;background:rgba(210,153,34,0.10)">{&#x27;SYMBOL&#x27;: &#x27;XLF&#x27;, &#x27;SEASON&#x27;: &#x27;SPRING&#x27;, &#x27;MACD_Z&#x27;: -0.83}</span>
+  </div>
+</div>
+<div class="season-quad" style="background:rgba(63,185,80,0.10);border:1px solid #3fb95022">
+  <div class="quad-title" style="color:#3fb950">&#x2600;&#xFE0F; Summer</div>
+  <div class="season-badges">
+    <span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;DIA&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: -1.42}</span>
+<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;XOP&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: -1.42}</span>
+<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;MDY&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: -0.81}</span>
+<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;XLI&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 0.71}</span>
+<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;IYR&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 0.28}</span>
+<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;EWJ&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 1.09}</span>
+<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;EFA&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 1.19}</span>
+<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;EWW&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 1.27}</span>
+<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;XLU&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 1.18}</span>
+<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;XLE&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 1.5}</span>
+<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;XLP&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 1.53}</span>
+<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;USO&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 1.59}</span>
+<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;EPP&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 1.78}</span>
+  </div>
+</div>
+<div class="season-quad" style="background:rgba(88,166,255,0.10);border:1px solid #58a6ff22">
+  <div class="quad-title" style="color:#58a6ff">&#x1F342; Fall</div>
+  <div class="season-badges">
+    <span class="season-sym" style="color:#58a6ff;border-color:#58a6ff44;background:rgba(88,166,255,0.10)">{&#x27;SYMBOL&#x27;: &#x27;SPY&#x27;, &#x27;SEASON&#x27;: &#x27;FALL&#x27;, &#x27;MACD_Z&#x27;: -1.84}</span>
+<span class="season-sym" style="color:#58a6ff;border-color:#58a6ff44;background:rgba(88,166,255,0.10)">{&#x27;SYMBOL&#x27;: &#x27;XME&#x27;, &#x27;SEASON&#x27;: &#x27;FALL&#x27;, &#x27;MACD_Z&#x27;: -1.69}</span>
+<span class="season-sym" style="color:#58a6ff;border-color:#58a6ff44;background:rgba(88,166,255,0.10)">{&#x27;SYMBOL&#x27;: &#x27;SLV&#x27;, &#x27;SEASON&#x27;: &#x27;FALL&#x27;, &#x27;MACD_Z&#x27;: -2.17}</span>
+<span class="season-sym" style="color:#58a6ff;border-color:#58a6ff44;background:rgba(88,166,255,0.10)">{&#x27;SYMBOL&#x27;: &#x27;IWM&#x27;, &#x27;SEASON&#x27;: &#x27;FALL&#x27;, &#x27;MACD_Z&#x27;: -0.85}</span>
+<span class="season-sym" style="color:#58a6ff;border-color:#58a6ff44;background:rgba(88,166,255,0.10)">{&#x27;SYMBOL&#x27;: &#x27;EEM&#x27;, &#x27;SEASON&#x27;: &#x27;FALL&#x27;, &#x27;MACD_Z&#x27;: 0.3}</span>
+<span class="season-sym" style="color:#58a6ff;border-color:#58a6ff44;background:rgba(88,166,255,0.10)">{&#x27;SYMBOL&#x27;: &#x27;XLB&#x27;, &#x27;SEASON&#x27;: &#x27;FALL&#x27;, &#x27;MACD_Z&#x27;: 0.44}</span>
+<span class="season-sym" style="color:#58a6ff;border-color:#58a6ff44;background:rgba(88,166,255,0.10)">{&#x27;SYMBOL&#x27;: &#x27;IEV&#x27;, &#x27;SEASON&#x27;: &#x27;FALL&#x27;, &#x27;MACD_Z&#x27;: 1.22}</span>
+<span class="season-sym" style="color:#58a6ff;border-color:#58a6ff44;background:rgba(88,166,255,0.10)">{&#x27;SYMBOL&#x27;: &#x27;GLD&#x27;, &#x27;SEASON&#x27;: &#x27;FALL&#x27;, &#x27;MACD_Z&#x27;: 0.81}</span>
+<span class="season-sym" style="color:#58a6ff;border-color:#58a6ff44;background:rgba(88,166,255,0.10)">{&#x27;SYMBOL&#x27;: &#x27;ILF&#x27;, &#x27;SEASON&#x27;: &#x27;FALL&#x27;, &#x27;MACD_Z&#x27;: 1.3}</span>
+<span class="season-sym" style="color:#58a6ff;border-color:#58a6ff44;background:rgba(88,166,255,0.10)">{&#x27;SYMBOL&#x27;: &#x27;EWZ&#x27;, &#x27;SEASON&#x27;: &#x27;FALL&#x27;, &#x27;MACD_Z&#x27;: 1.32}</span>
+  </div>
+</div>
+<div class="season-quad" style="background:rgba(248,81,73,0.10);border:1px solid #f8514922">
+  <div class="quad-title" style="color:#f85149">&#x2744;&#xFE0F; Winter</div>
+  <div class="season-badges">
+    <span class="season-sym" style="color:#f85149;border-color:#f8514944;background:rgba(248,81,73,0.10)">{&#x27;SYMBOL&#x27;: &#x27;QQQ&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -3.05}</span>
+<span class="season-sym" style="color:#f85149;border-color:#f8514944;background:rgba(248,81,73,0.10)">{&#x27;SYMBOL&#x27;: &#x27;XLK&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -2.66}</span>
+<span class="season-sym" style="color:#f85149;border-color:#f8514944;background:rgba(248,81,73,0.10)">{&#x27;SYMBOL&#x27;: &#x27;XLV&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -1.97}</span>
+<span class="season-sym" style="color:#f85149;border-color:#f8514944;background:rgba(248,81,73,0.10)">{&#x27;SYMBOL&#x27;: &#x27;XLY&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -1.69}</span>
+  </div>
+</div>
+</div>
 </div>
   <div class="card">
   <div class="card-title"><span class="icon">&#x1F4CA;</span> ETF13 Portfolio</div>
@@ -631,168 +851,7 @@ a:hover{text-decoration:underline}
     </tbody>
   </table>
 </div>
-  <div class="card">
-  <div class="card-title"><span class="icon">&#x1F6E1;</span> Risk Dashboard</div>
-  <div class="risk-grid">
-    <div class="gauge-card">
-      <div class="label">VIX</div>
-      <div class="value" style="color:#3fb950">—</div>
-      <div class="gauge-bar"><div class="fill" style="width:0%;background:#3fb950"></div></div>
-      <div class="context">Volatility index</div>
-    </div>
-    <div class="gauge-card">
-      <div class="label">Risk Z-Score</div>
-      <div class="value" style="color:#3fb950">—</div>
-      <div class="gauge-bar"><div class="fill" style="width:50%;background:#3fb950"></div></div>
-      <div class="context">Normal range: -1.0 to +1.0</div>
-    </div>
-    <div class="gauge-card">
-      <div class="label">Market Regime</div>
-      <div class="regime-badge" style="color:#8b949e;background:#8b949e20;border:1px solid #8b949e44">Unknown</div>
-      <div class="context" style="margin-top:8px"></div>
-    </div>
-    
-  </div>
-</div>
-  <div class="card">
-  <div class="card-title"><span class="icon">&#x1F33B;</span> MACD Season Garden</div>
-  <div style="margin-bottom:8px;color:#8b949e;font-size:.85rem;font-weight:600">Stocks</div>
-<div class="season-grid">
-  <div class="season-quad" style="background:rgba(210,153,34,0.10);border:1px solid #d2992222">
-  <div class="quad-title" style="color:#d29922">&#x1F331; Spring</div>
-  <div class="season-badges">
-    <span class="season-sym" style="color:#d29922;border-color:#d2992244;background:rgba(210,153,34,0.10)">{&#x27;SYMBOL&#x27;: &#x27;JPM&#x27;, &#x27;SEASON&#x27;: &#x27;SPRING&#x27;, &#x27;MACD_Z&#x27;: -0.42}</span>
-<span class="season-sym" style="color:#d29922;border-color:#d2992244;background:rgba(210,153,34,0.10)">{&#x27;SYMBOL&#x27;: &#x27;MMM&#x27;, &#x27;SEASON&#x27;: &#x27;SPRING&#x27;, &#x27;MACD_Z&#x27;: -0.02}</span>
-<span class="season-sym" style="color:#d29922;border-color:#d2992244;background:rgba(210,153,34,0.10)">{&#x27;SYMBOL&#x27;: &#x27;AXP&#x27;, &#x27;SEASON&#x27;: &#x27;SPRING&#x27;, &#x27;MACD_Z&#x27;: -0.74}</span>
-  </div>
-</div>
-<div class="season-quad" style="background:rgba(63,185,80,0.10);border:1px solid #3fb95022">
-  <div class="quad-title" style="color:#3fb950">&#x2600;&#xFE0F; Summer</div>
-  <div class="season-badges">
-    <span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;INTC&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 0.12}</span>
-<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;MRK&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 0.48}</span>
-<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;CVX&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 1.13}</span>
-<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;CAT&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 1.61}</span>
-<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;WMT&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 1.93}</span>
-<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;PFE&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 1.73}</span>
-<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;XOM&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 1.66}</span>
-<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;JNJ&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 1.94}</span>
-<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;MCD&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 2.15}</span>
-<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;PG&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 2.0}</span>
-<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;KO&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 2.09}</span>
-<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;AAPL&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 2.42}</span>
-<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;CSCO&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 2.52}</span>
-  </div>
-</div>
-<div class="season-quad" style="background:rgba(88,166,255,0.10);border:1px solid #58a6ff22">
-  <div class="quad-title" style="color:#58a6ff">&#x1F342; Fall</div>
-  <div class="season-badges">
-    <span class="season-sym" style="color:#58a6ff;border-color:#58a6ff44;background:rgba(88,166,255,0.10)">{&#x27;SYMBOL&#x27;: &#x27;BA&#x27;, &#x27;SEASON&#x27;: &#x27;FALL&#x27;, &#x27;MACD_Z&#x27;: -2.49}</span>
-<span class="season-sym" style="color:#58a6ff;border-color:#58a6ff44;background:rgba(88,166,255,0.10)">{&#x27;SYMBOL&#x27;: &#x27;AMD&#x27;, &#x27;SEASON&#x27;: &#x27;FALL&#x27;, &#x27;MACD_Z&#x27;: -0.37}</span>
-<span class="season-sym" style="color:#58a6ff;border-color:#58a6ff44;background:rgba(88,166,255,0.10)">{&#x27;SYMBOL&#x27;: &#x27;HD&#x27;, &#x27;SEASON&#x27;: &#x27;FALL&#x27;, &#x27;MACD_Z&#x27;: 0.22}</span>
-<span class="season-sym" style="color:#58a6ff;border-color:#58a6ff44;background:rgba(88,166,255,0.10)">{&#x27;SYMBOL&#x27;: &#x27;GOOG&#x27;, &#x27;SEASON&#x27;: &#x27;FALL&#x27;, &#x27;MACD_Z&#x27;: 0.04}</span>
-  </div>
-</div>
-<div class="season-quad" style="background:rgba(248,81,73,0.10);border:1px solid #f8514922">
-  <div class="quad-title" style="color:#f85149">&#x2744;&#xFE0F; Winter</div>
-  <div class="season-badges">
-    <span class="season-sym" style="color:#f85149;border-color:#f8514944;background:rgba(248,81,73,0.10)">{&#x27;SYMBOL&#x27;: &#x27;UNH&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -2.83}</span>
-<span class="season-sym" style="color:#f85149;border-color:#f8514944;background:rgba(248,81,73,0.10)">{&#x27;SYMBOL&#x27;: &#x27;GS&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -2.08}</span>
-<span class="season-sym" style="color:#f85149;border-color:#f8514944;background:rgba(248,81,73,0.10)">{&#x27;SYMBOL&#x27;: &#x27;ORCL&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -2.3}</span>
-<span class="season-sym" style="color:#f85149;border-color:#f8514944;background:rgba(248,81,73,0.10)">{&#x27;SYMBOL&#x27;: &#x27;MSFT&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -2.28}</span>
-<span class="season-sym" style="color:#f85149;border-color:#f8514944;background:rgba(248,81,73,0.10)">{&#x27;SYMBOL&#x27;: &#x27;DIS&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -1.65}</span>
-<span class="season-sym" style="color:#f85149;border-color:#f8514944;background:rgba(248,81,73,0.10)">{&#x27;SYMBOL&#x27;: &#x27;PLTR&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -1.63}</span>
-<span class="season-sym" style="color:#f85149;border-color:#f8514944;background:rgba(248,81,73,0.10)">{&#x27;SYMBOL&#x27;: &#x27;NVDA&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -1.38}</span>
-<span class="season-sym" style="color:#f85149;border-color:#f8514944;background:rgba(248,81,73,0.10)">{&#x27;SYMBOL&#x27;: &#x27;AMZN&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -2.05}</span>
-<span class="season-sym" style="color:#f85149;border-color:#f8514944;background:rgba(248,81,73,0.10)">{&#x27;SYMBOL&#x27;: &#x27;TSLA&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -0.7}</span>
-<span class="season-sym" style="color:#f85149;border-color:#f8514944;background:rgba(248,81,73,0.10)">{&#x27;SYMBOL&#x27;: &#x27;NKE&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -0.58}</span>
-  </div>
-</div>
-</div><div style="margin-top:16px;margin-bottom:8px;color:#8b949e;font-size:.85rem;font-weight:600">ETFs</div>
-<div class="season-grid">
-  <div class="season-quad" style="background:rgba(210,153,34,0.10);border:1px solid #d2992222">
-  <div class="quad-title" style="color:#d29922">&#x1F331; Spring</div>
-  <div class="season-badges">
-    <span class="season-sym" style="color:#d29922;border-color:#d2992244;background:rgba(210,153,34,0.10)">{&#x27;SYMBOL&#x27;: &#x27;XLF&#x27;, &#x27;SEASON&#x27;: &#x27;SPRING&#x27;, &#x27;MACD_Z&#x27;: -0.83}</span>
-  </div>
-</div>
-<div class="season-quad" style="background:rgba(63,185,80,0.10);border:1px solid #3fb95022">
-  <div class="quad-title" style="color:#3fb950">&#x2600;&#xFE0F; Summer</div>
-  <div class="season-badges">
-    <span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;DIA&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: -1.42}</span>
-<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;XOP&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: -1.42}</span>
-<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;MDY&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: -0.81}</span>
-<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;XLI&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 0.71}</span>
-<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;IYR&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 0.28}</span>
-<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;EWJ&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 1.09}</span>
-<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;EFA&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 1.19}</span>
-<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;EWW&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 1.27}</span>
-<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;XLU&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 1.18}</span>
-<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;XLE&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 1.5}</span>
-<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;XLP&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 1.53}</span>
-<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;USO&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 1.59}</span>
-<span class="season-sym" style="color:#3fb950;border-color:#3fb95044;background:rgba(63,185,80,0.10)">{&#x27;SYMBOL&#x27;: &#x27;EPP&#x27;, &#x27;SEASON&#x27;: &#x27;SUMMER&#x27;, &#x27;MACD_Z&#x27;: 1.78}</span>
-  </div>
-</div>
-<div class="season-quad" style="background:rgba(88,166,255,0.10);border:1px solid #58a6ff22">
-  <div class="quad-title" style="color:#58a6ff">&#x1F342; Fall</div>
-  <div class="season-badges">
-    <span class="season-sym" style="color:#58a6ff;border-color:#58a6ff44;background:rgba(88,166,255,0.10)">{&#x27;SYMBOL&#x27;: &#x27;SPY&#x27;, &#x27;SEASON&#x27;: &#x27;FALL&#x27;, &#x27;MACD_Z&#x27;: -1.84}</span>
-<span class="season-sym" style="color:#58a6ff;border-color:#58a6ff44;background:rgba(88,166,255,0.10)">{&#x27;SYMBOL&#x27;: &#x27;XME&#x27;, &#x27;SEASON&#x27;: &#x27;FALL&#x27;, &#x27;MACD_Z&#x27;: -1.69}</span>
-<span class="season-sym" style="color:#58a6ff;border-color:#58a6ff44;background:rgba(88,166,255,0.10)">{&#x27;SYMBOL&#x27;: &#x27;SLV&#x27;, &#x27;SEASON&#x27;: &#x27;FALL&#x27;, &#x27;MACD_Z&#x27;: -2.17}</span>
-<span class="season-sym" style="color:#58a6ff;border-color:#58a6ff44;background:rgba(88,166,255,0.10)">{&#x27;SYMBOL&#x27;: &#x27;IWM&#x27;, &#x27;SEASON&#x27;: &#x27;FALL&#x27;, &#x27;MACD_Z&#x27;: -0.85}</span>
-<span class="season-sym" style="color:#58a6ff;border-color:#58a6ff44;background:rgba(88,166,255,0.10)">{&#x27;SYMBOL&#x27;: &#x27;EEM&#x27;, &#x27;SEASON&#x27;: &#x27;FALL&#x27;, &#x27;MACD_Z&#x27;: 0.3}</span>
-<span class="season-sym" style="color:#58a6ff;border-color:#58a6ff44;background:rgba(88,166,255,0.10)">{&#x27;SYMBOL&#x27;: &#x27;XLB&#x27;, &#x27;SEASON&#x27;: &#x27;FALL&#x27;, &#x27;MACD_Z&#x27;: 0.44}</span>
-<span class="season-sym" style="color:#58a6ff;border-color:#58a6ff44;background:rgba(88,166,255,0.10)">{&#x27;SYMBOL&#x27;: &#x27;IEV&#x27;, &#x27;SEASON&#x27;: &#x27;FALL&#x27;, &#x27;MACD_Z&#x27;: 1.22}</span>
-<span class="season-sym" style="color:#58a6ff;border-color:#58a6ff44;background:rgba(88,166,255,0.10)">{&#x27;SYMBOL&#x27;: &#x27;GLD&#x27;, &#x27;SEASON&#x27;: &#x27;FALL&#x27;, &#x27;MACD_Z&#x27;: 0.81}</span>
-<span class="season-sym" style="color:#58a6ff;border-color:#58a6ff44;background:rgba(88,166,255,0.10)">{&#x27;SYMBOL&#x27;: &#x27;ILF&#x27;, &#x27;SEASON&#x27;: &#x27;FALL&#x27;, &#x27;MACD_Z&#x27;: 1.3}</span>
-<span class="season-sym" style="color:#58a6ff;border-color:#58a6ff44;background:rgba(88,166,255,0.10)">{&#x27;SYMBOL&#x27;: &#x27;EWZ&#x27;, &#x27;SEASON&#x27;: &#x27;FALL&#x27;, &#x27;MACD_Z&#x27;: 1.32}</span>
-  </div>
-</div>
-<div class="season-quad" style="background:rgba(248,81,73,0.10);border:1px solid #f8514922">
-  <div class="quad-title" style="color:#f85149">&#x2744;&#xFE0F; Winter</div>
-  <div class="season-badges">
-    <span class="season-sym" style="color:#f85149;border-color:#f8514944;background:rgba(248,81,73,0.10)">{&#x27;SYMBOL&#x27;: &#x27;QQQ&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -3.05}</span>
-<span class="season-sym" style="color:#f85149;border-color:#f8514944;background:rgba(248,81,73,0.10)">{&#x27;SYMBOL&#x27;: &#x27;XLK&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -2.66}</span>
-<span class="season-sym" style="color:#f85149;border-color:#f8514944;background:rgba(248,81,73,0.10)">{&#x27;SYMBOL&#x27;: &#x27;XLV&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -1.97}</span>
-<span class="season-sym" style="color:#f85149;border-color:#f8514944;background:rgba(248,81,73,0.10)">{&#x27;SYMBOL&#x27;: &#x27;XLY&#x27;, &#x27;SEASON&#x27;: &#x27;WINTER&#x27;, &#x27;MACD_Z&#x27;: -1.69}</span>
-  </div>
-</div>
-</div>
-</div>
-  <div class="card">
-  <div class="card-title"><span class="icon">&#x1F4F6;</span> Signal Summary</div>
-  <div class="signal-row">
-  <div class="signal-label">ETF13</div>
-  <div class="signal-bar-wrap">
-    <div class="signal-bar" style="width:100%">
-      <div class="buy-seg" style="width:85%"></div>
-      <div class="cash-seg" style="width:15%"></div>
-    </div>
-    <div class="signal-counts">11 Buy / 2 Cash </div>
-  </div>
-</div>
-<div class="signal-row">
-  <div class="signal-label">ETF22</div>
-  <div class="signal-bar-wrap">
-    <div class="signal-bar" style="width:100%">
-      <div class="buy-seg" style="width:77%"></div>
-      <div class="cash-seg" style="width:23%"></div>
-    </div>
-    <div class="signal-counts">17 Buy / 5 Cash </div>
-  </div>
-</div>
-<div class="signal-row">
-  <div class="signal-label">Dow30</div>
-  <div class="signal-bar-wrap">
-    <div class="signal-bar" style="width:100%">
-      <div class="buy-seg" style="width:67%"></div>
-      <div class="cash-seg" style="width:33%"></div>
-    </div>
-    <div class="signal-counts">20 Buy / 10 Cash </div>
-  </div>
-</div>
-</div>
+  
   <div class="card">
   <div class="human-callout">
     <h3>Needs Human Input</h3>
