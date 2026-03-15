@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OWL GROUP TRADING — Weekly Briefing</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0d1117;
+    --card: #161b22;
+    --card-border: #21262d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --green: #3fb950;
+    --green-dim: #238636;
+    --red: #f85149;
+    --red-dim: #da3633;
+    --yellow: #d29922;
+    --blue: #58a6ff;
+    --card-radius: 12px;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 24px 20px 60px;
+  }
+
+  /* ── Header ── */
+  .header {
+    text-align: center;
+    padding: 40px 0 32px;
+    border-bottom: 1px solid var(--card-border);
+    margin-bottom: 32px;
+  }
+  .header .brand {
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+  .header h1 {
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .header .meta {
+    margin-top: 8px;
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+  .header .meta span { color: var(--accent); }
+
+  /* ── Cards ── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: var(--card-radius);
+    padding: 28px 28px 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.25);
+  }
+  .card-label {
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+  }
+  .card h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  /* ── Morning Brief ── */
+  .brief-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+  .play-btn {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: transform .15s, box-shadow .15s;
+    box-shadow: 0 0 12px rgba(88,166,255,.3);
+  }
+  .play-btn:hover { transform: scale(1.08); box-shadow: 0 0 20px rgba(88,166,255,.45); }
+  .play-btn svg { fill: #fff; margin-left: 3px; }
+  .brief-header .info { font-size: 13px; color: var(--text-muted); }
+  .brief-header .info strong { color: var(--text); font-weight: 600; }
+
+  .brief-body { padding-left: 4px; }
+  .brief-body .lead {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .brief-body ol {
+    list-style: none;
+    counter-reset: brief;
+    margin-bottom: 18px;
+  }
+  .brief-body ol li {
+    counter-increment: brief;
+    padding: 8px 0;
+    padding-left: 28px;
+    position: relative;
+    font-size: 15px;
+    line-height: 1.55;
+    border-bottom: 1px solid var(--card-border);
+  }
+  .brief-body ol li:last-child { border-bottom: none; }
+  .brief-body ol li::before {
+    content: counter(brief);
+    position: absolute; left: 0; top: 10px;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--card-border);
+    color: var(--text);
+    font-size: 11px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .brief-watch {
+    background: rgba(88,166,255,.08);
+    border-left: 3px solid var(--accent);
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+  .brief-watch strong { color: var(--text); }
+
+  /* ── Diff Engine ── */
+  .diff-list { list-style: none; }
+  .diff-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    margin-bottom: 4px;
+    cursor: pointer;
+    transition: background .15s;
+  }
+  .diff-item:hover { background: rgba(255,255,255,.04); }
+  .diff-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .diff-dot.red { background: var(--red); box-shadow: 0 0 6px rgba(248,81,73,.4); }
+  .diff-dot.yellow { background: var(--yellow); box-shadow: 0 0 6px rgba(210,153,34,.4); }
+  .diff-dot.blue { background: var(--blue); box-shadow: 0 0 6px rgba(88,166,255,.4); }
+  .diff-text { flex: 1; font-size: 14px; }
+  .diff-arrow { color: var(--text-muted); font-size: 18px; transition: transform .15s; }
+  .diff-item:hover .diff-arrow { transform: translateX(3px); color: var(--accent); }
+
+  /* ── Sector Map ── */
+  .treemap {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 3px;
+    height: 340px;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .treemap-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border-radius: 4px;
+    transition: filter .15s, transform .15s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .treemap-tile:hover { filter: brightness(1.2); transform: scale(1.02); z-index: 2; }
+  .treemap-tile .ticker { font-size: 15px; font-weight: 700; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,.5); }
+  .treemap-tile .name { font-size: 9px; color: rgba(255,255,255,.75); text-align: center; margin-top: 2px; }
+  .treemap-tile .ret { font-size: 13px; font-weight: 600; color: #fff; margin-top: 4px; text-shadow: 0 1px 3px rgba(0,0,0,.5); }
+
+  /* tile positions — rough market-cap weighting */
+  .t-xlk  { grid-column: 1 / 6;  grid-row: 1 / 3; background: #1a6b30; }
+  .t-xlf  { grid-column: 6 / 10; grid-row: 1 / 3; background: #196228; }
+  .t-xlv  { grid-column: 10 / 13; grid-row: 1 / 2; background: #1b5425; }
+  .t-xly  { grid-column: 10 / 13; grid-row: 2 / 3; background: #1a4a22; }
+  .t-xlp  { grid-column: 1 / 3;   grid-row: 3 / 4; background: #5a2020; }
+  .t-xlu  { grid-column: 3 / 5;   grid-row: 3 / 4; background: #5e2424; }
+  .t-xli  { grid-column: 5 / 8;   grid-row: 3 / 4; background: #622828; }
+  .t-xlc  { grid-column: 8 / 10;  grid-row: 3 / 4; background: #6b2e2e; }
+  .t-xlb  { grid-column: 10 / 12; grid-row: 3 / 4; background: #753535; }
+  .t-xlre { grid-column: 12 / 13; grid-row: 3 / 5; background: #843e3e; }
+  .t-xle  { grid-column: 1 / 5;   grid-row: 4 / 5; background: #9c2222; }
+  /* fill row 4 right side */
+  .t-xlp2 { display: none; }
+
+  /* extend bottom row */
+  .t-xli2 { grid-column: 5 / 8; grid-row: 4 / 5; background: transparent; display: none; }
+
+  /* ── Trades vs Market ── */
+  .comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .comp-item {
+    padding: 16px;
+    background: rgba(255,255,255,.03);
+    border-radius: 8px;
+    text-align: center;
+  }
+  .comp-item .label { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+  .comp-item .value { font-size: 28px; font-weight: 700; }
+  .comp-item .value.green { color: var(--green); }
+  .comp-item .value.red { color: var(--red); }
+  .comp-item .value.yellow { color: var(--yellow); }
+
+  .bar-compare { margin: 20px 0; }
+  .bar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .bar-label { width: 100px; font-size: 13px; color: var(--text-muted); text-align: right; }
+  .bar-track { flex: 1; height: 28px; background: rgba(255,255,255,.04); border-radius: 6px; overflow: hidden; position: relative; }
+  .bar-fill { height: 100%; border-radius: 6px; display: flex; align-items: center; padding: 0 10px; font-size: 12px; font-weight: 600; color: #fff; transition: width .8s ease; }
+  .bar-fill.sector { background: linear-gradient(90deg, var(--green-dim), var(--green)); }
+  .bar-fill.yours { background: linear-gradient(90deg, #1a6b30, #2ea043); }
+
+  .ai-insight {
+    background: rgba(88,166,255,.06);
+    border: 1px solid rgba(88,166,255,.15);
+    border-radius: 8px;
+    padding: 16px 18px;
+    margin-top: 16px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .ai-insight .ai-tag {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    background: rgba(88,166,255,.15);
+    color: var(--accent);
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+  }
+  .ai-insight em { color: var(--accent); font-style: normal; font-weight: 500; }
+
+  /* ── Dojo CTA ── */
+  .dojo-card {
+    text-align: center;
+    padding: 36px 28px;
+    background: linear-gradient(135deg, #161b22 0%, #1a2233 100%);
+    border: 1px solid rgba(88,166,255,.2);
+  }
+  .dojo-card .emoji { font-size: 36px; margin-bottom: 12px; }
+  .dojo-card h2 { font-size: 22px; color: var(--accent); margin-bottom: 8px; }
+  .dojo-card .desc { font-size: 15px; color: var(--text-muted); max-width: 520px; margin: 0 auto 24px; }
+  .dojo-btn {
+    display: inline-block;
+    padding: 14px 40px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background .15s, box-shadow .15s, transform .1s;
+    box-shadow: 0 0 20px rgba(88,166,255,.25);
+  }
+  .dojo-btn:hover { background: #79bbff; box-shadow: 0 0 30px rgba(88,166,255,.4); transform: translateY(-1px); }
+  .dojo-meta { margin-top: 14px; font-size: 13px; color: var(--text-muted); }
+
+  /* ── Footer ── */
+  .footer {
+    text-align: center;
+    padding: 32px 0 8px;
+    font-size: 12px;
+    color: var(--text-muted);
+    border-top: 1px solid var(--card-border);
+    margin-top: 8px;
+  }
+  .footer strong { color: var(--accent); font-weight: 500; }
+
+  /* ── Traded tickers ── */
+  .traded-tickers {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .traded-tickers .chip {
+    background: rgba(88,166,255,.1);
+    border: 1px solid rgba(88,166,255,.2);
+    color: var(--accent);
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .alpha-line {
+    font-size: 15px;
+    margin: 8px 0;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    .container { padding: 16px 12px 40px; }
+    .card { padding: 20px 16px; }
+    .treemap { height: 280px; }
+    .treemap-tile .name { display: none; }
+    .comparison { grid-template-columns: 1fr 1fr; gap: 8px; }
+    .comp-item .value { font-size: 22px; }
+    .bar-label { width: 70px; font-size: 12px; }
+    .header h1 { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ════ Header ════ -->
+  <header class="header">
+    <div class="brand">Owl Group Trading</div>
+    <h1>Weekly Briefing</h1>
+    <div class="meta">March 15, 2026 &nbsp;&middot;&nbsp; <span>Welcome back, Trader</span></div>
+  </header>
+
+  <!-- ════ Morning Brief ════ -->
+  <div class="card">
+    <div class="card-label">Morning Brief &mdash; AI Ken</div>
+    <div class="brief-header">
+      <div class="play-btn" title="Play audio briefing">
+        <svg width="16" height="18" viewBox="0 0 16 18"><polygon points="1,0 16,9 1,18"/></svg>
+      </div>
+      <div class="info">
+        <strong>2-minute audio summary</strong><br>
+        Generated in Dr. Long's voice &amp; style
+      </div>
+    </div>
+    <div class="brief-body">
+      <p class="lead">Three things that matter this week:</p>
+      <ol>
+        <li>SPY held above SMA(200) but VIX is elevated at 21.0 &mdash; regime is <strong>Bullish Cautious</strong>, not Bullish Trending.</li>
+        <li>XLE broke below SMA(200) for the first time since October &mdash; Energy is diverging from the market.</li>
+        <li>Leadership rotation: XLK moved to <strong>#1 sector</strong> (was #3 last week). Technology is leading.</li>
+      </ol>
+      <div class="brief-watch">
+        <strong>Watch for:</strong> If VIX drops below 18, regime shifts back to Bullish Trending. Position sizing should remain conservative until then.
+      </div>
+    </div>
+  </div>
+
+  <!-- ════ What Changed ════ -->
+  <div class="card">
+    <div class="card-label">What Changed &mdash; Diff Engine</div>
+    <ul class="diff-list">
+      <li class="diff-item">
+        <span class="diff-dot red"></span>
+        <span class="diff-text"><strong>VIX +14.2%</strong> &mdash; largest 1-day move in 30 days</span>
+        <span class="diff-arrow">&rarr;</span>
+      </li>
+      <li class="diff-item">
+        <span class="diff-dot red"></span>
+        <span class="diff-text"><strong>XLE broke below SMA(200)</strong></span>
+        <span class="diff-arrow">&rarr;</span>
+      </li>
+      <li class="diff-item">
+        <span class="diff-dot yellow"></span>
+        <span class="diff-text"><strong>SPY Regime:</strong> Bullish Trending &rarr; Bullish Cautious</span>
+        <span class="diff-arrow">&rarr;</span>
+      </li>
+      <li class="diff-item">
+        <span class="diff-dot yellow"></span>
+        <span class="diff-text"><strong>Leadership rotation:</strong> XLK now #1 (was #3)</span>
+        <span class="diff-arrow">&rarr;</span>
+      </li>
+      <li class="diff-item">
+        <span class="diff-dot blue"></span>
+        <span class="diff-text"><strong>SPY daily range 2.1&times; ATR</strong> &mdash; expansion day</span>
+        <span class="diff-arrow">&rarr;</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- ════ Sector Map ════ -->
+  <div class="card">
+    <div class="card-label">Sector Map &mdash; Today's Performance</div>
+    <div class="treemap">
+      <div class="treemap-tile t-xlk"><span class="ticker">XLK</span><span class="name">Technology</span><span class="ret">+1.2%</span></div>
+      <div class="treemap-tile t-xlf"><span class="ticker">XLF</span><span class="name">Financials</span><span class="ret">+0.8%</span></div>
+      <div class="treemap-tile t-xlv"><span class="ticker">XLV</span><span class="name">Health Care</span><span class="ret">+0.3%</span></div>
+      <div class="treemap-tile t-xly"><span class="ticker">XLY</span><span class="name">Consumer Disc.</span><span class="ret">+0.1%</span></div>
+      <div class="treemap-tile t-xlp"><span class="ticker">XLP</span><span class="name">Cons. Staples</span><span class="ret">-0.1%</span></div>
+      <div class="treemap-tile t-xlu"><span class="ticker">XLU</span><span class="name">Utilities</span><span class="ret">-0.2%</span></div>
+      <div class="treemap-tile t-xli"><span class="ticker">XLI</span><span class="name">Industrials</span><span class="ret">-0.3%</span></div>
+      <div class="treemap-tile t-xlc"><span class="ticker">XLC</span><span class="name">Comm. Svcs</span><span class="ret">-0.5%</span></div>
+      <div class="treemap-tile t-xlb"><span class="ticker">XLB</span><span class="name">Materials</span><span class="ret">-0.8%</span></div>
+      <div class="treemap-tile t-xlre"><span class="ticker">XLRE</span><span class="name">Real Estate</span><span class="ret">-1.0%</span></div>
+      <div class="treemap-tile t-xle"><span class="ticker">XLE</span><span class="name">Energy</span><span class="ret">-3.1%</span></div>
+    </div>
+  </div>
+
+  <!-- ════ Your Trades vs The Market ════ -->
+  <div class="card">
+    <div class="card-label">Your Trades vs The Market</div>
+    <div class="traded-tickers">
+      <span class="chip">PLTR</span>
+      <span class="chip">CRM</span>
+      <span style="font-size:14px;color:var(--text-muted);display:flex;align-items:center;">traded this week</span>
+    </div>
+
+    <div class="comparison">
+      <div class="comp-item">
+        <div class="label">Your Sector (XLK)</div>
+        <div class="value green">+1.2%</div>
+      </div>
+      <div class="comp-item">
+        <div class="label">Your Return</div>
+        <div class="value green">+0.8%</div>
+      </div>
+    </div>
+
+    <p class="alpha-line" style="color:var(--yellow);text-align:center;font-weight:500;">Alpha: -0.4% &mdash; you underperformed your sector</p>
+
+    <div class="bar-compare">
+      <div class="bar-row">
+        <span class="bar-label">XLK (sector)</span>
+        <div class="bar-track"><div class="bar-fill sector" id="bar-sector">+1.2%</div></div>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">Your trades</span>
+        <div class="bar-track"><div class="bar-fill yours" id="bar-yours">+0.8%</div></div>
+      </div>
+    </div>
+
+    <div class="ai-insight">
+      <div class="ai-tag">AI Insight</div>
+      <p>Your entries were aligned with the Frog setup, but your position size was 2&times; your stated risk rule. Dr. Long's guidance: <em>"The Frog tells you when to jump, not how far."</em></p>
+    </div>
+  </div>
+
+  <!-- ════ Dojo CTA ════ -->
+  <div class="card dojo-card">
+    <div class="emoji">&#127919;</div>
+    <h2>The Dojo: Identifying Regime Shifts</h2>
+    <p class="desc">Replay last week's SPY bar-by-bar. Can you spot the moment the regime shifted?</p>
+    <a href="#" class="dojo-btn" onclick="return false;">Start Practice &rarr;</a>
+    <div class="dojo-meta">Estimated time: 8 minutes &nbsp;&bull;&nbsp; Difficulty: Intermediate</div>
+  </div>
+
+  <!-- ════ Footer ════ -->
+  <footer class="footer">
+    Powered by <strong>Edge S2</strong> &nbsp;&middot;&nbsp; AI grounded in Dr. Ken Long's 2M word library &nbsp;&middot;&nbsp; Educational use only
+  </footer>
+
+</div>
+
+<script>
+  // Animate bars on load
+  window.addEventListener('DOMContentLoaded', function() {
+    requestAnimationFrame(function() {
+      var maxPct = 1.2;
+      var sectorW = (1.2 / maxPct) * 80;
+      var yoursW  = (0.8 / maxPct) * 80;
+      document.getElementById('bar-sector').style.width = sectorW + '%';
+      document.getElementById('bar-yours').style.width  = yoursW + '%';
+    });
+  });
+</script>
+
+</body>
+</html>

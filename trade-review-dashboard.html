@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OWL GROUP TRADING — Trade Review</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0d1117;
+    color: #c9d1d9;
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    padding: 0 0 60px;
+  }
+
+  /* ---------- Header ---------- */
+  .header {
+    text-align: center;
+    padding: 48px 24px 36px;
+    border-bottom: 1px solid #30363d;
+    background: linear-gradient(180deg, #161b22 0%, #0d1117 100%);
+  }
+  .header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #e6edf3;
+    letter-spacing: 1.2px;
+  }
+  .header h1 span { color: #58a6ff; }
+  .header .subtitle {
+    margin-top: 8px;
+    font-size: 15px;
+    color: #8b949e;
+  }
+
+  /* ---------- Container ---------- */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- Card ---------- */
+  .card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-top: 28px;
+  }
+  .card-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #e6edf3;
+    margin-bottom: 20px;
+  }
+
+  /* ---------- Performance Summary ---------- */
+  .perf-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px;
+  }
+  .perf-item {
+    text-align: center;
+    padding: 16px 8px;
+    background: #0d1117;
+    border-radius: 10px;
+    border: 1px solid #21262d;
+  }
+  .perf-item .label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    color: #8b949e;
+    margin-bottom: 4px;
+  }
+  .perf-item .value {
+    font-size: 24px;
+    font-weight: 700;
+    color: #e6edf3;
+  }
+  .perf-item .value.green { color: #3fb950; }
+  .perf-item .value.red   { color: #f85149; }
+
+  /* ---------- Trade Table ---------- */
+  .table-wrap { overflow-x: auto; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  thead th {
+    text-align: left;
+    padding: 10px 12px;
+    color: #8b949e;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .6px;
+    border-bottom: 1px solid #30363d;
+  }
+  tbody tr { border-bottom: 1px solid #21262d; cursor: pointer; transition: background .15s; }
+  tbody tr:nth-child(even) { background: #0d111780; }
+  tbody tr:hover { background: #1c2128; }
+  tbody td { padding: 10px 12px; white-space: nowrap; }
+  td.pnl-pos { color: #3fb950; font-weight: 600; }
+  td.pnl-neg { color: #f85149; font-weight: 600; }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+    min-width: 36px;
+  }
+  .badge-a  { background: #23893020; color: #3fb950; border: 1px solid #3fb95050; }
+  .badge-b  { background: #58a6ff20; color: #58a6ff; border: 1px solid #58a6ff50; }
+  .badge-c  { background: #d2992220; color: #d29922; border: 1px solid #d2992250; }
+  .badge-d  { background: #f8514920; color: #f85149; border: 1px solid #f8514950; }
+
+  /* ---------- AI Analysis ---------- */
+  .ai-card {
+    border-left: 4px solid #58a6ff;
+    background: linear-gradient(135deg, #161b22 0%, #1a2030 100%);
+  }
+  .ai-card .card-title { font-size: 20px; }
+  .ai-section { margin-bottom: 24px; }
+  .ai-section h3 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #e6edf3;
+  }
+  .ai-section h3.strengths { color: #3fb950; }
+  .ai-section h3.improve   { color: #d29922; }
+
+  .ai-section ul { list-style: none; padding: 0; }
+  .ai-section li {
+    position: relative;
+    padding: 10px 16px 10px 28px;
+    margin-bottom: 8px;
+    background: #0d111790;
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 1.65;
+    color: #c9d1d9;
+  }
+  .ai-section li::before {
+    content: '';
+    position: absolute;
+    left: 12px;
+    top: 17px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+  .ai-section.strengths-section li::before { background: #3fb950; }
+  .ai-section.improve-section  li::before { background: #d29922; }
+
+  .pattern-box {
+    border: 1px solid #58a6ff40;
+    background: #58a6ff08;
+    border-radius: 10px;
+    padding: 18px 22px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #c9d1d9;
+  }
+  .pattern-box strong { color: #e6edf3; }
+
+  /* ---------- Gauges ---------- */
+  .gauge-row { margin-bottom: 18px; }
+  .gauge-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    margin-bottom: 6px;
+    color: #c9d1d9;
+  }
+  .gauge-label span:last-child { font-weight: 700; }
+  .gauge-track {
+    height: 14px;
+    background: #21262d;
+    border-radius: 7px;
+    overflow: hidden;
+  }
+  .gauge-fill {
+    height: 100%;
+    border-radius: 7px;
+    transition: width .8s ease;
+  }
+  .gauge-fill.green  { background: linear-gradient(90deg, #238636, #3fb950); }
+  .gauge-fill.yellow { background: linear-gradient(90deg, #9e6a03, #d29922); }
+  .gauge-fill.red    { background: linear-gradient(90deg, #b62324, #f85149); }
+
+  .overall-score {
+    text-align: center;
+    margin-top: 24px;
+    padding: 18px;
+    background: #0d1117;
+    border-radius: 10px;
+    border: 1px solid #30363d;
+  }
+  .overall-score .grade {
+    font-size: 36px;
+    font-weight: 800;
+    color: #58a6ff;
+  }
+  .overall-score .caption {
+    font-size: 14px;
+    color: #8b949e;
+    margin-top: 4px;
+  }
+
+  /* ---------- Recommended Practice ---------- */
+  .rec-list { list-style: none; padding: 0; }
+  .rec-list li {
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    background: #0d1117;
+    border-radius: 8px;
+    font-size: 14px;
+    border: 1px solid #21262d;
+  }
+  .rec-list li strong { color: #e6edf3; }
+
+  .btn-practice {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 12px 32px;
+    background: linear-gradient(135deg, #238636, #2ea043);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform .15s, box-shadow .15s;
+    text-decoration: none;
+  }
+  .btn-practice:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 18px #2ea04350;
+  }
+
+  /* ---------- Sparkline ---------- */
+  .spark-container {
+    display: flex;
+    align-items: flex-end;
+    gap: 24px;
+    justify-content: center;
+    padding: 20px 0 8px;
+  }
+  .spark-week {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .spark-bar {
+    width: 48px;
+    border-radius: 6px 6px 0 0;
+    transition: height .6s ease;
+  }
+  .spark-label {
+    font-size: 12px;
+    color: #8b949e;
+  }
+  .spark-value {
+    font-size: 13px;
+    font-weight: 700;
+    color: #e6edf3;
+  }
+
+  /* ---------- Footer ---------- */
+  .footer {
+    text-align: center;
+    padding: 36px 24px 0;
+    font-size: 12px;
+    color: #484f58;
+    line-height: 1.8;
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 640px) {
+    .perf-grid { grid-template-columns: repeat(2, 1fr); }
+    .header h1 { font-size: 20px; }
+    .card { padding: 20px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<div class="header">
+  <h1>OWL GROUP TRADING <span>&mdash; Trade Review</span></h1>
+  <p class="subtitle">AI-powered analysis of your trading &bull; Week of March 10&ndash;14, 2026</p>
+</div>
+
+<div class="container">
+
+<!-- ============ PERFORMANCE SUMMARY ============ -->
+<div class="card">
+  <div class="card-title">Performance Summary</div>
+  <div class="perf-grid">
+    <div class="perf-item">
+      <div class="label">Total Trades</div>
+      <div class="value">7</div>
+    </div>
+    <div class="perf-item">
+      <div class="label">Win Rate</div>
+      <div class="value green">57%</div>
+      <div style="font-size:12px;color:#8b949e;margin-top:2px;">4W / 3L</div>
+    </div>
+    <div class="perf-item">
+      <div class="label">Net P&amp;L</div>
+      <div class="value green">+$1,247</div>
+    </div>
+    <div class="perf-item">
+      <div class="label">Avg R-Multiple</div>
+      <div class="value green">1.3R</div>
+    </div>
+    <div class="perf-item">
+      <div class="label">Best Trade</div>
+      <div class="value green">PLTR +$680</div>
+    </div>
+    <div class="perf-item">
+      <div class="label">Worst Trade</div>
+      <div class="value red">AAPL -$320</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ TRADE TABLE ============ -->
+<div class="card">
+  <div class="card-title">Trade Log</div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th><th>Symbol</th><th>Side</th><th>Entry</th><th>Exit</th><th>P&amp;L</th><th>R-Multiple</th><th>Setup</th><th>AI Grade</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Mar 10</td><td><strong>PLTR</strong></td><td>Long</td><td>$82.40</td><td>$89.20</td>
+          <td class="pnl-pos">+$680</td><td class="pnl-pos">2.8R</td><td>Frog</td>
+          <td><span class="badge badge-a">A</span></td>
+        </tr>
+        <tr>
+          <td>Mar 10</td><td><strong>CRM</strong></td><td>Long</td><td>$312.50</td><td>$318.40</td>
+          <td class="pnl-pos">+$354</td><td class="pnl-pos">1.4R</td><td>Breakout</td>
+          <td><span class="badge badge-b">B+</span></td>
+        </tr>
+        <tr>
+          <td>Mar 11</td><td><strong>NVDA</strong></td><td>Long</td><td>$890.20</td><td>$895.80</td>
+          <td class="pnl-pos">+$280</td><td class="pnl-pos">1.1R</td><td>Frog</td>
+          <td><span class="badge badge-b">B</span></td>
+        </tr>
+        <tr>
+          <td>Mar 12</td><td><strong>AAPL</strong></td><td>Long</td><td>$178.60</td><td>$175.40</td>
+          <td class="pnl-neg">-$320</td><td class="pnl-neg">-1.3R</td><td>Counter-trend</td>
+          <td><span class="badge badge-d">D</span></td>
+        </tr>
+        <tr>
+          <td>Mar 12</td><td><strong>META</strong></td><td>Long</td><td>$612.30</td><td>$618.90</td>
+          <td class="pnl-pos">+$396</td><td class="pnl-pos">1.6R</td><td>Breakout</td>
+          <td><span class="badge badge-b">B+</span></td>
+        </tr>
+        <tr>
+          <td>Mar 13</td><td><strong>MSFT</strong></td><td>Long</td><td>$425.80</td><td>$423.10</td>
+          <td class="pnl-neg">-$270</td><td class="pnl-neg">-1.1R</td><td>Frog</td>
+          <td><span class="badge badge-c">C</span></td>
+        </tr>
+        <tr>
+          <td>Mar 14</td><td><strong>AMZN</strong></td><td>Short</td><td>$198.40</td><td>$196.20</td>
+          <td class="pnl-pos">+$127</td><td class="pnl-pos">0.5R</td><td>PSAR flip</td>
+          <td><span class="badge badge-c">C+</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ============ AI ANALYSIS ============ -->
+<div class="card ai-card">
+  <div class="card-title">&#x1F916; AI Trade Review &mdash; Grounded in Dr.&nbsp;Long's Framework</div>
+
+  <div class="ai-section strengths-section">
+    <h3 class="strengths">Strengths Identified</h3>
+    <ul>
+      <li>Your Frog setups (PLTR, NVDA) are well-timed &mdash; entries aligned with the daily Frog value range. PLTR especially: entry at the low of the Frog range produced a 2.8R winner.</li>
+      <li>Position sizing on winning trades was consistent at ~$10,000 per position, matching your stated risk parameters.</li>
+    </ul>
+  </div>
+
+  <div class="ai-section improve-section">
+    <h3 class="improve">Areas for Improvement</h3>
+    <ul>
+      <li>The <strong>AAPL</strong> trade was a counter-trend entry during a Bullish Cautious regime. Dr.&nbsp;Long teaches: <em>&ldquo;Don't fight the regime. In Cautious mode, favor setups that align with the primary trend.&rdquo;</em> AAPL was showing a bearish PSAR flip on the daily when you entered long.</li>
+      <li>Your <strong>MSFT</strong> Frog entry was technically valid but the position size was 1.8&times; your normal size ($18,000 vs $10,000). Dr.&nbsp;Long's rule: <em>&ldquo;The Frog tells you when to jump, not how far. Size first, entry second.&rdquo;</em></li>
+      <li>The <strong>AMZN</strong> short was correctly identified via PSAR flip, but you exited at only 0.5R. The setup had room to run to 1.5R based on the Frog value. Consider using a trailing stop at 1&times; Frog below entry.</li>
+    </ul>
+  </div>
+
+  <div class="ai-section">
+    <div class="pattern-box">
+      <strong>&#x1F4CA; Pattern Detected:</strong> You tend to exit winning trades early (avg hold: 1.2 days) but hold losers longer (avg hold: 1.8 days). This is the classic <em>&ldquo;disposition effect.&rdquo;</em> Dr.&nbsp;Long addresses this in <strong>Foundations Module 11</strong>: <em>&ldquo;Let the math decide, not your feelings. The system's exit is the exit.&rdquo;</em>
+    </div>
+  </div>
+</div>
+
+<!-- ============ GAUGES ============ -->
+<div class="card">
+  <div class="card-title">Your Trading vs Dr.&nbsp;Long's Framework</div>
+
+  <div class="gauge-row">
+    <div class="gauge-label"><span>Setup Alignment</span><span>71%</span></div>
+    <div class="gauge-track"><div class="gauge-fill green" style="width:0%" data-target="71"></div></div>
+    <div style="font-size:12px;color:#8b949e;margin-top:3px;">5 of 7 trades matched a recognized setup</div>
+  </div>
+
+  <div class="gauge-row">
+    <div class="gauge-label"><span>Position Sizing Discipline</span><span>57%</span></div>
+    <div class="gauge-track"><div class="gauge-fill yellow" style="width:0%" data-target="57"></div></div>
+    <div style="font-size:12px;color:#8b949e;margin-top:3px;">4 of 7 trades within risk rules</div>
+  </div>
+
+  <div class="gauge-row">
+    <div class="gauge-label"><span>Entry Timing</span><span>86%</span></div>
+    <div class="gauge-track"><div class="gauge-fill green" style="width:0%" data-target="86"></div></div>
+    <div style="font-size:12px;color:#8b949e;margin-top:3px;">6 of 7 entries at proper levels</div>
+  </div>
+
+  <div class="gauge-row">
+    <div class="gauge-label"><span>Exit Discipline</span><span>43%</span></div>
+    <div class="gauge-track"><div class="gauge-fill red" style="width:0%" data-target="43"></div></div>
+    <div style="font-size:12px;color:#8b949e;margin-top:3px;">3 of 7 exits followed system rules</div>
+  </div>
+
+  <div class="overall-score">
+    <div class="grade">B&minus;</div>
+    <div class="caption">Good foundation, exits need work</div>
+  </div>
+</div>
+
+<!-- ============ RECOMMENDED PRACTICE ============ -->
+<div class="card">
+  <div class="card-title">Recommended Practice</div>
+  <p style="font-size:14px;color:#8b949e;margin-bottom:14px;">Based on this week's review, we recommend:</p>
+  <ul class="rec-list">
+    <li>&#x1F3AF; <strong>Dojo Exercise: &ldquo;Exit Discipline Drill&rdquo;</strong> &mdash; Practice holding winners through the full Frog range using historical trade replays</li>
+    <li>&#x1F4D6; <strong>Reading: Foundations Module 11</strong> &mdash; &ldquo;System Exits and the Disposition Effect&rdquo;</li>
+  </ul>
+  <a href="#" class="btn-practice" onclick="alert('This would launch the Dojo practice environment.');return false;">Start Practice &rarr;</a>
+</div>
+
+<!-- ============ WEEK-OVER-WEEK TREND ============ -->
+<div class="card">
+  <div class="card-title">Week-over-Week Trend &mdash; Avg R-Multiple</div>
+  <div class="spark-container">
+    <div class="spark-week">
+      <div class="spark-value">1.1R</div>
+      <div class="spark-bar" style="height:0px;background:linear-gradient(180deg,#3fb950,#238636);" data-h="66"></div>
+      <div class="spark-label">Week 1</div>
+    </div>
+    <div class="spark-week">
+      <div class="spark-value">0.8R</div>
+      <div class="spark-bar" style="height:0px;background:linear-gradient(180deg,#d29922,#9e6a03);" data-h="48"></div>
+      <div class="spark-label">Week 2</div>
+    </div>
+    <div class="spark-week">
+      <div class="spark-value">1.5R</div>
+      <div class="spark-bar" style="height:0px;background:linear-gradient(180deg,#3fb950,#238636);" data-h="90"></div>
+      <div class="spark-label">Week 3</div>
+    </div>
+    <div class="spark-week" style="position:relative;">
+      <div class="spark-value" style="color:#58a6ff;">1.3R</div>
+      <div class="spark-bar" style="height:0px;background:linear-gradient(180deg,#58a6ff,#1f6feb);" data-h="78"></div>
+      <div class="spark-label" style="color:#58a6ff;font-weight:600;">This Week</div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<!-- ============ FOOTER ============ -->
+<div class="footer">
+  Powered by <strong>Edge S2</strong> &bull; AI grounded in Dr.&nbsp;Ken Long's 2M word library &bull; Educational use only &bull; Not financial advice
+</div>
+
+<!-- ============ ANIMATIONS ============ -->
+<script>
+(function() {
+  // Animate gauge bars on scroll into view
+  const gauges = document.querySelectorAll('.gauge-fill[data-target]');
+  const bars   = document.querySelectorAll('.spark-bar[data-h]');
+  let animated = false;
+
+  function animateAll() {
+    if (animated) return;
+    animated = true;
+    gauges.forEach(g => { g.style.width = g.dataset.target + '%'; });
+    bars.forEach(b  => { b.style.height = b.dataset.h + 'px'; });
+  }
+
+  // Use IntersectionObserver if available, else fire immediately
+  if ('IntersectionObserver' in window) {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { animateAll(); obs.disconnect(); } });
+    }, { threshold: 0.2 });
+    gauges.forEach(g => obs.observe(g));
+  } else {
+    setTimeout(animateAll, 400);
+  }
+
+  // Also fire after a short delay in case page loads at scroll position
+  setTimeout(animateAll, 800);
+})();
+</script>
+</body>
+</html>
