@@ -215,42 +215,50 @@
 </div>
 
 <div class="round-label">
-  <span class="r1">Round 1: Introductions</span>
-  <span class="r2">Round 2: New Angle</span>
-  <span class="r3">Round 3: Deep Dives</span>
+  <span class="r1">Wk 1: Welcome back (0 CTAs)</span>
+  <span class="r2">Wk 2: Build trust (2 CTAs)</span>
+  <span style="width: calc(32px * 7 + 4px * 6); font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#999;">Wk 3: Engage (3)</span>
+  <span style="width: calc(32px * 9 + 4px * 8); font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#999;">Wk 4: Daily CTAs</span>
 </div>
 <div class="grid-nav" id="gridNav"></div>
 
 <div id="emailContainer"></div>
 
+
 <script>
 const emails = [
-// ===== ROUND 1: CORE INTRODUCTIONS (Days 1-10) =====
+// ===== WEEK 1: WELCOME BACK + PURE VALUE =====
 {
-  day: 1, concept: "MACD Four Seasons", round: 1,
-  subject: "What season is your portfolio in right now?",
+  day: 1, concept: "MACD Four Seasons", week: 1, hasCta: false,
+  subject: "We're back — and the daily emails are better than ever",
   body: `<p>Hi there -</p>
+<p>Thank you for your patience. We've been quiet for a while, but we've been building something behind the scenes.</p>
+<p>Starting today, you'll receive a daily email from me with two things: a concept from our trading methodology, and a summary of what changed in the market overnight. These emails are designed to take 2 minutes to read and give you one actionable idea per day.</p>
+<p>Today's concept: <strong>The MACD Four Seasons</strong>.</p>
 <p>Most traders look at their charts and see noise. Green candles, red candles, a mess of indicators fighting for attention.</p>
 <p>What if I told you the market has seasons — just like the year — and that recognizing which season you're in is the single most important thing you can do before placing a trade?</p>
-<p><strong>The MACD Four Seasons</strong> is a framework I developed to classify market conditions into four distinct phases:</p>
+<p>The MACD Four Seasons is a framework I developed to classify market conditions into four distinct phases:</p>
 <ul>
 <li><strong>Winter</strong> — the market is in a pronounced downtrend. Fear dominates. This is where we look for short opportunities like the Collapsing Dragon.</li>
 <li><strong>Spring</strong> — the pain has stopped. Price is recovering. This is planting season — we stalk early long entries using the Supported Spring Crossing (SSC).</li>
 <li><strong>Summer</strong> — the trend is established and strong. We hold positions, add on dips, and let the Kata 2 pattern do its work.</li>
 <li><strong>Fall</strong> — momentum is decaying. Time to harvest. We tighten stops and prepare for winter.</li>
 </ul>
-<p>The key insight: <strong>you don't need to predict what's coming. You just need to recognize what season you're in right now</strong> — and align your strategy accordingly.</p>`,
+<p>The key insight: <strong>you don't need to predict what's coming. You just need to recognize what season you're in right now</strong> — and align your strategy accordingly.</p>
+<p>More tomorrow. Welcome back.</p>`,
   whatChanged: `<p>7 symbols transitioned seasons on the daily timeframe:</p>
 <p><span class="wc-stat wc-fall">XLF Summer → Fall</span><span class="wc-stat wc-spring">GDX Winter → Spring</span><span class="wc-stat wc-winter">ARKK Fall → Winter</span><span class="wc-stat wc-summer">AAPL Spring → Summer</span></p>
 <p>SPY remains in <strong>Summer</strong> but the MACD slope is flattening — watch for a Fall transition.</p>`,
-  bridge: `<p>When I teach the Four Seasons in the Foundations course, one of the first things students tell me is: <em>"I never realized I was trading against the season."</em> They were buying in Fall and wondering why their trades kept stalling.</p>
-<p>If you want a quick reference for the terms and patterns I use in these reports — the Red River, the Collapsing Dragon, the SSC, all of it — I put them all in one place.</p>`,
-  cta: { title: "Tortoise Glossary of Terms (v4.0)", sub: "Complete reference guide to the language and patterns we use every day", price: "$19.97" }
+  bridge: ``,
+  cta: null
 },
 {
-  day: 2, concept: "Zero State", round: 1,
-  subject: "The 5 minutes before your trading day that change everything",
+  day: 2, concept: "Zero State", week: 1, hasCta: false,
+  subject: "What to expect from these daily emails",
   body: `<p>Hi there -</p>
+<p>Yesterday I mentioned we're bringing back daily emails. Today I want to tell you exactly what each one will look like — and share one of the most important concepts I teach.</p>
+<p>Each email has two sections: a <strong>concept</strong> and a <strong>what changed</strong>. The concept is a piece of our trading methodology. The what changed is a snapshot of what the market did overnight. Together, they take about 2 minutes to read.</p>
+<p>Today's concept: <strong>The Zero State</strong>.</p>
 <p>Before I look at a single chart in the morning, I do something that might surprise you.</p>
 <p>I sit down. I close my eyes. And I breathe.</p>
 <p>Four counts in. Hold four. Four counts out. Hold four. Thirty times.</p>
@@ -261,12 +269,11 @@ const emails = [
 <p>And there's a non-negotiable rule that follows from it: <strong>if you lose the Zero State during a trade — just get out.</strong> No thinking. No rationalizing. Exit. Reset. Come back when you're ready.</p>`,
   whatChanged: `<p>Market classification: <strong>Sideways Normal</strong> (unchanged). SPY closed at 578.42 (<span class="wc-down">-0.3%</span>). VIX at 16.2.</p>
 <p>12 symbols triggered new setups overnight. 3 SSC signals forming on the daily timeframe.</p>`,
-  bridge: `<p>Today's numbers are just numbers. What matters is the state you bring to them.</p>
-<p>If you've ever felt like your trading psychology is the thing holding you back — not your system, not your analysis — then I built something specifically for that.</p>`,
-  cta: { title: "Navigating the Path to Trading Resilience", sub: "Zero State, PPEA cycle, energy management, and the psychological architecture of professional trading", price: "$97.95" }
+  bridge: ``,
+  cta: null
 },
 {
-  day: 3, concept: "Setup / Signal / Entry", round: 1,
+  day: 3, concept: "Setup / Signal / Entry", week: 1, hasCta: false,
   subject: "Why the best traders never chase",
   body: `<p>Hi there -</p>
 <p>One of the most common mistakes I see in newer traders: they see a stock moving and they jump in.</p>
@@ -286,12 +293,11 @@ const emails = [
   whatChanged: `<p>Setups forming across the watchlist:</p>
 <p><span class="wc-stat wc-spring">MSFT — SSC signal</span><span class="wc-stat">NVDA — shelf compression (day 3)</span><span class="wc-stat wc-fall">XLE — Collapsing Dragon</span></p>
 <p>8 symbols showing volatility compression on the daily chart — potential breakout setups within 1-2 sessions.</p>`,
-  bridge: `<p>If the daily report is showing you setups forming — symbols compressing, MACD seasons shifting — then the framework above is how you decide what to do next.</p>
-<p>I wrote a short, practical guide that covers this entire process from planning through assessment. No fluff. Just the operational loop.</p>`,
-  cta: { title: "Foundational Trading: Plan-Prepare-Execute-Assess", sub: "The complete PPEA framework in one practical document", price: "$9.97" }
+  bridge: ``,
+  cta: null
 },
 {
-  day: 4, concept: "Position Sizing", round: 1,
+  day: 4, concept: "Position Sizing", week: 1, hasCta: false,
   subject: "The question that separates amateurs from professionals",
   body: `<p>Hi there -</p>
 <p>Ask a new trader about their last trade and they'll tell you what they bought and when they bought it.</p>
@@ -305,11 +311,11 @@ const emails = [
 <p>The question that matters isn't "will this trade work?" It's: <strong>"If I took 5 losses in a row tomorrow, would I still be in the game?"</strong></p>`,
   whatChanged: `<p>Average ATR across watchlist: <strong>2.1%</strong> (normal volatility). Position sizing conditions favorable for standard risk.</p>
 <p>3 symbols showing elevated ATR (potential for wider stops): <span class="wc-stat">SMCI — ATR 5.8%</span><span class="wc-stat">MARA — ATR 6.2%</span><span class="wc-stat">RIVN — ATR 4.9%</span></p>`,
-  bridge: `<p>If you're interested in how relative strength and momentum factor into sizing decisions — when to size up, when to stay small, and how to let the market tell you — I wrote a research report on exactly this.</p>`,
-  cta: { title: "Research Report on Relative Strength and Momentum for Swing Trading", sub: "Evidence-based approach to tactical asset allocation and position sizing", price: "$9.00" }
+  bridge: ``,
+  cta: null
 },
 {
-  day: 5, concept: "Expectancy", round: 1,
+  day: 5, concept: "Expectancy", week: 1, hasCta: false,
   subject: "Your win rate is lying to you",
   body: `<p>Hi there -</p>
 <p>I've met traders who win 70% of their trades and lose money. And traders who win 35% and are consistently profitable.</p>
@@ -323,11 +329,11 @@ const emails = [
 <p>I call the combination of expectancy and trade frequency <strong>"Expecttunity"</strong> — the rate at which your edge converts to real dollars. A slightly lower expectancy with higher frequency can outperform a high-expectancy system you only trade twice a month.</p>`,
   whatChanged: `<p>Today's briefing shows 24 symbols with active setups. Market classification: <strong>Bull Normal</strong>.</p>
 <p>Expecttunity conditions: high. Multiple timeframes aligned bullish across broad ETFs. Frequency of setups above 90-day average.</p>`,
-  bridge: `<p>Want to see how R-multiples and expectancy work in real-time, trade-by-trade? The Ready Fire Aim strategy documents every trade in R — entries, stops, targets, scaling, and a complete chart example showing +5.2R across 4 intraday trades.</p>`,
-  cta: { title: "Ready Fire Aim (RFA) — Intraday Trading Strategy", sub: "Complete intraday system by Ken Long with real trade examples measured in R-multiples", price: "$19.00" }
+  bridge: ``,
+  cta: null
 },
 {
-  day: 6, concept: "Critical State", round: 1,
+  day: 6, concept: "Critical State", week: 1, hasCta: false,
   subject: "The market just told you something. Did you hear it?",
   body: `<p>Hi there -</p>
 <p>Most of the time, markets drift. They grind sideways, make small moves, and lull you into complacency.</p>
@@ -345,11 +351,36 @@ const emails = [
   whatChanged: `<p>Critical State signals detected:</p>
 <p><span class="wc-stat">AMZN — Z3 Pinch (BB width at 90-day low)</span><span class="wc-stat">XBI — Fence Sitter (balanced at RL30)</span><span class="wc-stat wc-spring">GLD — Fireworks candidate</span></p>
 <p>VIX compression continues — 5th day below 15. Broad market coiling.</p>`,
-  bridge: `<p>Recognizing Critical States is what separates reactive traders from prepared ones. If you want to build your vocabulary around these patterns and understand the herd dynamics behind them, this is where I'd start.</p>`,
-  cta: { title: "Swing Trading Basics: Understanding The Herd", sub: "How institutional flows create the patterns we trade — and how to position yourself ahead of the crowd", price: "$19.97" }
+  bridge: ``,
+  cta: null
 },
 {
-  day: 7, concept: "Multiple Timeframes", round: 1,
+  day: 7, concept: "Trading as a Craft", week: 1, hasCta: true,
+  subject: "You don't need a better indicator. You need a better process.",
+  body: `<p>Hi there -</p>
+<p>People sometimes ask: "If you're good at trading, why do you teach?"</p>
+<p>It's a fair question. The answer begins with this: we could just trade.</p>
+<p>Many of us do. Our senior mentors and I have built independent, long-term success as traders and system developers. But trading in isolation is not enough.</p>
+<p><strong>We teach because we are lifelong learners.</strong> There is no better way to refine your edge than by teaching it to someone else. Teaching is the most rigorous form of learning. It forces precision. It reveals blind spots. It demands honesty.</p>
+<p>We also teach because trading is a <strong>craft</strong> — like sailing, or surgery, or golf. It has three domains that must be integrated:</p>
+<ul>
+<li><strong>Market</strong> — the ever-shifting environment. You cannot control it. Only adapt.</li>
+<li><strong>System</strong> — the tools and methods. Setups, signals, risk controls. Your structured edge.</li>
+<li><strong>Self</strong> — the decision-maker under pressure. Without emotional mastery, even the best system fails.</li>
+</ul>
+<p>Most traders focus on System and ignore Self. Or they read about psychology but have no System to execute. <strong>The edge is in the integration.</strong></p>
+<p>That's what we work on every week in Small Group Coaching — not just what to trade, but how to become the kind of trader who can execute their plan under pressure, session after session.</p>`,
+  whatChanged: `<p>Weekly summary: 5 sessions this week. Market held Bull Normal throughout.</p>
+<p>Across the watchlist, 31 symbols produced tradeable setups. Average outcome for completed setups: +1.4R.</p>
+<p>The process works. The question is whether you're working the process.</p>`,
+  bridge: `<p>When I teach the Four Seasons in the Foundations course, one of the first things students tell me is: <em>"I never realized I was trading against the season."</em> They were buying in Fall and wondering why their trades kept stalling.</p>
+<p>If you want a quick reference for the terms and patterns I use in these reports — the Red River, the Collapsing Dragon, the SSC, all of it — I put them all in one place.</p>`,
+  cta: { title: "Tortoise Glossary of Terms (v4.0)", sub: "Complete reference guide to the language and patterns we use every day", price: "$19.97" }
+},
+
+// ===== WEEK 2: BUILD TRUST, 2 CTAs =====
+{
+  day: 8, concept: "Multiple Timeframes", week: 2, hasCta: false,
   subject: "Are you looking at the right chart?",
   body: `<p>Hi there -</p>
 <p>A stock can be in Summer on the daily chart and Winter on the weekly. Which one is right?</p>
@@ -367,11 +398,11 @@ const emails = [
 <p><strong>Aligned bullish (all TFs):</strong> <span class="wc-stat wc-summer">AAPL</span><span class="wc-stat wc-summer">MSFT</span><span class="wc-stat wc-summer">JPM</span><span class="wc-stat wc-summer">UNH</span></p>
 <p><strong>Conflicted (daily vs weekly divergence):</strong> <span class="wc-stat wc-fall">IWM</span><span class="wc-stat wc-fall">XLF</span><span class="wc-stat wc-winter">ARKK</span></p>
 <p>SPY: Weekly Summer, Daily Summer (slope flattening). Watch for daily Fall transition.</p>`,
-  bridge: `<p>Understanding multiple timeframes is the backbone of every strategy I teach. The Mechanical Swing Trading Fieldguide covers the complete framework — from RL stacking to MACD season alignment across timeframes to precise entry mechanics.</p>`,
-  cta: { title: "Mechanical Swing Trading Fieldguide", sub: "The complete field reference for swing trading with MACD Seasons, regression lines, and multi-timeframe analysis", price: "$197", membership: true }
+  bridge: ``,
+  cta: null
 },
 {
-  day: 8, concept: "Trading Plan", round: 1,
+  day: 9, concept: "Trading Plan", week: 2, hasCta: false,
   subject: "The one-page document that changed how I trade",
   body: `<p>Hi there -</p>
 <p>Early in my career, I traded from instinct. I was smart, I was fast, and I lost money consistently.</p>
@@ -390,11 +421,11 @@ const emails = [
 <p>And it needs to evolve. Every week, review it. Every month, update it. The plan is alive — it grows as you do.</p>`,
   whatChanged: `<p>Market classification: <strong>Bull Normal</strong>. This classification has held for 8 consecutive sessions.</p>
 <p>If your trading plan has a "Bull Normal" playbook, today's the day to run it. If it doesn't — that's your homework.</p>`,
-  bridge: `<p>The Foundations Q&A Study Guide walks through the process of building your plan, with annotated examples from 75 pages of workshop Q&A sessions. It's the closest thing to sitting in the room while I work through these questions with students.</p>`,
-  cta: { title: "Foundations Course Annotated Q&A Study Guide", sub: "75 pages of workshop Q&A plus a coupon — the plan-building process, live", price: "$47.95", membership: true }
+  bridge: ``,
+  cta: null
 },
 {
-  day: 9, concept: "Journaling", round: 1,
+  day: 10, concept: "Journaling", week: 2, hasCta: true,
   subject: "The trade you don't review is the trade you'll repeat",
   body: `<p>Hi there -</p>
 <p>I can tell you the exact entry, exit, and R-multiple of a trade I took 15 years ago.</p>
@@ -414,38 +445,13 @@ const emails = [
 <p>If you had setups from yesterday's report: how did they play out? Did you log the result? The state? The lesson?</p>
 <p>That 2-minute entry in your journal is worth more than the next 30 minutes of chart analysis.</p>`,
   bridge: `<p>One of the most requested resources from our coaching sessions is compiled coaching insights — real examples of how students journal, what patterns they discover, and how the process accelerates their growth.</p>`,
-  cta: { title: "Compiled Coaching Insights", sub: "Real coaching examples showing how the journaling and review process works in practice", price: "$7.99", membership: true }
+  cta: { title: "Foundational Trading: Plan-Prepare-Execute-Assess", sub: "The complete PPEA framework in one practical document", price: "$9.97" }
 },
 {
-  day: 10, concept: "Trading as a Craft", round: 1,
-  subject: "You don't need a better indicator. You need a better process.",
-  body: `<p>Hi there -</p>
-<p>People sometimes ask: "If you're good at trading, why do you teach?"</p>
-<p>It's a fair question. The answer begins with this: we could just trade.</p>
-<p>Many of us do. Our senior mentors and I have built independent, long-term success as traders and system developers. But trading in isolation is not enough.</p>
-<p><strong>We teach because we are lifelong learners.</strong> There is no better way to refine your edge than by teaching it to someone else. Teaching is the most rigorous form of learning. It forces precision. It reveals blind spots. It demands honesty.</p>
-<p>We also teach because trading is a <strong>craft</strong> — like sailing, or surgery, or golf. It has three domains that must be integrated:</p>
-<ul>
-<li><strong>Market</strong> — the ever-shifting environment. You cannot control it. Only adapt.</li>
-<li><strong>System</strong> — the tools and methods. Setups, signals, risk controls. Your structured edge.</li>
-<li><strong>Self</strong> — the decision-maker under pressure. Without emotional mastery, even the best system fails.</li>
-</ul>
-<p>Most traders focus on System and ignore Self. Or they read about psychology but have no System to execute. <strong>The edge is in the integration.</strong></p>
-<p>That's what we work on every week in Small Group Coaching — not just what to trade, but how to become the kind of trader who can execute their plan under pressure, session after session.</p>`,
-  whatChanged: `<p>Weekly summary: 5 sessions this week. Market held Bull Normal throughout.</p>
-<p>Across the watchlist, 31 symbols produced tradeable setups. Average outcome for completed setups: +1.4R.</p>
-<p>The process works. The question is whether you're working the process.</p>`,
-  bridge: `<p>If you're ready to work alongside other serious traders — people who show up, do the work, and hold each other accountable — Small Group Coaching is where that happens.</p>
-<p>Weekly live sessions. Multiple cohorts. Real accountability. This isn't a course you watch. It's a community you join.</p>`,
-  cta: { title: "Small Group Coaching — Observer Access", sub: "Weekly live coaching sessions with Dr. Ken Long and a community of serious traders. Watch, learn, and when you're ready — participate.", price: "From $997/year" }
-},
-
-// ===== ROUND 2: NEW ANGLES (Days 11-20) =====
-{
-  day: 11, concept: "MACD Four Seasons", round: 2,
+  day: 11, concept: "MACD Four Seasons", week: 2, hasCta: false,
   subject: "The one pattern that tells you it's time to get out",
   body: `<p>Hi there -</p>
-<p>Yesterday I mentioned the MACD Four Seasons. Today I want to zoom in on the most dangerous transition — and the pattern that exploits it.</p>
+<p>Today I want to zoom in on the most dangerous season transition — and the pattern that exploits it.</p>
 <p><strong>The Collapsing Dragon.</strong></p>
 <p>Here's the scenario: a stock has been in Winter (downtrend). The MACD starts to hook up — it looks like Spring is coming. Hope returns. Buyers step in early.</p>
 <p>Then it fails. The MACD rolls back down before reaching the zero line. Winter resumes — but now with trapped longs feeding the decline.</p>
@@ -463,11 +469,11 @@ const emails = [
 <p><span class="wc-stat wc-winter">ARKK — Dragon confirmed (3rd day below zero after failed Spring)</span></p>
 <p><span class="wc-stat wc-winter">XBI — Dragon forming (Spring attempt stalling at -0.3)</span></p>
 <p>Inverse ETF opportunities active for both.</p>`,
-  bridge: `<p>The Mechanical Swing Trading Fieldguide covers the Collapsing Dragon in detail — entry triggers, stop placement, and when to add to the position. It's the most comprehensive reference for all the seasonal patterns.</p>`,
-  cta: { title: "Mechanical Swing Trading Fieldguide", sub: "Every seasonal pattern documented — Collapsing Dragon, SSC, Kata 2, Owl, and more. With entry mechanics and examples.", price: "$197", membership: true }
+  bridge: ``,
+  cta: null
 },
 {
-  day: 12, concept: "Zero State", round: 2,
+  day: 12, concept: "Zero State", week: 2, hasCta: false,
   subject: "An owl taught me how to trade",
   body: `<p>Hi there -</p>
 <p>I want to share something personal today.</p>
@@ -480,11 +486,11 @@ const emails = [
 <p>I know this sounds soft for a trading email. But I've taught thousands of traders over 40 years, and I can tell you with certainty: <strong>the traders who build a pre-session ritual outperform those who don't.</strong> Every time. Without exception.</p>`,
   whatChanged: `<p>Market opened quietly. SPY gapped down 0.2% and recovered to flat by 10:30 AM.</p>
 <p>Days like this test patience. Low volatility. Few signals. The owl waits.</p>`,
-  bridge: `<p>If the Owl Meditation resonates with you, I recorded a guided version — 20 minutes of drumming meditation designed specifically for traders. Some of our coaching members use it as their daily pre-session practice.</p>`,
-  cta: { title: "Owl Drumming Meditations", sub: "20-minute guided meditation designed for traders — drumming, presence, and the Zero State", price: "$4.97" }
+  bridge: ``,
+  cta: null
 },
 {
-  day: 13, concept: "Setup / Signal / Entry", round: 2,
+  day: 13, concept: "Setup / Signal / Entry", week: 2, hasCta: false,
   subject: "How to trade a $50 stock with $250 of risk",
   body: `<p>Hi there -</p>
 <p>Let me walk you through a real trade frame using the Ready Fire Aim approach.</p>
@@ -498,11 +504,11 @@ const emails = [
   whatChanged: `<p>Intraday opportunities forming:</p>
 <p><span class="wc-stat">KO — morning hook setup on 5-min</span><span class="wc-stat">JPM — OR5 breakout candidate</span><span class="wc-stat">CAT — shelf compression</span></p>
 <p>SPY opened in the Yellow range (between yesterday's high and low) — look for 2:1 R:R trades with standard sizing.</p>`,
-  bridge: `<p>That CLF example comes directly from the Ready Fire Aim ebook, complete with annotated chart, SPY overlay, and self-critique notes. It's the full intraday system documented trade by trade.</p>`,
-  cta: { title: "Ready Fire Aim (RFA) — Intraday Trading Strategy", sub: "Complete intraday system with 5 setup patterns, position sizing, scaling rules, and real annotated trade examples", price: "$19.00" }
+  bridge: ``,
+  cta: null
 },
 {
-  day: 14, concept: "Position Sizing", round: 2,
+  day: 14, concept: "Position Sizing", week: 2, hasCta: true,
   subject: "Why I sometimes trade 10 shares of a $200 stock",
   body: `<p>Hi there -</p>
 <p>New traders often ask me: "How many shares should I buy?"</p>
@@ -525,8 +531,10 @@ const emails = [
   bridge: `<p>The Foundations Q&A Study Guide includes an entire section on position sizing calibration — how students in the course worked through their own psychology around size. It's one of the most honest and practical discussions we've had.</p>`,
   cta: { title: "Foundations Course Annotated Q&A Study Guide", sub: "75 pages of real workshop discussions including position sizing calibration and risk psychology", price: "$47.95", membership: true }
 },
+
+// ===== WEEK 3: ENGAGE, 3 CTAs =====
 {
-  day: 15, concept: "Expectancy", round: 2,
+  day: 15, concept: "Expectancy", week: 3, hasCta: true,
   subject: "What 100 trades will teach you that 1 trade never will",
   body: `<p>Hi there -</p>
 <p>One trade is a coin flip. Ten trades are a story. <strong>One hundred trades are the truth.</strong></p>
@@ -548,11 +556,11 @@ const emails = [
   whatChanged: `<p>Your 20-Trade Challenge update: track how setups from this week's reports perform.</p>
 <p>This week's setup count: 18 symbols generated signals. Average theoretical R:R at signal: 2.4:1.</p>
 <p>How many did you take? How many did you skip? Why? The journal knows.</p>`,
-  bridge: `<p>One of the best ways to learn this process is to watch it happen live. The Swing Trading Q&A Masterclass is 90 minutes of real questions from traders working through exactly these challenges — expectancy, execution, and the gap between knowing and doing.</p>`,
-  cta: { title: "Swing Trading Q&A Masterclass", sub: "90-minute video: real questions from traders on expectancy, execution, and closing the knowing-doing gap", price: "$9.97" }
+  bridge: `<p>One of the best ways to learn this process is to watch it happen live. The Ready Fire Aim strategy documents every trade in R — entries, stops, targets, scaling, and a complete chart example showing +5.2R across 4 intraday trades.</p>`,
+  cta: { title: "Ready Fire Aim (RFA) — Intraday Trading Strategy", sub: "Complete intraday system by Ken Long with real trade examples measured in R-multiples", price: "$19.00" }
 },
 {
-  day: 16, concept: "Critical State", round: 2,
+  day: 16, concept: "Critical State", week: 3, hasCta: false,
   subject: "When the market goes quiet, I start paying attention",
   body: `<p>Hi there -</p>
 <p>Most traders get bored when volatility drops. They start looking at their phones. They wander away from the screen.</p>
@@ -571,11 +579,11 @@ const emails = [
   whatChanged: `<p>Compound Critical State candidates:</p>
 <p><span class="wc-stat">AMZN — BB width 1.2% (5th percentile)</span><span class="wc-stat">META — 4-day range inside prior day</span><span class="wc-stat">XBI — volume declining 5 consecutive days</span></p>
 <p>Broad VIX at 14.8 — market-wide compression. When this releases, multiple symbols will move simultaneously.</p>`,
-  bridge: `<p>If you want to understand the psychological architecture that lets you stay patient while the market compresses — and then act decisively when it breaks — Trading Resilience covers exactly this. The discipline of waiting is harder than the discipline of acting.</p>`,
-  cta: { title: "Navigating the Path to Trading Resilience", sub: "The psychological framework for patience, presence, and decisive action under uncertainty", price: "$97.95" }
+  bridge: ``,
+  cta: null
 },
 {
-  day: 17, concept: "Multiple Timeframes", round: 2,
+  day: 17, concept: "Multiple Timeframes", week: 3, hasCta: false,
   subject: "A 3-minute chart and a 30-minute chart walk into a bar...",
   body: `<p>Hi there -</p>
 <p>One of the most common questions I get in coaching: "Ken, which timeframe should I use?"</p>
@@ -594,11 +602,11 @@ const emails = [
 <p><span class="wc-stat wc-fall">IWM — Daily: Fall, Weekly: Summer</span> (caution on long entries)</p>
 <p><span class="wc-stat wc-spring">EEM — Daily: Spring, Weekly: Winter</span> (counter-trend, reduce size)</p>
 <p>SPY aligned across all timeframes: Weekly Summer, Daily Summer. Green light for trend-following setups.</p>`,
-  bridge: `<p>Understanding how the herd behaves differently on each timeframe is what makes multi-timeframe analysis work. This book covers the underlying dynamics — why institutions create the patterns and how retail traders can align with them.</p>`,
-  cta: { title: "Swing Trading Basics: Understanding The Herd", sub: "The dynamics behind multi-timeframe patterns and how to read institutional behavior", price: "$19.97" }
+  bridge: ``,
+  cta: null
 },
 {
-  day: 18, concept: "Trading Plan", round: 2,
+  day: 18, concept: "Trading Plan", week: 3, hasCta: true,
   subject: "11 questions I answer every single morning",
   body: `<p>Hi there -</p>
 <p>Every morning before the market opens, I run through 11 questions. The same 11. In the same order. Every day.</p>
@@ -626,7 +634,7 @@ const emails = [
   cta: { title: "Foundational Trading: Plan-Prepare-Execute-Assess", sub: "Printable morning script, 11-question framework, and the complete PPEA operational loop", price: "$9.97" }
 },
 {
-  day: 19, concept: "Journaling", round: 2,
+  day: 19, concept: "Journaling", week: 3, hasCta: false,
   subject: "What a trading journal entry actually looks like",
   body: `<p>Hi there -</p>
 <p>A lot of traders tell me they journal. When I ask to see it, they show me a spreadsheet with entry price, exit price, and P&L.</p>
@@ -648,11 +656,11 @@ const emails = [
 <p><span class="wc-stat wc-summer">MSFT SSC → reached +2.1R (still running)</span></p>
 <p><span class="wc-stat">HD shelf → triggered, hit +1R, now at no-lose</span></p>
 <p>If you took these: what was your state? If you didn't: why not? Both answers belong in the journal.</p>`,
-  bridge: `<p>The most powerful thing about journaling is seeing your patterns over time. Trading Resilience includes the complete Coach's Eye After-Action Review framework — the structured debrief I use personally and teach in every coaching cohort.</p>`,
-  cta: { title: "Navigating the Path to Trading Resilience", sub: "Includes the Coach's Eye AAR framework, 4-Step Balancing Protocol, and structured journaling templates", price: "$97.95" }
+  bridge: ``,
+  cta: null
 },
 {
-  day: 20, concept: "Trading as a Craft", round: 2,
+  day: 20, concept: "Trading as a Craft", week: 3, hasCta: false,
   subject: "The market rewards this one thing above all else",
   body: `<p>Hi there -</p>
 <p>I've been trading for over 40 years. I've mentored hundreds of traders. And if I had to name the single quality that separates those who make it from those who don't, it's this:</p>
@@ -666,15 +674,13 @@ const emails = [
 <p>It's not sexy. Nobody posts their Consistency Cycle on social media. But over 100 trades, 500 trades, 1,000 trades — it's the only thing that works.</p>
 <p>The traders in our Foundations course who succeed aren't the ones who learn the fastest. They're the ones who <strong>keep showing up</strong>. They do the 20-Trade Challenge. They submit their journals. They ask questions in the Q&A sessions. They do the work.</p>
 <p>That's the craft. Not the knowledge. The practice.</p>`,
-  whatChanged: `<p>End of week 2. Market classification held <strong>Bull Normal</strong> for 12 consecutive sessions.</p>
+  whatChanged: `<p>End of week 3. Market classification held <strong>Bull Normal</strong> for 12 consecutive sessions.</p>
 <p>Consistent conditions reward consistent process. If you've been following a plan this week, the data should be accumulating. If you haven't — Monday is a fresh start.</p>`,
-  bridge: `<p>The Foundations course is designed around this principle of consistent practice. 163 lessons, not because you need 163 things — but because the craft requires repetition, reflection, and reinforcement over time.</p>`,
-  cta: { title: "Foundations Course", sub: "163 lessons across psychology, bootcamp, coaching, and 37 strategies — the complete curriculum for trading as a craft", price: "$47.95 Study Guide", membership: true }
+  bridge: ``,
+  cta: null
 },
-
-// ===== ROUND 3: DEEP DIVES & STUDENT STORIES (Days 21-30) =====
 {
-  day: 21, concept: "MACD Four Seasons", round: 3,
+  day: 21, concept: "MACD Four Seasons", week: 3, hasCta: true,
   subject: "\"I never realized I was trading against the season\" — a student's turning point",
   body: `<p>Hi there -</p>
 <p>I want to share a story from one of our Small Group Coaching cohorts.</p>
@@ -692,8 +698,10 @@ const emails = [
   bridge: `<p>Tom's story is one of dozens we work through in Small Group Coaching every week. If you want to see how other traders diagnose and fix problems like this — with real accountability and real feedback — SGC is the place.</p>`,
   cta: { title: "Small Group Coaching — Observer Access", sub: "Watch real traders work through real problems. Weekly live sessions with Dr. Ken Long across multiple cohorts.", price: "From $997/year" }
 },
+
+// ===== WEEK 4: DAILY CTAs =====
 {
-  day: 22, concept: "Zero State", round: 2,
+  day: 22, concept: "Zero State", week: 4, hasCta: true,
   subject: "What to do when you've already broken your rules",
   body: `<p>Hi there -</p>
 <p>Let's be honest. You're going to break your rules.</p>
@@ -712,7 +720,7 @@ const emails = [
   cta: { title: "Foundations Course", sub: "Module 1: Psychology of Self Discovery — 14 lessons building your personal Zero State practice from the ground up", price: "$47.95 Study Guide", membership: true }
 },
 {
-  day: 23, concept: "Setup / Signal / Entry", round: 3,
+  day: 23, concept: "Setup / Signal / Entry", week: 4, hasCta: true,
   subject: "5 setups you can spot in 60 seconds",
   body: `<p>Hi there -</p>
 <p>I've been teaching trade setups for decades. But there are five that I come back to more than any others — because they work, they're simple, and you can spot them quickly.</p>
@@ -732,7 +740,7 @@ const emails = [
   cta: { title: "2.5-Hour Q&A Session on Swing Trading with Foundational Concepts", sub: "Deep dive into setups, signals, entries, and trade management — live Q&A with Dr. Ken Long", price: "$47.95" }
 },
 {
-  day: 24, concept: "Position Sizing", round: 3,
+  day: 24, concept: "Position Sizing", week: 4, hasCta: true,
   subject: "How one number saved a trader's account",
   body: `<p>Hi there -</p>
 <p>In coaching last year, a trader I'll call Eric shared something that stopped the room.</p>
@@ -755,7 +763,7 @@ const emails = [
   cta: { title: "2.5-Hour Q&A Session on Swing Trading with Foundational Concepts", sub: "Real traders asking real sizing questions — 2.5 hours of practical Q&A with Dr. Ken Long", price: "$47.95" }
 },
 {
-  day: 25, concept: "Expectancy", round: 3,
+  day: 25, concept: "Expectancy", week: 4, hasCta: true,
   subject: "I lost money on 60% of my trades last month. Here's why I'm happy.",
   body: `<p>Hi there -</p>
 <p>Last month I took 47 trades. I won 19 and lost 28. That's a 40% win rate.</p>
@@ -780,7 +788,7 @@ const emails = [
   cta: { title: "Tortoise Glossary of Terms (v4.0)", sub: "Every term, pattern, and metric in the Tortoise/Owl ecosystem — defined and cross-referenced", price: "$19.97" }
 },
 {
-  day: 26, concept: "Critical State", round: 3,
+  day: 26, concept: "Critical State", week: 4, hasCta: true,
   subject: "The Godzilla trade: when everything aligns",
   body: `<p>Hi there -</p>
 <p>Every few months, the market produces something extraordinary. I call it a <strong>Godzilla move</strong> — a trend so powerful that it dominates everything in its path.</p>
@@ -803,7 +811,7 @@ const emails = [
   cta: { title: "Mechanical Swing Trading Fieldguide", sub: "Godzilla recognition, scaling-in protocol, and advanced trade management for exceptional moves", price: "$197", membership: true }
 },
 {
-  day: 27, concept: "Multiple Timeframes", round: 3,
+  day: 27, concept: "Multiple Timeframes", week: 4, hasCta: true,
   subject: "The regression line that predicted the last 3 major turns",
   body: `<p>Hi there -</p>
 <p>I use four regression lines on every chart: RL10, RL30, RL90, and RL270. Each one tells a different story.</p>
@@ -825,7 +833,7 @@ const emails = [
   cta: { title: "2.5-Hour Q&A Session on Swing Trading with Foundational Concepts", sub: "Live walkthrough of regression lines, MACD seasons, and multi-timeframe alignment with Q&A", price: "$47.95" }
 },
 {
-  day: 28, concept: "Trading Plan", round: 3,
+  day: 28, concept: "Trading Plan", week: 4, hasCta: true,
   subject: "\"My plan used to be 3 pages. Now it's 3 lines.\"",
   body: `<p>Hi there -</p>
 <p>One of our senior coaching members, Jeff, shared something during a recent session that stuck with me.</p>
@@ -853,7 +861,7 @@ const emails = [
   cta: { title: "Small Group Coaching — Observer Access", sub: "Watch traders like Jeff refine their plans in real-time. Weekly live sessions. Multiple cohorts. Real accountability.", price: "From $997/year" }
 },
 {
-  day: 29, concept: "Journaling", round: 3,
+  day: 29, concept: "Journaling", week: 4, hasCta: true,
   subject: "The pattern in my journal that cost me $12,000",
   body: `<p>Hi there -</p>
 <p>Last year, I did my quarterly review — 200+ trades, all logged in my journal. I was looking for patterns in my execution, and I found one I didn't expect.</p>
@@ -871,7 +879,7 @@ const emails = [
   cta: { title: "Foundational Trading: Plan-Prepare-Execute-Assess", sub: "Includes structured journaling templates designed for pattern discovery and quarterly review", price: "$9.97" }
 },
 {
-  day: 30, concept: "Trading as a Craft", round: 3,
+  day: 30, concept: "Trading as a Craft", week: 4, hasCta: true,
   subject: "What the owl sees that you don't — yet",
   body: `<p>Hi there -</p>
 <p>Thirty days ago, I introduced you to the MACD Four Seasons. Today, let me tell you what comes after you learn the framework.</p>
@@ -913,15 +921,33 @@ function buildGridNav() {
     btn.textContent = e.day;
     btn.onclick = () => showDay(i);
     if (i === 0) btn.classList.add('active');
+    // CTA days get a distinct border color
+    if (e.hasCta) {
+      btn.style.borderColor = '#1a1a2e';
+      btn.style.borderWidth = '2px';
+      btn.title = 'CTA day';
+    }
     grid.appendChild(btn);
   });
 }
 
 function renderEmail(idx) {
   const e = emails[idx];
-  const membershipLine = e.cta.membership
+  const ctaBadge = e.hasCta
+    ? '<span class="concept-tag" style="background:#1a1a2e;color:#8ecae6;">CTA</span>'
+    : '<span class="concept-tag" style="background:#f0f0f0;color:#999;">No CTA</span>';
+  const membershipLine = (e.hasCta && e.cta && e.cta.membership)
     ? '<div class="cta-membership">Included with membership</div>'
     : '';
+  const ctaHtml = e.hasCta && e.cta ? `<div class="cta-block">
+      <p>Recommended resource</p>
+      <div class="cta-title">${e.cta.title}</div>
+      <p class="cta-sub">${e.cta.sub}</p>
+      ${membershipLine}
+      <div class="cta-price">${e.cta.price}</div>
+      <a href="#" class="cta-btn">View in bookstore</a>
+    </div>` : '';
+  const bridgeHtml = e.hasCta && e.bridge ? e.bridge : '';
   return `<div class="email-container">
   <div class="email-header">
     <div class="email-subject">${e.subject}</div>
@@ -929,7 +955,8 @@ function renderEmail(idx) {
       <span class="email-sender">Dr. Ken Long</span>
       <span>&lt;ken@owlgrouptrading.com&gt;</span>
       <span class="concept-tag">${e.concept}</span>
-      <span class="concept-tag">Round ${e.round}</span>
+      <span class="concept-tag">Week ${e.week}</span>
+      ${ctaBadge}
       <span style="margin-left:auto; font-size:12px; color:#999;">Day ${e.day}</span>
     </div>
   </div>
@@ -939,15 +966,8 @@ function renderEmail(idx) {
       <h3>What Changed Today</h3>
       ${e.whatChanged}
     </div>
-    ${e.bridge}
-    <div class="cta-block">
-      <p>Recommended resource</p>
-      <div class="cta-title">${e.cta.title}</div>
-      <p class="cta-sub">${e.cta.sub}</p>
-      ${membershipLine}
-      <div class="cta-price">${e.cta.price}</div>
-      <a href="#" class="cta-btn">View in bookstore</a>
-    </div>
+    ${bridgeHtml}
+    ${ctaHtml}
     <div class="signoff">
       <p>Respectfully,</p>
       <p class="name">Ken Long</p>
@@ -962,7 +982,7 @@ function showDay(idx) {
   currentDay = idx;
   document.getElementById('emailContainer').innerHTML = renderEmail(idx);
   document.getElementById('dayNum').textContent = emails[idx].day;
-  document.getElementById('dayInfo').textContent = emails[idx].concept + ' — Round ' + emails[idx].round;
+  document.getElementById('dayInfo').textContent = emails[idx].concept + ' — Week ' + emails[idx].week;
   document.querySelectorAll('.grid-nav button').forEach((btn, i) => {
     btn.classList.toggle('active', i === idx);
   });
