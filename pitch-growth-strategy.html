@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OGT Growth Strategy — Pitch</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0d1117;
+  --card: #161b22;
+  --card-border: #21262d;
+  --text: #e6edf3;
+  --text-muted: #8b949e;
+  --text-dim: #6e7681;
+  --accent: #58a6ff;
+  --amber: #d4940a;
+  --green: #3fb950;
+  --red: #f85149;
+  --yellow: #d29922;
+}
+
+html, body { height: 100%; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+/* Navigation */
+.nav {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 56px;
+  background: rgba(13,17,23,0.95);
+  border-top: 1px solid var(--card-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  z-index: 100;
+  backdrop-filter: blur(8px);
+}
+.nav button {
+  padding: 8px 20px;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  color: var(--text-muted);
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.nav button:hover { background: #1c2128; color: var(--text); }
+.nav .slide-counter {
+  font-size: 13px;
+  color: var(--text-dim);
+  min-width: 60px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.nav .progress-bar {
+  position: absolute;
+  top: 0; left: 0;
+  height: 2px;
+  background: var(--accent);
+  transition: width 0.3s;
+}
+
+/* Slide container */
+.slide-viewport {
+  height: calc(100vh - 56px);
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+.slide {
+  display: none;
+  min-height: calc(100vh - 56px);
+  padding: 60px 40px 40px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.slide.active { display: flex; flex-direction: column; justify-content: center; }
+
+/* Typography */
+.slide h1 {
+  font-size: 42px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  line-height: 1.15;
+  margin-bottom: 24px;
+}
+.slide h2 {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-bottom: 20px;
+  line-height: 1.25;
+}
+.slide h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--accent);
+}
+.slide p {
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+.slide p.lead {
+  font-size: 22px;
+  color: var(--text);
+  line-height: 1.5;
+}
+.slide .label {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--amber);
+  margin-bottom: 16px;
+}
+
+/* Lists */
+.slide ul, .slide ol { margin: 0 0 20px; padding-left: 0; list-style: none; }
+.slide li {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--text-muted);
+  padding: 8px 0 8px 28px;
+  position: relative;
+}
+.slide li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 16px;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--card-border);
+}
+.slide li strong { color: var(--text); }
+.slide li em { color: var(--text-dim); font-style: normal; }
+
+/* Metric cards */
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+.metric {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 20px;
+}
+.metric .value {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.metric .desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+.metric.good .value { color: var(--green); }
+.metric.warn .value { color: var(--yellow); }
+.metric.bad .value { color: var(--red); }
+.metric.accent .value { color: var(--accent); }
+
+/* Two columns */
+.cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin: 20px 0;
+}
+.cols.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+/* Hypothesis cards */
+.hyp-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 24px;
+  margin-bottom: 16px;
+}
+.hyp-card h3 { margin-bottom: 8px; }
+.hyp-card .hyp-claim {
+  font-size: 16px;
+  color: var(--text);
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+.hyp-card .hyp-test {
+  font-size: 14px;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+.hyp-card .hyp-test strong { color: var(--text-muted); }
+.hyp-card .hyp-deadline {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--amber);
+  background: rgba(212,148,10,0.1);
+  padding: 3px 10px;
+  border-radius: 4px;
+}
+
+/* Timeline */
+.timeline {
+  margin: 20px 0;
+  border-left: 2px solid var(--card-border);
+  padding-left: 24px;
+}
+.timeline-item {
+  margin-bottom: 24px;
+  position: relative;
+}
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -29px; top: 6px;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--bg);
+}
+.timeline-item.done::before { background: var(--green); }
+.timeline-item.current::before { background: var(--amber); box-shadow: 0 0 8px rgba(212,148,10,0.5); }
+.timeline-item .tl-date {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.timeline-item .tl-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 4px 0;
+}
+.timeline-item .tl-desc {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* Funnel */
+.funnel {
+  margin: 24px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.funnel-step {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.funnel-step .f-arrow {
+  color: var(--text-dim);
+  font-size: 18px;
+}
+.funnel-step .f-stage {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  min-width: 200px;
+}
+.funnel-step .f-desc {
+  font-size: 14px;
+  color: var(--text-muted);
+  flex: 1;
+}
+.funnel-step .f-metric {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent);
+  text-align: right;
+  min-width: 100px;
+}
+
+/* Divider */
+hr {
+  border: none;
+  border-top: 1px solid var(--card-border);
+  margin: 24px 0;
+}
+
+/* Quote block */
+.quote {
+  border-left: 3px solid var(--amber);
+  padding: 12px 0 12px 20px;
+  margin: 20px 0;
+}
+.quote p {
+  font-size: 20px;
+  font-style: italic;
+  color: var(--text);
+  margin: 0;
+}
+.quote .attr {
+  font-size: 14px;
+  color: var(--text-dim);
+  font-style: normal;
+  margin-top: 8px;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .slide { padding: 32px 20px; }
+  .slide h1 { font-size: 30px; }
+  .slide h2 { font-size: 22px; }
+  .cols { grid-template-columns: 1fr; }
+  .cols.cols-3 { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- SLIDE 1: TITLE -->
+<div class="slide-viewport">
+
+<div class="slide active" id="s0">
+  <div class="label">OWL Group Trading — Growth Strategy</div>
+  <h1>The Content Is World-Class.<br>The Distribution Is Broken.</h1>
+  <p class="lead">A proposal for AI-operated growth infrastructure that turns Dr. Long's 40 years of trading education into a self-sustaining acquisition engine.</p>
+  <hr>
+  <p>Presented by the Growth Engineering team<br>
+  <span style="color:var(--text-dim)">March 2026 — For Dr. Ken Long &amp; Mark Holland</span></p>
+</div>
+
+<!-- SLIDE 2: THE PROBLEM -->
+<div class="slide" id="s1">
+  <div class="label">The Problem</div>
+  <h2>Dr. Long produces more value per week than most educators produce per year. Almost none of it reaches new students.</h2>
+
+  <div class="metrics">
+    <div class="metric good"><div class="value">2M</div><div class="desc">Words of curated trading knowledge in the library</div></div>
+    <div class="metric good"><div class="value">163</div><div class="desc">Lessons in the Foundations course alone</div></div>
+    <div class="metric good"><div class="value">180+</div><div class="desc">Live coaching sessions recorded (2024-2026)</div></div>
+    <div class="metric warn"><div class="value">620</div><div class="desc">Email subscribers (should be 6,000+)</div></div>
+    <div class="metric bad"><div class="value">12</div><div class="desc">Emails sent in 10 months (Kit.com broadcasts)</div></div>
+    <div class="metric bad"><div class="value">0</div><div class="desc">Automated systems converting content to revenue</div></div>
+  </div>
+
+  <p>The knowledge base is extraordinary. The distribution system doesn't exist. Every week, Dr. Long generates auto-generated reports that <strong>students cannot interpret</strong> — but no one is translating them, no one is emailing them, and no one is connecting them to the products in the bookstore.</p>
+</div>
+
+<!-- SLIDE 3: ROOT CAUSES -->
+<div class="slide" id="s2">
+  <div class="label">Root Causes</div>
+  <h2>Three structural problems, not three marketing problems</h2>
+
+  <div class="cols">
+    <div>
+      <h3>1. No Daily Operator</h3>
+      <p>Dr. Long creates. Mark builds infrastructure. Neither has capacity to operate a daily content-to-revenue pipeline. The business needs a third role: someone (or something) that wakes up every morning, processes the latest report, builds a briefing, writes an email, and sends it — every single day, without being asked.</p>
+    </div>
+    <div>
+      <h3>2. Content-Product Gap</h3>
+      <p>The bookstore has 36 products spanning $4.97 to $197. The email sequences teach concepts. But nothing connects them. A student reading about MACD Seasons never sees a link to the Glossary. A subscriber learning about position sizing never encounters the Fieldguide. The content and the commerce exist in separate worlds.</p>
+    </div>
+  </div>
+  <div style="margin-top:8px">
+    <h3>3. Interpretation Gap</h3>
+    <p>Dr. Long's daily reports are auto-generated — 30+ pages of MACD seasons, regression lines, and system signals across 300+ symbols. This is the raw data that powers his trading decisions. But students receive the same raw feed and can't extract actionable insight from it. The reports need a translation layer: <strong>what changed, what it means, and what to do about it.</strong></p>
+  </div>
+</div>
+
+<!-- SLIDE 4: THE APPROACH -->
+<div class="slide" id="s3">
+  <div class="label">The Approach</div>
+  <h2>An AI system that operates the content-to-revenue pipeline daily, without human intervention</h2>
+
+  <p>Not "AI-enhanced marketing." Not a chatbot. A complete operational layer that performs the daily work of a growth team:</p>
+
+  <ul>
+    <li><strong>Ingest</strong> — Parse Dr. Long's daily/weekend reports automatically when they arrive</li>
+    <li><strong>Translate</strong> — Compute day-over-day diffs and generate plain-English "What Changed" summaries</li>
+    <li><strong>Publish</strong> — Build a daily briefing (the free product that demonstrates value)</li>
+    <li><strong>Email</strong> — Send a concept spotlight with today's data and a contextual product CTA to 620 subscribers</li>
+    <li><strong>Measure</strong> — Track opens, clicks, purchases. Adjust concept rotation based on engagement data.</li>
+  </ul>
+
+  <p>This runs on Cloud Run. One codebase. One deploy. The system is already built and serving briefings at <span style="color:var(--accent)">ogt-engine on GCP</span>. What remains is wiring the email send and adding the commerce links.</p>
+</div>
+
+<!-- SLIDE 5: THE DAILY LOOP -->
+<div class="slide" id="s4">
+  <div class="label">Daily Operations</div>
+  <h2>What happens every morning at 6:00 AM</h2>
+
+  <div class="funnel">
+    <div class="funnel-step">
+      <div class="f-stage">Report Arrives</div>
+      <div class="f-desc">Dr. Long's system generates the daily report (this already happens, unchanged)</div>
+      <div class="f-metric">Automated</div>
+    </div>
+    <div class="funnel-step">
+      <div class="f-arrow">&darr;</div>
+      <div class="f-stage">Parse &amp; Diff</div>
+      <div class="f-desc">ogt-engine extracts data, computes day-over-day changes across all symbols</div>
+      <div class="f-metric">~30 seconds</div>
+    </div>
+    <div class="funnel-step">
+      <div class="f-arrow">&darr;</div>
+      <div class="f-stage">Build Briefing</div>
+      <div class="f-desc">Generates the daily briefing HTML — "What Changed" with MACD season transitions, setup alerts</div>
+      <div class="f-metric">~10 seconds</div>
+    </div>
+    <div class="funnel-step">
+      <div class="f-arrow">&darr;</div>
+      <div class="f-stage">Select Concept Email</div>
+      <div class="f-desc">Pick today's concept from 30-day rotation (or swap if market data strongly matches a concept)</div>
+      <div class="f-metric">Rule-based</div>
+    </div>
+    <div class="funnel-step">
+      <div class="f-arrow">&darr;</div>
+      <div class="f-stage">Inject &amp; Send</div>
+      <div class="f-desc">Merge "What Changed" data into email template. Send via Kit.com API to active list.</div>
+      <div class="f-metric">Kit API</div>
+    </div>
+    <div class="funnel-step">
+      <div class="f-arrow">&darr;</div>
+      <div class="f-stage">Track &amp; Learn</div>
+      <div class="f-desc">Log opens, clicks, CTA engagement. Feed back into concept rotation and CTA selection.</div>
+      <div class="f-metric">Ongoing</div>
+    </div>
+  </div>
+
+  <p>Dr. Long's involvement: <strong>zero daily effort</strong>. His existing auto-generated reports are the input. Everything downstream is operated by the system.</p>
+</div>
+
+<!-- SLIDE 6: THE EMAIL STRATEGY -->
+<div class="slide" id="s5">
+  <div class="label">Email Strategy</div>
+  <h2>30 concept emails, 3 rounds, contextual CTAs</h2>
+
+  <p>We pre-build 30 emails covering 10 core concepts. Each email has three components:</p>
+
+  <div class="cols cols-3">
+    <div>
+      <h3>Concept Spotlight</h3>
+      <p>~200 words teaching one idea from Dr. Long's methodology — in his voice, using his analogies. Not a summary. An actual lesson that delivers standalone value.</p>
+    </div>
+    <div>
+      <h3>"What Changed" Section</h3>
+      <p>Dynamically injected from the day's diff data. MACD season transitions, setup alerts, volatility signals. This is what makes each email timely — the concept is evergreen, the data is today's.</p>
+    </div>
+    <div>
+      <h3>Product CTA</h3>
+      <p>One relevant product linked at the bottom. Not a pitch — a natural extension of the concept. "If this resonated, the Glossary defines every term I just used." Price ranges from $4.97 to $97.95.</p>
+    </div>
+  </div>
+
+  <p>The 30 emails rotate in 3 rounds of 10:</p>
+  <ul>
+    <li><strong>Round 1 (Days 1-10):</strong> Core concept introductions — teach the vocabulary</li>
+    <li><strong>Round 2 (Days 11-20):</strong> New angle — Collapsing Dragon deep dive, real trade walkthroughs, the morning script</li>
+    <li><strong>Round 3 (Days 21-30):</strong> Student stories — "Tom was trading against the season," "Eric's position sizing crisis"</li>
+  </ul>
+  <p style="color:var(--text-dim)">All 30 are built and viewable now. <span style="color:var(--accent)">→ See the mockup</span></p>
+</div>
+
+<!-- SLIDE 7: THE FUNNEL -->
+<div class="slide" id="s6">
+  <div class="label">Revenue Model</div>
+  <h2>Free briefing → Email → Bookstore → Membership → SGC</h2>
+
+  <div class="funnel">
+    <div class="funnel-step">
+      <div class="f-stage">Daily Briefing (free)</div>
+      <div class="f-desc">Demonstrates value. Shows the diff engine in action. Available on the website.</div>
+      <div class="f-metric">Acquisition</div>
+    </div>
+    <div class="funnel-step">
+      <div class="f-arrow">&darr;</div>
+      <div class="f-stage">Email Signup</div>
+      <div class="f-desc">Visitor subscribes to receive concept emails + daily "What Changed" in their inbox</div>
+      <div class="f-metric">Conversion</div>
+    </div>
+    <div class="funnel-step">
+      <div class="f-arrow">&darr;</div>
+      <div class="f-stage">Bookstore Purchase</div>
+      <div class="f-desc">CTA in email leads to $5-$50 products. Low friction. Proves willingness to pay.</div>
+      <div class="f-metric">$10-50 AOV</div>
+    </div>
+    <div class="funnel-step">
+      <div class="f-arrow">&darr;</div>
+      <div class="f-stage">Membership</div>
+      <div class="f-desc">Unlocks 17 products + Foundations access + daily briefings. $79/month.</div>
+      <div class="f-metric">$79/mo MRR</div>
+    </div>
+    <div class="funnel-step">
+      <div class="f-arrow">&darr;</div>
+      <div class="f-stage">Small Group Coaching</div>
+      <div class="f-desc">Live weekly sessions with Dr. Long. 6 cohorts. The premium product.</div>
+      <div class="f-metric">$997-1,500/yr</div>
+    </div>
+  </div>
+
+  <p>Each stage has a measurable conversion rate. If we can't convert free briefing → email at >5%, we have a content problem. If we can't convert email → purchase at >2%, we have a CTA problem. The data tells us exactly where to focus.</p>
+</div>
+
+<!-- SLIDE 8: WHAT'S BUILT -->
+<div class="slide" id="s7">
+  <div class="label">Current State</div>
+  <h2>What exists today vs. what remains</h2>
+
+  <div class="cols">
+    <div>
+      <h3 style="color:var(--green)">Built &amp; Deployed</h3>
+      <ul>
+        <li><strong>ogt-engine on Cloud Run</strong> — parses reports, computes diffs, generates briefings</li>
+        <li><strong>15 daily + 6 weekly briefings</strong> — live and served with branded UI</li>
+        <li><strong>30 concept emails</strong> — written, reviewed, in Dr. Long's voice</li>
+        <li><strong>Bookstore catalog</strong> — 36 products cataloged, tiered, concept-mapped</li>
+        <li><strong>Kit.com integration</strong> — API keys configured, 94 existing emails archived</li>
+        <li><strong>Content library</strong> — 10 concept extractions from 2M-word knowledge base</li>
+        <li><strong>Home page &amp; bookstore mockups</strong> — approved design, shareable</li>
+        <li><strong>RFA book content extracted</strong> — full trade system for CTA deep links</li>
+        <li><strong>Foundations + SGC TOCs</strong> — 163 + 51 lessons mapped and concept-indexed</li>
+      </ul>
+    </div>
+    <div>
+      <h3 style="color:var(--yellow)">Remaining (2-3 weeks)</h3>
+      <ul>
+        <li><strong>Wire Kit.com email send</strong> — connect ogt-engine to Kit broadcast API</li>
+        <li><strong>Stripe integration</strong> — commerce for bookstore (currently Gumroad)</li>
+        <li><strong>Home page as route</strong> — serve from ogt-engine, not separate mockup</li>
+        <li><strong>/learn pages</strong> — 10 concept pages with audio/video clips</li>
+        <li><strong>/bookstore page</strong> — live product grid with purchase links</li>
+        <li><strong>Email approval workflow</strong> — Dr. Long reviews first 5-10 sends</li>
+        <li><strong>Daily report auto-ingest</strong> — watch folder or email-forward trigger</li>
+        <li><strong>Engagement tracking</strong> — open/click/purchase attribution per concept</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 9: HYPOTHESES -->
+<div class="slide" id="s8">
+  <div class="label">Hypotheses</div>
+  <h2>Four claims we're making — and how we'll know if we're wrong</h2>
+
+  <div class="hyp-card">
+    <h3>H1: The briefing is a viable lead magnet</h3>
+    <div class="hyp-claim">People who see Dr. Long's daily report translated into a "What Changed" briefing will find it valuable enough to subscribe for daily email delivery.</div>
+    <div class="hyp-test"><strong>Test:</strong> Share the briefing link with existing 620 subscribers and track email signup rate from the briefing page.<br><strong>Success:</strong> >5% of briefing visitors sign up for email. >50 new subscribers in first 30 days.<br><strong>Failure signal:</strong> <2% signup rate after 30 days = the briefing isn't compelling enough on its own. Revisit format.</div>
+    <div class="hyp-deadline">Testable by: Day 30</div>
+  </div>
+
+  <div class="hyp-card">
+    <h3>H2: Concept emails drive product discovery</h3>
+    <div class="hyp-claim">Teaching a concept and then linking to a relevant product creates meaningful click-through — not because the email is a sales pitch, but because the concept creates genuine curiosity about the source material.</div>
+    <div class="hyp-test"><strong>Test:</strong> Track CTA click rate across 30 concept emails. Compare to industry baseline (2-5% for educational email).<br><strong>Success:</strong> >3% CTA click rate. At least 1 in 20 clicks converts to a purchase.<br><strong>Failure signal:</strong> <1% click rate after 2 full rotations (60 days) = CTAs aren't relevant or products aren't priced right.</div>
+    <div class="hyp-deadline">Testable by: Day 60</div>
+  </div>
+
+  <div class="hyp-card">
+    <h3>H3: AI-generated content passes the Dr. Long test</h3>
+    <div class="hyp-claim">Emails written from the 2M-word knowledge base, using Dr. Long's analogies and voice patterns, will be indistinguishable from content he would write himself — or at minimum, approved with minor edits.</div>
+    <div class="hyp-test"><strong>Test:</strong> Dr. Long reviews first 10 emails and scores each: Approved / Minor edits / Major rewrite / Reject.<br><strong>Success:</strong> 8/10 approved or minor edits. Zero rejects.<br><strong>Failure signal:</strong> >3 major rewrites = voice model needs recalibration from more source material.</div>
+    <div class="hyp-deadline">Testable by: Day 7</div>
+  </div>
+
+  <div class="hyp-card">
+    <h3>H4: Daily consistency compounds into growth</h3>
+    <div class="hyp-claim">Sending a valuable email every single day — not weekly, not "when we have something" — builds a habit loop that converts casual subscribers into paying members. The daily cadence is the product.</div>
+    <div class="hyp-test"><strong>Test:</strong> Compare 30-day retention and open rates of daily sends vs. the current sporadic pattern (12 sends in 10 months).<br><strong>Success:</strong> Open rate stabilizes at >35% after 30 days. Unsubscribe rate <0.5% per send.<br><strong>Failure signal:</strong> Open rate declines below 20% after 14 days = daily is too frequent. Test 3x/week.</div>
+    <div class="hyp-deadline">Testable by: Day 30</div>
+  </div>
+</div>
+
+<!-- SLIDE 10: TIMELINE -->
+<div class="slide" id="s9">
+  <div class="label">Execution Timeline</div>
+  <h2>90 days to prove or disprove the model</h2>
+
+  <div class="cols">
+    <div>
+      <div class="timeline">
+        <div class="timeline-item done">
+          <div class="tl-date">Week 0 (Done)</div>
+          <div class="tl-title">Foundation</div>
+          <div class="tl-desc">ogt-engine deployed. Briefings generating. Kit.com archived and configured. 30 emails written. Bookstore cataloged. Mockups approved.</div>
+        </div>
+        <div class="timeline-item current">
+          <div class="tl-date">Weeks 1-2</div>
+          <div class="tl-title">Wire the pipeline</div>
+          <div class="tl-desc">Connect Kit.com send API. Dr. Long reviews and approves first 10 emails (H3 test). Set up auto-ingest for daily reports. Deploy home page + bookstore as live routes.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-date">Week 3</div>
+          <div class="tl-title">First sends</div>
+          <div class="tl-desc">Send Email #1 to 620 subscribers. Monitor open rate, click rate, unsubscribes. Daily sends begin. H1 and H4 tests start.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-date">Weeks 4-6</div>
+          <div class="tl-title">Optimize</div>
+          <div class="tl-desc">Complete first rotation (30 emails). Measure CTA performance by concept. Identify top 5 and bottom 5 performers. Adjust. H2 test results available.</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="tl-date">Weeks 7-8</div>
+          <div class="tl-title">Commerce</div>
+          <div class="tl-desc">Stripe integration live. Direct purchase from email → bookstore → checkout. Measure email-to-purchase conversion rate end-to-end.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-date">Weeks 9-10</div>
+          <div class="tl-title">Scale what works</div>
+          <div class="tl-desc">If H1-H4 hold: add /learn pages with audio clips. Build SEO content around top-performing concepts. Double down on winning CTAs.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-date">Week 12</div>
+          <div class="tl-title">90-day review</div>
+          <div class="tl-desc">All four hypotheses have data. Present results. Decide: double down, pivot, or stop.</div>
+        </div>
+      </div>
+
+      <hr>
+
+      <h3>90-Day Target</h3>
+      <div class="metrics">
+        <div class="metric accent"><div class="value">100</div><div class="desc">New email subscribers (from 620 → 720)</div></div>
+        <div class="metric accent"><div class="value">35%</div><div class="desc">Email open rate (sustained)</div></div>
+        <div class="metric accent"><div class="value">10</div><div class="desc">Bookstore purchases from email CTAs</div></div>
+      </div>
+      <p style="font-size:14px">These are modest targets. They exist to validate the model, not to impress. If we hit them, we have permission to invest more aggressively.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 11: OPERATING MODEL -->
+<div class="slide" id="s10">
+  <div class="label">Operating Model</div>
+  <h2>Who does what</h2>
+
+  <div class="cols cols-3">
+    <div>
+      <h3>Dr. Ken Long</h3>
+      <ul>
+        <li><strong>Continue what you do</strong> — generate daily reports, run coaching sessions, create content</li>
+        <li><strong>Review first 10 emails</strong> — approve voice and accuracy (one-time, ~30 min)</li>
+        <li><strong>Flag factual errors</strong> — if an email misrepresents a concept, we fix it immediately</li>
+        <li><strong>No new daily work</strong> — the system runs on your existing output</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Mark Holland</h3>
+      <ul>
+        <li><strong>Infrastructure decisions</strong> — Stripe setup, domain, commerce architecture</li>
+        <li><strong>Business oversight</strong> — pricing, membership tiers, partner terms</li>
+        <li><strong>Product strategy</strong> — which products to promote, new product creation</li>
+        <li><strong>90-day review</strong> — evaluate results, decide next phase</li>
+      </ul>
+    </div>
+    <div>
+      <h3>AI Operations (Claude)</h3>
+      <ul>
+        <li><strong>Daily pipeline</strong> — ingest, diff, build, send, track. Every morning.</li>
+        <li><strong>Content generation</strong> — emails, briefings, /learn pages, bookstore copy</li>
+        <li><strong>Optimization</strong> — concept rotation, CTA selection, engagement analysis</li>
+        <li><strong>Engineering</strong> — ogt-engine, Cloud Run, Kit API, Stripe integration</li>
+        <li><strong>Reporting</strong> — weekly growth metrics to Mark and Ken</li>
+      </ul>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="quote">
+    <p>The operating cost of this system is near zero. There is no marketing team to hire. No agency to manage. The marginal cost of sending the 100th email is the same as the 1st. The question is not whether we can afford to do this — it's whether the content converts.</p>
+  </div>
+</div>
+
+<!-- SLIDE 12: RISKS -->
+<div class="slide" id="s11">
+  <div class="label">Risks &amp; Mitigations</div>
+  <h2>What could go wrong</h2>
+
+  <div class="cols">
+    <div>
+      <h3 style="color:var(--red)">Risk</h3>
+      <ul>
+        <li><strong>Voice mismatch</strong> — Emails don't sound like Dr. Long. Students notice. Trust erodes.</li>
+        <li><strong>Factual errors</strong> — AI gets a trading concept wrong. A student acts on bad information.</li>
+        <li><strong>Email fatigue</strong> — Daily sends annoy subscribers. Open rates collapse. List shrinks.</li>
+        <li><strong>Gumroad friction</strong> — Current bookstore is on Gumroad. Adding Stripe creates two checkout experiences.</li>
+        <li><strong>Content runs dry</strong> — 30 emails covers 30 days. What happens on day 31?</li>
+      </ul>
+    </div>
+    <div>
+      <h3 style="color:var(--green)">Mitigation</h3>
+      <ul>
+        <li><strong>Approval gate</strong> — Dr. Long reviews first 10. All emails cite his knowledge base verbatim. No fabricated claims.</li>
+        <li><strong>Facts-only policy</strong> — Emails teach concepts, never give trade recommendations. Every claim traces to source material.</li>
+        <li><strong>Fallback cadence</strong> — If open rate drops below 20% after 14 days, switch to 3x/week. Kit already has active/digest segmentation.</li>
+        <li><strong>Phase Stripe in</strong> — Week 7-8. Keep Gumroad links until Stripe is tested. No disruption to existing buyers.</li>
+        <li><strong>Rotation + expansion</strong> — After 30, build 30 more from Foundations (163 lessons) and SGC recordings (180+ sessions). Source material is effectively infinite.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 13: WHY THIS WORKS -->
+<div class="slide" id="s12">
+  <div class="label">Competitive Position</div>
+  <h2>Why this particular approach, for this particular business</h2>
+
+  <p>Three structural advantages that make OGT different from every other trading education business trying AI:</p>
+
+  <ul>
+    <li><strong>The content already exists.</strong> We're not generating AI trading advice. We're distributing Dr. Long's 40-year methodology through a channel that didn't exist before. The AI operates the pipeline; it doesn't invent the content. This is an important distinction: we're a distribution engine, not a content generator.</li>
+    <li><strong>The data is proprietary and daily.</strong> Dr. Long's reports are auto-generated from his own systems — MACD seasons, regression lines, and signals across 300+ symbols. No competitor has this data. The daily briefing can't be replicated by someone with a ChatGPT subscription because the underlying data feed doesn't exist anywhere else.</li>
+    <li><strong>The cost structure inverts.</strong> Traditional trading educators hire content teams, video editors, email marketers, and community managers. Each additional student increases operational load. This system has near-zero marginal cost. The 1,000th subscriber costs the same as the 1st. The constraint is not operations — it's whether the content converts.</li>
+  </ul>
+
+  <p>We're not competing on AI sophistication. We're competing on the depth and authenticity of Dr. Long's methodology, delivered at a frequency and consistency that wasn't possible before.</p>
+</div>
+
+<!-- SLIDE 14: THE ASK -->
+<div class="slide" id="s13">
+  <div class="label">The Ask</div>
+  <h2>What we need to start</h2>
+
+  <div class="cols">
+    <div>
+      <h3>From Dr. Long</h3>
+      <ul>
+        <li><strong>30 minutes</strong> — Review the first 10 emails and mark: Approved / Edit / Rewrite</li>
+        <li><strong>Permission to send</strong> — Approval to email the 620 subscribers daily using his name</li>
+        <li><strong>Ongoing report access</strong> — Continue generating daily reports as usual (no change needed)</li>
+      </ul>
+    </div>
+    <div>
+      <h3>From Mark</h3>
+      <ul>
+        <li><strong>Stripe account</strong> — For direct commerce (Week 7-8, not urgent)</li>
+        <li><strong>Go/no-go on daily cadence</strong> — Confirm we're comfortable with daily sends to start</li>
+        <li><strong>90-day commitment</strong> — Enough runway to test all four hypotheses before deciding</li>
+      </ul>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="metrics">
+    <div class="metric"><div class="value">$0</div><div class="desc">Additional cost to run this system (Cloud Run free tier + Kit free tier covers current scale)</div></div>
+    <div class="metric"><div class="value">90</div><div class="desc">Days to prove or disprove the model with data</div></div>
+    <div class="metric"><div class="value">30 min</div><div class="desc">Dr. Long's total time commitment to launch</div></div>
+  </div>
+</div>
+
+<!-- SLIDE 15: CLOSE -->
+<div class="slide" id="s14">
+  <div class="label">Summary</div>
+  <h1>The content is built.<br>The system is built.<br>The emails are written.</h1>
+  <p class="lead">We need approval to press send.</p>
+
+  <hr>
+
+  <p>Review the assets:</p>
+  <ul>
+    <li><strong>30 daily emails</strong> — <a href="emails/30-day-rotation-v1.html" style="color:var(--accent)">View the full rotation</a></li>
+    <li><strong>Home page</strong> — <a href="home-v1.html" style="color:var(--accent)">View the mockup</a></li>
+    <li><strong>Bookstore</strong> — <a href="bookstore-v1.html" style="color:var(--accent)">View the catalog</a></li>
+    <li><strong>Live briefing engine</strong> — <a href="https://ogt-engine-997223893735.us-central1.run.app/" style="color:var(--accent)">View on Cloud Run</a></li>
+  </ul>
+
+  <hr>
+
+  <p style="color:var(--text-dim); font-size:15px;">OWL Group Trading — Growth Engineering<br>March 2026</p>
+</div>
+
+</div><!-- /slide-viewport -->
+
+<div class="nav">
+  <div class="progress-bar" id="progressBar"></div>
+  <button onclick="nav(-1)">&#9664; Prev</button>
+  <div class="slide-counter" id="counter">1 / 15</div>
+  <button onclick="nav(1)">Next &#9654;</button>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+let current = 0;
+
+function showSlide(idx) {
+  slides.forEach(s => s.classList.remove('active'));
+  slides[idx].classList.add('active');
+  current = idx;
+  document.getElementById('counter').textContent = `${idx + 1} / ${slides.length}`;
+  document.getElementById('progressBar').style.width = `${((idx + 1) / slides.length) * 100}%`;
+  document.querySelector('.slide-viewport').scrollTop = 0;
+}
+
+function nav(dir) {
+  let next = current + dir;
+  if (next < 0) next = 0;
+  if (next >= slides.length) next = slides.length - 1;
+  showSlide(next);
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nav(1); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); nav(-1); }
+});
+
+showSlide(0);
+</script>
+
+</body>
+</html>
