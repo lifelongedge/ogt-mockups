@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edge S2 — Daily Briefing — 2026-03-16</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0d1117;
+    --bg-panel: #0c0f14;
+    --bg-topbar: #080b10;
+    --card: #161b22;
+    --card-hover: #1c2128;
+    --card-border: #21262d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --text-dim: #6e7681;
+    --accent: #58a6ff;
+    --accent-dim: rgba(88,166,255,.12);
+    --green: #3fb950;
+    --green-dim: rgba(63,185,80,.12);
+    --red: #f85149;
+    --yellow: #d29922;
+    --orange: #db6d28;
+    --purple: #bc8cff;
+    --card-radius: 10px;
+    --guide-bg: #0f1318;
+    --guide-border: #1c2128;
+    --separator: #21262d;
+    --topbar-height: 48px;
+  }
+
+  [data-theme="light"] {
+    --bg: #f6f8fa;
+    --bg-panel: #eef1f5;
+    --bg-topbar: #24292f;
+    --card: #ffffff;
+    --card-hover: #f3f4f6;
+    --card-border: #d0d7de;
+    --text: #1f2328;
+    --text-muted: #656d76;
+    --text-dim: #8b949e;
+    --accent: #0969da;
+    --accent-dim: rgba(9,105,218,.08);
+    --green: #1a7f37;
+    --green-dim: rgba(26,127,55,.08);
+    --red: #cf222e;
+    --yellow: #9a6700;
+    --orange: #bc4c00;
+    --purple: #8250df;
+    --guide-bg: #f0f2f5;
+    --guide-border: #d0d7de;
+    --separator: #d0d7de;
+  }
+
+  html, body { height: 100%; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  .topbar {
+    height: var(--topbar-height);
+    background: var(--bg-topbar);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    border-bottom: 1px solid var(--separator);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .topbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .topbar-brand .owl { font-size: 22px; }
+  .topbar-brand .name {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    color: var(--text);
+  }
+  .topbar-brand .sub {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-left: 6px;
+  }
+  .topbar-nav {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .topbar-nav a {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+  .topbar-nav a:hover { color: var(--accent); }
+  .theme-toggle {
+    background: none;
+    border: 1px solid var(--card-border);
+    color: var(--text-muted);
+    padding: 4px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  .theme-toggle:hover { color: var(--text); border-color: var(--accent); }
+
+  .view-layout {
+    display: grid;
+    grid-template-columns: 1fr 6px 280px;
+    gap: 0;
+    min-height: calc(100vh - var(--topbar-height));
+    transition: grid-template-columns .25s ease;
+  }
+  .view-layout.guide-expanded {
+    grid-template-columns: 30fr 6px 70fr;
+  }
+
+  .pane-divider {
+    width: 6px;
+    cursor: col-resize;
+    background: var(--separator);
+    position: relative;
+    z-index: 10;
+    transition: background .15s;
+  }
+  .pane-divider:hover, .pane-divider.active {
+    background: var(--accent);
+  }
+  .pane-divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 1px;
+    width: 4px;
+    height: 32px;
+    transform: translateY(-50%);
+    border-radius: 2px;
+    background: var(--text-dim);
+    opacity: .4;
+    transition: opacity .15s;
+  }
+  .pane-divider:hover::after { opacity: .8; }
+
+  .view-main {
+    padding: 24px;
+    overflow-y: auto;
+    max-height: calc(100vh - var(--topbar-height));
+  }
+
+  .guide-pane {
+    background: var(--guide-bg);
+    border-left: 1px solid var(--guide-border);
+    padding: 16px;
+    overflow-y: auto;
+    max-height: calc(100vh - var(--topbar-height));
+    position: sticky;
+    top: var(--topbar-height);
+  }
+  .guide-pane-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--separator);
+  }
+  .guide-item {
+    padding: 10px 8px;
+    border-bottom: 1px solid var(--separator);
+    cursor: pointer;
+    transition: background .15s;
+    border-radius: 4px;
+  }
+  .guide-item:hover { background: var(--card-hover); }
+  .guide-item:last-child { border-bottom: none; }
+  .guide-item strong {
+    display: block;
+    font-size: 14px;
+    color: var(--text);
+  }
+  .guide-source {
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+
+  .guide-detail {
+    display: none;
+    padding: 16px 0;
+  }
+  .guide-detail.active { display: block; }
+
+  .guide-domain-badge { display:inline-block; font-size:.65rem; padding:1px 6px; border-radius:8px; background:var(--accent-dim); color:var(--accent); margin-right:6px; vertical-align:middle; text-transform:uppercase; letter-spacing:.5px; }
+  .guide-item-meta { display:flex; align-items:center; gap:4px; margin-top:2px; }
+  .guide-domain { font-size:.75rem; color:var(--text-muted); margin-bottom:4px; text-transform:uppercase; letter-spacing:1px; }
+  .guide-keyphrase { font-style:italic; color:var(--yellow); font-size:.9rem; margin-bottom:12px; }
+  .guide-title { font-size:16px; color:var(--accent); font-weight:700; margin-bottom:4px; }
+  .guide-tabs { display:flex; gap:4px; margin-bottom:12px; }
+  .guide-tabs .tab { padding:4px 12px; border-radius:12px; border:1px solid var(--card-border); background:transparent; color:var(--text-muted); cursor:pointer; font-size:.8rem; }
+  .guide-tabs .tab.active { background:var(--accent); color:#fff; border-color:var(--accent); }
+  .guide-tabs .tab:hover { border-color:var(--accent); }
+  .guide-quote { border-left:3px solid var(--accent); padding:8px 14px; margin:14px 0; font-style:italic; color:var(--text); background:var(--card); border-radius:0 8px 8px 0; }
+  .guide-quote cite { display:block; margin-top:6px; font-size:.8rem; color:var(--text-muted); font-style:normal; }
+  .guide-quiz { background:var(--card); border:1px solid var(--card-border); border-radius:8px; padding:14px; margin:14px 0; }
+  .quiz-label { font-weight:600; font-size:.85rem; color:var(--text); margin-bottom:8px; }
+  .quiz-question { color:var(--text); margin-bottom:10px; font-size:.9rem; }
+  .quiz-option { padding:8px 12px; margin-bottom:6px; border-radius:6px; border:1px solid var(--card-border); cursor:pointer; font-size:.85rem; color:var(--text); transition:all .2s; }
+  .quiz-option:hover { border-color:var(--accent); background:rgba(88,166,255,0.08); }
+  .quiz-option.correct { border-color:var(--green); background:rgba(63,185,80,0.15); color:var(--green); }
+  .quiz-option.incorrect { border-color:var(--red); background:rgba(248,81,73,0.15); color:var(--red); }
+  .quiz-explanation { margin-top:10px; padding:10px; background:rgba(63,185,80,0.08); border-radius:6px; font-size:.85rem; color:var(--text); border:1px solid rgba(63,185,80,0.2); }
+  .guide-historical { background:var(--card); border:1px solid var(--card-border); border-radius:8px; padding:12px; margin:14px 0; }
+  .hist-label { font-weight:600; font-size:.8rem; color:var(--text-muted); margin-bottom:6px; }
+  .hist-content { font-size:.88rem; color:var(--text); line-height:1.5; }
+  .guide-related { margin:14px 0; }
+  .rel-label { font-size:.8rem; color:var(--text-muted); margin-bottom:6px; font-weight:600; }
+  .related-pill { display:inline-block; padding:3px 10px; border-radius:12px; font-size:.78rem; border:1px solid var(--card-border); color:var(--accent); cursor:pointer; margin:2px 4px 2px 0; transition:all .15s; }
+  .related-pill:hover { background:rgba(88,166,255,0.1); border-color:var(--accent); }
+  .guide-content { font-size:13px; color:var(--text-muted); line-height:1.7; white-space:pre-line; margin-bottom:8px; }
+  .guide-layer { font-size:13px; color:var(--text-muted); line-height:1.7; white-space:pre-line; margin-bottom:8px; }
+  .guide-back {
+    font-size: 12px;
+    color: var(--accent);
+    cursor: pointer;
+    margin-top: 12px;
+    display: inline-block;
+  }
+  .guide-back:hover { text-decoration: underline; }
+
+  @media (max-width: 768px) {
+    .view-layout { grid-template-columns: 1fr; }
+    .guide-pane { position: static; max-height: none; border-left: none; border-top: 1px solid var(--guide-border); }
+  }
+
+  /* Briefing content styles */
+  
+/* -- Theme Variables -- */
+[data-theme="dark"]{
+  --ogt-bg-page:#0d1117;--ogt-bg-card:#161b22;--ogt-bg-inset:#0d1117;
+  --ogt-border:#30363d;--ogt-border-subtle:#21262d;
+  --ogt-text:#c9d1d9;--ogt-text-heading:#e6edf3;--ogt-text-muted:#8b949e;--ogt-text-faint:#484f58;
+  --ogt-link:#58a6ff;--ogt-positive:#3fb950;--ogt-negative:#f85149;--ogt-warning:#d29922;
+  --ogt-date-bg:#1f6feb22;--ogt-date-border:#1f6feb44;
+  --ogt-row-hover:#1c2129;
+  --ogt-shadow-sm:0 1px 3px rgba(0,0,0,.3);--ogt-shadow-lg:0 4px 12px rgba(0,0,0,.5);
+  --ogt-positive-bg:#3fb95020;--ogt-positive-border:#3fb95044;
+  --ogt-muted-bg:#8b949e20;--ogt-muted-border:#8b949e44;
+  --ogt-warning-bg-subtle:#d299220a;--ogt-warning-border-subtle:#d2992233;
+  --ogt-warning-bg-light:#d2992215;
+  --ogt-signal-flip-bg:#d299220d;
+  --ogt-buy-seg:#3fb95044;--ogt-cash-seg:#8b949e22;
+  --ogt-gauge-track:#21262d;
+  --ogt-toggle-bg:#30363d;
+}
+[data-theme="light"]{
+  --ogt-bg-page:#ffffff;--ogt-bg-card:#f6f8fa;--ogt-bg-inset:#ffffff;
+  --ogt-border:#d0d7de;--ogt-border-subtle:#d8dee4;
+  --ogt-text:#1f2328;--ogt-text-heading:#1f2328;--ogt-text-muted:#656d76;--ogt-text-faint:#8c959f;
+  --ogt-link:#0969da;--ogt-positive:#1a7f37;--ogt-negative:#cf222e;--ogt-warning:#9a6700;
+  --ogt-date-bg:#ddf4ff;--ogt-date-border:#54aeff66;
+  --ogt-row-hover:#f0f3f6;
+  --ogt-shadow-sm:0 1px 3px rgba(31,35,40,.1);--ogt-shadow-lg:0 4px 12px rgba(31,35,40,.15);
+  --ogt-positive-bg:#dafbe1;--ogt-positive-border:#1a7f3744;
+  --ogt-muted-bg:#eaeef2;--ogt-muted-border:#8c959f44;
+  --ogt-warning-bg-subtle:#fff8c5;--ogt-warning-border-subtle:#9a670044;
+  --ogt-warning-bg-light:#fff8c5;
+  --ogt-signal-flip-bg:#fff8c5;
+  --ogt-buy-seg:#1a7f3744;--ogt-cash-seg:#8c959f22;
+  --ogt-gauge-track:#d8dee4;
+  --ogt-toggle-bg:#d0d7de;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--ogt-bg-page);color:var(--ogt-text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica Neue,sans-serif;
+  line-height:1.6;-webkit-font-smoothing:antialiased;
+}
+.container{max-width:1200px;margin:0 auto;padding:24px 16px}
+a{color:var(--ogt-link);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* -- Theme Toggle -- */
+#theme-toggle{
+  position:fixed;top:16px;right:16px;z-index:1000;
+  width:40px;height:40px;border-radius:50%;border:none;
+  background:var(--ogt-toggle-bg);cursor:pointer;font-size:1.2rem;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:var(--ogt-shadow-sm);transition:background .2s ease;
+}
+#theme-toggle:hover{box-shadow:var(--ogt-shadow-lg)}
+
+/* -- Cards -- */
+.card{
+  background:var(--ogt-bg-card);border:1px solid var(--ogt-border);border-radius:12px;
+  padding:24px;margin-bottom:24px;
+  box-shadow:var(--ogt-shadow-sm);
+  transition:box-shadow .2s ease;
+}
+.card:hover{box-shadow:var(--ogt-shadow-lg)}
+.card-title{
+  font-size:1.1rem;font-weight:600;color:var(--ogt-text-heading);margin-bottom:16px;
+  display:flex;align-items:center;gap:8px;
+  border-bottom:1px solid var(--ogt-border);padding-bottom:12px;
+}
+.card-title .icon{font-size:1.3rem}
+
+/* -- Header -- */
+.header{text-align:center;padding:32px 0 16px;position:relative}
+.header h1{font-size:1.6rem;color:var(--ogt-text-heading);letter-spacing:1px;font-weight:700}
+.header .subtitle{color:var(--ogt-text-muted);font-size:.95rem;margin-top:4px}
+.header .date-badge{
+  display:inline-block;background:var(--ogt-date-bg);color:var(--ogt-link);
+  padding:4px 14px;border-radius:20px;font-size:.85rem;margin-top:10px;
+  border:1px solid var(--ogt-date-border);
+}
+
+/* -- Morning Brief -- */
+.brief-author{
+  display:flex;align-items:center;gap:14px;margin-bottom:14px;
+}
+.brief-author-photo{
+  width:48px;height:48px;border-radius:50%;object-fit:cover;flex-shrink:0;
+  border:2px solid var(--ogt-border);
+}
+.brief-author-name{font-size:15px;font-weight:700;color:var(--ogt-text-heading)}
+.brief-author-subtitle{font-size:12px;color:var(--ogt-text-muted)}
+.brief-item{
+  background:var(--ogt-bg-inset);border:1px solid var(--ogt-border);border-radius:8px;
+  padding:14px 18px;margin-bottom:10px;
+}
+.brief-item strong{color:var(--ogt-text-heading)}
+.brief-watch{
+  background:var(--ogt-warning-bg-light);border-left:3px solid var(--ogt-warning);
+  padding:12px 18px;border-radius:0 8px 8px 0;margin-top:14px;
+  color:var(--ogt-warning);
+}
+.human-note{
+  color:var(--ogt-text-muted);font-style:italic;font-size:.85rem;margin-top:14px;
+  border-top:1px dashed var(--ogt-border);padding-top:10px;
+}
+
+/* -- What Changed -- */
+.change-row{
+  display:flex;align-items:flex-start;gap:4px;
+  padding:10px 0;border-bottom:1px solid var(--ogt-border-subtle);
+}
+.change-row:last-child{border-bottom:none}
+.change-row .text{flex:1;color:var(--ogt-text);font-size:.93rem}
+.change-row .arrow{color:var(--ogt-link);font-size:.85rem;flex-shrink:0;margin-top:2px}
+
+/* -- Sector Map -- */
+.sector-grid{
+  display:grid;gap:6px;
+  grid-template-columns:repeat(auto-fill,minmax(120px,1fr));
+}
+.sector-tile{
+  border-radius:8px;padding:14px 10px;text-align:center;
+  transition:transform .15s;cursor:default;position:relative;overflow:hidden;
+  border:1px solid var(--ogt-border);
+}
+.sector-tile:hover{transform:scale(1.04)}
+.sector-tile .sym{font-weight:700;font-size:1rem;color:var(--ogt-text-heading)}
+.sector-tile .pct{font-size:.85rem;margin-top:4px;font-weight:600}
+
+/* -- Tables -- */
+.port-table{width:100%;border-collapse:collapse;font-size:.88rem}
+.port-table th{
+  text-align:left;color:var(--ogt-text-muted);font-weight:600;padding:8px 10px;
+  border-bottom:2px solid var(--ogt-border);cursor:pointer;user-select:none;
+  white-space:nowrap;
+}
+.port-table th:hover{color:var(--ogt-text-heading)}
+.port-table td{padding:8px 10px;border-bottom:1px solid var(--ogt-border-subtle);color:var(--ogt-text)}
+.port-table tr:hover td{background:var(--ogt-row-hover)}
+.port-table tr.signal-flip td{background:var(--ogt-signal-flip-bg);border-left:3px solid var(--ogt-warning)}
+.badge{
+  display:inline-block;padding:2px 10px;border-radius:12px;
+  font-size:.75rem;font-weight:700;letter-spacing:.5px;
+}
+.badge-buy{background:var(--ogt-positive-bg);color:var(--ogt-positive);border:1px solid var(--ogt-positive-border)}
+.badge-cash{background:var(--ogt-muted-bg);color:var(--ogt-text-muted);border:1px solid var(--ogt-muted-border)}
+.rank-up{color:var(--ogt-positive);font-weight:600}
+.rank-down{color:var(--ogt-negative);font-weight:600}
+.rank-flat{color:var(--ogt-text-muted)}
+.sort-arrow{font-size:.7rem;margin-left:3px}
+
+/* -- Risk Dashboard -- */
+.risk-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.gauge-card{
+  background:var(--ogt-bg-inset);border:1px solid var(--ogt-border);border-radius:10px;
+  padding:20px;text-align:center;
+}
+.gauge-card .label{color:var(--ogt-text-muted);font-size:.8rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.gauge-card .value{font-size:2rem;font-weight:700;color:var(--ogt-text-heading)}
+.gauge-card .context{color:var(--ogt-text-muted);font-size:.8rem;margin-top:6px}
+.gauge-bar{
+  height:8px;border-radius:4px;background:var(--ogt-gauge-track);margin-top:12px;position:relative;overflow:hidden;
+}
+.gauge-bar .fill{height:100%;border-radius:4px;transition:width .6s ease}
+.regime-badge{
+  display:inline-block;padding:6px 18px;border-radius:20px;
+  font-weight:700;font-size:.9rem;letter-spacing:.5px;
+}
+
+/* -- MACD Season Garden -- */
+.season-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.season-quad{border-radius:10px;padding:16px;min-height:100px}
+.season-quad .quad-title{font-weight:700;font-size:.9rem;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.season-badges{display:flex;flex-wrap:wrap;gap:6px}
+.season-sym{
+  display:inline-block;padding:3px 10px;border-radius:6px;
+  font-size:.78rem;font-weight:600;border:1px solid;
+  transition:transform .1s;
+}
+.season-sym:hover{transform:scale(1.08)}
+.season-sym.transitioned{
+  box-shadow:0 0 0 2px var(--ogt-warning);
+}
+
+/* -- Signal Summary -- */
+.signal-row{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.signal-label{width:80px;font-weight:600;color:var(--ogt-text-heading);font-size:.9rem;flex-shrink:0}
+.signal-bar-wrap{flex:1;display:flex;align-items:center;gap:10px}
+.signal-bar{height:26px;border-radius:6px;display:flex;overflow:hidden;flex:1}
+.signal-bar .buy-seg{background:var(--ogt-buy-seg);transition:width .4s}
+.signal-bar .cash-seg{background:var(--ogt-cash-seg);transition:width .4s}
+.signal-counts{font-size:.82rem;color:var(--ogt-text-muted);white-space:nowrap}
+.signal-delta{font-size:.78rem;margin-left:6px}
+
+/* -- Needs Human -- */
+.human-callout{
+  background:var(--ogt-warning-bg-subtle);border:1px solid var(--ogt-warning-border-subtle);border-radius:10px;
+  padding:20px 24px;
+}
+.human-callout h3{color:var(--ogt-warning);font-size:.95rem;margin-bottom:12px}
+.human-callout ul{list-style:disc;padding-left:20px}
+.human-callout li{color:var(--ogt-text-muted);font-size:.88rem;margin-bottom:6px}
+
+/* -- Footer -- */
+.footer{text-align:center;color:var(--ogt-text-faint);font-size:.8rem;padding:24px 0 12px;border-top:1px solid var(--ogt-border-subtle);margin-top:8px}
+
+/* -- Holding X Days Z-Score Table -- */
+.zscore-table{width:100%;border-collapse:collapse;font-size:.88rem}
+.zscore-table th{
+  text-align:center;color:var(--ogt-text-muted);font-weight:600;padding:8px 10px;
+  border-bottom:2px solid var(--ogt-border);white-space:nowrap;
+}
+.zscore-table th:first-child{text-align:left}
+.zscore-table td{padding:8px 10px;border-bottom:1px solid var(--ogt-border-subtle);text-align:center}
+.zscore-table td:first-child{text-align:left;font-weight:600;color:var(--ogt-text-heading)}
+.zscore-table tr:hover td{background:var(--ogt-row-hover)}
+.z-chip{
+  display:inline-block;padding:2px 8px;border-radius:6px;
+  font-size:.8rem;font-weight:600;min-width:50px;text-align:center;
+}
+.z-green{background:rgba(63,185,80,0.18);color:var(--ogt-positive)}
+.z-red{background:rgba(248,81,73,0.18);color:var(--ogt-negative)}
+.z-yellow{background:rgba(210,153,34,0.18);color:var(--ogt-warning)}
+.z-gray{background:var(--ogt-muted-bg);color:var(--ogt-text-muted)}
+
+/* -- Gap Stats -- */
+.gap-row{
+  display:flex;align-items:center;gap:12px;
+  padding:10px 0;border-bottom:1px solid var(--ogt-border-subtle);
+}
+.gap-row:last-child{border-bottom:none}
+.gap-label{width:160px;font-weight:600;color:var(--ogt-text-heading);font-size:.88rem;flex-shrink:0}
+.gap-bar-wrap{flex:1;display:flex;align-items:center;gap:10px}
+.gap-bar{height:18px;border-radius:4px;transition:width .4s}
+.gap-stats-text{font-size:.82rem;color:var(--ogt-text-muted);white-space:nowrap}
+
+/* -- Pivot Points Table -- */
+.pivot-table{width:100%;border-collapse:collapse;font-size:.88rem}
+details summary::-webkit-details-marker{display:none}
+details:not([open]) summary span:first-child{transform:rotate(-90deg)}
+.pivot-table th{
+  text-align:center;color:var(--ogt-text-muted);font-weight:600;padding:8px 10px;
+  border-bottom:2px solid var(--ogt-border);
+}
+.pivot-table th:first-child{text-align:left}
+.pivot-table td{padding:8px 10px;border-bottom:1px solid var(--ogt-border-subtle);text-align:center}
+.pivot-table td:first-child{text-align:left;font-weight:600;color:var(--ogt-text-heading)}
+.pivot-table tr:hover td{background:var(--ogt-row-hover)}
+.pivot-highlight{background:var(--ogt-date-bg);font-weight:700;color:var(--ogt-link)}
+
+/* -- Pain Extremes -- */
+.pain-section{margin-bottom:16px}
+.pain-section:last-child{margin-bottom:0}
+.pain-section-title{font-weight:600;font-size:.9rem;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.pain-badges{display:flex;flex-wrap:wrap;gap:6px}
+.pain-pill{
+  display:inline-block;padding:4px 12px;border-radius:14px;
+  font-size:.78rem;font-weight:600;border:1px solid;
+}
+.pain-pill-green{color:var(--ogt-positive);border-color:var(--ogt-positive-border);background:var(--ogt-positive-bg)}
+.pain-pill-red{color:var(--ogt-negative);border-color:rgba(248,81,73,0.27);background:rgba(248,81,73,0.13)}
+.pain-sub{color:var(--ogt-text-muted);font-size:.8rem;font-weight:600;margin-bottom:6px;margin-top:8px}
+
+/* -- Responsive -- */
+@media(max-width:768px){
+  .container{padding:12px 8px}
+  .season-grid{grid-template-columns:1fr}
+  .risk-grid{grid-template-columns:1fr 1fr}
+  .sector-grid{grid-template-columns:repeat(auto-fill,minmax(90px,1fr))}
+  .gap-row{flex-direction:column;align-items:flex-start;gap:6px}
+  .gap-label{width:auto}
+}
+
+
+
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-brand">
+    <span class="owl">&#129417;</span>
+    <span class="name">Edge S2</span>
+    <span class="sub">Daily Briefing — 2026-03-16</span>
+  </div>
+  <div class="topbar-nav">
+    <a href="/">&larr; All Briefings</a>
+    <button class="theme-toggle" onclick="toggleTheme()">&#9790; / &#9788;</button>
+  </div>
+</div>
+
+<div class="view-layout">
+  <div class="view-main">
+    
+<button id="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light theme"></button>
+<div class="container">
+  <div class="header">
+  <h1>OWL GROUP TRADING</h1>
+  <div class="subtitle">Daily Briefing</div>
+  <div class="date-badge">March 17, 2026</div>
+</div>
+  <div class="card" data-section="what-changed">
+  <div class="card-title">What Changed</div>
+  <div class="brief-author">
+    <img class="brief-author-photo" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCABeAFADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD1WkopK846ANJXOeIvE0ei3Qglk8oGDzV2LukkJYjao6L0yWOfavOdS8X6jqErCO4uYkPQLIw/rj9KLDSbPX7m/tLQA3FxHGDxlmwKji1OynvMMV1C7gA4WQHOfxrxO21BrRDvs2nkJzvdix/WsrVNfnukaB4Vji9UOGBxxz6A8+9NQbG1bc+ijTDXH+CvG1trun21rdyeXqaoFZW/5akDkg+vHSuvNQ1bQQ00w080w0gNCq17cC1sppyVAjQtlugqxmqWrWi32l3Fu38SHH1HIqxI8xbSbrX2m1CWSQ+cx69WA4/L0FaWmeG7eMtuiYY/vLitvT4jDYQRrhVVAATz27CpCSFO0lc8Z2gfrzXO5NnpwgkjEvLC0tzhEUv7YNcRrWkpcyuyKFbsPWu51C9tA7I1ySwHIZ/8a5yZEfc8UivkZGOlKDlF3LnGMo2OU0mafRdat5zgrFKp6npmvofIYZHQ8ivC5IY3fawGTweK9m0ecXGj2b7lJ8lA2DnBwK6ZS5jzJQcS4aYacaYTUEl+mmlpKsR5t4llntb8wzX62tpCx2qo5bjPPqOajsZ7rUNDupoy5SFfkYkgOD6f5612Gq6bb3l/lsLPswsmwMQO45qnPbR2ukzwxuzLjazsck+prF9j0qLbSOAXR7lreS5ksUnlIBUNLtBye30p+m6VdiWWWSKOKEZJCPkE102nahYGQWV55ZJG6Ld8wP19DTNZuwu9EYBMYAXgClKTtY19naRyM0ojeRo49z87fXNdP8PmmN9csZZWjMA3K56Nu/8A11ykwYsFGSzHHy9c16J4SsHtLOWaSJojJhVVhg7R3x9apGNZpQl5nSE0wmkL0wvVHAaWaM03NJmrJMzWy0cCXEYyynace9cbqlvJJppjXUPKmYEsHYYJPOK9AuIhcQPEf4hwfQ1xE1rKLi58tBDd7tpcjlR269vpUNWdzvws7x5Tk7W3h0fLnzbuUjDMqsVP4nirV0xltRMUePLYCM2SKu3elyxyLLdagZjnhT2rn9SvwJREjFgvf3pWcnodMpKC1Gx3Cx30DMflSRWOfYivYfPSVRJG6uj8qynII9Qa8GeUvIe49K9B8Cs+n6eulzSFmCmRQTnBzyB+GPyrX2T5W10POrzvJHatJTDJULPUZesjM6DNKaTNKATQQsS7nPQZJ9Kr3ErySR28R2tINzHuq16FLC31kcs61tiXcGYqnOPvH0rG1+zuLiNHt9nmLxyOo9M1uoiwoEQYGcVEyGRGAPzKcD6V1KlBK1tDJVZp8yep4t4gu7m3l23EpjGcFSuDn0Nc8ZjPKEhy7H0613HxAa1ub5bVYlkmtMSTYzuUEZ25Htjr61fs9O0eHT4buytw6SoHQDvn1NYrDLmsnodc8TPlUpLc5rTNFWKL7Rcj5uoB6Vs2MOblXUnIOcjsKuCxnu5lMijHRIl/z+tbdtpixIqDBZz8xHt2+ldKpRSsjilVcndhDPIQVb5scZ71IXptnHvubo44EpUVOYlkzjqDXNVwcZax0NaddrRmsZftlyir/qwc1ZhXddTTH/cX6CodOjEduG6nb1qzFxGo/E11s50K5/eIPxqGSUW/nylchVJ/KnglpAfeszX7hoNOuFjGGkXbu9M0JdBnlniZICjS+XIL+6iM11Ip5d3bIH0CgAVoeA45ZNAaKeVyI5XWFAOckj5efcmsrWXjmvbvKtkOEX5um35f6VvfD2XFzcQYJIIYknPPNStZHbWp8tFM7K3sBZxHLbp5OCfQegq8UWMoo64wKRfnusdhSSNm/RewXNaHAZ+ngx3t3E3/AD1zj6ipp1VH8hfvy7mHsAP8aZP+41hXHSZcH6ii6bbrlv6NAw/UUwP/2Q==" alt="Dr. Ken Long">
+    <div>
+      <div class="brief-author-name">Dr Ken Long</div>
+      <div class="brief-author-subtitle">Owl Group Trading</div>
+    </div>
+  </div>
+  <div style="margin-bottom:10px;display:flex;align-items:center;gap:8px"><span style="font-weight:600;font-size:.9rem;color:var(--text,#e6edf3)">Market Regime: No Change</span><span style="font-size:.85rem;font-weight:600;color:#d29922">Sideways</span></div>
+<div class="change-row">
+  <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#58a6ff;margin-right:8px;flex-shrink:0"></span>
+  <div class="text">VIX dropped -13.9% (27.3 -&gt; 23.5)</div>
+</div>
+<div class="change-row">
+  <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#58a6ff;margin-right:8px;flex-shrink:0"></span>
+  <div class="text">ADX crossed above 25 (24.3 -&gt; 27.8): trend strengthening</div>
+</div>
+<details style="margin-top:10px"><summary style="cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px"><span style="font-size:.65rem;color:var(--text-dim,#6e7681);transition:transform .15s">&#x25BC;</span><span style="font-weight:600;font-size:.9rem;color:var(--text,#e6edf3)">MACD Season Transitions (7 symbols)</span><span style="font-size:.8rem;color:var(--text-muted,#8b949e)">— 3 bullish, 4 bearish</span></summary><div style="margin-top:8px"><div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:8px 0">
+  <div style="background:rgba(210,153,34,.10);border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:10px;min-height:60px;position:relative"><span style="position:absolute;top:6px;right:8px;font-size:1.2rem;opacity:.7">&#x1F331;</span><div style="display:flex;align-items:center;margin-bottom:4px"><span style="display:inline-block;width:24px;height:24px;color:#d29922;vertical-align:middle;margin-right:4px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="32" x2="60" y2="32" opacity="0.3"/><path d="M8,52 Q16,50 24,44 Q32,36 40,28 Q48,18 56,14"/><polyline points="52,18 56,14 52,12"/></svg></span><span style="font-size:.75rem;font-weight:700;color:#d29922;letter-spacing:.5px">SPRING (2)</span><span style="font-weight:400;color:var(--text-dim,#6e7681);margin-left:4px;font-size:.75rem">emerging</span></div><div style="display:flex;flex-wrap:wrap;gap:2px"><span style="display:inline-block;margin:2px 4px;padding:2px 8px;border-radius:4px;font-size:.8rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08)"><strong>AXP</strong><span style="color:var(--text-dim,#6e7681);font-size:.7rem">&larr;win</span></span><span style="display:inline-block;margin:2px 4px;padding:2px 8px;border-radius:4px;font-size:.8rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08)"><strong>TSLA</strong><span style="color:var(--text-dim,#6e7681);font-size:.7rem">&larr;win</span></span></div></div>
+  <div style="background:rgba(63,185,80,.10);border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:10px;min-height:60px;position:relative"><span style="position:absolute;top:6px;right:8px;font-size:1.2rem;opacity:.7">&#x2600;&#xFE0F;</span><div style="display:flex;align-items:center;margin-bottom:4px"><span style="display:inline-block;width:24px;height:24px;color:#3fb950;vertical-align:middle;margin-right:4px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="32" x2="60" y2="32" opacity="0.3"/><path d="M8,30 Q16,22 24,16 Q32,12 40,16 Q48,22 56,30"/></svg></span><span style="font-size:.75rem;font-weight:700;color:#3fb950;letter-spacing:.5px">SUMMER (1)</span><span style="font-weight:400;color:var(--text-dim,#6e7681);margin-left:4px;font-size:.75rem">strong</span></div><div style="display:flex;flex-wrap:wrap;gap:2px"><span style="display:inline-block;margin:2px 4px;padding:2px 8px;border-radius:4px;font-size:.8rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08)"><strong>AMZN</strong><span style="color:var(--text-dim,#6e7681);font-size:.7rem">&larr;spr</span></span></div></div>
+  <div style="background:rgba(248,81,73,.10);border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:10px;min-height:60px;position:relative"><span style="position:absolute;top:6px;right:8px;font-size:1.2rem;opacity:.7">&#x2744;&#xFE0F;</span><div style="display:flex;align-items:center;margin-bottom:4px"><span style="display:inline-block;width:24px;height:24px;color:#f85149;vertical-align:middle;margin-right:4px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="32" x2="60" y2="32" opacity="0.3"/><path d="M8,34 Q16,42 24,48 Q32,52 40,48 Q48,42 56,34"/></svg></span><span style="font-size:.75rem;font-weight:700;color:#f85149;letter-spacing:.5px">WINTER (3)</span><span style="font-weight:400;color:var(--text-dim,#6e7681);margin-left:4px;font-size:.75rem">bearish</span></div><div style="display:flex;flex-wrap:wrap;gap:2px"><span style="display:inline-block;margin:2px 4px;padding:2px 8px;border-radius:4px;font-size:.8rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08)"><strong>JNJ</strong><span style="color:var(--text-dim,#6e7681);font-size:.7rem">&larr;fal</span></span><span style="display:inline-block;margin:2px 4px;padding:2px 8px;border-radius:4px;font-size:.8rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08)"><strong>MCD</strong><span style="color:var(--text-dim,#6e7681);font-size:.7rem">&larr;fal</span></span><span style="display:inline-block;margin:2px 4px;padding:2px 8px;border-radius:4px;font-size:.8rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08)"><strong>IYR</strong><span style="color:var(--text-dim,#6e7681);font-size:.7rem">&larr;fal</span></span></div></div>
+  <div style="background:rgba(88,166,255,.10);border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:10px;min-height:60px;position:relative"><span style="position:absolute;top:6px;right:8px;font-size:1.2rem;opacity:.7">&#x1F342;</span><div style="display:flex;align-items:center;margin-bottom:4px"><span style="display:inline-block;width:24px;height:24px;color:#58a6ff;vertical-align:middle;margin-right:4px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="32" x2="60" y2="32" opacity="0.3"/><path d="M8,14 Q16,18 24,24 Q32,30 40,36 Q48,44 56,50"/><polyline points="52,46 56,50 52,52"/></svg></span><span style="font-size:.75rem;font-weight:700;color:#58a6ff;letter-spacing:.5px">FALL (1)</span><span style="font-weight:400;color:var(--text-dim,#6e7681);margin-left:4px;font-size:.75rem">fading</span></div><div style="display:flex;flex-wrap:wrap;gap:2px"><span style="display:inline-block;margin:2px 4px;padding:2px 8px;border-radius:4px;font-size:.8rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08)"><strong>SLV</strong><span style="color:var(--text-dim,#6e7681);font-size:.7rem">&larr;sum</span></span></div></div>
+</div>
+<div style="text-align:center;font-size:.85rem;color:var(--text-muted,#8b949e);margin-top:6px">
+  Net: <strong style="color:var(--text-muted,#8b949e)">3 bullish, 4 bearish</strong>
+</div></div></details>
+</div>
+  
+  
+  
+  
+  <div class="card" data-section="season-garden">
+  <div class="card-title"><span class="icon">&#x1F33B;</span> MACD Season Garden <span style="font-size:.75rem;font-weight:400;color:var(--text-muted,#8b949e)">(symbol, MACD Z)</span></div>
+  <div style="margin-bottom:6px;color:#8b949e;font-size:.82rem;font-weight:600">Stocks</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:12px">
+  <div style="background:rgba(210,153,34,0.10);border:1px solid #d2992218;border-radius:8px;padding:8px 10px;min-height:50px;position:relative"><span style="position:absolute;top:4px;right:6px;font-size:1rem;opacity:.5">&#x1F331;</span><div style="display:flex;align-items:center;margin-bottom:4px"><span style="display:inline-block;width:20px;height:20px;color:#d29922;vertical-align:middle;margin-right:4px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="32" x2="60" y2="32" opacity="0.3"/><path d="M8,52 Q16,50 24,44 Q32,36 40,28 Q48,18 56,14"/><polyline points="52,18 56,14 52,12"/></svg></span><span style="font-size:.7rem;font-weight:700;color:#d29922;letter-spacing:.5px;text-transform:uppercase">spring (6)</span></div><div style="display:flex;flex-wrap:wrap;gap:1px"><span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(219,109,40,.15);border:1px solid rgba(219,109,40,.4);color:#db6d28" title="Transitioned this period"><strong>TSLA</strong>, 1.43</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(219,109,40,.15);border:1px solid rgba(219,109,40,.4);color:#db6d28" title="Transitioned this period"><strong>AXP</strong>, -1.18</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">NVDA, -0.77</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">AMD, 0.37</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">INTC, -0.35</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">GOOG, -0.05</span></div></div>
+  <div style="background:rgba(63,185,80,0.10);border:1px solid #3fb95018;border-radius:8px;padding:8px 10px;min-height:50px;position:relative"><span style="position:absolute;top:4px;right:6px;font-size:1rem;opacity:.5">&#x2600;&#xFE0F;</span><div style="display:flex;align-items:center;margin-bottom:4px"><span style="display:inline-block;width:20px;height:20px;color:#3fb950;vertical-align:middle;margin-right:4px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="32" x2="60" y2="32" opacity="0.3"/><path d="M8,30 Q16,22 24,16 Q32,12 40,16 Q48,22 56,30"/></svg></span><span style="font-size:.7rem;font-weight:700;color:#3fb950;letter-spacing:.5px;text-transform:uppercase">summer (5)</span></div><div style="display:flex;flex-wrap:wrap;gap:1px"><span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">PLTR, 1.87</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">MSFT, 1.86</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">ORCL, 1.84</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(219,109,40,.15);border:1px solid rgba(219,109,40,.4);color:#db6d28" title="Transitioned this period"><strong>AMZN</strong>, 1.33</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">CVX, -1.11</span></div></div>
+  <div style="background:rgba(248,81,73,0.10);border:1px solid #f8514918;border-radius:8px;padding:8px 10px;min-height:50px;position:relative"><span style="position:absolute;top:4px;right:6px;font-size:1rem;opacity:.5">&#x2744;&#xFE0F;</span><div style="display:flex;align-items:center;margin-bottom:4px"><span style="display:inline-block;width:20px;height:20px;color:#f85149;vertical-align:middle;margin-right:4px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="32" x2="60" y2="32" opacity="0.3"/><path d="M8,34 Q16,42 24,48 Q32,52 40,48 Q48,42 56,34"/></svg></span><span style="font-size:.7rem;font-weight:700;color:#f85149;letter-spacing:.5px;text-transform:uppercase">winter (17)</span></div><div style="display:flex;flex-wrap:wrap;gap:1px"><span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">PG, -2.49</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(219,109,40,.15);border:1px solid rgba(219,109,40,.4);color:#db6d28" title="Transitioned this period"><strong>MCD</strong>, -2.39</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">NKE, -2.38</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">KO, -2.24</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">MRK, -2.20</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(219,109,40,.15);border:1px solid rgba(219,109,40,.4);color:#db6d28" title="Transitioned this period"><strong>JNJ</strong>, -2.10</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">CAT, -2.09</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">GS, -2.04</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">HD, -1.99</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">MMM, -1.98</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">AAPL, -1.89</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">PFE, -1.80</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">JPM, -1.75</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">WMT, -1.63</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">BA, -1.58</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">CSCO, -1.07</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">DIS, -0.94</span></div></div>
+  <div style="background:rgba(88,166,255,0.10);border:1px solid #58a6ff18;border-radius:8px;padding:8px 10px;min-height:50px;position:relative"><span style="position:absolute;top:4px;right:6px;font-size:1rem;opacity:.5">&#x1F342;</span><div style="display:flex;align-items:center;margin-bottom:4px"><span style="display:inline-block;width:20px;height:20px;color:#58a6ff;vertical-align:middle;margin-right:4px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="32" x2="60" y2="32" opacity="0.3"/><path d="M8,14 Q16,18 24,24 Q32,30 40,36 Q48,44 56,50"/><polyline points="52,46 56,50 52,52"/></svg></span><span style="font-size:.7rem;font-weight:700;color:#58a6ff;letter-spacing:.5px;text-transform:uppercase">fall (2)</span></div><div style="display:flex;flex-wrap:wrap;gap:1px"><span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">XOM, -1.43</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">UNH, 1.18</span></div></div>
+</div><div style="margin-bottom:6px;color:#8b949e;font-size:.82rem;font-weight:600">ETFs</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:12px">
+  <div style="background:rgba(210,153,34,0.10);border:1px solid #d2992218;border-radius:8px;padding:8px 10px;min-height:50px;position:relative"><span style="position:absolute;top:4px;right:6px;font-size:1rem;opacity:.5">&#x1F331;</span><div style="display:flex;align-items:center;margin-bottom:4px"><span style="display:inline-block;width:20px;height:20px;color:#d29922;vertical-align:middle;margin-right:4px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="32" x2="60" y2="32" opacity="0.3"/><path d="M8,52 Q16,50 24,44 Q32,36 40,28 Q48,18 56,14"/><polyline points="52,18 56,14 52,12"/></svg></span><span style="font-size:.7rem;font-weight:700;color:#d29922;letter-spacing:.5px;text-transform:uppercase">spring (3)</span></div><div style="display:flex;flex-wrap:wrap;gap:1px"><span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">XLK, 1.16</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">QQQ, 0.70</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">XLY, -0.18</span></div></div>
+  <div style="background:rgba(63,185,80,0.10);border:1px solid #3fb95018;border-radius:8px;padding:8px 10px;min-height:50px;position:relative"><span style="position:absolute;top:4px;right:6px;font-size:1rem;opacity:.5">&#x2600;&#xFE0F;</span><div style="display:flex;align-items:center;margin-bottom:4px"><span style="display:inline-block;width:20px;height:20px;color:#3fb950;vertical-align:middle;margin-right:4px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="32" x2="60" y2="32" opacity="0.3"/><path d="M8,30 Q16,22 24,16 Q32,12 40,16 Q48,22 56,30"/></svg></span><span style="font-size:.7rem;font-weight:700;color:#3fb950;letter-spacing:.5px;text-transform:uppercase">summer (1)</span></div><div style="display:flex;flex-wrap:wrap;gap:1px"><span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">USO, 2.63</span></div></div>
+  <div style="background:rgba(248,81,73,0.10);border:1px solid #f8514918;border-radius:8px;padding:8px 10px;min-height:50px;position:relative"><span style="position:absolute;top:4px;right:6px;font-size:1rem;opacity:.5">&#x2744;&#xFE0F;</span><div style="display:flex;align-items:center;margin-bottom:4px"><span style="display:inline-block;width:20px;height:20px;color:#f85149;vertical-align:middle;margin-right:4px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="32" x2="60" y2="32" opacity="0.3"/><path d="M8,34 Q16,42 24,48 Q32,52 40,48 Q48,42 56,34"/></svg></span><span style="font-size:.7rem;font-weight:700;color:#f85149;letter-spacing:.5px;text-transform:uppercase">winter (20)</span></div><div style="display:flex;flex-wrap:wrap;gap:1px"><span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">MDY, -2.71</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">XLI, -2.69</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">XLV, -2.48</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">XLB, -2.38</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">EPP, -2.37</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">EFA, -2.31</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">IWM, -2.29</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">IEV, -2.29</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">EEM, -2.28</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">DIA, -2.27</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">XOP, -2.27</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">XLP, -2.27</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">SPY, -2.21</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">EWJ, -2.17</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">XLF, -2.17</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">EWW, -2.12</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(219,109,40,.15);border:1px solid rgba(219,109,40,.4);color:#db6d28" title="Transitioned this period"><strong>IYR</strong>, -2.05</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">EWZ, -1.79</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">ILF, -1.74</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">TLT, -1.72</span></div></div>
+  <div style="background:rgba(88,166,255,0.10);border:1px solid #58a6ff18;border-radius:8px;padding:8px 10px;min-height:50px;position:relative"><span style="position:absolute;top:4px;right:6px;font-size:1rem;opacity:.5">&#x1F342;</span><div style="display:flex;align-items:center;margin-bottom:4px"><span style="display:inline-block;width:20px;height:20px;color:#58a6ff;vertical-align:middle;margin-right:4px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="32" x2="60" y2="32" opacity="0.3"/><path d="M8,14 Q16,18 24,24 Q32,30 40,36 Q48,44 56,50"/><polyline points="52,46 56,50 52,52"/></svg></span><span style="font-size:.7rem;font-weight:700;color:#58a6ff;letter-spacing:.5px;text-transform:uppercase">fall (4)</span></div><div style="display:flex;flex-wrap:wrap;gap:1px"><span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">XLE, -1.88</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">GLD, -1.34</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--text-muted,#8b949e)">XLU, -0.55</span>
+<span style="display:inline-block;margin:1px 3px;padding:1px 6px;border-radius:3px;font-size:.75rem;background:rgba(219,109,40,.15);border:1px solid rgba(219,109,40,.4);color:#db6d28" title="Transitioned this period"><strong>SLV</strong>, 0.32</span></div></div>
+</div>
+  <div style="margin-top:4px;color:#d29922;font-size:.78rem">7 symbols transitioned this period (highlighted in orange)</div>
+</div>
+  
+  <div class="card" data-section="pain-extremes">
+  <div class="card-title"><span class="icon">&#x1F525;</span> 10-Day Pain Extremes</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+    <div class="pain-section">
+  <div class="pain-section-title">&#x1F7E2; Min Pain (strongest)</div>
+  <div class="pain-sub">Dow 30</div><div class="pain-badges"><span class="pain-pill pain-pill-green">XOM</span> <span class="pain-pill pain-pill-green">CVX</span> <span class="pain-pill pain-pill-green">VZ</span> <span class="pain-pill pain-pill-green">VZ</span> <span class="pain-pill pain-pill-green">WMT</span></div>
+<div class="pain-sub">ETF 100</div><div class="pain-badges"><span class="pain-pill pain-pill-green">SHV</span> <span class="pain-pill pain-pill-green">IYE</span> <span class="pain-pill pain-pill-green">BSV</span> <span class="pain-pill pain-pill-green">EWT</span> <span class="pain-pill pain-pill-green">XLU</span></div>
+</div>
+    <div class="pain-section">
+  <div class="pain-section-title">&#x1F534; Max Pain (weakest)</div>
+  <div class="pain-sub">Dow 30</div><div class="pain-badges"><span class="pain-pill pain-pill-red">UMAC</span> <span class="pain-pill pain-pill-red">GS</span> <span class="pain-pill pain-pill-red">NUE</span> <span class="pain-pill pain-pill-red">NKE</span> <span class="pain-pill pain-pill-red">BA</span></div>
+<div class="pain-sub">ETF 100</div><div class="pain-badges"><span class="pain-pill pain-pill-red">GDX</span> <span class="pain-pill pain-pill-red">UDOW</span> <span class="pain-pill pain-pill-red">SLV</span> <span class="pain-pill pain-pill-red">ITB</span> <span class="pain-pill pain-pill-red">UNG</span></div>
+</div>
+  </div>
+</div>
+  
+  <div class="footer">
+  Powered by Edge S2 &bull; AI grounded in Dr. Ken Long's methodology &bull; Educational use only
+</div>
+</div>
+
+
+  </div>
+
+  <div class="pane-divider" id="pane-divider" title="Click to expand/collapse guide"></div>
+
+  <div class="guide-pane">
+    <div class="guide-pane-title">&#128214; Concept Guide</div>
+    <button class="guide-expand-btn" id="guide-expand-btn" onclick="toggleGuideExpand()">&#9664; Expand guide</button>
+    <div id="guide-list">
+      
+          <div class="guide-item" onclick="showConcept('market-mosaic')">
+            <strong> Market Mosaic</strong>
+            <div class="guide-item-meta"><span class="guide-domain-badge">📊 Market</span><span class="guide-source">Dr. Long's Daily Report Framework</span></div>
+          </div>
+          <div class="guide-item" onclick="showConcept('market-classification')">
+            <strong> Market Classification</strong>
+            <div class="guide-item-meta"><span class="guide-domain-badge">📊 Market</span><span class="guide-source">Dr. Long's Daily Report Framework</span></div>
+          </div>
+          <div class="guide-item" onclick="showConcept('condition-lenses')">
+            <strong> Condition Lenses</strong>
+            <div class="guide-item-meta"><span class="guide-domain-badge">📊 Market</span><span class="guide-source">Dr. Long's Daily Report Framework</span></div>
+          </div>
+          <div class="guide-item" onclick="showConcept('riskz')">
+            <strong>📊 Risk Z</strong>
+            <div class="guide-item-meta"><span class="guide-domain-badge">📊 Market</span><span class="guide-source">Foundations Module 4 + Weekend Report Jan 31, 2026</span></div>
+          </div>
+          <div class="guide-item" onclick="showConcept('ndx-timeframes')">
+            <strong> Multi-Timeframe NDX</strong>
+            <div class="guide-item-meta"><span class="guide-domain-badge">📊 Market</span><span class="guide-source">Dr. Long's Daily Report Framework</span></div>
+          </div>
+          <div class="guide-item" onclick="showConcept('gap-stats')">
+            <strong> Gap Statistics</strong>
+            <div class="guide-item-meta"><span class="guide-domain-badge">📊 Market</span><span class="guide-source">Dr. Long's Daily Report Framework</span></div>
+          </div>
+          <div class="guide-item" onclick="showConcept('macd')">
+            <strong>🍃 MACD 4 Seasons</strong>
+            <div class="guide-item-meta"><span class="guide-domain-badge">⚙️ System</span><span class="guide-source">Foundations Module 8: MACD Analysis + Daily Report Mar 12, 2026</span></div>
+          </div>
+          <div class="guide-item" onclick="showConcept('max-pain')">
+            <strong> Min/Max Pain Extremes</strong>
+            <div class="guide-item-meta"><span class="guide-domain-badge">📊 Market</span><span class="guide-source">Dr. Long's Daily Report Framework</span></div>
+          </div>
+          <div class="guide-item" onclick="showConcept('etf2')">
+            <strong> ETF2 Exposure Model</strong>
+            <div class="guide-item-meta"><span class="guide-domain-badge">📊 Market</span><span class="guide-source">Foundations Module 4: Risk Management</span></div>
+          </div>
+          <div class="guide-item" onclick="showConcept('etf22')">
+            <strong> ETF22 Universe</strong>
+            <div class="guide-item-meta"><span class="guide-domain-badge">📊 Market</span><span class="guide-source">Foundations Module 3: ETF22 Rankings</span></div>
+          </div>
+          <div class="guide-item" onclick="showConcept('vix')">
+            <strong> VIX (Volatility Index)</strong>
+            <div class="guide-item-meta"><span class="guide-domain-badge">📊 Market</span><span class="guide-source">Foundations Module 2: Reading Market Conditions</span></div>
+          </div>
+          <div class="guide-item" onclick="showConcept('critical-state')">
+            <strong> Critical State</strong>
+            <div class="guide-item-meta"><span class="guide-domain-badge">📊 Market</span><span class="guide-source">Weekend Report Narration, Jan 31 2026</span></div>
+          </div>
+          <div class="guide-item" onclick="showConcept('intl-rotation')">
+            <strong> International Rotation</strong>
+            <div class="guide-item-meta"><span class="guide-domain-badge">📊 Market</span><span class="guide-source">Weekend Report Narration, Jan 31 2026</span></div>
+          </div>
+          <div class="guide-item" onclick="showConcept('world-market')">
+            <strong> World Market Model (STR/CON/QUAL)</strong>
+            <div class="guide-item-meta"><span class="guide-domain-badge">📊 Market</span><span class="guide-source">Weekend Report Narration, Jan 31 2026</span></div>
+          </div>
+          <div class="guide-item" onclick="showConcept('frog')">
+            <strong> Frog Trading Value</strong>
+            <div class="guide-item-meta"><span class="guide-domain-badge">⚙️ System</span><span class="guide-source">Foundations Module 7: Frog Trading</span></div>
+          </div>
+          <div class="guide-item" onclick="showConcept('rlff')">
+            <strong> RLFF (Regression Line Fractal Framework)</strong>
+            <div class="guide-item-meta"><span class="guide-domain-badge">⚙️ System</span><span class="guide-source">Weekend Report Narration, Jan 31 2026</span></div>
+          </div>
+          <div class="guide-item" onclick="showConcept('signal-noise')">
+            <strong> Signal to Noise Ratio</strong>
+            <div class="guide-item-meta"><span class="guide-domain-badge">⚙️ System</span><span class="guide-source">Weekend Report Narration, Jan 31 2026</span></div>
+          </div>
+          <div class="guide-item" onclick="showConcept('overreaction')">
+            <strong> Overreaction & Channeling Systems</strong>
+            <div class="guide-item-meta"><span class="guide-domain-badge">⚙️ System</span><span class="guide-source">Weekend Report Narration, Jan 31 2026</span></div>
+          </div>
+          <div class="guide-item" onclick="showConcept('dragon')">
+            <strong>🐉 The Dragon</strong>
+            <div class="guide-item-meta"><span class="guide-domain-badge">⚙️ System</span><span class="guide-source">Daily Report Narration, Feb 26 2026</span></div>
+          </div>
+          <div class="guide-item" onclick="showConcept('swing-frame')">
+            <strong> Swing Frame of the Day</strong>
+            <div class="guide-item-meta"><span class="guide-domain-badge">⚙️ System</span><span class="guide-source">Daily Report Narration, Feb 26 2026</span></div>
+          </div>
+          <div class="guide-item" onclick="showConcept('o10')">
+            <strong> O10 (Opening Range 10 Minutes)</strong>
+            <div class="guide-item-meta"><span class="guide-domain-badge">⚙️ System</span><span class="guide-source">Daily Report Narration, Feb 26 2026</span></div>
+          </div>
+          <div class="guide-item" onclick="showConcept('standard-risk')">
+            <strong> Standard Risk Box</strong>
+            <div class="guide-item-meta"><span class="guide-domain-badge">⚙️ System</span><span class="guide-source">Daily Report Narration, Feb 26 2026</span></div>
+          </div>
+          <div class="guide-item" onclick="showConcept('kata-2')">
+            <strong> Kata 2 (Continuation Trade)</strong>
+            <div class="guide-item-meta"><span class="guide-domain-badge">⚙️ System</span><span class="guide-source">Daily Report Narration, Feb 26 2026</span></div>
+          </div>
+          <div class="guide-item" onclick="showConcept('one-two-three')">
+            <strong> 1-2-3 Exit Pattern</strong>
+            <div class="guide-item-meta"><span class="guide-domain-badge">⚙️ System</span><span class="guide-source">Daily Report Narration, Feb 26 2026</span></div>
+          </div>
+          <div class="guide-item" onclick="showConcept('r-multiple')">
+            <strong> R-Multiple</strong>
+            <div class="guide-item-meta"><span class="guide-domain-badge">⚙️ System</span><span class="guide-source">Daily Report Narration, Feb 26 2026</span></div>
+          </div>
+          <div class="guide-item" onclick="showConcept('keep-70')">
+            <strong>🛡️ Keep 70% Rule</strong>
+            <div class="guide-item-meta"><span class="guide-domain-badge">⚙️ System</span><span class="guide-source">Daily Report Narration, Feb 26 2026</span></div>
+          </div>
+          <div class="guide-item" onclick="showConcept('zero-state')">
+            <strong>🧘 Zero State</strong>
+            <div class="guide-item-meta"><span class="guide-domain-badge">🧠 Self</span><span class="guide-source">Daily Report Narration, Feb 26 2026</span></div>
+          </div>
+          <div class="guide-item" onclick="showConcept('check-hold')">
+            <strong> Check or Hold</strong>
+            <div class="guide-item-meta"><span class="guide-domain-badge">🧠 Self</span><span class="guide-source">Owl Group Trading Protocol</span></div>
+          </div>
+          <div class="guide-item" onclick="showConcept('routine')">
+            <strong> Do Routine Things Routinely</strong>
+            <div class="guide-item-meta"><span class="guide-domain-badge">🧠 Self</span><span class="guide-source">Owl Group Trading Philosophy</span></div>
+          </div>
+          <div class="guide-item" onclick="showConcept('price-levels')">
+            <strong> Key Price Levels</strong>
+            <div class="guide-item-meta"><span class="guide-domain-badge">📊 Market</span><span class="guide-source">Weekend Report Narration, Jan 31 2026</span></div>
+          </div>
+    </div>
+    <div id="guide-detail" class="guide-detail"></div>
+  </div>
+</div>
+
+<script>
+// Theme
+function toggleTheme() {
+  const html = document.documentElement;
+  html.dataset.theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('theme', html.dataset.theme);
+}
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved) document.documentElement.dataset.theme = saved;
+})();
+
+// Pane divider toggle
+function toggleGuideExpand() {
+  var layout = document.querySelector('.view-layout') || document.querySelector('.layout');
+  var divider = document.getElementById('pane-divider');
+  var btn = document.getElementById('guide-expand-btn');
+  if (layout) layout.classList.toggle('guide-expanded');
+  if (divider) divider.classList.toggle('active');
+  var expanded = layout && layout.classList.contains('guide-expanded');
+  if (btn) btn.textContent = expanded ? 'Collapse guide \u25B6' : '\u25C0 Expand guide';
+}
+document.getElementById('pane-divider').addEventListener('click', toggleGuideExpand);
+
+// Guide concepts
+const concepts = {"market-mosaic": {"title": "Market Mosaic", "domain": "market", "content": "The Market Mosaic is the daily situational awareness dashboard. It combines five independent lenses into a single view of market conditions.\n\nSub-components:\n- Market Classification (3x3 grid: trend x volatility)\n- Condition Lenses (200dma%, ADX, ATR%, VIX ratio)\n- Risk Z (volatility compression gauge)\n- Multi-Timeframe NDX (zone-based momentum grid)\n- Gap Statistics (200-day gap direction and follow-through)\n\nWhen the Market Mosaic appears inside 'What Changed', it means the market regime shifted -- the most important signal in Dr. Long's framework.", "source": "Dr. Long's Daily Report Framework", "related": ["market-classification", "condition-lenses", "riskz", "ndx-timeframes", "gap-stats"]}, "market-classification": {"title": "Market Classification", "domain": "market", "content": "A 3x3 grid classifying the market by trend (Bullish / Sideways / Bearish) and volatility (Volatile / Normal / Quiet).\n\nDr. Long: \"You need to know what kind of market you're in before you pick your systems. A Bullish Volatile market rewards different strategies than Sideways Quiet.\"\n\nOnly one cell is active at a time. The classification drives which trading systems are in play and what exposure level is appropriate.", "source": "Dr. Long's Daily Report Framework", "related": ["market-mosaic", "etf2", "riskz"]}, "condition-lenses": {"title": "Condition Lenses", "domain": "market", "content": "Four independent perspectives on market conditions:\n\n- 200dma% — price distance from the 200-day moving average. Above = bullish structure, below = bearish.\n- ADX(14) — trend strength. Below 20 = no trend, above 25 = trending.\n- ATR%(100) — current volatility as percentage of price. High = volatile, low = compressed.\n- VIX MA(30/10) — ratio of long to short VIX averages. Below 1.0 = risk off.\n\nEach lens is independent. When all four agree, conviction is high. When they diverge, the market is in transition.", "source": "Dr. Long's Daily Report Framework", "related": ["market-mosaic", "riskz", "market-classification"]}, "riskz": {"title": "Risk Z", "domain": "market", "icon": "📊", "layers": {"simple": "Risk Z is like a weather forecast for the market. Green means clear skies. Yellow means clouds forming. Red means storm warning. Right now it's telling you to carry an umbrella — be prepared, not scared.", "detailed": "Risk Z measures how unusual current volatility is compared to history. It takes the VIX (the market's 'fear gauge'), compares the 30-day average to the 10-day average, then asks: 'Is this ratio normal or extreme?' When Risk Z goes below -1, volatility is unusually compressed — like a spring being pressed down. History shows these periods often precede sharp moves. Dr. Long's response: reduce exposure, tighten stops, prepare for both directions.", "technical": "Risk Z = Z-score of [VIX MA(30) / VIX MA(10)] over a 5,000-day lookback window. Normal range: -1 to +1 (one standard deviation). Current reading: -1.58 (abnormally negative). This drives the ETF2 exposure model — at -1.58, exposure drops from 50% to 20%. The 20-year VIX stats: max 82.7, +1σ 24.7, mean 17.9, -1σ 11.0, min 9.1."}, "key_phrase": "Early warning against complacency", "dr_long_quote": "This Risk Z is early warning against complacency. Compound critical state. So the maximum potential for explosive moves out of this in any direction.", "quiz": {"question": "Risk Z just dropped from -0.5 to -1.6. What does this mean?", "options": ["The market is about to crash — sell everything", "Volatility is unusually compressed — be alert for a potential expansion", "Everything is fine — keep trading normally", "Buy more stocks — low volatility means safety"], "correct": 1, "explanation": "Risk Z at -1.6 means VIX is abnormally low relative to its 20-year history. Dr. Long reads this as 'early warning against complacency' — not a sell signal, but a signal to reduce position sizes and be prepared for volatility to return."}, "live_reference": {"section": "risk_dashboard", "callout": "Check the Risk Dashboard above — the Risk Z gauge shows today's reading."}, "historical": {"date": "2026-01-31", "narrative": "On January 31, Risk Z hit -1.58. Dr. Long warned: 'This is massive critical state.' Two weeks later, SPY dropped from 700 to 670 — a 4.3% decline. Traders who heeded the Risk Z warning had already reduced exposure from 50% to 20%."}, "related": ["critical-state", "vix", "etf2"], "source": "Foundations Module 4 + Weekend Report Jan 31, 2026", "content": "Risk Z measures how unusual current volatility is compared to history. It takes the VIX (the market's 'fear gauge'), compares the 30-day average to the 10-day average, then asks: 'Is this ratio normal or extreme?' When Risk Z goes below -1, volatility is unusually compressed — like a spring being pressed down. History shows these periods often precede sharp moves. Dr. Long's response: reduce exposure, tighten stops, prepare for both directions."}, "ndx-timeframes": {"title": "Multi-Timeframe NDX", "domain": "market", "content": "Zone-based momentum grid for SPY across five timeframes: Annual (-270d), Quarter (-90d), Month (-30d), 2-Week (-10d), Cycle (-2d).\n\nEach timeframe is classified into zones: Overbought, Neutral+, Neutral-, Oversold. When short timeframes are oversold while long timeframes stay overbought, it signals a pullback within a trend -- Dr. Long's favorite buy-the-dip setup.\n\nWhen all timeframes align in the same zone, the move has broad momentum confirmation.", "source": "Dr. Long's Daily Report Framework", "related": ["market-mosaic", "rlff", "critical-state"]}, "gap-stats": {"title": "Gap Statistics", "domain": "market", "content": "200-day history of opening gaps classified by direction and follow-through:\n\n- Gap Down / Drop — gap down that continues lower (bearish confirmation)\n- Gap Down / Reverse — gap down that reverses higher (buy-the-dip)\n- Gap Up / Reverse — gap up that fades (distribution)\n- Gap Up / Gain — gap up that continues higher (bullish confirmation)\n\nThe ratio between reversals and continuations reveals whether dip-buyers or sellers are winning. In healthy markets, Gap Down / Reverse dominates.", "source": "Dr. Long's Daily Report Framework", "related": ["market-mosaic", "market-classification"]}, "macd": {"title": "MACD 4 Seasons", "domain": "system", "icon": "🍃", "layers": {"simple": "Stocks cycle through four seasons like nature. Spring 🌱 = new growth (momentum turning up). Summer ☀️ = full bloom (strong trend). Fall 🍂 = leaves changing (momentum fading). Winter ❄️ = dormant (bearish, avoid or short).\n\nThe natural cycle goes clockwise: Spring → Summer → Fall → Winter → Spring. Most stocks follow this pattern.\n\nWatch for unusual transitions ⚡ — when a stock skips a season (Fall → Summer) or reverses direction (Spring → Winter). These signal something abnormal is happening and deserve extra attention.", "detailed": "The MACD histogram moves in cycles that Dr. Long maps to four seasons:\n\nSpring 🌱 = MACD turning up from below zero (early momentum). Buy setup.\nSummer ☀️ = MACD positive and rising (strong trend — ride it).\nFall 🍂 = MACD turning down from above zero (momentum fading — take profits).\nWinter ❄️ = MACD negative and falling (bearish — stay away or short).\n\nKey trading signals are the transitions:\n• Winter→Spring is a buy setup\n• Summer→Fall is a sell/take-profit signal\n\nUNUSUAL TRANSITIONS (marked with ⚡ in briefings):\nThe natural cycle is Spring→Summer→Fall→Winter→Spring. Any transition that skips a season or reverses direction is unusual:\n• Fall→Summer (like CVX on Mar 12) — reversal, skipped Winter and Spring\n• Spring→Winter (like NVDA on Jan 31) — sharp reversal, skipped Summer and Fall\n• Summer→Spring — reverse without completing the cycle\n\nUnusual transitions tell you the stock is behaving out of character. This could signal sector rotation, earnings shock, or broader regime change.", "technical": "Season classification by MACD line relative to zero line:\nSpring: MACD < 0, slope > 0 (below zero, turning up)\nSummer: MACD > 0, slope > 0 (above zero, rising)\nFall: MACD > 0, slope < 0 (above zero, turning down)\nWinter: MACD < 0, slope < 0 (below zero, falling)\n\nMACD Z normalizes using Bollinger Band width BB(30,1).\n\nTRANSITION RULES:\nNatural cycle (clockwise): Spr→Sum→Fall→Win→Spr\nNormal transition = one step clockwise\nUnusual transition = any non-clockwise move:\n  • Skip forward (Spr→Fall, Sum→Win)\n  • Reverse (Fall→Sum, Win→Fall, Sum→Spr, Spr→Win)\n  • Skip reverse (Fall→Spr, Win→Sum)\n\nIn the Season Flow Matrix: unusual transitions are highlighted orange with ⚡. Count of unusual vs normal gives a regime instability signal."}, "key_phrase": "Which season is the stock in — and did it get there normally?", "dr_long_quote": "NVDA just went from Spring to Winter. That's unusual. That tells you the character of this market.", "quiz": {"question": "CVX moved from Fall to Summer. The natural cycle is Spring→Summer→Fall→Winter. What does this transition tell you?", "options": ["Normal — Fall to Summer is a standard progression", "Unusual — it reversed direction, skipping Winter and Spring entirely", "Meaningless — individual stocks don't follow the season cycle", "Bearish — any transition to Summer is a sell signal"], "correct": 1, "explanation": "Fall→Summer is unusual because it reverses the natural cycle (which would go Fall→Winter next). CVX skipped Winter and Spring entirely, jumping back to Summer. This signals something abnormal — possibly a sector-specific catalyst or rotation. In the briefing, unusual transitions are highlighted in orange with ⚡."}, "live_reference": {"section": "season_garden", "callout": "Check the Season Garden for current positions, and the Season Flow Matrix in What Changed for today's transitions — orange ⚡ tags mark unusual moves."}, "historical": {"date": "2026-03-12", "narrative": "On Mar 12, 15 symbols changed seasons. CVX went Fall→Summer (unusual ⚡ — reversed the cycle). Meanwhile, 8 symbols moved Fall→Winter (normal cycle). The one unusual transition in a sea of normal bearish moves made CVX stand out as worth investigating."}, "related": ["rlff", "etf22", "signal-noise"], "source": "Foundations Module 8: MACD Analysis + Daily Report Mar 12, 2026", "content": "The MACD histogram moves in cycles that Dr. Long maps to four seasons:\n\nSpring 🌱 = MACD turning up from below zero (early momentum). Buy setup.\nSummer ☀️ = MACD positive and rising (strong trend — ride it).\nFall 🍂 = MACD turning down from above zero (momentum fading — take profits).\nWinter ❄️ = MACD negative and falling (bearish — stay away or short).\n\nKey trading signals are the transitions:\n• Winter→Spring is a buy setup\n• Summer→Fall is a sell/take-profit signal\n\nUNUSUAL TRANSITIONS (marked with ⚡ in briefings):\nThe natural cycle is Spring→Summer→Fall→Winter→Spring. Any transition that skips a season or reverses direction is unusual:\n• Fall→Summer (like CVX on Mar 12) — reversal, skipped Winter and Spring\n• Spring→Winter (like NVDA on Jan 31) — sharp reversal, skipped Summer and Fall\n• Summer→Spring — reverse without completing the cycle\n\nUnusual transitions tell you the stock is behaving out of character. This could signal sector rotation, earnings shock, or broader regime change."}, "max-pain": {"title": "Min/Max Pain Extremes", "domain": "market", "content": "The 10-day pain extremes table shows which symbols experienced the largest percentage moves (both up and down) over the last 10 trading days.\n\nMax Pain = largest drawdown. Min Pain = strongest rally.\n\nExtreme moves often precede mean reversion. Symbols appearing in both columns across different windows are whipsawing -- high volatility, low conviction. Use alongside MACD Seasons to determine if the extreme is a trend reversal or continuation.", "source": "Dr. Long's Daily Report Framework", "related": ["riskz", "frog", "market-mosaic"]}, "etf2": {"title": "ETF2 Exposure Model", "domain": "market", "content": "The ETF2 exposure model determines what percentage of capital to deploy.\n\nDr. Long: \"Nothing in the 10 indexes has fallen below their four-month moving average. So the BMR and the ETF2 still is favoring the upside. That makes this a buy on dip opportunity and short on failure.\"\n\nExposure levels:\n- 100%: Full deployment -- strong bullish regime\n- 50%: Half deployment -- mixed signals\n- 20%: Defensive -- elevated risk\n- 0%: All cash -- bear market confirmed\n\nThe best trade is sometimes no trade at all.", "source": "Foundations Module 4: Risk Management", "related": ["riskz", "vix", "critical-state"]}, "etf22": {"title": "ETF22 Universe", "domain": "market", "content": "The ETF22 is a curated universe of 22 sector and thematic ETFs.\n\nBy tracking all 22 through MACD Seasons, relative strength rankings, and Frog values, the system identifies which sectors are leading and lagging.\n\nDon't fight the rotation. Follow the leaders and avoid the laggards.", "source": "Foundations Module 3: ETF22 Rankings", "related": ["macd", "intl-rotation", "frog"]}, "vix": {"title": "VIX (Volatility Index)", "domain": "market", "content": "The CBOE Volatility Index measures the market's expectation of 30-day forward volatility, derived from S&P 500 option prices.\n\nDr. Long's framework classifies VIX levels:\n- Below 15: Low volatility -- markets complacent\n- 15-20: Normal range\n- 20-30: Elevated -- increased uncertainty\n- Above 30: High fear -- potential capitulation\n\n\"The VIX tells you how scared the market is. Risk Z tells you if that fear is justified.\"", "source": "Foundations Module 2: Reading Market Conditions", "related": ["riskz", "critical-state", "etf2"]}, "critical-state": {"title": "Critical State", "domain": "market", "content": "A Critical State occurs when multiple indicators compress into a narrow range, creating potential for a large move in either direction.\n\nDr. Long: \"This is massive critical state because long-term we're still strong, short-term we're still in pretty good shape. But this Risk Z is early warning against complacency.\"\n\n\"Compound critical state. So the maximum potential for explosive moves out of this in any direction.\"\n\nCritical states are not directional calls -- they're alerts that a big move is coming. The trader's job is to be ready for either direction.", "source": "Weekend Report Narration, Jan 31 2026", "related": ["riskz", "rlff", "price-levels"]}, "intl-rotation": {"title": "International Rotation", "domain": "market", "content": "Dr. Long tracks global rotation by watching where leadership sits in ETF rankings.\n\n\"Latin America, Energy, Emerging Markets. No primary US in there at all. None of the tech bros. Old school tech and then industrial cat.\"\n\n\"None of the mainstream US indexes even made it into the top 30. That tells you how much the US is lagging all the internationals.\"\n\n\"People are moving away from the US and taking positions in the globals. That's just a fact.\"\n\nWhen international ETFs dominate the top positions and US indexes lag, it signals a shift in global capital flows.", "source": "Weekend Report Narration, Jan 31 2026", "related": ["etf22", "world-market", "etf2"]}, "world-market": {"title": "World Market Model (STR/CON/QUAL)", "domain": "market", "content": "Three independent lenses: STR (current strength), CON (consistency), QUAL (system quality over 40 weeks). Color-coded: green = above average, white = average, yellow = below, red = poor.\n\nDr. Long: \"Green across the board means it's great -- I should be ready to buy breakouts to the upside.\"\n\n\"White on consistency but green on strength -- that's accelerating strength. That's the next leaders.\"", "source": "Weekend Report Narration, Jan 31 2026", "related": ["etf22", "intl-rotation"]}, "frog": {"title": "Frog Trading Value", "domain": "system", "content": "The Frog represents the average daily range of a stock. \"How far does this stock typically jump in a day?\"\n\nUse the Frog to set realistic profit targets and stop losses. A stock with a 2% Frog shouldn't be expected to move 5% in a day -- and if it does, something unusual is happening.\n\nWhen the Frog expands, volatility is rising. When it contracts, the market is calming down. Frog expansion across multiple ETFs confirms a regime shift.\n\n\"The Frog tells you when to jump, not how far.\"", "source": "Foundations Module 7: Frog Trading", "related": ["signal-noise", "standard-risk", "r-multiple"]}, "rlff": {"title": "RLFF (Regression Line Fractal Framework)", "domain": "system", "content": "Multiple regression lines (RL10, RL30, RL90, RL270) show momentum at different timeframes. When they converge (\"super pinch\"), a large move is imminent.\n\nDr. Long: \"RL270 purple. RL90 has come to a conversion point. RL30 compression. RL10 rising lows and everything is tightly clustered at the SMA30 -- that is a super pinch, compound critical state.\"\n\nRead as a hierarchy: RL270 is the longest and strongest trend. RL10 is fastest. When shorter RLs roll over while longer ones hold, it signals weakening momentum within an intact trend.", "source": "Weekend Report Narration, Jan 31 2026", "related": ["critical-state", "macd", "price-levels"]}, "signal-noise": {"title": "Signal to Noise Ratio", "domain": "system", "content": "Measures how much of a stock's daily range is directional (open-to-close) versus whipsaw (tails/wicks).\n\nDr. Long: \"Chevron has a signal to noise ratio of 0.41. That means its tails are bigger than the real body. Alcoa has a 0.56 -- a real body bigger than the tails.\"\n\n\"All other things being equal, I want things that have a high signal to noise ratio.\"\n\nAbove 0.50 = stock tends to move directionally. Below 0.50 = more backing and filling.", "source": "Weekend Report Narration, Jan 31 2026", "related": ["frog", "macd", "swing-frame"]}, "overreaction": {"title": "Overreaction & Channeling Systems", "domain": "system", "content": "Purely mechanical -- no discretion. When an index drops to the bottom 20% of its 10-day range while above the 200-day MA, the system triggers an automatic buy.\n\nDr. Long: \"The midcaps and small caps have moved back to the bottom 20%. That's an automatic buy at the open if you're following the mechanical rules.\"\n\n\"Even though I've spent 90% of my time talking about the danger, there's guys ready to buy on dips -- which is why it becomes a volatile trade.\"", "source": "Weekend Report Narration, Jan 31 2026", "related": ["etf2", "price-levels", "swing-frame"]}, "dragon": {"title": "The Dragon", "domain": "system", "icon": "🐉", "layers": {"simple": "The Dragon is a zone on the chart where the price tends to bounce or break through — like a fence around a yard. If price is above the Dragon, the bulls are in control. If it breaks below, the bears take over. 'Skin of the dragon' means price is right at the fence — a decision point.", "detailed": "The Dragon is Dr. Long's name for a specific moving average envelope that acts as dynamic support and resistance. Unlike a single moving average line, the Dragon is a zone with edges ('skin'). Key signals: 'Through the Dragon' = price broke the envelope decisively, confirming momentum. 'Skin of the Dragon' = price is touching the edge but hasn't broken through — a potential reversal or breakout point. Dr. Long uses it as both an entry trigger (break through = new trade) and an exit target (reach the skin = take profit).", "technical": "Built from SMA with upper/lower bands. The 'spine' is the SMA center; the 'skin' is the outer edge. In Dr. Long's framework, Dragon above Spine = bullish alignment. Dragon also serves as dynamic stop placement for Kata 2 continuation trades. 'I take the 123 exit at the skin of the dragon' — combining pattern recognition with the envelope target."}, "key_phrase": "Dynamic support and resistance envelope", "dr_long_quote": "Continuation comes through the dragon — we're short standard risk. I take the 123 exit at the skin of the dragon.", "quiz": {"question": "SPY price crosses through the Dragon from below on increasing volume. Dr. Long would likely:", "options": ["Wait for a pullback — never chase a breakout", "Go long with standard risk, treating it as a momentum breakout", "Short the market — the Dragon is resistance", "Ignore it — the Dragon is only for daily charts"], "correct": 1, "explanation": "Breaking through the Dragon from below on volume is a momentum breakout signal. Dr. Long enters long with standard risk when price crosses through the Dragon decisively."}, "live_reference": {"section": "chart_overlay", "callout": "The Dragon envelope is visible as the shaded band around the SMA on the chart overlay."}, "historical": {"date": "2026-02-26", "narrative": "On Feb 26, Dr. Long's CSCO Kata 2 trade entered 'as it's crossing the SMA30 — standard risk, peaks comes down. I take the 123 exit at the skin of the dragon.' The Dragon served as both the entry zone and the exit target."}, "related": ["kata-2", "one-two-three", "standard-risk"], "source": "Daily Report Narration, Feb 26 2026", "content": "The Dragon is Dr. Long's name for a specific moving average envelope that acts as dynamic support and resistance. Unlike a single moving average line, the Dragon is a zone with edges ('skin'). Key signals: 'Through the Dragon' = price broke the envelope decisively, confirming momentum. 'Skin of the Dragon' = price is touching the edge but hasn't broken through — a potential reversal or breakout point. Dr. Long uses it as both an entry trigger (break through = new trade) and an exit target (reach the skin = take profit)."}, "swing-frame": {"title": "Swing Frame of the Day", "domain": "system", "content": "Dr. Long's daily setup methodology. Each evening, select a stock and frame the next day's trade in both directions.\n\n\"We like to trade these one day at a time. We looked at framed trades in both directions. No overnight risk.\"\n\nLong above a level (green line), short below a level (red line). The yellow zone is the current range. You don't predict direction -- you frame both sides and let the market choose.", "source": "Daily Report Narration, Feb 26 2026", "related": ["o10", "standard-risk", "dragon"]}, "o10": {"title": "O10 (Opening Range 10 Minutes)", "domain": "system", "content": "The first 10 minutes of trading. Wait for this range to establish before taking any position.\n\nDr. Long: \"It opened in an orderly fashion. So we wait for the opening range 10 minutes. That's the green highlighted bar to establish. We play the breakout of that low of the O10.\"\n\nA breakout above O10 high triggers a long; below O10 low triggers a short.", "source": "Daily Report Narration, Feb 26 2026", "related": ["swing-frame", "standard-risk"]}, "standard-risk": {"title": "Standard Risk Box", "domain": "system", "content": "The predefined risk per trade, placed at a logical level (VWAP, SMA, or dragon).\n\nDr. Long: \"Standard risk box just above the VWAP. About 40 cents, maybe 30 cents.\"\n\nEvery trade starts with standard risk -- non-negotiable. The box is small relative to potential reward (4R-8R winners). Small risk, let winners run.", "source": "Daily Report Narration, Feb 26 2026", "related": ["r-multiple", "keep-70", "dragon"]}, "kata-2": {"title": "Kata 2 (Continuation Trade)", "domain": "system", "content": "The second entry in the same direction after the first trade closes.\n\nDr. Long: \"We get the Kata 2 continuation to the downside comes through the dragon -- we're short standard risk.\"\n\nIn martial arts, a kata is a sequence of movements. K2 triggers when price resumes its trend after a pause. Higher confidence because direction is already confirmed by the first trade.", "source": "Daily Report Narration, Feb 26 2026", "related": ["dragon", "one-two-three", "standard-risk"]}, "one-two-three": {"title": "1-2-3 Exit Pattern", "domain": "system", "content": "A pattern-based exit signal: (1) price makes a new extreme, (2) pulls back, (3) fails to make a new extreme.\n\nDr. Long: \"We got a one two three exit. Felt good about that. I take the 123 exit at the skin of the dragon.\"\n\nSignals exhaustion -- the move is losing momentum. A skill-based exit that experienced traders develop over time.", "source": "Daily Report Narration, Feb 26 2026", "related": ["dragon", "keep-70", "kata-2"]}, "r-multiple": {"title": "R-Multiple", "domain": "system", "content": "The ratio of profit to initial risk.\n\nDr. Long: \"Keep about 65% of that trade for about 4R.\" \"That's about 8R and we get a K of two.\"\n\nIf you risk 30 cents and make $2.40, that's 8R. Frame every trade in R-multiples, never in dollar amounts. A 1R loss is acceptable. A 3R+ winner is what you're hunting. Over time, positive expectancy compounds wealth.", "source": "Daily Report Narration, Feb 26 2026", "related": ["standard-risk", "keep-70", "frog"]}, "keep-70": {"title": "Keep 70% Rule", "domain": "system", "icon": "🛡️", "layers": {"simple": "Imagine you're picking apples. You've filled your basket halfway. The Keep 70% rule says: protect at least 70% of the apples you've already picked. If a wind comes, you might lose a few — but you keep most of your harvest. Applied to trading: if your trade is up $10, your stop protects at least $7 of that gain.", "detailed": "Once a trade moves into profit, set a trailing stop at 70% of the maximum unrealized gain. Example: You buy at $82.40. Price hits $89.20 — you're up $6.80. Your stop moves to $82.40 + (70% × $6.80) = $87.16. If price reverses, you keep at least $4.76 per share instead of watching it go back to breakeven. Dr. Long: 'Got a bad fill. So we keep about 65% of that trade for about 4R.' Even imperfect execution preserves most of the gain.", "technical": "Trailing stop = Entry + (0.70 × (High Water Mark - Entry)). Applies after position is in profit by at least 1R. Does not apply to initial risk management (that's the Standard Risk Box). Can be combined with 1-2-3 exit for discretionary early exit when momentum exhausts before the 70% stop triggers."}, "key_phrase": "Protect most of your gain", "dr_long_quote": "We had our stop at the preserve 70% of the original trade. Got a bad fill. So we keep about 65% of that trade for about 4R.", "quiz": {"question": "You bought at $100. Price peaks at $112, then pulls back to $109. Where is your Keep 70% stop?", "options": ["$100 — at breakeven", "$106.40 — 70% of the $12 move", "$108.40 — $100 + 70% × $12", "$112 — at the peak"], "correct": 2, "explanation": "Keep 70% stop = Entry + 70% × (High Water Mark - Entry) = $100 + 0.70 × $12 = $108.40. At $109 you would still be in the trade. The stop protects $8.40 of the $12 gain."}, "live_reference": {"section": "trade_detail", "callout": "Open trades show their Keep 70% trailing stop level in the trade detail panel."}, "historical": {"date": "2026-02-26", "narrative": "In Dr. Long's CSCO trade on Feb 26, he set Keep 70% and 'got a bad fill — so we keep about 65% of that trade for about 4R.' Even with slippage, the framework preserved 4× his initial risk."}, "related": ["standard-risk", "r-multiple", "one-two-three"], "source": "Daily Report Narration, Feb 26 2026", "content": "Once a trade moves into profit, set a trailing stop at 70% of the maximum unrealized gain. Example: You buy at $82.40. Price hits $89.20 — you're up $6.80. Your stop moves to $82.40 + (70% × $6.80) = $87.16. If price reverses, you keep at least $4.76 per share instead of watching it go back to breakeven. Dr. Long: 'Got a bad fill. So we keep about 65% of that trade for about 4R.' Even imperfect execution preserves most of the gain."}, "zero-state": {"title": "Zero State", "domain": "self", "icon": "🧘", "layers": {"simple": "Zero State is the feeling of calm focus — like an athlete in 'the zone.' You're not excited, not scared, not hoping. You're just present, watching, ready. If you don't feel this way, Dr. Long says: don't trade. The best trade you can make is sometimes no trade at all.", "detailed": "Zero State is Dr. Long's term for the optimal psychological state for trading. It means: no attachment to outcome, no fear of loss, no excitement about gain. Just calm, disciplined execution of your plan. Dr. Long: 'It did not have the peace of mind and the zero state will.' He passed on a technically valid trade because he didn't have the right mental state. This is the Self pillar in action — recognizing that YOU are the most important variable in the system. A perfect setup traded with a broken mindset produces losses.", "technical": "Operational definition: Zero State = you can clearly articulate your entry, stop, target, and position size BEFORE the trade. You can walk away from the screen and not check for 30 minutes. You would be equally comfortable if the trade went against you immediately. If any of these feel wrong, you're not in Zero State. Dr. Long's protocol: pre-market routine (physical, mental, review), journal check (any emotional carryover from yesterday?), then 'check or hold' on each setup before executing."}, "key_phrase": "Calm focus — the optimal trading state", "dr_long_quote": "It did not have the peace of mind and the zero state will.", "quiz": {"question": "You just had a big winning trade. Your next setup looks perfect. But you notice your heart rate is elevated and you're already calculating the profit. Are you in Zero State?", "options": ["Yes — confidence from winning is a good thing", "Yes — the setup is perfect so emotions don't matter", "No — excitement from the prior win is compromising objectivity", "It depends on the Risk Z reading"], "correct": 2, "explanation": "Excitement from a prior win is compromising your objectivity. Zero State requires emotional neutrality — no attachment to outcome in either direction. Wait, reset, then reassess the setup with fresh eyes."}, "live_reference": {"section": "self_check", "callout": "Before every trade, the Self Check panel reminds you to verify your Zero State."}, "historical": {"date": "2026-02-26", "narrative": "On Feb 26, a rebound trade appeared after Dr. Long's GGLL short. He passed: 'It did not have the peace of mind and the zero state will.' The rebound did materialize — but he was right to skip it. Discipline over opportunity."}, "related": ["check-hold", "routine", "swing-frame"], "source": "Daily Report Narration, Feb 26 2026", "content": "Zero State is Dr. Long's term for the optimal psychological state for trading. It means: no attachment to outcome, no fear of loss, no excitement about gain. Just calm, disciplined execution of your plan. Dr. Long: 'It did not have the peace of mind and the zero state will.' He passed on a technically valid trade because he didn't have the right mental state. This is the Self pillar in action — recognizing that YOU are the most important variable in the system. A perfect setup traded with a broken mindset produces losses."}, "check-hold": {"title": "Check or Hold", "domain": "self", "content": "Dr. Long's decision framework, borrowed from military briefing protocol.\n\nAfter each piece of analysis: Check = I understand, move on. Hold = stop, I need to discuss this further.\n\nIt enforces active engagement -- you don't passively read the report, you make a decision at each step about whether you understand the implications.", "source": "Owl Group Trading Protocol", "related": ["zero-state", "routine"]}, "routine": {"title": "Do Routine Things Routinely", "domain": "self", "content": "Dr. Long's closing mantra:\n\n\"Do routine things routinely in a professional manner based by statistics. A robust community of practice populated with professional traders and money managers sharing our best ideas.\"\n\n\"Keep your risk measured and your powder dry.\"\n\nTrading is a professional practice, not gambling. Same analysis, same risk framework, same execution every day.", "source": "Owl Group Trading Philosophy", "related": ["zero-state", "check-hold"]}, "price-levels": {"title": "Key Price Levels", "domain": "market", "content": "Dr. Long identifies key levels by convergence -- when multiple independent methods all point to the same level, that level becomes crucial.\n\n\"By every measure, compound critical state -- 685 and 680 are key price levels, but 630 is in play.\"\n\n\"700, 630, 560. That's your 20% envelope. A 10% correction is 630. A 20% bear is 560.\"\n\nPredetermined response plans rather than reacting emotionally to each move.", "source": "Weekend Report Narration, Jan 31 2026", "related": ["critical-state", "rlff", "etf2"]}};
+
+function formatContent(text) {
+  if (!text) return '';
+  return text.replace(/\n/g, '<br>');
+}
+
+function showConcept(key) {
+  const c = concepts[key];
+  if (!c) return;
+
+  let html = '';
+
+  const domainIcons = {market: '📊 Market', system: '⚙️ System', self: '🧠 Self'};
+  if (c.domain) {
+    html += '<div class="guide-domain">' + (domainIcons[c.domain] || c.domain) + '</div>';
+  }
+
+  html += '<div class="guide-title">' + (c.icon || '') + ' ' + c.title + '</div>';
+  if (c.key_phrase) {
+    html += '<div class="guide-keyphrase">"' + c.key_phrase + '"</div>';
+  }
+
+  if (c.layers) {
+    html += '<div class="guide-tabs">'
+      + '<button class="tab active" data-layer="simple">Overview</button>'
+      + '<button class="tab" data-layer="detailed">Detailed</button>'
+      + '<button class="tab" data-layer="technical">Technical</button>'
+      + '</div>';
+    html += '<div class="guide-layer" id="layer-simple">' + formatContent(c.layers.simple) + '</div>';
+    html += '<div class="guide-layer" id="layer-detailed" style="display:none">' + formatContent(c.layers.detailed) + '</div>';
+    html += '<div class="guide-layer" id="layer-technical" style="display:none">' + formatContent(c.layers.technical) + '</div>';
+  } else {
+    html += '<div class="guide-content">' + formatContent(c.content) + '</div>';
+  }
+
+  if (c.dr_long_quote) {
+    html += '<blockquote class="guide-quote">"' + c.dr_long_quote + '"<cite>&mdash; Dr. Ken Long</cite></blockquote>';
+  }
+
+  if (c.quiz) {
+    html += renderQuiz(c.quiz, key);
+  }
+
+  if (c.historical) {
+    html += '<div class="guide-historical">'
+      + '<div class="hist-label">Historical Example (' + c.historical.date + ')</div>'
+      + '<div class="hist-content">' + c.historical.narrative + '</div>'
+      + '</div>';
+  }
+
+  if (c.related && c.related.length > 0) {
+    const pills = c.related.map(function(r) {
+      const rc = concepts[r];
+      return rc ? '<span class="related-pill" data-concept="' + r + '">' + (rc.icon || '') + ' ' + rc.title + '</span>' : '';
+    }).join('');
+    html += '<div class="guide-related"><div class="rel-label">Related Concepts</div>' + pills + '</div>';
+  }
+
+  html += '<div class="guide-source">' + (c.source || '') + '</div>';
+  html += '<span class="guide-back" onclick="hideGuide()">&larr; Back to all concepts</span>';
+
+  document.getElementById('guide-detail').innerHTML = html;
+  document.getElementById('guide-list').style.display = 'none';
+  document.getElementById('guide-detail').classList.add('active');
+}
+
+function renderQuiz(quiz, conceptKey) {
+  const options = quiz.options.map(function(opt, i) {
+    return '<div class="quiz-option" data-idx="' + i + '" data-correct="' + quiz.correct + '" data-concept="' + conceptKey + '">'
+      + String.fromCharCode(65 + i) + ') ' + opt + '</div>';
+  }).join('');
+  return '<div class="guide-quiz">'
+    + '<div class="quiz-label">Test Your Understanding</div>'
+    + '<div class="quiz-question">' + quiz.question + '</div>'
+    + '<div class="quiz-options">' + options + '</div>'
+    + '<div class="quiz-explanation" id="quiz-explain-' + conceptKey + '" style="display:none">' + quiz.explanation + '</div>'
+    + '</div>';
+}
+
+function checkAnswer(el, correct, key) {
+  const options = el.parentNode.querySelectorAll('.quiz-option');
+  options.forEach(function(o, i) {
+    o.classList.remove('correct', 'incorrect');
+    o.style.pointerEvents = 'none';
+    if (i === correct) o.classList.add('correct');
+    else if (o === el && i !== correct) o.classList.add('incorrect');
+  });
+  document.getElementById('quiz-explain-' + key).style.display = 'block';
+}
+
+function showLayer(depth) {
+  ['simple','detailed','technical'].forEach(function(d) {
+    const el = document.getElementById('layer-' + d);
+    if (el) el.style.display = d === depth ? 'block' : 'none';
+  });
+  document.querySelectorAll('.guide-tabs .tab').forEach(function(t) {
+    t.classList.toggle('active', t.dataset.layer === depth);
+  });
+}
+
+function hideGuide() {
+  document.getElementById('guide-list').style.display = 'block';
+  document.getElementById('guide-detail').classList.remove('active');
+}
+
+document.addEventListener('click', function(e) {
+  var target = e.target.closest('[data-layer]');
+  if (target) { showLayer(target.dataset.layer); return; }
+  target = e.target.closest('.related-pill[data-concept]');
+  if (target) { showConcept(target.dataset.concept); return; }
+  target = e.target.closest('.quiz-option[data-correct]');
+  if (target) { checkAnswer(target, parseInt(target.dataset.correct), target.dataset.concept); return; }
+});
+
+// ── Engagement Tracker ──
+(function() {
+  var VID_KEY = 'ogt_vid';
+  var vid = localStorage.getItem(VID_KEY);
+  if (!vid) { vid = crypto.randomUUID(); localStorage.setItem(VID_KEY, vid); }
+  var sid = crypto.randomUUID();
+  var startTime = Date.now();
+  var buffer = [];
+  var maxScroll = 0;
+  var scrollMilestones = {};
+  var mouseActive = true;
+  var mouseTimer = null;
+  var visibleSections = {};
+  var viewedSections = new Set();
+  var FLUSH_MS = 30000;
+  var DWELL_MS = 5000;
+
+  var pathParts = location.pathname.split('/');
+  var briefingDate = pathParts[pathParts.length - 1] || '';
+  var briefingType = location.pathname.includes('weekly') ? 'weekly' : 'daily';
+
+  function emit(type, data) {
+    buffer.push({ type: type, ts: new Date().toISOString(), data: data || {} });
+  }
+
+  function resetMouse() {
+    mouseActive = true;
+    clearTimeout(mouseTimer);
+    mouseTimer = setTimeout(function() { mouseActive = false; }, 10000);
+  }
+  document.addEventListener('mousemove', resetMouse, { passive: true });
+  document.addEventListener('keydown', resetMouse, { passive: true });
+  document.addEventListener('scroll', resetMouse, { passive: true });
+
+  function flush() {
+    if (buffer.length === 0) return;
+    var payload = JSON.stringify({
+      visitor_id: vid, session_id: sid,
+      briefing_date: briefingDate, briefing_type: briefingType,
+      events: buffer.splice(0)
+    });
+    try {
+      if (navigator.sendBeacon) {
+        navigator.sendBeacon('/api/engage', new Blob([payload], { type: 'application/json' }));
+      } else {
+        fetch('/api/engage', { method: 'POST', body: payload,
+          headers: { 'Content-Type': 'application/json' }, keepalive: true });
+      }
+    } catch(e) {}
+  }
+
+  emit('briefing_open', { briefing_date: briefingDate, briefing_type: briefingType, referrer: document.referrer || '' });
+
+  // Section tracking
+  var sections = document.querySelectorAll('[data-section]');
+  if (sections.length > 0 && 'IntersectionObserver' in window) {
+    var viewTimers = {};
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        var secId = entry.target.dataset.section;
+        if (entry.isIntersecting) {
+          if (!viewTimers[secId]) {
+            viewTimers[secId] = setTimeout(function() {
+              if (!viewedSections.has(secId)) {
+                viewedSections.add(secId);
+                emit('section_view', { section_id: secId });
+              }
+              visibleSections[secId] = Date.now();
+            }, 1000);
+          }
+        } else {
+          if (viewTimers[secId]) { clearTimeout(viewTimers[secId]); delete viewTimers[secId]; }
+          delete visibleSections[secId];
+        }
+      });
+    }, { threshold: 0.5 });
+    sections.forEach(function(el) { observer.observe(el); });
+  }
+
+  // Dwell heartbeat
+  setInterval(function() {
+    var now = Date.now();
+    for (var secId in visibleSections) {
+      emit('section_dwell', {
+        section_id: secId, duration_ms: now - visibleSections[secId], mouse_active: mouseActive
+      });
+    }
+  }, DWELL_MS);
+
+  // Scroll depth
+  var scrollEl = document.querySelector('.view-main') || document.documentElement;
+  function checkScroll() {
+    var st = scrollEl.scrollTop || window.pageYOffset || 0;
+    var ch = scrollEl.clientHeight || window.innerHeight;
+    var sh = scrollEl.scrollHeight || document.body.scrollHeight;
+    if (sh <= ch) return;
+    var depth = Math.round((st + ch) / sh * 100);
+    if (depth > maxScroll) maxScroll = depth;
+    [25, 50, 75, 100].forEach(function(m) {
+      if (depth >= m && !scrollMilestones[m]) {
+        scrollMilestones[m] = true;
+        emit('scroll_depth', { depth_pct: m });
+      }
+    });
+  }
+  (scrollEl === document.documentElement ? window : scrollEl)
+    .addEventListener('scroll', checkScroll, { passive: true });
+
+  setInterval(flush, FLUSH_MS);
+
+  document.addEventListener('visibilitychange', function() {
+    if (document.visibilityState === 'hidden') {
+      emit('session_end', {
+        total_duration_ms: Date.now() - startTime,
+        sections_seen: viewedSections.size,
+        max_scroll_depth: maxScroll
+      });
+      flush();
+    }
+  });
+})();
+</script>
+</body>
+</html>
