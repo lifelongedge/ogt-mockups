@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OGT Daily Emails — 30-Day Rotation</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #f0f0f0;
+    margin: 0;
+    padding: 20px;
+  }
+  .nav-bar {
+    max-width: 660px;
+    margin: 0 auto 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .nav-bar button {
+    padding: 8px 16px;
+    border: 2px solid #333;
+    background: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 6px;
+  }
+  .nav-bar button:hover { background: #eee; }
+  .nav-bar .day-label {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1a1a2e;
+    min-width: 200px;
+    text-align: center;
+  }
+  .nav-bar .day-num {
+    font-size: 28px;
+    font-weight: 800;
+    color: #1a1a2e;
+  }
+  .grid-nav {
+    max-width: 660px;
+    margin: 0 auto 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .grid-nav button {
+    width: 32px; height: 32px;
+    border: 1px solid #ccc;
+    background: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 4px;
+    color: #333;
+  }
+  .grid-nav button.active {
+    background: #1a1a2e;
+    color: #fff;
+    border-color: #1a1a2e;
+  }
+  .grid-nav button:hover:not(.active) { background: #eee; }
+  .round-label {
+    max-width: 660px;
+    margin: 0 auto;
+    display: flex;
+    gap: 4px;
+    margin-bottom: 4px;
+  }
+  .round-label span {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #999;
+  }
+  .round-label .r1 { width: calc(32px * 10 + 4px * 9); }
+  .round-label .r2 { width: calc(32px * 10 + 4px * 9); }
+  .round-label .r3 { width: calc(32px * 10 + 4px * 9); }
+
+  .email-wrapper { display: none; }
+  .email-wrapper.active { display: block; }
+  .email-container {
+    max-width: 660px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
+    overflow: hidden;
+  }
+  .email-header {
+    padding: 16px 24px;
+    border-bottom: 1px solid #e0e0e0;
+    background: #fafafa;
+  }
+  .email-subject {
+    font-size: 19px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0 0 8px;
+  }
+  .email-meta {
+    font-size: 13px;
+    color: #666;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .email-sender { font-weight: 600; color: #1a1a1a; }
+  .email-body {
+    padding: 24px;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #333;
+  }
+  .email-body p { margin: 0 0 16px; }
+  .email-body strong { color: #1a1a1a; }
+  .email-body ul, .email-body ol { margin: 0 0 16px; padding-left: 24px; }
+  .email-body li { margin-bottom: 8px; }
+  .email-body em { color: #555; }
+  .what-changed {
+    margin: 24px 0;
+    padding: 20px;
+    background: #f8f9fa;
+    border-left: 4px solid #1a1a2e;
+    border-radius: 0 6px 6px 0;
+  }
+  .what-changed h3 {
+    margin: 0 0 12px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a1a2e;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .what-changed p { margin: 0 0 8px; font-size: 14px; color: #555; }
+  .wc-stat {
+    display: inline-block;
+    background: #e8eaf0;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #1a1a2e;
+    margin: 2px 4px 2px 0;
+  }
+  .wc-spring { background: #d4edda; color: #155724; }
+  .wc-summer { background: #fff3cd; color: #856404; }
+  .wc-fall { background: #ffe0cc; color: #8b4513; }
+  .wc-winter { background: #d6e9f8; color: #1a4a6e; }
+  .wc-up { color: #155724; }
+  .wc-down { color: #721c24; }
+  .cta-block {
+    margin: 24px 0;
+    padding: 20px;
+    background: #1a1a2e;
+    border-radius: 8px;
+    text-align: center;
+  }
+  .cta-block p { color: #ccc; font-size: 14px; margin: 0 0 12px; }
+  .cta-block .cta-title { color: #fff; font-size: 17px; font-weight: 700; margin: 0 0 6px; }
+  .cta-block .cta-sub { color: #aaa; font-size: 13px; margin: 0 0 12px; }
+  .cta-block .cta-price { color: #8ecae6; font-size: 22px; font-weight: 700; margin: 0 0 16px; }
+  .cta-block a.cta-btn {
+    display: inline-block;
+    background: #fff;
+    color: #1a1a2e;
+    text-decoration: none;
+    padding: 12px 32px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .cta-block a.cta-btn:hover { background: #e0e0e0; }
+  .cta-block .cta-membership {
+    color: #8ecae6;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0 0 16px;
+  }
+  .signoff {
+    margin-top: 32px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    font-size: 14px;
+    color: #666;
+  }
+  .signoff .name { font-weight: 700; color: #1a1a1a; font-size: 15px; }
+  .signoff .tagline { font-style: italic; color: #999; margin-top: 8px; }
+  .concept-tag {
+    display: inline-block;
+    background: #e8eaf0;
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #666;
+    margin-left: 8px;
+  }
+</style>
+</head>
+<body>
+
+<div class="nav-bar">
+  <button onclick="nav(-1)">&#9664; Prev</button>
+  <div class="day-label">
+    <div class="day-num" id="dayNum">1</div>
+    <div id="dayInfo">MACD Four Seasons</div>
+  </div>
+  <button onclick="nav(1)">Next &#9654;</button>
+</div>
+
+<div class="round-label">
+  <span class="r1">Round 1: Introductions</span>
+  <span class="r2">Round 2: New Angle</span>
+  <span class="r3">Round 3: Deep Dives</span>
+</div>
+<div class="grid-nav" id="gridNav"></div>
+
+<div id="emailContainer"></div>
+
+<script>
+const emails = [
+// ===== ROUND 1: CORE INTRODUCTIONS (Days 1-10) =====
+{
+  day: 1, concept: "MACD Four Seasons", round: 1,
+  subject: "What season is your portfolio in right now?",
+  body: `<p>Hi there -</p>
+<p>Most traders look at their charts and see noise. Green candles, red candles, a mess of indicators fighting for attention.</p>
+<p>What if I told you the market has seasons — just like the year — and that recognizing which season you're in is the single most important thing you can do before placing a trade?</p>
+<p><strong>The MACD Four Seasons</strong> is a framework I developed to classify market conditions into four distinct phases:</p>
+<ul>
+<li><strong>Winter</strong> — the market is in a pronounced downtrend. Fear dominates. This is where we look for short opportunities like the Collapsing Dragon.</li>
+<li><strong>Spring</strong> — the pain has stopped. Price is recovering. This is planting season — we stalk early long entries using the Supported Spring Crossing (SSC).</li>
+<li><strong>Summer</strong> — the trend is established and strong. We hold positions, add on dips, and let the Kata 2 pattern do its work.</li>
+<li><strong>Fall</strong> — momentum is decaying. Time to harvest. We tighten stops and prepare for winter.</li>
+</ul>
+<p>The key insight: <strong>you don't need to predict what's coming. You just need to recognize what season you're in right now</strong> — and align your strategy accordingly.</p>`,
+  whatChanged: `<p>7 symbols transitioned seasons on the daily timeframe:</p>
+<p><span class="wc-stat wc-fall">XLF Summer → Fall</span><span class="wc-stat wc-spring">GDX Winter → Spring</span><span class="wc-stat wc-winter">ARKK Fall → Winter</span><span class="wc-stat wc-summer">AAPL Spring → Summer</span></p>
+<p>SPY remains in <strong>Summer</strong> but the MACD slope is flattening — watch for a Fall transition.</p>`,
+  bridge: `<p>When I teach the Four Seasons in the Foundations course, one of the first things students tell me is: <em>"I never realized I was trading against the season."</em> They were buying in Fall and wondering why their trades kept stalling.</p>
+<p>If you want a quick reference for the terms and patterns I use in these reports — the Red River, the Collapsing Dragon, the SSC, all of it — I put them all in one place.</p>`,
+  cta: { title: "Tortoise Glossary of Terms (v4.0)", sub: "Complete reference guide to the language and patterns we use every day", price: "$19.97" }
+},
+{
+  day: 2, concept: "Zero State", round: 1,
+  subject: "The 5 minutes before your trading day that change everything",
+  body: `<p>Hi there -</p>
+<p>Before I look at a single chart in the morning, I do something that might surprise you.</p>
+<p>I sit down. I close my eyes. And I breathe.</p>
+<p>Four counts in. Hold four. Four counts out. Hold four. Thirty times.</p>
+<p>This is <strong>box breathing</strong> — the same technique Navy SEALs use to perform under extreme pressure. And it's the gateway to what I call the <strong>Zero State</strong>: a condition of calm, focused readiness where opposing mental states cancel each other out, leaving only pure presence.</p>
+<p>Why does this matter for trading?</p>
+<p>Because <strong>every bad trade starts with a bad state</strong>. You chase because you're anxious. You hold too long because you're greedy. You revenge-trade because you're angry. The market didn't beat you — your state did.</p>
+<p>The Zero State is the foundation of everything I teach. Before Plan. Before Prepare. Before Execute. Before Assess. There is the breath.</p>
+<p>And there's a non-negotiable rule that follows from it: <strong>if you lose the Zero State during a trade — just get out.</strong> No thinking. No rationalizing. Exit. Reset. Come back when you're ready.</p>`,
+  whatChanged: `<p>Market classification: <strong>Sideways Normal</strong> (unchanged). SPY closed at 578.42 (<span class="wc-down">-0.3%</span>). VIX at 16.2.</p>
+<p>12 symbols triggered new setups overnight. 3 SSC signals forming on the daily timeframe.</p>`,
+  bridge: `<p>Today's numbers are just numbers. What matters is the state you bring to them.</p>
+<p>If you've ever felt like your trading psychology is the thing holding you back — not your system, not your analysis — then I built something specifically for that.</p>`,
+  cta: { title: "Navigating the Path to Trading Resilience", sub: "Zero State, PPEA cycle, energy management, and the psychological architecture of professional trading", price: "$97.95" }
+},
+{
+  day: 3, concept: "Setup / Signal / Entry", round: 1,
+  subject: "Why the best traders never chase",
+  body: `<p>Hi there -</p>
+<p>One of the most common mistakes I see in newer traders: they see a stock moving and they jump in.</p>
+<p>No plan. No frame. No stop. Just FOMO.</p>
+<p>The professionals I train do the opposite. They separate every potential trade into three distinct phases — and they never skip one.</p>
+<p><strong>Setup</strong> — the precondition. The market is showing a recognizable pattern. A volatility compression. A pullback to support. A MACD season transition. This is observation, not action.</p>
+<p><strong>Signal</strong> — the trigger. Something mathematical and objective fires. The MACD hooks upward. Price closes above the prior bar's high. A specific coded condition is met. There's no interpretation here — it either fired or it didn't.</p>
+<p><strong>Entry</strong> — the execution. You commit capital at a pre-defined price with a pre-defined stop and a pre-defined target. The entry cannot exist without the other two.</p>
+<p>I teach this with a sniper analogy: the setup is choosing your position. The signal is the target entering the crosshairs. The entry is pulling the trigger. <strong>A sniper who chases his target across an open field is a dead sniper.</strong></p>
+<p>Once you're in, the <strong>Rule of Four</strong> takes over:</p>
+<ul>
+<li><strong>Give it one</strong> — move to no-lose at +1R</li>
+<li><strong>Aim for three</strong> — that's your rational target</li>
+<li><strong>Settle for two</strong> — lock in +1.5R if momentum stalls</li>
+<li><strong>Keep one</strong> — never give back more than one R from your peak</li>
+</ul>`,
+  whatChanged: `<p>Setups forming across the watchlist:</p>
+<p><span class="wc-stat wc-spring">MSFT — SSC signal</span><span class="wc-stat">NVDA — shelf compression (day 3)</span><span class="wc-stat wc-fall">XLE — Collapsing Dragon</span></p>
+<p>8 symbols showing volatility compression on the daily chart — potential breakout setups within 1-2 sessions.</p>`,
+  bridge: `<p>If the daily report is showing you setups forming — symbols compressing, MACD seasons shifting — then the framework above is how you decide what to do next.</p>
+<p>I wrote a short, practical guide that covers this entire process from planning through assessment. No fluff. Just the operational loop.</p>`,
+  cta: { title: "Foundational Trading: Plan-Prepare-Execute-Assess", sub: "The complete PPEA framework in one practical document", price: "$9.97" }
+},
+{
+  day: 4, concept: "Position Sizing", round: 1,
+  subject: "The question that separates amateurs from professionals",
+  body: `<p>Hi there -</p>
+<p>Ask a new trader about their last trade and they'll tell you what they bought and when they bought it.</p>
+<p>Ask a professional the same question and the first thing out of their mouth is: <strong>"How much did I risk?"</strong></p>
+<p>Position sizing is the least glamorous and most important skill in trading. It's the difference between a bad week and a blown account.</p>
+<p>Here's the framework I teach:</p>
+<p><strong>1R = the amount you're willing to lose on a single trade.</strong> Not a percentage of your portfolio. A fixed dollar amount that you've calculated from your system's edge and your own psychology.</p>
+<p>If your account is $50,000 and you're risking 0.5% per trade, your 1R = $250. If your initial stop is $0.10 from entry, you buy 2,500 shares. Not 100. Not 10,000. Exactly 2,500.</p>
+<p>This is not optional math. This is survival math.</p>
+<p>The professionals I work with in Small Group Coaching think in terms of <strong>pR</strong> (position R — the risk defined by your position and stop placement) and <strong>xR</strong> (execution R — your actual result measured in R-multiples). Every trade gets logged this way. After 50 trades, you know your edge with mathematical precision.</p>
+<p>The question that matters isn't "will this trade work?" It's: <strong>"If I took 5 losses in a row tomorrow, would I still be in the game?"</strong></p>`,
+  whatChanged: `<p>Average ATR across watchlist: <strong>2.1%</strong> (normal volatility). Position sizing conditions favorable for standard risk.</p>
+<p>3 symbols showing elevated ATR (potential for wider stops): <span class="wc-stat">SMCI — ATR 5.8%</span><span class="wc-stat">MARA — ATR 6.2%</span><span class="wc-stat">RIVN — ATR 4.9%</span></p>`,
+  bridge: `<p>If you're interested in how relative strength and momentum factor into sizing decisions — when to size up, when to stay small, and how to let the market tell you — I wrote a research report on exactly this.</p>`,
+  cta: { title: "Research Report on Relative Strength and Momentum for Swing Trading", sub: "Evidence-based approach to tactical asset allocation and position sizing", price: "$9.00" }
+},
+{
+  day: 5, concept: "Expectancy", round: 1,
+  subject: "Your win rate is lying to you",
+  body: `<p>Hi there -</p>
+<p>I've met traders who win 70% of their trades and lose money. And traders who win 35% and are consistently profitable.</p>
+<p>The difference? <strong>Expectancy.</strong></p>
+<p>Expectancy is the average amount you can expect to make (or lose) per dollar risked, per trade, over time. It's calculated from your win rate, your average win size, and your average loss size.</p>
+<p>Here's the formula:<br>
+<strong>Expectancy = (Win% × Avg Win) − (Loss% × Avg Loss)</strong></p>
+<p>A trader who wins 40% of the time with average wins of +3R and average losses of -1R has an expectancy of +0.6R per trade. Over 100 trades, that's +60R. That's a serious edge.</p>
+<p>A trader who wins 70% with +0.5R wins and -2R losses has an expectancy of -0.25R. Over 100 trades, that's -25R. They're going broke slowly while feeling like they're winning.</p>
+<p>This is why I insist on the <strong>2:1 minimum reward-to-risk ratio</strong> before entering any trade. It's not about being right. It's about the math working in your favor over hundreds of trades.</p>
+<p>I call the combination of expectancy and trade frequency <strong>"Expecttunity"</strong> — the rate at which your edge converts to real dollars. A slightly lower expectancy with higher frequency can outperform a high-expectancy system you only trade twice a month.</p>`,
+  whatChanged: `<p>Today's briefing shows 24 symbols with active setups. Market classification: <strong>Bull Normal</strong>.</p>
+<p>Expecttunity conditions: high. Multiple timeframes aligned bullish across broad ETFs. Frequency of setups above 90-day average.</p>`,
+  bridge: `<p>Want to see how R-multiples and expectancy work in real-time, trade-by-trade? The Ready Fire Aim strategy documents every trade in R — entries, stops, targets, scaling, and a complete chart example showing +5.2R across 4 intraday trades.</p>`,
+  cta: { title: "Ready Fire Aim (RFA) — Intraday Trading Strategy", sub: "Complete intraday system by Ken Long with real trade examples measured in R-multiples", price: "$19.00" }
+},
+{
+  day: 6, concept: "Critical State", round: 1,
+  subject: "The market just told you something. Did you hear it?",
+  body: `<p>Hi there -</p>
+<p>Most of the time, markets drift. They grind sideways, make small moves, and lull you into complacency.</p>
+<p>Then, without warning, they move <em>fast</em>.</p>
+<p>I call these moments <strong>Critical States</strong> — points where the market has become so compressed, so energized, that the next move will be violent and directional. The spring is coiled. The question is only: which direction does it snap?</p>
+<p>There are several patterns I watch for:</p>
+<ul>
+<li><strong>Godzilla</strong> — a massive trend move that dominates everything. When Godzilla walks, you don't step in front of it. You ride it or stay clear.</li>
+<li><strong>Fireworks</strong> — a volatility explosion after extended compression. Volume surges. The move is real.</li>
+<li><strong>Fence Sitter</strong> — the market is balanced between forces. A slight push either way triggers a breakout. This is where patience pays.</li>
+<li><strong>Z3 Pinch</strong> — Bollinger Bands narrow to extreme levels. The narrower they get, the more explosive the coming move.</li>
+</ul>
+<p>The critical insight: <strong>the market tells you when it's ready to move.</strong> You don't need to predict. You need to listen.</p>
+<p>When a symbol enters Critical State, I move it to the top of my prep list. I frame the trade. I calculate my R. And I wait for the signal — because the setup is already there.</p>`,
+  whatChanged: `<p>Critical State signals detected:</p>
+<p><span class="wc-stat">AMZN — Z3 Pinch (BB width at 90-day low)</span><span class="wc-stat">XBI — Fence Sitter (balanced at RL30)</span><span class="wc-stat wc-spring">GLD — Fireworks candidate</span></p>
+<p>VIX compression continues — 5th day below 15. Broad market coiling.</p>`,
+  bridge: `<p>Recognizing Critical States is what separates reactive traders from prepared ones. If you want to build your vocabulary around these patterns and understand the herd dynamics behind them, this is where I'd start.</p>`,
+  cta: { title: "Swing Trading Basics: Understanding The Herd", sub: "How institutional flows create the patterns we trade — and how to position yourself ahead of the crowd", price: "$19.97" }
+},
+{
+  day: 7, concept: "Multiple Timeframes", round: 1,
+  subject: "Are you looking at the right chart?",
+  body: `<p>Hi there -</p>
+<p>A stock can be in Summer on the daily chart and Winter on the weekly. Which one is right?</p>
+<p>Both. And knowing how to read them together is the difference between trading <em>with</em> the trend and trading <em>against</em> it.</p>
+<p>I teach a framework called <strong>MTFMLA</strong> — Multi-Timeframe Multi-Level Analysis. The idea is fractal: the same patterns that appear on a 5-minute chart appear on a monthly chart. The physics are the same. Only the scale changes.</p>
+<p>Here's how I stack them:</p>
+<ul>
+<li><strong>Monthly/Weekly</strong> — the strategic view. This is the ocean current. You don't fight it.</li>
+<li><strong>Daily</strong> — the tactical view. This is where you identify setups and classify MACD seasons.</li>
+<li><strong>Intraday (5-min to 60-min)</strong> — the execution view. This is where you time entries and manage stops.</li>
+</ul>
+<p>The rule is simple: <strong>trade in the direction of the higher timeframe.</strong> A daily Spring signal that aligns with a weekly Summer is high-probability. A daily Spring signal against a weekly Winter is a counter-trend trade — smaller size, tighter stops, lower expectation.</p>
+<p>I use Regression Lines (RL10, RL30, RL90, RL270) to read each timeframe at a glance. When all four regression lines are rising and stacked in order — that's what I call the <strong>Market Mosaic</strong> aligned. That's when I size up.</p>`,
+  whatChanged: `<p>Timeframe alignment scan:</p>
+<p><strong>Aligned bullish (all TFs):</strong> <span class="wc-stat wc-summer">AAPL</span><span class="wc-stat wc-summer">MSFT</span><span class="wc-stat wc-summer">JPM</span><span class="wc-stat wc-summer">UNH</span></p>
+<p><strong>Conflicted (daily vs weekly divergence):</strong> <span class="wc-stat wc-fall">IWM</span><span class="wc-stat wc-fall">XLF</span><span class="wc-stat wc-winter">ARKK</span></p>
+<p>SPY: Weekly Summer, Daily Summer (slope flattening). Watch for daily Fall transition.</p>`,
+  bridge: `<p>Understanding multiple timeframes is the backbone of every strategy I teach. The Mechanical Swing Trading Fieldguide covers the complete framework — from RL stacking to MACD season alignment across timeframes to precise entry mechanics.</p>`,
+  cta: { title: "Mechanical Swing Trading Fieldguide", sub: "The complete field reference for swing trading with MACD Seasons, regression lines, and multi-timeframe analysis", price: "$197", membership: true }
+},
+{
+  day: 8, concept: "Trading Plan", round: 1,
+  subject: "The one-page document that changed how I trade",
+  body: `<p>Hi there -</p>
+<p>Early in my career, I traded from instinct. I was smart, I was fast, and I lost money consistently.</p>
+<p>What changed? I wrote it down.</p>
+<p>Not a 50-page business plan. <strong>One page.</strong> My markets. My setups. My signals. My stops. My position sizing rules. My maximum daily loss. My morning routine. My exit protocol.</p>
+<p>One page that I read every single morning before the market opens.</p>
+<p>Here's what your trading plan needs:</p>
+<ul>
+<li><strong>Your edge</strong> — what specific pattern or system gives you positive expectancy? Name it.</li>
+<li><strong>Your population</strong> — which symbols do you trade and why? Don't say "everything."</li>
+<li><strong>Your risk rules</strong> — maximum risk per trade, per day, per week. Non-negotiable numbers.</li>
+<li><strong>Your morning script</strong> — the 11 questions you answer before touching a single order. (What's the market classification? What season are my targets in? What setups are forming? Am I in the Zero State?)</li>
+<li><strong>Your circuit breaker</strong> — what triggers you to stop trading for the day? Two consecutive losses? A dollar amount? A feeling?</li>
+</ul>
+<p>The plan doesn't need to be perfect. It needs to exist. <strong>A bad plan executed with discipline beats no plan executed with genius.</strong></p>
+<p>And it needs to evolve. Every week, review it. Every month, update it. The plan is alive — it grows as you do.</p>`,
+  whatChanged: `<p>Market classification: <strong>Bull Normal</strong>. This classification has held for 8 consecutive sessions.</p>
+<p>If your trading plan has a "Bull Normal" playbook, today's the day to run it. If it doesn't — that's your homework.</p>`,
+  bridge: `<p>The Foundations Q&A Study Guide walks through the process of building your plan, with annotated examples from 75 pages of workshop Q&A sessions. It's the closest thing to sitting in the room while I work through these questions with students.</p>`,
+  cta: { title: "Foundations Course Annotated Q&A Study Guide", sub: "75 pages of workshop Q&A plus a coupon — the plan-building process, live", price: "$47.95", membership: true }
+},
+{
+  day: 9, concept: "Journaling", round: 1,
+  subject: "The trade you don't review is the trade you'll repeat",
+  body: `<p>Hi there -</p>
+<p>I can tell you the exact entry, exit, and R-multiple of a trade I took 15 years ago.</p>
+<p>Not because I have a perfect memory. Because I wrote it down.</p>
+<p><strong>Journaling is the highest-leverage activity in trading.</strong> Not analysis. Not scanning. Not backtesting. Journaling. Because it's the only activity that turns experience into wisdom.</p>
+<p>Here's what I capture for every trade:</p>
+<ul>
+<li><strong>The setup</strong> — what pattern did I see? What season was it? What timeframe?</li>
+<li><strong>The signal</strong> — what specifically triggered my entry?</li>
+<li><strong>The result</strong> — entry, exit, R-multiple. Cold numbers.</li>
+<li><strong>The state</strong> — what was I feeling? Confident? Anxious? Rushed? Bored?</li>
+<li><strong>The lesson</strong> — what would I do differently? What would I repeat?</li>
+</ul>
+<p>Over time, patterns emerge. Not market patterns — <em>your</em> patterns. You'll discover that you lose money on Mondays. Or that you overtrade after a big win. Or that your best trades come from one specific setup in one specific season.</p>
+<p>The journal doesn't judge. It reveals. And what it reveals is the most valuable data in your trading business: <strong>the truth about how you actually trade.</strong></p>`,
+  whatChanged: `<p>22 symbols showed measurable moves yesterday. Average absolute change: 1.4%.</p>
+<p>If you had setups from yesterday's report: how did they play out? Did you log the result? The state? The lesson?</p>
+<p>That 2-minute entry in your journal is worth more than the next 30 minutes of chart analysis.</p>`,
+  bridge: `<p>One of the most requested resources from our coaching sessions is compiled coaching insights — real examples of how students journal, what patterns they discover, and how the process accelerates their growth.</p>`,
+  cta: { title: "Compiled Coaching Insights", sub: "Real coaching examples showing how the journaling and review process works in practice", price: "$7.99", membership: true }
+},
+{
+  day: 10, concept: "Trading as a Craft", round: 1,
+  subject: "You don't need a better indicator. You need a better process.",
+  body: `<p>Hi there -</p>
+<p>People sometimes ask: "If you're good at trading, why do you teach?"</p>
+<p>It's a fair question. The answer begins with this: we could just trade.</p>
+<p>Many of us do. Our senior mentors and I have built independent, long-term success as traders and system developers. But trading in isolation is not enough.</p>
+<p><strong>We teach because we are lifelong learners.</strong> There is no better way to refine your edge than by teaching it to someone else. Teaching is the most rigorous form of learning. It forces precision. It reveals blind spots. It demands honesty.</p>
+<p>We also teach because trading is a <strong>craft</strong> — like sailing, or surgery, or golf. It has three domains that must be integrated:</p>
+<ul>
+<li><strong>Market</strong> — the ever-shifting environment. You cannot control it. Only adapt.</li>
+<li><strong>System</strong> — the tools and methods. Setups, signals, risk controls. Your structured edge.</li>
+<li><strong>Self</strong> — the decision-maker under pressure. Without emotional mastery, even the best system fails.</li>
+</ul>
+<p>Most traders focus on System and ignore Self. Or they read about psychology but have no System to execute. <strong>The edge is in the integration.</strong></p>
+<p>That's what we work on every week in Small Group Coaching — not just what to trade, but how to become the kind of trader who can execute their plan under pressure, session after session.</p>`,
+  whatChanged: `<p>Weekly summary: 5 sessions this week. Market held Bull Normal throughout.</p>
+<p>Across the watchlist, 31 symbols produced tradeable setups. Average outcome for completed setups: +1.4R.</p>
+<p>The process works. The question is whether you're working the process.</p>`,
+  bridge: `<p>If you're ready to work alongside other serious traders — people who show up, do the work, and hold each other accountable — Small Group Coaching is where that happens.</p>
+<p>Weekly live sessions. Multiple cohorts. Real accountability. This isn't a course you watch. It's a community you join.</p>`,
+  cta: { title: "Small Group Coaching — Observer Access", sub: "Weekly live coaching sessions with Dr. Ken Long and a community of serious traders. Watch, learn, and when you're ready — participate.", price: "From $997/year" }
+},
+
+// ===== ROUND 2: NEW ANGLES (Days 11-20) =====
+{
+  day: 11, concept: "MACD Four Seasons", round: 2,
+  subject: "The one pattern that tells you it's time to get out",
+  body: `<p>Hi there -</p>
+<p>Yesterday I mentioned the MACD Four Seasons. Today I want to zoom in on the most dangerous transition — and the pattern that exploits it.</p>
+<p><strong>The Collapsing Dragon.</strong></p>
+<p>Here's the scenario: a stock has been in Winter (downtrend). The MACD starts to hook up — it looks like Spring is coming. Hope returns. Buyers step in early.</p>
+<p>Then it fails. The MACD rolls back down before reaching the zero line. Winter resumes — but now with trapped longs feeding the decline.</p>
+<p>This Winter → Spring → Winter transition is one of the most reliable short setups I've found. The "first mouse" buyers just got caught, and their forced selling accelerates the next leg down.</p>
+<p>How do you spot it?</p>
+<ul>
+<li>MACD was below zero (Winter) and started rising (Spring)</li>
+<li>The rise stalls well below the zero line</li>
+<li>The slope reverses back downward — that's the collapse</li>
+<li>If the MACD was outside the Red River during Winter, the energy is even higher</li>
+</ul>
+<p><strong>The Collapsing Dragon is an "instant short" signal.</strong> I use inverse ETFs to execute it in retirement accounts. Same pattern, long position.</p>
+<p>The opposite pattern exists too — a bullish failed breakdown that becomes a powerful long entry. But the Dragon is the one I see traders miss most often, because they're so eager for Spring they ignore the evidence of failure.</p>`,
+  whatChanged: `<p>Collapsing Dragon watch:</p>
+<p><span class="wc-stat wc-winter">ARKK — Dragon confirmed (3rd day below zero after failed Spring)</span></p>
+<p><span class="wc-stat wc-winter">XBI — Dragon forming (Spring attempt stalling at -0.3)</span></p>
+<p>Inverse ETF opportunities active for both.</p>`,
+  bridge: `<p>The Mechanical Swing Trading Fieldguide covers the Collapsing Dragon in detail — entry triggers, stop placement, and when to add to the position. It's the most comprehensive reference for all the seasonal patterns.</p>`,
+  cta: { title: "Mechanical Swing Trading Fieldguide", sub: "Every seasonal pattern documented — Collapsing Dragon, SSC, Kata 2, Owl, and more. With entry mechanics and examples.", price: "$197", membership: true }
+},
+{
+  day: 12, concept: "Zero State", round: 2,
+  subject: "An owl taught me how to trade",
+  body: `<p>Hi there -</p>
+<p>I want to share something personal today.</p>
+<p>Years ago, I developed a meditation practice specifically for trading. I call it the <strong>Owl Meditation</strong>.</p>
+<p>You close your eyes. You picture an owl perched on a branch in the forest at dusk. The owl is perfectly still. Watching. Waiting. It offers no advice. It makes no judgment. It simply observes with infinite patience.</p>
+<p>That owl is your ideal trading self.</p>
+<p>The owl doesn't chase. It doesn't panic. It doesn't revenge-trade after a missed opportunity. It waits for the right moment, and when that moment comes, it acts with absolute precision.</p>
+<p>After box breathing, I spend two minutes with the owl. I let gratitude clear the first layer of noise. Then forgiveness clears the second — forgiving yesterday's mistakes, forgiving the market for doing what markets do.</p>
+<p>What's left after gratitude and forgiveness? <strong>The Zero State.</strong> Pure readiness. No attachment. No fear.</p>
+<p>I know this sounds soft for a trading email. But I've taught thousands of traders over 40 years, and I can tell you with certainty: <strong>the traders who build a pre-session ritual outperform those who don't.</strong> Every time. Without exception.</p>`,
+  whatChanged: `<p>Market opened quietly. SPY gapped down 0.2% and recovered to flat by 10:30 AM.</p>
+<p>Days like this test patience. Low volatility. Few signals. The owl waits.</p>`,
+  bridge: `<p>If the Owl Meditation resonates with you, I recorded a guided version — 20 minutes of drumming meditation designed specifically for traders. Some of our coaching members use it as their daily pre-session practice.</p>`,
+  cta: { title: "Owl Drumming Meditations", sub: "20-minute guided meditation designed for traders — drumming, presence, and the Zero State", price: "$4.97" }
+},
+{
+  day: 13, concept: "Setup / Signal / Entry", round: 2,
+  subject: "How to trade a $50 stock with $250 of risk",
+  body: `<p>Hi there -</p>
+<p>Let me walk you through a real trade frame using the Ready Fire Aim approach.</p>
+<p>The stock is CLF, trading at $26.40. It's 10:00 AM. SPY is recovering from an early dip. CLF has pulled back to support and formed a doji on the 5-minute chart — the telltale sign of indecision at a turning point.</p>
+<p><strong>Ready:</strong> CLF is on my watchlist. It's a large-cap "cow" — slow, liquid, orderly. The daily chart is in Summer. SPY is confirming an intraday reversal. The setup is valid.</p>
+<p><strong>Fire:</strong> A green candle closes above the doji high. I enter at $26.41 — one cent above the confirmation candle. My initial stop goes at $26.31 — ten cents below entry. That's my 1R.</p>
+<p><strong>Aim:</strong> My target is the prior intraday high at $26.80 — that's nearly 4R. I manage the trade using the Rule of Four. At +1R ($26.51), I move my stop to entry. At +2R ($26.61), I lock in +1.5R.</p>
+<p>If I'm risking $250 per trade, I buy 2,500 shares ($250 / $0.10 per share). The position is $66,000 notional — but my maximum loss is exactly $250.</p>
+<p><strong>Result:</strong> CLF reached $26.80. I exited in two pieces — half at +3R, half at +2R on the trailing stop. Total result: +2.5R on average. That's $625 profit on $250 of risk in 45 minutes.</p>
+<p>That's what a framed trade looks like. Setup → Signal → Entry → Manage → Exit. No guessing at any point.</p>`,
+  whatChanged: `<p>Intraday opportunities forming:</p>
+<p><span class="wc-stat">KO — morning hook setup on 5-min</span><span class="wc-stat">JPM — OR5 breakout candidate</span><span class="wc-stat">CAT — shelf compression</span></p>
+<p>SPY opened in the Yellow range (between yesterday's high and low) — look for 2:1 R:R trades with standard sizing.</p>`,
+  bridge: `<p>That CLF example comes directly from the Ready Fire Aim ebook, complete with annotated chart, SPY overlay, and self-critique notes. It's the full intraday system documented trade by trade.</p>`,
+  cta: { title: "Ready Fire Aim (RFA) — Intraday Trading Strategy", sub: "Complete intraday system with 5 setup patterns, position sizing, scaling rules, and real annotated trade examples", price: "$19.00" }
+},
+{
+  day: 14, concept: "Position Sizing", round: 2,
+  subject: "Why I sometimes trade 10 shares of a $200 stock",
+  body: `<p>Hi there -</p>
+<p>New traders often ask me: "How many shares should I buy?"</p>
+<p>The answer is always the same: <strong>let the stop tell you.</strong></p>
+<p>If a stock has a tight setup with an initial stop of $0.10, you can buy a lot of shares for a given risk budget. If the stop is $2.00, you buy far fewer. The risk stays constant. The share count is just the output.</p>
+<p>Here's where it gets interesting: <strong>your position size is also a psychological signal.</strong></p>
+<p>If 2,500 shares of CLF makes your heart race, the position is too big — regardless of what the math says. If 10 shares of a $200 stock feels boring, you might need to size up.</p>
+<p>The goal is to find the size where you can execute your plan without emotional interference. Where a -1R loss is genuinely acceptable. Where you can hold through a pullback without tightening your stop too early.</p>
+<p>In our coaching sessions, we use a progression I call <strong>4-3-2-1 sizing:</strong></p>
+<ul>
+<li><strong>4</strong> — paper trade until the setup frequency feels natural</li>
+<li><strong>3</strong> — trade with 25% of your intended size (quarter position)</li>
+<li><strong>2</strong> — move to 50% when quarter feels routine</li>
+<li><strong>1</strong> — full size when half-size is boring</li>
+</ul>
+<p>Boring is the goal. If your position size makes you feel something, it's too big.</p>`,
+  whatChanged: `<p>Volatility profile across watchlist:</p>
+<p>Low ATR (tight stops, larger share counts): <span class="wc-stat">KO 0.8%</span><span class="wc-stat">PG 0.7%</span><span class="wc-stat">JNJ 0.9%</span></p>
+<p>High ATR (wider stops, smaller share counts): <span class="wc-stat">TSLA 3.4%</span><span class="wc-stat">COIN 4.1%</span><span class="wc-stat">MARA 6.2%</span></p>`,
+  bridge: `<p>The Foundations Q&A Study Guide includes an entire section on position sizing calibration — how students in the course worked through their own psychology around size. It's one of the most honest and practical discussions we've had.</p>`,
+  cta: { title: "Foundations Course Annotated Q&A Study Guide", sub: "75 pages of real workshop discussions including position sizing calibration and risk psychology", price: "$47.95", membership: true }
+},
+{
+  day: 15, concept: "Expectancy", round: 2,
+  subject: "What 100 trades will teach you that 1 trade never will",
+  body: `<p>Hi there -</p>
+<p>One trade is a coin flip. Ten trades are a story. <strong>One hundred trades are the truth.</strong></p>
+<p>This is why I insist that every trader I coach commits to a <strong>20-Trade Challenge</strong> before making any changes to their system. Here's the deal:</p>
+<ul>
+<li>Pick one setup. Just one.</li>
+<li>Trade it 20 times with identical rules. Same entry, same stop, same sizing.</li>
+<li>Log every result in R-multiples. No exceptions.</li>
+<li>After 20 trades, calculate your expectancy.</li>
+</ul>
+<p>What you'll discover might surprise you. Maybe your system has a +0.4R expectancy — modest but real. Maybe it's negative and you need to adjust your stops. Maybe your win rate is lower than you thought but your average win is bigger.</p>
+<p>The 20-Trade Challenge strips away narrative and leaves you with data. And data is the only honest mirror in trading.</p>
+<p>I use two quality metrics to evaluate a system:</p>
+<ul>
+<li><strong>SQN (System Quality Number)</strong> — measures the system's edge independent of the trader</li>
+<li><strong>TQN (Trader Quality Number)</strong> — measures how well you personally execute the system</li>
+</ul>
+<p>The gap between SQN and TQN is your execution cost. Narrowing that gap is the real work of becoming a professional.</p>`,
+  whatChanged: `<p>Your 20-Trade Challenge update: track how setups from this week's reports perform.</p>
+<p>This week's setup count: 18 symbols generated signals. Average theoretical R:R at signal: 2.4:1.</p>
+<p>How many did you take? How many did you skip? Why? The journal knows.</p>`,
+  bridge: `<p>One of the best ways to learn this process is to watch it happen live. The Swing Trading Q&A Masterclass is 90 minutes of real questions from traders working through exactly these challenges — expectancy, execution, and the gap between knowing and doing.</p>`,
+  cta: { title: "Swing Trading Q&A Masterclass", sub: "90-minute video: real questions from traders on expectancy, execution, and closing the knowing-doing gap", price: "$9.97" }
+},
+{
+  day: 16, concept: "Critical State", round: 2,
+  subject: "When the market goes quiet, I start paying attention",
+  body: `<p>Hi there -</p>
+<p>Most traders get bored when volatility drops. They start looking at their phones. They wander away from the screen.</p>
+<p>That's exactly when I lean in.</p>
+<p>Because <strong>low volatility doesn't mean low opportunity. It means the opportunity is loading.</strong></p>
+<p>When Bollinger Bands narrow — what I call a <strong>Z3 Pinch</strong> — the market is telling you that a directional move is imminent. The energy is being stored. Sellers and buyers are in equilibrium. Something will break that balance, and when it does, the move will be fast.</p>
+<p>The same principle applies at the individual stock level. A stock that has been trading in a tight range for 5 days, with declining volume and narrowing candles, is a coiled spring. I call this the <strong>"Compound Critical State"</strong> — multiple compression signals converging on the same symbol.</p>
+<p>Here's how I prepare:</p>
+<ul>
+<li>Identify symbols in Compound Critical State (BB squeeze + low volume + range compression)</li>
+<li>Frame the trade in BOTH directions — I don't predict which way. I prepare for both.</li>
+<li>Set alerts at the range boundaries</li>
+<li>When the breakout fires, enter in the breakout direction with a stop below the range</li>
+</ul>
+<p>The R:R on these trades is often exceptional because the stop is tight (narrow range) and the target is wide (energy release).</p>`,
+  whatChanged: `<p>Compound Critical State candidates:</p>
+<p><span class="wc-stat">AMZN — BB width 1.2% (5th percentile)</span><span class="wc-stat">META — 4-day range inside prior day</span><span class="wc-stat">XBI — volume declining 5 consecutive days</span></p>
+<p>Broad VIX at 14.8 — market-wide compression. When this releases, multiple symbols will move simultaneously.</p>`,
+  bridge: `<p>If you want to understand the psychological architecture that lets you stay patient while the market compresses — and then act decisively when it breaks — Trading Resilience covers exactly this. The discipline of waiting is harder than the discipline of acting.</p>`,
+  cta: { title: "Navigating the Path to Trading Resilience", sub: "The psychological framework for patience, presence, and decisive action under uncertainty", price: "$97.95" }
+},
+{
+  day: 17, concept: "Multiple Timeframes", round: 2,
+  subject: "A 3-minute chart and a 30-minute chart walk into a bar...",
+  body: `<p>Hi there -</p>
+<p>One of the most common questions I get in coaching: "Ken, which timeframe should I use?"</p>
+<p>My answer: <strong>at least three. Simultaneously.</strong></p>
+<p>Here's a real scenario from a recent coaching session. A student was trading NVDA on the 5-minute chart. Great setup — morning hook, doji confirmation, textbook entry. The trade immediately went against him.</p>
+<p>Why? Because on the 60-minute chart, NVDA was at resistance. And on the daily, it was in early Fall season. The student was trading a 5-minute Spring against a daily Fall. He was swimming upstream.</p>
+<p>The fix wasn't a better 5-minute setup. It was <strong>checking the higher timeframes first.</strong></p>
+<p>Here's the hierarchy I teach:</p>
+<ul>
+<li><strong>Step 1:</strong> What season is the weekly chart in? This sets your directional bias.</li>
+<li><strong>Step 2:</strong> What season is the daily chart in? This tells you which setups to look for.</li>
+<li><strong>Step 3:</strong> Use the intraday chart to time your entry. Don't let the intraday chart change your bias.</li>
+</ul>
+<p>It takes 60 seconds to check three timeframes. That 60 seconds eliminates most losing trades before they happen.</p>`,
+  whatChanged: `<p>Timeframe conflict alert: 5 symbols showing daily/weekly divergence today.</p>
+<p><span class="wc-stat wc-fall">IWM — Daily: Fall, Weekly: Summer</span> (caution on long entries)</p>
+<p><span class="wc-stat wc-spring">EEM — Daily: Spring, Weekly: Winter</span> (counter-trend, reduce size)</p>
+<p>SPY aligned across all timeframes: Weekly Summer, Daily Summer. Green light for trend-following setups.</p>`,
+  bridge: `<p>Understanding how the herd behaves differently on each timeframe is what makes multi-timeframe analysis work. This book covers the underlying dynamics — why institutions create the patterns and how retail traders can align with them.</p>`,
+  cta: { title: "Swing Trading Basics: Understanding The Herd", sub: "The dynamics behind multi-timeframe patterns and how to read institutional behavior", price: "$19.97" }
+},
+{
+  day: 18, concept: "Trading Plan", round: 2,
+  subject: "11 questions I answer every single morning",
+  body: `<p>Hi there -</p>
+<p>Every morning before the market opens, I run through 11 questions. The same 11. In the same order. Every day.</p>
+<ol>
+<li>Am I in the Zero State? (If no, stop. Breathe. Start over.)</li>
+<li>What is the current market classification?</li>
+<li>What season is SPY in on the daily chart?</li>
+<li>Did anything change overnight? (Gaps, news, futures)</li>
+<li>Which symbols on my watchlist have active setups?</li>
+<li>For each setup: what's the signal? What's the entry? What's the stop?</li>
+<li>What's my R for each trade? Is it at least 2:1?</li>
+<li>How much total am I willing to risk today?</li>
+<li>What's my circuit breaker? (The loss level where I stop for the day)</li>
+<li>Are there any calendar events that could spike volatility?</li>
+<li>What's my one focus for today? (Not five things. One.)</li>
+</ol>
+<p>This takes me 10 minutes. And it prevents 90% of the bad trades I would otherwise take.</p>
+<p>The morning script is not optional. It's the most important part of the PPEA cycle. It IS the Plan and Prepare phases compressed into a daily ritual.</p>
+<p><strong>If you only adopt one thing from these emails, adopt a morning script.</strong> Write your own version. Tape it to your monitor. Run it every day before the open. I promise you: the quality of your trading will change within a week.</p>`,
+  whatChanged: `<p>Here's your morning brief for today — answers to questions 2-5 from the 11-question script:</p>
+<p>Market classification: <strong>Bull Normal</strong>. SPY season: <strong>Summer</strong>. No significant overnight gaps.</p>
+<p>Active setups: <span class="wc-stat wc-spring">MSFT — SSC</span><span class="wc-stat">HD — shelf breakout</span><span class="wc-stat wc-summer">COST — Kata 2 pullback</span></p>
+<p>Calendar: FOMC minutes released at 2:00 PM ET. Expect volatility spike — tighten stops or avoid new entries after 1:30.</p>`,
+  bridge: `<p>The Foundational Trading guide includes a printable version of the morning script, the 11-question framework, and the complete PPEA operational loop. It's designed to sit next to your keyboard.</p>`,
+  cta: { title: "Foundational Trading: Plan-Prepare-Execute-Assess", sub: "Printable morning script, 11-question framework, and the complete PPEA operational loop", price: "$9.97" }
+},
+{
+  day: 19, concept: "Journaling", round: 2,
+  subject: "What a trading journal entry actually looks like",
+  body: `<p>Hi there -</p>
+<p>A lot of traders tell me they journal. When I ask to see it, they show me a spreadsheet with entry price, exit price, and P&L.</p>
+<p>That's not a journal. That's a trade log. Important, but not enough.</p>
+<p>Here's what a real journal entry looks like after one of my trades:</p>
+<p style="background:#f8f9fa; padding:16px; border-radius:6px; font-size:14px;">
+<strong>Date:</strong> Mar 14, 2026 | <strong>Symbol:</strong> GDX | <strong>Setup:</strong> SSC (Winter → Spring on daily)<br>
+<strong>Entry:</strong> $34.20 | <strong>Stop:</strong> $33.90 | <strong>Target:</strong> $35.10 | <strong>R:R:</strong> 3:1<br>
+<strong>Result:</strong> Exit $34.78 at +1.9R (trailing stop hit)<br>
+<strong>State at entry:</strong> Calm. Zero State confirmed. Morning script complete.<br>
+<strong>State during trade:</strong> Tempted to tighten stop at +1R when GDX paused. Resisted. Good.<br>
+<strong>State at exit:</strong> Slight frustration — wanted the full +3R. Reminded myself: "settle for two."<br>
+<strong>Lesson:</strong> The pause at +1R was a doji on the 5-min. This is normal in Spring transitions. Trust the process.<br>
+<strong>Grade:</strong> B+ (entry was good, management was good, slight emotional leak at exit)
+</p>
+<p>That entry takes 3 minutes. And it teaches me more than 3 hours of chart analysis.</p>
+<p>Notice: <strong>half the entry is about my state, not the market.</strong> Because the market is going to do what it does. The variable I can improve is me.</p>`,
+  whatChanged: `<p>Yesterday's setups — did you journal them?</p>
+<p><span class="wc-stat wc-summer">MSFT SSC → reached +2.1R (still running)</span></p>
+<p><span class="wc-stat">HD shelf → triggered, hit +1R, now at no-lose</span></p>
+<p>If you took these: what was your state? If you didn't: why not? Both answers belong in the journal.</p>`,
+  bridge: `<p>The most powerful thing about journaling is seeing your patterns over time. Trading Resilience includes the complete Coach's Eye After-Action Review framework — the structured debrief I use personally and teach in every coaching cohort.</p>`,
+  cta: { title: "Navigating the Path to Trading Resilience", sub: "Includes the Coach's Eye AAR framework, 4-Step Balancing Protocol, and structured journaling templates", price: "$97.95" }
+},
+{
+  day: 20, concept: "Trading as a Craft", round: 2,
+  subject: "The market rewards this one thing above all else",
+  body: `<p>Hi there -</p>
+<p>I've been trading for over 40 years. I've mentored hundreds of traders. And if I had to name the single quality that separates those who make it from those who don't, it's this:</p>
+<p><strong>Consistency.</strong></p>
+<p>Not brilliance. Not insight. Not even discipline — because discipline implies white-knuckling through something difficult.</p>
+<p>Consistency is quieter than discipline. It's showing up every morning and running the script. Logging every trade. Reviewing every week. Making small adjustments. Doing the boring work that compounds.</p>
+<p>I call it the <strong>Consistency Cycle:</strong></p>
+<ul>
+<li>Trade your plan → Journal the result → Review the data → Adjust the plan → Trade the plan</li>
+</ul>
+<p>It's not sexy. Nobody posts their Consistency Cycle on social media. But over 100 trades, 500 trades, 1,000 trades — it's the only thing that works.</p>
+<p>The traders in our Foundations course who succeed aren't the ones who learn the fastest. They're the ones who <strong>keep showing up</strong>. They do the 20-Trade Challenge. They submit their journals. They ask questions in the Q&A sessions. They do the work.</p>
+<p>That's the craft. Not the knowledge. The practice.</p>`,
+  whatChanged: `<p>End of week 2. Market classification held <strong>Bull Normal</strong> for 12 consecutive sessions.</p>
+<p>Consistent conditions reward consistent process. If you've been following a plan this week, the data should be accumulating. If you haven't — Monday is a fresh start.</p>`,
+  bridge: `<p>The Foundations course is designed around this principle of consistent practice. 163 lessons, not because you need 163 things — but because the craft requires repetition, reflection, and reinforcement over time.</p>`,
+  cta: { title: "Foundations Course", sub: "163 lessons across psychology, bootcamp, coaching, and 37 strategies — the complete curriculum for trading as a craft", price: "$47.95 Study Guide", membership: true }
+},
+
+// ===== ROUND 3: DEEP DIVES & STUDENT STORIES (Days 21-30) =====
+{
+  day: 21, concept: "MACD Four Seasons", round: 3,
+  subject: "\"I never realized I was trading against the season\" — a student's turning point",
+  body: `<p>Hi there -</p>
+<p>I want to share a story from one of our Small Group Coaching cohorts.</p>
+<p>A trader — I'll call him Tom — had been struggling for months. His system was sound. His entries were good. But he kept getting stopped out on trades that "should have worked."</p>
+<p>In our weekly session, I asked him to walk me through his last 10 trades. We plotted each one on the MACD Four Seasons chart.</p>
+<p>Nine out of ten were long entries in Fall season.</p>
+<p>Tom's system was generating valid signals. But he was executing them in the wrong season. He was planting seeds in October and wondering why nothing grew.</p>
+<p>We made one change: <strong>before entering any trade, check the MACD season on the daily chart. Only take long entries in Spring or Summer. Only take short entries in Fall or Winter.</strong></p>
+<p>Tom's win rate went from 32% to 51% in the next 20 trades. His expectancy flipped from -0.3R to +0.5R. Not because his entries got better — because he stopped fighting the season.</p>
+<p>This is the power of a simple filter. One question — "What season am I in?" — eliminated most of his losing trades.</p>
+<p>We see this pattern repeatedly in coaching. The fix is rarely a new indicator or a new strategy. It's usually <strong>one simple alignment check</strong> that the trader was skipping.</p>`,
+  whatChanged: `<p>Season distribution across watchlist today:</p>
+<p><span class="wc-stat wc-summer">Summer: 18 symbols</span><span class="wc-stat wc-fall">Fall: 8 symbols</span><span class="wc-stat wc-spring">Spring: 5 symbols</span><span class="wc-stat wc-winter">Winter: 3 symbols</span></p>
+<p>Long setups in the 18 Summer symbols. Short setups in the 3 Winter symbols. The other 13 require caution.</p>`,
+  bridge: `<p>Tom's story is one of dozens we work through in Small Group Coaching every week. If you want to see how other traders diagnose and fix problems like this — with real accountability and real feedback — SGC is the place.</p>`,
+  cta: { title: "Small Group Coaching — Observer Access", sub: "Watch real traders work through real problems. Weekly live sessions with Dr. Ken Long across multiple cohorts.", price: "From $997/year" }
+},
+{
+  day: 22, concept: "Zero State", round: 2,
+  subject: "What to do when you've already broken your rules",
+  body: `<p>Hi there -</p>
+<p>Let's be honest. You're going to break your rules.</p>
+<p>Not because you're weak. Because you're human. The question isn't whether it will happen — it's <strong>what you do next.</strong></p>
+<p>Here's the protocol I teach:</p>
+<p><strong>Step 1: Recognize.</strong> The moment you feel that pit in your stomach — the "oh no, I just chased that" feeling — the recognition IS the signal. Don't push it away. Don't rationalize. Acknowledge it.</p>
+<p><strong>Step 2: Execute the "Just Get Out" rule.</strong> This is non-negotiable. If you've lost the Zero State — if you entered without a frame, or moved your stop, or doubled down out of anger — exit the trade. Now. Not at the next support level. Not when it gets back to breakeven. Now.</p>
+<p><strong>Step 3: Step away.</strong> Close the charts. Walk to the window. Do 10 box breaths. This isn't weakness — it's the most professional thing you can do.</p>
+<p><strong>Step 4: Debrief.</strong> In your journal, answer: What triggered the rule break? What was I feeling? What was the market doing? What will I do differently next time?</p>
+<p><strong>Step 5: Re-enter the Zero State.</strong> Run your full reset protocol. Owl Meditation. Box breathing. Morning script — even if it's 2 PM. Only when you're back in the Zero State can you trade again.</p>
+<p>This process is the <strong>4-Step Balancing Protocol</strong>: Awareness → Acknowledgment → Adjustment → Assessment. It's the engine of self-correction.</p>`,
+  whatChanged: `<p>Yesterday's FOMC volatility spike caught some traders off-guard. SPY moved 1.2% in 15 minutes.</p>
+<p>If you were in a position during the spike: how did you handle it? Did you stick to your stops? Did you panic-exit? Did you revenge-trade the recovery?</p>
+<p>No judgment. Just journal it. The debrief is the lesson.</p>`,
+  bridge: `<p>The Foundations course dedicates an entire module to Psychology — 14 lessons on self-discovery, beliefs, values, the Johari Window, and building your personal Zero State practice. It's where the real work begins.</p>`,
+  cta: { title: "Foundations Course", sub: "Module 1: Psychology of Self Discovery — 14 lessons building your personal Zero State practice from the ground up", price: "$47.95 Study Guide", membership: true }
+},
+{
+  day: 23, concept: "Setup / Signal / Entry", round: 3,
+  subject: "5 setups you can spot in 60 seconds",
+  body: `<p>Hi there -</p>
+<p>I've been teaching trade setups for decades. But there are five that I come back to more than any others — because they work, they're simple, and you can spot them quickly.</p>
+<ul>
+<li><strong>The Morning Hook</strong> — stock opens, sells off hard in the first 30-60 minutes, then forms a doji or hammer at support. The hook up is your signal. Enter on the green candle above the doji.</li>
+<li><strong>The Shelf</strong> — price is in an uptrend and pauses. Several dojis or narrow-range candles form a flat shelf. The breakout candle closing above the shelf is your signal.</li>
+<li><strong>The SSC (Supported Spring Crossing)</strong> — MACD transitions from Winter to Spring after a Harsh Winter selloff. The slope change is the signal. This is the highest-probability seasonal entry.</li>
+<li><strong>The OR5 Breakout</strong> — first 5-minute candle establishes the opening range. Price breaking above the high of that candle is the signal. Simple and fast.</li>
+<li><strong>The Double Bottom (W)</strong> — two tests of the same support level. The second test holds. Enter on the green candle after the second low is confirmed.</li>
+</ul>
+<p>Each of these takes less than 10 seconds to identify. The preparation — knowing your R, setting your stop, sizing your position — is where the real time goes.</p>
+<p>One setup, mastered and repeated consistently, will outperform five setups executed sloppily. Pick one. Run your 20-Trade Challenge. Then add the next.</p>`,
+  whatChanged: `<p>Setup scan for today:</p>
+<p><span class="wc-stat wc-spring">3 SSC signals</span><span class="wc-stat">2 shelf formations</span><span class="wc-stat">4 OR5 breakout candidates</span></p>
+<p>Market opened in the Green range (above yesterday's high) — favor trend continuation setups (shelf, OR5). Avoid counter-trend hooks.</p>`,
+  bridge: `<p>Want to see all five of these setups taught live, with real Q&A from students working through them for the first time? The Q&A Masterclass is 2.5 hours of exactly that — pattern recognition, trade framing, and real-time coaching.</p>`,
+  cta: { title: "2.5-Hour Q&A Session on Swing Trading with Foundational Concepts", sub: "Deep dive into setups, signals, entries, and trade management — live Q&A with Dr. Ken Long", price: "$47.95" }
+},
+{
+  day: 24, concept: "Position Sizing", round: 3,
+  subject: "How one number saved a trader's account",
+  body: `<p>Hi there -</p>
+<p>In coaching last year, a trader I'll call Eric shared something that stopped the room.</p>
+<p>"I was risking 5% per trade," he said. "I thought I was being conservative. Then I hit four losses in a row and I was down 20%. I panicked. I doubled my size to make it back. Two more losses. Down 40% in a week."</p>
+<p>Eric is smart. Eric had a system. Eric's problem was one number: <strong>his risk per trade was too high.</strong></p>
+<p>We worked through the math together:</p>
+<ul>
+<li>At 5% risk per trade, 4 consecutive losses = -20%. Recoverable, but psychologically devastating.</li>
+<li>At 1% risk per trade, 4 consecutive losses = -4%. Barely noticeable. You keep trading your system without flinching.</li>
+<li>At 0.5% risk per trade, 4 consecutive losses = -2%. You might not even feel it.</li>
+</ul>
+<p>Eric dropped to 0.5% risk per trade. His P&L slowed down — but so did his anxiety. For the first time in months, he could execute his system without emotional interference.</p>
+<p>Three months later, his expectancy was positive (+0.6R), his TQN matched his SQN, and he started gradually increasing size using the 4-3-2-1 protocol.</p>
+<p><strong>The number that saved his account wasn't a price target or a stop level. It was his risk percentage.</strong></p>`,
+  whatChanged: `<p>Quick sizing check for today's setups:</p>
+<p>At 0.5% risk on a $50K account ($250 risk per trade):</p>
+<p><span class="wc-stat">KO ($0.10 stop) → 2,500 shares</span><span class="wc-stat">NVDA ($2.00 stop) → 125 shares</span><span class="wc-stat">SPY ($0.50 stop) → 500 shares</span></p>
+<p>Same risk. Different sizes. The stop drives the math.</p>`,
+  bridge: `<p>Eric's story, and a dozen like it, unfold in real time during the 2.5-hour Q&A session. Position sizing is the topic traders ask about most — and the one where watching someone else work through the math changes everything.</p>`,
+  cta: { title: "2.5-Hour Q&A Session on Swing Trading with Foundational Concepts", sub: "Real traders asking real sizing questions — 2.5 hours of practical Q&A with Dr. Ken Long", price: "$47.95" }
+},
+{
+  day: 25, concept: "Expectancy", round: 3,
+  subject: "I lost money on 60% of my trades last month. Here's why I'm happy.",
+  body: `<p>Hi there -</p>
+<p>Last month I took 47 trades. I won 19 and lost 28. That's a 40% win rate.</p>
+<p>My P&L was positive. Significantly.</p>
+<p>Here's the math:</p>
+<ul>
+<li>19 wins × average +2.8R = +53.2R</li>
+<li>28 losses × average -0.7R = -19.6R</li>
+<li><strong>Net: +33.6R</strong></li>
+</ul>
+<p>This is the power of asymmetric returns. My average win was 4x my average loss. The win rate is almost irrelevant.</p>
+<p>How did I keep my average loss at -0.7R when my initial stop is always -1R? Two things:</p>
+<ol>
+<li><strong>Time stops.</strong> If a trade doesn't move in my favor within 20-30 minutes, I exit early. I don't wait for the stop. A trade that goes nowhere is telling me something.</li>
+<li><strong>Context stops.</strong> If SPY suddenly rolls over while I'm in a long position, I don't care what my stock is doing. I exit or tighten immediately. Context trumps the individual chart.</li>
+</ol>
+<p>Both of these cut my average loss below -1R, which is the hidden edge. Everyone talks about maximizing wins. <strong>The real professionals minimize the losses they don't need to take.</strong></p>`,
+  whatChanged: `<p>Running tally for this month's report-based setups:</p>
+<p>Setups generated: 89 | Signals triggered: 41 | Average R:R at signal: 2.6:1</p>
+<p>If you're tracking these in your journal, you're building your own expectancy data. That data will tell you which setups work best for your trading style.</p>`,
+  bridge: `<p>Every term in today's email — R-multiples, expectancy, time stops, context stops — is defined in one place. The Glossary is the reference I wish I'd had when I started.</p>`,
+  cta: { title: "Tortoise Glossary of Terms (v4.0)", sub: "Every term, pattern, and metric in the Tortoise/Owl ecosystem — defined and cross-referenced", price: "$19.97" }
+},
+{
+  day: 26, concept: "Critical State", round: 3,
+  subject: "The Godzilla trade: when everything aligns",
+  body: `<p>Hi there -</p>
+<p>Every few months, the market produces something extraordinary. I call it a <strong>Godzilla move</strong> — a trend so powerful that it dominates everything in its path.</p>
+<p>Godzilla doesn't happen often. But when it does, it accounts for a disproportionate share of annual returns. One Godzilla trade in 2024 — a 3-week run in NVDA coming out of a Harsh Winter → Spring → Summer transition — produced +14R for traders who caught it and managed it properly.</p>
+<p>Here's what a Godzilla setup looks like:</p>
+<ul>
+<li>Weekly chart transitions from Winter to Spring (the big picture shift)</li>
+<li>Daily chart confirms with an SSC or RLCO signal</li>
+<li>Volume surges on the breakout day — institutional money is moving</li>
+<li>The MACD blasts through the Red River on the upside</li>
+<li>Regression lines stack in order (RL10 > RL30 > RL90 > RL270) across multiple timeframes</li>
+</ul>
+<p>When all of these align, you have a Godzilla. <strong>The correct response is not to take a normal-sized trade.</strong> This is when you use the scaling-in protocol: initial entry, then add at +2R, +3R, and +4R as the trend confirms.</p>
+<p>Most traders take their normal 1R and exit at +2R, feeling clever. The professional catches +8R to +14R on the same move by scaling in as strength confirms.</p>
+<p><strong>Recognize when the market is giving you a gift. And have the courage to accept it fully.</strong></p>`,
+  whatChanged: `<p>Godzilla scan (rare — most days this section is empty):</p>
+<p>No Godzilla candidates today. Market is in a normal regime. Standard setups apply.</p>
+<p>But GDX is showing early signs: Weekly transitioning from Winter to Spring. Daily SSC forming. Volume up 40% on the last 3 sessions. Add to your prep list.</p>`,
+  bridge: `<p>The Mechanical Fieldguide covers Godzilla identification and the scaling-in protocol in detail — when to add, how much to add, and where to place your stops as the position grows.</p>`,
+  cta: { title: "Mechanical Swing Trading Fieldguide", sub: "Godzilla recognition, scaling-in protocol, and advanced trade management for exceptional moves", price: "$197", membership: true }
+},
+{
+  day: 27, concept: "Multiple Timeframes", round: 3,
+  subject: "The regression line that predicted the last 3 major turns",
+  body: `<p>Hi there -</p>
+<p>I use four regression lines on every chart: RL10, RL30, RL90, and RL270. Each one tells a different story.</p>
+<ul>
+<li><strong>RL10</strong> — the pulse. Where is price right now relative to recent action?</li>
+<li><strong>RL30</strong> — the trend. The RL30 is the single most important line on my charts. When the RL30 changes slope, pay attention.</li>
+<li><strong>RL90</strong> — the tide. This is the quarterly trend. It moves slowly but powerfully.</li>
+<li><strong>RL270</strong> — the current. This is the annual trend. It almost never changes direction, and when it does, major regime shifts are underway.</li>
+</ul>
+<p>The <strong>RL30 on the daily chart</strong> is the one I watch most closely. Here's why:</p>
+<p>When price pulls back to the RL30 and bounces, that's a Kata 2 setup — a trend-continuation entry with the RL30 acting as dynamic support. The risk is low (stop below the RL30) and the reward is the continuation of the existing trend.</p>
+<p>When the RL30 rolls over after being rising for weeks, that's a regime change. The trend that was supporting you is now working against you. Time to harvest.</p>
+<p>Last year, the RL30 predicted three major turns in SPY with less than 2 days of lag. It's not predictive — it's responsive. And responsiveness, in trading, is more valuable than prediction.</p>`,
+  whatChanged: `<p>RL30 status across key symbols:</p>
+<p><span class="wc-stat wc-summer">SPY — RL30 rising (day 28)</span><span class="wc-stat wc-summer">QQQ — RL30 rising (slope flattening)</span></p>
+<p><span class="wc-stat wc-fall">IWM — RL30 rolled over 3 days ago</span><span class="wc-stat wc-spring">GLD — RL30 just turned up</span></p>
+<p>Kata 2 pullback candidates (price near rising RL30): <span class="wc-stat">AAPL</span><span class="wc-stat">COST</span><span class="wc-stat">UNH</span></p>`,
+  bridge: `<p>Regression lines and multi-timeframe analysis are covered extensively in the 2.5-hour Q&A session — including live examples of how to read RL stacking and slope changes in real-time market conditions.</p>`,
+  cta: { title: "2.5-Hour Q&A Session on Swing Trading with Foundational Concepts", sub: "Live walkthrough of regression lines, MACD seasons, and multi-timeframe alignment with Q&A", price: "$47.95" }
+},
+{
+  day: 28, concept: "Trading Plan", round: 3,
+  subject: "\"My plan used to be 3 pages. Now it's 3 lines.\"",
+  body: `<p>Hi there -</p>
+<p>One of our senior coaching members, Jeff, shared something during a recent session that stuck with me.</p>
+<p>"When I started, my trading plan was three pages of rules, exceptions, and contingencies. I never read it. Now it's three lines:"</p>
+<ol>
+<li>Only trade SSC and Kata 2 setups in Summer or Spring seasons.</li>
+<li>Risk 0.5% per trade. Maximum 3 open positions.</li>
+<li>If I break rule 1 or 2, stop trading for the day.</li>
+</ol>
+<p>Three lines. Fits on an index card. He reads it every morning in 10 seconds.</p>
+<p>Jeff's three-line plan outperforms most 30-page plans I've seen. Why? <strong>Because he actually follows it.</strong></p>
+<p>Here's the evolution I see in every trader who works through our process:</p>
+<ul>
+<li><strong>Beginner:</strong> No plan. Trading from instinct and excitement.</li>
+<li><strong>Intermediate:</strong> Long, complex plan. Feels thorough but never gets read.</li>
+<li><strong>Advanced:</strong> Short, ruthless plan. Every word earns its place. Memorized.</li>
+</ul>
+<p>The progression from complex to simple is the hallmark of mastery. Not just in trading — in any craft.</p>
+<p>Your homework: take your current trading plan (or the one in your head) and compress it to fit on an index card. What survives the compression is what actually matters.</p>`,
+  whatChanged: `<p>Today's setups, filtered through Jeff's 3-line plan:</p>
+<p>SSC signals in Spring/Summer: <span class="wc-stat wc-spring">GDX</span><span class="wc-stat wc-spring">EWZ</span></p>
+<p>Kata 2 pullbacks in Summer: <span class="wc-stat wc-summer">AAPL</span><span class="wc-stat wc-summer">COST</span><span class="wc-stat wc-summer">UNH</span></p>
+<p>Everything else? Not on the index card. Skip it.</p>`,
+  bridge: `<p>Jeff developed his plan over 18 months in Small Group Coaching — through trial, error, and weekly accountability with peers. The coaching environment is what makes the compression possible, because you get honest feedback on what's working and what's complexity for its own sake.</p>`,
+  cta: { title: "Small Group Coaching — Observer Access", sub: "Watch traders like Jeff refine their plans in real-time. Weekly live sessions. Multiple cohorts. Real accountability.", price: "From $997/year" }
+},
+{
+  day: 29, concept: "Journaling", round: 3,
+  subject: "The pattern in my journal that cost me $12,000",
+  body: `<p>Hi there -</p>
+<p>Last year, I did my quarterly review — 200+ trades, all logged in my journal. I was looking for patterns in my execution, and I found one I didn't expect.</p>
+<p><strong>Every trade I took between 11:30 AM and 1:00 PM Eastern had negative expectancy.</strong></p>
+<p>Not slightly negative. Significantly negative. Over the quarter, my lunch-hour trades had cost me approximately $12,000.</p>
+<p>The morning trades? Solid. The afternoon trades after 1:30? Fine. But the lunch hour was a black hole.</p>
+<p>When I dug deeper, the journal told me why. My state entries for those trades showed words like "bored," "restless," "thought I saw something." I wasn't trading setups. I was trading boredom.</p>
+<p>The fix was simple: <strong>I now close my charts from 11:30 to 1:30.</strong> I eat lunch. I take a walk. I do my Owl Meditation. And when I come back, I'm in a fresh Zero State for the afternoon session.</p>
+<p>That one journal insight — boredom trades during lunch — was worth $12,000 per quarter. $48,000 a year. From a habit that takes 3 minutes per trade to maintain.</p>
+<p><strong>The journal pays for itself. Literally.</strong></p>`,
+  whatChanged: `<p>It's 9:15 AM as this email lands. You have 15 minutes before the open.</p>
+<p>Today's prep: <span class="wc-stat wc-spring">2 SSC signals</span><span class="wc-stat">3 shelf setups</span><span class="wc-stat wc-summer">4 Kata 2 pullbacks</span></p>
+<p>Run your morning script. Enter your Zero State. And if nothing looks right by 11:30 — close the charts and come back at 1:30. The setups will still be there.</p>`,
+  bridge: `<p>The PPEA guide includes a journaling template designed for exactly this kind of pattern discovery. It's structured to capture not just what happened, but when and why — so your quarterly review reveals the patterns that matter.</p>`,
+  cta: { title: "Foundational Trading: Plan-Prepare-Execute-Assess", sub: "Includes structured journaling templates designed for pattern discovery and quarterly review", price: "$9.97" }
+},
+{
+  day: 30, concept: "Trading as a Craft", round: 3,
+  subject: "What the owl sees that you don't — yet",
+  body: `<p>Hi there -</p>
+<p>Thirty days ago, I introduced you to the MACD Four Seasons. Today, let me tell you what comes after you learn the framework.</p>
+<p><strong>You start to see.</strong></p>
+<p>Not just the charts. You see the rhythm. The ebb and flow. The way Spring follows Winter with mathematical reliability. The way fear creates opportunity and euphoria creates risk.</p>
+<p>You see yourself, too. The patterns in your journal. The trades you take and the ones you skip. The state that produces your best work and the state that destroys it.</p>
+<p>The owl in the meditation sees all of this. It has patience. It has perspective. It doesn't react — it observes, and then it acts with precision at exactly the right moment.</p>
+<p>Over these 30 days, I've shared the core of what I teach:</p>
+<ul>
+<li>The <strong>MACD Four Seasons</strong> for reading market context</li>
+<li>The <strong>Zero State</strong> for psychological readiness</li>
+<li><strong>Setup / Signal / Entry</strong> for disciplined execution</li>
+<li><strong>Position Sizing</strong> for survival</li>
+<li><strong>Expectancy</strong> for honest measurement</li>
+<li><strong>Critical States</strong> for recognizing opportunity</li>
+<li><strong>Multiple Timeframes</strong> for alignment</li>
+<li><strong>The Trading Plan</strong> for structure</li>
+<li><strong>Journaling</strong> for self-knowledge</li>
+<li><strong>Trading as a Craft</strong> for the long game</li>
+</ul>
+<p>Each of these is a thread. Woven together, they become something stronger than any individual technique: <strong>a complete trading practice.</strong></p>
+<p>We're here to help you weave those threads. Whether through these daily emails, the resources in our bookstore, the Foundations course, or the weekly accountability of Small Group Coaching — the path is yours to walk.</p>
+<p>The owl is patient. So are we.</p>`,
+  whatChanged: `<p>30-day summary: Market classification transitioned from Bull Normal → Sideways Normal → Bull Normal over the period.</p>
+<p>Total setups generated: 267 | Signals triggered: 118 | Active SSC signals today: 4</p>
+<p>Tomorrow is Day 1 again. New rotation. Same process. The craft continues.</p>`,
+  bridge: `<p>If these 30 days have resonated with you — if you've started a journal, tried box breathing, or checked a MACD season before entering a trade — then you're ready for the deeper work.</p>`,
+  cta: { title: "Navigating the Path to Trading Resilience", sub: "The comprehensive program that integrates everything from these 30 days into a structured path of professional development", price: "$97.95" }
+}
+];
+
+let currentDay = 0;
+
+function buildGridNav() {
+  const grid = document.getElementById('gridNav');
+  grid.innerHTML = '';
+  emails.forEach((e, i) => {
+    const btn = document.createElement('button');
+    btn.textContent = e.day;
+    btn.onclick = () => showDay(i);
+    if (i === 0) btn.classList.add('active');
+    grid.appendChild(btn);
+  });
+}
+
+function renderEmail(idx) {
+  const e = emails[idx];
+  const membershipLine = e.cta.membership
+    ? '<div class="cta-membership">Included with membership</div>'
+    : '';
+  return `<div class="email-container">
+  <div class="email-header">
+    <div class="email-subject">${e.subject}</div>
+    <div class="email-meta">
+      <span class="email-sender">Dr. Ken Long</span>
+      <span>&lt;ken@owlgrouptrading.com&gt;</span>
+      <span class="concept-tag">${e.concept}</span>
+      <span class="concept-tag">Round ${e.round}</span>
+      <span style="margin-left:auto; font-size:12px; color:#999;">Day ${e.day}</span>
+    </div>
+  </div>
+  <div class="email-body">
+    ${e.body}
+    <div class="what-changed">
+      <h3>What Changed Today</h3>
+      ${e.whatChanged}
+    </div>
+    ${e.bridge}
+    <div class="cta-block">
+      <p>Recommended resource</p>
+      <div class="cta-title">${e.cta.title}</div>
+      <p class="cta-sub">${e.cta.sub}</p>
+      ${membershipLine}
+      <div class="cta-price">${e.cta.price}</div>
+      <a href="#" class="cta-btn">View in bookstore</a>
+    </div>
+    <div class="signoff">
+      <p>Respectfully,</p>
+      <p class="name">Ken Long</p>
+      <p>Founder, Tortoise Capital → Owl Group Trading<br>OwlGroupTrading.com</p>
+      <p class="tagline">Learn by doing. Trade with clarity.</p>
+    </div>
+  </div>
+</div>`;
+}
+
+function showDay(idx) {
+  currentDay = idx;
+  document.getElementById('emailContainer').innerHTML = renderEmail(idx);
+  document.getElementById('dayNum').textContent = emails[idx].day;
+  document.getElementById('dayInfo').textContent = emails[idx].concept + ' — Round ' + emails[idx].round;
+  document.querySelectorAll('.grid-nav button').forEach((btn, i) => {
+    btn.classList.toggle('active', i === idx);
+  });
+}
+
+function nav(dir) {
+  let next = currentDay + dir;
+  if (next < 0) next = emails.length - 1;
+  if (next >= emails.length) next = 0;
+  showDay(next);
+}
+
+buildGridNav();
+showDay(0);
+</script>
+
+</body>
+</html>
