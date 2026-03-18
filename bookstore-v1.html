@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bookstore — Owl Group Trading</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0d1117;
+  --bg-panel: #0c0f14;
+  --bg-topbar: #080b10;
+  --card: #161b22;
+  --card-hover: #1c2128;
+  --card-border: #21262d;
+  --text: #e6edf3;
+  --text-muted: #8b949e;
+  --text-dim: #6e7681;
+  --accent: #58a6ff;
+  --accent-dim: rgba(88,166,255,.12);
+  --green: #3fb950;
+  --red: #f85149;
+  --yellow: #d29922;
+  --orange: #db6d28;
+  --purple: #bc8cff;
+  --owl-amber: #d4940a;
+  --owl-amber-glow: rgba(212,148,10,.15);
+}
+
+[data-theme="light"] {
+  --bg: #f6f8fa;
+  --bg-panel: #ffffff;
+  --bg-topbar: #ffffff;
+  --card: #ffffff;
+  --card-hover: #f3f4f6;
+  --card-border: #d0d7de;
+  --text: #1f2328;
+  --text-muted: #656d76;
+  --text-dim: #8b949e;
+  --accent: #0969da;
+  --accent-dim: rgba(9,105,218,.08);
+  --owl-amber-glow: rgba(212,148,10,.08);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Topbar ── */
+.topbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 52px;
+  background: var(--bg-topbar);
+  border-bottom: 1px solid var(--card-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  z-index: 100;
+  backdrop-filter: blur(12px);
+}
+.topbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.topbar-brand .name {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: 0.3px;
+}
+.topbar-nav {
+  display: flex;
+  gap: 24px;
+}
+.topbar-nav a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 0.15s;
+}
+.topbar-nav a:hover, .topbar-nav a.active {
+  color: var(--text);
+}
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--card-border);
+  color: var(--text-muted);
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* ── Layout ── */
+.page { padding-top: 52px; }
+
+.hero {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 60px 24px 40px;
+  text-align: center;
+}
+.hero h1 {
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: 12px;
+}
+.hero p {
+  font-size: 17px;
+  color: var(--text-muted);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ── Filter bar ── */
+.filter-bar {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 24px 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.filter-btn {
+  padding: 6px 16px;
+  border: 1px solid var(--card-border);
+  background: var(--card);
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.filter-btn:hover { border-color: var(--text-muted); color: var(--text); }
+.filter-btn.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+.filter-count {
+  margin-left: auto;
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+/* ── Product grid ── */
+.product-grid {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 24px 60px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.product-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+.product-card:hover {
+  background: var(--card-hover);
+  border-color: var(--text-dim);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+
+.product-cover {
+  height: 180px;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.product-cover .cover-icon {
+  font-size: 48px;
+  opacity: 0.15;
+}
+.product-cover .format-badge {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  background: rgba(0,0,0,0.7);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.product-cover .featured-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: var(--owl-amber);
+  color: #000;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Cover art using CSS gradients per category */
+.cover-trading { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); }
+.cover-psychology { background: linear-gradient(135deg, #1a1a2e 0%, #2d1b4e 50%, #4a1942 100%); }
+.cover-ai { background: linear-gradient(135deg, #0d1117 0%, #0a2f1f 50%, #1a4731 100%); }
+.cover-leadership { background: linear-gradient(135deg, #1a1a2e 0%, #3d2b1f 50%, #5c3d2e 100%); }
+.cover-reference { background: linear-gradient(135deg, #161b22 0%, #21262d 50%, #30363d 100%); }
+.cover-coaching { background: linear-gradient(135deg, #1a1a2e 0%, #1b2d4e 50%, #1a4a6e 100%); }
+.cover-course { background: linear-gradient(135deg, #0d1117 0%, #1c1a3c 50%, #2a1f5e 100%); }
+
+.cover-title {
+  color: rgba(255,255,255,0.85);
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  padding: 0 20px;
+  line-height: 1.3;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+
+.product-body {
+  padding: 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.product-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+.product-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+  flex: 1;
+  line-height: 1.5;
+}
+.product-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+.product-tag {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: var(--accent-dim);
+  color: var(--accent);
+}
+.product-tag.tag-membership {
+  background: var(--owl-amber-glow);
+  color: var(--owl-amber);
+}
+.product-tag.tag-video { background: rgba(188,140,255,0.12); color: var(--purple); }
+.product-tag.tag-new { background: rgba(63,185,80,0.12); color: var(--green); }
+
+.product-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-top: 1px solid var(--card-border);
+}
+.product-price {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text);
+}
+.product-price .original {
+  font-size: 13px;
+  color: var(--text-dim);
+  text-decoration: line-through;
+  font-weight: 500;
+  margin-right: 6px;
+}
+.product-btn {
+  padding: 8px 20px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.product-btn:hover { opacity: 0.85; }
+.product-btn.btn-membership {
+  background: var(--owl-amber);
+  color: #000;
+}
+
+/* ── Membership banner ── */
+.membership-banner {
+  max-width: 960px;
+  margin: 0 auto 32px;
+  padding: 0 24px;
+}
+.membership-card {
+  background: linear-gradient(135deg, var(--card) 0%, rgba(212,148,10,0.08) 100%);
+  border: 1px solid var(--owl-amber);
+  border-radius: 12px;
+  padding: 32px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+.membership-card .mc-text { flex: 1; }
+.membership-card h3 {
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  color: var(--owl-amber);
+}
+.membership-card p {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+.membership-card .mc-price {
+  text-align: center;
+}
+.membership-card .mc-price .amount {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--text);
+}
+.membership-card .mc-price .period {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+.membership-card .mc-btn {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 10px 28px;
+  background: var(--owl-amber);
+  color: #000;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* ── Section headers ── */
+.section-header {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 40px 24px 16px;
+}
+.section-header h2 {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+}
+.section-header p {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* ── Footer ── */
+.footer {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 40px 24px;
+  border-top: 1px solid var(--card-border);
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+@media (max-width: 640px) {
+  .hero h1 { font-size: 28px; }
+  .product-grid { grid-template-columns: 1fr; }
+  .membership-card { flex-direction: column; text-align: center; }
+  .topbar-nav { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-brand">
+    <span class="name">Owl Group Trading</span>
+  </div>
+  <nav class="topbar-nav">
+    <a href="home-v1.html">Home</a>
+    <a href="#">About</a>
+    <a href="#">Learn</a>
+    <a href="#" class="active">Bookstore</a>
+    <a href="#">Today's Briefing</a>
+  </nav>
+  <button class="theme-toggle" onclick="toggleTheme()">Light / Dark</button>
+</div>
+
+<div class="page">
+
+<div class="hero">
+  <h1>Bookstore</h1>
+  <p>Decades of trading knowledge — strategies, psychology, research, and tools. From Dr. Ken Long and the Owl Group community.</p>
+</div>
+
+<!-- Membership banner -->
+<div class="membership-banner">
+  <div class="membership-card">
+    <div class="mc-text">
+      <h3>OGT Membership</h3>
+      <p>Unlock 17 products instantly — Foundations study guide, Mechanical Fieldguide, daily reports, all collections, and more.</p>
+      <p style="color:var(--text-dim); font-size:13px;">Plus: daily market briefings, concept spotlights, and community access.</p>
+    </div>
+    <div class="mc-price">
+      <div class="amount">$79</div>
+      <div class="period">/ month</div>
+      <button class="mc-btn">Join now</button>
+    </div>
+  </div>
+</div>
+
+<!-- Filter bar -->
+<div class="filter-bar">
+  <button class="filter-btn active" onclick="filterProducts('all', this)">All</button>
+  <button class="filter-btn" onclick="filterProducts('trading', this)">Trading Systems</button>
+  <button class="filter-btn" onclick="filterProducts('psychology', this)">Psychology</button>
+  <button class="filter-btn" onclick="filterProducts('reference', this)">Reference</button>
+  <button class="filter-btn" onclick="filterProducts('coaching', this)">Coaching</button>
+  <button class="filter-btn" onclick="filterProducts('ai', this)">AI &amp; Research</button>
+  <button class="filter-btn" onclick="filterProducts('leadership', this)">Leadership</button>
+  <button class="filter-btn" onclick="filterProducts('membership', this)">Membership Included</button>
+  <span class="filter-count" id="filterCount">36 products</span>
+</div>
+
+<!-- Featured products -->
+<div class="section-header">
+  <h2>Featured</h2>
+  <p>Our most comprehensive resources for serious traders</p>
+</div>
+
+<div class="product-grid" id="featuredGrid">
+</div>
+
+<!-- All products -->
+<div class="section-header">
+  <h2>All Products</h2>
+</div>
+
+<div class="product-grid" id="productGrid">
+</div>
+
+<!-- Courses section -->
+<div class="section-header">
+  <h2>Courses &amp; Coaching</h2>
+  <p>Structured learning paths with live instruction and community support</p>
+</div>
+
+<div class="product-grid" id="courseGrid">
+</div>
+
+<div class="footer">
+  <p>&copy; 2026 Owl Group Trading. All rights reserved. Education for the serious trader.</p>
+  <p style="margin-top:8px;">Dr. Ken Long &middot; Tortoise Capital Management &middot; OwlGroupTrading.com</p>
+</div>
+
+</div>
+
+<script>
+const products = [
+  // Featured
+  { id:"H1", title:"Navigating the Path to Trading Resilience: A Comprehensive Program", desc:"The flagship program — Zero State, PPEA cycle, energy management, and the complete psychological architecture of professional trading.", price:"97.95", cat:"psychology", format:"Multi-file", featured:true, cover:"cover-psychology" },
+  { id:"H2", title:"Foundations Course Annotated Q&A Study Guide", desc:"75 pages of real workshop Q&A — plan building, trade framing, and concept application. Includes a course coupon.", price:"47.95", origPrice:"47.95", cat:"trading", format:"PDF", featured:true, membership:true, cover:"cover-course" },
+  { id:"H3", title:"Mechanical Swing Trading Fieldguide", desc:"The complete field reference — MACD Seasons, regression lines, Collapsing Dragon, SSC, Kata 2, scaling protocols, and multi-timeframe analysis.", price:"197", origPrice:"197", cat:"trading", format:"PDF", featured:true, membership:true, cover:"cover-trading" },
+
+  // Core Trading
+  { id:"B16", title:"Foundational Trading: Plan-Prepare-Execute-Assess", desc:"The PPEA framework in one practical document. Morning script, trade framing, journaling template.", price:"9.97", cat:"trading", format:"PDF", cover:"cover-trading" },
+  { id:"B18", title:"Ready Fire Aim (RFA) — Intraday Trading Strategy", desc:"Complete intraday system: 5 setup patterns, entry/exit rules, position sizing, scaling-in protocol, and annotated CLF chart example (+5.2R).", price:"19", cat:"trading", format:"DOC", cover:"cover-trading" },
+  { id:"B15", title:"Swing Trading Basics: Understanding The Herd", desc:"How institutional flows create the patterns we trade. Herd dynamics, market microstructure, and positioning.", price:"19.97", cat:"trading", format:"PDF", cover:"cover-trading" },
+  { id:"B17", title:"Research Report on Relative Strength and Momentum for Swing Trading", desc:"Evidence-based approach to tactical asset allocation. Backtested ETF strategies with performance data.", price:"9", cat:"trading", format:"DOCX", cover:"cover-reference" },
+  { id:"B5", title:"Swing Trading Q&A Masterclass", desc:"90-minute video: real questions from traders on expectancy, execution, entries, and the knowing-doing gap.", price:"9.97", cat:"trading", format:"Video (1:31)", isVideo:true, cover:"cover-coaching" },
+  { id:"B11", title:"2.5-Hour Q&A Session on Swing Trading", desc:"Deep dive into setups, signals, entries, regression lines, and trade management — live Q&A with Dr. Ken Long.", price:"47.95", cat:"trading", format:"Video (2:23)", isVideo:true, cover:"cover-coaching" },
+
+  // Reference
+  { id:"B10", title:"Tortoise Glossary of Terms (v4.0)", desc:"Every term, pattern, and metric in the Tortoise/Owl ecosystem — defined and cross-referenced. The essential desktop companion.", price:"19.97", cat:"reference", format:"Multi-file", cover:"cover-reference" },
+
+  // Psychology
+  { id:"B13", title:"Owl Drumming Meditations", desc:"20-minute guided meditation designed for traders. Drumming, presence, and the Zero State.", price:"4.97", cat:"psychology", format:"Video (20:12)", isVideo:true, cover:"cover-psychology" },
+
+  // Membership posts
+  { id:"M1", title:"Draft 30-Day Action Plan for Trader 'N'", desc:"A real personalized trading action plan — study this template to build your own.", price:"29.99", origPrice:"29.99", cat:"coaching", membership:true, cover:"cover-coaching" },
+  { id:"M2", title:"Compiled Coaching Insights", desc:"Curated highlights from coaching sessions — journaling patterns, student breakthroughs, and review techniques.", price:"7.99", origPrice:"7.99", cat:"coaching", membership:true, cover:"cover-coaching" },
+  { id:"M8", title:"ApplAI Prompt Engineering to Develop 5 Levels of Explanation", desc:"How to use AI to break down any trading concept into 5 levels — from beginner to expert.", price:"14.97", origPrice:"14.97", cat:"ai", format:"DOCX", membership:true, cover:"cover-ai" },
+  { id:"M9", title:"Prompt Engineering for Busy Professionals", desc:"Practical guide to getting useful output from AI tools — structured prompts for research, analysis, and coaching.", price:"9.97", origPrice:"9.97", cat:"ai", format:"PDF", membership:true, cover:"cover-ai" },
+
+  // Collections
+  { id:"C4", title:"F202: Foundations Course 2.0", desc:"18 lessons covering Zero State, PPEA, trade framing, and the complete beginner-to-intermediate progression.", price:"14.97", origPrice:"14.97", cat:"trading", format:"18 posts", membership:true, isCollection:true, cover:"cover-course" },
+  { id:"C2", title:"10 Commandments of the Trail", desc:"22 lessons on the core principles that guide every trading decision in the Owl Group methodology.", price:"7", origPrice:"7", cat:"trading", format:"22 posts", membership:true, isCollection:true, cover:"cover-course" },
+  { id:"C5", title:"Performance Coaching Collection", desc:"9 lessons on coaching methods, mental performance, and developing your professional trading identity.", price:"14.99", origPrice:"14.99", cat:"psychology", format:"9 posts", membership:true, isCollection:true, cover:"cover-psychology" },
+  { id:"C1", title:"PEN 3: Prompt Engineering Navigator", desc:"10 lessons on AI-assisted trading research, prompt construction, and integrating AI into your workflow.", price:"19", origPrice:"19", cat:"ai", format:"10 posts", membership:true, isCollection:true, cover:"cover-ai" },
+  { id:"C3", title:"Prompt Engineering Collection", desc:"Focused lessons on building effective AI prompts for trading analysis and research.", price:"19.97", origPrice:"19.97", cat:"ai", format:"1 post", membership:true, isCollection:true, cover:"cover-ai" },
+
+  // AI & Professional Development
+  { id:"B4", title:"Modernized Socratic Questioning for Coaches", desc:"A case study in AI-assisted coaching. How to use structured questioning to unlock trader insights.", price:"19.97", cat:"ai", format:"PDF", cover:"cover-ai" },
+  { id:"B6", title:"Practitioner Guide to AI Support for Research", desc:"88-page guide for using AI assistants in research workflows. Applicable beyond trading.", price:"9.97", cat:"ai", format:"DOCX", cover:"cover-ai" },
+  { id:"B9", title:"Case Study in AI Curriculum Development for Behavior over Time", desc:"How to build AI-powered curricula that adapt to learner behavior. Academic/practical hybrid.", price:"4.97", cat:"ai", format:"DOCX", cover:"cover-ai" },
+  { id:"B12", title:"Training Your Ethical Personal AI Advisor", desc:"Practical guide to building and fine-tuning your own AI advisor with integrity and transparency.", price:"4.97", cat:"ai", format:"DOCX", cover:"cover-ai" },
+
+  // Leadership
+  { id:"B2", title:"Problem Solving with Narrative Intelligence: US Army Style", desc:"How the military uses narrative frameworks to solve complex problems. Applicable to trading and leadership.", price:"37", cat:"leadership", format:"Multi-file", cover:"cover-leadership" },
+  { id:"B3", title:"A Professional Development Program for Managing Innovation", desc:"Structured program for leading innovation in complex environments. From Dr. Long's military leadership work.", price:"47.95", cat:"leadership", format:"Multi-file", cover:"cover-leadership" },
+  { id:"B7", title:"Army Writing Improvement Workbook", desc:"Hundreds of practical exercises to sharpen your writing. Clear writing = clear thinking.", price:"19.97", cat:"leadership", format:"DOCX", cover:"cover-leadership" },
+  { id:"B8", title:"Data Literacy Workbook for Busy Leaders", desc:"Practical data analysis skills for decision-makers. Statistics, visualization, and interpretation.", price:"19.97", cat:"leadership", format:"Multi-file", cover:"cover-leadership" },
+  { id:"B14", title:"Jumpstart Your Writing", desc:"Quick-start guide to productive, AI-assisted writing. Remove blocks and build momentum.", price:"9.97", cat:"leadership", format:"Multi-file", cover:"cover-leadership" },
+
+  // Locked / Special
+  { id:"B1", title:"Project Minerva: Book of Readings 01", desc:"Curated readings on trading, psychology, and self-development. The intellectual foundation of the Owl Group.", price:"29", cat:"reference", format:"Locked", cover:"cover-reference" },
+];
+
+const courses = [
+  { id:"FOUND", title:"Foundations Course", desc:"163 lessons across 10 modules: Psychology, Bootcamp (81 lessons), Coaching, 37 Strategies, TC2000 layouts, and inspiring trader stories. The complete curriculum.", price:"From $79/mo", cat:"course", format:"163 lessons", isCourse:true, cover:"cover-course" },
+  { id:"SGC", title:"Small Group Coaching — Observer Access", desc:"Weekly live Zoom sessions with Dr. Ken Long. 6 active cohorts. Systems traders, journeymen, and internationals. Real accountability, real growth.", price:"From $997/yr", cat:"course", format:"Live weekly", isCourse:true, cover:"cover-coaching" },
+  { id:"SGC-P", title:"Small Group Coaching — Participant", desc:"Full participation: present your work, get direct coaching from Dr. Long and senior mentors, join the accountability circle.", price:"From $1,500/yr", cat:"course", format:"Live weekly", isCourse:true, cover:"cover-coaching" },
+];
+
+function renderCard(p, target) {
+  const memberTag = p.membership ? '<span class="product-tag tag-membership">Membership</span>' : '';
+  const videoTag = p.isVideo ? '<span class="product-tag tag-video">Video</span>' : '';
+  const collectionTag = p.isCollection ? '<span class="product-tag">Collection</span>' : '';
+  const courseTag = p.isCourse ? '<span class="product-tag tag-new">Course</span>' : '';
+  const featuredBadge = p.featured ? '<div class="featured-badge">Featured</div>' : '';
+  const formatBadge = p.format ? `<div class="format-badge">${p.format}</div>` : '';
+  const origPrice = p.origPrice ? `<span class="original">$${p.origPrice}</span>` : '';
+  const btnClass = p.membership ? 'product-btn btn-membership' : 'product-btn';
+  const btnText = p.membership ? 'Included' : (p.isCourse ? 'Learn more' : 'Buy now');
+  const priceDisplay = p.price.startsWith('From') ? p.price : `${origPrice}$${p.price}`;
+
+  const card = document.createElement('div');
+  card.className = 'product-card';
+  card.dataset.cat = p.cat;
+  card.dataset.membership = p.membership ? 'true' : 'false';
+  card.innerHTML = `
+    <div class="product-cover ${p.cover || 'cover-trading'}">
+      ${featuredBadge}
+      ${formatBadge}
+      <div class="cover-title">${p.title}</div>
+    </div>
+    <div class="product-body">
+      <div class="product-title">${p.title}</div>
+      <div class="product-desc">${p.desc}</div>
+      <div class="product-tags">${memberTag}${videoTag}${collectionTag}${courseTag}</div>
+    </div>
+    <div class="product-footer">
+      <div class="product-price">${priceDisplay}</div>
+      <button class="${btnClass}">${btnText}</button>
+    </div>`;
+  document.getElementById(target).appendChild(card);
+}
+
+// Render featured
+products.filter(p => p.featured).forEach(p => renderCard(p, 'featuredGrid'));
+
+// Render all (non-featured)
+products.filter(p => !p.featured).forEach(p => renderCard(p, 'productGrid'));
+
+// Render courses
+courses.forEach(p => renderCard(p, 'courseGrid'));
+
+function filterProducts(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  let count = 0;
+  document.querySelectorAll('.product-card').forEach(card => {
+    let show = false;
+    if (cat === 'all') show = true;
+    else if (cat === 'membership') show = card.dataset.membership === 'true';
+    else show = card.dataset.cat === cat;
+    card.style.display = show ? '' : 'none';
+    if (show) count++;
+  });
+  document.getElementById('filterCount').textContent = count + ' product' + (count !== 1 ? 's' : '');
+}
+
+function toggleTheme() {
+  const html = document.documentElement;
+  html.dataset.theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
+}
+</script>
+
+</body>
+</html>
