@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LifeLongEdge — Fractal Edge Framework for TC2000</title>
+<style>
+:root {
+  --bg-primary: #0d1117;
+  --bg-secondary: #161b22;
+  --bg-tertiary: #1c2128;
+  --bg-card: #21262d;
+  --text-primary: #e6edf3;
+  --text-secondary: #8b949e;
+  --text-muted: #6e7681;
+  --accent: #58a6ff;
+  --accent-hover: #79c0ff;
+  --border: #30363d;
+  --border-light: #3d444d;
+  --green: #3fb950;
+  --red: #f85149;
+  --orange: #d29922;
+  --purple: #bc8cff;
+  --spring: #3fb950;
+  --summer: #d29922;
+  --fall: #f85149;
+  --winter: #58a6ff;
+  --radius: 8px;
+  --shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+[data-theme="light"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f6f8fa;
+  --bg-tertiary: #eef1f5;
+  --bg-card: #ffffff;
+  --text-primary: #1f2328;
+  --text-secondary: #656d76;
+  --text-muted: #8b949e;
+  --accent: #0969da;
+  --accent-hover: #0550ae;
+  --border: #d0d7de;
+  --border-light: #e1e4e8;
+  --shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+/* NAV */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+}
+
+.nav-brand {
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--text-primary);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 4px;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.15s;
+}
+
+.nav-links a:hover, .nav-links a.active {
+  color: var(--text-primary);
+  background: var(--bg-tertiary);
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn:hover { border-color: var(--text-muted); }
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.btn-primary:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+.btn-large {
+  padding: 12px 28px;
+  font-size: 16px;
+}
+
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: var(--radius);
+  font-size: 14px;
+}
+
+/* SECTIONS */
+.page { display: none; }
+.page.active { display: block; }
+
+.hero {
+  text-align: center;
+  padding: 80px 24px 60px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.hero h1 {
+  font-size: 40px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  letter-spacing: -0.5px;
+}
+
+.hero .subtitle {
+  font-size: 18px;
+  color: var(--text-secondary);
+  margin-bottom: 32px;
+  line-height: 1.7;
+}
+
+.hero .quote {
+  font-style: italic;
+  color: var(--text-muted);
+  font-size: 15px;
+  margin-bottom: 32px;
+}
+
+.section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px 24px;
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.section-subtitle {
+  color: var(--text-secondary);
+  margin-bottom: 32px;
+  font-size: 15px;
+}
+
+/* CARDS */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  transition: border-color 0.15s;
+}
+
+.card:hover { border-color: var(--text-muted); }
+
+.card h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.card p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.card .card-footer {
+  margin-top: 16px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid;
+}
+
+.badge-prod { color: var(--green); border-color: var(--green); }
+.badge-beta { color: var(--orange); border-color: var(--orange); }
+.badge-targeting { color: var(--spring); border-color: var(--spring); }
+.badge-stalking { color: var(--summer); border-color: var(--summer); }
+.badge-trading { color: var(--fall); border-color: var(--fall); }
+.badge-bmr { color: var(--purple); border-color: var(--purple); }
+
+/* LAYOUT DETAIL MODAL */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 200;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 60px 24px;
+  overflow-y: auto;
+}
+
+.modal-overlay.active { display: flex; }
+
+.modal {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  max-width: 800px;
+  width: 100%;
+  padding: 32px;
+}
+
+.modal h2 { font-size: 28px; margin-bottom: 16px; }
+
+.modal .screenshot-placeholder {
+  background: var(--bg-tertiary);
+  border: 1px dashed var(--border-light);
+  border-radius: var(--radius);
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+
+.modal p { color: var(--text-secondary); line-height: 1.7; margin-bottom: 16px; }
+
+.modal-close {
+  float: right;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 24px;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.modal-close:hover { color: var(--text-primary); }
+
+/* TEAM */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.team-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+
+.team-card h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.team-card .role {
+  color: var(--accent);
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+
+.team-card p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* TESTIMONIALS */
+.testimonial {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 16px;
+}
+
+.testimonial .attribution {
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.testimonial p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  font-style: italic;
+}
+
+/* SHOP */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 24px;
+  margin-bottom: 48px;
+}
+
+.pricing-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 32px;
+  text-align: center;
+}
+
+.pricing-card.featured {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+
+.pricing-card h3 {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.pricing-card .price {
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.pricing-card .price-note {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+
+.pricing-card .features {
+  list-style: none;
+  text-align: left;
+  margin-bottom: 24px;
+}
+
+.pricing-card .features li {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.pricing-card .features li:last-child { border-bottom: none; }
+
+.coupon {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-top: 12px;
+}
+
+.coupon code {
+  color: var(--green);
+  font-weight: 600;
+}
+
+/* LAUNCHPAD */
+.pillar-section {
+  margin-bottom: 40px;
+}
+
+.pillar-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.pillar-header h3 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.pillar-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.layout-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 8px;
+}
+
+.layout-chip {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.layout-chip:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.layout-chip .beta-tag {
+  font-size: 10px;
+  color: var(--orange);
+  font-weight: 600;
+}
+
+/* GLOSSARY */
+.glossary-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.glossary-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.glossary-term {
+  padding: 14px 20px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.1s;
+}
+
+.glossary-term:hover { background: var(--bg-tertiary); }
+
+.glossary-term .arrow {
+  color: var(--text-muted);
+  transition: transform 0.2s;
+  font-size: 12px;
+}
+
+.glossary-item.open .arrow { transform: rotate(90deg); }
+
+.glossary-def {
+  display: none;
+  padding: 0 20px 16px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.glossary-item.open .glossary-def { display: block; }
+
+/* DOWNLOAD */
+.download-gate {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 40px;
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.download-gate h3 { font-size: 20px; margin-bottom: 12px; }
+.download-gate p { color: var(--text-secondary); margin-bottom: 24px; }
+
+/* FILTER BAR */
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.filter-btn:hover, .filter-btn.active {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* FOOTER */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 32px 24px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+footer a { color: var(--text-secondary); text-decoration: none; }
+footer a:hover { color: var(--accent); }
+
+.disclaimer {
+  max-width: 800px;
+  margin: 24px auto 0;
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .hero h1 { font-size: 28px; }
+  .pricing-grid { grid-template-columns: 1fr; }
+  .card-grid { grid-template-columns: 1fr; }
+  .nav-links { display: none; }
+}
+
+/* SEARCH */
+.search-box {
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 14px;
+}
+
+.search-box input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.search-box input::placeholder { color: var(--text-muted); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-brand" onclick="showPage('home')">LifeLongEdge</a>
+  <ul class="nav-links">
+    <li><a href="#" onclick="showPage('home')" class="active" data-page="home">Home</a></li>
+    <li><a href="#" onclick="showPage('about')" data-page="about">About</a></li>
+    <li><a href="#" onclick="showPage('launchpad')" data-page="launchpad">Start</a></li>
+    <li><a href="#" onclick="showPage('shop')" data-page="shop">Shop</a></li>
+    <li><a href="#" onclick="showPage('download')" data-page="download">Download</a></li>
+    <li><a href="#" onclick="showPage('glossary')" data-page="glossary">Glossary</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">Theme</button>
+    <a href="#" class="btn" onclick="showPage('login')">Log In</a>
+  </div>
+</nav>
+
+<!-- ==================== HOME ==================== -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <p class="quote">"Trade what you see, not what you hope." — Dr. Ken Long</p>
+    <h1>Retain an Edge for Life</h1>
+    <p class="subtitle">
+      We combine data-driven statistical frameworks with the simplicity of visual box methods to trade stocks and other financial assets. Our Fractal Edge Framework is a set of layouts for TC2000, built on Dr. Ken Long's trading strategies — robust, adaptive, spanning multiple time frames, and time-tested for over 40 years.
+    </p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <a href="#" class="btn btn-primary btn-large" onclick="showPage('launchpad')">Explore Layouts</a>
+      <a href="#" class="btn btn-large" onclick="showPage('shop')">View Pricing</a>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">Software, Training & Coaching</h2>
+    <p class="section-subtitle">For traders at every stage of their journey</p>
+    <div class="card-grid">
+      <div class="card">
+        <h3>Active Intraday Traders</h3>
+        <p>Generate income through intraday trading with targeting, stalking, and trading layouts that systematize your process.</p>
+      </div>
+      <div class="card">
+        <h3>End-of-Day Swing Traders</h3>
+        <p>Capture short-term swings with scans and templates designed for traders with day jobs. Prepare in the evening, execute during the day.</p>
+      </div>
+      <div class="card">
+        <h3>Career Transitioners</h3>
+        <p>Transitioning from a non-trading career? Our systematic approach and coaching help you build trading as a craft — one skill at a time.</p>
+      </div>
+      <div class="card">
+        <h3>Passive Portfolio Managers</h3>
+        <p>Blended Monthly Rebalancing (BMR) layouts manage portfolios with minimal time on weekly or monthly time frames.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">Why TC2000?</h2>
+    <p class="section-subtitle">The platform we trust for systematic trading</p>
+    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;">
+      <p style="color:var(--text-secondary);font-size:14px;line-height:1.7;">
+        TC2000 is an excellent trading platform for individual investors. Our trading style is systematic with trader discretion in multiple timeframes. We focus on intraday and swing trades with a short holding period. TC2000 provides stunning visual charts, blazing speed for scanning complex conditions across the universe of all stocks, in a highly reliable and affordable package. They also have a brokerage option overlay on top of Interactive Brokers.
+      </p>
+    </div>
+  </div>
+
+  <!-- Contact -->
+  <div class="section" style="max-width:600px;">
+    <h2 class="section-title">Get in Touch</h2>
+    <p class="section-subtitle">Questions? We're here to help.</p>
+    <form style="display:flex;flex-direction:column;gap:12px;" onsubmit="event.preventDefault();alert('Contact form — will connect to backend')">
+      <input type="text" placeholder="Name" style="padding:10px 14px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg-card);color:var(--text-primary);font-size:14px;">
+      <input type="email" placeholder="Email *" required style="padding:10px 14px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg-card);color:var(--text-primary);font-size:14px;">
+      <textarea placeholder="Comments (optional)" rows="3" style="padding:10px 14px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg-card);color:var(--text-primary);font-size:14px;resize:vertical;"></textarea>
+      <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-secondary);">
+        <input type="checkbox"> Subscribe to mailing list
+      </label>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>
+
+<!-- ==================== ABOUT ==================== -->
+<div id="page-about" class="page">
+  <div class="hero">
+    <h1>Markets Are Complex Adaptive Systems</h1>
+    <p class="subtitle">We have partnered with Dr Ken Long to build his trading strategies and indicators into a complete framework for TC2000. The first version was branded as "KL-Bundle for TC2000".</p>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">Our Team</h2>
+    <div class="team-grid">
+      <div class="team-card">
+        <h3>Dr. Ken Long</h3>
+        <div class="role">Trading Authority & System Designer</div>
+        <p>Master trader and trading coach's coach. Founded Tortoise Capital Management Inc in 1999 after meeting Dr Van Tharp. Analyzes global equity markets with a statistical approach focusing on robust edges for individual traders. Associate Professor, US Army Command & General Staff College; retired Lieutenant Colonel after 25 years of active service.</p>
+      </div>
+      <div class="team-card">
+        <h3>Mark Holland</h3>
+        <div class="role">Product & Systematic Trading</div>
+        <p>Active trader for over 25 years with three years full-time. Sharp focus on swing trading with a methodical, structured approach to market analysis. Van Tharp Institute SuperTrader program alumnus. Studied with Ken Long since 2008, drawn to his adaptive, statistics-based approach.</p>
+      </div>
+      <div class="team-card">
+        <h3>Sundeep Gupta</h3>
+        <div class="role">Technology & System Design</div>
+        <p>Passionate about trading system design and pattern recognition — skillset honed in computer vision and AI. 25+ years in high-tech product development. Fully transitioned into trading as a career in 2024. Studied with Ken Long since 2008.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">What Traders Say</h2>
+    <div class="testimonial">
+      <div class="attribution">A.W. — Switzerland</div>
+      <p>"If you are new to the Day and Swing Trading concepts, the TC2000 layouts could accelerate your learning. A very structured approach to the concepts and proper digestion of all the relevant concept in a single package. After getting used to it, you can focus on key characteristics that facilitate your own style of trading. It can help you to become more efficient in trade execution."</p>
+    </div>
+    <div class="testimonial">
+      <div class="attribution">P.B. — USA</div>
+      <p>"Everything from the market mosaic to real time frog systems info is in here, and all will update in real time as the markets change. This takes a LOT of the brain power needed to analyze the current situation out of the picture which then further allows me to focus on acquiring the right pairs with the right setups for entry and exits."</p>
+    </div>
+    <div class="testimonial">
+      <div class="attribution">N.L. — South Africa</div>
+      <p>"The TC2000 package is very nimble and helps me to navigate the markets quickly, easily and effectively. Right from the open I can see what the major movers are on the indices, the sectors that are major contributors, then zoom in and find symbols WITH a clear indication of hybrid frog moves, Range Stat, and season — all at a glance. Overall the RLCO TC2000 is an effective time hack."</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== LAUNCHPAD ==================== -->
+<div id="page-launchpad" class="page">
+  <div class="hero">
+    <h1>Members Launchpad</h1>
+    <p class="subtitle">Browse the layouts of the Fractal Edge Framework on TC2000. Everyone can review descriptions; paid subscribers can download from the Download page. Layouts are fractal — they work across all time frames.</p>
+  </div>
+
+  <div class="section">
+    <div class="search-box">
+      <input type="text" id="layoutSearch" placeholder="Search layouts..." oninput="filterLayouts()">
+    </div>
+
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="setFilter('all',this)">All (46)</button>
+      <button class="filter-btn" onclick="setFilter('targeting',this)">Targeting</button>
+      <button class="filter-btn" onclick="setFilter('stalking',this)">Stalking</button>
+      <button class="filter-btn" onclick="setFilter('trading',this)">Trading</button>
+      <button class="filter-btn" onclick="setFilter('bmr',this)">BMR</button>
+      <button class="filter-btn" onclick="setFilter('beta',this)">Beta</button>
+    </div>
+
+    <!-- TARGETING -->
+    <div class="pillar-section" data-pillar="targeting">
+      <div class="pillar-header">
+        <span class="pillar-dot" style="background:var(--spring)"></span>
+        <h3>Targeting</h3>
+        <span style="color:var(--text-muted);font-size:13px;">— Selecting symbols with ideal characteristics</span>
+      </div>
+      <div class="layout-list" id="targeting-layouts"></div>
+    </div>
+
+    <!-- STALKING -->
+    <div class="pillar-section" data-pillar="stalking">
+      <div class="pillar-header">
+        <span class="pillar-dot" style="background:var(--summer)"></span>
+        <h3>Stalking</h3>
+        <span style="color:var(--text-muted);font-size:13px;">— Alerts for when targets are moving</span>
+      </div>
+      <div class="layout-list" id="stalking-layouts"></div>
+    </div>
+
+    <!-- TRADING -->
+    <div class="pillar-section" data-pillar="trading">
+      <div class="pillar-header">
+        <span class="pillar-dot" style="background:var(--fall)"></span>
+        <h3>Trading</h3>
+        <span style="color:var(--text-muted);font-size:13px;">— Position sizing, entries, exits, patterns</span>
+      </div>
+      <div class="layout-list" id="trading-layouts"></div>
+    </div>
+
+    <!-- BMR -->
+    <div class="pillar-section" data-pillar="bmr">
+      <div class="pillar-header">
+        <span class="pillar-dot" style="background:var(--purple)"></span>
+        <h3>Blended Monthly Rebalancing</h3>
+        <span style="color:var(--text-muted);font-size:13px;">— Portfolio management on monthly timeframe</span>
+      </div>
+      <div class="layout-list" id="bmr-layouts"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SHOP ==================== -->
+<div id="page-shop" class="page">
+  <div class="hero">
+    <h1>Our Flagship Offering</h1>
+    <p class="subtitle">Fractal Edge Framework is Dr. Ken Long's trading strategies and indicators in a complete bundle for use with TC2000 platform.</p>
+  </div>
+
+  <div class="section">
+    <div class="pricing-grid">
+      <div class="pricing-card featured">
+        <h3>FEF Bundle on TC2000</h3>
+        <div class="price">$4,999</div>
+        <div class="price-note">One-time purchase · 12 months of updates</div>
+        <ul class="features">
+          <li>All 30 production layouts + 16 beta layouts</li>
+          <li>Dr. Ken Long's complete trading system on TC2000</li>
+          <li>Dark and Light mode templates</li>
+          <li>Targeting, Stalking, and Trading pillars</li>
+          <li>BMR portfolio rebalancing suite</li>
+          <li>Sniper setups (5 patterns, 2 timeframes)</li>
+          <li>12 months of fixes and new functionality</li>
+        </ul>
+        <a href="#" class="btn btn-primary btn-large" style="width:100%;justify-content:center;">Purchase</a>
+        <div class="coupon">Dr. Long subscribers: use <code>FEFLAUNCHPRO</code> for 20% off</div>
+      </div>
+      <div class="pricing-card">
+        <h3>FEF 12-Month Update</h3>
+        <div class="price">$999</div>
+        <div class="price-note">Annual renewal · Existing owners only</div>
+        <ul class="features">
+          <li>12 months of updates to your FEF Bundle</li>
+          <li>New layouts and functionality</li>
+          <li>Bug fixes and improvements</li>
+          <li>Access to beta releases</li>
+        </ul>
+        <a href="#" class="btn btn-large" style="width:100%;justify-content:center;">Renew</a>
+        <div class="coupon">KL-Bundle owners: use <code>KLBUNDLEOWNER</code> for $500 off</div>
+      </div>
+    </div>
+
+    <h2 class="section-title">Add-ons</h2>
+    <p class="section-subtitle">Supplemental programs and community</p>
+    <div class="card-grid">
+      <div class="card">
+        <h3>TC2000 User Group Weekly Insights</h3>
+        <div class="card-footer">
+          <span class="badge" style="color:var(--accent);border-color:var(--accent);">Meetup</span>
+          <a href="#" class="btn" style="margin-left:auto;">View Details</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>TC2000 PCF Proficiency: A Step-by-Step Guide</h3>
+        <div class="card-footer">
+          <span class="badge" style="color:var(--purple);border-color:var(--purple);">Self-paced</span>
+          <a href="#" class="btn" style="margin-left:auto;">View Details</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== DOWNLOAD ==================== -->
+<div id="page-download" class="page">
+  <div class="hero">
+    <h1>Download Layouts</h1>
+    <p class="subtitle">Download and install Fractal Edge Framework layouts for TC2000. Only paid subscribers have access to download links.</p>
+  </div>
+
+  <div class="section">
+    <div class="download-gate" id="download-logged-out">
+      <h3>Subscriber Access Required</h3>
+      <p>Please log in to access download links. If you are a paid subscriber and cannot see downloads, contact us.</p>
+      <a href="#" class="btn btn-primary" onclick="showPage('login')">Log In</a>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:32px;">
+      <div class="card" style="text-align:center;padding:32px;">
+        <h3 style="margin-bottom:8px;">Production Release</h3>
+        <p style="margin-bottom:16px;">30 stable, battle-tested layouts ready for daily use.</p>
+        <span class="badge badge-prod">Production</span>
+      </div>
+      <div class="card" style="text-align:center;padding:32px;">
+        <h3 style="margin-bottom:8px;">Beta Release</h3>
+        <p style="margin-bottom:16px;">16 layouts in testing. Designed for feedback — not for production use.</p>
+        <span class="badge badge-beta">Beta</span>
+      </div>
+    </div>
+
+    <h3 style="margin-bottom:16px;">All Layouts</h3>
+    <div class="card-grid" id="download-list"></div>
+  </div>
+</div>
+
+<!-- ==================== GLOSSARY ==================== -->
+<div id="page-glossary" class="page">
+  <div class="hero">
+    <h1>Our Craft Language</h1>
+    <p class="subtitle">Key terms and concepts used in the Fractal Edge Framework and Dr. Ken Long's trading methodology.</p>
+  </div>
+
+  <div class="section" style="max-width:700px;">
+    <div class="glossary-list" id="glossary-list"></div>
+  </div>
+</div>
+
+<!-- ==================== LOGIN ==================== -->
+<div id="page-login" class="page">
+  <div class="hero">
+    <h1>Log In</h1>
+    <p class="subtitle">Access your downloads and member content.</p>
+  </div>
+  <div class="section" style="max-width:400px;">
+    <form style="display:flex;flex-direction:column;gap:12px;" onsubmit="event.preventDefault();alert('Auth will connect to Stripe customer lookup')">
+      <input type="email" placeholder="Email address" required style="padding:12px 14px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg-card);color:var(--text-primary);font-size:14px;">
+      <input type="password" placeholder="Password" required style="padding:12px 14px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg-card);color:var(--text-primary);font-size:14px;">
+      <button type="submit" class="btn btn-primary" style="justify-content:center;">Log In</button>
+      <p style="text-align:center;font-size:13px;color:var(--text-muted);">Don't have an account? <a href="#" onclick="showPage('shop')" style="color:var(--accent);">Purchase access</a></p>
+    </form>
+  </div>
+</div>
+
+<!-- LAYOUT DETAIL MODAL -->
+<div class="modal-overlay" id="layoutModal" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <h2 id="modal-title"></h2>
+    <div class="screenshot-placeholder" id="modal-screenshot">TC2000 screenshot placeholder</div>
+    <p id="modal-description"></p>
+    <div id="modal-footer" style="display:flex;gap:12px;align-items:center;"></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <a href="#" onclick="showPage('home')">Home</a> ·
+    <a href="#" onclick="showPage('about')">About</a> ·
+    <a href="#" onclick="showPage('launchpad')">Start</a> ·
+    <a href="#" onclick="showPage('shop')">Shop</a> ·
+    <a href="#" onclick="showPage('download')">Download</a> ·
+    <a href="#" onclick="showPage('glossary')">Glossary</a>
+  </div>
+  <div style="margin-top:8px;">Contact us at lifelongedge@gmail.com · Offices in California and Massachusetts</div>
+  <div class="disclaimer">
+    Life Long Edge is not an investment advisory service, nor are we registered investment advisors or broker-dealers and do not purport to tell or suggest which securities customers should buy or sell for themselves. Customers should always check with their licensed financial advisor and their tax advisor to determine the suitability of any investment. It should not be assumed that the methods, techniques, or indicators presented in these products will be profitable or that they will not result in losses. Past results are not necessarily indicative of future results. Examples presented on these sites are for educational purposes only.
+  </div>
+</footer>
+
+<script>
+// ===== DATA =====
+const LAYOUTS = [
+  // PRODUCTION — Targeting
+  {name:"Frog Box",slug:"frogbox",desc:"Calculates frog box, hybrid frog box, long term frog box.",pillar:"targeting",status:"prod",tc2k:"https://www.tc2000.com/~awMv6C",workspace:"FEF-TargetingEssentials"},
+  {name:"FQN",slug:"fqn",desc:"Frog Quality Number is a measure of how directional a symbol is intraday. Higher FQN is associated with directional price movements; low FQN results in choppy price action.",pillar:"targeting",status:"prod",tc2k:"https://www.tc2000.com/~2e12VK",workspace:"FEF-TargetingEssentials"},
+  {name:"RL Stretch",slug:"rl-stretch",desc:"The Z score of difference between RL10 and RL270 tells us how many standard deviations the current price is compared to fair value.",pillar:"targeting",status:"prod",tc2k:"https://www.tc2000.com/~p9jQWU",workspace:"FEF-TargetingEssentials"},
+  {name:"OB RSI",slug:"ob-rsi",desc:"Use three levels of RSI over a 30 period lookback to identify symbols that are overbought and then scan for PSAR flip to get a short entry signal.",pillar:"targeting",status:"prod",tc2k:"https://www.tc2000.com/~kEWsiZ",workspace:"FEF-TargetingEssentials"},
+  {name:"OS RSI",slug:"os-rsi",desc:"Use three levels of RSI over a 30 period lookback to identify symbols that are oversold and then scan for PSAR flip to get a long entry signal.",pillar:"targeting",status:"prod",tc2k:"https://www.tc2000.com/~3tm2gZ",workspace:"FEF-TargetingEssentials"},
+  {name:"MACD Seasons",slug:"macd-seasons",desc:"Filter on symbols entering different MACD seasons — entering Fall or Spring — as a way to shortlist candidates at a turning point.",pillar:"targeting",status:"prod",tc2k:"https://www.tc2000.com/~cGqZ2T",workspace:"FEF-TargetingEssentials"},
+  {name:"Max Pain",slug:"max-pain",desc:"Candidates that have declined the most from their 10 day high, representing maximum pain on whoever bought the 10 day high.",pillar:"targeting",status:"prod",tc2k:"https://www.tc2000.com/~POOFy9",workspace:"FEF-TargetingEssentials"},
+  // PRODUCTION — Stalking
+  {name:"Autoframer",slug:"autoframer",desc:"Ranks the best risk to reward opportunity in a mechanical fashion. Reward is defined as the distance from now to the 10d high. Sort by R:R column.",pillar:"stalking",status:"prod",tc2k:"https://www.tc2000.com/~qWlrpF",workspace:"FEF-StalkEssentials"},
+  {name:"HF Movers",slug:"hf-movers",desc:"Filters for symbols that have made a 'Hybrid Frog Box' move from the open.",pillar:"stalking",status:"prod",tc2k:"https://www.tc2000.com/~gDc3ON",workspace:"FEF-StalkEssentials"},
+  {name:"ATR Movers",slug:"atr-movers",desc:"Filters for symbols that have made ATR moves in the last 5 bars.",pillar:"stalking",status:"prod",tc2k:"https://www.tc2000.com/~6gDCxc",workspace:"FEF-StalkEssentials"},
+  {name:"NDX Movers",slug:"ndx-movers",desc:"Filter symbols that make a move on any value of daily high/low. Shows symbols that 'touched' the 5D low or high.",pillar:"stalking",status:"prod",tc2k:"https://www.tc2000.com/~3T4vAO",workspace:"FEF-StalkEssentials"},
+  {name:"Fail Gain Stat",slug:"fail-gain-stat",desc:"Calculates the Fail Stat (statistical likelihood of a falling price being bought) and Gain Stat (likelihood of a rising price being sold).",pillar:"stalking",status:"prod",tc2k:"https://www.tc2000.com/~UQP47r",workspace:"FEF-StalkEssentials"},
+  {name:"Mosaic",slug:"mosaic",desc:"Calculates indicators to determine the state of the Market based on Dr Long's nine box Market Type categories. 13 concepts including Market Type, Trend and Range, Volatility, Risk Env, Risk Z, Gainers/Laggards, Fundamentals, Earnings, Dividends.",pillar:"stalking",status:"prod",tc2k:"https://www.tc2000.com/~Zb9Awa",workspace:"FEF-StalkEssentials"},
+  {name:"Z3BO",slug:"z3bo",desc:"Z3 Breakout scan filters for when price breaks out of the Z3 level on the selected time frame.",pillar:"stalking",status:"prod",tc2k:"https://www.tc2000.com/~CUdHlp",workspace:"FEF-StalkEssentials"},
+  // PRODUCTION — Trading (Templates)
+  {name:"Main.Dark",slug:"main-dark",desc:"The core template with RLs, Dragon, BB Means, Zs, PSARs in a dark mode color palette.",pillar:"trading",status:"prod",tc2k:"https://www.tc2000.com/~aPmZci",workspace:"FEF-TradeEssentials"},
+  {name:"Main.Light",slug:"main-light",desc:"The core template with RLs, Dragon, BB Means, Zs, PSARs in a light mode color palette.",pillar:"trading",status:"prod",tc2k:"https://www.tc2000.com/~I92sBD",workspace:"FEF-TradeEssentials"},
+  {name:"Position Sizing",slug:"position-sizing",desc:"Calculate the number of shares you can purchase based on the size of your risk box and risk dollars.",pillar:"trading",status:"prod",tc2k:"https://www.tc2000.com/~cVVmpI",workspace:"FEF-TradeEssentials"},
+  // PRODUCTION — Trading (Scans)
+  {name:"SSC Scan",slug:"ssc-scan",desc:"Find symbols in a Supported Spring Crossing pattern formation — a bullish signal for reversal of the most recent downtrend.",pillar:"trading",status:"prod",tc2k:"https://www.tc2000.com/~N9shkj",workspace:"FEF-TradeEssentials"},
+  {name:"SFC Scan",slug:"sfc-scan",desc:"Find symbols in a Supported Fall Crossing pattern — a bearish signal expecting reversal of the most recent uptrend.",pillar:"trading",status:"prod",tc2k:"https://www.tc2000.com/~dBreFI",workspace:"FEF-TradeEssentials"},
+  {name:"CD Scan",slug:"cd-scan",desc:"Find symbols in a Collapsing Dragon pattern — a bearish signal that the reversal attempt to the upside is failing.",pillar:"trading",status:"prod",tc2k:"https://www.tc2000.com/~DVU6qa",workspace:"FEF-TradeEssentials"},
+  {name:"Owl Scan",slug:"owl-scan",desc:"Find symbols in an Owl pattern formation — a bullish signal for breakout of price to the upside.",pillar:"trading",status:"prod",tc2k:"https://www.tc2000.com/~8qjO9M",workspace:"FEF-TradeEssentials"},
+  {name:"SSC HW Scan",slug:"ssc-hw-scan",desc:"SSC pattern with the condition that MACD season of Harsh Winter has been true.",pillar:"trading",status:"prod",tc2k:"https://www.tc2000.com/~73u87X",workspace:"FEF-TradeEssentials"},
+  {name:"SFC WS Scan",slug:"sfc-ws-scan",desc:"SFC pattern with the condition that MACD season of Warm Summer has been true.",pillar:"trading",status:"prod",tc2k:"https://www.tc2000.com/~sqwN2Q",workspace:"FEF-TradeEssentials"},
+  {name:"PFL",slug:"pfl",desc:"Find symbols where the PSAR has Flipped to Long for a long entry signal.",pillar:"trading",status:"prod",tc2k:"https://www.tc2000.com/~QuxmMK",workspace:"FEF-TradeEssentials"},
+  {name:"PFS",slug:"pfs",desc:"Find symbols where the PSAR has Flipped to Short for a short entry signal.",pillar:"trading",status:"prod",tc2k:"https://www.tc2000.com/~Nz5O3b",workspace:"FEF-TradeEssentials"},
+  // PRODUCTION — BMR
+  {name:"BMR All Sectors",slug:"bmr-all-sectors",desc:"BMR approach to any sector ETF in TC2000, with option to pick strongest/weakest component.",pillar:"bmr",status:"prod",tc2k:"https://www.tc2000.com/~zvuLSS",workspace:"FEF-BMR"},
+  {name:"BMR Dow 30",slug:"bmr-dow-30",desc:"BMR approach to Dow 30 components.",pillar:"bmr",status:"prod",tc2k:"https://www.tc2000.com/~o48tfg",workspace:"FEF-BMR"},
+  {name:"BMR ETF 13",slug:"bmr-etf-13",desc:"BMR approach to 13 ETFs representing major regions of the world.",pillar:"bmr",status:"prod",tc2k:"https://www.tc2000.com/~AovuVg",workspace:"FEF-BMR"},
+  {name:"BMR ETF 22",slug:"bmr-etf-22",desc:"BMR approach to 22 ETFs representing major regions and S&P Sectors.",pillar:"bmr",status:"prod",tc2k:"https://www.tc2000.com/~jPhafx",workspace:"FEF-BMR"},
+  {name:"BMR ETF 32",slug:"bmr-etf-32",desc:"BMR approach to 32 ETFs adding many asset classes for investing.",pillar:"bmr",status:"prod",tc2k:"https://www.tc2000.com/~jxYKIL",workspace:"FEF-BMR"},
+  {name:"BMR ETF MAX",slug:"bmr-etf-max",desc:"BMR approach to any ETFs listed in TC2000.",pillar:"bmr",status:"prod",tc2k:"https://www.tc2000.com/~ikfHXL",workspace:"FEF-BMR"},
+  {name:"BMR Sector SPDRs",slug:"bmr-sector-spdrs",desc:"BMR approach to sector SPDR ETFs.",pillar:"bmr",status:"prod",tc2k:"https://www.tc2000.com/~3Ji6ny",workspace:"FEF-BMR"},
+  // BETA
+  {name:"MACD Zscore",slug:"macd-zscore",desc:"MACD in z-score format to scan and sort the most extreme readings with an expectation of mean reversion.",pillar:"targeting",status:"beta",tc2k:"https://www.tc2000.com/~HDfI1L"},
+  {name:"AlphaStat",slug:"alphastat",desc:"Identifies symbols better or worse than the market by comparing slope of the regression line of the symbol with that of the market.",pillar:"targeting",status:"beta",tc2k:"https://www.tc2000.com/~t7FDy7"},
+  {name:"SlopeStat.Dark",slug:"slopestat-dark",desc:"Slope of the 30-period regression line with 180-day lookback — insights into turning points of the trend. Dark mode.",pillar:"targeting",status:"beta",tc2k:"https://www.tc2000.com/~NGmTgg"},
+  {name:"SlopeStat.Light",slug:"slopestat-light",desc:"Slope of the 30-period regression line with 180-day lookback. Light mode.",pillar:"targeting",status:"beta",tc2k:"https://www.tc2000.com/~XyliEe"},
+  {name:"SlopeStat.Scans",slug:"slopestat-scans",desc:"Scans for SlopeStat turning points.",pillar:"targeting",status:"beta",tc2k:"https://www.tc2000.com/~K4ckez"},
+  {name:"SlopeZs.Dark",slug:"slopezs-dark",desc:"Slopes for RL10, RL30, SMA10, SMA30 with z-scores using 30-period lookback. Dark mode.",pillar:"targeting",status:"beta",tc2k:"https://www.tc2000.com/~RNbOMi"},
+  {name:"SlopeZs.Light",slug:"slopezs-light",desc:"Slopes for RL10, RL30, SMA10, SMA30 with z-scores using 30-period lookback. Light mode.",pillar:"targeting",status:"beta",tc2k:"https://www.tc2000.com/~sOJO8F"},
+  {name:"Main.8c.Dark",slug:"main-8c-dark",desc:"Core template with 2 colors per season — see at a glance if the season is at an extreme without checking Red River status. Dark mode.",pillar:"trading",status:"beta",tc2k:"https://www.tc2000.com/~geQqpi"},
+  {name:"Main.8c.Light",slug:"main-8c-light",desc:"Core template with 2 colors per season for extreme visibility. Light mode.",pillar:"trading",status:"beta",tc2k:"https://www.tc2000.com/~MoSeGO"},
+  {name:"K2L-K2S Scan",slug:"k2l-k2s",desc:"Scans for K2L or K2S entry.",pillar:"trading",status:"beta",tc2k:"https://www.tc2000.com/~gagXLD"},
+  {name:"FS/GS Scan",slug:"fs-gs-scan",desc:"Filters for symbols whose price has fallen and hit the FailStat target, or risen and hit the GainStat target.",pillar:"stalking",status:"beta",tc2k:"https://www.tc2000.com/~ryTDvf"},
+  {name:"Market Trend",slug:"market-trend",desc:"Classifies the market as bullish & long okay, bullish, bearish & short okay, bearish — based on RL30 slope and SMA 30.",pillar:"stalking",status:"beta",tc2k:"https://www.tc2000.com/~WJhrbt"},
+  {name:"SniperDaily.DM",slug:"sniper-daily-dm",desc:"Scan for 5 Sniper setups (Catfish, Fence Sitter, Fireworks, Godzilla, Humpty Dumpty) on weekly/daily/30min for swing trading. Dark mode.",pillar:"trading",status:"beta",tc2k:"https://www.tc2000.com/~AcXRTO"},
+  {name:"SniperDaily.LM",slug:"sniper-daily-lm",desc:"5 Sniper setups for swing trading. Light mode.",pillar:"trading",status:"beta",tc2k:"https://www.tc2000.com/~9jdThq"},
+  {name:"SniperITD.DM",slug:"sniper-itd-dm",desc:"5 Sniper setups on daily/30min/3min for intraday trading. Dark mode.",pillar:"trading",status:"beta",tc2k:"https://www.tc2000.com/~loPJyR"},
+  {name:"SniperITD.LM",slug:"sniper-itd-lm",desc:"5 Sniper setups for intraday trading. Light mode.",pillar:"trading",status:"beta",tc2k:"https://www.tc2000.com/~fSY52D"},
+];
+
+const GLOSSARY = [
+  {term:"ATR (Average True Range)",def:"A volatility indicator that measures the average price range over a specified period, used for assessing risk and setting stop losses, and for determining position sizes."},
+  {term:"Bollinger Bands",def:"A volatility indicator based on the standard deviation of the closing prices over a lookback period. We use it to determine when prices are outside one standard deviation or when price is abnormally stretched at three standard deviations or higher."},
+  {term:"Collapsing Dragon",def:"A core pattern we trade. It is a bearish signal. It signals that the reversal attempt to the upside is failing and price is likely to fall back and continue the primary downtrend."},
+  {term:"Craft Knowledge",def:"Practical skills and experience gained from doing something over and over, which combines and enhances the 'art' and 'science' elements of trading into actionable techniques."},
+  {term:"Doji",def:"A candlestick pattern characterized by a small body with upper and lower wicks of about equal size, indicating indecision. If today ended in a Doji on a daily time frame, we pay attention for possibly large moves tomorrow on an intraday basis when price breaks outside the zone established by the Doji. Dr Long's command is 'Green Doji Go' — get long when you see price breakout after a Doji."},
+  {term:"FQN (Frog Quality Number)",def:"A statistical indicator to measure the desirability of stocks for intraday trading. Higher FQN is associated with directional price movements; low FQN results in choppy price action. Symbols with FQN of 3.0 or higher are highlighted in Dr Long's nightly podcast."},
+  {term:"Owl",def:"A core pattern we trade. It is a bullish signal. It signals the breakout of price to the upside."},
+  {term:"R (Risk)",def:"A measure of risk — the maximum amount of money that can be lost if the trade fails. If risking $200 on a long trade, that is 1R. A $300 gain would be 1.5R. R is both a unit of risk and a unit of reward multiples."},
+  {term:"R (Reward)",def:"A measure of potential profit, often used to determine the reward-to-risk ratio for trade setups, frequently discussed in terms of multiples."},
+  {term:"Supported Fall Crossing (SFC)",def:"A core pattern we trade. It is a bearish signal expecting a reversal of the most recent uptrend."},
+  {term:"Supported Spring Crossing (SSC)",def:"A core pattern we trade. It is a bullish signal. It signals the reversal of the most recent downtrend."},
+  {term:"TC2000",def:"A trading analysis, charting, scanning and trade execution platform. The authors of this site use this platform."},
+];
+
+// ===== RENDER =====
+function renderLayouts() {
+  const groups = {targeting:[],stalking:[],trading:[],bmr:[]};
+  LAYOUTS.forEach(l => groups[l.pillar].push(l));
+
+  Object.keys(groups).forEach(pillar => {
+    const container = document.getElementById(pillar + '-layouts');
+    if (!container) return;
+    container.innerHTML = groups[pillar].map(l => `
+      <div class="layout-chip" data-pillar="${l.pillar}" data-status="${l.status}" data-name="${l.name.toLowerCase()}" onclick="openLayout('${l.slug}')">
+        <span>${l.name}</span>
+        ${l.status === 'beta' ? '<span class="beta-tag">BETA</span>' : ''}
+      </div>
+    `).join('');
+  });
+}
+
+function renderDownloads() {
+  const container = document.getElementById('download-list');
+  container.innerHTML = LAYOUTS.map(l => `
+    <div class="card">
+      <h3>${l.name}</h3>
+      <p>${l.desc}</p>
+      <div class="card-footer">
+        <span class="badge ${l.status === 'prod' ? 'badge-prod' : 'badge-beta'}">${l.status === 'prod' ? 'Production' : 'Beta'}</span>
+        <a href="${l.tc2k}" target="_blank" class="btn" style="margin-left:auto;font-size:12px;">TC2000 Link</a>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderGlossary() {
+  const container = document.getElementById('glossary-list');
+  container.innerHTML = GLOSSARY.map((g,i) => `
+    <div class="glossary-item" onclick="this.classList.toggle('open')">
+      <div class="glossary-term">
+        <span>${g.term}</span>
+        <span class="arrow">&#9654;</span>
+      </div>
+      <div class="glossary-def">${g.def}</div>
+    </div>
+  `).join('');
+}
+
+// ===== NAVIGATION =====
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.classList.toggle('active', a.dataset.page === id);
+  });
+  window.scrollTo(0, 0);
+}
+
+// ===== MODAL =====
+function openLayout(slug) {
+  const l = LAYOUTS.find(x => x.slug === slug);
+  if (!l) return;
+  document.getElementById('modal-title').textContent = l.name;
+  document.getElementById('modal-screenshot').textContent = 'TC2000 screenshot: ' + l.name;
+  document.getElementById('modal-description').textContent = l.desc;
+  document.getElementById('modal-footer').innerHTML = `
+    <span class="badge ${l.status === 'prod' ? 'badge-prod' : 'badge-beta'}">${l.status === 'prod' ? 'Production' : 'Beta'}</span>
+    <span class="badge badge-${l.pillar}">${l.pillar}</span>
+    <a href="${l.tc2k}" target="_blank" class="btn btn-primary" style="margin-left:auto;">Open in TC2000</a>
+  `;
+  document.getElementById('layoutModal').classList.add('active');
+}
+
+function closeModal() {
+  document.getElementById('layoutModal').classList.remove('active');
+}
+
+// ===== FILTER =====
+let currentFilter = 'all';
+
+function setFilter(filter, btn) {
+  currentFilter = filter;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  filterLayouts();
+}
+
+function filterLayouts() {
+  const search = (document.getElementById('layoutSearch')?.value || '').toLowerCase();
+  document.querySelectorAll('.layout-chip').forEach(chip => {
+    const name = chip.dataset.name;
+    const pillar = chip.dataset.pillar;
+    const status = chip.dataset.status;
+    let show = true;
+    if (search && !name.includes(search)) show = false;
+    if (currentFilter !== 'all') {
+      if (currentFilter === 'beta') { if (status !== 'beta') show = false; }
+      else { if (pillar !== currentFilter) show = false; }
+    }
+    chip.style.display = show ? '' : 'none';
+  });
+  // hide empty sections
+  document.querySelectorAll('.pillar-section').forEach(s => {
+    const visible = s.querySelectorAll('.layout-chip[style=""],.layout-chip:not([style])').length;
+    s.style.display = visible ? '' : 'none';
+  });
+}
+
+// ===== THEME =====
+function toggleTheme() {
+  const body = document.documentElement;
+  const current = body.getAttribute('data-theme');
+  body.setAttribute('data-theme', current === 'light' ? '' : 'light');
+}
+
+// ===== KEYBOARD =====
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+});
+
+// ===== INIT =====
+renderLayouts();
+renderDownloads();
+renderGlossary();
+</script>
+</body>
+</html>
