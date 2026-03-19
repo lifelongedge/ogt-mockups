@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your First Edge — Owl Group Trading</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0d1117;
+  --bg-panel: #0c0f14;
+  --bg-topbar: #080b10;
+  --card: #161b22;
+  --card-hover: #1c2128;
+  --card-border: #21262d;
+  --text: #e6edf3;
+  --text-muted: #8b949e;
+  --text-dim: #6e7681;
+  --accent: #58a6ff;
+  --accent-dim: rgba(88,166,255,.12);
+  --green: #3fb950;
+  --green-dim: rgba(63,185,80,.12);
+  --red: #f85149;
+  --red-dim: rgba(248,81,73,.12);
+  --yellow: #d29922;
+  --orange: #db6d28;
+  --purple: #bc8cff;
+  --owl-amber: #d4940a;
+  --owl-amber-glow: rgba(212,148,10,.15);
+  --owl-amber-dim: rgba(212,148,10,.08);
+}
+
+[data-theme="light"] {
+  --bg: #f6f8fa;
+  --bg-panel: #ffffff;
+  --bg-topbar: #ffffff;
+  --card: #ffffff;
+  --card-hover: #f3f4f6;
+  --card-border: #d0d7de;
+  --text: #1f2328;
+  --text-muted: #656d76;
+  --text-dim: #8b949e;
+  --accent: #0969da;
+  --accent-dim: rgba(9,105,218,.08);
+  --green-dim: rgba(63,185,80,.08);
+  --red-dim: rgba(248,81,73,.06);
+  --owl-amber-glow: rgba(212,148,10,.08);
+  --owl-amber-dim: rgba(212,148,10,.05);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* ── Topbar ── */
+.topbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 52px;
+  background: var(--bg-topbar);
+  border-bottom: 1px solid var(--card-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  z-index: 100;
+  backdrop-filter: blur(12px);
+}
+.topbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.topbar-brand .name {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: 0.3px;
+}
+.topbar-brand .sub {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.theme-toggle {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  color: var(--text-muted);
+  border-radius: 6px;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s;
+}
+.theme-toggle:hover {
+  color: var(--text);
+  border-color: var(--text-muted);
+}
+
+/* ── Progress Bar ── */
+.progress-container {
+  position: fixed;
+  top: 52px; left: 0; right: 0;
+  height: 4px;
+  background: var(--card-border);
+  z-index: 99;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--owl-amber), var(--accent));
+  width: 0%;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Module Navigation ── */
+.module-nav {
+  position: fixed;
+  top: 56px; left: 0; right: 0;
+  height: 48px;
+  background: var(--bg-panel);
+  border-bottom: 1px solid var(--card-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  z-index: 98;
+  padding: 0 16px;
+}
+.module-tab {
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  background: none;
+  white-space: nowrap;
+}
+.module-tab:hover { color: var(--text); background: var(--card); }
+.module-tab.active { color: var(--owl-amber); background: var(--owl-amber-dim); }
+.module-tab.completed { color: var(--green); }
+.module-tab.locked { opacity: 0.4; cursor: default; }
+.module-tab.locked:hover { color: var(--text-muted); background: none; }
+
+/* ── Main Content ── */
+.content-area {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 128px 24px 120px;
+}
+
+/* ── Screens ── */
+.screen { display: none; }
+.screen.active { display: block; animation: fadeIn 0.4s ease; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Welcome Screen ── */
+.welcome-hero {
+  text-align: center;
+  padding: 40px 0 32px;
+}
+.welcome-hero h1 {
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-bottom: 12px;
+  background: linear-gradient(135deg, var(--owl-amber), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.welcome-hero .subtitle {
+  font-size: 18px;
+  color: var(--text-muted);
+  max-width: 480px;
+  margin: 0 auto 32px;
+  line-height: 1.6;
+}
+.welcome-meta {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+.welcome-meta-item {
+  text-align: center;
+}
+.welcome-meta-item .val {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--owl-amber);
+}
+.welcome-meta-item .label {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.module-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 40px;
+  text-align: left;
+}
+.module-preview-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.module-preview-num {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--owl-amber-dim);
+  color: var(--owl-amber);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.module-preview-text h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.module-preview-text p {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* ── Buttons ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+.btn-primary {
+  background: var(--owl-amber);
+  color: #000;
+}
+.btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
+.btn-secondary {
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--card-border);
+}
+.btn-secondary:hover { background: var(--card-hover); border-color: var(--text-muted); }
+.btn-accent {
+  background: var(--accent);
+  color: #fff;
+}
+.btn-accent:hover { filter: brightness(1.1); }
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none !important;
+  filter: none !important;
+}
+
+/* ── Section Labels ── */
+.section-label {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--owl-amber);
+  margin-bottom: 8px;
+}
+
+/* ── Lesson ── */
+.lesson-header {
+  margin-bottom: 28px;
+}
+.lesson-header h2 {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  margin-bottom: 8px;
+}
+.lesson-header .module-badge {
+  font-size: 12px;
+  color: var(--owl-amber);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.lesson-body {
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text);
+}
+.lesson-body p {
+  margin-bottom: 16px;
+}
+.lesson-body strong {
+  color: var(--owl-amber);
+  font-weight: 600;
+}
+.season-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 20px 0;
+}
+@media (max-width: 520px) {
+  .season-grid { grid-template-columns: 1fr; }
+}
+.season-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+.season-card .season-name {
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+.season-card .season-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+.season-winter .season-name { color: #79c0ff; }
+.season-spring .season-name { color: #3fb950; }
+.season-summer .season-name { color: var(--owl-amber); }
+.season-fall .season-name { color: #f85149; }
+
+.concept-list {
+  list-style: none;
+  margin: 16px 0;
+}
+.concept-list li {
+  padding: 10px 14px;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.concept-list li strong {
+  display: block;
+  margin-bottom: 2px;
+}
+
+/* ── Media Players ── */
+.media-block {
+  margin: 28px 0;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 20px;
+}
+.media-label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--owl-amber);
+  margin-bottom: 4px;
+}
+.media-title {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+.media-block audio,
+.media-block video {
+  width: 100%;
+  border-radius: 6px;
+  max-height: 400px;
+}
+.media-block audio { height: 44px; }
+
+/* ── Quiz ── */
+.quiz-section {
+  margin: 32px 0;
+}
+.quiz-question {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 24px;
+  margin-bottom: 16px;
+}
+.quiz-question.answered-correct {
+  border-color: var(--green);
+  background: var(--green-dim);
+}
+.quiz-question.answered-wrong {
+  border-color: var(--red);
+}
+.quiz-q-num {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--owl-amber);
+  margin-bottom: 8px;
+}
+.quiz-q-text {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.quiz-option {
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--card-border);
+  background: var(--bg);
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+  text-align: left;
+  color: var(--text);
+  font-family: inherit;
+  width: 100%;
+}
+.quiz-option:hover:not(.selected):not(.disabled) {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+}
+.quiz-option.selected.correct {
+  border-color: var(--green);
+  background: var(--green-dim);
+  color: var(--green);
+}
+.quiz-option.selected.incorrect {
+  border-color: var(--red);
+  background: var(--red-dim);
+  color: var(--red);
+}
+.quiz-option.reveal-correct {
+  border-color: var(--green);
+  background: var(--green-dim);
+}
+.quiz-option.disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+.quiz-feedback {
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  display: none;
+}
+.quiz-feedback.visible { display: block; }
+.quiz-score {
+  text-align: center;
+  padding: 16px;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  margin-top: 16px;
+  font-size: 15px;
+  color: var(--text-muted);
+  display: none;
+}
+.quiz-score.visible { display: block; }
+.quiz-score .score-num {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--green);
+}
+
+/* ── Scenario ── */
+.scenario-section {
+  margin: 32px 0;
+}
+.scenario-block {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 24px;
+}
+.scenario-text {
+  font-size: 15px;
+  line-height: 1.7;
+  margin-bottom: 16px;
+  color: var(--text);
+}
+.scenario-answer {
+  display: none;
+  margin-top: 16px;
+  padding: 16px;
+  background: var(--owl-amber-dim);
+  border: 1px solid rgba(212,148,10,.2);
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text);
+}
+.scenario-answer.visible { display: block; animation: fadeIn 0.3s ease; }
+
+/* ── Navigation Footer ── */
+.nav-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--card-border);
+}
+.nav-footer .step-info {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* ── Completion Screen ── */
+.completion-hero {
+  text-align: center;
+  padding: 40px 0 24px;
+}
+.completion-hero h2 {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  background: linear-gradient(135deg, var(--owl-amber), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.completion-hero p {
+  font-size: 16px;
+  color: var(--text-muted);
+  max-width: 520px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+.completion-check {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--green-dim);
+  border: 2px solid var(--green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+  font-size: 36px;
+  color: var(--green);
+}
+.cta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  margin-top: 40px;
+}
+@media (max-width: 640px) {
+  .cta-grid { grid-template-columns: 1fr; }
+}
+.cta-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 24px 20px;
+  text-align: center;
+  text-decoration: none;
+  color: var(--text);
+  transition: all 0.2s;
+  display: block;
+}
+.cta-card:hover {
+  border-color: var(--owl-amber);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,.3);
+}
+.cta-card h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.cta-card p {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+.cta-card .cta-arrow {
+  display: inline-block;
+  margin-top: 12px;
+  color: var(--owl-amber);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ── Keyboard Hint ── */
+.kb-hint {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  font-size: 11px;
+  color: var(--text-dim);
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  padding: 6px 12px;
+  z-index: 50;
+}
+.kb-hint kbd {
+  background: var(--bg);
+  border: 1px solid var(--card-border);
+  border-radius: 3px;
+  padding: 1px 5px;
+  font-family: inherit;
+  font-size: 11px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 520px) {
+  .content-area { padding: 120px 16px 100px; }
+  .welcome-hero h1 { font-size: 28px; }
+  .lesson-header h2 { font-size: 22px; }
+  .module-tab { padding: 6px 10px; font-size: 12px; }
+  .welcome-meta { gap: 20px; }
+  .nav-footer { flex-wrap: wrap; gap: 12px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Topbar -->
+<header class="topbar">
+  <div class="topbar-brand">
+    <span class="name">Owl Group Trading</span>
+    <span class="sub">Your First Edge</span>
+  </div>
+  <div class="topbar-actions">
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark theme">Light / Dark</button>
+  </div>
+</header>
+
+<!-- Progress -->
+<div class="progress-container">
+  <div class="progress-fill" id="progressFill"></div>
+</div>
+
+<!-- Module Nav -->
+<nav class="module-nav" id="moduleNav">
+  <button class="module-tab active" data-target="welcome" onclick="goToScreen('welcome')">Start</button>
+  <button class="module-tab locked" data-target="m1-lesson" onclick="goToModule(1)">Module 1</button>
+  <button class="module-tab locked" data-target="m2-lesson" onclick="goToModule(2)">Module 2</button>
+  <button class="module-tab locked" data-target="m3-lesson" onclick="goToModule(3)">Module 3</button>
+  <button class="module-tab locked" data-target="completion" onclick="goToScreen('completion')">Complete</button>
+</nav>
+
+<main class="content-area">
+
+<!-- ============================================================ -->
+<!-- WELCOME SCREEN -->
+<!-- ============================================================ -->
+<div class="screen active" id="screen-welcome">
+  <div class="welcome-hero">
+    <h1>Your First Edge</h1>
+    <p class="subtitle">Three core concepts from Dr. Ken Long's 40-year trading methodology. In 15 minutes, you'll learn to read the market, frame a trade, and size your position.</p>
+  </div>
+
+  <div class="welcome-meta">
+    <div class="welcome-meta-item">
+      <div class="val">3</div>
+      <div class="label">Modules</div>
+    </div>
+    <div class="welcome-meta-item">
+      <div class="val">~15 min</div>
+      <div class="label">Duration</div>
+    </div>
+    <div class="welcome-meta-item">
+      <div class="val">9</div>
+      <div class="label">Quiz Questions</div>
+    </div>
+  </div>
+
+  <div class="module-preview">
+    <div class="module-preview-card">
+      <div class="module-preview-num">1</div>
+      <div class="module-preview-text">
+        <h3>Reading the Market's Season</h3>
+        <p>The MACD Four Seasons framework: know when to plant and when to harvest.</p>
+      </div>
+    </div>
+    <div class="module-preview-card">
+      <div class="module-preview-num">2</div>
+      <div class="module-preview-text">
+        <h3>Framing Your Trade</h3>
+        <p>Setup, Signal, Entry + the Rule of Four for trade management.</p>
+      </div>
+    </div>
+    <div class="module-preview-card">
+      <div class="module-preview-num">3</div>
+      <div class="module-preview-text">
+        <h3>Sizing Your Position</h3>
+        <p>The 1R concept, stop-driven math, and the psychology of position size.</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center">
+    <button class="btn btn-primary" onclick="startCourse()">Begin the Course</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- MODULE 1: LESSON -->
+<!-- ============================================================ -->
+<div class="screen" id="screen-m1-lesson">
+  <div class="lesson-header">
+    <div class="module-badge">Module 1 of 3</div>
+    <h2>Reading the Market's Season</h2>
+  </div>
+
+  <div class="lesson-body">
+    <p>The market has seasons &mdash; just like the year. The <strong>MACD Four Seasons</strong> framework classifies market conditions into four phases:</p>
+
+    <div class="season-grid">
+      <div class="season-card season-winter">
+        <div class="season-name">Winter</div>
+        <div class="season-desc">Below Zero, Falling &mdash; downtrend, fear dominates. We look for short opportunities.</div>
+      </div>
+      <div class="season-card season-spring">
+        <div class="season-name">Spring</div>
+        <div class="season-desc">Below Zero, Rising &mdash; the pain has stopped, recovery begins. We stalk early long entries using the Supported Spring Crossing (SSC).</div>
+      </div>
+      <div class="season-card season-summer">
+        <div class="season-name">Summer</div>
+        <div class="season-desc">Above Zero, Rising &mdash; strong uptrend. We hold positions and add on dips.</div>
+      </div>
+      <div class="season-card season-fall">
+        <div class="season-name">Fall</div>
+        <div class="season-desc">Above Zero, Falling &mdash; momentum decaying. Harvest time &mdash; tighten stops.</div>
+      </div>
+    </div>
+
+    <p>The key insight: you don't need to predict what's coming. <strong>Recognize which season you're in and align your strategy.</strong> A trader who buys in Fall is planting seeds in October.</p>
+
+    <p>The MACD uses a 10-period vs 30-period moving average comparison. When the signal line is above zero and rising, that's Summer. When it crosses below zero, Winter arrives. The transitions between seasons &mdash; especially <strong>Spring after a Harsh Winter</strong> &mdash; create the highest-probability trading opportunities.</p>
+  </div>
+
+  <!-- Audio -->
+  <div class="media-block">
+    <div class="media-label">Listen</div>
+    <div class="media-title">Dr. Ken Long explains the Harsh Winter &rarr; Spring &rarr; Collapsing Dragon pathway (1:30)</div>
+    <audio controls preload="none">
+      <source src="https://storage.googleapis.com/ogt-media-clips/v3-collapsing-dragon-deep.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+
+  <div class="nav-footer">
+    <button class="btn btn-secondary" onclick="goToScreen('welcome')">Back</button>
+    <span class="step-info">Lesson &rarr; Quiz &rarr; Scenario</span>
+    <button class="btn btn-primary" onclick="goToScreen('m1-quiz')">Continue to Quiz</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- MODULE 1: QUIZ -->
+<!-- ============================================================ -->
+<div class="screen" id="screen-m1-quiz">
+  <div class="lesson-header">
+    <div class="module-badge">Module 1 &mdash; Quiz</div>
+    <h2>Check Your Understanding</h2>
+  </div>
+
+  <div class="quiz-section" id="quiz-m1">
+    <div class="quiz-question" data-correct="0" id="m1q1">
+      <div class="quiz-q-num">Question 1 of 3</div>
+      <div class="quiz-q-text">The MACD signal line is below zero and falling. What season is this?</div>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answerQuiz('m1q1', 0)">Winter</button>
+        <button class="quiz-option" onclick="answerQuiz('m1q1', 1)">Spring</button>
+        <button class="quiz-option" onclick="answerQuiz('m1q1', 2)">Summer</button>
+        <button class="quiz-option" onclick="answerQuiz('m1q1', 3)">Fall</button>
+      </div>
+      <div class="quiz-feedback">Below zero and falling means both conditions for Winter are met: the MACD is negative and the momentum is declining.</div>
+    </div>
+
+    <div class="quiz-question" data-correct="0" id="m1q2">
+      <div class="quiz-q-num">Question 2 of 3</div>
+      <div class="quiz-q-text">You notice the MACD has been in Winter but the slope just hooked upward. What should you do?</div>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answerQuiz('m1q2', 0)">Start stalking long entry setups</button>
+        <button class="quiz-option" onclick="answerQuiz('m1q2', 1)">Immediately buy</button>
+        <button class="quiz-option" onclick="answerQuiz('m1q2', 2)">Short the market</button>
+        <button class="quiz-option" onclick="answerQuiz('m1q2', 3)">Wait for Summer</button>
+      </div>
+      <div class="quiz-feedback">The upward hook signals a Winter-to-Spring transition. Start watching for Supported Spring Crossing setups &mdash; but don't buy blindly. Observe first, then act on a confirmed signal.</div>
+    </div>
+
+    <div class="quiz-question" data-correct="0" id="m1q3">
+      <div class="quiz-q-num">Question 3 of 3</div>
+      <div class="quiz-q-text">A stock's MACD crossed above zero and is rising strongly. Which season?</div>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answerQuiz('m1q3', 0)">Summer</button>
+        <button class="quiz-option" onclick="answerQuiz('m1q3', 1)">Spring</button>
+        <button class="quiz-option" onclick="answerQuiz('m1q3', 2)">Fall</button>
+        <button class="quiz-option" onclick="answerQuiz('m1q3', 3)">Winter</button>
+      </div>
+      <div class="quiz-feedback">Above zero (positive MACD) and rising &mdash; that's Summer. This is the strong uptrend where we hold positions and look to add on dips.</div>
+    </div>
+
+    <div class="quiz-score" id="m1-score">
+      <div class="score-num" id="m1-score-num"></div>
+      <div>correct out of 3</div>
+    </div>
+  </div>
+
+  <div class="nav-footer">
+    <button class="btn btn-secondary" onclick="goToScreen('m1-lesson')">Back to Lesson</button>
+    <span class="step-info">Lesson &rarr; Quiz &rarr; Scenario</span>
+    <button class="btn btn-primary" id="m1-quiz-next" disabled onclick="goToScreen('m1-scenario')">Continue to Scenario</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- MODULE 1: SCENARIO -->
+<!-- ============================================================ -->
+<div class="screen" id="screen-m1-scenario">
+  <div class="lesson-header">
+    <div class="module-badge">Module 1 &mdash; Scenario</div>
+    <h2>Apply What You Learned</h2>
+  </div>
+
+  <div class="scenario-section">
+    <div class="scenario-block">
+      <div class="section-label">Scenario</div>
+      <div class="scenario-text">
+        SPY's MACD was deep below zero for 3 weeks (Harsh Winter). Yesterday the slope reversed upward. GDX shows the same pattern. What is the season now, and what setup would you look for?
+      </div>
+      <button class="btn btn-secondary" onclick="revealAnswer('m1-answer')">Reveal Answer</button>
+      <div class="scenario-answer" id="m1-answer">
+        This is the transition from <strong>Winter to Spring</strong>. The setup to look for is the <strong>Supported Spring Crossing (SSC)</strong> &mdash; a high-probability long entry after a Harsh Winter selloff. The fact that multiple instruments (SPY and GDX) show the same seasonal transition strengthens the signal. When the broad market and individual names are aligned in the same season shift, the probability of a sustained move increases.
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-footer">
+    <button class="btn btn-secondary" onclick="goToScreen('m1-quiz')">Back to Quiz</button>
+    <span class="step-info">Module 1 Complete</span>
+    <button class="btn btn-primary" onclick="completeModule(1)">Continue to Module 2</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- MODULE 2: LESSON -->
+<!-- ============================================================ -->
+<div class="screen" id="screen-m2-lesson">
+  <div class="lesson-header">
+    <div class="module-badge">Module 2 of 3</div>
+    <h2>Framing Your Trade</h2>
+  </div>
+
+  <div class="lesson-body">
+    <p>Every trade has three phases. Skipping one is how accounts blow up.</p>
+
+    <ul class="concept-list">
+      <li><strong>Setup</strong> &mdash; the precondition. The market shows a recognizable pattern: volatility compression, pullback to support, a season transition. This is observation, not action.</li>
+      <li><strong>Signal</strong> &mdash; the trigger. Something mathematical fires. The MACD hooks upward. Price closes above a prior bar's high. There's no interpretation &mdash; it either fired or it didn't.</li>
+      <li><strong>Entry</strong> &mdash; the execution. You commit capital at a pre-defined price with a pre-defined stop and target. The entry cannot exist without the other two.</li>
+    </ul>
+
+    <p>Think of a sniper: the setup is choosing your position. The signal is the target entering the crosshairs. The entry is pulling the trigger. <strong>A sniper who chases his target across an open field is a dead sniper.</strong></p>
+
+    <p>Once you're in, the <strong>Rule of Four</strong> manages the trade:</p>
+
+    <ul class="concept-list">
+      <li><strong>Give it one</strong> &mdash; move to no-lose at +1R</li>
+      <li><strong>Aim for three</strong> &mdash; your rational target</li>
+      <li><strong>Settle for two</strong> &mdash; lock in +1.5R if momentum stalls</li>
+      <li><strong>Keep one</strong> &mdash; never give back more than 1R from peak</li>
+    </ul>
+  </div>
+
+  <!-- Video -->
+  <div class="media-block">
+    <div class="media-label">Watch</div>
+    <div class="media-title">Dr. Ken Long coaching bar-by-bar: "Where would you get long?" (1:30)</div>
+    <video controls preload="none" style="background:#000;">
+      <source src="https://storage.googleapis.com/ogt-media-clips/v7-bar-by-bar-training.mp4" type="video/mp4">
+      Your browser does not support the video element.
+    </video>
+  </div>
+
+  <div class="nav-footer">
+    <button class="btn btn-secondary" onclick="goToScreen('m1-scenario')">Back</button>
+    <span class="step-info">Lesson &rarr; Quiz &rarr; Scenario</span>
+    <button class="btn btn-primary" onclick="goToScreen('m2-quiz')">Continue to Quiz</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- MODULE 2: QUIZ -->
+<!-- ============================================================ -->
+<div class="screen" id="screen-m2-quiz">
+  <div class="lesson-header">
+    <div class="module-badge">Module 2 &mdash; Quiz</div>
+    <h2>Check Your Understanding</h2>
+  </div>
+
+  <div class="quiz-section" id="quiz-m2">
+    <div class="quiz-question" data-correct="0" id="m2q1">
+      <div class="quiz-q-num">Question 1 of 3</div>
+      <div class="quiz-q-text">You see a stock compressing in a tight range with declining volume. Is this a Setup, Signal, or Entry?</div>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answerQuiz('m2q1', 0)">Setup</button>
+        <button class="quiz-option" onclick="answerQuiz('m2q1', 1)">Signal</button>
+        <button class="quiz-option" onclick="answerQuiz('m2q1', 2)">Entry</button>
+      </div>
+      <div class="quiz-feedback">A volatility compression pattern is a precondition &mdash; it tells you to pay attention, but no trigger has fired yet. This is observation, not action.</div>
+    </div>
+
+    <div class="quiz-question" data-correct="0" id="m2q2">
+      <div class="quiz-q-num">Question 2 of 3</div>
+      <div class="quiz-q-text">The MACD hooks upward and price closes above yesterday's high. What phase is this?</div>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answerQuiz('m2q2', 0)">Signal</button>
+        <button class="quiz-option" onclick="answerQuiz('m2q2', 1)">Setup</button>
+        <button class="quiz-option" onclick="answerQuiz('m2q2', 2)">Entry</button>
+      </div>
+      <div class="quiz-feedback">A mathematical event fired (MACD hook + price close above prior high). This is a binary, objective trigger &mdash; it either happened or it didn't. That's a Signal.</div>
+    </div>
+
+    <div class="quiz-question" data-correct="0" id="m2q3">
+      <div class="quiz-q-num">Question 3 of 3</div>
+      <div class="quiz-q-text">Your trade has reached +2R. According to the Rule of Four, what should you do?</div>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answerQuiz('m2q3', 0)">Lock in +1.5R with a trailing stop</button>
+        <button class="quiz-option" onclick="answerQuiz('m2q3', 1)">Exit immediately</button>
+        <button class="quiz-option" onclick="answerQuiz('m2q3', 2)">Add to the position</button>
+        <button class="quiz-option" onclick="answerQuiz('m2q3', 3)">Move stop to entry</button>
+      </div>
+      <div class="quiz-feedback">"Settle for two" &mdash; at +2R, lock in +1.5R with a trailing stop. You're protecting profit while allowing the trade to continue toward the 3R target.</div>
+    </div>
+
+    <div class="quiz-score" id="m2-score">
+      <div class="score-num" id="m2-score-num"></div>
+      <div>correct out of 3</div>
+    </div>
+  </div>
+
+  <div class="nav-footer">
+    <button class="btn btn-secondary" onclick="goToScreen('m2-lesson')">Back to Lesson</button>
+    <span class="step-info">Lesson &rarr; Quiz &rarr; Scenario</span>
+    <button class="btn btn-primary" id="m2-quiz-next" disabled onclick="goToScreen('m2-scenario')">Continue to Scenario</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- MODULE 2: SCENARIO -->
+<!-- ============================================================ -->
+<div class="screen" id="screen-m2-scenario">
+  <div class="lesson-header">
+    <div class="module-badge">Module 2 &mdash; Scenario</div>
+    <h2>Apply What You Learned</h2>
+  </div>
+
+  <div class="scenario-section">
+    <div class="scenario-block">
+      <div class="section-label">Scenario</div>
+      <div class="scenario-text">
+        NVDA has been in a shelf pattern for 3 days (<strong>Setup</strong>). This morning, price broke above the shelf high on increased volume (<strong>Signal</strong>). Your entry is $0.01 above the breakout candle at $142.01. Your stop is $141.50 (initial risk = $0.51 = 1R). Your target is $143.54 (3R). Price reaches $143.02 (+2R). What do you do?
+      </div>
+      <button class="btn btn-secondary" onclick="revealAnswer('m2-answer')">Reveal Answer</button>
+      <div class="scenario-answer" id="m2-answer">
+        Move your stop to lock in <strong>+1.5R ($142.78)</strong>. You're following the Rule of Four: "settle for two." If price continues to your 3R target, great. If it reverses, you keep a solid +1.5R profit. The math: entry $142.01 + (1.5 &times; $0.51) = $142.78 trailing stop.
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-footer">
+    <button class="btn btn-secondary" onclick="goToScreen('m2-quiz')">Back to Quiz</button>
+    <span class="step-info">Module 2 Complete</span>
+    <button class="btn btn-primary" onclick="completeModule(2)">Continue to Module 3</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- MODULE 3: LESSON -->
+<!-- ============================================================ -->
+<div class="screen" id="screen-m3-lesson">
+  <div class="lesson-header">
+    <div class="module-badge">Module 3 of 3</div>
+    <h2>Sizing Your Position</h2>
+  </div>
+
+  <div class="lesson-body">
+    <p>Ask a new trader about their last trade and they'll tell you what they bought. Ask a professional and the first thing they say is: <strong>"How much did I risk?"</strong></p>
+
+    <p><strong>1R = the amount you're willing to lose on a single trade.</strong> It's a fixed dollar amount calculated from your system's edge and your own psychology.</p>
+
+    <p>If your account is $50,000 and you risk 0.5% per trade, your 1R = $250. If your initial stop is $0.10 from entry, you buy 2,500 shares. Not 100. Not 10,000. The stop drives the math.</p>
+
+    <p>Position size is also a <strong>psychological signal</strong>. If 2,500 shares makes your heart race, the position is too big &mdash; regardless of what the math says. The goal is to find the size where a -1R loss is genuinely acceptable and you can execute your plan without emotional interference.</p>
+
+    <p>The progression: paper trade first, then 25% size, then 50%, then full. <strong>Boring is the goal.</strong> If your position size makes you feel something, it's too big.</p>
+  </div>
+
+  <!-- Audio -->
+  <div class="media-block">
+    <div class="media-label">Listen</div>
+    <div class="media-title">Dr. Ken Long on position sizing psychology: "How does it feel at that level of risk?" (1:30)</div>
+    <audio controls preload="none">
+      <source src="https://storage.googleapis.com/ogt-media-clips/v5-hougaard-press-intro.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+
+  <div class="nav-footer">
+    <button class="btn btn-secondary" onclick="goToScreen('m2-scenario')">Back</button>
+    <span class="step-info">Lesson &rarr; Quiz &rarr; Scenario</span>
+    <button class="btn btn-primary" onclick="goToScreen('m3-quiz')">Continue to Quiz</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- MODULE 3: QUIZ -->
+<!-- ============================================================ -->
+<div class="screen" id="screen-m3-quiz">
+  <div class="lesson-header">
+    <div class="module-badge">Module 3 &mdash; Quiz</div>
+    <h2>Check Your Understanding</h2>
+  </div>
+
+  <div class="quiz-section" id="quiz-m3">
+    <div class="quiz-question" data-correct="0" id="m3q1">
+      <div class="quiz-q-num">Question 1 of 3</div>
+      <div class="quiz-q-text">Your account is $100,000. You risk 0.5% per trade. What is your 1R?</div>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answerQuiz('m3q1', 0)">$500</button>
+        <button class="quiz-option" onclick="answerQuiz('m3q1', 1)">$50</button>
+        <button class="quiz-option" onclick="answerQuiz('m3q1', 2)">$5,000</button>
+        <button class="quiz-option" onclick="answerQuiz('m3q1', 3)">$1,000</button>
+      </div>
+      <div class="quiz-feedback">$100,000 &times; 0.5% = $500. This is your maximum acceptable loss per trade. Every position size calculation starts from this number.</div>
+    </div>
+
+    <div class="quiz-question" data-correct="0" id="m3q2">
+      <div class="quiz-q-num">Question 2 of 3</div>
+      <div class="quiz-q-text">Your 1R is $500. The initial stop on your trade is $2.00 below entry. How many shares do you buy?</div>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answerQuiz('m3q2', 0)">250 shares</button>
+        <button class="quiz-option" onclick="answerQuiz('m3q2', 1)">500 shares</button>
+        <button class="quiz-option" onclick="answerQuiz('m3q2', 2)">1,000 shares</button>
+        <button class="quiz-option" onclick="answerQuiz('m3q2', 3)">100 shares</button>
+      </div>
+      <div class="quiz-feedback">$500 &divide; $2.00 per share = 250 shares. The stop distance drives the position size, not the other way around. Never choose shares first and then figure out where to put the stop.</div>
+    </div>
+
+    <div class="quiz-question" data-correct="0" id="m3q3">
+      <div class="quiz-q-num">Question 3 of 3</div>
+      <div class="quiz-q-text">You're at 250 shares and your heart is racing. What should you do?</div>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answerQuiz('m3q3', 0)">Reduce size until it feels boring</button>
+        <button class="quiz-option" onclick="answerQuiz('m3q3', 1)">Push through the discomfort</button>
+        <button class="quiz-option" onclick="answerQuiz('m3q3', 2)">Stop trading</button>
+        <button class="quiz-option" onclick="answerQuiz('m3q3', 3)">Double your size to make it worth it</button>
+      </div>
+      <div class="quiz-feedback">Emotional arousal during a trade impairs decision-making. If the size feels uncomfortable, the math doesn't matter &mdash; cut it back until a -1R loss is genuinely acceptable. Boring is the goal.</div>
+    </div>
+
+    <div class="quiz-score" id="m3-score">
+      <div class="score-num" id="m3-score-num"></div>
+      <div>correct out of 3</div>
+    </div>
+  </div>
+
+  <div class="nav-footer">
+    <button class="btn btn-secondary" onclick="goToScreen('m3-lesson')">Back to Lesson</button>
+    <span class="step-info">Lesson &rarr; Quiz &rarr; Scenario</span>
+    <button class="btn btn-primary" id="m3-quiz-next" disabled onclick="goToScreen('m3-scenario')">Continue to Scenario</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- MODULE 3: SCENARIO -->
+<!-- ============================================================ -->
+<div class="screen" id="screen-m3-scenario">
+  <div class="lesson-header">
+    <div class="module-badge">Module 3 &mdash; Scenario</div>
+    <h2>Apply What You Learned</h2>
+  </div>
+
+  <div class="scenario-section">
+    <div class="scenario-block">
+      <div class="section-label">Scenario</div>
+      <div class="scenario-text">
+        You've been paper trading for 2 months and your system shows +0.4R expectancy over 40 trades. You're ready to go live with a $25,000 account. Walk through the sizing decision.
+      </div>
+      <button class="btn btn-secondary" onclick="revealAnswer('m3-answer')">Reveal Answer</button>
+      <div class="scenario-answer" id="m3-answer">
+        At 0.5% risk, your <strong>1R = $125</strong>. Start at 25% of intended size (quarter position). If your system calls for 500 shares of a $25 stock with a $0.25 stop, trade 125 shares instead. When quarter-size feels routine, move to 250 shares. When that's boring, go to full 500. The progression takes weeks, not days. Your paper-trading edge (+0.4R over 40 trades) gives you confidence that the system works &mdash; now the only variable is your execution psychology.
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-footer">
+    <button class="btn btn-secondary" onclick="goToScreen('m3-quiz')">Back to Quiz</button>
+    <span class="step-info">Module 3 Complete</span>
+    <button class="btn btn-primary" onclick="completeModule(3)">Finish the Course</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- COMPLETION SCREEN -->
+<!-- ============================================================ -->
+<div class="screen" id="screen-completion">
+  <div class="completion-hero">
+    <div class="completion-check">&#10003;</div>
+    <h2>Course Complete</h2>
+    <p>You just learned the three foundations of Dr. Ken Long's trading methodology: how to read the market's season, how to frame a disciplined trade, and how to size your position for survival. These concepts come from 40 years of research and real-world trading.</p>
+  </div>
+
+  <div class="cta-grid">
+    <a class="cta-card" href="https://kit.com/owlgrouptrading" target="_blank" rel="noopener">
+      <h3>Keep Learning</h3>
+      <p>Get Dr. Long's daily market analysis delivered to your inbox every morning.</p>
+      <span class="cta-arrow">Subscribe &rarr;</span>
+    </a>
+    <a class="cta-card" href="#" target="_blank" rel="noopener">
+      <h3>Go Deeper</h3>
+      <p>The Foundations Course covers 20+ systems with full trade examples and live coaching.</p>
+      <span class="cta-arrow">Learn more &rarr;</span>
+    </a>
+    <a class="cta-card" href="../store-v1.html" target="_blank" rel="noopener">
+      <h3>Explore the Store</h3>
+      <p>Books, courses, and tools from Owl Group Trading.</p>
+      <span class="cta-arrow">Visit store &rarr;</span>
+    </a>
+  </div>
+</div>
+
+</main>
+
+<!-- Keyboard hint -->
+<div class="kb-hint" id="kbHint">
+  <kbd>&larr;</kbd> <kbd>&rarr;</kbd> to navigate
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  // ── State ──
+  const state = {
+    currentScreen: 'welcome',
+    modulesCompleted: new Set(),
+    quizAnswered: { m1: 0, m2: 0, m3: 0 },
+    quizCorrect: { m1: 0, m2: 0, m3: 0 },
+    highestUnlocked: 0 // 0=welcome, 1=m1, 2=m2, 3=m3, 4=completion
+  };
+
+  // ── Screen flow (for arrow key navigation) ──
+  const screenOrder = [
+    'welcome',
+    'm1-lesson', 'm1-quiz', 'm1-scenario',
+    'm2-lesson', 'm2-quiz', 'm2-scenario',
+    'm3-lesson', 'm3-quiz', 'm3-scenario',
+    'completion'
+  ];
+
+  // ── Progress mapping ──
+  const progressMap = {
+    'welcome': 0,
+    'm1-lesson': 5,
+    'm1-quiz': 15,
+    'm1-scenario': 25,
+    'm2-lesson': 35,
+    'm2-quiz': 48,
+    'm2-scenario': 58,
+    'm3-lesson': 68,
+    'm3-quiz': 80,
+    'm3-scenario': 92,
+    'completion': 100
+  };
+
+  // ── Navigation ──
+  window.goToScreen = function(screenId) {
+    // Check if screen is accessible
+    const idx = screenOrder.indexOf(screenId);
+    if (idx < 0) return;
+
+    // Determine max accessible index
+    let maxIdx;
+    if (state.highestUnlocked >= 4) maxIdx = screenOrder.length - 1;
+    else if (state.highestUnlocked >= 3) maxIdx = 9; // up to m3-scenario
+    else if (state.highestUnlocked >= 2) maxIdx = 6; // up to m2-scenario
+    else if (state.highestUnlocked >= 1) maxIdx = 3; // up to m1-scenario
+    else maxIdx = 0;
+
+    if (idx > maxIdx) return;
+
+    // Hide all screens
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+
+    // Show target
+    const el = document.getElementById('screen-' + screenId);
+    if (el) {
+      el.classList.add('active');
+      state.currentScreen = screenId;
+      updateProgress();
+      updateTabs();
+      window.scrollTo(0, 0);
+    }
+  };
+
+  window.goToModule = function(n) {
+    if (n > state.highestUnlocked) return;
+    goToScreen('m' + n + '-lesson');
+  };
+
+  window.startCourse = function() {
+    state.highestUnlocked = Math.max(state.highestUnlocked, 1);
+    goToScreen('m1-lesson');
+  };
+
+  window.completeModule = function(n) {
+    state.modulesCompleted.add(n);
+    if (n < 3) {
+      state.highestUnlocked = Math.max(state.highestUnlocked, n + 1);
+      goToScreen('m' + (n + 1) + '-lesson');
+    } else {
+      state.highestUnlocked = 4;
+      goToScreen('completion');
+    }
+  };
+
+  // ── Progress Bar ──
+  function updateProgress() {
+    const pct = progressMap[state.currentScreen] || 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  // ── Tab State ──
+  function updateTabs() {
+    const tabs = document.querySelectorAll('.module-tab');
+    tabs.forEach(tab => {
+      const target = tab.dataset.target;
+      tab.classList.remove('active', 'completed', 'locked');
+
+      // Determine which tab group this screen belongs to
+      const current = state.currentScreen;
+      const isCurrentTab =
+        (target === 'welcome' && current === 'welcome') ||
+        (target === 'm1-lesson' && current.startsWith('m1')) ||
+        (target === 'm2-lesson' && current.startsWith('m2')) ||
+        (target === 'm3-lesson' && current.startsWith('m3')) ||
+        (target === 'completion' && current === 'completion');
+
+      if (isCurrentTab) {
+        tab.classList.add('active');
+      } else if (
+        (target === 'm1-lesson' && state.modulesCompleted.has(1)) ||
+        (target === 'm2-lesson' && state.modulesCompleted.has(2)) ||
+        (target === 'm3-lesson' && state.modulesCompleted.has(3))
+      ) {
+        tab.classList.add('completed');
+      } else {
+        // Check if locked
+        const moduleNum =
+          target === 'welcome' ? 0 :
+          target === 'm1-lesson' ? 1 :
+          target === 'm2-lesson' ? 2 :
+          target === 'm3-lesson' ? 3 :
+          target === 'completion' ? 4 : 0;
+        if (moduleNum > state.highestUnlocked) {
+          tab.classList.add('locked');
+        }
+      }
+    });
+  }
+
+  // ── Quiz Engine ──
+  window.answerQuiz = function(qId, selectedIdx) {
+    const qEl = document.getElementById(qId);
+    if (qEl.classList.contains('answered-correct') || qEl.classList.contains('answered-wrong')) return;
+
+    const correctIdx = parseInt(qEl.dataset.correct);
+    const options = qEl.querySelectorAll('.quiz-option');
+    const moduleKey = qId.substring(0, 2); // m1, m2, m3
+
+    // Disable all options
+    options.forEach(o => o.classList.add('disabled'));
+
+    // Mark selected
+    options[selectedIdx].classList.add('selected');
+    if (selectedIdx === correctIdx) {
+      options[selectedIdx].classList.add('correct');
+      qEl.classList.add('answered-correct');
+      state.quizCorrect[moduleKey]++;
+    } else {
+      options[selectedIdx].classList.add('incorrect');
+      qEl.classList.add('answered-wrong');
+      // Reveal correct answer
+      options[correctIdx].classList.add('reveal-correct');
+    }
+
+    // Show feedback
+    qEl.querySelector('.quiz-feedback').classList.add('visible');
+
+    // Track answered count
+    state.quizAnswered[moduleKey]++;
+
+    // Check if all 3 answered
+    if (state.quizAnswered[moduleKey] >= 3) {
+      const scoreEl = document.getElementById(moduleKey + '-score');
+      const scoreNum = document.getElementById(moduleKey + '-score-num');
+      scoreNum.textContent = state.quizCorrect[moduleKey];
+      scoreEl.classList.add('visible');
+      document.getElementById(moduleKey + '-quiz-next').disabled = false;
+    }
+  };
+
+  // ── Scenario Reveal ──
+  window.revealAnswer = function(id) {
+    const el = document.getElementById(id);
+    el.classList.add('visible');
+  };
+
+  // ── Theme Toggle ──
+  window.toggleTheme = function() {
+    const html = document.documentElement;
+    const current = html.getAttribute('data-theme');
+    html.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+  };
+
+  // ── Keyboard Navigation ──
+  document.addEventListener('keydown', function(e) {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      navigateDirection(1);
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      navigateDirection(-1);
+    }
+  });
+
+  function navigateDirection(dir) {
+    const currentIdx = screenOrder.indexOf(state.currentScreen);
+    if (currentIdx < 0) return;
+    const nextIdx = currentIdx + dir;
+    if (nextIdx < 0 || nextIdx >= screenOrder.length) return;
+
+    const nextScreen = screenOrder[nextIdx];
+
+    // For forward navigation, check if the next screen requires quiz completion
+    if (dir > 0) {
+      // If moving from quiz to scenario, check quiz is done
+      if (nextScreen.endsWith('-scenario')) {
+        const mk = nextScreen.split('-')[0]; // m1, m2, m3
+        if (state.quizAnswered[mk] < 3) return; // quiz not complete
+      }
+      // If moving to a new module's lesson, check previous module completed
+      if (nextScreen === 'm2-lesson' && !state.modulesCompleted.has(1)) return;
+      if (nextScreen === 'm3-lesson' && !state.modulesCompleted.has(2)) return;
+      if (nextScreen === 'completion' && !state.modulesCompleted.has(3)) return;
+    }
+
+    goToScreen(nextScreen);
+  }
+
+  // ── Init ──
+  updateProgress();
+  updateTabs();
+})();
+</script>
+</body>
+</html>
