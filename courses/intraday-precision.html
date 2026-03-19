@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intraday Precision — Owl Group Trading</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0d1117;
+  --bg-panel: #0c0f14;
+  --bg-topbar: #080b10;
+  --card: #161b22;
+  --card-hover: #1c2128;
+  --card-border: #21262d;
+  --text: #e6edf3;
+  --text-muted: #8b949e;
+  --text-dim: #6e7681;
+  --accent: #58a6ff;
+  --accent-dim: rgba(88,166,255,.12);
+  --green: #3fb950;
+  --green-dim: rgba(63,185,80,.12);
+  --red: #f85149;
+  --red-dim: rgba(248,81,73,.12);
+  --yellow: #d29922;
+  --orange: #db6d28;
+  --purple: #bc8cff;
+  --owl-amber: #d4940a;
+  --owl-amber-glow: rgba(212,148,10,.15);
+  --owl-amber-dim: rgba(212,148,10,.08);
+}
+
+[data-theme="light"] {
+  --bg: #f6f8fa;
+  --bg-panel: #ffffff;
+  --bg-topbar: #ffffff;
+  --card: #ffffff;
+  --card-hover: #f3f4f6;
+  --card-border: #d0d7de;
+  --text: #1f2328;
+  --text-muted: #656d76;
+  --text-dim: #8b949e;
+  --accent: #0969da;
+  --accent-dim: rgba(9,105,218,.08);
+  --green-dim: rgba(63,185,80,.08);
+  --red-dim: rgba(248,81,73,.06);
+  --owl-amber-glow: rgba(212,148,10,.08);
+  --owl-amber-dim: rgba(212,148,10,.05);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* ── Topbar ── */
+.topbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 52px;
+  background: var(--bg-topbar);
+  border-bottom: 1px solid var(--card-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  z-index: 100;
+  backdrop-filter: blur(12px);
+}
+.topbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.topbar-brand .name {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: 0.3px;
+}
+.topbar-brand .sub {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.theme-toggle {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  color: var(--text-muted);
+  border-radius: 6px;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s;
+}
+.theme-toggle:hover {
+  color: var(--text);
+  border-color: var(--text-muted);
+}
+
+/* ── Progress Bar ── */
+.progress-container {
+  position: fixed;
+  top: 52px; left: 0; right: 0;
+  height: 4px;
+  background: var(--card-border);
+  z-index: 99;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--owl-amber), var(--accent));
+  width: 0%;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Module Navigation ── */
+.module-nav {
+  position: fixed;
+  top: 56px; left: 0; right: 0;
+  height: 48px;
+  background: var(--bg-panel);
+  border-bottom: 1px solid var(--card-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  z-index: 98;
+  padding: 0 16px;
+}
+.module-tab {
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  background: none;
+  white-space: nowrap;
+}
+.module-tab:hover { color: var(--text); background: var(--card); }
+.module-tab.active { color: var(--owl-amber); background: var(--owl-amber-dim); }
+.module-tab.completed { color: var(--green); }
+.module-tab.locked { opacity: 0.4; cursor: default; }
+.module-tab.locked:hover { color: var(--text-muted); background: none; }
+
+/* ── Main Content ── */
+.content-area {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 128px 24px 120px;
+}
+
+/* ── Screens ── */
+.screen { display: none; }
+.screen.active { display: block; animation: fadeIn 0.4s ease; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Welcome Screen ── */
+.welcome-hero {
+  text-align: center;
+  padding: 40px 0 32px;
+}
+.welcome-hero h1 {
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-bottom: 12px;
+  background: linear-gradient(135deg, var(--owl-amber), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.welcome-hero .subtitle {
+  font-size: 18px;
+  color: var(--text-muted);
+  max-width: 480px;
+  margin: 0 auto 32px;
+  line-height: 1.6;
+}
+.welcome-meta {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+.welcome-meta-item {
+  text-align: center;
+}
+.welcome-meta-item .val {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--owl-amber);
+}
+.welcome-meta-item .label {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.module-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 40px;
+  text-align: left;
+}
+.module-preview-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.module-preview-num {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--owl-amber-dim);
+  color: var(--owl-amber);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.module-preview-text h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.module-preview-text p {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* ── Buttons ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+.btn-primary {
+  background: var(--owl-amber);
+  color: #000;
+}
+.btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
+.btn-secondary {
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--card-border);
+}
+.btn-secondary:hover { background: var(--card-hover); border-color: var(--text-muted); }
+.btn-accent {
+  background: var(--accent);
+  color: #fff;
+}
+.btn-accent:hover { filter: brightness(1.1); }
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none !important;
+  filter: none !important;
+}
+
+/* ── Section Labels ── */
+.section-label {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--owl-amber);
+  margin-bottom: 8px;
+}
+
+/* ── Lesson ── */
+.lesson-header {
+  margin-bottom: 28px;
+}
+.lesson-header h2 {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  margin-bottom: 8px;
+}
+.lesson-header .module-badge {
+  font-size: 12px;
+  color: var(--owl-amber);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.lesson-body {
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text);
+}
+.lesson-body p {
+  margin-bottom: 16px;
+}
+.lesson-body strong {
+  color: var(--owl-amber);
+  font-weight: 600;
+}
+
+.concept-list {
+  list-style: none;
+  margin: 16px 0;
+}
+.concept-list li {
+  padding: 10px 14px;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.concept-list li strong {
+  display: block;
+  margin-bottom: 2px;
+}
+
+/* ── GYR Grid ── */
+.gyr-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  margin: 20px 0;
+}
+@media (max-width: 520px) {
+  .gyr-grid { grid-template-columns: 1fr; }
+}
+.gyr-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+.gyr-card .gyr-name {
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+.gyr-card .gyr-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+.gyr-green .gyr-name { color: #3fb950; }
+.gyr-yellow .gyr-name { color: #d29922; }
+.gyr-red .gyr-name { color: #f85149; }
+
+/* ── Media Players ── */
+.media-block {
+  margin: 28px 0;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 20px;
+}
+.media-label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--owl-amber);
+  margin-bottom: 4px;
+}
+.media-title {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+.media-block audio,
+.media-block video {
+  width: 100%;
+  border-radius: 6px;
+  max-height: 400px;
+}
+.media-block audio { height: 44px; }
+
+/* ── Quiz ── */
+.quiz-section {
+  margin: 32px 0;
+}
+.quiz-question {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 24px;
+  margin-bottom: 16px;
+}
+.quiz-question.answered-correct {
+  border-color: var(--green);
+  background: var(--green-dim);
+}
+.quiz-question.answered-wrong {
+  border-color: var(--red);
+}
+.quiz-q-num {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--owl-amber);
+  margin-bottom: 8px;
+}
+.quiz-q-text {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.quiz-option {
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--card-border);
+  background: var(--bg);
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+  text-align: left;
+  color: var(--text);
+  font-family: inherit;
+  width: 100%;
+}
+.quiz-option:hover:not(.selected):not(.disabled) {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+}
+.quiz-option.selected.correct {
+  border-color: var(--green);
+  background: var(--green-dim);
+  color: var(--green);
+}
+.quiz-option.selected.incorrect {
+  border-color: var(--red);
+  background: var(--red-dim);
+  color: var(--red);
+}
+.quiz-option.reveal-correct {
+  border-color: var(--green);
+  background: var(--green-dim);
+}
+.quiz-option.disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+.quiz-feedback {
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  display: none;
+}
+.quiz-feedback.visible { display: block; }
+.quiz-score {
+  text-align: center;
+  padding: 16px;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  margin-top: 16px;
+  font-size: 15px;
+  color: var(--text-muted);
+  display: none;
+}
+.quiz-score.visible { display: block; }
+.quiz-score .score-num {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--green);
+}
+
+/* ── Scenario ── */
+.scenario-section {
+  margin: 32px 0;
+}
+.scenario-block {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 24px;
+}
+.scenario-text {
+  font-size: 15px;
+  line-height: 1.7;
+  margin-bottom: 16px;
+  color: var(--text);
+}
+.scenario-answer {
+  display: none;
+  margin-top: 16px;
+  padding: 16px;
+  background: var(--owl-amber-dim);
+  border: 1px solid rgba(212,148,10,.2);
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text);
+}
+.scenario-answer.visible { display: block; animation: fadeIn 0.3s ease; }
+
+/* ── Navigation Footer ── */
+.nav-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--card-border);
+}
+.nav-footer .step-info {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* ── Completion Screen ── */
+.completion-hero {
+  text-align: center;
+  padding: 40px 0 24px;
+}
+.completion-hero h2 {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  background: linear-gradient(135deg, var(--owl-amber), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.completion-hero p {
+  font-size: 16px;
+  color: var(--text-muted);
+  max-width: 520px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+.completion-check {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--green-dim);
+  border: 2px solid var(--green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+  font-size: 36px;
+  color: var(--green);
+}
+.cta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  margin-top: 40px;
+}
+@media (max-width: 640px) {
+  .cta-grid { grid-template-columns: 1fr; }
+}
+.cta-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 24px 20px;
+  text-align: center;
+  text-decoration: none;
+  color: var(--text);
+  transition: all 0.2s;
+  display: block;
+}
+.cta-card:hover {
+  border-color: var(--owl-amber);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,.3);
+}
+.cta-card h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.cta-card p {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+.cta-card .cta-arrow {
+  display: inline-block;
+  margin-top: 12px;
+  color: var(--owl-amber);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ── Keyboard Hint ── */
+.kb-hint {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  font-size: 11px;
+  color: var(--text-dim);
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  padding: 6px 12px;
+  z-index: 50;
+}
+.kb-hint kbd {
+  background: var(--bg);
+  border: 1px solid var(--card-border);
+  border-radius: 3px;
+  padding: 1px 5px;
+  font-family: inherit;
+  font-size: 11px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 520px) {
+  .content-area { padding: 120px 16px 100px; }
+  .welcome-hero h1 { font-size: 28px; }
+  .lesson-header h2 { font-size: 22px; }
+  .module-tab { padding: 6px 10px; font-size: 12px; }
+  .welcome-meta { gap: 20px; }
+  .nav-footer { flex-wrap: wrap; gap: 12px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Topbar -->
+<header class="topbar">
+  <div class="topbar-brand">
+    <span class="name">Owl Group Trading</span>
+    <span class="sub">Intraday Precision</span>
+  </div>
+  <div class="topbar-actions">
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark theme">Light / Dark</button>
+  </div>
+</header>
+
+<!-- Progress -->
+<div class="progress-container">
+  <div class="progress-fill" id="progressFill"></div>
+</div>
+
+<!-- Module Nav -->
+<nav class="module-nav" id="moduleNav">
+  <button class="module-tab active" data-target="welcome" onclick="goToScreen('welcome')">Start</button>
+  <button class="module-tab locked" data-target="m1-lesson" onclick="goToModule(1)">Module 1</button>
+  <button class="module-tab locked" data-target="m2-lesson" onclick="goToModule(2)">Module 2</button>
+  <button class="module-tab locked" data-target="m3-lesson" onclick="goToModule(3)">Module 3</button>
+  <button class="module-tab locked" data-target="completion" onclick="goToScreen('completion')">Complete</button>
+</nav>
+
+<main class="content-area">
+
+<!-- ============================================================ -->
+<!-- WELCOME SCREEN -->
+<!-- ============================================================ -->
+<div class="screen active" id="screen-welcome">
+  <div class="welcome-hero">
+    <h1>Intraday Precision</h1>
+    <p class="subtitle">Dr. Ken Long's intraday trading framework for active traders. Learn to read the market context, identify five high-probability setups, and execute with discipline.</p>
+  </div>
+
+  <div class="welcome-meta">
+    <div class="welcome-meta-item">
+      <div class="val">3</div>
+      <div class="label">Modules</div>
+    </div>
+    <div class="welcome-meta-item">
+      <div class="val">~18 min</div>
+      <div class="label">Duration</div>
+    </div>
+    <div class="welcome-meta-item">
+      <div class="val">9</div>
+      <div class="label">Quiz Questions</div>
+    </div>
+  </div>
+
+  <div class="module-preview">
+    <div class="module-preview-card">
+      <div class="module-preview-num">1</div>
+      <div class="module-preview-text">
+        <h3>Ready Fire Aim &mdash; The Intraday Framework</h3>
+        <p>The three-phase protocol for buying large caps at key turning points during the day session.</p>
+      </div>
+    </div>
+    <div class="module-preview-card">
+      <div class="module-preview-num">2</div>
+      <div class="module-preview-text">
+        <h3>The Five Intraday Setups</h3>
+        <p>Morning Hook, Intraday Selloff, Double Bottom, The Shelf, and OR5 Breakout.</p>
+      </div>
+    </div>
+    <div class="module-preview-card">
+      <div class="module-preview-num">3</div>
+      <div class="module-preview-text">
+        <h3>GYR and the Lunch Rule</h3>
+        <p>How SPY context and time-of-day discipline prevent the most common intraday mistakes.</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center">
+    <button class="btn btn-primary" onclick="startCourse()">Begin the Course</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- MODULE 1: LESSON -->
+<!-- ============================================================ -->
+<div class="screen" id="screen-m1-lesson">
+  <div class="lesson-header">
+    <div class="module-badge">Module 1 of 3</div>
+    <h2>Ready Fire Aim &mdash; The Intraday Framework</h2>
+  </div>
+
+  <div class="lesson-body">
+    <p>The Ready Fire Aim (RFA) strategy is Dr. Ken Long's intraday system for buying large caps and broad ETFs at key turning points during the day session (9:30 AM &ndash; 4:00 PM ET).</p>
+
+    <p>The name tells you the protocol:</p>
+
+    <ul class="concept-list">
+      <li><strong>Ready</strong> &mdash; you've been stalking your target. You have a reason to buy based on tactical momentum. The stock is on your watchlist. The daily chart confirms the setup. SPY is supporting your direction.</li>
+      <li><strong>Fire</strong> &mdash; you pull the trigger on positive price action and immediately set a capital preservation stop. The entry is mechanical, not emotional. You're in.</li>
+      <li><strong>Aim</strong> &mdash; you manage the trade carefully. You're prepared to exit on weakness and add a second position on strength. This is where experience and trade efficiency matter most.</li>
+    </ul>
+
+    <p>RFA is a long-only strategy. Shorts are executed by going long inverse ETFs (like SH, EEV). The key principle: we want to see evidence of price moving in our direction before committing. "Be the second mouse" &mdash; the first mouse gets caught in the trap. The second mouse gets the cheese.</p>
+
+    <p>The minimum Reward:Risk ratio is <strong>2:1</strong>. If you can't frame the trade at 2:1 or better, you don't take it. Period. This single rule eliminates most bad trades before they happen.</p>
+
+    <p>Intraday trades typically last 30&ndash;60 minutes. The goal is the best return in the shortest time period. Overnight risk is substantial, so we close before the session ends.</p>
+  </div>
+
+  <!-- Audio -->
+  <div class="media-block">
+    <div class="media-label">Listen</div>
+    <div class="media-title">Dr. Ken Long on reversion to mean: "motivated buyers on a dip" (1:30)</div>
+    <audio controls preload="none">
+      <source src="https://storage.googleapis.com/ogt-media-clips/v11-gold-sample-300s.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+
+  <div class="nav-footer">
+    <button class="btn btn-secondary" onclick="goToScreen('welcome')">Back</button>
+    <span class="step-info">Lesson &rarr; Quiz &rarr; Scenario</span>
+    <button class="btn btn-primary" onclick="goToScreen('m1-quiz')">Continue to Quiz</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- MODULE 1: QUIZ -->
+<!-- ============================================================ -->
+<div class="screen" id="screen-m1-quiz">
+  <div class="lesson-header">
+    <div class="module-badge">Module 1 &mdash; Quiz</div>
+    <h2>Check Your Understanding</h2>
+  </div>
+
+  <div class="quiz-section" id="quiz-m1">
+    <div class="quiz-question" data-correct="0" id="m1q1">
+      <div class="quiz-q-num">Question 1 of 3</div>
+      <div class="quiz-q-text">In the RFA framework, what does "Ready" mean?</div>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answerQuiz('m1q1', 0)">You've been stalking the target with tactical momentum and a reason to buy</button>
+        <button class="quiz-option" onclick="answerQuiz('m1q1', 1)">You've placed your order and are waiting for a fill</button>
+        <button class="quiz-option" onclick="answerQuiz('m1q1', 2)">You've identified your stop loss level</button>
+        <button class="quiz-option" onclick="answerQuiz('m1q1', 3)">You're watching the market open</button>
+      </div>
+      <div class="quiz-feedback">"Ready" is the preparation phase. You've been watching the stock, the daily chart confirms the setup, SPY supports the direction, and you have a tactical reason to buy. You're stalking &mdash; observing, not acting.</div>
+    </div>
+
+    <div class="quiz-question" data-correct="0" id="m1q2">
+      <div class="quiz-q-num">Question 2 of 3</div>
+      <div class="quiz-q-text">What is the minimum Reward:Risk ratio required to take an RFA trade?</div>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answerQuiz('m1q2', 0)">2:1</button>
+        <button class="quiz-option" onclick="answerQuiz('m1q2', 1)">1:1</button>
+        <button class="quiz-option" onclick="answerQuiz('m1q2', 2)">3:1</button>
+        <button class="quiz-option" onclick="answerQuiz('m1q2', 3)">5:1</button>
+      </div>
+      <div class="quiz-feedback">The minimum is 2:1. If you can't frame the trade at 2:1 or better, you pass. This single rule eliminates most bad trades before they happen.</div>
+    </div>
+
+    <div class="quiz-question" data-correct="0" id="m1q3">
+      <div class="quiz-q-num">Question 3 of 3</div>
+      <div class="quiz-q-text">Why does Dr. Long say "be the second mouse"?</div>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answerQuiz('m1q3', 0)">Wait for evidence of price moving in your direction before committing &mdash; don't try to catch the exact bottom</button>
+        <button class="quiz-option" onclick="answerQuiz('m1q3', 1)">Always enter after another trader</button>
+        <button class="quiz-option" onclick="answerQuiz('m1q3', 2)">Trade only the second stock on your watchlist</button>
+        <button class="quiz-option" onclick="answerQuiz('m1q3', 3)">Use two monitors</button>
+      </div>
+      <div class="quiz-feedback">The first mouse gets caught in the trap. The second mouse gets the cheese. We want to see evidence &mdash; a confirmed turning point &mdash; before committing capital. Confirmation over prediction.</div>
+    </div>
+
+    <div class="quiz-score" id="m1-score">
+      <div class="score-num" id="m1-score-num"></div>
+      <div>correct out of 3</div>
+    </div>
+  </div>
+
+  <div class="nav-footer">
+    <button class="btn btn-secondary" onclick="goToScreen('m1-lesson')">Back to Lesson</button>
+    <span class="step-info">Lesson &rarr; Quiz &rarr; Scenario</span>
+    <button class="btn btn-primary" id="m1-quiz-next" disabled onclick="goToScreen('m1-scenario')">Continue to Scenario</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- MODULE 1: SCENARIO -->
+<!-- ============================================================ -->
+<div class="screen" id="screen-m1-scenario">
+  <div class="lesson-header">
+    <div class="module-badge">Module 1 &mdash; Scenario</div>
+    <h2>Apply What You Learned</h2>
+  </div>
+
+  <div class="scenario-section">
+    <div class="scenario-block">
+      <div class="section-label">Scenario</div>
+      <div class="scenario-text">
+        It's 10:15 AM. SPY is recovering from an early dip and is now flat on the day. KO (Coca-Cola) pulled back $0.40 in the first 30 minutes and just printed a doji candle on the 5-minute chart at a support level. The MACD on the daily chart shows KO in <span style="color:#3fb950;font-weight:600;">Summer</span>. You calculate: entry at $62.01 (above doji high), stop at $61.91 ($0.10 risk = 1R), target at $62.41 (prior intraday high, +4R). Do you take this trade?
+      </div>
+      <button class="btn btn-secondary" onclick="revealAnswer('m1-answer')">Reveal Answer</button>
+      <div class="scenario-answer" id="m1-answer">
+        <strong>Yes.</strong> All conditions are met: SPY supporting direction (recovering), KO in <span style="color:#3fb950;">Summer</span> on the daily (aligned with higher timeframe), doji at support (turning point evidence), R:R is 4:1 (well above the 2:1 minimum). You're the second mouse &mdash; the doji confirms the turning point. Risk $0.10 per share. If your 1R is $250, you buy 2,500 shares.
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-footer">
+    <button class="btn btn-secondary" onclick="goToScreen('m1-quiz')">Back to Quiz</button>
+    <span class="step-info">Module 1 Complete</span>
+    <button class="btn btn-primary" onclick="completeModule(1)">Continue to Module 2</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- MODULE 2: LESSON -->
+<!-- ============================================================ -->
+<div class="screen" id="screen-m2-lesson">
+  <div class="lesson-header">
+    <div class="module-badge">Module 2 of 3</div>
+    <h2>The Five Intraday Setups</h2>
+  </div>
+
+  <div class="lesson-body">
+    <p>Dr. Long identifies five recurring patterns on the 5-minute chart. Each takes less than 10 seconds to spot. The preparation &mdash; knowing your R, setting your stop, sizing your position &mdash; is where the real work happens.</p>
+
+    <ul class="concept-list">
+      <li><strong>1. The Morning Hook</strong> &mdash; Stock opens, sells off in the first 30&ndash;60 minutes (the "big sell"), then forms a doji or hammer at support. The hook upward is your signal. Enter on the green candle above the doji high.</li>
+      <li><strong>2. The Intraday Selloff</strong> &mdash; Same pattern as the Morning Hook, but later in the day. Big sell &rarr; doji/hammer &rarr; green confirmation candle.</li>
+      <li><strong>3. The Double Bottom ("W")</strong> &mdash; Two tests of the same support level. The second test holds (preferably at the same level or slightly higher). Enter on the green candle after the second low confirms.</li>
+      <li><strong>4. The Shelf (Congestion Zone)</strong> &mdash; Price is in an uptrend and pauses. Several dojis or narrow-range candles form a flat shelf. The breakout: a green candle closing above the shelf high.</li>
+      <li><strong>5. The OR5 Breakout</strong> &mdash; The first 5-minute candle establishes the Opening Range. Price breaking above the OR5 high is the signal. Simple, fast, and effective.</li>
+    </ul>
+
+    <p>One setup, mastered and repeated consistently, will outperform five setups executed sloppily. Pick one. Run your 20-Trade Challenge. Then add the next.</p>
+  </div>
+
+  <!-- Video -->
+  <div class="media-block">
+    <div class="media-label">Watch</div>
+    <div class="media-title">Dr. Ken Long coaching bar-by-bar: "Where would you get long?" (1:30)</div>
+    <video controls preload="none" style="background:#000;">
+      <source src="https://storage.googleapis.com/ogt-media-clips/v7-bar-by-bar-training.mp4" type="video/mp4">
+      Your browser does not support the video element.
+    </video>
+  </div>
+
+  <div class="nav-footer">
+    <button class="btn btn-secondary" onclick="goToScreen('m1-scenario')">Back</button>
+    <span class="step-info">Lesson &rarr; Quiz &rarr; Scenario</span>
+    <button class="btn btn-primary" onclick="goToScreen('m2-quiz')">Continue to Quiz</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- MODULE 2: QUIZ -->
+<!-- ============================================================ -->
+<div class="screen" id="screen-m2-quiz">
+  <div class="lesson-header">
+    <div class="module-badge">Module 2 &mdash; Quiz</div>
+    <h2>Check Your Understanding</h2>
+  </div>
+
+  <div class="quiz-section" id="quiz-m2">
+    <div class="quiz-question" data-correct="0" id="m2q1">
+      <div class="quiz-q-num">Question 1 of 3</div>
+      <div class="quiz-q-text">KO opens at $62.50, sells off to $61.80 in 20 minutes, then prints a hammer candle. What setup is this?</div>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answerQuiz('m2q1', 0)">Morning Hook</button>
+        <button class="quiz-option" onclick="answerQuiz('m2q1', 1)">OR5 Breakout</button>
+        <button class="quiz-option" onclick="answerQuiz('m2q1', 2)">The Shelf</button>
+        <button class="quiz-option" onclick="answerQuiz('m2q1', 3)">Double Bottom</button>
+      </div>
+      <div class="quiz-feedback">Opens, sells off in the first 30&ndash;60 minutes, then prints a reversal candle (hammer) at support. That's the Morning Hook &mdash; the "big sell" followed by the hook upward.</div>
+    </div>
+
+    <div class="quiz-question" data-correct="0" id="m2q2">
+      <div class="quiz-q-num">Question 2 of 3</div>
+      <div class="quiz-q-text">A stock has been in an uptrend and pauses for 4 candles in a tight range with small bodies. What setup is forming?</div>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answerQuiz('m2q2', 0)">The Shelf</button>
+        <button class="quiz-option" onclick="answerQuiz('m2q2', 1)">Morning Hook</button>
+        <button class="quiz-option" onclick="answerQuiz('m2q2', 2)">Double Bottom</button>
+        <button class="quiz-option" onclick="answerQuiz('m2q2', 3)">Intraday Selloff</button>
+      </div>
+      <div class="quiz-feedback">Price in an uptrend, pausing with several narrow-range candles forming a flat consolidation. That's The Shelf (congestion zone). Wait for a green candle closing above the shelf high for the breakout entry.</div>
+    </div>
+
+    <div class="quiz-question" data-correct="0" id="m2q3">
+      <div class="quiz-q-num">Question 3 of 3</div>
+      <div class="quiz-q-text">How many setups does Dr. Long recommend mastering before adding another?</div>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answerQuiz('m2q3', 0)">One &mdash; run the 20-Trade Challenge on a single setup first</button>
+        <button class="quiz-option" onclick="answerQuiz('m2q3', 1)">All five simultaneously</button>
+        <button class="quiz-option" onclick="answerQuiz('m2q3', 2)">At least three</button>
+        <button class="quiz-option" onclick="answerQuiz('m2q3', 3)">Two at a time</button>
+      </div>
+      <div class="quiz-feedback">One setup, mastered and repeated consistently, will outperform five setups executed sloppily. Pick one, run the 20-Trade Challenge to prove competence, then add the next.</div>
+    </div>
+
+    <div class="quiz-score" id="m2-score">
+      <div class="score-num" id="m2-score-num"></div>
+      <div>correct out of 3</div>
+    </div>
+  </div>
+
+  <div class="nav-footer">
+    <button class="btn btn-secondary" onclick="goToScreen('m2-lesson')">Back to Lesson</button>
+    <span class="step-info">Lesson &rarr; Quiz &rarr; Scenario</span>
+    <button class="btn btn-primary" id="m2-quiz-next" disabled onclick="goToScreen('m2-scenario')">Continue to Scenario</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- MODULE 2: SCENARIO -->
+<!-- ============================================================ -->
+<div class="screen" id="screen-m2-scenario">
+  <div class="lesson-header">
+    <div class="module-badge">Module 2 &mdash; Scenario</div>
+    <h2>Apply What You Learned</h2>
+  </div>
+
+  <div class="scenario-section">
+    <div class="scenario-block">
+      <div class="section-label">Scenario</div>
+      <div class="scenario-text">
+        It's 11:00 AM. SPY is in the <span style="color:#3fb950;font-weight:600;">Green</span> range (above yesterday's high) and trending up. AAPL has been rising since the open and just paused for the last 15 minutes &mdash; four narrow-range candles sitting at $185.20&ndash;$185.30 (The Shelf). A green candle just closed at $185.35, above the shelf. Your stop would be $185.15 (below the shelf, $0.20 risk). Target: $186.00 (prior day's high, +3.25R). Which setup is this, and do you take it?
+      </div>
+      <button class="btn btn-secondary" onclick="revealAnswer('m2-answer')">Reveal Answer</button>
+      <div class="scenario-answer" id="m2-answer">
+        This is <strong>The Shelf</strong> (congestion zone breakout). All conditions are met: SPY in the <span style="color:#3fb950;">Green</span> range supporting longs, AAPL trending up with a clean shelf formation, breakout confirmed by green candle above the range, R:R is 3.25:1. Enter at $185.36 ($0.01 above breakout candle). Set stop at $185.15. If your 1R is $250, buy 1,250 shares ($250 / $0.20). Manage with the Rule of Four.
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-footer">
+    <button class="btn btn-secondary" onclick="goToScreen('m2-quiz')">Back to Quiz</button>
+    <span class="step-info">Module 2 Complete</span>
+    <button class="btn btn-primary" onclick="completeModule(2)">Continue to Module 3</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- MODULE 3: LESSON -->
+<!-- ============================================================ -->
+<div class="screen" id="screen-m3-lesson">
+  <div class="lesson-header">
+    <div class="module-badge">Module 3 of 3</div>
+    <h2>GYR and the Lunch Rule &mdash; Context Drives Everything</h2>
+  </div>
+
+  <div class="lesson-body">
+    <p>Before you look at any individual stock, check one thing: where is SPY relative to yesterday?</p>
+
+    <p>Dr. Long uses a color system called <strong>GYR (Green-Yellow-Red)</strong> to frame the entire day:</p>
+
+    <div class="gyr-grid">
+      <div class="gyr-card gyr-green">
+        <div class="gyr-name">Green</div>
+        <div class="gyr-desc">SPY above yesterday's high. Expansion mode. Favor trend-continuation setups: shelves, OR5 breakouts, adding to winners. Size up.</div>
+      </div>
+      <div class="gyr-card gyr-yellow">
+        <div class="gyr-name">Yellow</div>
+        <div class="gyr-desc">SPY between yesterday's high and low. Uncertain. Look for 2:1 R:R trades with standard sizing. Adjust as price moves toward Green or Red.</div>
+      </div>
+      <div class="gyr-card gyr-red">
+        <div class="gyr-name">Red</div>
+        <div class="gyr-desc">SPY below yesterday's low. Contraction. Favor inverse ETF longs (shorts) or cash. Tighten stops aggressively on any longs.</div>
+      </div>
+    </div>
+
+    <p>GYR takes 5 seconds to check. It prevents the single most common intraday mistake: buying long into a <span style="color:#f85149;font-weight:600;">Red</span> day because your individual stock "looks good."</p>
+
+    <p><strong>The Lunch Rule:</strong> Avoid opening new positions between 11:30 AM and 1:30 PM ET. Volume drops, spreads widen, and false signals multiply. If you have an open position going into lunch, tighten your stop or take profit. When you come back at 1:30, you're in a fresh Zero State for the afternoon session.</p>
+
+    <p>Dr. Long discovered through his own journal that lunch-hour trades had consistently negative expectancy &mdash; approximately $12,000 in avoidable losses per quarter. The journal revealed the pattern. The rule eliminated it.</p>
+  </div>
+
+  <!-- Audio -->
+  <div class="media-block">
+    <div class="media-label">Listen</div>
+    <div class="media-title">Dr. Ken Long on volatility regimes: "What was once holy cow became the new normal" (1:30)</div>
+    <audio controls preload="none">
+      <source src="https://storage.googleapis.com/ogt-media-clips/v4-volatility-intro.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+
+  <div class="nav-footer">
+    <button class="btn btn-secondary" onclick="goToScreen('m2-scenario')">Back</button>
+    <span class="step-info">Lesson &rarr; Quiz &rarr; Scenario</span>
+    <button class="btn btn-primary" onclick="goToScreen('m3-quiz')">Continue to Quiz</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- MODULE 3: QUIZ -->
+<!-- ============================================================ -->
+<div class="screen" id="screen-m3-quiz">
+  <div class="lesson-header">
+    <div class="module-badge">Module 3 &mdash; Quiz</div>
+    <h2>Check Your Understanding</h2>
+  </div>
+
+  <div class="quiz-section" id="quiz-m3">
+    <div class="quiz-question" data-correct="0" id="m3q1">
+      <div class="quiz-q-num">Question 1 of 3</div>
+      <div class="quiz-q-text">SPY opened below yesterday's low and hasn't recovered. What GYR zone is this?</div>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answerQuiz('m3q1', 0)">Red &mdash; favor shorts/inverse ETFs or cash</button>
+        <button class="quiz-option" onclick="answerQuiz('m3q1', 1)">Yellow &mdash; trade normally</button>
+        <button class="quiz-option" onclick="answerQuiz('m3q1', 2)">Green &mdash; buy the dip</button>
+        <button class="quiz-option" onclick="answerQuiz('m3q1', 3)">It depends on the individual stock</button>
+      </div>
+      <div class="quiz-feedback">SPY below yesterday's low is <span style="color:#f85149;font-weight:600;">Red</span>. The market is in contraction. Favor inverse ETF longs (effectively short positions) or stay in cash. Individual stock setups don't override the broad market context.</div>
+    </div>
+
+    <div class="quiz-question" data-correct="0" id="m3q2">
+      <div class="quiz-q-num">Question 2 of 3</div>
+      <div class="quiz-q-text">It's 12:15 PM. You see a Morning Hook forming on CAT. Should you enter?</div>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answerQuiz('m3q2', 0)">No &mdash; it's during the lunch window (11:30&ndash;1:30). Wait until after 1:30 to evaluate.</button>
+        <button class="quiz-option" onclick="answerQuiz('m3q2', 1)">Yes &mdash; the pattern looks strong</button>
+        <button class="quiz-option" onclick="answerQuiz('m3q2', 2)">Yes &mdash; but use half position</button>
+        <button class="quiz-option" onclick="answerQuiz('m3q2', 3)">Only if SPY is in Green</button>
+      </div>
+      <div class="quiz-feedback">The Lunch Rule: no new positions between 11:30 AM and 1:30 PM ET. Volume drops, spreads widen, false signals multiply. Dr. Long tracked approximately $12,000 in avoidable losses per quarter from lunch-hour trades. Wait until 1:30.</div>
+    </div>
+
+    <div class="quiz-question" data-correct="0" id="m3q3">
+      <div class="quiz-q-num">Question 3 of 3</div>
+      <div class="quiz-q-text">Dr. Long discovered his lunch-hour trading losses through what practice?</div>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answerQuiz('m3q3', 0)">Journaling &mdash; reviewing his trade log revealed the pattern</button>
+        <button class="quiz-option" onclick="answerQuiz('m3q3', 1)">Backtesting</button>
+        <button class="quiz-option" onclick="answerQuiz('m3q3', 2)">A coaching session</button>
+        <button class="quiz-option" onclick="answerQuiz('m3q3', 3)">Market research</button>
+      </div>
+      <div class="quiz-feedback">The trading journal revealed the pattern. Consistent review of your own trades is where real edge is discovered. The data was always there &mdash; the journal made it visible.</div>
+    </div>
+
+    <div class="quiz-score" id="m3-score">
+      <div class="score-num" id="m3-score-num"></div>
+      <div>correct out of 3</div>
+    </div>
+  </div>
+
+  <div class="nav-footer">
+    <button class="btn btn-secondary" onclick="goToScreen('m3-lesson')">Back to Lesson</button>
+    <span class="step-info">Lesson &rarr; Quiz &rarr; Scenario</span>
+    <button class="btn btn-primary" id="m3-quiz-next" disabled onclick="goToScreen('m3-scenario')">Continue to Scenario</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- MODULE 3: SCENARIO -->
+<!-- ============================================================ -->
+<div class="screen" id="screen-m3-scenario">
+  <div class="lesson-header">
+    <div class="module-badge">Module 3 &mdash; Scenario</div>
+    <h2>Apply What You Learned</h2>
+  </div>
+
+  <div class="scenario-section">
+    <div class="scenario-block">
+      <div class="section-label">Scenario</div>
+      <div class="scenario-text">
+        It's 9:45 AM. SPY opened in the <span style="color:#d29922;font-weight:600;">Yellow</span> range ($575.20, between yesterday's high of $576.00 and low of $574.50). SPY is drifting upward toward $575.80. XLF shows a Morning Hook forming on the 5-minute chart &mdash; selloff followed by a doji at the RL30. Entry would be $42.01, stop $41.91 ($0.10, 1R), target $42.21 (2:1 R:R). How does the GYR context affect your decision?
+      </div>
+      <button class="btn btn-secondary" onclick="revealAnswer('m3-answer')">Reveal Answer</button>
+      <div class="scenario-answer" id="m3-answer">
+        SPY is in the <span style="color:#d29922;font-weight:600;">Yellow</span> zone, which means caution. A 2:1 R:R is acceptable for Yellow &mdash; you don't need 3:1. But size conservatively (standard, not aggressive). The fact that SPY is drifting toward <span style="color:#3fb950;">Green</span> is encouraging &mdash; if SPY breaks above $576.00 while you're in the trade, consider this a tailwind. If SPY reverses toward <span style="color:#f85149;">Red</span>, tighten your stop immediately regardless of what XLF is doing. <strong>Context trumps the individual chart.</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-footer">
+    <button class="btn btn-secondary" onclick="goToScreen('m3-quiz')">Back to Quiz</button>
+    <span class="step-info">Module 3 Complete</span>
+    <button class="btn btn-primary" onclick="completeModule(3)">Finish the Course</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- COMPLETION SCREEN -->
+<!-- ============================================================ -->
+<div class="screen" id="screen-completion">
+  <div class="completion-hero">
+    <div class="completion-check">&#10003;</div>
+    <h2>Course Complete</h2>
+    <p>You just learned the three pillars of Dr. Ken Long's intraday approach: the Ready Fire Aim framework for disciplined entries, five specific chart patterns you can spot in seconds, and the GYR context system that prevents you from trading against the market. These techniques come from decades of live trading and coaching hundreds of intraday traders.</p>
+  </div>
+
+  <div class="cta-grid">
+    <a class="cta-card" href="https://kit.com/owlgrouptrading" target="_blank" rel="noopener">
+      <h3>Keep Learning</h3>
+      <p>Get Dr. Long's daily market analysis delivered to your inbox every morning.</p>
+      <span class="cta-arrow">Subscribe &rarr;</span>
+    </a>
+    <a class="cta-card" href="#" target="_blank" rel="noopener">
+      <h3>The Complete System</h3>
+      <p>Ready Fire Aim &mdash; the full intraday ebook with all setups, trade management, and position sizing. $19</p>
+      <span class="cta-arrow">Get the ebook &rarr;</span>
+    </a>
+    <a class="cta-card" href="../store-v1.html" target="_blank" rel="noopener">
+      <h3>Explore the Store</h3>
+      <p>Books, courses, and tools from Owl Group Trading.</p>
+      <span class="cta-arrow">Visit store &rarr;</span>
+    </a>
+  </div>
+</div>
+
+</main>
+
+<!-- Keyboard hint -->
+<div class="kb-hint" id="kbHint">
+  <kbd>&larr;</kbd> <kbd>&rarr;</kbd> to navigate
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  // ── State ──
+  const state = {
+    currentScreen: 'welcome',
+    modulesCompleted: new Set(),
+    quizAnswered: { m1: 0, m2: 0, m3: 0 },
+    quizCorrect: { m1: 0, m2: 0, m3: 0 },
+    highestUnlocked: 0 // 0=welcome, 1=m1, 2=m2, 3=m3, 4=completion
+  };
+
+  // ── Screen flow (for arrow key navigation) ──
+  const screenOrder = [
+    'welcome',
+    'm1-lesson', 'm1-quiz', 'm1-scenario',
+    'm2-lesson', 'm2-quiz', 'm2-scenario',
+    'm3-lesson', 'm3-quiz', 'm3-scenario',
+    'completion'
+  ];
+
+  // ── Progress mapping ──
+  const progressMap = {
+    'welcome': 0,
+    'm1-lesson': 5,
+    'm1-quiz': 15,
+    'm1-scenario': 25,
+    'm2-lesson': 35,
+    'm2-quiz': 48,
+    'm2-scenario': 58,
+    'm3-lesson': 68,
+    'm3-quiz': 80,
+    'm3-scenario': 92,
+    'completion': 100
+  };
+
+  // ── Navigation ──
+  window.goToScreen = function(screenId) {
+    const idx = screenOrder.indexOf(screenId);
+    if (idx < 0) return;
+
+    let maxIdx;
+    if (state.highestUnlocked >= 4) maxIdx = screenOrder.length - 1;
+    else if (state.highestUnlocked >= 3) maxIdx = 9;
+    else if (state.highestUnlocked >= 2) maxIdx = 6;
+    else if (state.highestUnlocked >= 1) maxIdx = 3;
+    else maxIdx = 0;
+
+    if (idx > maxIdx) return;
+
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+
+    const el = document.getElementById('screen-' + screenId);
+    if (el) {
+      el.classList.add('active');
+      state.currentScreen = screenId;
+      updateProgress();
+      updateTabs();
+      window.scrollTo(0, 0);
+    }
+  };
+
+  window.goToModule = function(n) {
+    if (n > state.highestUnlocked) return;
+    goToScreen('m' + n + '-lesson');
+  };
+
+  window.startCourse = function() {
+    state.highestUnlocked = Math.max(state.highestUnlocked, 1);
+    goToScreen('m1-lesson');
+  };
+
+  window.completeModule = function(n) {
+    state.modulesCompleted.add(n);
+    if (n < 3) {
+      state.highestUnlocked = Math.max(state.highestUnlocked, n + 1);
+      goToScreen('m' + (n + 1) + '-lesson');
+    } else {
+      state.highestUnlocked = 4;
+      goToScreen('completion');
+    }
+  };
+
+  // ── Progress Bar ──
+  function updateProgress() {
+    const pct = progressMap[state.currentScreen] || 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  // ── Tab State ──
+  function updateTabs() {
+    const tabs = document.querySelectorAll('.module-tab');
+    tabs.forEach(tab => {
+      const target = tab.dataset.target;
+      tab.classList.remove('active', 'completed', 'locked');
+
+      const current = state.currentScreen;
+      const isCurrentTab =
+        (target === 'welcome' && current === 'welcome') ||
+        (target === 'm1-lesson' && current.startsWith('m1')) ||
+        (target === 'm2-lesson' && current.startsWith('m2')) ||
+        (target === 'm3-lesson' && current.startsWith('m3')) ||
+        (target === 'completion' && current === 'completion');
+
+      if (isCurrentTab) {
+        tab.classList.add('active');
+      } else if (
+        (target === 'm1-lesson' && state.modulesCompleted.has(1)) ||
+        (target === 'm2-lesson' && state.modulesCompleted.has(2)) ||
+        (target === 'm3-lesson' && state.modulesCompleted.has(3))
+      ) {
+        tab.classList.add('completed');
+      } else {
+        const moduleNum =
+          target === 'welcome' ? 0 :
+          target === 'm1-lesson' ? 1 :
+          target === 'm2-lesson' ? 2 :
+          target === 'm3-lesson' ? 3 :
+          target === 'completion' ? 4 : 0;
+        if (moduleNum > state.highestUnlocked) {
+          tab.classList.add('locked');
+        }
+      }
+    });
+  }
+
+  // ── Quiz Engine ──
+  window.answerQuiz = function(qId, selectedIdx) {
+    const qEl = document.getElementById(qId);
+    if (qEl.classList.contains('answered-correct') || qEl.classList.contains('answered-wrong')) return;
+
+    const correctIdx = parseInt(qEl.dataset.correct);
+    const options = qEl.querySelectorAll('.quiz-option');
+    const moduleKey = qId.substring(0, 2);
+
+    options.forEach(o => o.classList.add('disabled'));
+
+    options[selectedIdx].classList.add('selected');
+    if (selectedIdx === correctIdx) {
+      options[selectedIdx].classList.add('correct');
+      qEl.classList.add('answered-correct');
+      state.quizCorrect[moduleKey]++;
+    } else {
+      options[selectedIdx].classList.add('incorrect');
+      qEl.classList.add('answered-wrong');
+      options[correctIdx].classList.add('reveal-correct');
+    }
+
+    qEl.querySelector('.quiz-feedback').classList.add('visible');
+
+    state.quizAnswered[moduleKey]++;
+
+    if (state.quizAnswered[moduleKey] >= 3) {
+      const scoreEl = document.getElementById(moduleKey + '-score');
+      const scoreNum = document.getElementById(moduleKey + '-score-num');
+      scoreNum.textContent = state.quizCorrect[moduleKey];
+      scoreEl.classList.add('visible');
+      document.getElementById(moduleKey + '-quiz-next').disabled = false;
+    }
+  };
+
+  // ── Scenario Reveal ──
+  window.revealAnswer = function(id) {
+    const el = document.getElementById(id);
+    el.classList.add('visible');
+  };
+
+  // ── Theme Toggle ──
+  window.toggleTheme = function() {
+    const html = document.documentElement;
+    const current = html.getAttribute('data-theme');
+    html.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+  };
+
+  // ── Keyboard Navigation ──
+  document.addEventListener('keydown', function(e) {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      navigateDirection(1);
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      navigateDirection(-1);
+    }
+  });
+
+  function navigateDirection(dir) {
+    const currentIdx = screenOrder.indexOf(state.currentScreen);
+    if (currentIdx < 0) return;
+    const nextIdx = currentIdx + dir;
+    if (nextIdx < 0 || nextIdx >= screenOrder.length) return;
+
+    const nextScreen = screenOrder[nextIdx];
+
+    if (dir > 0) {
+      if (nextScreen.endsWith('-scenario')) {
+        const mk = nextScreen.split('-')[0];
+        if (state.quizAnswered[mk] < 3) return;
+      }
+      if (nextScreen === 'm2-lesson' && !state.modulesCompleted.has(1)) return;
+      if (nextScreen === 'm3-lesson' && !state.modulesCompleted.has(2)) return;
+      if (nextScreen === 'completion' && !state.modulesCompleted.has(3)) return;
+    }
+
+    goToScreen(nextScreen);
+  }
+
+  // ── Init ──
+  updateProgress();
+  updateTabs();
+})();
+</script>
+</body>
+</html>

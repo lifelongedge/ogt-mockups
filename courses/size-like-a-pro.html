@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Size Like a Pro — Owl Group Trading</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0d1117;
+  --bg-panel: #0c0f14;
+  --bg-topbar: #080b10;
+  --card: #161b22;
+  --card-hover: #1c2128;
+  --card-border: #21262d;
+  --text: #e6edf3;
+  --text-muted: #8b949e;
+  --text-dim: #6e7681;
+  --accent: #58a6ff;
+  --accent-dim: rgba(88,166,255,.12);
+  --green: #3fb950;
+  --green-dim: rgba(63,185,80,.12);
+  --red: #f85149;
+  --red-dim: rgba(248,81,73,.12);
+  --yellow: #d29922;
+  --orange: #db6d28;
+  --purple: #bc8cff;
+  --owl-amber: #d4940a;
+  --owl-amber-glow: rgba(212,148,10,.15);
+  --owl-amber-dim: rgba(212,148,10,.08);
+}
+
+[data-theme="light"] {
+  --bg: #f6f8fa;
+  --bg-panel: #ffffff;
+  --bg-topbar: #ffffff;
+  --card: #ffffff;
+  --card-hover: #f3f4f6;
+  --card-border: #d0d7de;
+  --text: #1f2328;
+  --text-muted: #656d76;
+  --text-dim: #8b949e;
+  --accent: #0969da;
+  --accent-dim: rgba(9,105,218,.08);
+  --green-dim: rgba(63,185,80,.08);
+  --red-dim: rgba(248,81,73,.06);
+  --owl-amber-glow: rgba(212,148,10,.08);
+  --owl-amber-dim: rgba(212,148,10,.05);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* ── Topbar ── */
+.topbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 52px;
+  background: var(--bg-topbar);
+  border-bottom: 1px solid var(--card-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  z-index: 100;
+  backdrop-filter: blur(12px);
+}
+.topbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.topbar-brand .name {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: 0.3px;
+}
+.topbar-brand .sub {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.theme-toggle {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  color: var(--text-muted);
+  border-radius: 6px;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s;
+}
+.theme-toggle:hover {
+  color: var(--text);
+  border-color: var(--text-muted);
+}
+
+/* ── Progress Bar ── */
+.progress-container {
+  position: fixed;
+  top: 52px; left: 0; right: 0;
+  height: 4px;
+  background: var(--card-border);
+  z-index: 99;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--owl-amber), var(--accent));
+  width: 0%;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Module Navigation ── */
+.module-nav {
+  position: fixed;
+  top: 56px; left: 0; right: 0;
+  height: 48px;
+  background: var(--bg-panel);
+  border-bottom: 1px solid var(--card-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  z-index: 98;
+  padding: 0 16px;
+}
+.module-tab {
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  background: none;
+  white-space: nowrap;
+}
+.module-tab:hover { color: var(--text); background: var(--card); }
+.module-tab.active { color: var(--owl-amber); background: var(--owl-amber-dim); }
+.module-tab.completed { color: var(--green); }
+.module-tab.locked { opacity: 0.4; cursor: default; }
+.module-tab.locked:hover { color: var(--text-muted); background: none; }
+
+/* ── Main Content ── */
+.content-area {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 128px 24px 120px;
+}
+
+/* ── Screens ── */
+.screen { display: none; }
+.screen.active { display: block; animation: fadeIn 0.4s ease; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Welcome Screen ── */
+.welcome-hero {
+  text-align: center;
+  padding: 40px 0 32px;
+}
+.welcome-hero h1 {
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-bottom: 12px;
+  background: linear-gradient(135deg, var(--owl-amber), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.welcome-hero .subtitle {
+  font-size: 18px;
+  color: var(--text-muted);
+  max-width: 480px;
+  margin: 0 auto 32px;
+  line-height: 1.6;
+}
+.welcome-meta {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+.welcome-meta-item {
+  text-align: center;
+}
+.welcome-meta-item .val {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--owl-amber);
+}
+.welcome-meta-item .label {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.module-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 40px;
+  text-align: left;
+}
+.module-preview-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.module-preview-num {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--owl-amber-dim);
+  color: var(--owl-amber);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.module-preview-text h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.module-preview-text p {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* ── Buttons ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+.btn-primary {
+  background: var(--owl-amber);
+  color: #000;
+}
+.btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
+.btn-secondary {
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--card-border);
+}
+.btn-secondary:hover { background: var(--card-hover); border-color: var(--text-muted); }
+.btn-accent {
+  background: var(--accent);
+  color: #fff;
+}
+.btn-accent:hover { filter: brightness(1.1); }
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none !important;
+  filter: none !important;
+}
+
+/* ── Section Labels ── */
+.section-label {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--owl-amber);
+  margin-bottom: 8px;
+}
+
+/* ── Lesson ── */
+.lesson-header {
+  margin-bottom: 28px;
+}
+.lesson-header h2 {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  margin-bottom: 8px;
+}
+.lesson-header .module-badge {
+  font-size: 12px;
+  color: var(--owl-amber);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.lesson-body {
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text);
+}
+.lesson-body p {
+  margin-bottom: 16px;
+}
+.lesson-body strong {
+  color: var(--owl-amber);
+  font-weight: 600;
+}
+
+.concept-list {
+  list-style: none;
+  margin: 16px 0;
+}
+.concept-list li {
+  padding: 10px 14px;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.concept-list li strong {
+  display: block;
+  margin-bottom: 2px;
+}
+
+/* ── Media Players ── */
+.media-block {
+  margin: 28px 0;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 20px;
+}
+.media-label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--owl-amber);
+  margin-bottom: 4px;
+}
+.media-title {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+.media-block audio,
+.media-block video {
+  width: 100%;
+  border-radius: 6px;
+  max-height: 400px;
+}
+.media-block audio { height: 44px; }
+
+/* ── Quiz ── */
+.quiz-section {
+  margin: 32px 0;
+}
+.quiz-question {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 24px;
+  margin-bottom: 16px;
+}
+.quiz-question.answered-correct {
+  border-color: var(--green);
+  background: var(--green-dim);
+}
+.quiz-question.answered-wrong {
+  border-color: var(--red);
+}
+.quiz-q-num {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--owl-amber);
+  margin-bottom: 8px;
+}
+.quiz-q-text {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.quiz-option {
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--card-border);
+  background: var(--bg);
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+  text-align: left;
+  color: var(--text);
+  font-family: inherit;
+  width: 100%;
+}
+.quiz-option:hover:not(.selected):not(.disabled) {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+}
+.quiz-option.selected.correct {
+  border-color: var(--green);
+  background: var(--green-dim);
+  color: var(--green);
+}
+.quiz-option.selected.incorrect {
+  border-color: var(--red);
+  background: var(--red-dim);
+  color: var(--red);
+}
+.quiz-option.reveal-correct {
+  border-color: var(--green);
+  background: var(--green-dim);
+}
+.quiz-option.disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+.quiz-feedback {
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  display: none;
+}
+.quiz-feedback.visible { display: block; }
+.quiz-score {
+  text-align: center;
+  padding: 16px;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  margin-top: 16px;
+  font-size: 15px;
+  color: var(--text-muted);
+  display: none;
+}
+.quiz-score.visible { display: block; }
+.quiz-score .score-num {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--green);
+}
+
+/* ── Scenario ── */
+.scenario-section {
+  margin: 32px 0;
+}
+.scenario-block {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 24px;
+}
+.scenario-text {
+  font-size: 15px;
+  line-height: 1.7;
+  margin-bottom: 16px;
+  color: var(--text);
+}
+.scenario-answer {
+  display: none;
+  margin-top: 16px;
+  padding: 16px;
+  background: var(--owl-amber-dim);
+  border: 1px solid rgba(212,148,10,.2);
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text);
+}
+.scenario-answer.visible { display: block; animation: fadeIn 0.3s ease; }
+
+/* ── Navigation Footer ── */
+.nav-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--card-border);
+}
+.nav-footer .step-info {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* ── Completion Screen ── */
+.completion-hero {
+  text-align: center;
+  padding: 40px 0 24px;
+}
+.completion-hero h2 {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  background: linear-gradient(135deg, var(--owl-amber), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.completion-hero p {
+  font-size: 16px;
+  color: var(--text-muted);
+  max-width: 520px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+.completion-check {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--green-dim);
+  border: 2px solid var(--green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+  font-size: 36px;
+  color: var(--green);
+}
+.cta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  margin-top: 40px;
+}
+@media (max-width: 640px) {
+  .cta-grid { grid-template-columns: 1fr; }
+}
+.cta-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 24px 20px;
+  text-align: center;
+  text-decoration: none;
+  color: var(--text);
+  transition: all 0.2s;
+  display: block;
+}
+.cta-card:hover {
+  border-color: var(--owl-amber);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,.3);
+}
+.cta-card h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.cta-card p {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+.cta-card .cta-arrow {
+  display: inline-block;
+  margin-top: 12px;
+  color: var(--owl-amber);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ── Keyboard Hint ── */
+.kb-hint {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  font-size: 11px;
+  color: var(--text-dim);
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  padding: 6px 12px;
+  z-index: 50;
+}
+.kb-hint kbd {
+  background: var(--bg);
+  border: 1px solid var(--card-border);
+  border-radius: 3px;
+  padding: 1px 5px;
+  font-family: inherit;
+  font-size: 11px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 520px) {
+  .content-area { padding: 120px 16px 100px; }
+  .welcome-hero h1 { font-size: 28px; }
+  .lesson-header h2 { font-size: 22px; }
+  .module-tab { padding: 6px 10px; font-size: 12px; }
+  .welcome-meta { gap: 20px; }
+  .nav-footer { flex-wrap: wrap; gap: 12px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Topbar -->
+<header class="topbar">
+  <div class="topbar-brand">
+    <span class="name">Owl Group Trading</span>
+    <span class="sub">Size Like a Pro</span>
+  </div>
+  <div class="topbar-actions">
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark theme">Light / Dark</button>
+  </div>
+</header>
+
+<!-- Progress -->
+<div class="progress-container">
+  <div class="progress-fill" id="progressFill"></div>
+</div>
+
+<!-- Module Nav -->
+<nav class="module-nav" id="moduleNav">
+  <button class="module-tab active" data-target="welcome" onclick="goToScreen('welcome')">Start</button>
+  <button class="module-tab locked" data-target="m1-lesson" onclick="goToModule(1)">Module 1</button>
+  <button class="module-tab locked" data-target="m2-lesson" onclick="goToModule(2)">Module 2</button>
+  <button class="module-tab locked" data-target="m3-lesson" onclick="goToModule(3)">Module 3</button>
+  <button class="module-tab locked" data-target="completion" onclick="goToScreen('completion')">Complete</button>
+</nav>
+
+<main class="content-area">
+
+<!-- ============================================================ -->
+<!-- WELCOME SCREEN -->
+<!-- ============================================================ -->
+<div class="screen active" id="screen-welcome">
+  <div class="welcome-hero">
+    <h1>Size Like a Pro</h1>
+    <p class="subtitle">Three advanced position sizing techniques from Dr. Ken Long's coaching program. In 20 minutes, you'll learn to size with confidence, track every entry as a separate hypothesis, and progress from paper to full position without blowing up.</p>
+  </div>
+
+  <div class="welcome-meta">
+    <div class="welcome-meta-item">
+      <div class="val">3</div>
+      <div class="label">Modules</div>
+    </div>
+    <div class="welcome-meta-item">
+      <div class="val">~20 min</div>
+      <div class="label">Duration</div>
+    </div>
+    <div class="welcome-meta-item">
+      <div class="val">9</div>
+      <div class="label">Quiz Questions</div>
+    </div>
+  </div>
+
+  <div class="module-preview">
+    <div class="module-preview-card">
+      <div class="module-preview-num">1</div>
+      <div class="module-preview-text">
+        <h3>The Hougaard Press</h3>
+        <p>Regime-based sizing: press when the data says press, pull back before the drawdown forces you.</p>
+      </div>
+    </div>
+    <div class="module-preview-card">
+      <div class="module-preview-num">2</div>
+      <div class="module-preview-text">
+        <h3>Tracking R</h3>
+        <p>Every entry is a separate hypothesis. Measure each one independently to find your execution cost.</p>
+      </div>
+    </div>
+    <div class="module-preview-card">
+      <div class="module-preview-num">3</div>
+      <div class="module-preview-text">
+        <h3>The 4-3-2-1 Progression</h3>
+        <p>From paper to full position: the sizing ladder that keeps your account alive while you learn.</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center">
+    <button class="btn btn-primary" onclick="startCourse()">Begin the Course</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- MODULE 1: LESSON — The Hougaard Press -->
+<!-- ============================================================ -->
+<div class="screen" id="screen-m1-lesson">
+  <div class="lesson-header">
+    <div class="module-badge">Module 1 of 3</div>
+    <h2>The Hougaard Press &mdash; Sizing With Confidence</h2>
+  </div>
+
+  <div class="lesson-body">
+    <p>Most traders size their positions using a simple formula: risk X% of account per trade. That works as a starting point. But the professionals in our coaching program use a more nuanced approach called the <strong>Hougaard Press</strong>.</p>
+
+    <p>The idea comes from a simple observation: your system performs differently in different market conditions. In a trending <span style="color:#3fb950;font-weight:600">Summer</span> market, your win rate and average R-multiple are higher. In a choppy <span style="color:#58a6ff;font-weight:600">Fall</span> market, they're lower. So why would you size the same in both conditions?</p>
+
+    <p>The Hougaard Press adjusts your position size based on your system's recent performance. When your equity curve is rising and your R-multiples are consistently positive, you press &mdash; you gradually increase size. When your curve flattens or dips, you pull back.</p>
+
+    <p>This is psychologically difficult. When you're winning, the instinct is to keep the same size (or double it recklessly). When you're losing, the instinct is to stop entirely. The Hougaard Press does the opposite of what feels natural: it scales methodically based on data, not emotion.</p>
+
+    <p>The implementation uses the <strong>slope of the RL10 of your cumulative R-multiple</strong> as the sizing signal. When the slope is positive and steepening, you're in a favorable regime &mdash; press harder. When the slope flattens or turns negative, reduce size. The math removes the emotion.</p>
+
+    <p>Dr. Long teaches this progression: start at a base size that feels boring. Only press when the data says your system is in a favorable period. Pull back before the drawdown forces you to.</p>
+  </div>
+
+  <!-- Audio -->
+  <div class="media-block">
+    <div class="media-label">Listen</div>
+    <div class="media-title">Dr. Ken Long on sizing psychology: "How does it feel at that level of risk?" (1:30)</div>
+    <audio controls preload="none">
+      <source src="https://storage.googleapis.com/ogt-media-clips/v5-hougaard-press-intro.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+
+  <div class="nav-footer">
+    <button class="btn btn-secondary" onclick="goToScreen('welcome')">Back</button>
+    <span class="step-info">Lesson &rarr; Quiz &rarr; Scenario</span>
+    <button class="btn btn-primary" onclick="goToScreen('m1-quiz')">Continue to Quiz</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- MODULE 1: QUIZ -->
+<!-- ============================================================ -->
+<div class="screen" id="screen-m1-quiz">
+  <div class="lesson-header">
+    <div class="module-badge">Module 1 &mdash; Quiz</div>
+    <h2>Check Your Understanding</h2>
+  </div>
+
+  <div class="quiz-section" id="quiz-m1">
+    <div class="quiz-question" data-correct="0" id="m1q1">
+      <div class="quiz-q-num">Question 1 of 3</div>
+      <div class="quiz-q-text">Your system has been in a drawdown for 2 weeks. According to the Hougaard Press, what should you do?</div>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answerQuiz('m1q1', 0)">Reduce position size based on the declining R-curve</button>
+        <button class="quiz-option" onclick="answerQuiz('m1q1', 1)">Double your size to recover faster</button>
+        <button class="quiz-option" onclick="answerQuiz('m1q1', 2)">Keep size the same and wait it out</button>
+        <button class="quiz-option" onclick="answerQuiz('m1q1', 3)">Stop trading entirely</button>
+      </div>
+      <div class="quiz-feedback">The Hougaard Press responds to the data: a declining R-curve means the system is in an unfavorable regime. You reduce size to limit drawdown, then press again when the slope turns positive.</div>
+    </div>
+
+    <div class="quiz-question" data-correct="0" id="m1q2">
+      <div class="quiz-q-num">Question 2 of 3</div>
+      <div class="quiz-q-text">The RL10 of your cumulative R-multiple is rising steeply. What does this indicate?</div>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answerQuiz('m1q2', 0)">Your system is in a favorable regime &mdash; consider pressing size up</button>
+        <button class="quiz-option" onclick="answerQuiz('m1q2', 1)">You should take profits and stop trading</button>
+        <button class="quiz-option" onclick="answerQuiz('m1q2', 2)">The market is about to reverse</button>
+        <button class="quiz-option" onclick="answerQuiz('m1q2', 3)">Your stops are too tight</button>
+      </div>
+      <div class="quiz-feedback">A steeply rising RL10 slope means your recent trades are generating consistently positive R-multiples. The system is performing well in current conditions &mdash; the data supports a measured increase in size.</div>
+    </div>
+
+    <div class="quiz-question" data-correct="0" id="m1q3">
+      <div class="quiz-q-num">Question 3 of 3</div>
+      <div class="quiz-q-text">Why is the Hougaard Press psychologically difficult?</div>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answerQuiz('m1q3', 0)">It requires increasing size when things are going well and reducing when they're not &mdash; the opposite of what feels safe</button>
+        <button class="quiz-option" onclick="answerQuiz('m1q3', 1)">The math is too complex</button>
+        <button class="quiz-option" onclick="answerQuiz('m1q3', 2)">It requires daily monitoring</button>
+        <button class="quiz-option" onclick="answerQuiz('m1q3', 3)">It only works in bull markets</button>
+      </div>
+      <div class="quiz-feedback">When you're winning, increasing size feels greedy. When you're losing, reducing feels like giving up. The Hougaard Press requires trusting the data over your instincts &mdash; and that takes discipline.</div>
+    </div>
+
+    <div class="quiz-score" id="m1-score">
+      <div class="score-num" id="m1-score-num"></div>
+      <div>correct out of 3</div>
+    </div>
+  </div>
+
+  <div class="nav-footer">
+    <button class="btn btn-secondary" onclick="goToScreen('m1-lesson')">Back to Lesson</button>
+    <span class="step-info">Lesson &rarr; Quiz &rarr; Scenario</span>
+    <button class="btn btn-primary" id="m1-quiz-next" disabled onclick="goToScreen('m1-scenario')">Continue to Scenario</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- MODULE 1: SCENARIO -->
+<!-- ============================================================ -->
+<div class="screen" id="screen-m1-scenario">
+  <div class="lesson-header">
+    <div class="module-badge">Module 1 &mdash; Scenario</div>
+    <h2>Apply What You Learned</h2>
+  </div>
+
+  <div class="scenario-section">
+    <div class="scenario-block">
+      <div class="section-label">Scenario</div>
+      <div class="scenario-text">
+        You've been trading your swing system for 3 months. Your base risk is $250 per trade (0.5% of $50K). Over the last 20 trades, your cumulative R-curve shows: +0.4R average, RL10 slope positive and steepening, 12 wins / 8 losses. Your gut says everything is fine at $250. The Hougaard Press says you could move to $312 (25% increase). What do you do, and why?
+      </div>
+      <button class="btn btn-secondary" onclick="revealAnswer('m1-answer')">Reveal Answer</button>
+      <div class="scenario-answer" id="m1-answer">
+        Move to $312. The data supports it &mdash; your system is in a favorable regime (positive slope, above-average expectancy). The 25% step is conservative, not reckless. The key is that <strong>the data, not your gut, drives the decision</strong>. If the RL10 slope flattens after the increase, you step back to $250. The progression is always reversible.
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-footer">
+    <button class="btn btn-secondary" onclick="goToScreen('m1-quiz')">Back to Quiz</button>
+    <span class="step-info">Module 1 Complete</span>
+    <button class="btn btn-primary" onclick="completeModule(1)">Continue to Module 2</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- MODULE 2: LESSON — Tracking R -->
+<!-- ============================================================ -->
+<div class="screen" id="screen-m2-lesson">
+  <div class="lesson-header">
+    <div class="module-badge">Module 2 of 3</div>
+    <h2>Tracking R &mdash; Every Entry Is a Separate Hypothesis</h2>
+  </div>
+
+  <div class="lesson-body">
+    <p>Here's a mistake that costs traders thousands: they enter a position in two pieces and track it as one trade.</p>
+
+    <p>Say you buy 500 shares of MSFT at $380 (Trade 1A). Price moves in your favor. You add 250 shares at $383 (Trade 1B). Both are part of the same thesis, but they have different entries, different stops, and different R profiles. If you track them as one blended trade, you lose the ability to measure whether scaling in actually improves your system.</p>
+
+    <p><strong>Each entry is a separate hypothesis.</strong> Trade 1A says: "MSFT at $380 with a stop at $378 is a favorable R:R." Trade 1B says: "Adding at $383 after confirmation improves my overall result." These are different claims. They deserve different measurement.</p>
+
+    <p>Dr. Long insists on labeling every entry separately: 1A, 1B, 1C. Each gets its own entry price, stop, target, and R-multiple calculation. Over 50 or 100 trades, you'll discover whether your scaling-in entries actually have positive expectancy &mdash; or whether you'd be better off taking full size on the initial entry.</p>
+
+    <p>This discipline also reveals your <strong>Trader Quality Number (TQN)</strong>. Your system has a theoretical edge (SQN &mdash; System Quality Number). Your TQN measures how well you personally execute that system. The gap between SQN and TQN is your execution cost. Tracking each entry separately is how you identify where that cost lives.</p>
+  </div>
+
+  <!-- Audio -->
+  <div class="media-block">
+    <div class="media-label">Listen</div>
+    <div class="media-title">Dr. Ken Long: "Each entry is a separate hypothesis with its own R-multiple" (1:30)</div>
+    <audio controls preload="none">
+      <source src="https://storage.googleapis.com/ogt-media-clips/v6-calculating-r-intro.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+
+  <div class="nav-footer">
+    <button class="btn btn-secondary" onclick="goToScreen('m1-scenario')">Back</button>
+    <span class="step-info">Lesson &rarr; Quiz &rarr; Scenario</span>
+    <button class="btn btn-primary" onclick="goToScreen('m2-quiz')">Continue to Quiz</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- MODULE 2: QUIZ -->
+<!-- ============================================================ -->
+<div class="screen" id="screen-m2-quiz">
+  <div class="lesson-header">
+    <div class="module-badge">Module 2 &mdash; Quiz</div>
+    <h2>Check Your Understanding</h2>
+  </div>
+
+  <div class="quiz-section" id="quiz-m2">
+    <div class="quiz-question" data-correct="0" id="m2q1">
+      <div class="quiz-q-num">Question 1 of 3</div>
+      <div class="quiz-q-text">You buy 1000 shares at $50 and add 500 shares at $52. How should you track these?</div>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answerQuiz('m2q1', 0)">As two separate trades (1A and 1B) with independent R calculations</button>
+        <button class="quiz-option" onclick="answerQuiz('m2q1', 1)">As one trade with an average entry of $50.67</button>
+        <button class="quiz-option" onclick="answerQuiz('m2q1', 2)">As one trade using the first entry price only</button>
+        <button class="quiz-option" onclick="answerQuiz('m2q1', 3)">Only track the second entry since it's the add</button>
+      </div>
+      <div class="quiz-feedback">Each entry has a different price, different stop, and different risk profile. By tracking them as 1A and 1B, you can measure whether the scale-in entry actually adds value over time.</div>
+    </div>
+
+    <div class="quiz-question" data-correct="0" id="m2q2">
+      <div class="quiz-q-num">Question 2 of 3</div>
+      <div class="quiz-q-text">What does the gap between SQN and TQN reveal?</div>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answerQuiz('m2q2', 0)">Your execution cost &mdash; how much edge you lose through imperfect execution</button>
+        <button class="quiz-option" onclick="answerQuiz('m2q2', 1)">Whether your system works</button>
+        <button class="quiz-option" onclick="answerQuiz('m2q2', 2)">How much money you made</button>
+        <button class="quiz-option" onclick="answerQuiz('m2q2', 3)">Your win rate</button>
+      </div>
+      <div class="quiz-feedback">SQN is the system's theoretical edge. TQN is how well you execute it. The difference is your execution cost &mdash; and tracking each entry separately is how you find exactly where that cost accumulates.</div>
+    </div>
+
+    <div class="quiz-question" data-correct="0" id="m2q3">
+      <div class="quiz-q-num">Question 3 of 3</div>
+      <div class="quiz-q-text">After 100 separately-tracked scale-in entries, you discover Trade B entries have negative expectancy. What should you do?</div>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answerQuiz('m2q3', 0)">Stop scaling in &mdash; take full position on the initial entry instead</button>
+        <button class="quiz-option" onclick="answerQuiz('m2q3', 1)">Scale in more aggressively to average out</button>
+        <button class="quiz-option" onclick="answerQuiz('m2q3', 2)">Ignore the data and keep scaling</button>
+        <button class="quiz-option" onclick="answerQuiz('m2q3', 3)">Switch to a different system</button>
+      </div>
+      <div class="quiz-feedback">The data says your scale-in entries are destroying value. Stop adding. Take your full intended position on the initial entry and simplify your execution. Revisit scaling only after changing your rules and re-testing over another 50+ trades.</div>
+    </div>
+
+    <div class="quiz-score" id="m2-score">
+      <div class="score-num" id="m2-score-num"></div>
+      <div>correct out of 3</div>
+    </div>
+  </div>
+
+  <div class="nav-footer">
+    <button class="btn btn-secondary" onclick="goToScreen('m2-lesson')">Back to Lesson</button>
+    <span class="step-info">Lesson &rarr; Quiz &rarr; Scenario</span>
+    <button class="btn btn-primary" id="m2-quiz-next" disabled onclick="goToScreen('m2-scenario')">Continue to Scenario</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- MODULE 2: SCENARIO -->
+<!-- ============================================================ -->
+<div class="screen" id="screen-m2-scenario">
+  <div class="lesson-header">
+    <div class="module-badge">Module 2 &mdash; Scenario</div>
+    <h2>Apply What You Learned</h2>
+  </div>
+
+  <div class="scenario-section">
+    <div class="scenario-block">
+      <div class="section-label">Scenario</div>
+      <div class="scenario-text">
+        You've been tracking your trades with separate A/B labels for 2 months. Results: Trade A entries (initial): +0.6R expectancy, 55% win rate. Trade B entries (scale-in): -0.1R expectancy, 42% win rate. What does this tell you, and what change would you make?
+      </div>
+      <button class="btn btn-secondary" onclick="revealAnswer('m2-answer')">Reveal Answer</button>
+      <div class="scenario-answer" id="m2-answer">
+        Your initial entries have genuine edge. Your scale-in entries are destroying value &mdash; you'd be better off not adding. The data says: <strong>take your full intended position on Trade A and stop scaling in.</strong> This saves the negative expectancy from Trade B entries and simplifies your execution. Revisit scaling only if you change your scale-in rules and re-test over another 50+ trades.
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-footer">
+    <button class="btn btn-secondary" onclick="goToScreen('m2-quiz')">Back to Quiz</button>
+    <span class="step-info">Module 2 Complete</span>
+    <button class="btn btn-primary" onclick="completeModule(2)">Continue to Module 3</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- MODULE 3: LESSON — The 4-3-2-1 Progression -->
+<!-- ============================================================ -->
+<div class="screen" id="screen-m3-lesson">
+  <div class="lesson-header">
+    <div class="module-badge">Module 3 of 3</div>
+    <h2>The 4-3-2-1 Progression &mdash; From Paper to Full Size</h2>
+  </div>
+
+  <div class="lesson-body">
+    <p>You have a system with positive expectancy. You've paper traded it for 3 months. You're ready to go live. The question every new trader gets wrong: how much do you start with?</p>
+
+    <p>The answer is almost always: less than you think.</p>
+
+    <p>Dr. Long teaches a sizing progression called <strong>4-3-2-1</strong>:</p>
+
+    <ul class="concept-list">
+      <li><strong>4 &mdash; Paper trade</strong> until the setup frequency and execution feel natural. You should be bored by it. If you're still excited by each trade, you haven't paper traded enough.</li>
+      <li><strong>3 &mdash; Quarter position (25% of intended size).</strong> This is your first live money. At this level, a -1R loss is trivially small. The goal is to prove you can execute in real markets with real money at stake &mdash; order entry, stop placement, position monitoring &mdash; without emotional interference.</li>
+      <li><strong>2 &mdash; Half position (50%).</strong> Move here when quarter-size feels routine. At half-size, the P&amp;L starts to register emotionally. Pay attention to your state. If you notice anxiety, hesitation, or revenge impulses, you moved up too fast. Drop back to quarter.</li>
+      <li><strong>1 &mdash; Full position.</strong> You arrive here when half-size is boring. The full position should feel like a natural extension of the same process, not a dramatic escalation.</li>
+    </ul>
+
+    <p>The progression takes weeks to months. Rushing it is the most expensive mistake in trading. Every trader who blew up did so because they sized up before their psychology was ready.</p>
+
+    <p><strong>Boring is the goal.</strong> If your position size makes you feel something, it's too big.</p>
+  </div>
+
+  <!-- Audio -->
+  <div class="media-block">
+    <div class="media-label">Listen</div>
+    <div class="media-title">A student discovers RL10-based sizing: "The difference that makes is enormous" (1:30)</div>
+    <audio controls preload="none">
+      <source src="https://storage.googleapis.com/ogt-media-clips/v11-gold-sample-8100s.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+
+  <div class="nav-footer">
+    <button class="btn btn-secondary" onclick="goToScreen('m2-scenario')">Back</button>
+    <span class="step-info">Lesson &rarr; Quiz &rarr; Scenario</span>
+    <button class="btn btn-primary" onclick="goToScreen('m3-quiz')">Continue to Quiz</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- MODULE 3: QUIZ -->
+<!-- ============================================================ -->
+<div class="screen" id="screen-m3-quiz">
+  <div class="lesson-header">
+    <div class="module-badge">Module 3 &mdash; Quiz</div>
+    <h2>Check Your Understanding</h2>
+  </div>
+
+  <div class="quiz-section" id="quiz-m3">
+    <div class="quiz-question" data-correct="0" id="m3q1">
+      <div class="quiz-q-num">Question 1 of 3</div>
+      <div class="quiz-q-text">You've been paper trading for 6 weeks and you're still excited by each trade. Are you ready for live trading?</div>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answerQuiz('m3q1', 0)">No &mdash; you haven't paper traded enough. You should feel bored before moving to live.</button>
+        <button class="quiz-option" onclick="answerQuiz('m3q1', 1)">Yes &mdash; excitement means you're engaged</button>
+        <button class="quiz-option" onclick="answerQuiz('m3q1', 2)">Yes &mdash; 6 weeks is more than enough</button>
+        <button class="quiz-option" onclick="answerQuiz('m3q1', 3)">Maybe &mdash; try one live trade to test</button>
+      </div>
+      <div class="quiz-feedback">Excitement is a signal that the process hasn't become automatic yet. If each trade still feels like an event, your execution will be emotional. Paper trade until it's boring &mdash; that's when you're ready.</div>
+    </div>
+
+    <div class="quiz-question" data-correct="0" id="m3q2">
+      <div class="quiz-q-num">Question 2 of 3</div>
+      <div class="quiz-q-text">At quarter position, you notice your heart racing when you place a stop order. What should you do?</div>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answerQuiz('m3q2', 0)">Reduce size further until the execution feels mechanical</button>
+        <button class="quiz-option" onclick="answerQuiz('m3q2', 1)">Push through it &mdash; the anxiety will fade</button>
+        <button class="quiz-option" onclick="answerQuiz('m3q2', 2)">Move to half position to make it more worthwhile</button>
+        <button class="quiz-option" onclick="answerQuiz('m3q2', 3)">Switch to a different system</button>
+      </div>
+      <div class="quiz-feedback">Physical arousal (heart racing) means the dollar risk is too large for your current psychology. The fix is always the same: reduce size until execution feels mechanical. There's no shame in trading smaller &mdash; there's only the math.</div>
+    </div>
+
+    <div class="quiz-question" data-correct="0" id="m3q3">
+      <div class="quiz-q-num">Question 3 of 3</div>
+      <div class="quiz-q-text">What is the single most important criterion for moving from half to full position?</div>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answerQuiz('m3q3', 0)">Half-size feels boring and routine</button>
+        <button class="quiz-option" onclick="answerQuiz('m3q3', 1)">You've had 5 winning trades in a row</button>
+        <button class="quiz-option" onclick="answerQuiz('m3q3', 2)">Your account has grown by 10%</button>
+        <button class="quiz-option" onclick="answerQuiz('m3q3', 3)">You've been at half-size for at least 30 days</button>
+      </div>
+      <div class="quiz-feedback">The criterion is psychological, not statistical. When half-size losses feel like the cost of doing business &mdash; boring, unremarkable &mdash; you're ready. Time at a level doesn't matter; emotional readiness does.</div>
+    </div>
+
+    <div class="quiz-score" id="m3-score">
+      <div class="score-num" id="m3-score-num"></div>
+      <div>correct out of 3</div>
+    </div>
+  </div>
+
+  <div class="nav-footer">
+    <button class="btn btn-secondary" onclick="goToScreen('m3-lesson')">Back to Lesson</button>
+    <span class="step-info">Lesson &rarr; Quiz &rarr; Scenario</span>
+    <button class="btn btn-primary" id="m3-quiz-next" disabled onclick="goToScreen('m3-scenario')">Continue to Scenario</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- MODULE 3: SCENARIO -->
+<!-- ============================================================ -->
+<div class="screen" id="screen-m3-scenario">
+  <div class="lesson-header">
+    <div class="module-badge">Module 3 &mdash; Scenario</div>
+    <h2>Apply What You Learned</h2>
+  </div>
+
+  <div class="scenario-section">
+    <div class="scenario-block">
+      <div class="section-label">Scenario</div>
+      <div class="scenario-text">
+        You paper traded for 2 months with strong results (+0.5R expectancy, 48 trades). You went live at quarter position ($62.50 risk per trade on a $50K account). After 15 live trades, your results: +0.3R expectancy, 7 wins / 8 losses. Your P&amp;L is -$94 (trivial). But you notice you're checking your phone constantly and feeling frustrated after losses. Should you move to half position?
+      </div>
+      <button class="btn btn-secondary" onclick="revealAnswer('m3-answer')">Reveal Answer</button>
+      <div class="scenario-answer" id="m3-answer">
+        No. The P&amp;L results are fine &mdash; slightly positive expectancy with small sample noise. But the behavioral signals say you're not ready: <strong>checking phone constantly and frustration after losses are emotional leaks.</strong> Stay at quarter position for another 20 trades. Focus on executing the process mechanically. When losses stop generating frustration &mdash; when they feel like the cost of doing business &mdash; that's when you move to half.
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-footer">
+    <button class="btn btn-secondary" onclick="goToScreen('m3-quiz')">Back to Quiz</button>
+    <span class="step-info">Module 3 Complete</span>
+    <button class="btn btn-primary" onclick="completeModule(3)">Finish the Course</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- COMPLETION SCREEN -->
+<!-- ============================================================ -->
+<div class="screen" id="screen-completion">
+  <div class="completion-hero">
+    <div class="completion-check">&#10003;</div>
+    <h2>Course Complete</h2>
+    <p>You just learned three advanced sizing concepts: the Hougaard Press for regime-based sizing, independent R-tracking for every entry, and the 4-3-2-1 progression from paper to full position. These techniques separate professionals from amateurs &mdash; they're how Dr. Long's coaching students systematically build confidence and compound returns.</p>
+  </div>
+
+  <div class="cta-grid">
+    <a class="cta-card" href="https://kit.com/owlgrouptrading" target="_blank" rel="noopener">
+      <h3>Keep Learning</h3>
+      <p>Get Dr. Long's daily market analysis delivered to your inbox every morning.</p>
+      <span class="cta-arrow">Subscribe &rarr;</span>
+    </a>
+    <a class="cta-card" href="https://www.youtube.com/watch?v=a5ANcVZ3cZg" target="_blank" rel="noopener">
+      <h3>Go Deeper</h3>
+      <p>Watch the full Hougaard Press session with Dr. Ken Long &mdash; the complete sizing methodology.</p>
+      <span class="cta-arrow">Watch now &rarr;</span>
+    </a>
+    <a class="cta-card" href="../store-v1.html" target="_blank" rel="noopener">
+      <h3>Explore the Store</h3>
+      <p>Books, courses, and tools from Owl Group Trading.</p>
+      <span class="cta-arrow">Visit store &rarr;</span>
+    </a>
+  </div>
+</div>
+
+</main>
+
+<!-- Keyboard hint -->
+<div class="kb-hint" id="kbHint">
+  <kbd>&larr;</kbd> <kbd>&rarr;</kbd> to navigate
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  // ── State ──
+  const state = {
+    currentScreen: 'welcome',
+    modulesCompleted: new Set(),
+    quizAnswered: { m1: 0, m2: 0, m3: 0 },
+    quizCorrect: { m1: 0, m2: 0, m3: 0 },
+    highestUnlocked: 0 // 0=welcome, 1=m1, 2=m2, 3=m3, 4=completion
+  };
+
+  // ── Screen flow (for arrow key navigation) ──
+  const screenOrder = [
+    'welcome',
+    'm1-lesson', 'm1-quiz', 'm1-scenario',
+    'm2-lesson', 'm2-quiz', 'm2-scenario',
+    'm3-lesson', 'm3-quiz', 'm3-scenario',
+    'completion'
+  ];
+
+  // ── Progress mapping ──
+  const progressMap = {
+    'welcome': 0,
+    'm1-lesson': 5,
+    'm1-quiz': 15,
+    'm1-scenario': 25,
+    'm2-lesson': 35,
+    'm2-quiz': 48,
+    'm2-scenario': 58,
+    'm3-lesson': 68,
+    'm3-quiz': 80,
+    'm3-scenario': 92,
+    'completion': 100
+  };
+
+  // ── Navigation ──
+  window.goToScreen = function(screenId) {
+    // Check if screen is accessible
+    const idx = screenOrder.indexOf(screenId);
+    if (idx < 0) return;
+
+    // Determine max accessible index
+    let maxIdx;
+    if (state.highestUnlocked >= 4) maxIdx = screenOrder.length - 1;
+    else if (state.highestUnlocked >= 3) maxIdx = 9; // up to m3-scenario
+    else if (state.highestUnlocked >= 2) maxIdx = 6; // up to m2-scenario
+    else if (state.highestUnlocked >= 1) maxIdx = 3; // up to m1-scenario
+    else maxIdx = 0;
+
+    if (idx > maxIdx) return;
+
+    // Hide all screens
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+
+    // Show target
+    const el = document.getElementById('screen-' + screenId);
+    if (el) {
+      el.classList.add('active');
+      state.currentScreen = screenId;
+      updateProgress();
+      updateTabs();
+      window.scrollTo(0, 0);
+    }
+  };
+
+  window.goToModule = function(n) {
+    if (n > state.highestUnlocked) return;
+    goToScreen('m' + n + '-lesson');
+  };
+
+  window.startCourse = function() {
+    state.highestUnlocked = Math.max(state.highestUnlocked, 1);
+    goToScreen('m1-lesson');
+  };
+
+  window.completeModule = function(n) {
+    state.modulesCompleted.add(n);
+    if (n < 3) {
+      state.highestUnlocked = Math.max(state.highestUnlocked, n + 1);
+      goToScreen('m' + (n + 1) + '-lesson');
+    } else {
+      state.highestUnlocked = 4;
+      goToScreen('completion');
+    }
+  };
+
+  // ── Progress Bar ──
+  function updateProgress() {
+    const pct = progressMap[state.currentScreen] || 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  // ── Tab State ──
+  function updateTabs() {
+    const tabs = document.querySelectorAll('.module-tab');
+    tabs.forEach(tab => {
+      const target = tab.dataset.target;
+      tab.classList.remove('active', 'completed', 'locked');
+
+      // Determine which tab group this screen belongs to
+      const current = state.currentScreen;
+      const isCurrentTab =
+        (target === 'welcome' && current === 'welcome') ||
+        (target === 'm1-lesson' && current.startsWith('m1')) ||
+        (target === 'm2-lesson' && current.startsWith('m2')) ||
+        (target === 'm3-lesson' && current.startsWith('m3')) ||
+        (target === 'completion' && current === 'completion');
+
+      if (isCurrentTab) {
+        tab.classList.add('active');
+      } else if (
+        (target === 'm1-lesson' && state.modulesCompleted.has(1)) ||
+        (target === 'm2-lesson' && state.modulesCompleted.has(2)) ||
+        (target === 'm3-lesson' && state.modulesCompleted.has(3))
+      ) {
+        tab.classList.add('completed');
+      } else {
+        // Check if locked
+        const moduleNum =
+          target === 'welcome' ? 0 :
+          target === 'm1-lesson' ? 1 :
+          target === 'm2-lesson' ? 2 :
+          target === 'm3-lesson' ? 3 :
+          target === 'completion' ? 4 : 0;
+        if (moduleNum > state.highestUnlocked) {
+          tab.classList.add('locked');
+        }
+      }
+    });
+  }
+
+  // ── Quiz Engine ──
+  window.answerQuiz = function(qId, selectedIdx) {
+    const qEl = document.getElementById(qId);
+    if (qEl.classList.contains('answered-correct') || qEl.classList.contains('answered-wrong')) return;
+
+    const correctIdx = parseInt(qEl.dataset.correct);
+    const options = qEl.querySelectorAll('.quiz-option');
+    const moduleKey = qId.substring(0, 2); // m1, m2, m3
+
+    // Disable all options
+    options.forEach(o => o.classList.add('disabled'));
+
+    // Mark selected
+    options[selectedIdx].classList.add('selected');
+    if (selectedIdx === correctIdx) {
+      options[selectedIdx].classList.add('correct');
+      qEl.classList.add('answered-correct');
+      state.quizCorrect[moduleKey]++;
+    } else {
+      options[selectedIdx].classList.add('incorrect');
+      qEl.classList.add('answered-wrong');
+      // Reveal correct answer
+      options[correctIdx].classList.add('reveal-correct');
+    }
+
+    // Show feedback
+    qEl.querySelector('.quiz-feedback').classList.add('visible');
+
+    // Track answered count
+    state.quizAnswered[moduleKey]++;
+
+    // Check if all 3 answered
+    if (state.quizAnswered[moduleKey] >= 3) {
+      const scoreEl = document.getElementById(moduleKey + '-score');
+      const scoreNum = document.getElementById(moduleKey + '-score-num');
+      scoreNum.textContent = state.quizCorrect[moduleKey];
+      scoreEl.classList.add('visible');
+      document.getElementById(moduleKey + '-quiz-next').disabled = false;
+    }
+  };
+
+  // ── Scenario Reveal ──
+  window.revealAnswer = function(id) {
+    const el = document.getElementById(id);
+    el.classList.add('visible');
+  };
+
+  // ── Theme Toggle ──
+  window.toggleTheme = function() {
+    const html = document.documentElement;
+    const current = html.getAttribute('data-theme');
+    html.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+  };
+
+  // ── Keyboard Navigation ──
+  document.addEventListener('keydown', function(e) {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      navigateDirection(1);
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      navigateDirection(-1);
+    }
+  });
+
+  function navigateDirection(dir) {
+    const currentIdx = screenOrder.indexOf(state.currentScreen);
+    if (currentIdx < 0) return;
+    const nextIdx = currentIdx + dir;
+    if (nextIdx < 0 || nextIdx >= screenOrder.length) return;
+
+    const nextScreen = screenOrder[nextIdx];
+
+    // For forward navigation, check if the next screen requires quiz completion
+    if (dir > 0) {
+      // If moving from quiz to scenario, check quiz is done
+      if (nextScreen.endsWith('-scenario')) {
+        const mk = nextScreen.split('-')[0]; // m1, m2, m3
+        if (state.quizAnswered[mk] < 3) return; // quiz not complete
+      }
+      // If moving to a new module's lesson, check previous module completed
+      if (nextScreen === 'm2-lesson' && !state.modulesCompleted.has(1)) return;
+      if (nextScreen === 'm3-lesson' && !state.modulesCompleted.has(2)) return;
+      if (nextScreen === 'completion' && !state.modulesCompleted.has(3)) return;
+    }
+
+    goToScreen(nextScreen);
+  }
+
+  // ── Init ──
+  updateProgress();
+  updateTabs();
+})();
+</script>
+</body>
+</html>
