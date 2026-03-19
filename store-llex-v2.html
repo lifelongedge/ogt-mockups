@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LifeLongEdge — Store</title>
+<style>
+:root {
+  --bg-primary: #0d1117;
+  --bg-secondary: #161b22;
+  --bg-tertiary: #1c2128;
+  --bg-card: #21262d;
+  --text-primary: #e6edf3;
+  --text-secondary: #8b949e;
+  --text-muted: #6e7681;
+  --accent: #58a6ff;
+  --accent-hover: #79c0ff;
+  --border: #30363d;
+  --border-light: #3d444d;
+  --green: #3fb950;
+  --red: #f85149;
+  --orange: #d29922;
+  --purple: #bc8cff;
+  --spring: #3fb950;
+  --summer: #d29922;
+  --fall: #f85149;
+  --winter: #58a6ff;
+  --radius: 8px;
+  --shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+[data-theme="light"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f6f8fa;
+  --bg-tertiary: #eef1f5;
+  --bg-card: #ffffff;
+  --text-primary: #1f2328;
+  --text-secondary: #656d76;
+  --text-muted: #8b949e;
+  --accent: #0969da;
+  --accent-hover: #0550ae;
+  --border: #d0d7de;
+  --border-light: #e1e4e8;
+  --shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+/* NAV */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 56px;
+}
+.nav-brand { font-weight:700; font-size:18px; color:var(--text-primary); text-decoration:none; }
+.nav-links { display:flex; gap:4px; list-style:none; }
+.nav-links a {
+  color: var(--text-secondary); text-decoration: none;
+  padding: 8px 14px; border-radius: var(--radius);
+  font-size: 14px; font-weight: 500; transition: all 0.15s;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--text-primary); background: var(--bg-tertiary); }
+.theme-toggle {
+  background: none; border: 1px solid var(--border);
+  color: var(--text-secondary); cursor: pointer;
+  padding: 6px 10px; border-radius: var(--radius); font-size: 14px;
+}
+
+/* HERO */
+.hero {
+  text-align: center; padding: 64px 24px 48px;
+  max-width: 800px; margin: 0 auto;
+}
+.hero h1 { font-size: 36px; font-weight: 700; margin-bottom: 12px; }
+.hero .subtitle { font-size: 16px; color: var(--text-secondary); margin-bottom: 32px; line-height: 1.7; }
+
+/* SECTION */
+.section { max-width: 1100px; margin: 0 auto; padding: 0 24px 48px; }
+.section-title { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+.section-subtitle { color: var(--text-secondary); margin-bottom: 24px; font-size: 14px; }
+
+/* PRODUCT CARDS */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+  margin-bottom: 48px;
+}
+
+.product-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.15s;
+}
+.product-card:hover { border-color: var(--text-muted); }
+.product-card.featured {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+  position: relative;
+}
+.product-card.featured::before {
+  content: 'BEST VALUE';
+  position: absolute;
+  top: -10px; left: 24px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+}
+
+.product-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.product-header h3 { font-size: 18px; font-weight: 600; }
+
+.pillar-indicator {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  margin-top: 6px;
+  flex-shrink: 0;
+}
+
+.product-price {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.product-price-note {
+  color: var(--text-muted);
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+
+.product-desc {
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 16px;
+  flex-grow: 1;
+}
+
+.layout-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 20px;
+}
+
+.layout-chip-sm {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 11px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 6px; padding: 10px 20px; border-radius: var(--radius);
+  font-size: 14px; font-weight: 500; text-decoration: none;
+  border: 1px solid var(--border); background: var(--bg-card);
+  color: var(--text-primary); cursor: pointer; transition: all 0.15s;
+  width: 100%;
+}
+.btn:hover { border-color: var(--text-muted); }
+.btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn-primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+
+.coupon-note {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 12px;
+  text-align: center;
+}
+.coupon-note code { color: var(--green); font-weight: 600; }
+
+/* COMPARISON TABLE */
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 48px;
+}
+.compare-table th, .compare-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  text-align: center;
+}
+.compare-table th {
+  background: var(--bg-secondary);
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+}
+.compare-table th:first-child,
+.compare-table td:first-child {
+  text-align: left;
+  font-weight: 500;
+}
+.compare-table td { color: var(--text-secondary); }
+.check { color: var(--green); font-weight: 700; font-size: 16px; }
+.dash { color: var(--text-muted); }
+
+/* UPGRADE PATH */
+.upgrade-banner {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 32px;
+  text-align: center;
+  margin-bottom: 48px;
+}
+.upgrade-banner h3 { font-size: 20px; margin-bottom: 8px; }
+.upgrade-banner p { color: var(--text-secondary); font-size: 14px; margin-bottom: 20px; max-width: 600px; margin-left: auto; margin-right: auto; }
+
+.upgrade-steps {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  flex-wrap: wrap;
+}
+.upgrade-step {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  text-align: center;
+  min-width: 140px;
+}
+.upgrade-step .step-price { font-size: 20px; font-weight: 700; }
+.upgrade-step .step-label { font-size: 12px; color: var(--text-muted); }
+.upgrade-arrow {
+  color: var(--text-muted);
+  font-size: 20px;
+  padding: 0 8px;
+}
+
+/* ADD-ONS */
+.addon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+.addon-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+.addon-card h4 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+.addon-card p { font-size: 13px; color: var(--text-secondary); margin-bottom: 12px; }
+.addon-card .badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 500;
+  border: 1px solid;
+}
+
+/* SUBSCRIPTION TEASER */
+.subscription-teaser {
+  background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 40px;
+  text-align: center;
+  margin-bottom: 48px;
+}
+.subscription-teaser h3 { font-size: 22px; margin-bottom: 8px; }
+.subscription-teaser p { color: var(--text-secondary); font-size: 14px; max-width: 600px; margin: 0 auto 24px; }
+.sub-tiers {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.sub-tier {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 28px;
+  min-width: 160px;
+}
+.sub-tier h4 { font-size: 14px; margin-bottom: 4px; }
+.sub-tier .tier-price { font-size: 28px; font-weight: 700; }
+.sub-tier .tier-period { color: var(--text-muted); font-size: 12px; }
+
+/* FOOTER */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 24px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+@media (max-width: 768px) {
+  .product-grid { grid-template-columns: 1fr; }
+  .compare-table { font-size: 11px; }
+  .compare-table th, .compare-table td { padding: 8px 6px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-brand">LifeLongEdge</a>
+  <ul class="nav-links">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#">Start</a></li>
+    <li><a href="#" class="active">Shop</a></li>
+    <li><a href="#">Download</a></li>
+    <li><a href="#">Glossary</a></li>
+  </ul>
+  <button class="theme-toggle" onclick="document.documentElement.setAttribute('data-theme', document.documentElement.getAttribute('data-theme')==='light'?'':'light')">Theme</button>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>Fractal Edge Framework</h1>
+  <p class="subtitle">Dr. Ken Long's trading strategies and indicators for TC2000. Start with one pack or get everything in the full bundle. Every pack you buy counts toward a bundle upgrade.</p>
+</div>
+
+<!-- COMPONENT PACKS -->
+<div class="section">
+  <h2 class="section-title">Component Packs</h2>
+  <p class="section-subtitle">Start with the pillar that matches where you are in your trading journey</p>
+
+  <div class="product-grid">
+    <!-- TARGETING -->
+    <div class="product-card">
+      <div class="product-header">
+        <h3>Targeting Pack</h3>
+        <span class="pillar-indicator" style="background:var(--spring)"></span>
+      </div>
+      <div class="product-price">$79</div>
+      <div class="product-price-note">One-time purchase · 12 months updates</div>
+      <p class="product-desc">Find the right symbols. Statistical filters that identify stocks with ideal characteristics for trading — directional momentum, stretched valuations, overbought/oversold conditions, and seasonal turning points.</p>
+      <div class="layout-chips">
+        <span class="layout-chip-sm">Frog Box</span>
+        <span class="layout-chip-sm">FQN</span>
+        <span class="layout-chip-sm">RL Stretch</span>
+        <span class="layout-chip-sm">OB RSI</span>
+        <span class="layout-chip-sm">OS RSI</span>
+        <span class="layout-chip-sm">MACD Seasons</span>
+        <span class="layout-chip-sm">Max Pain</span>
+      </div>
+      <a href="#" class="btn btn-primary">Purchase — $79</a>
+    </div>
+
+    <!-- STALKING -->
+    <div class="product-card">
+      <div class="product-header">
+        <h3>Stalking Pack</h3>
+        <span class="pillar-indicator" style="background:var(--summer)"></span>
+      </div>
+      <div class="product-price">$79</div>
+      <div class="product-price-note">One-time purchase · 12 months updates</div>
+      <p class="product-desc">Know when to strike. Movers, scanners, and the Market Mosaic that alert you when your targets are in motion — ATR breakouts, frog moves, Z3 breakouts, and fail/gain reversals.</p>
+      <div class="layout-chips">
+        <span class="layout-chip-sm">Autoframer</span>
+        <span class="layout-chip-sm">HF Movers</span>
+        <span class="layout-chip-sm">ATR Movers</span>
+        <span class="layout-chip-sm">NDX Movers</span>
+        <span class="layout-chip-sm">Fail Gain Stat</span>
+        <span class="layout-chip-sm">Mosaic</span>
+        <span class="layout-chip-sm">Z3BO</span>
+      </div>
+      <a href="#" class="btn btn-primary">Purchase — $79</a>
+    </div>
+
+    <!-- TRADING -->
+    <div class="product-card">
+      <div class="product-header">
+        <h3>Trading Pack</h3>
+        <span class="pillar-indicator" style="background:var(--fall)"></span>
+      </div>
+      <div class="product-price">$149</div>
+      <div class="product-price-note">One-time purchase · 12 months updates</div>
+      <p class="product-desc">Execute with precision. Core chart templates (dark + light), position sizing calculator, and all four pattern scans (SSC, SFC, CD, Owl) plus PSAR flip signals and seasonal pattern combinations.</p>
+      <div class="layout-chips">
+        <span class="layout-chip-sm">Main.Dark</span>
+        <span class="layout-chip-sm">Main.Light</span>
+        <span class="layout-chip-sm">Position Sizing</span>
+        <span class="layout-chip-sm">SSC Scan</span>
+        <span class="layout-chip-sm">SFC Scan</span>
+        <span class="layout-chip-sm">CD Scan</span>
+        <span class="layout-chip-sm">Owl Scan</span>
+        <span class="layout-chip-sm">SSC HW</span>
+        <span class="layout-chip-sm">SFC WS</span>
+        <span class="layout-chip-sm">PFL</span>
+        <span class="layout-chip-sm">PFS</span>
+      </div>
+      <a href="#" class="btn btn-primary">Purchase — $149</a>
+    </div>
+
+    <!-- BMR -->
+    <div class="product-card">
+      <div class="product-header">
+        <h3>BMR Pack</h3>
+        <span class="pillar-indicator" style="background:var(--purple)"></span>
+      </div>
+      <div class="product-price">$79</div>
+      <div class="product-price-note">One-time purchase · 12 months updates</div>
+      <p class="product-desc">Passive portfolio management. Blended Monthly Rebalancing across Dow 30, sector SPDRs, global ETFs, and custom watchlists. Minimal time commitment — review monthly.</p>
+      <div class="layout-chips">
+        <span class="layout-chip-sm">BMR All Sectors</span>
+        <span class="layout-chip-sm">BMR Dow 30</span>
+        <span class="layout-chip-sm">BMR ETF 13</span>
+        <span class="layout-chip-sm">BMR ETF 22</span>
+        <span class="layout-chip-sm">BMR ETF 32</span>
+        <span class="layout-chip-sm">BMR ETF MAX</span>
+        <span class="layout-chip-sm">BMR Sector SPDRs</span>
+      </div>
+      <a href="#" class="btn btn-primary">Purchase — $79</a>
+    </div>
+
+    <!-- SNIPER -->
+    <div class="product-card">
+      <div class="product-header">
+        <h3>Sniper Pack</h3>
+        <span class="pillar-indicator" style="background:var(--orange)"></span>
+      </div>
+      <div class="product-price">$49</div>
+      <div class="product-price-note">One-time purchase · Beta release</div>
+      <p class="product-desc">Five pattern setups — Catfish, Fence Sitter, Fireworks, Godzilla, Humpty Dumpty — across swing and intraday timeframes. Dark and light modes included.</p>
+      <div class="layout-chips">
+        <span class="layout-chip-sm">SniperDaily.DM</span>
+        <span class="layout-chip-sm">SniperDaily.LM</span>
+        <span class="layout-chip-sm">SniperITD.DM</span>
+        <span class="layout-chip-sm">SniperITD.LM</span>
+      </div>
+      <a href="#" class="btn">Purchase — $49</a>
+      <div class="coupon-note">Beta release — early adopter pricing</div>
+    </div>
+
+    <!-- FULL BUNDLE -->
+    <div class="product-card featured">
+      <div class="product-header">
+        <h3>Full Bundle</h3>
+      </div>
+      <div class="product-price">$399</div>
+      <div class="product-price-note">One-time purchase · All 46 layouts · 12 months updates</div>
+      <p class="product-desc">Everything in one package. All production and beta layouts across every pillar — Targeting, Stalking, Trading, BMR, and Sniper. Includes all future layouts released during your update period.</p>
+      <div class="layout-chips">
+        <span class="layout-chip-sm">30 production</span>
+        <span class="layout-chip-sm">16 beta</span>
+        <span class="layout-chip-sm">all pillars</span>
+        <span class="layout-chip-sm">dark + light</span>
+      </div>
+      <a href="#" class="btn btn-primary">Purchase — $399</a>
+      <div class="coupon-note">Save $85 vs buying all packs separately ($484)</div>
+    </div>
+  </div>
+</div>
+
+<!-- UPGRADE PATH -->
+<div class="section">
+  <div class="upgrade-banner">
+    <h3>Start Small, Grow Into It</h3>
+    <p>Every pack purchase counts toward a Full Bundle upgrade. Buy what you need now — when you're ready for everything, you only pay the difference.</p>
+    <div class="upgrade-steps">
+      <div class="upgrade-step">
+        <div class="step-price">$79</div>
+        <div class="step-label">Targeting Pack</div>
+      </div>
+      <span class="upgrade-arrow">+</span>
+      <div class="upgrade-step">
+        <div class="step-price">$79</div>
+        <div class="step-label">Stalking Pack</div>
+      </div>
+      <span class="upgrade-arrow">=</span>
+      <div class="upgrade-step" style="border-color:var(--accent);">
+        <div class="step-price">$158</div>
+        <div class="step-label">Spent so far</div>
+      </div>
+      <span class="upgrade-arrow">→</span>
+      <div class="upgrade-step" style="border-color:var(--green);">
+        <div class="step-price" style="color:var(--green);">$241</div>
+        <div class="step-label">to upgrade to Full Bundle</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COMPARISON TABLE -->
+<div class="section">
+  <h2 class="section-title">What's in Each Pack</h2>
+  <p class="section-subtitle">Side-by-side comparison</p>
+
+  <div style="overflow-x:auto;">
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th style="width:200px;">Feature</th>
+        <th>Targeting<br><span style="color:var(--spring);">$79</span></th>
+        <th>Stalking<br><span style="color:var(--summer);">$79</span></th>
+        <th>Trading<br><span style="color:var(--fall);">$149</span></th>
+        <th>BMR<br><span style="color:var(--purple);">$79</span></th>
+        <th>Sniper<br><span style="color:var(--orange);">$49</span></th>
+        <th style="background:var(--bg-tertiary);">Full Bundle<br><span style="color:var(--accent);">$399</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Frog Box / FQN</td><td class="check">&#10003;</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="check">&#10003;</td></tr>
+      <tr><td>MACD Seasons filter</td><td class="check">&#10003;</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="check">&#10003;</td></tr>
+      <tr><td>RSI OB/OS scanners</td><td class="check">&#10003;</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="check">&#10003;</td></tr>
+      <tr><td>RL Stretch / Max Pain</td><td class="check">&#10003;</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="check">&#10003;</td></tr>
+      <tr><td>Market Mosaic</td><td class="dash">—</td><td class="check">&#10003;</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="check">&#10003;</td></tr>
+      <tr><td>Autoframer</td><td class="dash">—</td><td class="check">&#10003;</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="check">&#10003;</td></tr>
+      <tr><td>ATR / HF / NDX Movers</td><td class="dash">—</td><td class="check">&#10003;</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="check">&#10003;</td></tr>
+      <tr><td>Main templates (dark/light)</td><td class="dash">—</td><td class="dash">—</td><td class="check">&#10003;</td><td class="dash">—</td><td class="dash">—</td><td class="check">&#10003;</td></tr>
+      <tr><td>Position Sizing calculator</td><td class="dash">—</td><td class="dash">—</td><td class="check">&#10003;</td><td class="dash">—</td><td class="dash">—</td><td class="check">&#10003;</td></tr>
+      <tr><td>Pattern scans (SSC/SFC/CD/Owl)</td><td class="dash">—</td><td class="dash">—</td><td class="check">&#10003;</td><td class="dash">—</td><td class="dash">—</td><td class="check">&#10003;</td></tr>
+      <tr><td>PSAR flip signals (PFL/PFS)</td><td class="dash">—</td><td class="dash">—</td><td class="check">&#10003;</td><td class="dash">—</td><td class="dash">—</td><td class="check">&#10003;</td></tr>
+      <tr><td>Monthly rebalancing (7 layouts)</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="check">&#10003;</td><td class="dash">—</td><td class="check">&#10003;</td></tr>
+      <tr><td>5 Sniper setups (4 layouts)</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="check">&#10003;</td><td class="check">&#10003;</td></tr>
+      <tr><td>Beta layouts (SlopeStat, etc.)</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="check">&#10003;</td></tr>
+      <tr><td>Upgrade credit toward bundle</td><td class="check">&#10003;</td><td class="check">&#10003;</td><td class="check">&#10003;</td><td class="check">&#10003;</td><td class="check">&#10003;</td><td class="dash">—</td></tr>
+      <tr>
+        <td style="font-weight:700;">Layouts included</td>
+        <td style="font-weight:700;">7</td>
+        <td style="font-weight:700;">7</td>
+        <td style="font-weight:700;">11</td>
+        <td style="font-weight:700;">7</td>
+        <td style="font-weight:700;">4</td>
+        <td style="font-weight:700;color:var(--accent);">46</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<!-- RENEWALS -->
+<div class="section">
+  <h2 class="section-title">Renewals</h2>
+  <p class="section-subtitle">Keep your layouts current with 12-month update subscriptions</p>
+  <div class="product-grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+    <div class="product-card">
+      <h3 style="font-size:16px;margin-bottom:8px;">Pack Renewal</h3>
+      <div class="product-price" style="font-size:28px;">$29<span style="font-size:14px;color:var(--text-muted);">/year per pack</span></div>
+      <p class="product-desc" style="font-size:13px;">Renew any individual pack for 12 more months of updates, new layouts, and fixes.</p>
+      <a href="#" class="btn">Renew a Pack</a>
+    </div>
+    <div class="product-card">
+      <h3 style="font-size:16px;margin-bottom:8px;">Full Bundle Renewal</h3>
+      <div class="product-price" style="font-size:28px;">$99<span style="font-size:14px;color:var(--text-muted);">/year</span></div>
+      <p class="product-desc" style="font-size:13px;">Renew the full bundle for 12 months. Includes all new layouts released during the period.</p>
+      <a href="#" class="btn">Renew Bundle</a>
+    </div>
+  </div>
+</div>
+
+<!-- PREMIUM TIER -->
+<div class="section">
+  <h2 class="section-title">Premium Experience</h2>
+  <p class="section-subtitle">For traders who want the complete package with hands-on guidance</p>
+  <div class="product-card featured" style="max-width:600px;margin:0 auto;">
+    <div class="product-header">
+      <h3>FEF Premium + Onboarding</h3>
+    </div>
+    <div class="product-price">$4,999</div>
+    <div class="product-price-note">One-time · Full bundle + personalized onboarding</div>
+    <p class="product-desc">Everything in the Full Bundle plus personalized onboarding sessions, direct access to the team for setup and configuration, and priority support during your first 90 days. For traders who want to hit the ground running with expert guidance.</p>
+    <div class="layout-chips">
+      <span class="layout-chip-sm">All 46 layouts</span>
+      <span class="layout-chip-sm">1:1 onboarding</span>
+      <span class="layout-chip-sm">Priority support</span>
+      <span class="layout-chip-sm">12 months updates</span>
+    </div>
+    <a href="#" class="btn btn-primary">Contact Us</a>
+    <div class="coupon-note">Dr. Long subscribers: use <code>FEFLAUNCHPRO</code> for 20% off</div>
+  </div>
+</div>
+
+<!-- EDGE S2 TEASER -->
+<div class="section">
+  <div class="subscription-teaser">
+    <h3>Coming Soon: Edge S2 Platform</h3>
+    <p>Interactive analytics, AI-powered trade review, and personalized coaching — powered by Dr. Ken Long's methodology. Join the waitlist to get early access pricing.</p>
+    <div class="sub-tiers">
+      <div class="sub-tier">
+        <h4>Explorer</h4>
+        <div class="tier-price">Free</div>
+        <div class="tier-period">Demo access</div>
+      </div>
+      <div class="sub-tier">
+        <h4>Edge Trader</h4>
+        <div class="tier-price">$79</div>
+        <div class="tier-period">/month</div>
+      </div>
+      <div class="sub-tier">
+        <h4>Edge Pro</h4>
+        <div class="tier-price">$199</div>
+        <div class="tier-period">/month</div>
+      </div>
+      <div class="sub-tier">
+        <h4>Edge Elite</h4>
+        <div class="tier-price">$499</div>
+        <div class="tier-period">/month</div>
+      </div>
+    </div>
+    <div style="margin-top:20px;">
+      <a href="#" class="btn" style="width:auto;display:inline-flex;">Join Waitlist</a>
+    </div>
+  </div>
+</div>
+
+<!-- ADD-ONS -->
+<div class="section">
+  <h2 class="section-title">Add-ons</h2>
+  <p class="section-subtitle">Supplemental programs and community</p>
+  <div class="addon-grid">
+    <div class="addon-card">
+      <h4>TC2000 User Group Weekly Insights</h4>
+      <p>Live weekly sessions exploring TC2000 techniques, layout customization, and market analysis with fellow traders.</p>
+      <span class="badge" style="color:var(--accent);border-color:var(--accent);">Meetup</span>
+    </div>
+    <div class="addon-card">
+      <h4>TC2000 PCF Proficiency</h4>
+      <p>Step-by-step guide to mastering TC2000's Personal Criteria Formulas. Build your own custom scans and indicators.</p>
+      <span class="badge" style="color:var(--purple);border-color:var(--purple);">Self-paced</span>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div>LifeLongEdge · lifelongedge@gmail.com · Offices in California and Massachusetts</div>
+  <div style="margin-top:8px;font-size:11px;">Not investment advice. Past results are not indicative of future results. See full disclaimer on site.</div>
+</footer>
+
+</body>
+</html>
