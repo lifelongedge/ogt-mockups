@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LifeLongEdge — Store</title>
+<style>
+:root {
+  --bg-primary: #0d1117;
+  --bg-secondary: #161b22;
+  --bg-tertiary: #1c2128;
+  --bg-card: #21262d;
+  --text-primary: #e6edf3;
+  --text-secondary: #8b949e;
+  --text-muted: #6e7681;
+  --accent: #58a6ff;
+  --accent-hover: #79c0ff;
+  --border: #30363d;
+  --border-light: #3d444d;
+  --green: #3fb950;
+  --red: #f85149;
+  --orange: #d29922;
+  --purple: #bc8cff;
+  --spring: #3fb950;
+  --summer: #d29922;
+  --fall: #f85149;
+  --winter: #58a6ff;
+  --radius: 8px;
+}
+[data-theme="light"] {
+  --bg-primary: #ffffff; --bg-secondary: #f6f8fa; --bg-tertiary: #eef1f5;
+  --bg-card: #ffffff; --text-primary: #1f2328; --text-secondary: #656d76;
+  --text-muted: #8b949e; --accent: #0969da; --accent-hover: #0550ae;
+  --border: #d0d7de; --border-light: #e1e4e8;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  background: var(--bg-primary); color: var(--text-primary); line-height: 1.6;
+}
+
+nav {
+  position:sticky; top:0; z-index:100; background:var(--bg-secondary);
+  border-bottom:1px solid var(--border); padding:0 24px;
+  display:flex; align-items:center; justify-content:space-between; height:56px;
+}
+.nav-brand { font-weight:700; font-size:18px; color:var(--text-primary); text-decoration:none; }
+.nav-links { display:flex; gap:4px; list-style:none; }
+.nav-links a {
+  color:var(--text-secondary); text-decoration:none; padding:8px 14px;
+  border-radius:var(--radius); font-size:14px; font-weight:500; transition:all 0.15s;
+}
+.nav-links a:hover, .nav-links a.active { color:var(--text-primary); background:var(--bg-tertiary); }
+.theme-toggle {
+  background:none; border:1px solid var(--border); color:var(--text-secondary);
+  cursor:pointer; padding:6px 10px; border-radius:var(--radius); font-size:14px;
+}
+
+.hero { text-align:center; padding:64px 24px 16px; max-width:800px; margin:0 auto; }
+.hero h1 { font-size:36px; font-weight:700; margin-bottom:12px; }
+.hero .subtitle { font-size:16px; color:var(--text-secondary); line-height:1.7; }
+
+.section { max-width:1100px; margin:0 auto; padding:40px 24px; }
+.section-title { font-size:22px; font-weight:700; margin-bottom:6px; }
+.section-subtitle { color:var(--text-secondary); margin-bottom:24px; font-size:14px; }
+
+.btn {
+  display:inline-flex; align-items:center; justify-content:center; gap:6px;
+  padding:10px 20px; border-radius:var(--radius); font-size:14px; font-weight:500;
+  text-decoration:none; border:1px solid var(--border); background:var(--bg-card);
+  color:var(--text-primary); cursor:pointer; transition:all 0.15s;
+}
+.btn:hover { border-color:var(--text-muted); }
+.btn-primary { background:var(--accent); color:#fff; border-color:var(--accent); }
+.btn-primary:hover { background:var(--accent-hover); border-color:var(--accent-hover); }
+.btn-sm { padding:6px 14px; font-size:13px; }
+
+/* THREE TIER HERO */
+.tier-hero {
+  display:grid; grid-template-columns:1fr 1fr 1fr; gap:0;
+  max-width:900px; margin:40px auto 0; position:relative;
+}
+.tier-card {
+  background:var(--bg-card); border:1px solid var(--border);
+  padding:32px 24px; text-align:center; position:relative;
+}
+.tier-card:first-child { border-radius:12px 0 0 12px; }
+.tier-card:last-child { border-radius:0 12px 12px 0; }
+.tier-card.tier-featured {
+  border-color:var(--accent); z-index:1;
+  transform:scale(1.04); border-radius:12px;
+  box-shadow:0 4px 24px rgba(0,0,0,0.3);
+}
+.tier-card.tier-featured::before {
+  content:'MOST POPULAR';
+  position:absolute; top:-12px; left:50%; transform:translateX(-50%);
+  background:var(--accent); color:#fff; font-size:11px; font-weight:700;
+  padding:3px 14px; border-radius:4px; letter-spacing:0.5px; white-space:nowrap;
+}
+.tier-label { font-size:12px; text-transform:uppercase; letter-spacing:1px; color:var(--text-muted); margin-bottom:8px; }
+.tier-name { font-size:20px; font-weight:700; margin-bottom:4px; }
+.tier-price-big { font-size:48px; font-weight:700; line-height:1.1; }
+.tier-price-unit { font-size:14px; color:var(--text-muted); margin-bottom:16px; }
+.tier-savings {
+  display:inline-block; background:var(--bg-tertiary); border:1px solid var(--border);
+  border-radius:4px; padding:2px 10px; font-size:12px; color:var(--green);
+  font-weight:600; margin-bottom:16px;
+}
+.tier-desc { font-size:13px; color:var(--text-secondary); margin-bottom:20px; line-height:1.6; }
+.tier-list { list-style:none; text-align:left; margin-bottom:24px; }
+.tier-list li {
+  padding:6px 0; font-size:13px; color:var(--text-secondary);
+  border-bottom:1px solid var(--border);
+  display:flex; align-items:center; gap:8px;
+}
+.tier-list li:last-child { border:none; }
+.tier-list .li-check { color:var(--green); font-weight:700; flex-shrink:0; }
+
+/* INDIVIDUAL LAYOUTS */
+.individual-section {
+  background:var(--bg-secondary); border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border); padding:48px 0;
+}
+
+.layout-browser {
+  max-width:1100px; margin:0 auto; padding:0 24px;
+}
+
+.pillar-tabs {
+  display:flex; gap:4px; margin-bottom:24px; flex-wrap:wrap;
+}
+.pillar-tab {
+  padding:8px 16px; border-radius:20px; border:1px solid var(--border);
+  background:var(--bg-card); color:var(--text-secondary); font-size:13px;
+  cursor:pointer; transition:all 0.15s; font-weight:500;
+}
+.pillar-tab:hover { border-color:var(--text-muted); }
+.pillar-tab.active { border-color:var(--accent); color:var(--accent); }
+
+.layout-grid {
+  display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));
+  gap:12px;
+}
+
+.layout-card {
+  background:var(--bg-card); border:1px solid var(--border);
+  border-radius:var(--radius); padding:16px 20px;
+  display:flex; align-items:flex-start; justify-content:space-between;
+  gap:16px; transition:border-color 0.15s;
+}
+.layout-card:hover { border-color:var(--text-muted); }
+
+.layout-info h4 { font-size:14px; font-weight:600; margin-bottom:2px; }
+.layout-info p { font-size:12px; color:var(--text-muted); line-height:1.5; }
+
+.layout-price-col {
+  display:flex; flex-direction:column; align-items:flex-end; gap:4px;
+  flex-shrink:0;
+}
+.layout-price { font-size:18px; font-weight:700; }
+
+.badge {
+  display:inline-block; padding:1px 6px; border-radius:3px;
+  font-size:10px; font-weight:600; text-transform:uppercase;
+  letter-spacing:0.5px;
+}
+.badge-prod { background:rgba(63,185,80,0.15); color:var(--green); }
+.badge-beta { background:rgba(210,153,34,0.15); color:var(--orange); }
+.badge-targeting { background:rgba(63,185,80,0.1); color:var(--spring); }
+.badge-stalking { background:rgba(210,153,34,0.1); color:var(--summer); }
+.badge-trading { background:rgba(248,81,73,0.1); color:var(--fall); }
+.badge-bmr { background:rgba(188,140,255,0.1); color:var(--purple); }
+
+/* PACK DETAIL */
+.pack-grid {
+  display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr));
+  gap:20px;
+}
+.pack-card {
+  background:var(--bg-card); border:1px solid var(--border);
+  border-radius:12px; padding:24px; position:relative;
+}
+.pack-card .pillar-stripe {
+  position:absolute; top:0; left:0; right:0; height:3px;
+  border-radius:12px 12px 0 0;
+}
+.pack-header { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:12px; }
+.pack-header h3 { font-size:18px; font-weight:600; }
+.pack-price { font-size:24px; font-weight:700; }
+.pack-savings { font-size:12px; color:var(--green); }
+.pack-desc { font-size:13px; color:var(--text-secondary); margin-bottom:16px; line-height:1.6; }
+.pack-layouts { display:flex; flex-wrap:wrap; gap:4px; margin-bottom:20px; }
+.pack-chip {
+  background:var(--bg-tertiary); border:1px solid var(--border);
+  border-radius:4px; padding:3px 8px; font-size:11px; color:var(--text-secondary);
+}
+.pack-math {
+  background:var(--bg-tertiary); border:1px solid var(--border);
+  border-radius:var(--radius); padding:10px 14px; font-size:12px;
+  color:var(--text-muted); text-align:center; margin-bottom:16px;
+}
+.pack-math .strike { text-decoration:line-through; opacity:0.6; }
+.pack-math .save { color:var(--green); font-weight:600; }
+
+/* UPGRADE PATH */
+.upgrade-bar {
+  background:var(--bg-secondary); border:1px solid var(--border);
+  border-radius:12px; padding:28px 32px; margin-top:48px;
+  display:flex; align-items:center; gap:24px;
+}
+.upgrade-bar .ub-text { flex:1; }
+.upgrade-bar h3 { font-size:16px; margin-bottom:4px; }
+.upgrade-bar p { font-size:13px; color:var(--text-secondary); }
+
+/* FULL SUITE DETAIL */
+.suite-detail {
+  background:var(--bg-card); border:1px solid var(--accent);
+  border-radius:16px; padding:40px; max-width:800px;
+  margin:0 auto; position:relative;
+}
+.suite-detail::before {
+  content:'COMPLETE PACKAGE';
+  position:absolute; top:-12px; left:32px;
+  background:var(--accent); color:#fff; font-size:11px; font-weight:700;
+  padding:3px 14px; border-radius:4px; letter-spacing:0.5px;
+}
+.suite-columns {
+  display:grid; grid-template-columns:1fr 1fr; gap:32px; margin-top:24px;
+}
+.suite-col h4 { font-size:14px; font-weight:600; margin-bottom:12px; color:var(--accent); }
+.suite-col ul { list-style:none; }
+.suite-col li {
+  padding:5px 0; font-size:13px; color:var(--text-secondary);
+  display:flex; align-items:center; gap:8px;
+}
+.suite-col .li-check { color:var(--green); font-weight:700; }
+
+/* EDGE S2 TEASER */
+.teaser {
+  background:linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+  border:1px solid var(--border); border-radius:12px;
+  padding:40px; text-align:center;
+}
+.teaser h3 { font-size:22px; margin-bottom:8px; }
+.teaser p { color:var(--text-secondary); font-size:14px; max-width:600px; margin:0 auto 24px; }
+
+footer {
+  border-top:1px solid var(--border); padding:24px;
+  text-align:center; color:var(--text-muted); font-size:12px;
+}
+
+@media (max-width:768px) {
+  .tier-hero { grid-template-columns:1fr; gap:12px; }
+  .tier-card, .tier-card:first-child, .tier-card:last-child { border-radius:12px; }
+  .tier-card.tier-featured { transform:none; }
+  .layout-grid { grid-template-columns:1fr; }
+  .suite-columns { grid-template-columns:1fr; }
+  .upgrade-bar { flex-direction:column; text-align:center; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand">LifeLongEdge</a>
+  <ul class="nav-links">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#">Start</a></li>
+    <li><a href="#" class="active">Shop</a></li>
+    <li><a href="#">Download</a></li>
+    <li><a href="#">Glossary</a></li>
+  </ul>
+  <button class="theme-toggle" onclick="document.documentElement.setAttribute('data-theme',document.documentElement.getAttribute('data-theme')==='light'?'':'light')">Theme</button>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>Fractal Edge Framework</h1>
+  <p class="subtitle">Dr. Ken Long's trading strategies for TC2000. Buy a single layout, save with a pack, or get the complete suite.</p>
+</div>
+
+<!-- THREE-TIER COMPARISON -->
+<div class="tier-hero">
+  <div class="tier-card">
+    <div class="tier-label">Start here</div>
+    <div class="tier-name">Individual Layout</div>
+    <div class="tier-price-big">$49</div>
+    <div class="tier-price-unit">per layout</div>
+    <div class="tier-desc">Pick exactly what you need. Buy one layout, try it, come back for more.</div>
+    <ul class="tier-list">
+      <li><span class="li-check">&#10003;</span> Any single layout from the catalog</li>
+      <li><span class="li-check">&#10003;</span> 12 months of updates</li>
+      <li><span class="li-check">&#10003;</span> TC2000 install link</li>
+      <li><span class="li-check">&#10003;</span> Credit toward pack or suite upgrade</li>
+    </ul>
+    <a href="#individual" class="btn" style="width:100%;">Browse Layouts</a>
+  </div>
+
+  <div class="tier-card tier-featured">
+    <div class="tier-label">Save 40%</div>
+    <div class="tier-name">Pack</div>
+    <div class="tier-price-big">$199</div>
+    <div class="tier-price-unit">per pack (5–11 layouts)</div>
+    <div class="tier-savings">Save up to $340 vs individual</div>
+    <div class="tier-desc">Curated bundles organized by trading workflow — Targeting, Stalking, Trading, or BMR.</div>
+    <ul class="tier-list">
+      <li><span class="li-check">&#10003;</span> All layouts in the pack</li>
+      <li><span class="li-check">&#10003;</span> 12 months of updates</li>
+      <li><span class="li-check">&#10003;</span> Best value per layout</li>
+      <li><span class="li-check">&#10003;</span> Credit toward full suite upgrade</li>
+    </ul>
+    <a href="#packs" class="btn btn-primary" style="width:100%;">View Packs</a>
+  </div>
+
+  <div class="tier-card">
+    <div class="tier-label">Everything</div>
+    <div class="tier-name">Full Suite</div>
+    <div class="tier-price-big">$4,999</div>
+    <div class="tier-price-unit">all 46 layouts + premium</div>
+    <div class="tier-desc">Complete Fractal Edge Framework plus personalized onboarding and priority support.</div>
+    <ul class="tier-list">
+      <li><span class="li-check">&#10003;</span> All 46 layouts (prod + beta)</li>
+      <li><span class="li-check">&#10003;</span> 12 months of updates</li>
+      <li><span class="li-check">&#10003;</span> 1:1 onboarding sessions</li>
+      <li><span class="li-check">&#10003;</span> Priority support (90 days)</li>
+      <li><span class="li-check">&#10003;</span> Weekly User Group access</li>
+    </ul>
+    <a href="#suite" class="btn" style="width:100%;">Learn More</a>
+  </div>
+</div>
+
+<!-- INDIVIDUAL LAYOUTS -->
+<div class="individual-section" id="individual">
+  <div class="layout-browser">
+    <h2 class="section-title">Individual Layouts — $49 each</h2>
+    <p class="section-subtitle">Pick the layouts that match your trading style. Every purchase counts toward a pack or suite upgrade.</p>
+
+    <div class="pillar-tabs">
+      <button class="pillar-tab active" onclick="showPillar('all',this)">All (46)</button>
+      <button class="pillar-tab" onclick="showPillar('targeting',this)">Targeting (12)</button>
+      <button class="pillar-tab" onclick="showPillar('stalking',this)">Stalking (9)</button>
+      <button class="pillar-tab" onclick="showPillar('trading',this)">Trading (16)</button>
+      <button class="pillar-tab" onclick="showPillar('bmr',this)">BMR (7)</button>
+    </div>
+
+    <div class="layout-grid" id="layoutGrid"></div>
+  </div>
+</div>
+
+<!-- PACKS -->
+<div class="section" id="packs">
+  <h2 class="section-title">Packs — Save 40%+ vs Individual</h2>
+  <p class="section-subtitle">Each pack covers one pillar of the trading workflow</p>
+
+  <div class="pack-grid">
+    <!-- TARGETING -->
+    <div class="pack-card">
+      <div class="pillar-stripe" style="background:var(--spring);"></div>
+      <div class="pack-header">
+        <h3>Targeting Pack</h3>
+        <div class="pack-price">$199</div>
+      </div>
+      <p class="pack-desc">Find the right symbols. Statistical filters for momentum, valuation extremes, overbought/oversold conditions, and seasonal turning points.</p>
+      <div class="pack-math">
+        <span class="strike">7 layouts × $49 = $343</span> &nbsp; <span class="save">You save $144</span>
+      </div>
+      <div class="pack-layouts">
+        <span class="pack-chip">Frog Box</span>
+        <span class="pack-chip">FQN</span>
+        <span class="pack-chip">RL Stretch</span>
+        <span class="pack-chip">OB RSI</span>
+        <span class="pack-chip">OS RSI</span>
+        <span class="pack-chip">MACD Seasons</span>
+        <span class="pack-chip">Max Pain</span>
+      </div>
+      <a href="#" class="btn btn-primary" style="width:100%;">Get Targeting Pack — $199</a>
+    </div>
+
+    <!-- STALKING -->
+    <div class="pack-card">
+      <div class="pillar-stripe" style="background:var(--summer);"></div>
+      <div class="pack-header">
+        <h3>Stalking Pack</h3>
+        <div class="pack-price">$199</div>
+      </div>
+      <p class="pack-desc">Know when to strike. Movers, scanners, and the Market Mosaic that alert you when targets are moving — breakouts, reversals, and Z3 events.</p>
+      <div class="pack-math">
+        <span class="strike">7 layouts × $49 = $343</span> &nbsp; <span class="save">You save $144</span>
+      </div>
+      <div class="pack-layouts">
+        <span class="pack-chip">Autoframer</span>
+        <span class="pack-chip">HF Movers</span>
+        <span class="pack-chip">ATR Movers</span>
+        <span class="pack-chip">NDX Movers</span>
+        <span class="pack-chip">Fail Gain Stat</span>
+        <span class="pack-chip">Mosaic</span>
+        <span class="pack-chip">Z3BO</span>
+      </div>
+      <a href="#" class="btn btn-primary" style="width:100%;">Get Stalking Pack — $199</a>
+    </div>
+
+    <!-- TRADING -->
+    <div class="pack-card">
+      <div class="pillar-stripe" style="background:var(--fall);"></div>
+      <div class="pack-header">
+        <h3>Trading Pack</h3>
+        <div class="pack-price">$199</div>
+      </div>
+      <p class="pack-desc">Execute with precision. Core templates, position sizing, and all four pattern scans (SSC, SFC, CD, Owl) plus PSAR signals and seasonal combinations.</p>
+      <div class="pack-math">
+        <span class="strike">11 layouts × $49 = $539</span> &nbsp; <span class="save">You save $340</span>
+      </div>
+      <div class="pack-layouts">
+        <span class="pack-chip">Main.Dark</span>
+        <span class="pack-chip">Main.Light</span>
+        <span class="pack-chip">Position Sizing</span>
+        <span class="pack-chip">SSC Scan</span>
+        <span class="pack-chip">SFC Scan</span>
+        <span class="pack-chip">CD Scan</span>
+        <span class="pack-chip">Owl Scan</span>
+        <span class="pack-chip">SSC HW</span>
+        <span class="pack-chip">SFC WS</span>
+        <span class="pack-chip">PFL</span>
+        <span class="pack-chip">PFS</span>
+      </div>
+      <a href="#" class="btn btn-primary" style="width:100%;">Get Trading Pack — $199</a>
+    </div>
+
+    <!-- BMR -->
+    <div class="pack-card">
+      <div class="pillar-stripe" style="background:var(--purple);"></div>
+      <div class="pack-header">
+        <h3>BMR Pack</h3>
+        <div class="pack-price">$199</div>
+      </div>
+      <p class="pack-desc">Passive portfolio management. Blended Monthly Rebalancing across Dow 30, sector SPDRs, global ETFs, and custom watchlists. Monthly time commitment.</p>
+      <div class="pack-math">
+        <span class="strike">7 layouts × $49 = $343</span> &nbsp; <span class="save">You save $144</span>
+      </div>
+      <div class="pack-layouts">
+        <span class="pack-chip">BMR All Sectors</span>
+        <span class="pack-chip">BMR Dow 30</span>
+        <span class="pack-chip">BMR ETF 13</span>
+        <span class="pack-chip">BMR ETF 22</span>
+        <span class="pack-chip">BMR ETF 32</span>
+        <span class="pack-chip">BMR ETF MAX</span>
+        <span class="pack-chip">BMR Sector SPDRs</span>
+      </div>
+      <a href="#" class="btn btn-primary" style="width:100%;">Get BMR Pack — $199</a>
+    </div>
+  </div>
+
+  <!-- UPGRADE BAR -->
+  <div class="upgrade-bar">
+    <div class="ub-text">
+      <h3>Every dollar counts toward an upgrade</h3>
+      <p>Bought layouts individually or as packs? When you upgrade to the next tier, you only pay the difference. A $199 Targeting Pack + $199 Stalking Pack = $398 credit toward the $4,999 Full Suite.</p>
+    </div>
+    <a href="#suite" class="btn btn-primary" style="white-space:nowrap;">View Full Suite</a>
+  </div>
+</div>
+
+<!-- FULL SUITE -->
+<div class="section" id="suite">
+  <h2 class="section-title">Full Suite</h2>
+  <p class="section-subtitle">The complete Fractal Edge Framework with premium experience</p>
+
+  <div class="suite-detail">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:12px;">
+      <div>
+        <div style="font-size:36px;font-weight:700;">$4,999</div>
+        <div style="color:var(--text-muted);font-size:14px;">One-time purchase · 12 months updates</div>
+      </div>
+      <a href="#" class="btn btn-primary" style="padding:14px 32px;font-size:16px;">Purchase Full Suite</a>
+    </div>
+
+    <div class="suite-columns">
+      <div class="suite-col">
+        <h4>Software</h4>
+        <ul>
+          <li><span class="li-check">&#10003;</span> All 30 production layouts</li>
+          <li><span class="li-check">&#10003;</span> All 16 beta layouts</li>
+          <li><span class="li-check">&#10003;</span> All 4 packs (Targeting + Stalking + Trading + BMR)</li>
+          <li><span class="li-check">&#10003;</span> Dark and light mode templates</li>
+          <li><span class="li-check">&#10003;</span> New layouts released during update period</li>
+          <li><span class="li-check">&#10003;</span> 12 months of fixes and improvements</li>
+        </ul>
+      </div>
+      <div class="suite-col">
+        <h4>Premium Experience</h4>
+        <ul>
+          <li><span class="li-check">&#10003;</span> Personalized 1:1 onboarding sessions</li>
+          <li><span class="li-check">&#10003;</span> TC2000 setup and configuration help</li>
+          <li><span class="li-check">&#10003;</span> Priority support for 90 days</li>
+          <li><span class="li-check">&#10003;</span> Weekly User Group access included</li>
+          <li><span class="li-check">&#10003;</span> Direct access to the team</li>
+          <li><span class="li-check">&#10003;</span> Upgrade credit: prior purchases deducted</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="background:var(--bg-tertiary);border:1px solid var(--border);border-radius:var(--radius);padding:14px 20px;margin-top:24px;font-size:13px;color:var(--text-secondary);text-align:center;">
+      Dr. Long subscribers: use <code style="color:var(--green);font-weight:600;">FEFLAUNCHPRO</code> for 20% off &nbsp;·&nbsp;
+      KL-Bundle owners: use <code style="color:var(--green);font-weight:600;">KLBUNDLEOWNER</code> for $500 off
+    </div>
+  </div>
+</div>
+
+<!-- RENEWALS -->
+<div class="section">
+  <h2 class="section-title">Renewals</h2>
+  <p class="section-subtitle">Keep your layouts current</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:600px;">
+    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-align:center;">
+      <div style="font-size:14px;font-weight:600;margin-bottom:4px;">Individual / Pack</div>
+      <div style="font-size:24px;font-weight:700;">$99</div>
+      <div style="font-size:12px;color:var(--text-muted);">/year per pack</div>
+    </div>
+    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-align:center;">
+      <div style="font-size:14px;font-weight:600;margin-bottom:4px;">Full Suite</div>
+      <div style="font-size:24px;font-weight:700;">$999</div>
+      <div style="font-size:12px;color:var(--text-muted);">/year</div>
+    </div>
+  </div>
+</div>
+
+<!-- EDGE S2 TEASER -->
+<div class="section">
+  <div class="teaser">
+    <h3>Coming Soon: Edge S2 Platform</h3>
+    <p>Interactive analytics, AI-powered trade review, and personalized coaching — powered by Dr. Ken Long's methodology. Full Suite owners get early access.</p>
+    <a href="#" class="btn" style="width:auto;display:inline-flex;">Join Waitlist</a>
+  </div>
+</div>
+
+<!-- ADD-ONS -->
+<div class="section">
+  <h2 class="section-title">Add-ons</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:700px;">
+    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;">
+      <div style="font-size:15px;font-weight:600;margin-bottom:4px;">TC2000 User Group Weekly Insights</div>
+      <div style="font-size:13px;color:var(--text-secondary);margin-bottom:8px;">Live weekly sessions with fellow traders</div>
+      <span class="badge badge-targeting">Meetup</span>
+    </div>
+    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;">
+      <div style="font-size:15px;font-weight:600;margin-bottom:4px;">TC2000 PCF Proficiency</div>
+      <div style="font-size:13px;color:var(--text-secondary);margin-bottom:8px;">Build your own custom scans and indicators</div>
+      <span class="badge" style="background:rgba(188,140,255,0.1);color:var(--purple);">Self-paced</span>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div>LifeLongEdge · lifelongedge@gmail.com · California & Massachusetts</div>
+  <div style="margin-top:6px;">Not investment advice. Past results not indicative of future results. See full disclaimer.</div>
+</footer>
+
+<script>
+const LAYOUTS = [
+  // Targeting (7 prod + 5 beta = 12)
+  {name:"Frog Box",desc:"Frog box, hybrid frog box, long term frog box",pillar:"targeting",status:"prod"},
+  {name:"FQN",desc:"Frog Quality Number — directional measure for intraday",pillar:"targeting",status:"prod"},
+  {name:"RL Stretch",desc:"Z-score of RL10 vs RL270 — price vs fair value",pillar:"targeting",status:"prod"},
+  {name:"OB RSI",desc:"Overbought RSI with PSAR flip for short entry",pillar:"targeting",status:"prod"},
+  {name:"OS RSI",desc:"Oversold RSI with PSAR flip for long entry",pillar:"targeting",status:"prod"},
+  {name:"MACD Seasons",desc:"Filter symbols entering seasonal turning points",pillar:"targeting",status:"prod"},
+  {name:"Max Pain",desc:"Symbols at maximum decline from 10-day high",pillar:"targeting",status:"prod"},
+  {name:"MACD Zscore",desc:"MACD in z-score format for mean reversion",pillar:"targeting",status:"beta"},
+  {name:"AlphaStat",desc:"Symbol vs market regression slope comparison",pillar:"targeting",status:"beta"},
+  {name:"SlopeStat",desc:"30-period regression slope with 180-day lookback",pillar:"targeting",status:"beta"},
+  {name:"SlopeStat.Scans",desc:"Scans for SlopeStat turning points",pillar:"targeting",status:"beta"},
+  {name:"SlopeZs",desc:"RL10/30, SMA10/30 slopes with z-scores",pillar:"targeting",status:"beta"},
+  // Stalking (7 prod + 2 beta = 9)
+  {name:"Autoframer",desc:"Mechanical risk-to-reward ranking",pillar:"stalking",status:"prod"},
+  {name:"HF Movers",desc:"Hybrid Frog Box moves from the open",pillar:"stalking",status:"prod"},
+  {name:"ATR Movers",desc:"ATR moves in the last 5 bars",pillar:"stalking",status:"prod"},
+  {name:"NDX Movers",desc:"Moves on daily high/low values",pillar:"stalking",status:"prod"},
+  {name:"Fail Gain Stat",desc:"FailStat and GainStat probability",pillar:"stalking",status:"prod"},
+  {name:"Mosaic",desc:"Market state — 13 concepts in Dr Long's 9-box model",pillar:"stalking",status:"prod"},
+  {name:"Z3BO",desc:"Z3 Breakout on selected time frame",pillar:"stalking",status:"prod"},
+  {name:"FS/GS Scan",desc:"FailStat/GainStat target hit filter",pillar:"stalking",status:"beta"},
+  {name:"Market Trend",desc:"Bull/bear classification via RL30 + SMA 30",pillar:"stalking",status:"beta"},
+  // Trading (11 prod + 5 beta = 16)
+  {name:"Main.Dark",desc:"Core template — RLs, Dragon, BB, Zs, PSARs (dark)",pillar:"trading",status:"prod"},
+  {name:"Main.Light",desc:"Core template — RLs, Dragon, BB, Zs, PSARs (light)",pillar:"trading",status:"prod"},
+  {name:"Position Sizing",desc:"Share calculation from risk box and risk dollars",pillar:"trading",status:"prod"},
+  {name:"SSC Scan",desc:"Supported Spring Crossing — bullish reversal",pillar:"trading",status:"prod"},
+  {name:"SFC Scan",desc:"Supported Fall Crossing — bearish reversal",pillar:"trading",status:"prod"},
+  {name:"CD Scan",desc:"Collapsing Dragon — failing upside reversal",pillar:"trading",status:"prod"},
+  {name:"Owl Scan",desc:"Owl pattern — bullish breakout",pillar:"trading",status:"prod"},
+  {name:"SSC HW Scan",desc:"SSC + Harsh Winter MACD season",pillar:"trading",status:"prod"},
+  {name:"SFC WS Scan",desc:"SFC + Warm Summer MACD season",pillar:"trading",status:"prod"},
+  {name:"PFL",desc:"PSAR Flipped to Long — entry signal",pillar:"trading",status:"prod"},
+  {name:"PFS",desc:"PSAR Flipped to Short — entry signal",pillar:"trading",status:"prod"},
+  {name:"Main.8c.Dark",desc:"8-color template — season extremes visible (dark)",pillar:"trading",status:"beta"},
+  {name:"Main.8c.Light",desc:"8-color template — season extremes visible (light)",pillar:"trading",status:"beta"},
+  {name:"K2L-K2S Scan",desc:"K2L / K2S entry scan",pillar:"trading",status:"beta"},
+  {name:"SniperDaily",desc:"5 Sniper setups for swing (dark + light)",pillar:"trading",status:"beta"},
+  {name:"SniperITD",desc:"5 Sniper setups for intraday (dark + light)",pillar:"trading",status:"beta"},
+  // BMR (7 prod)
+  {name:"BMR All Sectors",desc:"Any sector ETF + strongest/weakest component",pillar:"bmr",status:"prod"},
+  {name:"BMR Dow 30",desc:"Dow 30 components rebalancing",pillar:"bmr",status:"prod"},
+  {name:"BMR ETF 13",desc:"13 global region ETFs",pillar:"bmr",status:"prod"},
+  {name:"BMR ETF 22",desc:"22 ETFs — regions + S&P sectors",pillar:"bmr",status:"prod"},
+  {name:"BMR ETF 32",desc:"32 ETFs — multi-asset class",pillar:"bmr",status:"prod"},
+  {name:"BMR ETF MAX",desc:"Any ETF in TC2000",pillar:"bmr",status:"prod"},
+  {name:"BMR Sector SPDRs",desc:"Sector SPDR ETFs",pillar:"bmr",status:"prod"},
+];
+
+function renderGrid(filter) {
+  const grid = document.getElementById('layoutGrid');
+  const items = filter === 'all' ? LAYOUTS : LAYOUTS.filter(l => l.pillar === filter);
+  grid.innerHTML = items.map(l => `
+    <div class="layout-card" data-pillar="${l.pillar}">
+      <div class="layout-info">
+        <h4>${l.name}</h4>
+        <p>${l.desc}</p>
+      </div>
+      <div class="layout-price-col">
+        <div class="layout-price">$49</div>
+        <span class="badge badge-${l.status}">${l.status === 'prod' ? 'Prod' : 'Beta'}</span>
+        <a href="#" class="btn btn-sm btn-primary" style="margin-top:4px;">Add</a>
+      </div>
+    </div>
+  `).join('');
+}
+
+function showPillar(pillar, btn) {
+  document.querySelectorAll('.pillar-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  renderGrid(pillar);
+}
+
+renderGrid('all');
+</script>
+</body>
+</html>
