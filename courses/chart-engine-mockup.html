@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chart Engine — What We'd Build</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  background: #0d1117;
+  color: #e6edf3;
+  line-height: 1.6;
+  padding: 40px 24px;
+}
+.page { max-width: 900px; margin: 0 auto; }
+h1 { font-size: 32px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 8px; }
+.subtitle { font-size: 16px; color: #8b949e; margin-bottom: 40px; }
+h2 { font-size: 20px; font-weight: 700; margin: 40px 0 12px; color: #d4940a; }
+h3 { font-size: 16px; font-weight: 700; margin: 24px 0 8px; color: #58a6ff; }
+p { font-size: 15px; color: #8b949e; margin-bottom: 12px; }
+code {
+  background: #161b22;
+  border: 1px solid #21262d;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 13px;
+  color: #e6edf3;
+}
+pre {
+  background: #161b22;
+  border: 1px solid #21262d;
+  border-radius: 8px;
+  padding: 16px;
+  font-size: 13px;
+  color: #e6edf3;
+  overflow-x: auto;
+  margin: 12px 0 20px;
+  line-height: 1.5;
+}
+
+/* Chart mockups */
+.chart-mockup {
+  background: #161b22;
+  border: 1px solid #21262d;
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 16px 0 24px;
+}
+.chart-header {
+  padding: 12px 16px;
+  border-bottom: 1px solid #21262d;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+}
+.chart-header .sym { font-weight: 700; color: #e6edf3; font-size: 15px; }
+.chart-header .tf { color: #8b949e; }
+.chart-header .season-badge {
+  padding: 2px 10px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 700;
+}
+.season-spring { background: rgba(210,153,34,0.15); color: #d29922; }
+.season-summer { background: rgba(63,185,80,0.15); color: #3fb950; }
+.season-fall { background: rgba(88,166,255,0.15); color: #58a6ff; }
+.season-winter { background: rgba(248,81,73,0.15); color: #f85149; }
+
+.chart-body {
+  padding: 20px;
+  min-height: 280px;
+  position: relative;
+}
+
+/* Simulated candlestick chart using CSS */
+.candle-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 200px;
+  padding: 0 10px;
+  position: relative;
+}
+.candle {
+  width: 12px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.candle .body {
+  width: 10px;
+  border-radius: 1px;
+  min-height: 4px;
+}
+.candle .wick {
+  width: 1px;
+  min-height: 2px;
+}
+.candle.green .body { background: #3fb950; }
+.candle.green .wick { background: #3fb950; }
+.candle.red .body { background: #f85149; }
+.candle.red .wick { background: #f85149; }
+.candle.doji .body { background: #8b949e; height: 2px !important; }
+.candle.doji .wick { background: #8b949e; }
+
+/* Overlays */
+.chart-overlay {
+  position: absolute;
+  left: 0; right: 0;
+  pointer-events: none;
+}
+.zone-overlay {
+  position: absolute;
+  left: 0; right: 0;
+  opacity: 0.08;
+  border-radius: 4px;
+}
+.annotation {
+  position: absolute;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+.annotation.setup { background: rgba(210,153,34,0.2); color: #d29922; border: 1px solid rgba(210,153,34,0.3); }
+.annotation.signal { background: rgba(63,185,80,0.2); color: #3fb950; border: 1px solid rgba(63,185,80,0.3); }
+.annotation.entry { background: rgba(88,166,255,0.2); color: #58a6ff; border: 1px solid rgba(88,166,255,0.3); }
+.annotation.stop { background: rgba(248,81,73,0.2); color: #f85149; border: 1px solid rgba(248,81,73,0.3); }
+.annotation.target { background: rgba(63,185,80,0.2); color: #3fb950; border: 1px solid rgba(63,185,80,0.3); }
+
+/* Indicator panel */
+.indicator-panel {
+  padding: 12px 20px;
+  border-top: 1px solid #21262d;
+  height: 80px;
+  position: relative;
+}
+.indicator-label {
+  font-size: 11px;
+  color: #6e7681;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.macd-line {
+  position: absolute;
+  height: 2px;
+  border-radius: 1px;
+}
+.zero-line {
+  position: absolute;
+  left: 20px; right: 20px;
+  height: 1px;
+  background: #21262d;
+  top: 50px;
+}
+.river-band {
+  position: absolute;
+  left: 20px; right: 20px;
+  background: rgba(248,81,73,0.08);
+  border-top: 1px dashed rgba(248,81,73,0.3);
+  border-bottom: 1px dashed rgba(248,81,73,0.3);
+}
+
+/* Quiz overlay on chart */
+.chart-quiz {
+  padding: 16px 20px;
+  border-top: 1px solid #21262d;
+  background: rgba(0,0,0,0.3);
+}
+.chart-quiz .question {
+  font-size: 14px;
+  font-weight: 700;
+  color: #e6edf3;
+  margin-bottom: 10px;
+}
+.chart-quiz .options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.chart-quiz button {
+  padding: 8px 16px;
+  background: #21262d;
+  border: 1px solid #30363d;
+  color: #e6edf3;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.chart-quiz button:hover { background: #30363d; }
+.chart-quiz button.correct { background: rgba(63,185,80,0.2); border-color: #3fb950; color: #3fb950; }
+.chart-quiz button.wrong { background: rgba(248,81,73,0.2); border-color: #f85149; color: #f85149; }
+
+/* API spec */
+.api-block {
+  background: #161b22;
+  border: 1px solid #21262d;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 16px 0;
+}
+.api-block .endpoint {
+  font-size: 14px;
+  font-weight: 700;
+  color: #3fb950;
+  margin-bottom: 4px;
+}
+.api-block .desc {
+  font-size: 13px;
+  color: #8b949e;
+  margin-bottom: 12px;
+}
+
+/* Interactive elements */
+.playback-controls {
+  padding: 12px 20px;
+  border-top: 1px solid #21262d;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.playback-controls button {
+  padding: 6px 14px;
+  background: #21262d;
+  border: 1px solid #30363d;
+  color: #e6edf3;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.playback-controls .slider {
+  flex: 1;
+  height: 4px;
+  background: #21262d;
+  border-radius: 2px;
+  position: relative;
+}
+.playback-controls .slider .fill {
+  height: 100%;
+  background: #58a6ff;
+  border-radius: 2px;
+  width: 35%;
+}
+.playback-controls .time { font-size: 12px; color: #6e7681; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<h1>Chart Engine — Design Mockup</h1>
+<p class="subtitle">What we'd ask a chart rendering API to produce for the lead magnet courses, and what the output would look like.</p>
+
+<!-- ============================================ -->
+<h2>1. Season-Colored Candlestick Chart</h2>
+<p>The most basic and highest-impact use: a candlestick chart where the background color shifts based on MACD Season. Students immediately see what "trading in the right season" looks like.</p>
+
+<h3>API Request</h3>
+<pre>{
+  "symbol": "SPY",
+  "timeframe": "daily",
+  "range": "2024-01-15 to 2024-04-15",
+  "overlays": ["rl10", "rl30"],
+  "indicators": ["macd_seasons"],
+  "annotations": {
+    "season_zones": true,       // color background by season
+    "season_transitions": true  // mark transition points
+  },
+  "style": "dark"
+}</pre>
+
+<h3>Output</h3>
+<div class="chart-mockup">
+  <div class="chart-header">
+    <span class="sym">SPY</span>
+    <span class="tf">Daily &middot; Jan 15 – Apr 15, 2024</span>
+    <span class="season-badge season-summer">Current: Summer</span>
+  </div>
+  <div class="chart-body">
+    <!-- Season-colored zones behind candles -->
+    <div class="zone-overlay" style="background:#f85149; top:0; bottom:50%; left:0; width:22%;"></div>
+    <div class="zone-overlay" style="background:#d29922; top:20%; bottom:30%; left:22%; width:20%;"></div>
+    <div class="zone-overlay" style="background:#3fb950; top:0; bottom:0; left:42%; width:40%;"></div>
+    <div class="zone-overlay" style="background:#58a6ff; top:0; bottom:40%; left:82%; width:18%;"></div>
+
+    <!-- Season labels -->
+    <div class="annotation" style="top:8px; left:4%; background:rgba(248,81,73,0.15); color:#f85149; border:1px solid rgba(248,81,73,0.3); font-size:10px;">WINTER</div>
+    <div class="annotation" style="top:8px; left:26%; background:rgba(210,153,34,0.15); color:#d29922; border:1px solid rgba(210,153,34,0.3); font-size:10px;">SPRING</div>
+    <div class="annotation" style="top:8px; left:55%; background:rgba(63,185,80,0.15); color:#3fb950; border:1px solid rgba(63,185,80,0.3); font-size:10px;">SUMMER</div>
+    <div class="annotation" style="top:8px; left:85%; background:rgba(88,166,255,0.15); color:#58a6ff; border:1px solid rgba(88,166,255,0.3); font-size:10px;">FALL</div>
+
+    <!-- Transition arrows -->
+    <div class="annotation signal" style="top:35%; left:20%;">SSC Signal &rarr;</div>
+    <div class="annotation" style="top:55%; left:80%; background:rgba(88,166,255,0.15); color:#58a6ff; border:1px solid rgba(88,166,255,0.3);">&larr; Harvest</div>
+
+    <!-- Simulated candles -->
+    <div class="candle-chart" style="position:absolute; bottom:20px; left:20px; right:20px;">
+      <div class="candle red" style="height:90px"><div class="wick" style="height:15px"></div><div class="body" style="height:30px"></div><div class="wick" style="height:10px"></div></div>
+      <div class="candle red" style="height:85px"><div class="wick" style="height:10px"></div><div class="body" style="height:35px"></div><div class="wick" style="height:8px"></div></div>
+      <div class="candle red" style="height:70px"><div class="wick" style="height:12px"></div><div class="body" style="height:25px"></div><div class="wick" style="height:15px"></div></div>
+      <div class="candle red" style="height:60px"><div class="wick" style="height:8px"></div><div class="body" style="height:20px"></div><div class="wick" style="height:20px"></div></div>
+      <div class="candle doji" style="height:55px"><div class="wick" style="height:20px"></div><div class="body"></div><div class="wick" style="height:20px"></div></div>
+      <div class="candle green" style="height:60px"><div class="wick" style="height:10px"></div><div class="body" style="height:15px"></div><div class="wick" style="height:5px"></div></div>
+      <div class="candle green" style="height:70px"><div class="wick" style="height:8px"></div><div class="body" style="height:20px"></div><div class="wick" style="height:5px"></div></div>
+      <div class="candle green" style="height:80px"><div class="wick" style="height:5px"></div><div class="body" style="height:25px"></div><div class="wick" style="height:3px"></div></div>
+      <div class="candle green" style="height:90px"><div class="wick" style="height:8px"></div><div class="body" style="height:30px"></div><div class="wick" style="height:5px"></div></div>
+      <div class="candle green" style="height:100px"><div class="wick" style="height:5px"></div><div class="body" style="height:22px"></div><div class="wick" style="height:3px"></div></div>
+      <div class="candle green" style="height:110px"><div class="wick" style="height:8px"></div><div class="body" style="height:18px"></div><div class="wick" style="height:5px"></div></div>
+      <div class="candle red" style="height:105px"><div class="wick" style="height:5px"></div><div class="body" style="height:12px"></div><div class="wick" style="height:8px"></div></div>
+      <div class="candle green" style="height:115px"><div class="wick" style="height:5px"></div><div class="body" style="height:15px"></div><div class="wick" style="height:3px"></div></div>
+      <div class="candle green" style="height:125px"><div class="wick" style="height:3px"></div><div class="body" style="height:20px"></div><div class="wick" style="height:3px"></div></div>
+      <div class="candle green" style="height:135px"><div class="wick" style="height:5px"></div><div class="body" style="height:18px"></div><div class="wick" style="height:2px"></div></div>
+      <div class="candle green" style="height:140px"><div class="wick" style="height:3px"></div><div class="body" style="height:12px"></div><div class="wick" style="height:3px"></div></div>
+      <div class="candle red" style="height:135px"><div class="wick" style="height:3px"></div><div class="body" style="height:10px"></div><div class="wick" style="height:8px"></div></div>
+      <div class="candle red" style="height:130px"><div class="wick" style="height:5px"></div><div class="body" style="height:15px"></div><div class="wick" style="height:5px"></div></div>
+      <div class="candle red" style="height:120px"><div class="wick" style="height:3px"></div><div class="body" style="height:12px"></div><div class="wick" style="height:8px"></div></div>
+    </div>
+  </div>
+  <div class="indicator-panel">
+    <div class="indicator-label">MACD Seasons (RL10/RL30)</div>
+    <div class="zero-line"></div>
+    <div class="river-band" style="top:42px; height:16px;"></div>
+  </div>
+</div>
+
+<p><strong>Course use:</strong> Module 1 of "Your First Edge" — instead of describing what Winter→Spring→Summer looks like in text, the student sees it. The season zones make the concept immediately intuitive.</p>
+
+<!-- ============================================ -->
+<h2>2. Interactive "Identify the Setup" Quiz</h2>
+<p>A chart frozen at a decision point. The student must identify the setup from the price action alone. This replaces our current text-based quizzes with visual pattern recognition — the actual skill we're teaching.</p>
+
+<h3>API Request</h3>
+<pre>{
+  "symbol": "KO",
+  "timeframe": "5min",
+  "range": "2024-03-20 09:30 to 11:00",
+  "overlays": ["vwap"],
+  "annotations": {
+    "freeze_at": "2024-03-20 10:15",  // hide candles after this
+    "highlight_candle": -1,            // highlight the last visible candle
+    "or5_range": true                  // show opening range box
+  },
+  "quiz": {
+    "question": "What setup is forming at the highlighted candle?",
+    "options": ["Morning Hook", "OR5 Breakout", "The Shelf (SQC)", "Double Bottom"],
+    "correct": 0,
+    "explanation": "KO sold off from the open, found support at VWAP, and printed a hammer candle. The hook upward is forming. Wait for a green candle closing above the hammer high to confirm."
+  }
+}</pre>
+
+<h3>Output</h3>
+<div class="chart-mockup">
+  <div class="chart-header">
+    <span class="sym">KO</span>
+    <span class="tf">5-min &middot; Mar 20, 2024 &middot; 9:30 – 10:15 AM</span>
+    <span style="margin-left:auto; font-size:12px; color:#6e7681;">Frozen at 10:15</span>
+  </div>
+  <div class="chart-body" style="min-height:220px;">
+    <!-- OR5 range box -->
+    <div style="position:absolute; top:20px; left:20px; width:60px; height:60px; border:1px dashed #58a6ff; border-radius:4px; opacity:0.4;"></div>
+    <div style="position:absolute; top:12px; left:22px; font-size:10px; color:#58a6ff; opacity:0.6;">OR5</div>
+
+    <!-- VWAP line -->
+    <div style="position:absolute; top:120px; left:20px; right:20px; height:1px; background:#d29922; opacity:0.4;"></div>
+    <div style="position:absolute; top:110px; right:25px; font-size:10px; color:#d29922; opacity:0.6;">VWAP</div>
+
+    <!-- Simulated 5-min candles: open high, sell off, hammer -->
+    <div class="candle-chart" style="position:absolute; bottom:20px; left:20px; right:120px;">
+      <div class="candle green" style="height:100px"><div class="wick" style="height:10px"></div><div class="body" style="height:25px"></div><div class="wick" style="height:5px"></div></div>
+      <div class="candle red" style="height:90px"><div class="wick" style="height:5px"></div><div class="body" style="height:20px"></div><div class="wick" style="height:10px"></div></div>
+      <div class="candle red" style="height:75px"><div class="wick" style="height:8px"></div><div class="body" style="height:25px"></div><div class="wick" style="height:5px"></div></div>
+      <div class="candle red" style="height:60px"><div class="wick" style="height:5px"></div><div class="body" style="height:30px"></div><div class="wick" style="height:8px"></div></div>
+      <div class="candle red" style="height:45px"><div class="wick" style="height:3px"></div><div class="body" style="height:20px"></div><div class="wick" style="height:12px"></div></div>
+      <div class="candle red" style="height:35px"><div class="wick" style="height:5px"></div><div class="body" style="height:15px"></div><div class="wick" style="height:18px"></div></div>
+      <div class="candle doji" style="height:30px"><div class="wick" style="height:8px"></div><div class="body"></div><div class="wick" style="height:25px"></div></div>
+    </div>
+
+    <!-- Highlight last candle (hammer) -->
+    <div style="position:absolute; bottom:15px; left:190px; width:20px; height:65px; border:2px solid #d29922; border-radius:4px; opacity:0.6;"></div>
+    <div class="annotation setup" style="bottom:80px; left:170px;">?</div>
+
+    <!-- "Hidden" future candles hint -->
+    <div style="position:absolute; bottom:20px; right:20px; width:100px; height:160px; background:repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(33,38,45,0.5) 5px, rgba(33,38,45,0.5) 10px); border-radius:4px;"></div>
+    <div style="position:absolute; bottom:90px; right:30px; font-size:11px; color:#6e7681;">What happens next?</div>
+  </div>
+
+  <div class="chart-quiz">
+    <div class="question">What setup is forming at the highlighted candle?</div>
+    <div class="options">
+      <button onclick="this.classList.add('correct')">Morning Hook</button>
+      <button onclick="this.classList.add('wrong')">OR5 Breakout</button>
+      <button onclick="this.classList.add('wrong')">SQC / Congestion Zone</button>
+      <button onclick="this.classList.add('wrong')">Double Bottom</button>
+    </div>
+  </div>
+</div>
+
+<p><strong>Course use:</strong> Every quiz in all 3 courses. Instead of "The MACD signal line is below zero and falling — what season is this?" (text), students see an actual chart and must read the pattern. This is the skill transfer that text quizzes can't provide.</p>
+
+<!-- ============================================ -->
+<h2>3. Trade Frame Overlay — Entry / Stop / Target</h2>
+<p>Show a complete trade frame on the chart: entry level, initial stop, 1R/2R/3R targets, and the Rule of Four management zones. Students see exactly how a framed trade looks before execution.</p>
+
+<h3>API Request</h3>
+<pre>{
+  "symbol": "NVDA",
+  "timeframe": "5min",
+  "range": "2024-03-20 09:30 to 11:30",
+  "overlays": ["rl10"],
+  "trade_frame": {
+    "entry": 882.50,
+    "stop": 880.50,
+    "targets": [884.50, 886.50, 888.50],  // +1R, +2R, +3R
+    "labels": ["No Lose (+1R)", "Lock +1.5R (+2R)", "Target (+3R)"],
+    "fill_zones": true    // shade the R-zones
+  },
+  "annotations": {
+    "setup_label": "Shelf breakout",
+    "signal_label": "Green candle above $882.45",
+    "entry_label": "Entry: $882.50"
+  }
+}</pre>
+
+<h3>Output</h3>
+<div class="chart-mockup">
+  <div class="chart-header">
+    <span class="sym">NVDA</span>
+    <span class="tf">5-min &middot; Mar 20, 2024</span>
+    <span class="season-badge season-summer">Summer</span>
+    <span style="margin-left:auto; font-size:12px; color:#8b949e;">Rule of Four</span>
+  </div>
+  <div class="chart-body" style="min-height:260px;">
+    <!-- R-zone fills -->
+    <div style="position:absolute; left:40%; right:20px; top:15px; height:40px; background:rgba(63,185,80,0.06); border-top:1px dashed rgba(63,185,80,0.3);"></div>
+    <div style="position:absolute; left:40%; right:20px; top:55px; height:40px; background:rgba(63,185,80,0.04); border-top:1px dashed rgba(63,185,80,0.2);"></div>
+    <div style="position:absolute; left:40%; right:20px; top:95px; height:40px; background:rgba(88,166,255,0.04); border-top:1px dashed rgba(88,166,255,0.2);"></div>
+    <div style="position:absolute; left:40%; right:20px; top:175px; height:40px; background:rgba(248,81,73,0.06); border-bottom:1px dashed rgba(248,81,73,0.3);"></div>
+
+    <!-- R-zone labels -->
+    <div class="annotation target" style="top:20px; right:25px;">+3R Target ($888.50)</div>
+    <div class="annotation" style="top:60px; right:25px; background:rgba(63,185,80,0.15); color:#3fb950; border:1px solid rgba(63,185,80,0.3);">+2R Lock 1.5R ($886.50)</div>
+    <div class="annotation" style="top:100px; right:25px; background:rgba(88,166,255,0.15); color:#58a6ff; border:1px solid rgba(88,166,255,0.3);">+1R No Lose ($884.50)</div>
+
+    <!-- Entry line -->
+    <div style="position:absolute; left:35%; right:20px; top:135px; height:2px; background:#58a6ff;"></div>
+    <div class="annotation entry" style="top:125px; left:36%;">Entry: $882.50</div>
+
+    <!-- Stop line -->
+    <div style="position:absolute; left:35%; right:20px; top:180px; height:2px; background:#f85149;"></div>
+    <div class="annotation stop" style="top:183px; left:36%;">Stop: $880.50 (-1R)</div>
+
+    <!-- Setup/Signal annotations on candles -->
+    <div class="annotation setup" style="top:160px; left:15%;">Setup: SQC</div>
+    <div class="annotation signal" style="top:130px; left:28%;">Signal: breakout</div>
+  </div>
+</div>
+
+<p><strong>Course use:</strong> Module 2 of "Your First Edge" and Module 1 of "Intraday Precision." Students see the complete frame — entry, stop, and all three R-level targets — before answering the scenario question. This makes the Rule of Four concrete.</p>
+
+<!-- ============================================ -->
+<h2>4. Playback Mode — Watch the Trade Unfold</h2>
+<p>A chart with a timeline slider. The student can scrub forward bar-by-bar and watch a setup form, trigger, and resolve. At each step, annotations explain what's happening and what the trader should be thinking.</p>
+
+<h3>API Request</h3>
+<pre>{
+  "symbol": "CLF",
+  "timeframe": "5min",
+  "range": "2024-09-08 09:30 to 13:00",
+  "mode": "playback",
+  "overlays": ["rl10", "vwap"],
+  "trades": [
+    {"entry": 26.40, "stop": 26.30, "exit": 26.80, "result": "+2R", "label": "Trade 1"},
+    {"entry": 26.72, "stop": 26.62, "exit": 26.62, "result": "-1R", "label": "Trade 2"},
+    {"entry": 26.53, "stop": 26.48, "exit": 26.68, "result": "+3R", "label": "Trade 4"}
+  ],
+  "commentary": [
+    {"bar": 5,  "text": "Big sell in first 15 min. Cascade of red candles. Don't buy yet."},
+    {"bar": 10, "text": "Doji forming at support. Possible turning point. Stalk."},
+    {"bar": 11, "text": "Green candle above doji high. SIGNAL. Enter $0.01 above."},
+    {"bar": 15, "text": "+1R reached. Move stop to entry. No lose."},
+    {"bar": 20, "text": "+2R. Lock in +1.5R. 'Settle for two.'"},
+    {"bar": 30, "text": "Lunch approaching. Tighten stop. Cash half position."}
+  ]
+}</pre>
+
+<h3>Output</h3>
+<div class="chart-mockup">
+  <div class="chart-header">
+    <span class="sym">CLF</span>
+    <span class="tf">5-min &middot; Sep 8, 2024</span>
+    <span style="margin-left:auto; font-size:12px;">Trade 1: <span style="color:#3fb950">+2R</span> &middot; Trade 2: <span style="color:#f85149">-1R</span> &middot; Trade 4: <span style="color:#3fb950">+3R</span></span>
+  </div>
+  <div class="chart-body" style="min-height:200px;">
+    <!-- Commentary bubble -->
+    <div style="position:absolute; top:15px; left:20px; right:20px; background:rgba(0,0,0,0.4); border-radius:8px; padding:12px 16px;">
+      <div style="font-size:13px; color:#d29922; font-weight:700; margin-bottom:4px;">Bar 11 of 45</div>
+      <div style="font-size:14px; color:#e6edf3;">Green candle above doji high. <strong>SIGNAL.</strong> Enter $0.01 above at $26.41. Stop at $26.31. This is your 1R.</div>
+    </div>
+
+    <!-- Simplified candle area -->
+    <div class="candle-chart" style="position:absolute; bottom:20px; left:20px; right:20px;">
+      <div class="candle green" style="height:80px"><div class="wick" style="height:8px"></div><div class="body" style="height:20px"></div><div class="wick" style="height:5px"></div></div>
+      <div class="candle red" style="height:70px"><div class="wick" style="height:5px"></div><div class="body" style="height:25px"></div><div class="wick" style="height:8px"></div></div>
+      <div class="candle red" style="height:55px"><div class="wick" style="height:8px"></div><div class="body" style="height:20px"></div><div class="wick" style="height:5px"></div></div>
+      <div class="candle red" style="height:42px"><div class="wick" style="height:5px"></div><div class="body" style="height:18px"></div><div class="wick" style="height:10px"></div></div>
+      <div class="candle red" style="height:35px"><div class="wick" style="height:3px"></div><div class="body" style="height:12px"></div><div class="wick" style="height:15px"></div></div>
+      <div class="candle doji" style="height:30px; opacity:0.6"><div class="wick" style="height:12px"></div><div class="body"></div><div class="wick" style="height:18px"></div></div>
+      <div class="candle green" style="height:38px; border:2px solid #3fb950; border-radius:3px;"><div class="wick" style="height:5px"></div><div class="body" style="height:15px"></div><div class="wick" style="height:3px"></div></div>
+    </div>
+  </div>
+
+  <div class="playback-controls">
+    <button>&#9664;&#9664;</button>
+    <button>&#9664;</button>
+    <button style="background:#58a6ff; color:#000;">&#9654;</button>
+    <button>&#9654;&#9654;</button>
+    <div class="slider"><div class="fill" style="width:24%;"></div></div>
+    <div class="time">Bar 11 / 45</div>
+  </div>
+</div>
+
+<p><strong>Course use:</strong> The RFA CLF example from the book, brought to life. Students scrub through the trade bar-by-bar, reading Dr. Long's commentary at each step. This is the "wow" experience — it's the closest thing to sitting in the coaching session.</p>
+
+<!-- ============================================ -->
+<h2>5. Equity Curve Comparison — Sizing Impact</h2>
+<p>For the "Size Like a Pro" course: show the same 50 trades with flat sizing vs Hougaard Press sizing. The visual difference is the argument.</p>
+
+<h3>API Request</h3>
+<pre>{
+  "type": "equity_curve",
+  "trades": [0.4, -1, 0.8, 1.2, -0.5, ...],  // 50 R-multiples
+  "curves": [
+    {"name": "Flat $250/trade", "sizing": "flat", "base": 250},
+    {"name": "Hougaard Press", "sizing": "hougaard", "base": 250, "press_factor": 1.25}
+  ],
+  "annotations": {
+    "drawdown_zones": true,
+    "press_events": true  // mark where sizing increased/decreased
+  }
+}</pre>
+
+<h3>Output</h3>
+<div class="chart-mockup">
+  <div class="chart-header">
+    <span class="sym">Equity Curve</span>
+    <span class="tf">50 trades &middot; Same system, different sizing</span>
+  </div>
+  <div class="chart-body" style="min-height:200px;">
+    <!-- Simplified equity curves -->
+    <svg width="100%" height="180" viewBox="0 0 800 180" style="padding:10px 20px;">
+      <!-- Flat sizing curve (blue) -->
+      <polyline points="0,140 40,135 80,145 120,130 160,138 200,125 240,120 280,115 320,125 360,110 400,105 440,112 480,100 520,95 560,105 600,90 640,85 680,80 720,78 760,75" fill="none" stroke="#58a6ff" stroke-width="2" opacity="0.6"/>
+      <!-- Hougaard Press curve (green) -->
+      <polyline points="0,140 40,133 80,148 120,125 160,130 200,112 240,103 280,92 320,108 360,85 400,75 440,88 480,68 520,58 560,72 600,50 640,40 680,32 720,28 760,20" fill="none" stroke="#3fb950" stroke-width="2.5"/>
+      <!-- Labels -->
+      <text x="770" y="78" fill="#58a6ff" font-size="11" font-weight="600">Flat: +$3,200</text>
+      <text x="770" y="23" fill="#3fb950" font-size="11" font-weight="600">Press: +$6,800</text>
+      <!-- Press events -->
+      <circle cx="240" cy="103" r="4" fill="#d29922" opacity="0.8"/>
+      <circle cx="400" cy="75" r="4" fill="#d29922" opacity="0.8"/>
+      <circle cx="600" cy="50" r="4" fill="#d29922" opacity="0.8"/>
+    </svg>
+    <div style="position:absolute; bottom:15px; left:30px; font-size:11px; color:#d29922;">&#9679; = Press event (size increased)</div>
+  </div>
+</div>
+
+<p><strong>Course use:</strong> Module 1 of "Size Like a Pro." The visual proof that regime-based sizing compounds better than flat sizing. Students see the divergence accelerate over 50 trades. This replaces the abstract description with a concrete demonstration.</p>
+
+<!-- ============================================ -->
+<h2>6. GYR Zone Overlay — Intraday Context</h2>
+<p>For the Intraday Precision course: overlay yesterday's high/low as Green/Yellow/Red zones on today's 5-minute chart. Students see immediately how the GYR system frames the day.</p>
+
+<h3>API Request</h3>
+<pre>{
+  "symbol": "SPY",
+  "timeframe": "5min",
+  "range": "today",
+  "overlays": ["vwap", "yesterday_high_low"],
+  "zones": {
+    "gyr": true,  // Green above yesterday high, Red below yesterday low, Yellow between
+    "lunch": {"start": "11:30", "end": "13:30", "label": "Lunch — no new entries"}
+  }
+}</pre>
+
+<h3>Output</h3>
+<div class="chart-mockup">
+  <div class="chart-header">
+    <span class="sym">SPY</span>
+    <span class="tf">5-min &middot; Today &middot; Intraday</span>
+    <span style="margin-left:auto; font-size:12px; color:#d29922; font-weight:600;">Currently: YELLOW zone</span>
+  </div>
+  <div class="chart-body" style="min-height:200px;">
+    <!-- GYR zones -->
+    <div style="position:absolute; top:0; left:0; right:0; height:50px; background:rgba(63,185,80,0.06); border-bottom:1px solid rgba(63,185,80,0.2);"></div>
+    <div style="position:absolute; top:50px; left:0; right:0; height:100px; background:rgba(210,153,34,0.06);"></div>
+    <div style="position:absolute; top:150px; left:0; right:0; bottom:0; height:50px; background:rgba(248,81,73,0.06); border-top:1px solid rgba(248,81,73,0.2);"></div>
+
+    <!-- Zone labels -->
+    <div style="position:absolute; top:15px; right:20px; font-size:11px; color:#3fb950; font-weight:600;">GREEN — above yesterday's high</div>
+    <div style="position:absolute; top:90px; right:20px; font-size:11px; color:#d29922; font-weight:600;">YELLOW — between yesterday's H/L</div>
+    <div style="position:absolute; top:160px; right:20px; font-size:11px; color:#f85149; font-weight:600;">RED — below yesterday's low</div>
+
+    <!-- Lunch zone -->
+    <div style="position:absolute; top:0; bottom:0; left:55%; width:20%; background:rgba(110,118,129,0.08); border-left:1px dashed #6e7681; border-right:1px dashed #6e7681;"></div>
+    <div style="position:absolute; top:5px; left:57%; font-size:10px; color:#6e7681;">11:30–1:30 LUNCH</div>
+
+    <!-- Yesterday's levels -->
+    <div style="position:absolute; top:50px; left:0; right:0; height:1px; background:#3fb950; opacity:0.4;"></div>
+    <div style="position:absolute; top:150px; left:0; right:0; height:1px; background:#f85149; opacity:0.4;"></div>
+    <div style="position:absolute; top:42px; left:5px; font-size:10px; color:#3fb950; opacity:0.6;">Yesterday High</div>
+    <div style="position:absolute; top:152px; left:5px; font-size:10px; color:#f85149; opacity:0.6;">Yesterday Low</div>
+  </div>
+</div>
+
+<p><strong>Course use:</strong> Module 3 of "Intraday Precision." Students see the GYR zones and lunch window on an actual intraday chart. The quiz asks them to evaluate a setup in context: "SPY is in Yellow — what sizing should you use?"</p>
+
+<!-- ============================================ -->
+<h2>Summary: What We'd Need From the Engine</h2>
+
+<div class="api-block">
+  <div class="endpoint">Core capabilities:</div>
+  <div class="desc">
+    1. <strong>Candlestick rendering</strong> with configurable timeframes and date ranges<br>
+    2. <strong>MACD Season coloring</strong> — background zones colored by season (Spring/Summer/Fall/Winter)<br>
+    3. <strong>Overlay indicators</strong> — RL10, RL30, RL90, RL270, VWAP, Dragon, Red River<br>
+    4. <strong>Trade frame annotation</strong> — entry/stop/target levels with R-zone shading<br>
+    5. <strong>Freeze/playback mode</strong> — hide future candles, reveal bar-by-bar with commentary<br>
+    6. <strong>GYR zones</strong> — yesterday's high/low as color zones on intraday charts<br>
+    7. <strong>Equity curve rendering</strong> — compare sizing strategies across the same trade sequence<br>
+    8. <strong>Quiz integration</strong> — chart with interactive question below, answer reveals annotations
+  </div>
+</div>
+
+<div class="api-block">
+  <div class="endpoint">Output format:</div>
+  <div class="desc">
+    SVG or interactive HTML component. Must work embedded in a single-file HTML course (no external JS dependencies). Dark/light theme aware. Responsive. Accessible (alt text for screen readers).
+  </div>
+</div>
+
+<div class="api-block">
+  <div class="endpoint">Data source:</div>
+  <div class="desc">
+    The edge-gyre server already has daily + intraday OHLCV data for 300+ symbols. The MACD Seasons, regression lines, and PSAR are already computed. The chart engine would consume these as JSON and render client-side.
+  </div>
+</div>
+
+</div>
+</body>
+</html>
