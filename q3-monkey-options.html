@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Quadrant Overlay System — Three States</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #1a1e2e;
+    color: #e0e0e0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    padding: 32px;
+  }
+  h1 { font-size: 1.1rem; margin-bottom: 6px; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.05em; }
+  .subtitle { font-size: 0.78rem; color: #6b7280; margin-bottom: 28px; line-height: 1.5; }
+  .framework-section {
+    margin-bottom: 40px;
+    background: #232839;
+    border-radius: 16px;
+    padding: 24px;
+    border: 1px solid #333a50;
+  }
+  .framework-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #9ca3af;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .framework-desc {
+    font-size: 0.68rem;
+    color: #6b7280;
+    margin-bottom: 16px;
+  }
+
+  /* Quadrant grid */
+  .quad-grid {
+    display: grid;
+    grid-template-columns: 36px 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 6px;
+    max-width: 640px;
+  }
+  .col-label {
+    text-align: center;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #6b7280;
+    padding-bottom: 2px;
+  }
+  .row-label {
+    writing-mode: vertical-lr;
+    transform: rotate(180deg);
+    font-size: 0.55rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #6b7280;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Tile base */
+  .mosaic-tile {
+    border-radius: 12px;
+    padding: 12px 12px 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 2px;
+    position: relative;
+    overflow: hidden;
+    min-height: 130px;
+  }
+  .mosaic-tile-label { font-size: 0.65rem; text-transform: uppercase; font-weight: 700; opacity: 0.85; }
+  .mosaic-tile-sublabel { font-size: 0.58rem; font-style: italic; opacity: 0.65; margin-top: -2px; }
+  .mosaic-tile-pnl { font-size: 1.1rem; font-weight: 700; line-height: 1.2; }
+  .mosaic-tile-pnl-pct { font-size: 0.7rem; font-weight: 500; opacity: 0.7; }
+  .mosaic-tile-meta { font-size: 0.62rem; font-weight: 500; opacity: 0.75; }
+  .mosaic-tile-bar { margin-top: auto; padding-top: 6px; width: 100%; }
+  .mosaic-tile-bar-track { height: 4px; background: rgba(0,0,0,0.18); border-radius: 2px; overflow: hidden; }
+  .mosaic-tile-bar-fill { height: 100%; background: rgba(255,255,255,0.55); border-radius: 2px; }
+
+  /* Overlay: has-overlay shrinks numbers */
+  .mosaic-tile-has-overlay .mosaic-tile-pnl { font-size: 0.85rem; }
+  .mosaic-tile-has-overlay .mosaic-tile-meta { font-size: 0.56rem; }
+
+  /* Overlay container */
+  .mosaic-overlay {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 3px 0;
+  }
+  .mosaic-overlay-svg { width: 40px; height: 40px; }
+  .mosaic-overlay-svg svg { width: 100%; height: 100%; }
+  .mosaic-overlay-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+  .mosaic-overlay-items li {
+    font-size: 0.55rem;
+    font-weight: 600;
+    opacity: 0.8;
+    text-align: center;
+    line-height: 1.3;
+  }
+  .mosaic-overlay-caption {
+    font-size: 0.48rem;
+    opacity: 0.5;
+    font-style: italic;
+    text-align: center;
+    margin-top: 1px;
+  }
+
+  /* Quadrant colors */
+  .q1-bg { background: hsl(145, 55%, 52%); color: rgba(255,255,255,0.95); }
+  .q2-bg { background: hsl(35, 45%, 72%); color: rgba(0,0,0,0.85); }
+  .q3-bg { background: hsl(45, 60%, 68%); color: rgba(0,0,0,0.85); }
+  .q4-bg { background: hsl(350, 55%, 58%); color: rgba(255,255,255,0.95); }
+</style>
+</head>
+<body>
+
+<h1>Quadrant Overlay System — Three States</h1>
+<p class="subtitle">
+  Overlay selector in controls bar. Default = no overlay (numbers centered).<br>
+  Switch to a framework and icons/lists appear between subtitle and PnL.
+</p>
+
+<!-- ─── STATE 1: None (default) ─── -->
+<div class="framework-section">
+  <div class="framework-label">Overlay: None (default)</div>
+  <div class="framework-desc">Numbers centered, no decoration. This is what ships today.</div>
+  <div class="quad-grid">
+    <div></div>
+    <div class="col-label">Unprofitable Outcome</div>
+    <div class="col-label">Profitable Outcome</div>
+
+    <div class="row-label">Good Decision</div>
+    <div class="mosaic-tile q2-bg">
+      <div class="mosaic-tile-label">Q2: Cost of Business</div>
+      <div class="mosaic-tile-sublabel">Bad Luck</div>
+      <div class="mosaic-tile-pnl">$-43180 <span class="mosaic-tile-pnl-pct">(15%)</span></div>
+      <div class="mosaic-tile-meta">171 trades (23%)</div>
+      <div class="mosaic-tile-meta">avg $-253</div>
+      <div class="mosaic-tile-bar"><div class="mosaic-tile-bar-track"><div class="mosaic-tile-bar-fill" style="width:22%"></div></div></div>
+    </div>
+    <div class="mosaic-tile q1-bg">
+      <div class="mosaic-tile-label">Q1: Reward</div>
+      <div class="mosaic-tile-sublabel">Deserved Reward</div>
+      <div class="mosaic-tile-pnl">+$112694 <span class="mosaic-tile-pnl-pct">(39%)</span></div>
+      <div class="mosaic-tile-meta">228 trades (31%)</div>
+      <div class="mosaic-tile-meta">avg +$494</div>
+      <div class="mosaic-tile-bar"><div class="mosaic-tile-bar-track"><div class="mosaic-tile-bar-fill" style="width:58%"></div></div></div>
+    </div>
+
+    <div class="row-label">Poor Decision</div>
+    <div class="mosaic-tile q4-bg">
+      <div class="mosaic-tile-label">Q4: Avoidable Loss</div>
+      <div class="mosaic-tile-sublabel">Poor Decision &amp; Outcome</div>
+      <div class="mosaic-tile-pnl">$-87414 <span class="mosaic-tile-pnl-pct">(30%)</span></div>
+      <div class="mosaic-tile-meta">222 trades (30%)</div>
+      <div class="mosaic-tile-meta">avg $-394</div>
+      <div class="mosaic-tile-bar"><div class="mosaic-tile-bar-track"><div class="mosaic-tile-bar-fill" style="width:45%"></div></div></div>
+    </div>
+    <div class="mosaic-tile q3-bg">
+      <div class="mosaic-tile-label">Q3: Just Got Lucky</div>
+      <div class="mosaic-tile-sublabel">Dangerous</div>
+      <div class="mosaic-tile-pnl">+$49383 <span class="mosaic-tile-pnl-pct">(17%)</span></div>
+      <div class="mosaic-tile-meta">115 trades (16%)</div>
+      <div class="mosaic-tile-meta">avg +$429</div>
+      <div class="mosaic-tile-bar"><div class="mosaic-tile-bar-track"><div class="mosaic-tile-bar-fill" style="width:25%"></div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── STATE 2: Dr. Ken Long Framework ─── -->
+<div class="framework-section">
+  <div class="framework-label">Overlay: Dr. Ken Long</div>
+  <div class="framework-desc">Animal archetypes per quadrant. Owl (patient earned), Tortoise (steady accepted), Monkey (dopamine trap), Frog (avoidable).</div>
+  <div class="quad-grid">
+    <div></div>
+    <div class="col-label">Unprofitable Outcome</div>
+    <div class="col-label">Profitable Outcome</div>
+
+    <div class="row-label">Good Decision</div>
+    <!-- Q2: Tortoise -->
+    <div class="mosaic-tile mosaic-tile-has-overlay q2-bg">
+      <div class="mosaic-tile-label">Q2: Cost of Business</div>
+      <div class="mosaic-tile-sublabel">Bad Luck</div>
+      <div class="mosaic-overlay">
+        <div class="mosaic-overlay-svg">
+          <svg viewBox="0 0 48 48" fill="none"><ellipse cx="24" cy="28" rx="14" ry="10" fill="rgba(0,0,0,0.08)" stroke="currentColor" stroke-width="1.4" opacity="0.6"/><ellipse cx="24" cy="26" rx="11" ry="7" fill="rgba(0,0,0,0.04)" stroke="currentColor" stroke-width="1" opacity="0.35"/><circle cx="15" cy="22" r="2" fill="currentColor" opacity="0.5"/><path d="M11 25 Q8 20 12 18" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.5"/><path d="M17 26 L14 38" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.4"/><path d="M31 26 L34 38" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.4"/></svg>
+        </div>
+        <div class="mosaic-overlay-caption">Tortoise — Steady, accepted</div>
+      </div>
+      <div class="mosaic-tile-pnl">$-43180 <span class="mosaic-tile-pnl-pct">(15%)</span></div>
+      <div class="mosaic-tile-meta">171 trades (23%)</div>
+      <div class="mosaic-tile-meta">avg $-253</div>
+      <div class="mosaic-tile-bar"><div class="mosaic-tile-bar-track"><div class="mosaic-tile-bar-fill" style="width:22%"></div></div></div>
+    </div>
+    <!-- Q1: Owl -->
+    <div class="mosaic-tile mosaic-tile-has-overlay q1-bg">
+      <div class="mosaic-tile-label">Q1: Reward</div>
+      <div class="mosaic-tile-sublabel">Deserved Reward</div>
+      <div class="mosaic-overlay">
+        <div class="mosaic-overlay-svg">
+          <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="22" r="13" fill="rgba(0,0,0,0.08)" stroke="currentColor" stroke-width="1.4" opacity="0.6"/><circle cx="19" cy="19" r="3.5" fill="rgba(0,0,0,0.06)" stroke="currentColor" stroke-width="1.2" opacity="0.5"/><circle cx="29" cy="19" r="3.5" fill="rgba(0,0,0,0.06)" stroke="currentColor" stroke-width="1.2" opacity="0.5"/><circle cx="19" cy="19" r="1.5" fill="currentColor" opacity="0.6"/><circle cx="29" cy="19" r="1.5" fill="currentColor" opacity="0.6"/><path d="M20 27 Q24 30 28 27" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.5"/><path d="M12 14 Q10 6 16 10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" fill="none" opacity="0.45"/><path d="M36 14 Q38 6 32 10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" fill="none" opacity="0.45"/></svg>
+        </div>
+        <div class="mosaic-overlay-caption">Owl — Patient, earned</div>
+      </div>
+      <div class="mosaic-tile-pnl">+$112694 <span class="mosaic-tile-pnl-pct">(39%)</span></div>
+      <div class="mosaic-tile-meta">228 trades (31%)</div>
+      <div class="mosaic-tile-meta">avg +$494</div>
+      <div class="mosaic-tile-bar"><div class="mosaic-tile-bar-track"><div class="mosaic-tile-bar-fill" style="width:58%"></div></div></div>
+    </div>
+
+    <div class="row-label">Poor Decision</div>
+    <!-- Q4: Frog -->
+    <div class="mosaic-tile mosaic-tile-has-overlay q4-bg">
+      <div class="mosaic-tile-label">Q4: Avoidable Loss</div>
+      <div class="mosaic-tile-sublabel">Poor Decision &amp; Outcome</div>
+      <div class="mosaic-overlay">
+        <div class="mosaic-overlay-svg">
+          <svg viewBox="0 0 48 48" fill="none"><ellipse cx="24" cy="30" rx="10" ry="7" fill="rgba(0,0,0,0.08)" stroke="currentColor" stroke-width="1.4" opacity="0.6"/><circle cx="19" cy="26" r="2.5" fill="rgba(0,0,0,0.06)" stroke="currentColor" stroke-width="1.2" opacity="0.5"/><circle cx="29" cy="26" r="2.5" fill="rgba(0,0,0,0.06)" stroke="currentColor" stroke-width="1.2" opacity="0.5"/><circle cx="19" cy="26" r="1" fill="currentColor" opacity="0.6"/><circle cx="29" cy="26" r="1" fill="currentColor" opacity="0.6"/><path d="M22 33 L24 35 L26 33" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.5"/><path d="M14 20 Q12 14 18 16" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" fill="none" opacity="0.45"/><path d="M34 20 Q36 14 30 16" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" fill="none" opacity="0.45"/><path d="M18 38 Q16 42 20 40" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.4"/><path d="M30 38 Q32 42 28 40" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.4"/></svg>
+        </div>
+        <div class="mosaic-overlay-caption">Frog — Avoidable</div>
+      </div>
+      <div class="mosaic-tile-pnl">$-87414 <span class="mosaic-tile-pnl-pct">(30%)</span></div>
+      <div class="mosaic-tile-meta">222 trades (30%)</div>
+      <div class="mosaic-tile-meta">avg $-394</div>
+      <div class="mosaic-tile-bar"><div class="mosaic-tile-bar-track"><div class="mosaic-tile-bar-fill" style="width:45%"></div></div></div>
+    </div>
+    <!-- Q3: Monkey -->
+    <div class="mosaic-tile mosaic-tile-has-overlay q3-bg">
+      <div class="mosaic-tile-label">Q3: Just Got Lucky</div>
+      <div class="mosaic-tile-sublabel">Dangerous</div>
+      <div class="mosaic-overlay">
+        <div class="mosaic-overlay-svg">
+          <svg viewBox="0 0 48 48" fill="none"><circle cx="11" cy="17" r="5" fill="rgba(0,0,0,0.12)" stroke="currentColor" stroke-width="1.2" opacity="0.5"/><circle cx="37" cy="17" r="5" fill="rgba(0,0,0,0.12)" stroke="currentColor" stroke-width="1.2" opacity="0.5"/><circle cx="24" cy="22" r="12" fill="rgba(0,0,0,0.08)" stroke="currentColor" stroke-width="1.5" opacity="0.6"/><path d="M19 19 Q20.5 17 22 19" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none" opacity="0.7"/><path d="M26 19 Q27.5 17 29 19" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none" opacity="0.7"/><path d="M18 25 Q24 32 30 25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="rgba(0,0,0,0.08)" opacity="0.6"/><path d="M34 28 Q40 22 42 30 Q40 34 36 32" stroke="rgba(120,100,0,0.7)" stroke-width="1.8" fill="rgba(200,180,40,0.45)" stroke-linecap="round"/></svg>
+        </div>
+        <div class="mosaic-overlay-caption">Monkey — Dopamine trap</div>
+      </div>
+      <div class="mosaic-tile-pnl">+$49383 <span class="mosaic-tile-pnl-pct">(17%)</span></div>
+      <div class="mosaic-tile-meta">115 trades (16%)</div>
+      <div class="mosaic-tile-meta">avg +$429</div>
+      <div class="mosaic-tile-bar"><div class="mosaic-tile-bar-track"><div class="mosaic-tile-bar-fill" style="width:25%"></div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── STATE 3: Kahneman Bias Framework ─── -->
+<div class="framework-section">
+  <div class="framework-label">Overlay: Kahneman Biases</div>
+  <div class="framework-desc">Per-quadrant bias lists. Each quadrant shows the cognitive biases most active in that decision/outcome combination.</div>
+  <div class="quad-grid">
+    <div></div>
+    <div class="col-label">Unprofitable Outcome</div>
+    <div class="col-label">Profitable Outcome</div>
+
+    <div class="row-label">Good Decision</div>
+    <!-- Q2 -->
+    <div class="mosaic-tile mosaic-tile-has-overlay q2-bg">
+      <div class="mosaic-tile-label">Q2: Cost of Business</div>
+      <div class="mosaic-tile-sublabel">Bad Luck</div>
+      <div class="mosaic-overlay">
+        <ul class="mosaic-overlay-items">
+          <li>Loss aversion</li>
+          <li>Status quo bias</li>
+          <li>Regret aversion</li>
+        </ul>
+        <div class="mosaic-overlay-caption">Biases triggered by accepted losses</div>
+      </div>
+      <div class="mosaic-tile-pnl">$-43180 <span class="mosaic-tile-pnl-pct">(15%)</span></div>
+      <div class="mosaic-tile-meta">171 trades (23%)</div>
+      <div class="mosaic-tile-meta">avg $-253</div>
+      <div class="mosaic-tile-bar"><div class="mosaic-tile-bar-track"><div class="mosaic-tile-bar-fill" style="width:22%"></div></div></div>
+    </div>
+    <!-- Q1 -->
+    <div class="mosaic-tile mosaic-tile-has-overlay q1-bg">
+      <div class="mosaic-tile-label">Q1: Reward</div>
+      <div class="mosaic-tile-sublabel">Deserved Reward</div>
+      <div class="mosaic-overlay">
+        <ul class="mosaic-overlay-items">
+          <li>Confirmation bias</li>
+          <li>Anchoring</li>
+          <li>Narrative fallacy</li>
+        </ul>
+        <div class="mosaic-overlay-caption">Biases that reinforce earned wins</div>
+      </div>
+      <div class="mosaic-tile-pnl">+$112694 <span class="mosaic-tile-pnl-pct">(39%)</span></div>
+      <div class="mosaic-tile-meta">228 trades (31%)</div>
+      <div class="mosaic-tile-meta">avg +$494</div>
+      <div class="mosaic-tile-bar"><div class="mosaic-tile-bar-track"><div class="mosaic-tile-bar-fill" style="width:58%"></div></div></div>
+    </div>
+
+    <div class="row-label">Poor Decision</div>
+    <!-- Q4 -->
+    <div class="mosaic-tile mosaic-tile-has-overlay q4-bg">
+      <div class="mosaic-tile-label">Q4: Avoidable Loss</div>
+      <div class="mosaic-tile-sublabel">Poor Decision &amp; Outcome</div>
+      <div class="mosaic-overlay">
+        <ul class="mosaic-overlay-items">
+          <li>Sunk cost fallacy</li>
+          <li>Disposition effect</li>
+          <li>Endowment effect</li>
+          <li>Denial</li>
+        </ul>
+        <div class="mosaic-overlay-caption">Biases that cause avoidable losses</div>
+      </div>
+      <div class="mosaic-tile-pnl">$-87414 <span class="mosaic-tile-pnl-pct">(30%)</span></div>
+      <div class="mosaic-tile-meta">222 trades (30%)</div>
+      <div class="mosaic-tile-meta">avg $-394</div>
+      <div class="mosaic-tile-bar"><div class="mosaic-tile-bar-track"><div class="mosaic-tile-bar-fill" style="width:45%"></div></div></div>
+    </div>
+    <!-- Q3 -->
+    <div class="mosaic-tile mosaic-tile-has-overlay q3-bg">
+      <div class="mosaic-tile-label">Q3: Just Got Lucky</div>
+      <div class="mosaic-tile-sublabel">Dangerous</div>
+      <div class="mosaic-overlay">
+        <ul class="mosaic-overlay-items">
+          <li>Outcome bias</li>
+          <li>Survivorship bias</li>
+          <li>Overconfidence</li>
+          <li>Hindsight bias</li>
+        </ul>
+        <div class="mosaic-overlay-caption">Biases that make luck feel like skill</div>
+      </div>
+      <div class="mosaic-tile-pnl">+$49383 <span class="mosaic-tile-pnl-pct">(17%)</span></div>
+      <div class="mosaic-tile-meta">115 trades (16%)</div>
+      <div class="mosaic-tile-meta">avg +$429</div>
+      <div class="mosaic-tile-bar"><div class="mosaic-tile-bar-track"><div class="mosaic-tile-bar-fill" style="width:25%"></div></div></div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
