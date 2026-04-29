@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Edge S2 — Tech Lab Stickiness Proposal</title>
+
+<script>
+(function(){
+  var u=new URLSearchParams(location.search).get("theme");
+  var t=u||"dark";if(!u){try{var p=JSON.parse(localStorage.getItem("edge.ui.prefs")||"{}");t=p.theme||"dark"}catch(e){}}
+  var d=t==="dark";
+  document.documentElement.classList.add("theme-"+(d?"dark":"light"));
+  document.documentElement.style.background=d?"#0a0f1c":"#f0ede6";
+})();
+</script>
+<link rel="stylesheet" href="./proposal.css?v=20260429b" />
+</head>
+<body>
+<div class="rlff-shell">
+<main class="rlff-main">
+
+  <div class="rlff-crumb">Guide &nbsp;/&nbsp; Lessons &nbsp;/&nbsp; RLFF &nbsp;/&nbsp; <span>Stickiness Proposal</span></div>
+  <h1>Tech Lab — How we make it stick, wow, and get shared</h1>
+  <p class="rlff-lede">
+    Eight ideas to take the Tech Lab from a clean course to one traders compete to finish and post about.
+    Each idea is illustrated below. Idea&nbsp;5 is interactive — your vote actually counts toward the prioritization.
+  </p>
+
+  <div class="prop-toc">
+    <a href="#i1">1. Personal symbol</a>
+    <a href="#i2">2. Owl-says vs You-say</a>
+    <a href="#i3">3. Receipt cards</a>
+    <a href="#i4">4. Find it in your platform</a>
+    <a href="#i5" class="prop-toc-live">5. Cohort vote · live</a>
+    <a href="#i6">6. Diamond Mind streak</a>
+    <a href="#i7">7. Claude hooks</a>
+    <a href="#i8">8. Referral URLs</a>
+    <a href="#ship">Ship 3 first</a>
+  </div>
+
+  <!-- ============ IDEA 1 ============ -->
+  <section class="panel" id="i1">
+    <div class="panel-head">
+      <div><span class="panel-no">1</span><span class="panel-title">Personal-symbol injection</span></div>
+      <span class="panel-tag">Stickiness · in-lab</span>
+    </div>
+    <p class="panel-sub">
+      The Fractal Stack symbol picker today is a hardcoded list. Let the trader paste their own ticker.
+      The aha moment is not the math — it is seeing AAPL, or the dog they actually own, through the framework for the first time.
+    </p>
+    <div class="grid-2">
+      <div class="prop-mock prop-mock-pad">
+        <div class="prop-input-row">
+          <label>Drop a ticker you have been wrong about</label>
+          <div class="prop-input-pair">
+            <input class="prop-input" id="i1Symbol" placeholder="e.g. AAPL, TSLA, NVDA" value="TSLA" />
+            <button class="toggle on" id="i1Load">Load my chart</button>
+          </div>
+        </div>
+        <div class="prop-chart-shell" id="i1ChartShell">
+          <svg id="i1Chart" viewBox="0 0 480 200"></svg>
+        </div>
+        <div class="prop-readout" id="i1Readout">
+          <span>RL10 vs RL270 excursion</span>
+          <span class="prop-readout-val" id="i1ExcVal">+1.7σ</span>
+          <span class="prop-readout-tag">stretched · floodplain</span>
+        </div>
+      </div>
+      <aside class="panel-text-col">
+        <h4>Why this matters</h4>
+        <p>Every learner has 5–10 tickers they keep coming back to. Demo symbols are forgettable. Their own portfolio is not.</p>
+        <p>The data-source path already exists: <code>fetchLive</code> in lab-engine.js + the EOD WarmDB endpoint. Wire it through Panel 1 and Panel 3 first.</p>
+        <p class="prop-effort">Effort: ~1 day · Reach: every learner · Risk: low</p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============ IDEA 2 ============ -->
+  <section class="panel" id="i2">
+    <div class="panel-head">
+      <div><span class="panel-no">2</span><span class="panel-title">Owl-says vs You-say · gut-vs-framework gap</span></div>
+      <span class="panel-tag">Wow moment · self-test</span>
+    </div>
+    <p class="panel-sub">
+      Before each panel reveals its number, the trader guesses. One click. Then the framework reveals.
+      By the third lesson the trader has a personal calibration score — that is the screenshot they post.
+    </p>
+    <div class="grid-2">
+      <div class="prop-mock prop-mock-pad" id="i2Mock">
+        <div class="prop-quiz-prompt">
+          Right now, where is <strong>SPY</strong> sitting?
+        </div>
+        <div class="prop-quiz-row">
+          <button class="prop-quiz-btn" data-zone="river">River <small>(±1σ)</small></button>
+          <button class="prop-quiz-btn" data-zone="floodplain">Floodplain <small>(1–2σ)</small></button>
+          <button class="prop-quiz-btn" data-zone="edge">Edge of the World <small>(&gt;2σ)</small></button>
+        </div>
+        <div class="prop-quiz-result" id="i2Result"></div>
+        <div class="prop-quiz-stats" id="i2Stats">Calibration so far · 0 / 0 correct</div>
+      </div>
+      <aside class="panel-text-col">
+        <h4>Why this matters</h4>
+        <p>Passive watching does not stick. Forced commitment before reveal does. This is the cheapest learning-science move available.</p>
+        <p>Cumulative score "you over-call Max Pain 60% of the time" is a personal stat — and a tweet.</p>
+        <p class="prop-effort">Effort: ~2 days for 9 panels · Reach: every learner · Risk: low</p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============ IDEA 3 ============ -->
+  <section class="panel" id="i3">
+    <div class="panel-head">
+      <div><span class="panel-no">3</span><span class="panel-title">Receipt cards · the share engine</span></div>
+      <span class="panel-tag">Public posting · highest leverage</span>
+    </div>
+    <p class="panel-sub">
+      One 1080×1080 dark card at every panel exit. Symbol, the one number, lesson tag, mascot mark, trader handle.
+      One tap to X, LinkedIn, Discord. No chrome — designed to be cropped and posted naturally.
+    </p>
+    <div class="prop-card-row">
+      <div class="prop-share-card prop-share-card--river">
+        <div class="prop-share-mark">Edge S2 · Lesson 3</div>
+        <div class="prop-share-symbol">AAPL</div>
+        <div class="prop-share-stat">Z = +2.3σ</div>
+        <div class="prop-share-line">Prior 47 occurrences reverted to SMA30 within 5 days <strong>78%</strong> of the time.</div>
+        <div class="prop-share-foot">
+          <span class="prop-share-mascot prop-mascot-owl"></span>
+          <span class="prop-share-handle">@sundeep · River &amp; Dragon</span>
+        </div>
+      </div>
+      <div class="prop-share-card prop-share-card--pinch">
+        <div class="prop-share-mark">Edge S2 · Lesson 7</div>
+        <div class="prop-share-symbol">VIX</div>
+        <div class="prop-share-stat">0.16σ pinch · 11 days</div>
+        <div class="prop-share-line">Last three pinches this tight broke <strong>4–6%</strong> inside a week.</div>
+        <div class="prop-share-foot">
+          <span class="prop-share-mascot prop-mascot-frog"></span>
+          <span class="prop-share-handle">@sundeep · C3 Pinch</span>
+        </div>
+      </div>
+      <div class="prop-share-card prop-share-card--frog">
+        <div class="prop-share-mark">Edge S2 · Lesson 4</div>
+        <div class="prop-share-symbol">NVDA</div>
+        <div class="prop-share-stat">Range 2.41 · 1.10× Range Stat</div>
+        <div class="prop-share-line">Today consumed <strong>110%</strong> of expected daily move. Tighten stops.</div>
+        <div class="prop-share-foot">
+          <span class="prop-share-mascot prop-mascot-tortoise"></span>
+          <span class="prop-share-handle">@sundeep · Frog Box</span>
+        </div>
+      </div>
+    </div>
+    <p class="prop-effort prop-effort-wide">
+      Effort: ~3 days (one canvas renderer + per-panel data hooks) · Reach: every shared lesson · Risk: low ·
+      <strong>Single highest-leverage virality move on this list.</strong> Make the artifact, not the testimonial.
+    </p>
+  </section>
+
+  <!-- ============ IDEA 4 ============ -->
+  <section class="panel" id="i4">
+    <div class="panel-head">
+      <div><span class="panel-no">4</span><span class="panel-title">"Find it in your own platform" homework</span></div>
+      <span class="panel-tag">Bridge · TC2000 / ToS / TradingView</span>
+    </div>
+    <p class="panel-sub">
+      End of each lesson, one assignment: find a Morning Hook on something you traded this month. Drop the screenshot.
+      Their tool, their chart, annotated by their lesson. Posted into a cohort wall.
+    </p>
+    <div class="prop-wall">
+      <div class="prop-wall-card"><div class="prop-wall-thumb prop-thumb-1"></div><div class="prop-wall-meta"><strong>@kim_t</strong> · TC2000<span class="prop-tag prop-tag-owl">Owl</span></div></div>
+      <div class="prop-wall-card"><div class="prop-wall-thumb prop-thumb-2"></div><div class="prop-wall-meta"><strong>@rivera</strong> · ToS<span class="prop-tag prop-tag-frog">Frog</span></div></div>
+      <div class="prop-wall-card"><div class="prop-wall-thumb prop-thumb-3"></div><div class="prop-wall-meta"><strong>@dre</strong> · TradingView<span class="prop-tag prop-tag-tortoise">Tortoise</span></div></div>
+      <div class="prop-wall-card"><div class="prop-wall-thumb prop-thumb-4"></div><div class="prop-wall-meta"><strong>@harini</strong> · TC2000<span class="prop-tag prop-tag-dragon">Dragon</span></div></div>
+      <div class="prop-wall-card"><div class="prop-wall-thumb prop-thumb-5"></div><div class="prop-wall-meta"><strong>@mike_l</strong> · ToS<span class="prop-tag prop-tag-owl">Owl</span></div></div>
+      <div class="prop-wall-card"><div class="prop-wall-thumb prop-thumb-6"></div><div class="prop-wall-meta"><strong>@yui</strong> · TradingView<span class="prop-tag prop-tag-frog">Frog</span></div></div>
+    </div>
+    <p class="prop-effort prop-effort-wide">
+      Side effects: traders use the framework on their real workflow; the wall becomes student-generated proof
+      that this stuff works on <em>their</em> setup, not Ken's. Pin one weekly with a brand mark.
+    </p>
+  </section>
+
+  <!-- ============ IDEA 5 — REAL VOTE ============ -->
+  <section class="panel panel-live" id="i5">
+    <div class="panel-head">
+      <div><span class="panel-no">5</span><span class="panel-title">Cohort vote · which mock becomes real next</span></div>
+      <span class="panel-tag">LIVE · your click counts</span>
+    </div>
+    <p class="panel-sub">
+      Of the nine RLFF panels, three are interactive (Fractal Stack, River &amp; Dragon, Quintile Self). Six are static SVG mocks today.
+      Don't hide it — own it. Active learners vote which mock ships next month. Shipping cadence becomes a re-engagement email.
+      <strong>Click a panel below to vote.</strong> Tally below updates immediately and persists across reloads.
+    </p>
+    <div class="prop-vote-grid" id="voteGrid">
+      <button class="prop-vote-card" data-panel="logic-chain">
+        <div class="prop-vote-no">2</div>
+        <div class="prop-vote-title">Logic Chain Inspector</div>
+        <div class="prop-vote-sub">Live Market → Sector → System → Symbol scan</div>
+        <div class="prop-vote-tally"><span class="prop-vote-bar"></span><span class="prop-vote-count">0</span></div>
+      </button>
+      <button class="prop-vote-card" data-panel="frog-box">
+        <div class="prop-vote-no">4</div>
+        <div class="prop-vote-title">Frog Box · Range Stat Calibrator</div>
+        <div class="prop-vote-sub">Drag-the-knob 30-day range distribution on your symbol</div>
+        <div class="prop-vote-tally"><span class="prop-vote-bar"></span><span class="prop-vote-count">0</span></div>
+      </button>
+      <button class="prop-vote-card" data-panel="excursion">
+        <div class="prop-vote-no">5</div>
+        <div class="prop-vote-title">Excursion / Max Pain Meter</div>
+        <div class="prop-vote-sub">Bayesian forward-outcome panel powered by edge-distributions</div>
+        <div class="prop-vote-tally"><span class="prop-vote-bar"></span><span class="prop-vote-count">0</span></div>
+      </button>
+      <button class="prop-vote-card" data-panel="patterns">
+        <div class="prop-vote-no">6</div>
+        <div class="prop-vote-title">Pattern Library</div>
+        <div class="prop-vote-sub">Click a pattern, scan your watchlist for live instances</div>
+        <div class="prop-vote-tally"><span class="prop-vote-bar"></span><span class="prop-vote-count">0</span></div>
+      </button>
+      <button class="prop-vote-card" data-panel="c3-pinch">
+        <div class="prop-vote-no">7</div>
+        <div class="prop-vote-title">C3 Pinch Detector</div>
+        <div class="prop-vote-sub">Tightness gauge + recent pinch outcomes for your symbol</div>
+        <div class="prop-vote-tally"><span class="prop-vote-bar"></span><span class="prop-vote-count">0</span></div>
+      </button>
+      <button class="prop-vote-card" data-panel="risk-box">
+        <div class="prop-vote-no">8</div>
+        <div class="prop-vote-title">Risk Box Builder (MMRB)</div>
+        <div class="prop-vote-sub">Live entry/stop → Yellow Box + position size</div>
+        <div class="prop-vote-tally"><span class="prop-vote-bar"></span><span class="prop-vote-count">0</span></div>
+      </button>
+    </div>
+    <div class="prop-vote-foot">
+      <span id="voteSummary" class="prop-vote-summary">No votes yet — be the first.</span>
+      <button class="toggle" id="voteReset">Reset my votes</button>
+    </div>
+    <p class="prop-effort prop-effort-wide">
+      <em>This page</em>: votes are stored locally in your browser so reviewers can see the mechanic working.
+      <em>Production</em>: POST <code>/api/v1/techu/proposal/vote</code> aggregates server-side, weekly digest goes to learnx.
+    </p>
+  </section>
+
+  <!-- ============ IDEA 6 ============ -->
+  <section class="panel" id="i6">
+    <div class="panel-head">
+      <div><span class="panel-no">6</span><span class="panel-title">Diamond Mind streak · visible, daily, public-by-default</span></div>
+      <span class="panel-tag">Habit · mascot evolves</span>
+    </div>
+    <p class="panel-sub">
+      Panel 9's 5-frame check becomes a once-a-day, one-minute habit in the workbench header.
+      The mascot evolves: 1 day = egg, 7 days = hatchling, 30 days = full Owl. People share streaks; people do not share completion%.
+    </p>
+    <div class="prop-streak-strip">
+      <div class="prop-streak-cell on"><div class="prop-streak-mark prop-mark-egg"></div><span>Day 1</span></div>
+      <div class="prop-streak-cell on"><div class="prop-streak-mark prop-mark-egg"></div><span>Day 2</span></div>
+      <div class="prop-streak-cell on"><div class="prop-streak-mark prop-mark-egg2"></div><span>Day 3</span></div>
+      <div class="prop-streak-cell on"><div class="prop-streak-mark prop-mark-hatch"></div><span>Day 5</span></div>
+      <div class="prop-streak-cell on"><div class="prop-streak-mark prop-mark-hatch2"></div><span>Day 7</span></div>
+      <div class="prop-streak-cell on"><div class="prop-streak-mark prop-mark-young"></div><span>Day 14</span></div>
+      <div class="prop-streak-cell on"><div class="prop-streak-mark prop-mark-owl"></div><span>Day 30</span></div>
+    </div>
+    <p class="prop-effort prop-effort-wide">
+      Hooks into the existing edge-uix workbench header. Streak break = sympathetic nudge, not shame.
+    </p>
+  </section>
+
+  <!-- ============ IDEA 7 ============ -->
+  <section class="panel" id="i7">
+    <div class="panel-head">
+      <div><span class="panel-no">7</span><span class="panel-title">Claude hooks · five concrete moves</span></div>
+      <span class="panel-tag">AI integration · already wired</span>
+    </div>
+    <p class="panel-sub">
+      The Tech Lab already has an "Ask AI" button (TechuChat). These five behaviours weaponize it.
+    </p>
+    <div class="grid-2">
+      <div class="prop-claude-card">
+        <h4>Explain like I am new</h4>
+        <p>One toggle on every dense aside. Claude rewrites the paragraph at the trader's stated experience level. Cached per (panel, level).</p>
+        <div class="prop-claude-bubble">"The Dragon is a smoothed regression line wrapped in a half-σ envelope" → <em>"Think of it as a tight rubber band that hugs the short-term trend."</em></div>
+      </div>
+      <div class="prop-claude-card prop-claude-card--hero">
+        <h4>Why did this fail?</h4>
+        <p>Trader pastes a losing trade — entry, stop, exit, symbol. Claude walks through which RLFF frame would have flagged it. <strong>The killer feature.</strong></p>
+        <div class="prop-claude-bubble">"You entered TSLA at +2.4σ. Panel 3 says the prior 47 occurrences reverted to SMA30 within 5 days 78% of the time. Your entry was on the wrong side of the river."</div>
+      </div>
+      <div class="prop-claude-card">
+        <h4>Voice-mode Ask AI</h4>
+        <p>Voice infra already in place (<code>/home/egyre/edge-transcriptions/</code>). Trader scrubs the chart, talks through what they see, Claude responds in voice. Feels like Ken on the phone.</p>
+      </div>
+      <div class="prop-claude-card">
+        <h4>End-of-lesson receipt</h4>
+        <p>Three personalized takeaways based on which panels they actually moved sliders on. Becomes the Receipt Card body (idea 3) — lesson-scope rather than panel-scope.</p>
+      </div>
+      <div class="prop-claude-card">
+        <h4>Claude-graded homework</h4>
+        <p>Trader submits a TC2000 screenshot of a Morning Hook. Claude reads it (vision), checks geometry against the rules, gives one-line feedback + Owl/Frog/Tortoise stamp. Closes the loop with idea 4.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ IDEA 8 ============ -->
+  <section class="panel" id="i8">
+    <div class="panel-head">
+      <div><span class="panel-no">8</span><span class="panel-title">Referral URLs baked into every share</span></div>
+      <span class="panel-tag">Conversion · 5–10× generic links</span>
+    </div>
+    <p class="panel-sub">
+      Each shareable card carries a unique link <code>s2.lifelongedge.com/r/&lt;lesson&gt;/&lt;handle&gt;</code>.
+      The new visitor lands on a clone of the same panel, pre-loaded with the same symbol and parameter values.
+      They get to <em>play with</em> the exact moment that made their friend share.
+    </p>
+    <div class="prop-url-card">
+      <div class="prop-url-line">https://<strong>s2.lifelongedge.com</strong>/r/river-dragon/<strong>sundeep</strong>?sym=AAPL&amp;z=2.3</div>
+      <div class="prop-url-explain">→ Loads Panel 3 with AAPL, scrubbed to the bar at Z = +2.3σ, Owl gauge already pinned. Visitor can drag, change symbols, or sign up to save their session.</div>
+    </div>
+    <p class="prop-effort prop-effort-wide">
+      Almost free to build because the panel state already lives in the URL hash. Add tracking + redirect rule. Done.
+    </p>
+  </section>
+
+  <!-- ============ SHIP THREE ============ -->
+  <section class="panel panel-ship" id="ship">
+    <div class="panel-head">
+      <div><span class="panel-no">★</span><span class="panel-title">If we ship three this month</span></div>
+      <span class="panel-tag">Recommended order</span>
+    </div>
+    <ol class="prop-ship-list">
+      <li><strong>Personal-symbol injection</strong> on Panels 1 + 3. Kills the demo-feel. Foundation for everything else.</li>
+      <li><strong>Receipt cards + referral URLs.</strong> The share engine — works for all 9 panels including the mocks.</li>
+      <li><strong>"Why did this fail?" Claude lab.</strong> The wow moment that gets posted.</li>
+    </ol>
+    <p class="prop-effort prop-effort-wide">
+      The cohort vote (idea 5, this page) is a free strategic win you can announce next week with zero code beyond what is on this page.
+    </p>
+  </section>
+
+  <p class="muted" style="margin-top:32px" id="propBuildTag">Edge S2 · Tech Lab · proposal mock</p>
+</main>
+</div>
+
+<script src="./proposal.js?v=20260429a"></script>
+</body>
+</html>
