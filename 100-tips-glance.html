@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The 100 Tips — at a glance</title>
+<style>
+  :root {
+    --bg: #0e0e0c; --card: #181815; --line: #2a2925;
+    --fg: #e8e6df; --dim: #9c978a; --faint: #5d594f; --gold: #d4a559;
+    --novice: #6dbb6d; --apprentice: #5dbacb; --journeyman: #d4a559;
+    --expert: #c47e53; --master: #b46aa0;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 1.5rem;
+    font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    background: var(--bg); color: var(--fg); font-size: 13px; line-height: 1.4;
+  }
+  header { max-width: 1880px; margin: 0 auto 1.2rem; }
+  h1 { font-family: Georgia, serif; font-weight: 400; color: var(--gold); font-size: 1.9rem; margin: 0 0 0.3rem; }
+  .sub { color: var(--dim); font-size: 0.92rem; line-height: 1.5; max-width: 60ch; }
+  table {
+    width: 100%; max-width: 1880px; margin: 0 auto;
+    border-collapse: separate; border-spacing: 0;
+    background: var(--card); border: 1px solid var(--line); border-radius: 6px;
+    table-layout: fixed;
+  }
+  thead th {
+    background: #14140f; color: var(--dim);
+    font-family: "SF Mono", Menlo, monospace; font-size: 0.7rem; font-weight: 500;
+    text-transform: uppercase; letter-spacing: 0.12em;
+    padding: 0.7rem 0.6rem; text-align: left; border-bottom: 1px solid var(--line);
+  }
+  thead th.stage-col { text-align: center; }
+  thead th.stage-col.novice { color: var(--novice); }
+  thead th.stage-col.apprentice { color: var(--apprentice); }
+  thead th.stage-col.journeyman { color: var(--journeyman); }
+  thead th.stage-col.expert { color: var(--expert); }
+  thead th.stage-col.master { color: var(--master); }
+  th.cat-header {
+    background: #14140f; vertical-align: top; padding: 0.8rem 0.7rem;
+    border-right: 1px solid var(--line); width: 11em; min-width: 11em;
+    text-align: left;
+  }
+  .cat-num { font-family: Georgia, serif; font-size: 1.6rem; color: var(--gold); line-height: 1; margin-bottom: 0.2rem; }
+  .cat-title { font-family: Georgia, serif; font-size: 0.95rem; color: var(--fg); line-height: 1.25; font-weight: 400; }
+  .cat-sub { font-size: 0.72rem; color: var(--dim); font-style: italic; margin-top: 0.4rem; line-height: 1.35; }
+  tbody td {
+    vertical-align: top; padding: 0.55rem; border-top: 1px solid var(--line);
+    border-right: 1px solid var(--line); width: 16.5%;
+  }
+  tbody td:last-child { border-right: 0; }
+  td.flat-cell {
+    background: #1c1c18;
+    display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.4rem;
+  }
+  td.flat-cell .tip { break-inside: avoid; }
+  .tip { display: flex; gap: 0.4rem; padding: 0.32rem 0.2rem; }
+  .tip + .tip { border-top: 1px dotted var(--line); margin-top: 0.15rem; padding-top: 0.42rem; }
+  td.flat-cell .tip + .tip { border-top: 0; margin-top: 0; padding-top: 0.32rem; }
+  .tip .n {
+    font-family: "SF Mono", Menlo, monospace; font-size: 0.7rem; color: var(--faint);
+    min-width: 1.6em; padding-top: 0.15em;
+  }
+  .tip .body { flex: 1; }
+  .tip .h { color: var(--gold); font-size: 0.84rem; font-weight: 500; margin-bottom: 0.12rem; line-height: 1.3; }
+  .tip .e { color: var(--dim); font-size: 0.78rem; line-height: 1.4; }
+  footer { max-width: 1880px; margin: 1.5rem auto 0; color: var(--faint); font-size: 0.75rem; text-align: center; }
+  @media print {
+    body { background: white; color: #1a1a1a; font-size: 8.5px; padding: 0.4in; }
+    h1, .cat-title, .tip .h { color: #6b4f1f; }
+    .sub, .cat-sub, .tip .e { color: #555; }
+    table { background: white; border: 1px solid #ccc; }
+    thead th, th.cat-header { background: #f5efe2; color: #555; }
+    tbody td, th.cat-header { border-color: #ddd; }
+    td.flat-cell { background: #f5efe2; }
+    .tip + .tip { border-top: 1px dotted #ccc; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>The 100 Tips — Getting Started at a glance</h1>
+  <p class="sub">7 categories × 5 stages (Novice → Master). Categories 5–7 are universal disciplines — they apply at every stage, so they span the full row.</p>
+</header>
+
+<table>
+<thead>
+<tr>
+  <th>Category</th>
+  <th class="stage-col novice">Novice</th>
+  <th class="stage-col apprentice">Apprentice</th>
+  <th class="stage-col journeyman">Journeyman</th>
+  <th class="stage-col expert">Expert</th>
+  <th class="stage-col master">Master</th>
+</tr>
+</thead>
+<tbody>
+<tr><th class="cat-header"><div class="cat-num">1</div><div class="cat-title">PLANNING</div><div class="cat-sub">Building the Map Before the Journey</div></th><td><div class="tip"><span class="n">1</span><div class="body"><div class="h">Define your why.</div><div class="e">Write your reason for trading on paper before risking a single dollar. Without purpose, pressure breaks you.</div></div></div>
+<div class="tip"><span class="n">2</span><div class="body"><div class="h">Choose one market.</div><div class="e">Stop scanning everything. Pick one instrument and learn it deeply. Mastery begins with focus.</div></div></div>
+<div class="tip"><span class="n">3</span><div class="body"><div class="h">Write the plan.</div><div class="e">If it is not written, it does not exist. Open a document today and start your first trading plan.</div></div></div>
+<div class="tip"><span class="n">4</span><div class="body"><div class="h">Study before screens.</div><div class="e">Read one foundational book before placing trades. Knowledge compounds faster than losses.</div></div></div>
+<div class="tip"><span class="n">5</span><div class="body"><div class="h">Accept slow growth.</div><div class="e">You are not behind. You are early. Begin where you are without apology.</div></div></div></td><td><div class="tip"><span class="n">6</span><div class="body"><div class="h">Define your edge.</div><div class="e">Name the specific condition where you have statistical advantage. If you cannot describe it, you do not have one yet.</div></div></div>
+<div class="tip"><span class="n">7</span><div class="body"><div class="h">Map your timeframe.</div><div class="e">Decide whether you are a scalper, day trader, swing trader, or position trader. Stop trading across all of them.</div></div></div>
+<div class="tip"><span class="n">8</span><div class="body"><div class="h">Set capital limits.</div><div class="e">Decide today the maximum capital you are willing to lose entirely. Anything beyond that is not risk capital.</div></div></div>
+<div class="tip"><span class="n">9</span><div class="body"><div class="h">Plan your week.</div><div class="e">Schedule study, review, and trading sessions in advance. Improvisation guarantees inconsistency.</div></div></div>
+<div class="tip"><span class="n">10</span><div class="body"><div class="h">Define success metrics.</div><div class="e">Track process metrics, not just profit. Measure what you can control before measuring what you cannot.</div></div></div></td><td><div class="tip"><span class="n">11</span><div class="body"><div class="h">Build playbook depth.</div><div class="e">Document every setup you trade with entry, stop, target, and invalidation. A trader without a playbook is a gambler with vocabulary.</div></div></div>
+<div class="tip"><span class="n">12</span><div class="body"><div class="h">Identify regime shifts.</div><div class="e">Markets behave differently in trends, ranges, and volatility expansions. Plan strategies for each.</div></div></div>
+<div class="tip"><span class="n">13</span><div class="body"><div class="h">Stress test plans.</div><div class="e">Imagine your worst week. Plan how you will respond before it arrives.</div></div></div>
+<div class="tip"><span class="n">14</span><div class="body"><div class="h">Schedule strategic reviews.</div><div class="e">Block calendar time monthly for full system review. What is not scheduled does not get improved.</div></div></div>
+<div class="tip"><span class="n">15</span><div class="body"><div class="h">Plan exit conditions.</div><div class="e">Decide in advance what would cause you to stop trading a strategy. Without exit criteria, you will ride dead methods into the ground.</div></div></div></td><td><div class="tip"><span class="n">16</span><div class="body"><div class="h">Design portfolio architecture.</div><div class="e">Allocate capital across uncorrelated strategies. Concentration is a tax on maturity.</div></div></div>
+<div class="tip"><span class="n">17</span><div class="body"><div class="h">Build redundancy layers.</div><div class="e">Backup systems, backup brokers, backup internet. Failure visits prepared traders less violently.</div></div></div>
+<div class="tip"><span class="n">18</span><div class="body"><div class="h">Plan tax efficiency.</div><div class="e">Trading without tax planning is bleeding profit silently. Engage professionals annually.</div></div></div>
+<div class="tip"><span class="n">19</span><div class="body"><div class="h">Model worst case.</div><div class="e">Run scenarios assuming 30% drawdowns. If you cannot survive them mentally and financially, restructure now.</div></div></div>
+<div class="tip"><span class="n">20</span><div class="body"><div class="h">Plan capacity limits.</div><div class="e">Strategy returns degrade with size. Know your ceiling before reaching it.</div></div></div></td><td><div class="tip"><span class="n">21</span><div class="body"><div class="h">Design legacy systems.</div><div class="e">Build structures that outlast your active career. Mastery is measured in what survives you.</div></div></div>
+<div class="tip"><span class="n">22</span><div class="body"><div class="h">Plan generational wealth.</div><div class="e">Trade not just for income but for inheritance. The long journey serves more than yourself.</div></div></div></td></tr>
+<tr><th class="cat-header"><div class="cat-num">2</div><div class="cat-title">PREPARATION</div><div class="cat-sub">Strengthening the Body, Mind, and Systems</div></th><td><div class="tip"><span class="n">23</span><div class="body"><div class="h">Sleep is alpha.</div><div class="e">Seven hours minimum. Tired traders make terrible decisions. Protect sleep aggressively.</div></div></div>
+<div class="tip"><span class="n">24</span><div class="body"><div class="h">Hydrate before trading.</div><div class="e">Dehydration reduces cognitive performance measurably. Drink water before opening the chart.</div></div></div>
+<div class="tip"><span class="n">25</span><div class="body"><div class="h">Eat for focus.</div><div class="e">Heavy meals dull judgment. Eat clean before market hours.</div></div></div>
+<div class="tip"><span class="n">26</span><div class="body"><div class="h">Clear the environment.</div><div class="e">Remove distractions from your workspace. Visual noise becomes cognitive noise.</div></div></div>
+<div class="tip"><span class="n">27</span><div class="body"><div class="h">Practice patience daily.</div><div class="e">Sit quietly five minutes before the open. Stillness precedes execution.</div></div></div></td><td><div class="tip"><span class="n">28</span><div class="body"><div class="h">Journal before sessions.</div><div class="e">Write your mental state, biases, and intentions before trading. Awareness precedes discipline.</div></div></div>
+<div class="tip"><span class="n">29</span><div class="body"><div class="h">Review yesterday first.</div><div class="e">Never start a session without reviewing the prior day. Memory without review becomes story.</div></div></div>
+<div class="tip"><span class="n">30</span><div class="body"><div class="h">Pre-mark levels.</div><div class="e">Identify key support, resistance, and reaction zones before the open. Decisions in real time should already be partially made.</div></div></div>
+<div class="tip"><span class="n">31</span><div class="body"><div class="h">Practice physical readiness.</div><div class="e">Stretch, walk, breathe. The body is the platform of the mind.</div></div></div>
+<div class="tip"><span class="n">32</span><div class="body"><div class="h">Limit caffeine spikes.</div><div class="e">Caffeine masks fatigue but does not replace rest. Use sparingly.</div></div></div></td><td><div class="tip"><span class="n">33</span><div class="body"><div class="h">Rehearse mentally.</div><div class="e">Visualize executing setups before market open. Mental rehearsal builds neural pathways.</div></div></div>
+<div class="tip"><span class="n">34</span><div class="body"><div class="h">Prepare contingency responses.</div><div class="e">Decide in advance how you will respond to gaps, news shocks, and unexpected volatility.</div></div></div>
+<div class="tip"><span class="n">35</span><div class="body"><div class="h">Calibrate position sizing.</div><div class="e">Adjust size based on volatility, not emotion. Volatility is the speed of risk.</div></div></div>
+<div class="tip"><span class="n">36</span><div class="body"><div class="h">Maintain technical hygiene.</div><div class="e">Update software, check feeds, test alerts daily. Equipment failure is preventable failure.</div></div></div>
+<div class="tip"><span class="n">37</span><div class="body"><div class="h">Protect deep work.</div><div class="e">Block social media during analysis sessions. Attention is the rarest professional asset.</div></div></div></td><td><div class="tip"><span class="n">38</span><div class="body"><div class="h">Train physical resilience.</div><div class="e">Trading is endurance. Exercise four times weekly minimum. Mental stamina sits on physical foundation.</div></div></div>
+<div class="tip"><span class="n">39</span><div class="body"><div class="h">Manage cognitive load.</div><div class="e">Reduce non-trading decisions during market hours. Decision fatigue is real and expensive.</div></div></div>
+<div class="tip"><span class="n">40</span><div class="body"><div class="h">Build recovery rituals.</div><div class="e">Schedule decompression after sessions. Unprocessed stress accumulates as bias.</div></div></div>
+<div class="tip"><span class="n">41</span><div class="body"><div class="h">Cultivate boredom tolerance.</div><div class="e">Most preparation is repetitive. Mastery requires loving the unglamorous middle.</div></div></div>
+<div class="tip"><span class="n">42</span><div class="body"><div class="h">Audit information diet.</div><div class="e">Eliminate noisy sources. Signal quality determines decision quality.</div></div></div></td><td><div class="tip"><span class="n">43</span><div class="body"><div class="h">Preserve nervous system.</div><div class="e">Years of trading tax the body. Prioritize long-term physiological maintenance.</div></div></div>
+<div class="tip"><span class="n">44</span><div class="body"><div class="h">Steward mental clarity.</div><div class="e">Protect your mind as you would protect capital. Both compound when guarded.</div></div></div></td></tr>
+<tr><th class="cat-header"><div class="cat-num">3</div><div class="cat-title">EXECUTION</div><div class="cat-sub">Acting Under Pressure</div></th><td><div class="tip"><span class="n">45</span><div class="body"><div class="h">Set the stop.</div><div class="e">Never enter without a predefined stop loss. Trading without stops is donating capital.</div></div></div>
+<div class="tip"><span class="n">46</span><div class="body"><div class="h">Honor the rails.</div><div class="e">Once rules are set, follow them. Negotiating with yourself mid-trade is the beginning of ruin.</div></div></div>
+<div class="tip"><span class="n">47</span><div class="body"><div class="h">Trade small first.</div><div class="e">Size up only after consistency. Confidence is earned, not assumed.</div></div></div>
+<div class="tip"><span class="n">48</span><div class="body"><div class="h">Accept being wrong.</div><div class="e">Losses are tuition. Pay them quickly and stay enrolled.</div></div></div>
+<div class="tip"><span class="n">49</span><div class="body"><div class="h">Press the button.</div><div class="e">Hesitation kills setups. When the plan triggers, execute.</div></div></div></td><td><div class="tip"><span class="n">50</span><div class="body"><div class="h">Risk one percent.</div><div class="e">Never risk more than 1% of account on a single trade. Survival precedes performance.</div></div></div>
+<div class="tip"><span class="n">51</span><div class="body"><div class="h">Trade your plan.</div><div class="e">Not the news. Not the chat room. Not the feeling. Only the plan.</div></div></div>
+<div class="tip"><span class="n">52</span><div class="body"><div class="h">Walk away winning.</div><div class="e">After a strong session, stop. Greed gives back gifts the market rarely offers twice.</div></div></div>
+<div class="tip"><span class="n">53</span><div class="body"><div class="h">Cut losses quickly.</div><div class="e">Small losses keep the door open. Large losses close it.</div></div></div>
+<div class="tip"><span class="n">54</span><div class="body"><div class="h">Avoid revenge trades.</div><div class="e">A loss is information, not an insult. Do not chase the market for emotional restitution.</div></div></div></td><td><div class="tip"><span class="n">55</span><div class="body"><div class="h">Scale into conviction.</div><div class="e">Add to winners, not losers. Average up, not down.</div></div></div>
+<div class="tip"><span class="n">56</span><div class="body"><div class="h">Trust the setup.</div><div class="e">If conditions match the playbook, execute without second-guessing. Doubt belongs in review, not execution.</div></div></div>
+<div class="tip"><span class="n">57</span><div class="body"><div class="h">Manage the middle.</div><div class="e">Most trades fail in the middle, not at entry or exit. Predefine management rules.</div></div></div>
+<div class="tip"><span class="n">58</span><div class="body"><div class="h">Respect the regime.</div><div class="e">Trade trend strategies in trends, mean reversion in ranges. Forcing methods on wrong regimes destroys edges.</div></div></div>
+<div class="tip"><span class="n">59</span><div class="body"><div class="h">Embrace incomplete information.</div><div class="e">You will never have full clarity. Act on probability, not certainty.</div></div></div></td><td><div class="tip"><span class="n">60</span><div class="body"><div class="h">Execute mechanically.</div><div class="e">Discretion within structure, never structure within discretion.</div></div></div>
+<div class="tip"><span class="n">61</span><div class="body"><div class="h">Honor stop hierarchy.</div><div class="e">Time stops, technical stops, volatility stops. Each protects against a different failure mode.</div></div></div>
+<div class="tip"><span class="n">62</span><div class="body"><div class="h">Detach from outcome.</div><div class="e">Judge execution by process adherence. Outcome is a lagging indicator.</div></div></div>
+<div class="tip"><span class="n">63</span><div class="body"><div class="h">Reduce after drawdown.</div><div class="e">Cut size during cold streaks. Survival mode preserves opportunity for the warm streak ahead.</div></div></div>
+<div class="tip"><span class="n">64</span><div class="body"><div class="h">Increase only after consistency.</div><div class="e">Scale up only after sustained profitable consistency. Premature scaling magnifies weakness.</div></div></div></td><td><div class="tip"><span class="n">65</span><div class="body"><div class="h">Operate from stillness.</div><div class="e">The deepest execution comes from quiet presence, not aggressive force.</div></div></div>
+<div class="tip"><span class="n">66</span><div class="body"><div class="h">Move with the market.</div><div class="e">Do not impose. Respond. The market leads. The master follows precisely.</div></div></div></td></tr>
+<tr><th class="cat-header"><div class="cat-num">4</div><div class="cat-title">ASSESSMENT</div><div class="cat-sub">Learning from Every Step</div></th><td><div class="tip"><span class="n">67</span><div class="body"><div class="h">Review every trade.</div><div class="e">Win or lose, study it. Each chart is a teacher if you bother to listen.</div></div></div>
+<div class="tip"><span class="n">68</span><div class="body"><div class="h">Screenshot every setup.</div><div class="e">Build a visual library of your own decisions. Pattern recognition develops through repetition.</div></div></div>
+<div class="tip"><span class="n">69</span><div class="body"><div class="h">Name the mistake.</div><div class="e">If you broke a rule, write which rule and why. Vague reflection produces vague improvement.</div></div></div>
+<div class="tip"><span class="n">70</span><div class="body"><div class="h">Track emotional state.</div><div class="e">Note your feelings before, during, and after each trade. Emotion is data, not weakness.</div></div></div>
+<div class="tip"><span class="n">71</span><div class="body"><div class="h">Celebrate process wins.</div><div class="e">Did you follow the plan? That is the real victory. Outcome is secondary to discipline.</div></div></div></td><td><div class="tip"><span class="n">72</span><div class="body"><div class="h">Score the session.</div><div class="e">Rate execution quality from one to ten daily. Numbers make patterns visible.</div></div></div>
+<div class="tip"><span class="n">73</span><div class="body"><div class="h">Separate luck from skill.</div><div class="e">A winning trade made on broken rules is a dangerous teacher. Punish bad process even when it pays.</div></div></div>
+<div class="tip"><span class="n">74</span><div class="body"><div class="h">Find repeating errors.</div><div class="e">Most traders make the same five mistakes endlessly. Identify yours and attack them directly.</div></div></div>
+<div class="tip"><span class="n">75</span><div class="body"><div class="h">Compare planned to actual.</div><div class="e">Where did execution diverge from intention? That gap is where growth lives.</div></div></div>
+<div class="tip"><span class="n">76</span><div class="body"><div class="h">Weekly written review.</div><div class="e">End every week with a written summary. Reflection without writing fades within hours.</div></div></div></td><td><div class="tip"><span class="n">77</span><div class="body"><div class="h">Quantify your edge.</div><div class="e">Calculate win rate, average win, average loss, expectancy. Feelings lie. Numbers do not.</div></div></div>
+<div class="tip"><span class="n">78</span><div class="body"><div class="h">Audit by setup type.</div><div class="e">Some setups carry your edge. Some bleed quietly. Cut what does not earn its place.</div></div></div>
+<div class="tip"><span class="n">79</span><div class="body"><div class="h">Review drawdown behavior.</div><div class="e">Study how you behave during losing streaks. That is your true trading character.</div></div></div>
+<div class="tip"><span class="n">80</span><div class="body"><div class="h">Conduct quarterly reviews.</div><div class="e">Zoom out. Patterns invisible weekly become obvious quarterly.</div></div></div>
+<div class="tip"><span class="n">81</span><div class="body"><div class="h">Track behavioral drift.</div><div class="e">Are you sizing up emotionally? Holding too long? Skipping stops? Drift kills accounts slowly.</div></div></div></td><td><div class="tip"><span class="n">82</span><div class="body"><div class="h">Benchmark against self.</div><div class="e">Compare yourself to your own twelve-month trailing performance, not to others.</div></div></div>
+<div class="tip"><span class="n">83</span><div class="body"><div class="h">Stress test results.</div><div class="e">Strip out your best month. Strip out your luckiest trade. What remains is your real edge.</div></div></div>
+<div class="tip"><span class="n">84</span><div class="body"><div class="h">Audit risk exposure.</div><div class="e">Measure correlation between positions. Hidden concentration is hidden danger.</div></div></div>
+<div class="tip"><span class="n">85</span><div class="body"><div class="h">Examine identity drift.</div><div class="e">Are you still trading the strategy you claim to trade? Identity erodes quietly under pressure.</div></div></div>
+<div class="tip"><span class="n">86</span><div class="body"><div class="h">Conduct annual postmortems.</div><div class="e">A full year reviewed honestly reveals truths no week can show.</div></div></div></td><td><div class="tip"><span class="n">87</span><div class="body"><div class="h">Teach to deepen mastery.</div><div class="e">Explaining your craft to others exposes weak reasoning. Teaching is advanced learning.</div></div></div>
+<div class="tip"><span class="n">88</span><div class="body"><div class="h">Refine the system continuously.</div><div class="e">No edge lasts forever. Markets adapt. Masters adapt faster.</div></div></div></td></tr>
+<tr><th class="cat-header"><div class="cat-num">5</div><div class="cat-title">EMOTIONAL REGULATION</div><div class="cat-sub">The Inner Game</div></th><td colspan="5" class="flat-cell"><div class="tip"><span class="n">89</span><div class="body"><div class="h">Breathe before reacting.</div><div class="e">Four seconds in, four seconds out. The pause between stimulus and response is where mastery lives.</div></div></div>
+<div class="tip"><span class="n">90</span><div class="body"><div class="h">Name the emotion.</div><div class="e">Fear, greed, frustration, euphoria. Labeling reduces emotional grip immediately.</div></div></div>
+<div class="tip"><span class="n">91</span><div class="body"><div class="h">Step away first.</div><div class="e">When triggered, leave the screen. No good decision is made in emotional flood.</div></div></div>
+<div class="tip"><span class="n">92</span><div class="body"><div class="h">Sleep on big choices.</div><div class="e">Major strategic decisions deserve overnight processing. Urgency is usually illusion.</div></div></div>
+<div class="tip"><span class="n">93</span><div class="body"><div class="h">Forgive yourself quickly.</div><div class="e">Mistakes are tuition. Self-punishment is interest you do not owe.</div></div></div>
+<div class="tip"><span class="n">94</span><div class="body"><div class="h">Detach identity from trades.</div><div class="e">You are not your P&amp;L. You are the trader executing the process behind it.</div></div></div></td></tr>
+<tr><th class="cat-header"><div class="cat-num">6</div><div class="cat-title">RISK MANAGEMENT</div><div class="cat-sub">The Sacred Discipline</div></th><td colspan="5" class="flat-cell"><div class="tip"><span class="n">95</span><div class="body"><div class="h">Survival is strategy.</div><div class="e">Stay in the game long enough and edges compound. Blow up once and the journey ends.</div></div></div>
+<div class="tip"><span class="n">96</span><div class="body"><div class="h">Risk fixed amounts.</div><div class="e">Predefined, consistent risk per trade. Variable risk produces variable mindset.</div></div></div>
+<div class="tip"><span class="n">97</span><div class="body"><div class="h">Hard stops always.</div><div class="e">Mental stops are negotiable stops. Negotiable stops become catastrophic stops.</div></div></div>
+<div class="tip"><span class="n">98</span><div class="body"><div class="h">Daily loss limits.</div><div class="e">When the limit hits, close the platform. The market will be there tomorrow. Make sure you are too.</div></div></div></td></tr>
+<tr><th class="cat-header"><div class="cat-num">7</div><div class="cat-title">CONTINUOUS IMPROVEMENT</div><div class="cat-sub">The Long Journey</div></th><td colspan="5" class="flat-cell"><div class="tip"><span class="n">99</span><div class="body"><div class="h">Improve one percent.</div><div class="e">Small daily improvements compound into mastery. The mountain is climbed in inches.</div></div></div>
+<div class="tip"><span class="n">100</span><div class="body"><div class="h">Stay the course.</div><div class="e">You will fail. You will doubt. You will want to quit. Do not. The traders who arrive are simply the ones who did not stop walking.</div></div></div></td></tr>
+</tbody>
+</table>
+
+<footer>Source: <code>drafts/ken-material/source/100-tips-getting-started.md</code> · regenerate via <code>python3 /tmp/build_100_tips_glance.py</code></footer>
+
+</body>
+</html>
