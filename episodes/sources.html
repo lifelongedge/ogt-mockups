@@ -71,7 +71,8 @@
 
   .badge { display: inline-block; padding: 0.18rem 0.55rem; border-radius: 3px; font-size: 0.7rem; font-family: "SF Mono", Menlo, monospace; letter-spacing: 0.05em; }
   .badge-pd { background: rgba(109,187,109,0.12); color: var(--green); border: 1px solid rgba(109,187,109,0.3); }
-  .badge-vs { background: rgba(93,186,203,0.12); color: var(--blue); border: 1px solid rgba(93,186,203,0.3); }
+  .badge-as { background: rgba(93,186,203,0.12); color: var(--blue); border: 1px solid rgba(93,186,203,0.3); }
+  .badge-vo { background: rgba(212,165,89,0.14); color: var(--gold); border: 1px solid rgba(212,165,89,0.4); }
   .badge-raw { background: rgba(196,126,83,0.12); color: var(--red); border: 1px solid rgba(196,126,83,0.3); }
 
   .treatment-cell { white-space: nowrap; }
@@ -91,15 +92,21 @@
 
   <header class="page-header">
     <h1>Episode Video Sources</h1>
-    <p class="subtitle">Open each YouTube link at the marked timestamp, watch the segment, decide whether the episode wants the raw clip or a Voice + Slides treatment, then tell me which you want.</p>
+    <p class="subtitle">Open each YouTube link at the marked timestamp, watch the segment, decide which of three treatments fits (Raw, A+S, or V+O), and tell me which you want.</p>
   </header>
 
   <section class="process-card">
     <h2>Going-forward process</h2>
     <p><strong>Step 1.</strong> For each new episode, I post the YouTube link with the start timestamp + the range I'd extract.</p>
-    <p><strong>Step 2.</strong> You watch and decide: <span class="badge badge-raw">Raw Clip</span> (Ken's screen + audio as-is), <span class="badge badge-vs">V+S</span> (audio + typographic slides), or <span class="badge badge-pd">Public Domain</span> override.</p>
+    <p><strong>Step 2.</strong> You pick one of three treatments:</p>
+    <ul style="color: var(--dim); margin: 0 0 0.8rem 1.2rem; padding: 0;">
+      <li><span class="badge badge-raw">Raw</span> — source video trimmed to the time range, no edits. Use when the visual is the point and stands alone.</li>
+      <li><span class="badge badge-as">A+S</span> — Audio + Slides. Ken's audio extracted, typographic slides timed to narration. Use when the screen-share is unrelated noise.</li>
+      <li><span class="badge badge-vo">V+O</span> — Video + Overlay. Source video plays; brief text overlays (top or bottom, ~60% width, centered) reinforce the key principle Ken is verbalizing. Use when the visual <em>is</em> relevant but the principle wants pinning down on screen.</li>
+      <li><span class="badge badge-pd">PD</span> — Public-domain override (Livermore, Seykota, pre-1972 footage).</li>
+    </ul>
     <p><strong>Step 3.</strong> I build it your way and push.</p>
-    <p style="color: var(--faint); font-size: 0.88rem; margin-top: 0.8rem;">The current 10 are all V+S because the source clips share screens that aren't relevant to the audio. Anywhere the visual <em>is</em> relevant (a chart Ken's walking through, a Bandy run, a TC2000 layout), the call should default to Raw Clip.</p>
+    <p style="color: var(--faint); font-size: 0.85rem; margin-top: 0.8rem;"><strong>V+O spec:</strong> overlays land medium-density (1 every 15–25s, one beat each). Locked style: optional gold Georgia headline + ink-white body on a dark scrim; position top|bottom per-overlay. Safe zones: bottom ≥12% from edge (clears controls), top ≥8% from edge (clears Zoom name tags). 350ms fade.</p>
   </section>
 
   <section>
@@ -128,7 +135,7 @@
             <a class="yt-link" href="https://youtu.be/q-df0MVvWBA?t=2559" target="_blank" rel="noopener">▶ open at 42:39</a>
             <span class="yt-range">range 42:39–47:55 · 5:16</span>
           </td>
-          <td class="treatment-cell"><span class="badge badge-vs">V+S</span></td>
+          <td class="treatment-cell"><span class="badge badge-as">A+S</span></td>
         </tr>
 
         <tr>
@@ -144,7 +151,7 @@
             <a class="yt-link" href="https://youtu.be/XvcsfWFFW20?t=6183" target="_blank" rel="noopener">▶ open at 1:43:03</a>
             <span class="yt-range">range 1:43:03–1:46:00 · 2:57</span>
           </td>
-          <td class="treatment-cell"><span class="badge badge-vs">V+S</span></td>
+          <td class="treatment-cell"><span class="badge badge-as">A+S</span></td>
         </tr>
 
         <tr>
@@ -160,7 +167,7 @@
             <a class="yt-link" href="https://youtu.be/XvcsfWFFW20?t=0" target="_blank" rel="noopener">▶ open at 0:00</a>
             <span class="yt-range">range 0:00–5:00 · 5:00</span>
           </td>
-          <td class="treatment-cell"><span class="badge badge-vs">V+S</span></td>
+          <td class="treatment-cell"><span class="badge badge-as">A+S</span></td>
         </tr>
 
         <tr>
@@ -176,7 +183,7 @@
             <a class="yt-link" href="https://youtu.be/zIfkgC7ZPiQ?t=0" target="_blank" rel="noopener">▶ open at 0:00</a>
             <span class="yt-range">range 0:00–5:00 · 5:00</span>
           </td>
-          <td class="treatment-cell"><span class="badge badge-pd">PD · V+S</span></td>
+          <td class="treatment-cell"><span class="badge badge-pd">PD · A+S</span></td>
         </tr>
 
         <tr>
@@ -192,7 +199,7 @@
             <a class="yt-link" href="https://youtu.be/3jnbqQEniyQ?t=1290" target="_blank" rel="noopener">▶ open at 21:30</a>
             <span class="yt-range">range 21:30–26:32 · 5:02 (wider context to 30:30 if you want)</span>
           </td>
-          <td class="treatment-cell"><span class="badge badge-vs">V+S</span></td>
+          <td class="treatment-cell"><span class="badge badge-as">A+S</span></td>
         </tr>
 
         <tr>
@@ -208,7 +215,7 @@
             <a class="yt-link" href="https://youtu.be/po4nlpEJlHo?t=0" target="_blank" rel="noopener">▶ open at 0:00</a>
             <span class="yt-range">range 0:00–5:00 · 5:00</span>
           </td>
-          <td class="treatment-cell"><span class="badge badge-vs">V+S</span></td>
+          <td class="treatment-cell"><span class="badge badge-as">A+S</span></td>
         </tr>
 
         <tr>
@@ -224,7 +231,7 @@
             <a class="yt-link" href="https://youtu.be/q-df0MVvWBA?t=780" target="_blank" rel="noopener">▶ open at 13:00</a>
             <span class="yt-range">range 13:00–19:46 · 6:46</span>
           </td>
-          <td class="treatment-cell"><span class="badge badge-vs">V+S</span></td>
+          <td class="treatment-cell"><span class="badge badge-as">A+S</span></td>
         </tr>
 
         <tr>
@@ -240,7 +247,7 @@
             <a class="yt-link" href="https://youtu.be/1FMcKTYaHMo?t=3092" target="_blank" rel="noopener">▶ open at 51:32</a>
             <span class="yt-range">range 51:32–57:00 · 5:28</span>
           </td>
-          <td class="treatment-cell"><span class="badge badge-vs">V+S</span></td>
+          <td class="treatment-cell"><span class="badge badge-as">A+S</span></td>
         </tr>
 
         <tr>
@@ -256,7 +263,7 @@
             <a class="yt-link" href="https://youtu.be/FwN2-8pfg0o?t=0" target="_blank" rel="noopener">▶ open at 0:00</a>
             <span class="yt-range">range 0:00–5:00 · 5:00</span>
           </td>
-          <td class="treatment-cell"><span class="badge badge-vs">V+S</span></td>
+          <td class="treatment-cell"><span class="badge badge-as">A+S</span></td>
         </tr>
 
         <tr>
@@ -272,16 +279,17 @@
             <a class="yt-link" href="https://youtu.be/apk9GWC17Zw?t=4629" target="_blank" rel="noopener">▶ open at 1:17:09</a>
             <span class="yt-range">range 1:17:09–1:21:30 · 4:21</span>
           </td>
-          <td class="treatment-cell"><span class="badge badge-vs">V+S</span></td>
+          <td class="treatment-cell"><span class="badge badge-as">A+S</span></td>
         </tr>
 
       </tbody>
     </table>
 
     <p class="legend">
-      <span class="badge badge-raw">Raw Clip</span> Ken's source video unedited (audio + shared screen) ·
-      <span class="badge badge-vs">V+S</span> Voice + Slides (audio extracted, typographic slides timed to narration) ·
-      <span class="badge badge-pd">PD</span> Public-domain override
+      <span class="badge badge-raw">Raw</span> source video trimmed, no edits ·
+      <span class="badge badge-as">A+S</span> Audio + Slides (audio extracted, typographic slides timed to narration) ·
+      <span class="badge badge-vo">V+O</span> Video + Overlay (source plays, brief text overlays reinforce the principle) ·
+      <span class="badge badge-pd">PD</span> public-domain override
     </p>
   </section>
 
@@ -289,7 +297,7 @@
     <h2>How to give feedback</h2>
     <p>Reply with the episode number and the verdict — e.g.</p>
     <p style="font-family: 'SF Mono', Menlo, monospace; font-size: 0.88rem; color: var(--gold); background: #0e0e0c; padding: 0.6rem 0.8rem; border-radius: 4px; border: 1px solid var(--line);">
-      ep1 keep V+S · ep2 raw · ep3 V+S · ep4 PD raw · ep5 raw start at 22:10 ...
+      ep1 keep A+S · ep2 raw · ep3 V+O · ep4 PD raw · ep5 raw start at 22:10 ...
     </p>
     <p style="color: var(--dim); font-size: 0.88rem;">Any timestamp tweak is fair (extend, shorten, shift start) — I'll rebuild only what changes.</p>
   </section>
