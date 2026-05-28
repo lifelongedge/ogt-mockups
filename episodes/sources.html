@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Episode Video Sources — Getting Started · OGT</title>
+<style>
+  :root {
+    --bg: #0e0e0c; --card: #181815; --line: #2a2925;
+    --fg: #e8e6df; --dim: #9c978a; --faint: #5d594f; --gold: #d4a559;
+    --green: #6dbb6d; --red: #c47e53; --blue: #5dbacb;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    background: var(--bg); color: var(--fg); font-size: 15px; line-height: 1.55;
+  }
+  .topbar {
+    background: #14140f; border-bottom: 1px solid var(--line);
+    padding: 0.7rem 1.4rem; display: flex; align-items: center; gap: 1.5rem;
+    position: sticky; top: 0; z-index: 10;
+  }
+  .topbar .crumb { color: var(--dim); font-size: 0.82rem; font-family: "SF Mono", Menlo, monospace; letter-spacing: 0.05em; text-transform: uppercase; }
+  .topbar .crumb a { color: var(--dim); text-decoration: none; border-bottom: 1px dotted var(--faint); }
+  .topbar .crumb a:hover { color: var(--gold); }
+
+  main { max-width: 1080px; margin: 0 auto; padding: 2rem 1.6rem 4rem; }
+
+  header.page-header { margin-bottom: 2rem; }
+  h1 { font-family: Georgia, serif; font-weight: 400; color: var(--gold); font-size: 2.2rem; margin: 0.3rem 0 0.5rem; line-height: 1.15; }
+  .subtitle { color: var(--dim); font-size: 1.02rem; line-height: 1.55; max-width: 70ch; font-style: italic; }
+
+  section { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 1.4rem 1.6rem; margin-bottom: 1.3rem; }
+  section h2 { font-family: Georgia, serif; color: var(--gold); font-size: 1.2rem; font-weight: 400; margin: 0 0 0.9rem; }
+  section p { color: var(--fg); margin: 0 0 0.8rem; }
+
+  .process-card { border-left: 3px solid var(--gold); padding-left: 1rem; }
+  .process-card p { color: var(--dim); }
+  .process-card strong { color: var(--fg); }
+
+  table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+  thead th {
+    text-align: left; padding: 0.6rem 0.7rem; border-bottom: 1px solid var(--line);
+    color: var(--gold); font-family: Georgia, serif; font-weight: 400; font-size: 0.9rem;
+  }
+  tbody td {
+    padding: 0.8rem 0.7rem; border-bottom: 1px solid var(--line); vertical-align: top;
+  }
+  tbody tr:last-child td { border-bottom: 0; }
+  tbody tr:hover { background: rgba(212,165,89,0.04); }
+
+  .ep-cell { white-space: nowrap; }
+  .ep-cell .ep-num { font-family: "SF Mono", Menlo, monospace; color: var(--gold); font-size: 0.78rem; letter-spacing: 0.08em; }
+  .ep-cell .ep-title { display: block; color: var(--fg); font-weight: 500; margin-top: 0.15rem; }
+  .ep-cell a { color: inherit; text-decoration: none; border-bottom: 1px dotted var(--faint); }
+  .ep-cell a:hover { color: var(--gold); border-bottom-color: var(--gold); }
+
+  .source-cell { color: var(--dim); }
+  .source-cell .src-title { color: var(--fg); font-style: italic; display: block; margin-bottom: 0.25rem; }
+  .source-cell .src-id { font-family: "SF Mono", Menlo, monospace; color: var(--faint); font-size: 0.78rem; }
+
+  .yt-link {
+    display: inline-block; padding: 0.35rem 0.7rem; border-radius: 4px;
+    background: rgba(212,165,89,0.08); border: 1px solid rgba(212,165,89,0.3);
+    color: var(--gold); text-decoration: none; font-family: "SF Mono", Menlo, monospace;
+    font-size: 0.78rem; letter-spacing: 0.03em; transition: all 0.12s;
+  }
+  .yt-link:hover { background: rgba(212,165,89,0.15); border-color: var(--gold); }
+  .yt-range { display: block; font-family: "SF Mono", Menlo, monospace; color: var(--dim); font-size: 0.78rem; margin-top: 0.3rem; }
+
+  .badge { display: inline-block; padding: 0.18rem 0.55rem; border-radius: 3px; font-size: 0.7rem; font-family: "SF Mono", Menlo, monospace; letter-spacing: 0.05em; }
+  .badge-pd { background: rgba(109,187,109,0.12); color: var(--green); border: 1px solid rgba(109,187,109,0.3); }
+  .badge-vs { background: rgba(93,186,203,0.12); color: var(--blue); border: 1px solid rgba(93,186,203,0.3); }
+  .badge-raw { background: rgba(196,126,83,0.12); color: var(--red); border: 1px solid rgba(196,126,83,0.3); }
+
+  .treatment-cell { white-space: nowrap; }
+  .treatment-cell .note { display: block; color: var(--faint); font-size: 0.75rem; margin-top: 0.3rem; font-style: italic; }
+
+  .legend { color: var(--dim); font-size: 0.85rem; margin-top: 0.6rem; }
+  .legend .badge { margin-right: 0.4rem; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="crumb"><a href="./index.html">Course Index</a> · Video Sources</div>
+</div>
+
+<main>
+
+  <header class="page-header">
+    <h1>Episode Video Sources</h1>
+    <p class="subtitle">Open each YouTube link at the marked timestamp, watch the segment, decide whether the episode wants the raw clip or a Voice + Slides treatment, then tell me which you want.</p>
+  </header>
+
+  <section class="process-card">
+    <h2>Going-forward process</h2>
+    <p><strong>Step 1.</strong> For each new episode, I post the YouTube link with the start timestamp + the range I'd extract.</p>
+    <p><strong>Step 2.</strong> You watch and decide: <span class="badge badge-raw">Raw Clip</span> (Ken's screen + audio as-is), <span class="badge badge-vs">V+S</span> (audio + typographic slides), or <span class="badge badge-pd">Public Domain</span> override.</p>
+    <p><strong>Step 3.</strong> I build it your way and push.</p>
+    <p style="color: var(--faint); font-size: 0.88rem; margin-top: 0.8rem;">The current 10 are all V+S because the source clips share screens that aren't relevant to the audio. Anywhere the visual <em>is</em> relevant (a chart Ken's walking through, a Bandy run, a TC2000 layout), the call should default to Raw Clip.</p>
+  </section>
+
+  <section>
+    <h2>Episodes 1–10 sources</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Ep</th>
+          <th>Source</th>
+          <th>YouTube (jump to start)</th>
+          <th>Current</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr>
+          <td class="ep-cell">
+            <span class="ep-num">EP. 01</span>
+            <a href="./01-set-your-reason.html" class="ep-title">Set Your Reason</a>
+          </td>
+          <td class="source-cell">
+            <span class="src-title">Really Good Sunday — Four Brothers framework</span>
+            <span class="src-id">yt: q-df0MVvWBA</span>
+          </td>
+          <td>
+            <a class="yt-link" href="https://youtu.be/q-df0MVvWBA?t=2559" target="_blank" rel="noopener">▶ open at 42:39</a>
+            <span class="yt-range">range 42:39–47:55 · 5:16</span>
+          </td>
+          <td class="treatment-cell"><span class="badge badge-vs">V+S</span></td>
+        </tr>
+
+        <tr>
+          <td class="ep-cell">
+            <span class="ep-num">EP. 02</span>
+            <a href="./02-pick-your-lane.html" class="ep-title">Pick Your Lane</a>
+          </td>
+          <td class="source-cell">
+            <span class="src-title">Cohort 6 — specialty + signal/system dominance</span>
+            <span class="src-id">yt: XvcsfWFFW20</span>
+          </td>
+          <td>
+            <a class="yt-link" href="https://youtu.be/XvcsfWFFW20?t=6183" target="_blank" rel="noopener">▶ open at 1:43:03</a>
+            <span class="yt-range">range 1:43:03–1:46:00 · 2:57</span>
+          </td>
+          <td class="treatment-cell"><span class="badge badge-vs">V+S</span></td>
+        </tr>
+
+        <tr>
+          <td class="ep-cell">
+            <span class="ep-num">EP. 03</span>
+            <a href="./03-build-your-plan.html" class="ep-title">Build Your Plan</a>
+          </td>
+          <td class="source-cell">
+            <span class="src-title">Cohort 6 — tomorrow's plan, 3 categories</span>
+            <span class="src-id">yt: XvcsfWFFW20</span>
+          </td>
+          <td>
+            <a class="yt-link" href="https://youtu.be/XvcsfWFFW20?t=0" target="_blank" rel="noopener">▶ open at 0:00</a>
+            <span class="yt-range">range 0:00–5:00 · 5:00</span>
+          </td>
+          <td class="treatment-cell"><span class="badge badge-vs">V+S</span></td>
+        </tr>
+
+        <tr>
+          <td class="ep-cell">
+            <span class="ep-num">EP. 04</span>
+            <a href="./04-foundational-books.html" class="ep-title">Foundational Books</a>
+          </td>
+          <td class="source-cell">
+            <span class="src-title">Reminiscences of a Stock Operator — Livermore patience monologue</span>
+            <span class="src-id">yt: zIfkgC7ZPiQ (public domain — Livermore d. 1940)</span>
+          </td>
+          <td>
+            <a class="yt-link" href="https://youtu.be/zIfkgC7ZPiQ?t=0" target="_blank" rel="noopener">▶ open at 0:00</a>
+            <span class="yt-range">range 0:00–5:00 · 5:00</span>
+          </td>
+          <td class="treatment-cell"><span class="badge badge-pd">PD · V+S</span></td>
+        </tr>
+
+        <tr>
+          <td class="ep-cell">
+            <span class="ep-num">EP. 05</span>
+            <a href="./05-accept-slow-growth.html" class="ep-title">Accept Slow Growth</a>
+          </td>
+          <td class="source-cell">
+            <span class="src-title">Cohort 1 — cyclic rate of fire, parsimony</span>
+            <span class="src-id">yt: 3jnbqQEniyQ</span>
+          </td>
+          <td>
+            <a class="yt-link" href="https://youtu.be/3jnbqQEniyQ?t=1290" target="_blank" rel="noopener">▶ open at 21:30</a>
+            <span class="yt-range">range 21:30–26:32 · 5:02 (wider context to 30:30 if you want)</span>
+          </td>
+          <td class="treatment-cell"><span class="badge badge-vs">V+S</span></td>
+        </tr>
+
+        <tr>
+          <td class="ep-cell">
+            <span class="ep-num">EP. 06</span>
+            <a href="./06-statistical-edge.html" class="ep-title">Statistical Edge</a>
+          </td>
+          <td class="source-cell">
+            <span class="src-title">Descriptive Statistics — math gives us an edge</span>
+            <span class="src-id">yt: po4nlpEJlHo</span>
+          </td>
+          <td>
+            <a class="yt-link" href="https://youtu.be/po4nlpEJlHo?t=0" target="_blank" rel="noopener">▶ open at 0:00</a>
+            <span class="yt-range">range 0:00–5:00 · 5:00</span>
+          </td>
+          <td class="treatment-cell"><span class="badge badge-vs">V+S</span></td>
+        </tr>
+
+        <tr>
+          <td class="ep-cell">
+            <span class="ep-num">EP. 07</span>
+            <a href="./07-match-style-to-life.html" class="ep-title">Match Style to Life</a>
+          </td>
+          <td class="source-cell">
+            <span class="src-title">Really Good Sunday — three mindsets + hybrid trader</span>
+            <span class="src-id">yt: q-df0MVvWBA</span>
+          </td>
+          <td>
+            <a class="yt-link" href="https://youtu.be/q-df0MVvWBA?t=780" target="_blank" rel="noopener">▶ open at 13:00</a>
+            <span class="yt-range">range 13:00–19:46 · 6:46</span>
+          </td>
+          <td class="treatment-cell"><span class="badge badge-vs">V+S</span></td>
+        </tr>
+
+        <tr>
+          <td class="ep-cell">
+            <span class="ep-num">EP. 08</span>
+            <a href="./08-set-max-loss.html" class="ep-title">Set Max Loss</a>
+          </td>
+          <td class="source-cell">
+            <span class="src-title">4321 Position Sizing — portfolio heat + petulant-child gut</span>
+            <span class="src-id">yt: 1FMcKTYaHMo</span>
+          </td>
+          <td>
+            <a class="yt-link" href="https://youtu.be/1FMcKTYaHMo?t=3092" target="_blank" rel="noopener">▶ open at 51:32</a>
+            <span class="yt-range">range 51:32–57:00 · 5:28</span>
+          </td>
+          <td class="treatment-cell"><span class="badge badge-vs">V+S</span></td>
+        </tr>
+
+        <tr>
+          <td class="ep-cell">
+            <span class="ep-num">EP. 09</span>
+            <a href="./09-structure-the-week.html" class="ep-title">Structure the Week</a>
+          </td>
+          <td class="source-cell">
+            <span class="src-title">Weekend Preview (3d/9d) — Sunday rhythm in action</span>
+            <span class="src-id">yt: FwN2-8pfg0o</span>
+          </td>
+          <td>
+            <a class="yt-link" href="https://youtu.be/FwN2-8pfg0o?t=0" target="_blank" rel="noopener">▶ open at 0:00</a>
+            <span class="yt-range">range 0:00–5:00 · 5:00</span>
+          </td>
+          <td class="treatment-cell"><span class="badge badge-vs">V+S</span></td>
+        </tr>
+
+        <tr>
+          <td class="ep-cell">
+            <span class="ep-num">EP. 10</span>
+            <a href="./10-track-process-not-pnl.html" class="ep-title">Track Process Not P&amp;L</a>
+          </td>
+          <td class="source-cell">
+            <span class="src-title">Really Really Good — A/B/C game self-rating</span>
+            <span class="src-id">yt: apk9GWC17Zw</span>
+          </td>
+          <td>
+            <a class="yt-link" href="https://youtu.be/apk9GWC17Zw?t=4629" target="_blank" rel="noopener">▶ open at 1:17:09</a>
+            <span class="yt-range">range 1:17:09–1:21:30 · 4:21</span>
+          </td>
+          <td class="treatment-cell"><span class="badge badge-vs">V+S</span></td>
+        </tr>
+
+      </tbody>
+    </table>
+
+    <p class="legend">
+      <span class="badge badge-raw">Raw Clip</span> Ken's source video unedited (audio + shared screen) ·
+      <span class="badge badge-vs">V+S</span> Voice + Slides (audio extracted, typographic slides timed to narration) ·
+      <span class="badge badge-pd">PD</span> Public-domain override
+    </p>
+  </section>
+
+  <section>
+    <h2>How to give feedback</h2>
+    <p>Reply with the episode number and the verdict — e.g.</p>
+    <p style="font-family: 'SF Mono', Menlo, monospace; font-size: 0.88rem; color: var(--gold); background: #0e0e0c; padding: 0.6rem 0.8rem; border-radius: 4px; border: 1px solid var(--line);">
+      ep1 keep V+S · ep2 raw · ep3 V+S · ep4 PD raw · ep5 raw start at 22:10 ...
+    </p>
+    <p style="color: var(--dim); font-size: 0.88rem;">Any timestamp tweak is fair (extend, shorten, shift start) — I'll rebuild only what changes.</p>
+  </section>
+
+</main>
+
+</body>
+</html>
