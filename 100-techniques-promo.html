@@ -1,0 +1,814 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>100 Techniques Toward Trading Mastery · Owl Group Trading</title>
+<meta name="description" content="Forty years of trading experience distilled into 100 ten-minute techniques. Climb the ladder from novice to master — one technique at a time.">
+<style>
+  :root {
+    --bg: #0e0e0c; --card: #181815; --card-elev: #1f1f1b; --line: #2a2925;
+    --fg: #e8e6df; --dim: #9c978a; --faint: #5d594f; --gold: #d4a559;
+    --gold-bright: #e8b96d; --green: #6dbb6d; --red: #c47e53; --blue: #5dbacb;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    background: var(--bg); color: var(--fg); font-size: 16px; line-height: 1.55;
+  }
+  a { color: var(--gold); }
+
+  /* ─── Top bar ────────────────────────────────────────────── */
+  .topbar {
+    background: #14140f; border-bottom: 1px solid var(--line);
+    padding: 0.85rem 1.6rem; display: flex; align-items: center; gap: 1.5rem;
+    position: sticky; top: 0; z-index: 50;
+  }
+  .topbar .brand { font-family: Georgia, serif; color: var(--gold); font-size: 1.05rem; font-weight: 400; letter-spacing: 0.02em; }
+  .topbar .brand .sub { color: var(--dim); font-family: "SF Mono", Menlo, monospace; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; margin-left: 0.6rem; }
+  .topbar .nav { margin-left: auto; display: flex; gap: 1.4rem; font-size: 0.88rem; }
+  .topbar .nav a { color: var(--dim); text-decoration: none; border-bottom: 1px dotted transparent; transition: color 0.15s; }
+  .topbar .nav a:hover { color: var(--gold); }
+  .topbar .cta-mini {
+    background: var(--gold); color: var(--bg); border: 0; padding: 0.45rem 0.95rem;
+    border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 0.85rem;
+    transition: transform 0.1s;
+  }
+  .topbar .cta-mini:hover { transform: translateY(-1px); background: var(--gold-bright); }
+
+  main { max-width: 1200px; margin: 0 auto; padding: 0 1.6rem; }
+
+  /* ─── Hero ──────────────────────────────────────────────── */
+  .hero { padding: 4rem 0 3rem; text-align: center; border-bottom: 1px solid var(--line); }
+  .hero .kicker {
+    color: var(--gold); font-family: "SF Mono", Menlo, monospace;
+    font-size: 0.82rem; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 1rem;
+  }
+  .hero h1 {
+    font-family: Georgia, serif; font-weight: 400; color: var(--gold);
+    font-size: 3.4rem; margin: 0 auto 1.1rem; line-height: 1.05; max-width: 18ch;
+  }
+  .hero h1 .num { font-style: italic; }
+  .hero .subhead {
+    color: var(--fg); font-size: 1.25rem; line-height: 1.5;
+    max-width: 56ch; margin: 0 auto 2rem; font-style: italic;
+  }
+  .hero .ladder-tagline {
+    display: inline-flex; gap: 0.55rem; align-items: center; flex-wrap: wrap; justify-content: center;
+    background: var(--card); border: 1px solid var(--line); border-radius: 999px;
+    padding: 0.55rem 1.3rem; font-size: 0.82rem; color: var(--dim);
+    font-family: "SF Mono", Menlo, monospace; letter-spacing: 0.05em;
+  }
+  .hero .ladder-tagline .rung { color: var(--faint); }
+  .hero .ladder-tagline .arrow { color: var(--gold); }
+
+  /* ─── Preview tile row ──────────────────────────────────── */
+  .preview-row {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem;
+    margin: 2.5rem auto 0; max-width: 1100px;
+  }
+  .preview-tile {
+    background: var(--card); border: 1px solid var(--line); border-radius: 8px;
+    padding: 1.3rem 1.3rem 1.1rem; transition: all 0.18s;
+    display: flex; flex-direction: column; text-align: left;
+  }
+  .preview-tile:hover { border-color: var(--faint); transform: translateY(-2px); }
+  .preview-tile.live { border-color: var(--gold); box-shadow: 0 0 0 1px rgba(212,165,89,0.25), 0 4px 18px rgba(212,165,89,0.10); }
+  .preview-tile .ribbon {
+    display: inline-block; align-self: flex-start;
+    padding: 0.18rem 0.6rem; border-radius: 3px; font-size: 0.7rem;
+    font-family: "SF Mono", Menlo, monospace; letter-spacing: 0.06em;
+    margin-bottom: 0.7rem; text-transform: uppercase;
+  }
+  .preview-tile.live .ribbon { background: rgba(212,165,89,0.15); color: var(--gold); border: 1px solid rgba(212,165,89,0.45); }
+  .preview-tile.locked .ribbon { background: rgba(156,151,138,0.10); color: var(--dim); border: 1px solid rgba(156,151,138,0.25); }
+  .preview-tile .tech-num {
+    font-family: "SF Mono", Menlo, monospace; color: var(--gold);
+    font-size: 0.8rem; letter-spacing: 0.08em; margin-bottom: 0.35rem;
+  }
+  .preview-tile h3 {
+    font-family: Georgia, serif; font-weight: 400; color: var(--fg);
+    font-size: 1.3rem; margin: 0 0 0.6rem; line-height: 1.2;
+  }
+  .preview-tile .tile-summary {
+    color: var(--dim); font-size: 0.92rem; line-height: 1.5; margin-bottom: 1rem; flex: 1;
+  }
+  .preview-tile .tile-meta {
+    color: var(--faint); font-size: 0.78rem; font-family: "SF Mono", Menlo, monospace;
+    letter-spacing: 0.04em; margin-bottom: 1rem;
+  }
+  .preview-tile .tile-cta {
+    background: var(--gold); color: var(--bg); padding: 0.55rem 1rem; border-radius: 4px;
+    text-align: center; text-decoration: none; font-weight: 600; font-size: 0.88rem;
+    transition: all 0.12s; border: 0; cursor: pointer; font-family: inherit;
+  }
+  .preview-tile .tile-cta:hover { background: var(--gold-bright); transform: translateY(-1px); }
+  .preview-tile.locked .tile-cta { background: transparent; color: var(--dim); border: 1px solid var(--line); cursor: default; }
+  .preview-tile.locked .tile-cta:hover { background: transparent; transform: none; color: var(--faint); }
+  .preview-tile .lock-icon { font-size: 0.85rem; margin-right: 0.35rem; }
+
+  /* ─── Live player (Ep 1) ────────────────────────────────── */
+  .live-player {
+    margin: 2rem auto 0; max-width: 1100px;
+    background: #000; border: 1px solid var(--gold); border-radius: 8px;
+    overflow: hidden; aspect-ratio: 16/9;
+    display: none;
+  }
+  .live-player.open { display: block; }
+  .live-player video { width: 100%; height: 100%; display: block; }
+  .player-caption {
+    text-align: center; color: var(--dim); font-size: 0.82rem; margin-top: 0.6rem;
+    max-width: 1100px; margin-left: auto; margin-right: auto;
+    display: none;
+  }
+  .player-caption.open { display: block; }
+
+  /* ─── Section base ──────────────────────────────────────── */
+  section { padding: 4rem 0; border-bottom: 1px solid var(--line); }
+  section.no-border { border-bottom: 0; }
+  section h2 {
+    font-family: Georgia, serif; font-weight: 400; color: var(--gold);
+    font-size: 2.2rem; margin: 0 0 0.7rem; line-height: 1.15;
+  }
+  section .section-kicker {
+    font-family: "SF Mono", Menlo, monospace; color: var(--dim);
+    font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.6rem;
+  }
+  section .section-lead {
+    color: var(--fg); font-size: 1.1rem; line-height: 1.6;
+    max-width: 70ch; margin: 0 0 2rem;
+  }
+
+  /* ─── The Climb (value ladder) ──────────────────────────── */
+  .ladder {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem;
+    margin-top: 2rem;
+  }
+  .rung {
+    background: var(--card); border: 1px solid var(--line); border-radius: 6px;
+    padding: 1.3rem 1.1rem; position: relative;
+  }
+  .rung .level-num {
+    position: absolute; top: -0.6rem; left: 1rem;
+    background: var(--bg); color: var(--gold); padding: 0 0.5rem;
+    font-family: "SF Mono", Menlo, monospace; font-size: 0.72rem; letter-spacing: 0.1em;
+  }
+  .rung h3 { font-family: Georgia, serif; font-weight: 400; color: var(--gold); margin: 0 0 0.5rem; font-size: 1.1rem; }
+  .rung .rung-count { color: var(--dim); font-size: 0.78rem; font-family: "SF Mono", Menlo, monospace; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+  .rung .rung-body { color: var(--dim); font-size: 0.86rem; line-height: 1.45; }
+
+  /* ─── 100 grid ──────────────────────────────────────────── */
+  .grid-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--line); margin: 2rem 0 1.2rem; flex-wrap: wrap; }
+  .grid-tab {
+    padding: 0.7rem 1.1rem; background: none; border: 0; color: var(--dim);
+    font-family: inherit; font-size: 0.88rem; cursor: pointer;
+    border-bottom: 2px solid transparent; transition: all 0.12s;
+  }
+  .grid-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+  .grid-tab:hover { color: var(--fg); }
+  .grid-tab .count { color: var(--faint); font-size: 0.78rem; margin-left: 0.4rem; }
+
+  .tech-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 0.55rem;
+  }
+  .tech-box {
+    background: var(--card); border: 1px solid var(--line); border-radius: 5px;
+    padding: 0.7rem 0.8rem; min-height: 88px;
+    display: flex; flex-direction: column; position: relative;
+    transition: all 0.12s;
+  }
+  .tech-box:hover { background: var(--card-elev); border-color: var(--faint); }
+  .tech-box.live {
+    border-color: var(--gold); background: rgba(212,165,89,0.06);
+    cursor: pointer;
+  }
+  .tech-box.live:hover { background: rgba(212,165,89,0.10); transform: translateY(-1px); }
+  .tech-box .tech-id {
+    font-family: "SF Mono", Menlo, monospace; color: var(--gold);
+    font-size: 0.72rem; letter-spacing: 0.08em; margin-bottom: 0.35rem;
+  }
+  .tech-box.locked .tech-id { color: var(--dim); }
+  .tech-box .tech-title {
+    color: var(--fg); font-size: 0.85rem; line-height: 1.3; font-weight: 500; flex: 1;
+  }
+  .tech-box.locked .tech-title { color: var(--dim); }
+  .tech-box .lock-mini {
+    position: absolute; top: 0.5rem; right: 0.55rem; color: var(--faint); font-size: 0.7rem;
+  }
+  .tech-box.live .lock-mini { color: var(--gold); content: "▶"; }
+  .tech-box.live::after {
+    content: "▶ PREVIEW"; position: absolute; bottom: 0.45rem; right: 0.6rem;
+    font-family: "SF Mono", Menlo, monospace; color: var(--gold); font-size: 0.62rem; letter-spacing: 0.08em;
+  }
+
+  /* ─── Pricing ────────────────────────────────────────────── */
+  .pricing-grid {
+    display: grid; grid-template-columns: 1fr 1.4fr; gap: 1.5rem;
+    margin: 2.5rem 0 1rem;
+  }
+  .price-card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 8px;
+    padding: 2rem 1.8rem; position: relative;
+  }
+  .price-card.featured {
+    border-color: var(--gold);
+    background: linear-gradient(180deg, rgba(212,165,89,0.06), var(--card));
+    box-shadow: 0 0 0 1px rgba(212,165,89,0.25);
+  }
+  .price-card .price-label {
+    font-family: "SF Mono", Menlo, monospace; color: var(--dim);
+    font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.6rem;
+  }
+  .price-card.featured .badge-best {
+    position: absolute; top: -0.65rem; right: 1.4rem;
+    background: var(--gold); color: var(--bg); padding: 0.22rem 0.7rem;
+    font-family: "SF Mono", Menlo, monospace; font-size: 0.7rem; letter-spacing: 0.1em;
+    border-radius: 3px; font-weight: 600;
+  }
+  .price-card h3 { font-family: Georgia, serif; font-weight: 400; color: var(--gold); font-size: 1.45rem; margin: 0 0 0.4rem; }
+  .price-card .price-tagline { color: var(--dim); font-size: 0.92rem; margin-bottom: 1.3rem; line-height: 1.5; }
+  .price-card .price-amount {
+    font-family: Georgia, serif; color: var(--fg);
+    font-size: 2.8rem; line-height: 1; margin-bottom: 0.3rem;
+  }
+  .price-card .price-amount .currency { color: var(--gold); font-size: 1.4rem; vertical-align: super; }
+  .price-card .price-amount .strike { color: var(--faint); font-size: 1.3rem; text-decoration: line-through; margin-right: 0.6rem; font-style: italic; }
+  .price-card .price-unit { color: var(--dim); font-size: 0.88rem; margin-bottom: 1.5rem; }
+  .price-card .savings { color: var(--green); font-size: 0.88rem; margin-bottom: 1.5rem; font-weight: 500; }
+  .price-card ul { list-style: none; padding: 0; margin: 0 0 1.6rem; }
+  .price-card ul li {
+    padding: 0.45rem 0; padding-left: 1.5rem; position: relative;
+    color: var(--fg); font-size: 0.92rem; line-height: 1.45;
+  }
+  .price-card ul li::before {
+    content: "✓"; position: absolute; left: 0; color: var(--gold); font-weight: 600;
+  }
+  .price-card .price-cta {
+    display: block; text-align: center; padding: 0.85rem;
+    background: var(--gold); color: var(--bg); border: 0; border-radius: 5px;
+    font-family: inherit; font-size: 1rem; font-weight: 600; cursor: pointer;
+    text-decoration: none; transition: all 0.12s;
+  }
+  .price-card .price-cta:hover { background: var(--gold-bright); transform: translateY(-1px); }
+  .price-card .price-cta.secondary { background: transparent; color: var(--gold); border: 1px solid var(--gold); }
+  .price-card .price-cta.secondary:hover { background: rgba(212,165,89,0.08); }
+
+  .price-context {
+    background: var(--card); border-left: 3px solid var(--gold); border-radius: 4px;
+    padding: 1.2rem 1.4rem; color: var(--dim); font-size: 0.92rem; line-height: 1.55;
+    max-width: 800px; margin: 1.5rem auto 0;
+  }
+  .price-context strong { color: var(--fg); }
+
+  /* ─── Trust signals ─────────────────────────────────────── */
+  .trust-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem;
+    margin: 2rem 0;
+  }
+  .trust-card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 6px;
+    padding: 1.5rem 1.4rem;
+  }
+  .trust-card .icon { color: var(--gold); font-family: Georgia, serif; font-size: 1.8rem; margin-bottom: 0.6rem; line-height: 1; }
+  .trust-card h3 { font-family: Georgia, serif; font-weight: 400; color: var(--fg); font-size: 1.1rem; margin: 0 0 0.5rem; }
+  .trust-card p { color: var(--dim); font-size: 0.92rem; line-height: 1.5; margin: 0; }
+
+  /* ─── FAQ ────────────────────────────────────────────────── */
+  .faq-item {
+    border-bottom: 1px solid var(--line); padding: 1.1rem 0;
+  }
+  .faq-item summary {
+    cursor: pointer; list-style: none; font-family: Georgia, serif;
+    color: var(--fg); font-size: 1.05rem; padding-right: 2rem; position: relative;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after {
+    content: "+"; position: absolute; right: 0; top: 0; color: var(--gold);
+    font-size: 1.4rem; font-weight: 300; transition: transform 0.18s;
+  }
+  .faq-item[open] summary::after { transform: rotate(45deg); }
+  .faq-item .faq-body { padding-top: 0.8rem; color: var(--dim); font-size: 0.95rem; line-height: 1.6; max-width: 75ch; }
+
+  /* ─── Final CTA ──────────────────────────────────────────── */
+  .final-cta { text-align: center; padding: 4rem 0 5rem; }
+  .final-cta h2 { font-size: 2.4rem; max-width: 20ch; margin: 0 auto 1rem; }
+  .final-cta .final-sub { color: var(--dim); font-size: 1.05rem; max-width: 50ch; margin: 0 auto 2rem; }
+  .final-cta .cta-row { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .final-cta .cta-row a { padding: 1rem 2rem; border-radius: 5px; text-decoration: none; font-size: 1rem; font-weight: 600; transition: all 0.12s; }
+  .final-cta .cta-primary { background: var(--gold); color: var(--bg); }
+  .final-cta .cta-primary:hover { background: var(--gold-bright); transform: translateY(-1px); }
+  .final-cta .cta-secondary { background: transparent; color: var(--gold); border: 1px solid var(--gold); }
+  .final-cta .cta-secondary:hover { background: rgba(212,165,89,0.08); }
+
+  footer {
+    border-top: 1px solid var(--line); padding: 2rem 0;
+    color: var(--faint); font-size: 0.82rem; text-align: center;
+  }
+  footer a { color: var(--dim); text-decoration: none; border-bottom: 1px dotted var(--faint); }
+
+  /* ─── Responsive ────────────────────────────────────────── */
+  @media (max-width: 900px) {
+    .hero h1 { font-size: 2.4rem; }
+    .preview-row { grid-template-columns: 1fr; }
+    .ladder { grid-template-columns: 1fr 1fr; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .trust-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .topbar { flex-wrap: wrap; gap: 0.6rem; }
+    .topbar .nav { display: none; }
+    section { padding: 2.8rem 0; }
+    .hero { padding: 2.5rem 0 2rem; }
+    .hero h1 { font-size: 1.9rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">Owl Group Trading<span class="sub">100 Techniques</span></div>
+  <nav class="nav">
+    <a href="#climb">The Climb</a>
+    <a href="#grid">All 100</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#faq">FAQ</a>
+  </nav>
+  <a class="cta-mini" href="#pricing">Enroll →</a>
+</div>
+
+<main>
+
+  <!-- ─── HERO ─────────────────────────────────────────────── -->
+  <section class="hero no-border" style="border-bottom:0">
+    <div class="kicker">A Dr. Ken Long course · 40 years of trading, distilled</div>
+    <h1><span class="num">100</span> Techniques Toward Trading Mastery</h1>
+    <p class="subhead">
+      One technique. Ten minutes. A lifetime of edge.
+      Climb the ladder of competency from novice to master — one rung at a time.
+    </p>
+    <div class="ladder-tagline">
+      <span class="rung">NOVICE</span><span class="arrow">→</span>
+      <span class="rung">APPRENTICE</span><span class="arrow">→</span>
+      <span class="rung">JOURNEYMAN</span><span class="arrow">→</span>
+      <span class="rung">EXPERT</span><span class="arrow">→</span>
+      <span class="rung" style="color:var(--gold)">MASTER</span>
+    </div>
+
+    <div class="preview-row">
+
+      <div class="preview-tile live">
+        <span class="ribbon">▶ Free preview</span>
+        <div class="tech-num">TECHNIQUE 01 · NOVICE · PLANNING</div>
+        <h3>Define Your Why</h3>
+        <p class="tile-summary">
+          Write your reason for trading on paper before risking a single dollar.
+          Without purpose, pressure breaks you. The "Four Brothers" framework
+          gives you the master-craftsman identity that holds when P&amp;L doesn't.
+        </p>
+        <div class="tile-meta">5:12 · A+S · Ken Long</div>
+        <button class="tile-cta" onclick="openPreview()">▶ Watch the 5-min preview</button>
+      </div>
+
+      <div class="preview-tile locked">
+        <span class="ribbon"><span class="lock-icon">🔒</span> Unlocks at enroll</span>
+        <div class="tech-num">TECHNIQUE 05 · NOVICE · PLANNING</div>
+        <h3>Accept Slow Growth</h3>
+        <p class="tile-summary">
+          You're not behind — you're early. Cyclic rate of fire decides longevity.
+          Most year-one traders run at 600 rpm. The barrel melts. Operate at 100 rpm,
+          carry the barrel for a 30-year career.
+        </p>
+        <div class="tile-meta">2:36 · V+O · Ken Long</div>
+        <button class="tile-cta">Bundle unlocks all 100</button>
+      </div>
+
+      <div class="preview-tile locked">
+        <span class="ribbon"><span class="lock-icon">🔒</span> Unlocks at enroll</span>
+        <div class="tech-num">TECHNIQUE 10 · APPRENTICE · PLANNING</div>
+        <h3>Define Success Metrics</h3>
+        <p class="tile-summary">
+          Track process metrics, not just profit. Measure what you can control before
+          measuring what you cannot. The A/B/C-game grade is what compounds across
+          a career — P&amp;L is the market's vote, the grade is yours.
+        </p>
+        <div class="tile-meta">4:18 · V+O · Ken Long</div>
+        <button class="tile-cta">Bundle unlocks all 100</button>
+      </div>
+
+    </div>
+
+    <!-- Inline live player (revealed when first tile is clicked) -->
+    <div id="livePlayer" class="live-player">
+      <video controls preload="metadata" controlsList="nodownload" src="./episodes/clips/ep01-four-brothers-v3.mp4"></video>
+    </div>
+    <div id="livePlayerCaption" class="player-caption">
+      <em>Technique 01: Define Your Why — Dr. Ken Long, "The Four Brothers" canonical articulation (Farmer · Blacksmith · Machinist · Trail Boss)</em>
+    </div>
+  </section>
+
+  <!-- ─── THE CLIMB ────────────────────────────────────────── -->
+  <section id="climb">
+    <div class="section-kicker">The Value Ladder</div>
+    <h2>Mastery isn't a course. It's a climb.</h2>
+    <p class="section-lead">
+      Every trader who survives long enough crosses the same five thresholds.
+      The traders who never arrive aren't missing intelligence — they're missing
+      the techniques that turn each rung into the next one. Each of these 100
+      techniques is a rung. Climb them in order; arrive at mastery on purpose.
+    </p>
+
+    <div class="ladder">
+      <div class="rung">
+        <span class="level-num">RUNG 1</span>
+        <h3>Novice</h3>
+        <div class="rung-count">≈ 25 techniques</div>
+        <p class="rung-body">Foundational identity, environment, and discipline. The techniques that keep you in the game long enough to develop an edge.</p>
+      </div>
+      <div class="rung">
+        <span class="level-num">RUNG 2</span>
+        <h3>Apprentice</h3>
+        <div class="rung-count">≈ 25 techniques</div>
+        <p class="rung-body">First edge. First playbook. First sustainable rhythm. The techniques that turn random profits into a process you can repeat.</p>
+      </div>
+      <div class="rung">
+        <span class="level-num">RUNG 3</span>
+        <h3>Journeyman</h3>
+        <div class="rung-count">≈ 25 techniques</div>
+        <p class="rung-body">Multiple setups, regime-aware execution, quantified edges. The techniques that lift you above the 95% who wash out by year three.</p>
+      </div>
+      <div class="rung">
+        <span class="level-num">RUNG 4</span>
+        <h3>Expert</h3>
+        <div class="rung-count">≈ 15 techniques</div>
+        <p class="rung-body">Portfolio architecture, capacity planning, identity resilience. The techniques that compound an account into a career.</p>
+      </div>
+      <div class="rung">
+        <span class="level-num">RUNG 5</span>
+        <h3>Master</h3>
+        <div class="rung-count">≈ 10 techniques</div>
+        <p class="rung-body">Stewardship of self, system, and legacy. The techniques that distinguish a trader who works from a trader the work survives.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── THE 100 GRID ─────────────────────────────────────── -->
+  <section id="grid">
+    <div class="section-kicker">The Curriculum</div>
+    <h2>All 100 techniques. Every rung.</h2>
+    <p class="section-lead">
+      Three are live below — click the gold-framed boxes to preview. The other 97
+      unlock with enrollment. Hover any technique to see Ken's one-line summary.
+    </p>
+
+    <div class="grid-tabs" id="gridTabs">
+      <button class="grid-tab active" data-cat="all">All<span class="count">100</span></button>
+      <button class="grid-tab" data-cat="plan">Planning<span class="count">22</span></button>
+      <button class="grid-tab" data-cat="prep">Preparation<span class="count">22</span></button>
+      <button class="grid-tab" data-cat="exec">Execution<span class="count">22</span></button>
+      <button class="grid-tab" data-cat="review">Review<span class="count">20</span></button>
+      <button class="grid-tab" data-cat="rest">Emotion · Risk · Persistence<span class="count">14</span></button>
+    </div>
+
+    <div class="tech-grid" id="techGrid">
+      <!-- Boxes injected by JS for compactness -->
+    </div>
+  </section>
+
+  <!-- ─── PRICING ──────────────────────────────────────────── -->
+  <section id="pricing">
+    <div class="section-kicker">Pricing</div>
+    <h2>Pay per rung. Or commit to the climb.</h2>
+    <p class="section-lead">
+      Each technique is a complete 10-minute video lesson with worksheet, checklist,
+      and a completion gate — built from forty years of live coaching, distilled into
+      the form that actually compounds. Take them one at a time. Or take all 100 and
+      save thirty percent.
+    </p>
+
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-label">A LA CARTE</div>
+        <h3>Single Technique</h3>
+        <p class="price-tagline">Buy any technique. Own it forever. Climb at your pace.</p>
+        <div class="price-amount"><span class="currency">$</span>49<span style="font-size:1.4rem;vertical-align:super;color:var(--gold)">.95</span></div>
+        <div class="price-unit">per technique · ~10 min video + worksheet + checklist</div>
+        <ul>
+          <li>One technique, fully unlocked</li>
+          <li>Lifetime access · re-watch anytime</li>
+          <li>Worksheet + checklist + completion gate</li>
+          <li>Counts toward bundle credit (if you upgrade later)</li>
+        </ul>
+        <a href="#enroll" class="price-cta secondary">Choose a technique →</a>
+      </div>
+
+      <div class="price-card featured">
+        <span class="badge-best">BEST VALUE · SAVE $1,498</span>
+        <div class="price-label">FULL MASTERY BUNDLE</div>
+        <h3>All 100 Techniques</h3>
+        <p class="price-tagline">The entire climb. From "Define your why" to "Stay the course." Forty years on one shelf.</p>
+        <div class="price-amount">
+          <span class="strike">$4,995</span>
+          <span class="currency">$</span>3,495
+        </div>
+        <div class="savings">↓ Save $1,498.50 vs a la carte (30% off)</div>
+        <div class="price-unit">one-time payment · lifetime access</div>
+        <ul>
+          <li>All 100 techniques unlocked at once</li>
+          <li>Climb in order, or jump to the rung you need</li>
+          <li>Every worksheet, checklist, and gate</li>
+          <li>All future updates and new techniques (cohort drops)</li>
+          <li>Private community access (live Q&amp;A monthly)</li>
+          <li>Certificate of completion at rung 5</li>
+        </ul>
+        <a href="#enroll" class="price-cta">Enroll in the bundle →</a>
+      </div>
+    </div>
+
+    <div class="price-context">
+      <strong>Is this expensive?</strong> Per technique, it's $49.95 for ten minutes of distilled experience.
+      Per career, it's the cost of <em>one</em> avoidable revenge trade, paid once,
+      against the fee the market would otherwise extract from you across decades.
+      The math always favors the trader who learned the technique cheaply,
+      not the one who paid full tuition by repeating the mistake.
+    </div>
+  </section>
+
+  <!-- ─── TRUST / DIFFERENTIATION ───────────────────────────── -->
+  <section>
+    <div class="section-kicker">Why this course is different</div>
+    <h2>Forty years. Not forty quotes.</h2>
+    <p class="section-lead">
+      Most "trading courses" are a single weekend rebranded as a curriculum.
+      This is the opposite — every technique is one Ken has executed, broken,
+      taught, refined, and re-taught across multiple market regimes since the 1980s.
+    </p>
+
+    <div class="trust-grid">
+      <div class="trust-card">
+        <div class="icon">⚜</div>
+        <h3>Built from live coaching</h3>
+        <p>Every technique comes from a real Ken cohort or coaching session — not a studio script. You hear the questions, the pushback, and the answer that actually held up.</p>
+      </div>
+      <div class="trust-card">
+        <div class="icon">∞</div>
+        <h3>Process-first, not setup-of-the-week</h3>
+        <p>Setups change with market regime. Techniques compound across all of them. This course teaches the second, deliberately — so your edge doesn't expire when the regime flips.</p>
+      </div>
+      <div class="trust-card">
+        <div class="icon">⛰</div>
+        <h3>The full climb, in order</h3>
+        <p>Novice → Apprentice → Journeyman → Expert → Master. Every rung has the techniques that lift you to the next. No gaps. No "you should already know this."</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FAQ ──────────────────────────────────────────────── -->
+  <section id="faq">
+    <div class="section-kicker">Questions you're already asking</div>
+    <h2>FAQ</h2>
+
+    <details class="faq-item" open>
+      <summary>$49.95 for ten minutes — really?</summary>
+      <div class="faq-body">
+        Yes — and it's the cheapest way you'll ever buy this content. Ken's live coaching
+        runs $2,000+ per session and you walk away with one or two techniques per call.
+        Here you get the technique distilled, the worksheet, the checklist, and lifetime
+        re-watch. The price reflects forty years of refinement, not ten minutes of recording.
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Why bundle?</summary>
+      <div class="faq-body">
+        Because the techniques compound on each other. Technique 50 (Risk one percent)
+        only earns its weight when you've already absorbed Technique 6 (Define your edge)
+        and Technique 45 (Set the stop). Buying one at a time is fine — but the climb is
+        the product. Bundle pricing reflects the bet you're making on the full journey.
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>What's the refund policy?</summary>
+      <div class="faq-body">
+        30 days, no questions, full refund. The bundle includes a 60-day refund window —
+        we want you to commit to the climb, not feel locked in. If after eight weeks of
+        honest engagement the techniques aren't earning their fee, full refund.
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Who is Dr. Ken Long?</summary>
+      <div class="faq-body">
+        Forty-year systematic trader. Founder of Tortoise Capital. Long-time coach to
+        independent traders through the Owl Group cohort program. Author of multiple
+        published trading frameworks (Bandy Risk-Normalized Position Sizing, CAR25
+        return modeling, the four-brothers craftsman framework). What's different about
+        Ken is that everything he teaches he still executes — these aren't retired-trader
+        memoirs, they're the working playbook.
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Do I need a trading account already?</summary>
+      <div class="faq-body">
+        No. The Novice rung is explicitly for traders who haven't placed their first
+        trade yet — and arguably the techniques there are <em>more</em> valuable before
+        you start than after. The Expert and Master rungs assume an active book; the
+        rungs in between meet you wherever you are.
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>How long do I have access?</summary>
+      <div class="faq-body">
+        Lifetime, for everything you purchase. Single-technique buys are yours forever.
+        Bundle buys include all future updates and any new techniques added in subsequent
+        cohort drops, at no additional cost.
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Is this technical analysis or psychology?</summary>
+      <div class="faq-body">
+        Both, deliberately. The 100 techniques span seven categories: Planning, Preparation,
+        Execution, Review, Emotion, Risk, and Persistence. About 40% are mechanical
+        (sizing rules, stop hierarchy, regime identification). About 40% are psychological
+        (detachment from outcome, audit cadence, drift recognition). The remaining 20%
+        are the bridge between the two — and that bridge is what most courses skip entirely.
+      </div>
+    </details>
+  </section>
+
+  <!-- ─── FINAL CTA ────────────────────────────────────────── -->
+  <section class="final-cta no-border">
+    <div class="section-kicker">Start the climb</div>
+    <h2>You will fail. You will doubt. You will want to quit. Do not.</h2>
+    <p class="final-sub">
+      Technique 100 says the same thing in eighteen words. The traders who arrive
+      are simply the ones who did not stop walking. Pick a rung. Take the first step.
+    </p>
+    <div class="cta-row">
+      <a class="cta-primary" href="#pricing">Enroll in the bundle — $3,495</a>
+      <a class="cta-secondary" href="#grid">Browse all 100 techniques</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Owl Group Trading · Dr. Ken Long · <a href="./episodes/sources.html">course catalog</a> · <a href="mailto:hello@owlgrouptrading.com">hello@owlgrouptrading.com</a>
+</footer>
+
+<script>
+// ─── Live preview reveal ────────────────────────────────────
+function openPreview() {
+  const p = document.getElementById('livePlayer');
+  const c = document.getElementById('livePlayerCaption');
+  p.classList.add('open');
+  c.classList.add('open');
+  p.scrollIntoView({behavior: 'smooth', block: 'center'});
+  setTimeout(() => p.querySelector('video').play().catch(() => {}), 600);
+}
+
+// ─── 100 techniques data ────────────────────────────────────
+// (id, level, category, title, summary)
+// live flag: 1, 5, 10 are previewable
+const TECHNIQUES = [
+  // Planning (1-22)
+  [1,'Novice','plan','Define your why','Write your reason for trading on paper before risking a single dollar.', true],
+  [2,'Novice','plan','Choose one market','Stop scanning everything. Pick one instrument and learn it deeply.'],
+  [3,'Novice','plan','Write the plan','If it is not written, it does not exist. Open a document today.'],
+  [4,'Novice','plan','Study before screens','Read one foundational book before placing trades.'],
+  [5,'Novice','plan','Accept slow growth','You are not behind. You are early. Begin where you are without apology.', true],
+  [6,'Apprentice','plan','Define your edge','Name the specific condition where you have statistical advantage.'],
+  [7,'Apprentice','plan','Map your timeframe','Decide whether you are a scalper, day trader, swing, or position trader.'],
+  [8,'Apprentice','plan','Set capital limits','Decide today the maximum capital you are willing to lose entirely.'],
+  [9,'Apprentice','plan','Plan your week','Schedule study, review, and trading sessions in advance.'],
+  [10,'Apprentice','plan','Define success metrics','Track process metrics, not just profit. Measure what you control first.', true],
+  [11,'Journeyman','plan','Build playbook depth','Document every setup with entry, stop, target, and invalidation.'],
+  [12,'Journeyman','plan','Identify regime shifts','Plan strategies for trends, ranges, and volatility expansions.'],
+  [13,'Journeyman','plan','Stress test plans','Imagine your worst week. Plan how you will respond before it arrives.'],
+  [14,'Journeyman','plan','Schedule strategic reviews','Block calendar time monthly for full system review.'],
+  [15,'Journeyman','plan','Plan exit conditions','Decide in advance what would cause you to stop trading a strategy.'],
+  [16,'Expert','plan','Design portfolio architecture','Allocate capital across uncorrelated strategies.'],
+  [17,'Expert','plan','Build redundancy layers','Backup systems, brokers, internet. Prepared traders fail less violently.'],
+  [18,'Expert','plan','Plan tax efficiency','Trading without tax planning is bleeding profit silently.'],
+  [19,'Expert','plan','Model worst case','Run scenarios assuming 30% drawdowns. Survive them mentally and financially.'],
+  [20,'Expert','plan','Plan capacity limits','Strategy returns degrade with size. Know your ceiling before reaching it.'],
+  [21,'Master','plan','Design legacy systems','Build structures that outlast your active career.'],
+  [22,'Master','plan','Plan generational wealth','Trade not just for income but for inheritance.'],
+  // Preparation (23-44)
+  [23,'Novice','prep','Sleep is alpha','Seven hours minimum. Tired traders make terrible decisions.'],
+  [24,'Novice','prep','Hydrate before trading','Dehydration reduces cognitive performance measurably.'],
+  [25,'Novice','prep','Eat for focus','Heavy meals dull judgment. Eat clean before market hours.'],
+  [26,'Novice','prep','Clear the environment','Remove distractions. Visual noise becomes cognitive noise.'],
+  [27,'Novice','prep','Practice patience daily','Sit quietly five minutes before the open.'],
+  [28,'Apprentice','prep','Journal before sessions','Write mental state, biases, and intentions before trading.'],
+  [29,'Apprentice','prep','Review yesterday first','Never start a session without reviewing the prior day.'],
+  [30,'Apprentice','prep','Pre-mark levels','Identify key support, resistance, reaction zones before the open.'],
+  [31,'Apprentice','prep','Practice physical readiness','Stretch, walk, breathe. The body is the platform of the mind.'],
+  [32,'Apprentice','prep','Limit caffeine spikes','Caffeine masks fatigue but does not replace rest.'],
+  [33,'Journeyman','prep','Rehearse mentally','Visualize executing setups before market open.'],
+  [34,'Journeyman','prep','Prepare contingency responses','Decide how you will respond to gaps, news shocks, volatility.'],
+  [35,'Journeyman','prep','Calibrate position sizing','Adjust size based on volatility, not emotion.'],
+  [36,'Journeyman','prep','Maintain technical hygiene','Update software, check feeds, test alerts daily.'],
+  [37,'Journeyman','prep','Protect deep work','Block social media during analysis sessions.'],
+  [38,'Expert','prep','Train physical resilience','Trading is endurance. Exercise four times weekly minimum.'],
+  [39,'Expert','prep','Manage cognitive load','Reduce non-trading decisions during market hours.'],
+  [40,'Expert','prep','Build recovery rituals','Schedule decompression after sessions.'],
+  [41,'Expert','prep','Cultivate boredom tolerance','Mastery requires loving the unglamorous middle.'],
+  [42,'Expert','prep','Audit information diet','Eliminate noisy sources. Signal quality drives decisions.'],
+  [43,'Master','prep','Preserve nervous system','Prioritize long-term physiological maintenance.'],
+  [44,'Master','prep','Steward mental clarity','Protect your mind as you would protect capital.'],
+  // Execution (45-66)
+  [45,'Novice','exec','Set the stop','Never enter without a predefined stop loss.'],
+  [46,'Novice','exec','Honor the rails','Once rules are set, follow them. No mid-trade negotiation.'],
+  [47,'Novice','exec','Trade small first','Size up only after consistency. Confidence is earned.'],
+  [48,'Novice','exec','Accept being wrong','Losses are tuition. Pay them quickly and stay enrolled.'],
+  [49,'Novice','exec','Press the button','Hesitation kills setups. When the plan triggers, execute.'],
+  [50,'Apprentice','exec','Risk one percent','Never risk more than 1% of account on a single trade.'],
+  [51,'Apprentice','exec','Trade your plan','Not the news. Not the chat room. Not the feeling. Only the plan.'],
+  [52,'Apprentice','exec','Walk away winning','After a strong session, stop. Greed gives back rare gifts.'],
+  [53,'Apprentice','exec','Cut losses quickly','Small losses keep the door open. Large losses close it.'],
+  [54,'Apprentice','exec','Avoid revenge trades','A loss is information, not an insult.'],
+  [55,'Journeyman','exec','Scale into conviction','Add to winners, not losers. Average up, not down.'],
+  [56,'Journeyman','exec','Trust the setup','If conditions match the playbook, execute without second-guessing.'],
+  [57,'Journeyman','exec','Manage the middle','Most trades fail in the middle. Predefine management rules.'],
+  [58,'Journeyman','exec','Respect the regime','Trend strategies in trends, mean reversion in ranges.'],
+  [59,'Journeyman','exec','Embrace incomplete information','Act on probability, not certainty.'],
+  [60,'Expert','exec','Execute mechanically','Discretion within structure, never structure within discretion.'],
+  [61,'Expert','exec','Honor stop hierarchy','Time stops, technical stops, volatility stops. Each protects differently.'],
+  [62,'Expert','exec','Detach from outcome','Judge execution by process adherence. Outcome is lagging.'],
+  [63,'Expert','exec','Reduce after drawdown','Cut size during cold streaks. Survival preserves opportunity.'],
+  [64,'Expert','exec','Increase only after consistency','Scale only after sustained profitable consistency.'],
+  [65,'Master','exec','Operate from stillness','Deepest execution comes from quiet presence, not aggressive force.'],
+  [66,'Master','exec','Move with the market','Do not impose. Respond. The market leads; the master follows.'],
+  // Review (67-86)
+  [67,'Novice','review','Review every trade','Win or lose, study it. Each chart is a teacher.'],
+  [68,'Novice','review','Screenshot every setup','Build a visual library of your own decisions.'],
+  [69,'Novice','review','Name the mistake','If you broke a rule, write which rule and why.'],
+  [70,'Novice','review','Track emotional state','Note feelings before, during, and after each trade.'],
+  [71,'Novice','review','Celebrate process wins','Did you follow the plan? That is the real victory.'],
+  [72,'Apprentice','review','Score the session','Rate execution quality 1-10 daily. Numbers make patterns visible.'],
+  [73,'Apprentice','review','Separate luck from skill','Punish bad process even when it pays.'],
+  [74,'Apprentice','review','Find repeating errors','Most traders make the same five mistakes endlessly.'],
+  [75,'Apprentice','review','Compare planned to actual','Where did execution diverge from intention? That gap is growth.'],
+  [76,'Apprentice','review','Weekly written review','End every week with a written summary.'],
+  [77,'Journeyman','review','Quantify your edge','Calculate win rate, average win, average loss, expectancy.'],
+  [78,'Journeyman','review','Audit by setup type','Some setups carry your edge. Some bleed quietly.'],
+  [79,'Journeyman','review','Review drawdown behavior','How you behave during losing streaks is your true character.'],
+  [80,'Journeyman','review','Conduct quarterly reviews','Patterns invisible weekly become obvious quarterly.'],
+  [81,'Journeyman','review','Track behavioral drift','Sizing up emotionally? Holding too long? Drift kills slowly.'],
+  [82,'Expert','review','Benchmark against self','Compare yourself to your own 12-month trailing performance.'],
+  [83,'Expert','review','Stress test results','Strip out your best month, luckiest trade. What remains is edge.'],
+  [84,'Expert','review','Audit risk exposure','Measure correlation between positions.'],
+  [85,'Expert','review','Examine identity drift','Are you still trading the strategy you claim to trade?'],
+  [86,'Expert','review','Conduct annual postmortems','A full year reviewed honestly reveals truths no week can show.'],
+  // Emotion / Risk / Persistence (87-100)
+  [87,'Master','rest','Teach to deepen mastery','Explaining your craft to others exposes weak reasoning.'],
+  [88,'Master','rest','Refine the system continuously','No edge lasts forever. Masters adapt faster.'],
+  [89,'Master','rest','Breathe before reacting','The pause between stimulus and response is where mastery lives.'],
+  [90,'Master','rest','Name the emotion','Labeling reduces emotional grip immediately.'],
+  [91,'Master','rest','Step away first','No good decision is made in emotional flood.'],
+  [92,'Master','rest','Sleep on big choices','Major strategic decisions deserve overnight processing.'],
+  [93,'Master','rest','Forgive yourself quickly','Mistakes are tuition. Self-punishment is interest you do not owe.'],
+  [94,'Master','rest','Detach identity from trades','You are not your P&L. You are the trader behind it.'],
+  [95,'Master','rest','Survival is strategy','Stay in the game long enough and edges compound.'],
+  [96,'Master','rest','Risk fixed amounts','Predefined, consistent risk per trade.'],
+  [97,'Master','rest','Hard stops always','Mental stops are negotiable stops are catastrophic stops.'],
+  [98,'Master','rest','Daily loss limits','When the limit hits, close the platform.'],
+  [99,'Master','rest','Improve one percent','Small daily improvements compound into mastery.'],
+  [100,'Master','rest','Stay the course','The traders who arrive are the ones who did not stop walking.'],
+];
+
+function renderGrid(cat) {
+  const wrap = document.getElementById('techGrid');
+  const filtered = cat === 'all' ? TECHNIQUES : TECHNIQUES.filter(t => t[2] === cat);
+  wrap.innerHTML = filtered.map(t => {
+    const [id, level, category, title, summary, isLive] = t;
+    const liveCls = isLive ? ' live' : ' locked';
+    const lock = isLive ? '▶' : '🔒';
+    const onclick = isLive ? ` onclick="openPreview(${id})"` : '';
+    return `
+      <div class="tech-box${liveCls}"${onclick} title="${title} — ${summary}">
+        <span class="lock-mini">${lock}</span>
+        <div class="tech-id">#${String(id).padStart(3,'0')} · ${level}</div>
+        <div class="tech-title">${title}</div>
+      </div>
+    `;
+  }).join('');
+}
+renderGrid('all');
+
+document.querySelectorAll('.grid-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.grid-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderGrid(btn.dataset.cat);
+  });
+});
+</script>
+
+</body>
+</html>
