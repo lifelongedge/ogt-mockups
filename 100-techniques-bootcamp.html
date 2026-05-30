@@ -1,0 +1,836 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Trading Mastery Bootcamp · 100 Techniques + Simulators + Coaching · OGT</title>
+<meta name="description" content="The 100 Techniques curriculum, the interactive simulators that turn the techniques into reps, and direct cohort coaching — at your pace, with us watching. Bundle + $99/month.">
+<style>
+  :root {
+    --bg: #0e0e0c; --card: #181815; --card-elev: #1f1f1b; --line: #2a2925;
+    --fg: #e8e6df; --dim: #9c978a; --faint: #5d594f; --gold: #d4a559;
+    --gold-bright: #e8b96d; --green: #6dbb6d; --red: #c47e53; --blue: #5dbacb;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    background: var(--bg); color: var(--fg); font-size: 16px; line-height: 1.55;
+  }
+  a { color: var(--gold); }
+
+  /* ─── Top bar ────────────────────────────────────────────── */
+  .topbar {
+    background: #14140f; border-bottom: 1px solid var(--line);
+    padding: 0.85rem 1.6rem; display: flex; align-items: center; gap: 1.5rem;
+    position: sticky; top: 0; z-index: 50;
+  }
+  .topbar .brand { font-family: Georgia, serif; color: var(--gold); font-size: 1.05rem; font-weight: 400; }
+  .topbar .brand .sub { color: var(--dim); font-family: "SF Mono", Menlo, monospace; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; margin-left: 0.6rem; }
+  .topbar .nav { margin-left: auto; display: flex; gap: 1.4rem; font-size: 0.88rem; }
+  .topbar .nav a { color: var(--dim); text-decoration: none; transition: color 0.15s; }
+  .topbar .nav a:hover { color: var(--gold); }
+  .topbar .cta-mini {
+    background: var(--gold); color: var(--bg); border: 0; padding: 0.45rem 0.95rem;
+    border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 0.85rem;
+    transition: transform 0.1s;
+  }
+  .topbar .cta-mini:hover { transform: translateY(-1px); background: var(--gold-bright); }
+
+  .compare-banner {
+    background: rgba(212,165,89,0.06); border-bottom: 1px solid var(--line);
+    padding: 0.55rem 1.6rem; color: var(--dim); font-size: 0.85rem; text-align: center;
+  }
+  .compare-banner a { color: var(--gold); text-decoration: none; border-bottom: 1px dotted var(--gold); }
+  .compare-banner a:hover { color: var(--gold-bright); }
+
+  main { max-width: 1200px; margin: 0 auto; padding: 0 1.6rem; }
+
+  /* ─── Hero ──────────────────────────────────────────────── */
+  .hero { padding: 4rem 0 3rem; border-bottom: 1px solid var(--line); }
+  .hero .kicker {
+    color: var(--gold); font-family: "SF Mono", Menlo, monospace;
+    font-size: 0.82rem; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 1rem;
+    text-align: center;
+  }
+  .hero h1 {
+    font-family: Georgia, serif; font-weight: 400; color: var(--gold);
+    font-size: 3.6rem; margin: 0 auto 1.1rem; line-height: 1.05; max-width: 20ch;
+    text-align: center;
+  }
+  .hero .subhead {
+    color: var(--fg); font-size: 1.3rem; line-height: 1.5;
+    max-width: 58ch; margin: 0 auto 2.4rem; font-style: italic; text-align: center;
+  }
+  .pillar-row {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem;
+    margin: 2rem auto 2.5rem; max-width: 1080px;
+  }
+  .pillar {
+    background: var(--card); border: 1px solid var(--line); border-radius: 8px;
+    padding: 1.5rem 1.4rem; position: relative;
+  }
+  .pillar .pillar-glyph {
+    font-family: Georgia, serif; color: var(--gold);
+    font-size: 1.8rem; line-height: 1; margin-bottom: 0.7rem;
+  }
+  .pillar h3 { font-family: Georgia, serif; font-weight: 400; color: var(--gold); font-size: 1.3rem; margin: 0 0 0.5rem; }
+  .pillar p { color: var(--dim); font-size: 0.95rem; line-height: 1.55; margin: 0; }
+
+  .hero-cta-row { text-align: center; }
+  .hero-cta-row .price-tag {
+    display: inline-block; background: var(--card); border: 1px solid var(--gold);
+    color: var(--gold); padding: 0.45rem 1rem; border-radius: 999px;
+    font-family: "SF Mono", Menlo, monospace; font-size: 0.85rem; letter-spacing: 0.05em;
+    margin-bottom: 1.2rem;
+  }
+  .hero-cta-row .price-tag .strike { color: var(--faint); text-decoration: line-through; margin-right: 0.5rem; }
+  .hero-cta-row .price-tag .plus { color: var(--dim); margin: 0 0.5rem; }
+  .hero-cta-row .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .hero-cta-row .cta-primary {
+    background: var(--gold); color: var(--bg); padding: 1rem 2rem; border-radius: 5px;
+    text-decoration: none; font-weight: 600; font-size: 1.05rem; transition: all 0.12s;
+  }
+  .hero-cta-row .cta-primary:hover { background: var(--gold-bright); transform: translateY(-1px); }
+  .hero-cta-row .cta-secondary {
+    background: transparent; color: var(--gold); border: 1px solid var(--gold);
+    padding: 1rem 2rem; border-radius: 5px; text-decoration: none; font-weight: 500; font-size: 1.05rem;
+  }
+
+  /* ─── Section base ──────────────────────────────────────── */
+  section { padding: 4rem 0; border-bottom: 1px solid var(--line); }
+  section.no-border { border-bottom: 0; }
+  section h2 {
+    font-family: Georgia, serif; font-weight: 400; color: var(--gold);
+    font-size: 2.3rem; margin: 0 0 0.7rem; line-height: 1.15;
+  }
+  section .section-kicker {
+    font-family: "SF Mono", Menlo, monospace; color: var(--dim);
+    font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.6rem;
+  }
+  section .section-lead {
+    color: var(--fg); font-size: 1.1rem; line-height: 1.6;
+    max-width: 70ch; margin: 0 0 2rem;
+  }
+
+  /* ─── Difference table ─────────────────────────────────── */
+  .diff-table {
+    width: 100%; border-collapse: collapse; margin: 2rem 0;
+    background: var(--card); border: 1px solid var(--line); border-radius: 8px; overflow: hidden;
+  }
+  .diff-table thead th {
+    text-align: left; padding: 1rem 1.2rem; background: var(--card-elev);
+    font-family: Georgia, serif; font-weight: 400; color: var(--gold); font-size: 1rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .diff-table thead th:nth-child(3) {
+    background: rgba(212,165,89,0.10); border-left: 1px solid rgba(212,165,89,0.3);
+    border-right: 1px solid rgba(212,165,89,0.3);
+  }
+  .diff-table tbody td {
+    padding: 0.85rem 1.2rem; border-bottom: 1px solid var(--line); color: var(--dim); font-size: 0.92rem;
+  }
+  .diff-table tbody td:first-child { color: var(--fg); font-weight: 500; }
+  .diff-table tbody td:nth-child(3) {
+    background: rgba(212,165,89,0.04); color: var(--fg);
+    border-left: 1px solid rgba(212,165,89,0.3); border-right: 1px solid rgba(212,165,89,0.3);
+  }
+  .diff-table tbody tr:last-child td { border-bottom: 0; }
+  .diff-table .check { color: var(--gold); font-weight: 600; }
+  .diff-table .dash { color: var(--faint); }
+
+  /* ─── Simulator gallery ────────────────────────────────── */
+  .sim-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem;
+    margin-top: 2rem;
+  }
+  .sim-card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 8px;
+    padding: 1.6rem 1.6rem; display: flex; flex-direction: column;
+    transition: all 0.18s;
+  }
+  .sim-card:hover { border-color: var(--faint); transform: translateY(-2px); }
+  .sim-card .sim-mockup {
+    background: #0a0a08; border: 1px solid var(--line); border-radius: 5px;
+    padding: 1rem; margin-bottom: 1rem; font-family: "SF Mono", Menlo, monospace;
+    color: var(--dim); font-size: 0.78rem; line-height: 1.5; min-height: 130px;
+    position: relative; overflow: hidden;
+  }
+  .sim-card .sim-mockup .sim-label {
+    position: absolute; top: 0.55rem; right: 0.7rem;
+    color: var(--faint); font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .sim-card .sim-mockup .row { display: flex; justify-content: space-between; padding: 0.2rem 0; }
+  .sim-card .sim-mockup .row .label { color: var(--dim); }
+  .sim-card .sim-mockup .row .val { color: var(--gold); }
+  .sim-card .sim-mockup .row .val.green { color: var(--green); }
+  .sim-card .sim-mockup .row .val.red { color: var(--red); }
+  .sim-card h3 { font-family: Georgia, serif; font-weight: 400; color: var(--gold); font-size: 1.25rem; margin: 0 0 0.5rem; }
+  .sim-card .sim-tagline { color: var(--fg); font-size: 0.92rem; margin-bottom: 0.7rem; }
+  .sim-card .sim-pairs {
+    color: var(--faint); font-size: 0.78rem; font-family: "SF Mono", Menlo, monospace;
+    letter-spacing: 0.04em; margin-top: auto;
+  }
+  .sim-card .sim-pairs strong { color: var(--gold); }
+
+  /* ─── Coaching layer ──────────────────────────────────── */
+  .coach-grid {
+    display: grid; grid-template-columns: 1.2fr 1fr; gap: 2rem;
+    margin-top: 2rem; align-items: start;
+  }
+  .coach-list { display: flex; flex-direction: column; gap: 1.1rem; }
+  .coach-item {
+    background: var(--card); border-left: 3px solid var(--gold); border-radius: 4px;
+    padding: 1.1rem 1.3rem;
+  }
+  .coach-item h4 {
+    font-family: Georgia, serif; font-weight: 400; color: var(--gold);
+    font-size: 1.05rem; margin: 0 0 0.35rem;
+  }
+  .coach-item p { color: var(--dim); font-size: 0.92rem; line-height: 1.55; margin: 0; }
+  .coach-item .meta {
+    font-family: "SF Mono", Menlo, monospace; color: var(--faint);
+    font-size: 0.72rem; letter-spacing: 0.06em; margin-top: 0.5rem;
+  }
+
+  .coach-quote {
+    background: var(--card-elev); border: 1px solid var(--line); border-radius: 8px;
+    padding: 1.8rem 1.8rem; position: relative;
+  }
+  .coach-quote .quote-mark {
+    font-family: Georgia, serif; color: var(--gold); font-size: 4rem; line-height: 1;
+    position: absolute; top: 0.5rem; left: 1rem; opacity: 0.5;
+  }
+  .coach-quote blockquote {
+    color: var(--fg); font-family: Georgia, serif; font-style: italic; font-size: 1.1rem;
+    line-height: 1.55; margin: 0 0 1rem; padding-left: 2.2rem;
+  }
+  .coach-quote .quote-attr {
+    color: var(--dim); font-size: 0.85rem; padding-left: 2.2rem;
+    font-family: "SF Mono", Menlo, monospace; letter-spacing: 0.04em;
+  }
+
+  /* ─── Skin in the game ────────────────────────────────── */
+  .skin-card {
+    background: linear-gradient(180deg, rgba(212,165,89,0.06), var(--card));
+    border: 1px solid var(--gold); border-radius: 10px;
+    padding: 2.5rem 2.5rem; margin-top: 2rem; text-align: center;
+  }
+  .skin-card h3 {
+    font-family: Georgia, serif; font-weight: 400; color: var(--gold);
+    font-size: 1.7rem; margin: 0 0 1rem;
+  }
+  .skin-card .skin-lead {
+    color: var(--fg); font-size: 1.05rem; line-height: 1.6; max-width: 60ch; margin: 0 auto 1.5rem;
+  }
+  .skin-fork {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+    margin-top: 2rem; text-align: left;
+  }
+  .skin-arm {
+    background: rgba(14,14,12,0.5); border: 1px solid var(--line); border-radius: 6px;
+    padding: 1.3rem 1.4rem;
+  }
+  .skin-arm h4 {
+    font-family: Georgia, serif; font-weight: 400; color: var(--gold);
+    font-size: 1.1rem; margin: 0 0 0.5rem;
+  }
+  .skin-arm p { color: var(--dim); font-size: 0.9rem; line-height: 1.55; margin: 0; }
+  .skin-arm .arm-tag {
+    font-family: "SF Mono", Menlo, monospace; color: var(--faint);
+    font-size: 0.7rem; letter-spacing: 0.08em; margin-bottom: 0.4rem;
+  }
+
+  /* ─── Pricing ────────────────────────────────────────── */
+  .pricing-stack {
+    background: var(--card); border: 2px solid var(--gold); border-radius: 10px;
+    padding: 2.5rem 2.5rem; margin-top: 2.5rem;
+    box-shadow: 0 8px 28px rgba(212,165,89,0.10);
+  }
+  .pricing-stack h3 { font-family: Georgia, serif; font-weight: 400; color: var(--gold); font-size: 1.6rem; margin: 0 0 0.4rem; text-align: center; }
+  .pricing-stack .price-sub { color: var(--dim); text-align: center; margin-bottom: 2rem; font-size: 0.95rem; }
+  .price-breakdown {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.3rem; margin-bottom: 1.5rem;
+  }
+  .price-block {
+    background: rgba(14,14,12,0.6); border: 1px solid var(--line); border-radius: 6px;
+    padding: 1.4rem 1.4rem; text-align: center;
+  }
+  .price-block .pb-label {
+    font-family: "SF Mono", Menlo, monospace; color: var(--dim);
+    font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.5rem;
+  }
+  .price-block .pb-amount {
+    font-family: Georgia, serif; color: var(--fg);
+    font-size: 2.3rem; line-height: 1; margin-bottom: 0.4rem;
+  }
+  .price-block .pb-amount .currency { color: var(--gold); font-size: 1.2rem; vertical-align: super; }
+  .price-block .pb-unit { color: var(--dim); font-size: 0.82rem; }
+  .price-block .pb-savings { color: var(--green); font-size: 0.78rem; margin-top: 0.4rem; }
+  .price-total {
+    text-align: center; padding: 1.4rem 0; border-top: 1px solid var(--line);
+    color: var(--fg); font-size: 1rem;
+  }
+  .price-total .ttl-amt { font-family: Georgia, serif; color: var(--gold); font-size: 1.3rem; }
+  .price-total .ttl-cycle { color: var(--dim); font-size: 0.9rem; margin-top: 0.3rem; }
+  .price-stack-cta {
+    display: block; text-align: center; margin: 1.5rem auto 0;
+    background: var(--gold); color: var(--bg); padding: 1rem 2.5rem;
+    border-radius: 5px; text-decoration: none; font-weight: 600; font-size: 1.05rem;
+    transition: all 0.12s; max-width: 320px;
+  }
+  .price-stack-cta:hover { background: var(--gold-bright); transform: translateY(-1px); }
+  .price-stack-fineprint { text-align: center; color: var(--faint); font-size: 0.78rem; margin-top: 0.7rem; }
+
+  .alternate-link {
+    background: var(--card); border: 1px solid var(--line); border-radius: 6px;
+    padding: 1rem 1.4rem; margin-top: 1.5rem; color: var(--dim); font-size: 0.92rem; line-height: 1.55;
+    text-align: center;
+  }
+  .alternate-link a { color: var(--gold); text-decoration: none; border-bottom: 1px dotted var(--gold); }
+
+  /* ─── FAQ ────────────────────────────────────────────── */
+  .faq-item {
+    border-bottom: 1px solid var(--line); padding: 1.1rem 0;
+  }
+  .faq-item summary {
+    cursor: pointer; list-style: none; font-family: Georgia, serif;
+    color: var(--fg); font-size: 1.05rem; padding-right: 2rem; position: relative;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after {
+    content: "+"; position: absolute; right: 0; top: 0; color: var(--gold);
+    font-size: 1.4rem; font-weight: 300; transition: transform 0.18s;
+  }
+  .faq-item[open] summary::after { transform: rotate(45deg); }
+  .faq-item .faq-body { padding-top: 0.8rem; color: var(--dim); font-size: 0.95rem; line-height: 1.6; max-width: 75ch; }
+
+  /* ─── Final CTA ──────────────────────────────────────── */
+  .final-cta { text-align: center; padding: 4rem 0 5rem; }
+  .final-cta h2 { font-size: 2.4rem; max-width: 22ch; margin: 0 auto 1rem; }
+  .final-cta .final-sub { color: var(--dim); font-size: 1.05rem; max-width: 56ch; margin: 0 auto 2rem; }
+  .final-cta .cta-row { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .final-cta .cta-row a { padding: 1rem 2rem; border-radius: 5px; text-decoration: none; font-size: 1rem; font-weight: 600; transition: all 0.12s; }
+  .final-cta .cta-primary { background: var(--gold); color: var(--bg); }
+  .final-cta .cta-secondary { background: transparent; color: var(--gold); border: 1px solid var(--gold); }
+
+  footer { border-top: 1px solid var(--line); padding: 2rem 0; color: var(--faint); font-size: 0.82rem; text-align: center; }
+  footer a { color: var(--dim); text-decoration: none; border-bottom: 1px dotted var(--faint); }
+
+  @media (max-width: 900px) {
+    .hero h1 { font-size: 2.4rem; }
+    .pillar-row { grid-template-columns: 1fr; }
+    .sim-grid { grid-template-columns: 1fr; }
+    .coach-grid { grid-template-columns: 1fr; }
+    .price-breakdown { grid-template-columns: 1fr; }
+    .skin-fork { grid-template-columns: 1fr; }
+    .diff-table { font-size: 0.85rem; }
+    .diff-table tbody td { padding: 0.7rem 0.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">Owl Group Trading<span class="sub">Mastery Bootcamp</span></div>
+  <nav class="nav">
+    <a href="#different">What's different</a>
+    <a href="#simulators">Simulators</a>
+    <a href="#coaching">Coaching</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#faq">FAQ</a>
+  </nav>
+  <a class="cta-mini" href="#pricing">Enroll →</a>
+</div>
+
+<div class="compare-banner">
+  Looking for the standalone course? Skip the platform + coaching — see the
+  <a href="./100-techniques-promo.html">100 Techniques course-only edition →</a>
+</div>
+
+<main>
+
+  <!-- ─── HERO ─────────────────────────────────────────────── -->
+  <section class="hero no-border" style="border-bottom:0">
+    <div class="kicker">A Dr. Ken Long bootcamp · Pace yourself. We're watching.</div>
+    <h1>Trading Mastery Bootcamp</h1>
+    <p class="subhead">
+      The 100 techniques. The simulators that turn each one into a hundred reps.
+      And direct access to Ken and the cohort coaches — every week, every question, until you arrive.
+    </p>
+
+    <div class="pillar-row">
+      <div class="pillar">
+        <div class="pillar-glyph">⛰</div>
+        <h3>The Climb</h3>
+        <p>All 100 techniques across 7 categories × 5 competency rungs. The same novice-to-master curriculum, delivered as 10-minute distilled lessons with worksheets and completion gates.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-glyph">⚙</div>
+        <h3>The Tools</h3>
+        <p>Interactive simulators paired to the techniques — position-sizing calculators, A/B/C graders, drawdown stress tests, setup-recognition trainers, replay engines. The techniques become reps.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-glyph">⚜</div>
+        <h3>The Cohort</h3>
+        <p>Monthly live group call with Ken. Direct email to instructors with 48-hour response. Personal progress dashboard the coaches review weekly. We watch the climb so you don't climb alone.</p>
+      </div>
+    </div>
+
+    <div class="hero-cta-row">
+      <div class="price-tag">
+        <span class="strike">$4,995</span> $3,495 bundle
+        <span class="plus">+</span> $99 / month coaching &amp; tools
+      </div>
+      <div class="cta-buttons">
+        <a class="cta-primary" href="#pricing">Enroll in the bootcamp →</a>
+        <a class="cta-secondary" href="#different">See what's different</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── WHAT'S DIFFERENT ─────────────────────────────────── -->
+  <section id="different">
+    <div class="section-kicker">A bootcamp, not a course</div>
+    <h2>Three things a course alone cannot do.</h2>
+    <p class="section-lead">
+      Most trading "courses" hand you a library and walk away. That works for traders
+      who already know how to turn knowledge into reps. For everyone else — the
+      90%+ who plateau halfway through — the bootcamp closes the gap with tools that
+      grade your reps and a coaching layer that catches drift early.
+    </p>
+
+    <table class="diff-table">
+      <thead>
+        <tr>
+          <th>What you get</th>
+          <th>Course Only</th>
+          <th>Mastery Bootcamp</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>All 100 techniques (video + worksheet + completion gate)</td>
+          <td><span class="check">✓</span></td>
+          <td><span class="check">✓</span></td>
+        </tr>
+        <tr>
+          <td>Lifetime access to every technique</td>
+          <td><span class="check">✓</span></td>
+          <td><span class="check">✓</span></td>
+        </tr>
+        <tr>
+          <td>Interactive simulators (sizing, A/B/C grading, replay, drawdown stress)</td>
+          <td><span class="dash">—</span></td>
+          <td><span class="check">✓</span></td>
+        </tr>
+        <tr>
+          <td>Personal progress dashboard reviewed by cohort coaches</td>
+          <td><span class="dash">—</span></td>
+          <td><span class="check">✓</span></td>
+        </tr>
+        <tr>
+          <td>Email-the-instructor tunnel · 48h response SLA</td>
+          <td><span class="dash">—</span></td>
+          <td><span class="check">✓</span></td>
+        </tr>
+        <tr>
+          <td>Monthly live group call with Ken</td>
+          <td><span class="dash">—</span></td>
+          <td><span class="check">✓</span></td>
+        </tr>
+        <tr>
+          <td>Cohort community + peer review</td>
+          <td><span class="dash">—</span></td>
+          <td><span class="check">✓</span></td>
+        </tr>
+        <tr>
+          <td>Cloud-hosted — your work follows you on any device</td>
+          <td><span class="dash">—</span></td>
+          <td><span class="check">✓</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ─── SIMULATORS ───────────────────────────────────────── -->
+  <section id="simulators">
+    <div class="section-kicker">The Tools — six marquee simulators</div>
+    <h2>Every technique earns its own simulator.</h2>
+    <p class="section-lead">
+      Reading "risk 1% per trade" is not the same as feeling the size shrink when
+      a stock's volatility doubles. The simulators turn each technique into
+      something you can actually rehearse — until the response is automatic,
+      not deliberate.
+    </p>
+
+    <div class="sim-grid">
+
+      <div class="sim-card">
+        <div class="sim-mockup">
+          <span class="sim-label">SIM · Sizing</span>
+          <div class="row"><span class="label">Symbol</span><span class="val">MU</span></div>
+          <div class="row"><span class="label">Account equity</span><span class="val">$50,000</span></div>
+          <div class="row"><span class="label">Risk per trade</span><span class="val">1.00%</span></div>
+          <div class="row"><span class="label">Entry / Stop</span><span class="val">$112.40 / $108.90</span></div>
+          <div class="row"><span class="label">ATR(14)</span><span class="val">3.85</span></div>
+          <div class="row" style="margin-top:0.4rem;border-top:1px dashed var(--line);padding-top:0.3rem"><span class="label">→ Position size</span><span class="val green">142 shares</span></div>
+          <div class="row"><span class="label">→ R-unit</span><span class="val green">$497.00</span></div>
+        </div>
+        <h3>Position Sizing Trainer</h3>
+        <p class="sim-tagline">Plug your symbol, stop, and account. The sizing math runs live, with volatility-adjusted variants side-by-side.</p>
+        <div class="sim-pairs">Pairs with <strong>Tech 35</strong> · Calibrate position sizing <span style="color:var(--faint)">·</span> <strong>Tech 50</strong> · Risk one percent</div>
+      </div>
+
+      <div class="sim-card">
+        <div class="sim-mockup">
+          <span class="sim-label">SIM · A/B/C Grade</span>
+          <div class="row"><span class="label">Session date</span><span class="val">2026-05-28</span></div>
+          <div class="row"><span class="label">Trades taken</span><span class="val">4</span></div>
+          <div class="row"><span class="label">Plan adherence</span><span class="val green">A</span></div>
+          <div class="row"><span class="label">Sizing discipline</span><span class="val green">A</span></div>
+          <div class="row"><span class="label">Stop honoring</span><span class="val">B (1 widened)</span></div>
+          <div class="row"><span class="label">Emotional state</span><span class="val green">A</span></div>
+          <div class="row" style="margin-top:0.4rem;border-top:1px dashed var(--line);padding-top:0.3rem"><span class="label">→ Session grade</span><span class="val">A−</span></div>
+          <div class="row"><span class="label">→ Today's P&amp;L</span><span class="val red">−$840 (independent)</span></div>
+        </div>
+        <h3>A/B/C Game Grader</h3>
+        <p class="sim-tagline">Score session quality on process — before you see P&amp;L. The dashboard shows your A-game frequency across the trailing 30 sessions.</p>
+        <div class="sim-pairs">Pairs with <strong>Tech 62</strong> · Detach from outcome <span style="color:var(--faint)">·</span> <strong>Tech 72</strong> · Score the session</div>
+      </div>
+
+      <div class="sim-card">
+        <div class="sim-mockup">
+          <span class="sim-label">SIM · Trade Replay</span>
+          <div class="row"><span class="label">Trade ID</span><span class="val">2026-05-21 · NVDA long</span></div>
+          <div class="row"><span class="label">Setup</span><span class="val">5DD bounce + bull regime</span></div>
+          <div class="row"><span class="label">Bar @ entry</span><span class="val">▶ 09:35 ET</span></div>
+          <div class="row"><span class="label">Replay speed</span><span class="val">2× (1m bars)</span></div>
+          <div class="row"><span class="label">Your decision tree</span><span class="val">tap to log</span></div>
+          <div class="row" style="margin-top:0.4rem;border-top:1px dashed var(--line);padding-top:0.3rem"><span class="label">→ Coach annotation</span><span class="val">"Trail moved early (bar 11)"</span></div>
+        </div>
+        <h3>Trade Replay Engine</h3>
+        <p class="sim-tagline">Step through your own trades bar-by-bar with the original chart. Coach annotations point out where execution diverged from the plan.</p>
+        <div class="sim-pairs">Pairs with <strong>Tech 67</strong> · Review every trade <span style="color:var(--faint)">·</span> <strong>Tech 75</strong> · Planned vs actual</div>
+      </div>
+
+      <div class="sim-card">
+        <div class="sim-mockup">
+          <span class="sim-label">SIM · Drawdown Stress</span>
+          <div class="row"><span class="label">Current equity</span><span class="val">$50,000</span></div>
+          <div class="row"><span class="label">Strategy win rate</span><span class="val">52%</span></div>
+          <div class="row"><span class="label">Avg win / Avg loss</span><span class="val">1.8R / 1.0R</span></div>
+          <div class="row"><span class="label">Monte Carlo runs</span><span class="val">10,000</span></div>
+          <div class="row"><span class="label">95% max DD over 1y</span><span class="val red">−28.4%</span></div>
+          <div class="row"><span class="label">Worst run drawdown</span><span class="val red">−42.1%</span></div>
+          <div class="row" style="margin-top:0.4rem;border-top:1px dashed var(--line);padding-top:0.3rem"><span class="label">→ Verdict</span><span class="val">Reduce size 25%</span></div>
+        </div>
+        <h3>Drawdown Stress Test</h3>
+        <p class="sim-tagline">Monte Carlo your strategy with your own stats. See the 95% worst-case drawdown for the next year. Make sure you can survive it before you trade it.</p>
+        <div class="sim-pairs">Pairs with <strong>Tech 19</strong> · Model worst case <span style="color:var(--faint)">·</span> <strong>Tech 83</strong> · Stress test results</div>
+      </div>
+
+      <div class="sim-card">
+        <div class="sim-mockup">
+          <span class="sim-label">SIM · Setup Recognition</span>
+          <div class="row"><span class="label">Pattern presented</span><span class="val">chart #2,847</span></div>
+          <div class="row"><span class="label">Your call</span><span class="val">▢ continuation · ▢ reversal · ▢ no trade</span></div>
+          <div class="row"><span class="label">Time to decide</span><span class="val">⏱ 2.3s</span></div>
+          <div class="row"><span class="label">Confidence (1-5)</span><span class="val">●●●●○</span></div>
+          <div class="row"><span class="label">Reference answer</span><span class="val green">continuation</span></div>
+          <div class="row" style="margin-top:0.4rem;border-top:1px dashed var(--line);padding-top:0.3rem"><span class="label">→ Trailing accuracy</span><span class="val green">78% · 200 charts</span></div>
+        </div>
+        <h3>Setup Recognition Trainer</h3>
+        <p class="sim-tagline">Tinder for charts. Snap-call each one continuation / reversal / no-trade. Speed + accuracy tracked over time so you can see pattern recognition develop.</p>
+        <div class="sim-pairs">Pairs with <strong>Tech 56</strong> · Trust the setup <span style="color:var(--faint)">·</span> <strong>Tech 68</strong> · Screenshot every setup</div>
+      </div>
+
+      <div class="sim-card">
+        <div class="sim-mockup">
+          <span class="sim-label">SIM · Daily Limit Guard</span>
+          <div class="row"><span class="label">Daily loss limit</span><span class="val">2.0% ($1,000)</span></div>
+          <div class="row"><span class="label">Realized today</span><span class="val red">−$680</span></div>
+          <div class="row"><span class="label">Open risk</span><span class="val">$220</span></div>
+          <div class="row"><span class="label">Cumulative tilt score</span><span class="val">3 / 10 (calm)</span></div>
+          <div class="row"><span class="label">Trading window</span><span class="val">OPEN until $1,000</span></div>
+          <div class="row" style="margin-top:0.4rem;border-top:1px dashed var(--line);padding-top:0.3rem"><span class="label">→ At limit</span><span class="val">platform auto-locks</span></div>
+        </div>
+        <h3>Daily Limit Guard</h3>
+        <p class="sim-tagline">Set your daily loss limit. The simulator (and the live trading layer, once wired to your broker) auto-locks the platform when it hits — no negotiation.</p>
+        <div class="sim-pairs">Pairs with <strong>Tech 98</strong> · Daily loss limits <span style="color:var(--faint)">·</span> <strong>Tech 97</strong> · Hard stops always</div>
+      </div>
+
+    </div>
+
+    <p style="color: var(--faint); font-size: 0.85rem; margin-top: 1.5rem; text-align: center; font-style: italic;">
+      Six marquee simulators above. The full bootcamp includes 22 simulators in total — one or more for nearly every technique.
+    </p>
+  </section>
+
+  <!-- ─── COACHING ───────────────────────────────────────── -->
+  <section id="coaching">
+    <div class="section-kicker">The Cohort — what "us watching" actually means</div>
+    <h2>You won't climb alone.</h2>
+    <p class="section-lead">
+      A bootcamp without watchers is just a course with extra steps. The coaching
+      layer is the difference — your progress dashboard is reviewed weekly, your
+      questions get real answers, and you have monthly time with Ken to think
+      out loud about where you actually are.
+    </p>
+
+    <div class="coach-grid">
+      <div class="coach-list">
+
+        <div class="coach-item">
+          <h4>Personal progress dashboard</h4>
+          <p>Every technique completion, every simulator run, every A/B/C session grade lands on a single dashboard. Your assigned cohort coach reviews it weekly and flags drift, plateaus, or readiness to ascend rungs.</p>
+          <div class="meta">REVIEWED WEEKLY · BY YOUR ASSIGNED COACH</div>
+        </div>
+
+        <div class="coach-item">
+          <h4>Email the instructor</h4>
+          <p>Stuck on a technique. Question about your simulator output. Wondering whether your A/B/C grade audit caught the real issue. Email it — you'll have an answer within 48 hours from a cohort coach, or from Ken directly for strategic questions.</p>
+          <div class="meta">48-HOUR SLA · BUSINESS DAYS</div>
+        </div>
+
+        <div class="coach-item">
+          <h4>Monthly live group call with Ken</h4>
+          <p>One ninety-minute call per month. Ken walks the active cohort through the techniques the group is collectively wrestling with — and answers questions live. Recorded if you can't attend.</p>
+          <div class="meta">90 MIN · LAST THURSDAY OF EACH MONTH · 7 PM ET</div>
+        </div>
+
+        <div class="coach-item">
+          <h4>Cohort community</h4>
+          <p>Private space (chat + forum) for every active member. Other traders working the same techniques, sharing simulator screens, comparing dashboards. Drift-spotting is easier from someone six weeks ahead of you.</p>
+          <div class="meta">PRIVATE · MEMBERS ONLY · MODERATED</div>
+        </div>
+
+      </div>
+
+      <div class="coach-quote">
+        <div class="quote-mark">"</div>
+        <blockquote>
+          What separates the trader who arrives from the one who doesn't is rarely
+          intelligence and almost never the platform. It's whether someone was
+          watching the climb — catching the drift in week six instead of month
+          fourteen. That's the whole job of the cohort coach.
+        </blockquote>
+        <div class="quote-attr">— Dr. Ken Long · forty-year systematic trader · founder, Tortoise Capital</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SKIN IN THE GAME ─────────────────────────────────── -->
+  <section>
+    <div class="section-kicker">Why the monthly fee, on top of the bundle</div>
+    <h2>Skin in the game — by design.</h2>
+    <p class="section-lead">
+      The $99 monthly isn't a content fee. The content is yours forever, the
+      moment you enroll. The monthly is the engagement mechanism — and it cuts
+      both directions on purpose.
+    </p>
+
+    <div class="skin-card">
+      <h3>Whichever pace you pick, the math favors you.</h3>
+      <p class="skin-lead">
+        With a one-time price, most courses get half-finished and quietly
+        abandoned. The monthly creates a fork — and both branches earn the fee.
+      </p>
+
+      <div class="skin-fork">
+        <div class="skin-arm">
+          <div class="arm-tag">PATH A · Climb fast</div>
+          <h4>Finish in 6 months</h4>
+          <p>
+            You work the bootcamp aggressively. Three to four techniques per week.
+            Simulators daily. Cohort calls every month. Total coaching cost: $594
+            on top of the bundle. You leave with mastery of every technique and
+            two years' worth of cohort access compressed into half a year.
+            Then you're a graduate, not a member — the monthly stops.
+          </p>
+        </div>
+        <div class="skin-arm">
+          <div class="arm-tag">PATH B · Climb deep</div>
+          <h4>Take 3 years to embed</h4>
+          <p>
+            You go technique by technique, deeply. A few each month. Simulators
+            until the response is automatic. Coaching dashboard tracking your
+            real trades alongside the practice ones. Monthly cost adds to ~$3,500
+            over three years — but you've had a cohort coach watching your live
+            book for thirty-six months. That's the cost of two coaching calls
+            elsewhere.
+          </p>
+        </div>
+      </div>
+
+      <p style="color: var(--gold); font-size: 1.05rem; margin-top: 2rem; font-family: Georgia, serif; font-style: italic;">
+        Either way, the monthly bill makes sure you actually open the platform.
+        That's the only thing that matters.
+      </p>
+    </div>
+  </section>
+
+  <!-- ─── PRICING ──────────────────────────────────────────── -->
+  <section id="pricing">
+    <div class="section-kicker">Pricing</div>
+    <h2>One bundle. One monthly. Lifetime content.</h2>
+    <p class="section-lead">
+      The bundle unlocks every technique forever. The monthly keeps the
+      simulators, coaching dashboard, instructor email, and cohort access active.
+      Cancel the monthly anytime — your content stays yours.
+    </p>
+
+    <div class="pricing-stack">
+      <h3>Trading Mastery Bootcamp</h3>
+      <p class="price-sub">All 100 techniques + 22 simulators + cohort coaching + monthly Ken call</p>
+
+      <div class="price-breakdown">
+        <div class="price-block">
+          <div class="pb-label">ONE-TIME BUNDLE</div>
+          <div class="pb-amount"><span class="currency">$</span>3,495</div>
+          <div class="pb-unit">all 100 techniques · lifetime access</div>
+          <div class="pb-savings">↓ 30% off vs $49.95 a la carte</div>
+        </div>
+        <div class="price-block">
+          <div class="pb-label">PLATFORM + COACHING</div>
+          <div class="pb-amount"><span class="currency">$</span>99<span style="font-size:1.1rem;color:var(--dim)"> / mo</span></div>
+          <div class="pb-unit">simulators · dashboard · email · cohort</div>
+          <div class="pb-savings">cancel anytime · content stays yours</div>
+        </div>
+      </div>
+
+      <div class="price-total">
+        Total to start: <span class="ttl-amt">$3,594</span>
+        <div class="ttl-cycle">$3,495 today + $99 on day 30, then monthly</div>
+      </div>
+
+      <a class="price-stack-cta" href="#enroll">Enroll in the bootcamp →</a>
+      <div class="price-stack-fineprint">60-day refund window · cancel monthly anytime · payment plans available</div>
+    </div>
+
+    <div class="alternate-link">
+      Don't want the platform or coaching? The
+      <a href="./100-techniques-promo.html">course-only edition</a>
+      ships the same 100 techniques as standalone video lessons, no monthly fee.
+      Pick that one if you already have your own playbook + journaling system
+      and just want the curriculum.
+    </div>
+  </section>
+
+  <!-- ─── FAQ ──────────────────────────────────────────────── -->
+  <section id="faq">
+    <div class="section-kicker">Questions you're already asking</div>
+    <h2>FAQ</h2>
+
+    <details class="faq-item" open>
+      <summary>Why the monthly fee on top of the bundle?</summary>
+      <div class="faq-body">
+        The bundle pays for content; the monthly pays for the things that have
+        ongoing cost — cloud-hosted simulators, weekly dashboard review by a
+        coach, 48-hour email response, and Ken's monthly call. Charging once
+        for those would mean either inflating the bundle past what most traders
+        can absorb, or burning the coaching layer down to nothing once you're
+        a year in. The monthly keeps the cohort sustainable.
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>What happens if I cancel the monthly?</summary>
+      <div class="faq-body">
+        You keep every technique you've paid for — videos, worksheets, completion
+        records — forever. What you lose: live simulator access (the math runs
+        on our servers), the coaching dashboard, instructor email, monthly call
+        access, and the cohort community. You can resubscribe later if you want
+        to climb actively again.
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Is the monthly required, or just recommended?</summary>
+      <div class="faq-body">
+        For the bootcamp tier — required for the first 90 days minimum, so the
+        coaching layer has time to make a meaningful difference. After that,
+        cancel anytime. If you know up front you only want the curriculum,
+        the <a href="./100-techniques-promo.html">course-only edition</a>
+        is the right product — no monthly at all.
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>How fast can I realistically finish?</summary>
+      <div class="faq-body">
+        Six months is aggressive but achievable for traders with 8-10 hours per
+        week. Most cohort members finish the climb in 12-18 months, which we
+        consider the healthy range — fast enough to build momentum, slow enough
+        for each technique to become a habit. The bootcamp is designed for
+        either pace.
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Does Ken actually answer emails himself?</summary>
+      <div class="faq-body">
+        Strategic questions, yes — Ken personally responds to roughly 20% of
+        instructor email, the ones flagged by the cohort coaches as needing
+        founder-level judgment. The other 80% are answered by Ken-trained
+        cohort coaches with the same 48-hour SLA. Every monthly group call
+        is Ken live.
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I switch from the course-only edition to the bootcamp later?</summary>
+      <div class="faq-body">
+        Yes. The course-only price ($3,495 or whatever you paid a la carte)
+        credits 1:1 toward the bootcamp bundle. You activate the monthly when
+        you upgrade. No double-charging for content you already own.
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>What's the refund policy?</summary>
+      <div class="faq-body">
+        Bundle: 60-day full refund, no questions. We want you to fully engage
+        without feeling locked in. Monthly: cancel anytime, no prorated refund
+        on the current month (since you've had access to the live coaching for
+        that period). If you cancel within 48 hours of the monthly billing, we
+        refund that cycle as a courtesy.
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Do I need to connect a brokerage account?</summary>
+      <div class="faq-body">
+        Not required, and not until you're ready. The simulators run on synthetic
+        + historical data by default. When you reach the Journeyman rung and
+        want the Daily Limit Guard wired to your real platform, we support
+        IBKR, TradeStation, and TC2000 via read-only API. Your account stays
+        in your control — we never see balances or place trades.
+      </div>
+    </details>
+  </section>
+
+  <!-- ─── FINAL CTA ────────────────────────────────────────── -->
+  <section class="final-cta no-border">
+    <div class="section-kicker">Start the climb</div>
+    <h2>The traders who arrive are the ones someone was watching.</h2>
+    <p class="final-sub">
+      Pick the bootcamp if you want the climb done deliberately, with the tools
+      to grade your reps and the coaches to catch your drift. Pick the
+      <a href="./100-techniques-promo.html" style="color:var(--gold)">course only</a>
+      if you already have those things and just want the curriculum.
+    </p>
+    <div class="cta-row">
+      <a class="cta-primary" href="#pricing">Enroll · $3,495 + $99 / mo →</a>
+      <a class="cta-secondary" href="./100-techniques-promo.html">Course-only · $3,495 one-time</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Owl Group Trading · Dr. Ken Long · <a href="./episodes/sources.html">course catalog</a> · <a href="./100-techniques-promo.html">course-only edition</a> · <a href="mailto:hello@owlgrouptrading.com">hello@owlgrouptrading.com</a>
+</footer>
+
+</body>
+</html>
