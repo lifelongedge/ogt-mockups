@@ -429,21 +429,24 @@
 
     <div class="preview-row">
 
-      <div class="preview-tile live">
+      <div class="preview-tile live" data-mp4="./episodes/clips/ep03-build-your-plan.mp4"
+           data-caption="Technique 03: Write the plan — Dr. Ken Long, cohort-6 live planning session (V+O · 13 overlays)">
         <span class="ribbon">▶ Free preview</span>
-        <div class="tech-num">TECHNIQUE 01 · NOVICE · PLANNING</div>
-        <h3>Define Your Why</h3>
+        <div class="tech-num">TECHNIQUE 03 · NOVICE · PLANNING</div>
+        <h3>Write the Plan</h3>
         <p class="tile-summary">
-          Write your reason for trading on paper before risking a single dollar.
-          Without purpose, pressure breaks you. The "Four Brothers" framework
-          gives you the master-craftsman identity that holds when P&amp;L doesn't.
+          If it's not written, it doesn't exist. Ken walks the three-bucket framework
+          that goes into tomorrow's plan today — continuations first, new patterns
+          second, special situations last. The structure prevents the chart from
+          dragging you into trades you never planned.
         </p>
-        <div class="tile-meta">5:12 · A+S · Ken Long</div>
-        <button class="tile-cta" onclick="openPreview()">▶ Watch the 5-min preview</button>
+        <div class="tile-meta">4:56 · V+O · Ken Long</div>
+        <button class="tile-cta" onclick="openPreview(3)">▶ Watch the 5-min preview</button>
       </div>
 
-      <div class="preview-tile locked">
-        <span class="ribbon"><span class="lock-icon">🔒</span> Unlocks at enroll</span>
+      <div class="preview-tile live" data-mp4="./episodes/clips/ep05-accept-slow-growth.mp4"
+           data-caption="Technique 05: Accept slow growth — Dr. Ken Long, cyclic rate of fire (V+O · Ken cropped from right-half tile · 8 overlays)">
+        <span class="ribbon">▶ Free preview</span>
         <div class="tech-num">TECHNIQUE 05 · NOVICE · PLANNING</div>
         <h3>Accept Slow Growth</h3>
         <p class="tile-summary">
@@ -452,31 +455,31 @@
           carry the barrel for a 30-year career.
         </p>
         <div class="tile-meta">2:36 · V+O · Ken Long</div>
-        <button class="tile-cta">Bundle unlocks all 100</button>
+        <button class="tile-cta" onclick="openPreview(5)">▶ Watch the 3-min preview</button>
       </div>
 
-      <div class="preview-tile locked">
-        <span class="ribbon"><span class="lock-icon">🔒</span> Unlocks at enroll</span>
-        <div class="tech-num">TECHNIQUE 10 · APPRENTICE · PLANNING</div>
-        <h3>Define Success Metrics</h3>
+      <div class="preview-tile live" data-mp4="./episodes/clips/ep07-match-style-to-life.mp4"
+           data-caption="Technique 07: Map your timeframe — Dr. Ken Long, three mindsets + hybrid trader (V+O · 18 overlays · multi-student session)">
+        <span class="ribbon">▶ Free preview</span>
+        <div class="tech-num">TECHNIQUE 07 · APPRENTICE · PLANNING</div>
+        <h3>Map Your Timeframe</h3>
         <p class="tile-summary">
-          Track process metrics, not just profit. Measure what you can control before
-          measuring what you cannot. The A/B/C-game grade is what compounds across
-          a career — P&amp;L is the market's vote, the grade is yours.
+          Three mindsets — swing, intraday, position. Each is a distinct trader,
+          shaped by your hours and your nervous system. The hybrid trader picks
+          the mindset that fits the moment, mindfully. The wrong mindset on the
+          right setup destroys both.
         </p>
-        <div class="tile-meta">4:18 · V+O · Ken Long</div>
-        <button class="tile-cta">Bundle unlocks all 100</button>
+        <div class="tile-meta">6:48 · V+O · Ken Long</div>
+        <button class="tile-cta" onclick="openPreview(7)">▶ Watch the 7-min preview</button>
       </div>
 
     </div>
 
-    <!-- Inline live player (revealed when first tile is clicked) -->
+    <!-- Inline live player (src swaps when a tile is clicked) -->
     <div id="livePlayer" class="live-player">
-      <video controls preload="metadata" controlsList="nodownload" src="./episodes/clips/ep01-four-brothers-v3.mp4"></video>
+      <video id="livePlayerVideo" controls preload="metadata" controlsList="nodownload"></video>
     </div>
-    <div id="livePlayerCaption" class="player-caption">
-      <em>Technique 01: Define Your Why — Dr. Ken Long, "The Four Brothers" canonical articulation (Farmer · Blacksmith · Machinist · Trail Boss)</em>
-    </div>
+    <div id="livePlayerCaption" class="player-caption"><em></em></div>
   </section>
 
   <!-- ─── THE CLIMB ────────────────────────────────────────── -->
@@ -738,13 +741,29 @@
 
 <script>
 // ─── Live preview reveal ────────────────────────────────────
-function openPreview() {
-  const p = document.getElementById('livePlayer');
-  const c = document.getElementById('livePlayerCaption');
-  p.classList.add('open');
-  c.classList.add('open');
-  p.scrollIntoView({behavior: 'smooth', block: 'center'});
-  setTimeout(() => p.querySelector('video').play().catch(() => {}), 600);
+// Map technique id → mp4 + caption (built from the hero tile data
+// attributes so we don't repeat ourselves)
+const PREVIEW_MEDIA = {};
+document.querySelectorAll('.preview-tile.live[data-mp4]').forEach(tile => {
+  const id = parseInt(tile.querySelector('.tile-cta').getAttribute('onclick').match(/\d+/)[0], 10);
+  PREVIEW_MEDIA[id] = { mp4: tile.dataset.mp4, caption: tile.dataset.caption };
+});
+
+function openPreview(id) {
+  const media = PREVIEW_MEDIA[id];
+  if (!media) return;
+  const wrap = document.getElementById('livePlayer');
+  const video = document.getElementById('livePlayerVideo');
+  const caption = document.getElementById('livePlayerCaption');
+  // swap src if changed
+  if (!video.src.endsWith(media.mp4.replace('./',''))) {
+    video.src = media.mp4;
+  }
+  caption.querySelector('em').textContent = media.caption;
+  wrap.classList.add('open');
+  caption.classList.add('open');
+  wrap.scrollIntoView({behavior: 'smooth', block: 'center'});
+  setTimeout(() => video.play().catch(() => {}), 600);
 }
 
 // ─── 100 techniques data ────────────────────────────────────
@@ -755,16 +774,16 @@ function openPreview() {
 // live flag: 1, 5, 10 are previewable
 const TECHNIQUES = [
   // Planning (1-22)
-  [1,'Novice','plan','Define your why','Write your reason for trading on paper before risking a single dollar.', true],
+  [1,'Novice','plan','Define your why','Write your reason for trading on paper before risking a single dollar.'],
   [2,'Novice','plan','Choose one market','Stop scanning everything. Pick one instrument and learn it deeply.'],
-  [3,'Novice','plan','Write the plan','If it is not written, it does not exist. Open a document today.'],
+  [3,'Novice','plan','Write the plan','If it is not written, it does not exist. Open a document today.', true],
   [4,'Novice','plan','Study before screens','Read one foundational book before placing trades.'],
   [5,'Novice','plan','Accept slow growth','You are not behind. You are early. Begin where you are without apology.', true],
   [6,'Apprentice','plan','Define your edge','Name the specific condition where you have statistical advantage.'],
-  [7,'Apprentice','plan','Map your timeframe','Decide whether you are a scalper, day trader, swing, or position trader.'],
+  [7,'Apprentice','plan','Map your timeframe','Decide whether you are a scalper, day trader, swing, or position trader.', true],
   [8,'Apprentice','plan','Set capital limits','Decide today the maximum capital you are willing to lose entirely.'],
   [9,'Apprentice','plan','Plan your week','Schedule study, review, and trading sessions in advance.'],
-  [10,'Apprentice','plan','Define success metrics','Track process metrics, not just profit. Measure what you control first.', true],
+  [10,'Apprentice','plan','Define success metrics','Track process metrics, not just profit. Measure what you control first.'],
   [11,'Journeyman','plan','Build playbook depth','Document every setup with entry, stop, target, and invalidation.'],
   [12,'Journeyman','plan','Identify regime shifts','Plan strategies for trends, ranges, and volatility expansions.'],
   [13,'Journeyman','plan','Stress test plans','Imagine your worst week. Plan how you will respond before it arrives.'],
