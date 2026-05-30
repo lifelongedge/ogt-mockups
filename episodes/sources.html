@@ -81,6 +81,24 @@
 
   .legend { color: var(--dim); font-size: 0.85rem; margin-top: 0.6rem; }
   .legend .badge { margin-right: 0.4rem; }
+
+  /* ─── Lock toggle (corpus mappings) ──────────────────────── */
+  .lock-cell { text-align: center; white-space: nowrap; }
+  .lock-toggle { display: inline-flex; align-items: center; gap: 0.4rem; cursor: pointer; user-select: none; font-size: 0.78rem; color: var(--dim); font-family: "SF Mono", Menlo, monospace; letter-spacing: 0.05em; }
+  .lock-toggle input[type="checkbox"] { appearance: none; -webkit-appearance: none; width: 1.05em; height: 1.05em; background: var(--card); border: 1.5px solid var(--faint); border-radius: 3px; cursor: pointer; position: relative; margin: 0; }
+  .lock-toggle input[type="checkbox"]:checked { background: var(--gold); border-color: var(--gold); }
+  .lock-toggle input[type="checkbox"]:checked::after { content: ""; position: absolute; left: 0.3em; top: 0.05em; width: 0.32em; height: 0.65em; border: solid var(--bg); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+  .lock-toggle:hover .lock-label { color: var(--fg); }
+  .corpus-row.final .lock-label { color: var(--gold); font-weight: 600; }
+
+  /* Final state styling — locked row */
+  .corpus-row.final { background: rgba(212,165,89,0.04); }
+  .corpus-row.final td:first-child { border-left: 3px solid var(--gold); }
+  .corpus-row.final .state-badge { background: rgba(212,165,89,0.14); color: var(--gold); border: 1px solid rgba(212,165,89,0.45); font-weight: 600; }
+  .corpus-row.final .state-note { color: var(--gold); }
+
+  /* Default DRAFT badge color */
+  .state-badge { background: rgba(196,126,83,0.10); color: var(--red); border: 1px solid rgba(196,126,83,0.30); }
 </style>
 </head>
 <body>
@@ -514,463 +532,539 @@
       Full data: <a href="../ogt-coursecraft/catalog/corpus-mappings-2026-05-30.md">catalog/corpus-mappings-2026-05-30.md</a>
     </p>
     <table>
-      <thead><tr><th>Tip</th><th>Source / Category</th><th>YouTube</th><th>Status</th></tr></thead>
+      <thead><tr><th>Tip</th><th>Source / Category</th><th>YouTube</th><th>Status</th><th>Lock</th></tr></thead>
       <tbody>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 01</span><span class="ep-title">Define</span></td>
+        <tr class="corpus-row" data-tip="1">
+          <td class="ep-cell"><span class="ep-num">TIP 01</span><span class="ep-title">Define your why</span></td>
           <td class="source-cell"><span class="src-title">PLANNING / Novice</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"a catastrophic loss or an adverse move that makes you freeze and then you panic and then you don't do the exit and then you have a disaster and then a psychological meltdown and question your own identity and purpose in …"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/MedsJ7jC8P4?t=2613" target="_blank" rel="noopener">▶ open at 00:43:33</a><span class="yt-range">range 00:43:33–00:43:46</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="1"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 02</span><span class="ep-title">Choose</span></td>
+        <tr class="corpus-row" data-tip="2">
+          <td class="ep-cell"><span class="ep-num">TIP 02</span><span class="ep-title">Choose one market</span></td>
           <td class="source-cell"><span class="src-title">PLANNING / Novice</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"what makes a good frog candidate any sniper pattern, any frog quality number better than three because by definition it is compressed to a relatively quiet state where an average move is going to give you a large multipl…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/a5SX0TSPSms?t=521" target="_blank" rel="noopener">▶ open at 00:08:41</a><span class="yt-range">range 00:08:41–00:10:15</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="2"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 03</span><span class="ep-title">Write</span></td>
+        <tr class="corpus-row" data-tip="3">
+          <td class="ep-cell"><span class="ep-num">TIP 03</span><span class="ep-title">Write the plan</span></td>
           <td class="source-cell"><span class="src-title">PLANNING / Novice</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"best way to put together a trading plan... I've seen so many trading plans out there outside of the canned Tharp organization that now I am so confused. I know I need one but I don't know how to put it together and then …"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/fOwlZ4A02PM?t=22" target="_blank" rel="noopener">▶ open at 00:00:22</a><span class="yt-range">range 00:00:22–00:01:09</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="3"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 04</span><span class="ep-title">Study</span></td>
+        <tr class="corpus-row" data-tip="4">
+          <td class="ep-cell"><span class="ep-num">TIP 04</span><span class="ep-title">Study before screens</span></td>
           <td class="source-cell"><span class="src-title">PLANNING / Novice</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"this is a quick look at the foundations course basic learning model for how to develop a professional body of knowledge that relies on a rigorous exploitation of professional rules that give us an edge reliably in the ma…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/kwbhArjzdcw?t=79" target="_blank" rel="noopener">▶ open at 00:01:19</a><span class="yt-range">range 00:01:19–00:01:56</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="4"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 05</span><span class="ep-title">Accept</span></td>
+        <tr class="corpus-row" data-tip="5">
+          <td class="ep-cell"><span class="ep-num">TIP 05</span><span class="ep-title">Accept slow growth</span></td>
           <td class="source-cell"><span class="src-title">PLANNING / Novice</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"keep it simple but don't be stupid. It started accepting where you are and moving on. Listen to Master Xi on the five impediments to walking up the hill... Let it rain, recognize where you are, accept and acknowledge, in…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/VnEu8K5BwL0?t=157" target="_blank" rel="noopener">▶ open at 00:02:37</a><span class="yt-range">range 00:02:37–00:03:27</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="5"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 06</span><span class="ep-title">Define</span></td>
+        <tr class="corpus-row" data-tip="6">
+          <td class="ep-cell"><span class="ep-num">TIP 06</span><span class="ep-title">Define your edge</span></td>
           <td class="source-cell"><span class="src-title">PLANNING / Apprentice</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"if I could give you a system that was annualized at 200 percent per year, how much risk could you take or what would be the maximum drawdown that you could tolerate and still trade that system?... it turns out that the n…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/GISgSB-V0Pk?t=76" target="_blank" rel="noopener">▶ open at 00:01:16</a><span class="yt-range">range 00:01:16–00:02:10</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="6"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 07</span><span class="ep-title">Map</span></td>
+        <tr class="corpus-row" data-tip="7">
+          <td class="ep-cell"><span class="ep-num">TIP 07</span><span class="ep-title">Map your timeframe</span></td>
           <td class="source-cell"><span class="src-title">PLANNING / Apprentice</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"when I teach trading technique I really have three categories. I have the long-term position trading or the core trading... and then I teach swing trading where you're thinking about holding positions two to ten days, so…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/VSYWFsJ_RGY?t=971" target="_blank" rel="noopener">▶ open at 00:16:11</a><span class="yt-range">range 00:16:11–00:17:53</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="7"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 08</span><span class="ep-title">Set</span></td>
+        <tr class="corpus-row" data-tip="8">
+          <td class="ep-cell"><span class="ep-num">TIP 08</span><span class="ep-title">Set capital limits</span></td>
           <td class="source-cell"><span class="src-title">PLANNING / Apprentice</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"print out my statements every single day and I keep track of everything manually, just because I don't know it works for me... these accounts — the entire account is probably five percent of my net worth. So the idea is …"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/QTz3HAtw6oQ?t=331" target="_blank" rel="noopener">▶ open at 00:05:31</a><span class="yt-range">range 00:05:31–00:07:53</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="8"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 09</span><span class="ep-title">Plan</span></td>
+        <tr class="corpus-row" data-tip="9">
+          <td class="ep-cell"><span class="ep-num">TIP 09</span><span class="ep-title">Plan your week</span></td>
           <td class="source-cell"><span class="src-title">PLANNING / Apprentice</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"the sniper trading business — limited charts, focus on less symbols. The one rule I have to implement is one trade only. That's the meaning — I don't take the next trade before I close that trade, because I realize the […"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/udtCjShKvs4?t=2528" target="_blank" rel="noopener">▶ open at 00:42:08</a><span class="yt-range">range 00:42:08–00:42:43</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="9"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 10</span><span class="ep-title">Define</span></td>
+        <tr class="corpus-row" data-tip="10">
+          <td class="ep-cell"><span class="ep-num">TIP 10</span><span class="ep-title">Define success metrics</span></td>
           <td class="source-cell"><span class="src-title">PLANNING / Apprentice</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"they learn to become their own — not harshest but their own best critics — and they own it and then they decide what they're going to do to fix it in the second half, and then I can confirm or affirm their process and th…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/UEggLDyMnI8?t=3252" target="_blank" rel="noopener">▶ open at 00:54:12</a><span class="yt-range">range 00:54:12–01:31:50</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="10"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 11</span><span class="ep-title">Build</span></td>
+        <tr class="corpus-row" data-tip="11">
+          <td class="ep-cell"><span class="ep-num">TIP 11</span><span class="ep-title">Build playbook depth</span></td>
           <td class="source-cell"><span class="src-title">PLANNING / Journeyman</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"that first reversal after a harsh winter is important because that's going to set the lower boundary of this channel and then you have the dragon complex in here that's also shaping down and right here is where he turns.…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/WlqQChOychs?t=164" target="_blank" rel="noopener">▶ open at 00:02:44</a><span class="yt-range">range 00:02:44–00:04:02</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="11"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 12</span><span class="ep-title">Identify</span></td>
+        <tr class="corpus-row" data-tip="12">
+          <td class="ep-cell"><span class="ep-num">TIP 12</span><span class="ep-title">Identify regime shifts</span></td>
           <td class="source-cell"><span class="src-title">PLANNING / Journeyman</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"when it comes out of the Red River in the other direction, you have a big move out of the Red River here, and then it chops around -- stay out. And now it leaves the Red River, you got this nice move in the spring... so …"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/GKsHsBKK8QI?t=90" target="_blank" rel="noopener">▶ open at 00:01:30</a><span class="yt-range">range 00:01:30–00:03:30</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="12"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 13</span><span class="ep-title">Stress</span></td>
+        <tr class="corpus-row" data-tip="13">
+          <td class="ep-cell"><span class="ep-num">TIP 13</span><span class="ep-title">Stress test plans</span></td>
           <td class="source-cell"><span class="src-title">PLANNING / Journeyman</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"number one favorite pattern -- because when you can identify a support level and it breaks, you have fear and panic in the market, and that creates large directional moves that we can exploit... so what we've done here i…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/rmfIYAVNQOA?t=4076" target="_blank" rel="noopener">▶ open at 01:07:56</a><span class="yt-range">range 01:07:56–01:13:38</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="13"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 14</span><span class="ep-title">Schedule</span></td>
+        <tr class="corpus-row" data-tip="14">
+          <td class="ep-cell"><span class="ep-num">TIP 14</span><span class="ep-title">Schedule strategic reviews</span></td>
           <td class="source-cell"><span class="src-title">PLANNING / Journeyman</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"there's a number of you out there who should be thinking about contributing your learning journal and histograms and trade stats from the hybrid trading... which will get you access to that workshop on account of doing t…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/XQxPc2XhIZs?t=3857" target="_blank" rel="noopener">▶ open at 01:04:17</a><span class="yt-range">range 01:04:17–01:04:59</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="14"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 15</span><span class="ep-title">Plan</span></td>
+        <tr class="corpus-row" data-tip="15">
+          <td class="ep-cell"><span class="ep-num">TIP 15</span><span class="ep-title">Plan exit conditions</span></td>
           <td class="source-cell"><span class="src-title">PLANNING / Journeyman</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"if in the course of a hundred trades I ever took a loss greater than 1R, I'm not trading it at production level until I can get a hundred trades in a row with no loss worse than one R... then and only then when I get a h…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/_qs7Qd0MTzc?t=7590" target="_blank" rel="noopener">▶ open at 02:06:30</a><span class="yt-range">range 02:06:30–02:08:30</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="15"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 16</span><span class="ep-title">Design</span></td>
+        <tr class="corpus-row" data-tip="16">
+          <td class="ep-cell"><span class="ep-num">TIP 16</span><span class="ep-title">Design portfolio architecture</span></td>
           <td class="source-cell"><span class="src-title">PLANNING / Expert</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"instead of having ten units of one R that I would put on ten in a row equally, it would be better to collapse that into four purchases of position size four, three, two, and one. So you put forty percent of your position…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/1FMcKTYaHMo?t=4238" target="_blank" rel="noopener">▶ open at 01:10:38</a><span class="yt-range">range 01:10:38–01:20:33</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="16"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 21</span><span class="ep-title">Design</span></td>
+        <tr class="corpus-row" data-tip="21">
+          <td class="ep-cell"><span class="ep-num">TIP 21</span><span class="ep-title">Design legacy systems</span></td>
           <td class="source-cell"><span class="src-title">PLANNING / Master</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"at the current moment my working program is integration -- you know so far I have learned a lot from Ken, how do I integrate my knowledge into creating skills... [Ken responding] paying attention to how you learn is some…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/z6RK3VFwHow?t=3011" target="_blank" rel="noopener">▶ open at 00:50:11</a><span class="yt-range">range 00:50:11–01:01:36</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="21"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 26</span><span class="ep-title">Clear</span></td>
+        <tr class="corpus-row" data-tip="26">
+          <td class="ep-cell"><span class="ep-num">TIP 26</span><span class="ep-title">Clear the environment</span></td>
           <td class="source-cell"><span class="src-title">PREPARATION / Novice</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"so you think about plan prepare execute assess, that readiness that ready room for me is the preparation where I take off all the things... to get to the battle circle I first got to get into the ready room. Over here th…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/Y6B-G8GtU3c?t=1179" target="_blank" rel="noopener">▶ open at 00:19:39</a><span class="yt-range">range 00:19:39–00:19:59</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="26"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 27</span><span class="ep-title">Practice</span></td>
+        <tr class="corpus-row" data-tip="27">
+          <td class="ep-cell"><span class="ep-num">TIP 27</span><span class="ep-title">Practice patience daily</span></td>
           <td class="source-cell"><span class="src-title">PREPARATION / Novice</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"just decide let me take a 0.3 while I can. My maximum favorable excursion was probably 1R and so that's what I felt like I gave back 0.7. Maybe on a better day I could have kept half but we'll take the 0.3, so now we're …"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/qOi198PXb28?t=451" target="_blank" rel="noopener">▶ open at 00:07:31</a><span class="yt-range">range 00:07:31–00:07:51</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="27"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 28</span><span class="ep-title">Journal</span></td>
+        <tr class="corpus-row" data-tip="28">
+          <td class="ep-cell"><span class="ep-num">TIP 28</span><span class="ep-title">Journal before sessions</span></td>
           <td class="source-cell"><span class="src-title">PREPARATION / Apprentice</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"What's the size of the range stat on DIA? ... The range stat is at $489. Okay, so draw a $5 box. So use your reference on the right hand side, come up with a $5 yellow box. Yeah, so that box should be on that chart first…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/3jnbqQEniyQ?t=2458" target="_blank" rel="noopener">▶ open at 00:40:58</a><span class="yt-range">range 00:40:58–00:41:33</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="28"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 29</span><span class="ep-title">Review</span></td>
+        <tr class="corpus-row" data-tip="29">
+          <td class="ep-cell"><span class="ep-num">TIP 29</span><span class="ep-title">Review yesterday first</span></td>
           <td class="source-cell"><span class="src-title">PREPARATION / Apprentice</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"It's about the outcome rather than what the move needs... the combination of you and your opponent, whatever situation you're in, plus all the energies, the moment is asking you to do judo correctly. Can you find the mov…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/B9HVuTtPVqM?t=1913" target="_blank" rel="noopener">▶ open at 00:31:53</a><span class="yt-range">range 00:31:53–00:32:32</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="29"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 30</span><span class="ep-title">Pre-mark</span></td>
+        <tr class="corpus-row" data-tip="30">
+          <td class="ep-cell"><span class="ep-num">TIP 30</span><span class="ep-title">Pre-mark levels</span></td>
           <td class="source-cell"><span class="src-title">PREPARATION / Apprentice</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"So I think this was an inspired entry with the SSC, a nice opportunity with markets money to double up. I consider that the tactical space that's looking great, nice work on that. ... uh I would rather see you in this be…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/Vjk8xSJXFTM?t=574" target="_blank" rel="noopener">▶ open at 00:09:34</a><span class="yt-range">range 00:09:34–00:11:09</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="30"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 31</span><span class="ep-title">Practice</span></td>
+        <tr class="corpus-row" data-tip="31">
+          <td class="ep-cell"><span class="ep-num">TIP 31</span><span class="ep-title">Practice physical readiness</span></td>
           <td class="source-cell"><span class="src-title">PREPARATION / Apprentice</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"willing trained fit and prepared, that's a new one I like that. Willing trained fit and prepared, we just got number 47, equals ready to act. So this mindset is a state that can be achieved through intentional effort, so…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/Y6B-G8GtU3c?t=672" target="_blank" rel="noopener">▶ open at 00:11:12</a><span class="yt-range">range 00:11:12–00:11:49</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="31"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 34</span><span class="ep-title">Prepare</span></td>
+        <tr class="corpus-row" data-tip="34">
+          <td class="ep-cell"><span class="ep-num">TIP 34</span><span class="ep-title">Prepare contingency responses</span></td>
           <td class="source-cell"><span class="src-title">PREPARATION / Journeyman</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"As you approach sideways or bear markets, you may take some of that money off the table as a way to reduce volatility and to prevent against total catastrophe. Uh, you might use something like the Brown Permanent Portfol…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/rmfIYAVNQOA?t=198" target="_blank" rel="noopener">▶ open at 00:03:18</a><span class="yt-range">range 00:03:18–00:03:50</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="34"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 35</span><span class="ep-title">Calibrate</span></td>
+        <tr class="corpus-row" data-tip="35">
+          <td class="ep-cell"><span class="ep-num">TIP 35</span><span class="ep-title">Calibrate position sizing</span></td>
           <td class="source-cell"><span class="src-title">PREPARATION / Journeyman</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"but this little warning about risk off in weak ADX and critical states also says, if that doesn't work, this was simply leg one of what could be leg two and leg three. ... compound, don't be surprised in compound critica…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/k-1vN8JOQbQ?t=3543" target="_blank" rel="noopener">▶ open at 00:59:03</a><span class="yt-range">range 00:59:03–00:59:40</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="35"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 38</span><span class="ep-title">Train</span></td>
+        <tr class="corpus-row" data-tip="38">
+          <td class="ep-cell"><span class="ep-num">TIP 38</span><span class="ep-title">Train physical resilience</span></td>
           <td class="source-cell"><span class="src-title">PREPARATION / Expert</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"I went from 275 pounds to about 220. I got as low as 200 but when I went in for the pre-op, on the pre-op day, it had crept up to about 235... So I had a long-term experience with fasting and I wanted to be as well prepa…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/J68nxPVKfUw?t=137" target="_blank" rel="noopener">▶ open at 00:02:17</a><span class="yt-range">range 00:02:17–00:07:16</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="38"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 39</span><span class="ep-title">Manage</span></td>
+        <tr class="corpus-row" data-tip="39">
+          <td class="ep-cell"><span class="ep-num">TIP 39</span><span class="ep-title">Manage cognitive load</span></td>
           <td class="source-cell"><span class="src-title">PREPARATION / Expert</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"Integrated time frames — I go back one day and find the high and the low and that creates my yellow zone, and in 10 days and 30 days and 90 days and 270 days... These allow me to set the different boundaries for the trad…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/Y6B-G8GtU3c?t=3079" target="_blank" rel="noopener">▶ open at 00:51:19</a><span class="yt-range">range 00:51:19–00:52:42</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="39"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 41</span><span class="ep-title">Cultivate</span></td>
+        <tr class="corpus-row" data-tip="41">
+          <td class="ep-cell"><span class="ep-num">TIP 41</span><span class="ep-title">Cultivate boredom tolerance</span></td>
           <td class="source-cell"><span class="src-title">PREPARATION / Expert</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"Once you know what that price is and then that price is shown, then you feel that pain before you even enter the trade and then examine that pain — said oh yeah, that's the worst it's ever gonna feel, and I've already fe…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/lVTKqi--hTQ?t=600" target="_blank" rel="noopener">▶ open at 00:10:00</a><span class="yt-range">range 00:10:00–00:12:36</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="41"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 42</span><span class="ep-title">Audit</span></td>
+        <tr class="corpus-row" data-tip="42">
+          <td class="ep-cell"><span class="ep-num">TIP 42</span><span class="ep-title">Audit information diet</span></td>
           <td class="source-cell"><span class="src-title">PREPARATION / Expert</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"Trying to make sense of this social phenomenon that we're in with this public display of politics... In the United States of America there are people losing their jobs because their spouse expresses a private opinion in …"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/B9HVuTtPVqM?t=62" target="_blank" rel="noopener">▶ open at 00:01:02</a><span class="yt-range">range 00:01:02–00:02:26</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="42"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 44</span><span class="ep-title">Steward</span></td>
+        <tr class="corpus-row" data-tip="44">
+          <td class="ep-cell"><span class="ep-num">TIP 44</span><span class="ep-title">Steward mental clarity</span></td>
           <td class="source-cell"><span class="src-title">PREPARATION / Master</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"For me, where the good ideas come from is when I am actively trying to tweak, and then in the process of tweaking I look to the side and then notice something else, like oh that... So there's something about the attentio…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/B20N_uiKR6U?t=3034" target="_blank" rel="noopener">▶ open at 00:50:34</a><span class="yt-range">range 00:50:34–00:52:08</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="44"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 45</span><span class="ep-title">Set</span></td>
+        <tr class="corpus-row" data-tip="45">
+          <td class="ep-cell"><span class="ep-num">TIP 45</span><span class="ep-title">Set the stop</span></td>
           <td class="source-cell"><span class="src-title">EXECUTION / Novice</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"We establish our standard risk box — that's the minimum manageable risk box, one-tenth of a range stat, the R10... Our job, right after that initial risk, is to figure out how to get our risk out. So as soon as I can mov…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/EBnOPObQeBg?t=61" target="_blank" rel="noopener">▶ open at 00:01:01</a><span class="yt-range">range 00:01:01–00:02:04</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="45"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 46</span><span class="ep-title">Honor</span></td>
+        <tr class="corpus-row" data-tip="46">
+          <td class="ep-cell"><span class="ep-num">TIP 46</span><span class="ep-title">Honor the rails</span></td>
           <td class="source-cell"><span class="src-title">EXECUTION / Novice</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"Both of those imbalances are neglecting an important half of the data, whether it's internal or external... The motivating energy that's moving me out of that zero state in the middle is an emotional response — a commitm…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/B9HVuTtPVqM?t=662" target="_blank" rel="noopener">▶ open at 00:11:02</a><span class="yt-range">range 00:11:02–00:11:57</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="46"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 47</span><span class="ep-title">Trade</span></td>
+        <tr class="corpus-row" data-tip="47">
+          <td class="ep-cell"><span class="ep-num">TIP 47</span><span class="ep-title">Trade small first</span></td>
           <td class="source-cell"><span class="src-title">EXECUTION / Novice</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"Griff Cooper walks you through the way he did that with the Kata 2 system that I coached them on every night in our chat room for nine months, and he turned that into a bulletproof system that really suits him and other …"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/ZVpsdy2Bdtk?t=36" target="_blank" rel="noopener">▶ open at 00:00:36</a><span class="yt-range">range 00:00:36–00:01:00</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="47"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 48</span><span class="ep-title">Accept</span></td>
+        <tr class="corpus-row" data-tip="48">
+          <td class="ep-cell"><span class="ep-num">TIP 48</span><span class="ep-title">Accept being wrong</span></td>
           <td class="source-cell"><span class="src-title">EXECUTION / Novice</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"Ignorance is not a choice — it's just where you are on your journey. A task came along and nothing in your experience or education or advice prepared you to answer that. You just didn't know. So don't — you don't have to…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/VnEu8K5BwL0?t=68" target="_blank" rel="noopener">▶ open at 00:01:08</a><span class="yt-range">range 00:01:08–00:01:58</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="48"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 49</span><span class="ep-title">Press</span></td>
+        <tr class="corpus-row" data-tip="49">
+          <td class="ep-cell"><span class="ep-num">TIP 49</span><span class="ep-title">Press the button</span></td>
           <td class="source-cell"><span class="src-title">EXECUTION / Novice</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"The swing trade portfolio — yesterday's end-of-day entry into Alcoa paid off with a gap and a continuation, so that's holding about 3R. We added Cliff on a morning hook and continuation. Devon Energy morning hook, and we…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/RsbP2yBQFZs?t=16" target="_blank" rel="noopener">▶ open at 00:00:16</a><span class="yt-range">range 00:00:16–00:01:00</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="49"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 50</span><span class="ep-title">Risk</span></td>
+        <tr class="corpus-row" data-tip="50">
+          <td class="ep-cell"><span class="ep-num">TIP 50</span><span class="ep-title">Risk one percent</span></td>
           <td class="source-cell"><span class="src-title">EXECUTION / Apprentice</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"If it's coming up here and I'm long and it starts to stall, that's the 2R battle drill — that is a technique. When you have refined your techniques you now have a module that you can use in strategies, or refine even fur…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/kAAZUmgDExA?t=719" target="_blank" rel="noopener">▶ open at 00:11:59</a><span class="yt-range">range 00:11:59–00:12:36</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="50"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 52</span><span class="ep-title">Walk</span></td>
+        <tr class="corpus-row" data-tip="52">
+          <td class="ep-cell"><span class="ep-num">TIP 52</span><span class="ep-title">Walk away winning</span></td>
           <td class="source-cell"><span class="src-title">EXECUTION / Apprentice</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"In anticipation of the Fed — Caterpillar, we were a short one from yesterday. It failed to fail and came back and hit the PSAR flip, so we just scratched and reduced risk before the Fed. Cliff yesterday we took the gift …"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/Z9oilz1VGRY?t=34" target="_blank" rel="noopener">▶ open at 00:00:34</a><span class="yt-range">range 00:00:34–00:01:30</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="52"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 53</span><span class="ep-title">Cut</span></td>
+        <tr class="corpus-row" data-tip="53">
+          <td class="ep-cell"><span class="ep-num">TIP 53</span><span class="ep-title">Cut losses quickly</span></td>
           <td class="source-cell"><span class="src-title">EXECUTION / Apprentice</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"Now I can start using combinations of market classification and EB and flow of time series with the volatility and support and resistance mechanical scaffolding, and the combination of those two things allows me to be ta…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/_qs7Qd0MTzc?t=3072" target="_blank" rel="noopener">▶ open at 00:51:12</a><span class="yt-range">range 00:51:12–00:51:43</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="53"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 54</span><span class="ep-title">Avoid</span></td>
+        <tr class="corpus-row" data-tip="54">
+          <td class="ep-cell"><span class="ep-num">TIP 54</span><span class="ep-title">Avoid revenge trades</span></td>
           <td class="source-cell"><span class="src-title">EXECUTION / Apprentice</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"Devon Energy was problematic — this was about a 10% gap down, and so although we were holding about 3R in hand, it blew right through all of this and opened here, so we just ate that one. That was about a one-two-three R…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/VogskAO7Fe4?t=208" target="_blank" rel="noopener">▶ open at 00:03:28</a><span class="yt-range">range 00:03:28–00:04:21</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="54"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 55</span><span class="ep-title">Scale</span></td>
+        <tr class="corpus-row" data-tip="55">
+          <td class="ep-cell"><span class="ep-num">TIP 55</span><span class="ep-title">Scale into conviction</span></td>
           <td class="source-cell"><span class="src-title">EXECUTION / Journeyman</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"AI just continues to crush. Yesterday I briefed how I held my nose and bought it, and today it did nothing but just take off when it broke above the resistances. Had a little over an R in hand, put a second position on, …"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/ckrvMBxLF1k?t=88" target="_blank" rel="noopener">▶ open at 00:01:28</a><span class="yt-range">range 00:01:28–00:02:37</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="55"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 57</span><span class="ep-title">Manage</span></td>
+        <tr class="corpus-row" data-tip="57">
+          <td class="ep-cell"><span class="ep-num">TIP 57</span><span class="ep-title">Manage the middle</span></td>
           <td class="source-cell"><span class="src-title">EXECUTION / Journeyman</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"As soon as it starts moving through, I tighten my stop up — no matter where it was I tighten my stop up really close, because I want to preserve the two. Then I watch for the 2R wiggle or the R10 to wiggle, and if that t…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/Mvp_A8kqdUM?t=1745" target="_blank" rel="noopener">▶ open at 00:29:05</a><span class="yt-range">range 00:29:05–00:29:59</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="57"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 58</span><span class="ep-title">Respect</span></td>
+        <tr class="corpus-row" data-tip="58">
+          <td class="ep-cell"><span class="ep-num">TIP 58</span><span class="ep-title">Respect the regime</span></td>
           <td class="source-cell"><span class="src-title">EXECUTION / Journeyman</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"Emerging Markets get smashed on this one so we played the Kata 2 short. It closed really well but then I got murdered on the Gap up. So that was my, it went from plus one to minus two. And then that's my revenge trade on…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/GKsHsBKK8QI?t=850" target="_blank" rel="noopener">▶ open at 00:14:10</a><span class="yt-range">range 00:14:10–00:14:49</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="58"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 59</span><span class="ep-title">Embrace</span></td>
+        <tr class="corpus-row" data-tip="59">
+          <td class="ep-cell"><span class="ep-num">TIP 59</span><span class="ep-title">Embrace incomplete information</span></td>
           <td class="source-cell"><span class="src-title">EXECUTION / Journeyman</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"When it comes to trading just show me the rules, show me the evidence, let me independently validate it, let me find out the actions that are adding value and let me see it replicated over time, and then I can tell. I'd …"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/gBulpfEXuPQ?t=2254" target="_blank" rel="noopener">▶ open at 00:37:34</a><span class="yt-range">range 00:37:34–00:38:05</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="59"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 60</span><span class="ep-title">Execute</span></td>
+        <tr class="corpus-row" data-tip="60">
+          <td class="ep-cell"><span class="ep-num">TIP 60</span><span class="ep-title">Execute mechanically</span></td>
           <td class="source-cell"><span class="src-title">EXECUTION / Expert</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"We plan, prepare, execute, assess each trade series. Actions to remove 80 percent of the cognitive emotional load so we can focus on a relatively simple task at the exact point of most cognitive and emotional stress. By …"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/uiUjMrbIZIs?t=35" target="_blank" rel="noopener">▶ open at 00:00:35</a><span class="yt-range">range 00:00:35–00:00:55</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="60"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 62</span><span class="ep-title">Detach</span></td>
+        <tr class="corpus-row" data-tip="62">
+          <td class="ep-cell"><span class="ep-num">TIP 62</span><span class="ep-title">Detach from outcome</span></td>
           <td class="source-cell"><span class="src-title">EXECUTION / Expert</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"To deal with our emotions when we are confronted with them in the market is central to our ability to follow the rules that we've laid out. So I think that emotional state control is more important, to be honest, than th…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/gBulpfEXuPQ?t=600" target="_blank" rel="noopener">▶ open at 00:10:00</a><span class="yt-range">range 00:10:00–00:10:50</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="62"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 63</span><span class="ep-title">Reduce</span></td>
+        <tr class="corpus-row" data-tip="63">
+          <td class="ep-cell"><span class="ep-num">TIP 63</span><span class="ep-title">Reduce after drawdown</span></td>
           <td class="source-cell"><span class="src-title">EXECUTION / Expert</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"On the 30 minute as applied to the S&P I find it helpful to put the trading patterns that are on there so you get a feel for what the psychological state of short-term traders is. I cash this one today because I got ever…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/GwRLMIX98eU?t=2413" target="_blank" rel="noopener">▶ open at 00:40:13</a><span class="yt-range">range 00:40:13–00:40:52</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="63"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 65</span><span class="ep-title">Operate</span></td>
+        <tr class="corpus-row" data-tip="65">
+          <td class="ep-cell"><span class="ep-num">TIP 65</span><span class="ep-title">Operate from stillness</span></td>
           <td class="source-cell"><span class="src-title">EXECUTION / Master</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"Deep listening to me leads to sacred listening if you have that intention of selflessness and service to others, and unconditional love and no judgment of other people, but simply to be part of that circle of truth. The …"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/WMDoLbbwSpM?t=551" target="_blank" rel="noopener">▶ open at 00:09:11</a><span class="yt-range">range 00:09:11–00:11:25</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="65"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 66</span><span class="ep-title">Move</span></td>
+        <tr class="corpus-row" data-tip="66">
+          <td class="ep-cell"><span class="ep-num">TIP 66</span><span class="ep-title">Move with the market</span></td>
           <td class="source-cell"><span class="src-title">EXECUTION / Master</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"Nicely played exit on a symbol that he is focusing on, specializing on, framing in a professional way and managing in a professionally relaxed, almost disinterested manner. Finds the Mover. He's got a symbol that moves i…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/sHiwT2bxSoM?t=29" target="_blank" rel="noopener">▶ open at 00:00:29</a><span class="yt-range">range 00:00:29–00:01:05</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="66"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 67</span><span class="ep-title">Review</span></td>
+        <tr class="corpus-row" data-tip="67">
+          <td class="ep-cell"><span class="ep-num">TIP 67</span><span class="ep-title">Review every trade</span></td>
           <td class="source-cell"><span class="src-title">ASSESSMENT / Novice</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"It's important to know this is the first hundred trades, exclusively on DIA on one minutes. It's trading live only one share so no position sizing issues — that may be the most important feature. It's essentially the one…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/2sBHXzQHsQ4?t=64" target="_blank" rel="noopener">▶ open at 00:01:04</a><span class="yt-range">range 00:01:04–00:05:12</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="67"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 68</span><span class="ep-title">Screenshot</span></td>
+        <tr class="corpus-row" data-tip="68">
+          <td class="ep-cell"><span class="ep-num">TIP 68</span><span class="ep-title">Screenshot every setup</span></td>
           <td class="source-cell"><span class="src-title">ASSESSMENT / Novice</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"Greg makes a good point... I noticed his uh Max Excursion to our capture. That's another reason to analyze the charts after you've done that, because there's no reason to believe that the rule set that we have actually h…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/2sBHXzQHsQ4?t=3522" target="_blank" rel="noopener">▶ open at 00:58:42</a><span class="yt-range">range 00:58:42–01:04:13</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="68"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 70</span><span class="ep-title">Track</span></td>
+        <tr class="corpus-row" data-tip="70">
+          <td class="ep-cell"><span class="ep-num">TIP 70</span><span class="ep-title">Track emotional state</span></td>
           <td class="source-cell"><span class="src-title">ASSESSMENT / Novice</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"What was important was the internal integrity and the consistency and the completeness of the system, which included in its rule set the kind of Market that it was appropriate for. So that's why I would say where I'm at …"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/gBulpfEXuPQ?t=1313" target="_blank" rel="noopener">▶ open at 00:21:53</a><span class="yt-range">range 00:21:53–00:22:48</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="70"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 72</span><span class="ep-title">Score</span></td>
+        <tr class="corpus-row" data-tip="72">
+          <td class="ep-cell"><span class="ep-num">TIP 72</span><span class="ep-title">Score the session</span></td>
           <td class="source-cell"><span class="src-title">ASSESSMENT / Apprentice</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"The trading process architecture to me is The Tool Room that the Craftsman use, and it's a set of tools that are designed for a purpose and then a procedure in which to use those tools correctly, safely. Like if you're u…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/UEggLDyMnI8?t=2171" target="_blank" rel="noopener">▶ open at 00:36:11</a><span class="yt-range">range 00:36:11–00:37:14</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="72"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 73</span><span class="ep-title">Separate</span></td>
+        <tr class="corpus-row" data-tip="73">
+          <td class="ep-cell"><span class="ep-num">TIP 73</span><span class="ep-title">Separate luck from skill</span></td>
           <td class="source-cell"><span class="src-title">ASSESSMENT / Apprentice</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"What has typically been happening is that people who are trading with the maximum position size are taking that exit — not a rule-based exit, but are just using discretion and panic to make an emotional decision and exit…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/GISgSB-V0Pk?t=847" target="_blank" rel="noopener">▶ open at 00:14:07</a><span class="yt-range">range 00:14:07–00:15:13</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="73"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 74</span><span class="ep-title">Find</span></td>
+        <tr class="corpus-row" data-tip="74">
+          <td class="ep-cell"><span class="ep-num">TIP 74</span><span class="ep-title">Find repeating errors</span></td>
           <td class="source-cell"><span class="src-title">ASSESSMENT / Apprentice</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"We would call that a fault mode. A fault mode is any way a system or a product or just a piece of material — uh, fault mode is a way that it would fail. And then what you do is you assess the consequences of the failure,…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/apk9GWC17Zw?t=246" target="_blank" rel="noopener">▶ open at 00:04:06</a><span class="yt-range">range 00:04:06–00:05:14</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="74"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 75</span><span class="ep-title">Compare</span></td>
+        <tr class="corpus-row" data-tip="75">
+          <td class="ep-cell"><span class="ep-num">TIP 75</span><span class="ep-title">Compare planned to actual</span></td>
           <td class="source-cell"><span class="src-title">ASSESSMENT / Apprentice</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"Unless I had something like a standing order that said hang this rbox from the top, from the highest high, and then automatically go short if it breaks below the one bar low — then what I'm really looking at is, this is …"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/tIqycrQQa0w?t=716" target="_blank" rel="noopener">▶ open at 00:11:56</a><span class="yt-range">range 00:11:56–00:12:30</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="75"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 76</span><span class="ep-title">Weekly</span></td>
+        <tr class="corpus-row" data-tip="76">
+          <td class="ep-cell"><span class="ep-num">TIP 76</span><span class="ep-title">Weekly written review</span></td>
           <td class="source-cell"><span class="src-title">ASSESSMENT / Apprentice</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"That will be your focus word to add to the effort for the week ahead. You should have a page in your journal with that word on top of it with the date, and that's going to be one of the things that you got to incorporate…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/xUlpGntK5m4?t=7" target="_blank" rel="noopener">▶ open at 00:00:07</a><span class="yt-range">range 00:00:07–00:00:28</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="76"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 77</span><span class="ep-title">Quantify</span></td>
+        <tr class="corpus-row" data-tip="77">
+          <td class="ep-cell"><span class="ep-num">TIP 77</span><span class="ep-title">Quantify your edge</span></td>
           <td class="source-cell"><span class="src-title">ASSESSMENT / Journeyman</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"From the moment I entered to the moment I exited, what happens afterwards, what am I giving up and what am I avoiding by taking my exit where I do. So I have the expectancy of this, and then that's your expectancy, and t…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/JWGG3OSFxrY?t=3987" target="_blank" rel="noopener">▶ open at 01:06:27</a><span class="yt-range">range 01:06:27–01:07:23</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="77"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 78</span><span class="ep-title">Audit</span></td>
+        <tr class="corpus-row" data-tip="78">
+          <td class="ep-cell"><span class="ep-num">TIP 78</span><span class="ep-title">Audit by setup type</span></td>
           <td class="source-cell"><span class="src-title">ASSESSMENT / Journeyman</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"I'm looking at three things: no loss greater than minus one, from minus one to plus two I'm looking for positive expectancy, and then I'm looking for fat right tails that I have a chance to get wins greater than 2R. So i…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/JWGG3OSFxrY?t=1191" target="_blank" rel="noopener">▶ open at 00:19:51</a><span class="yt-range">range 00:19:51–00:22:30</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="78"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 79</span><span class="ep-title">Review</span></td>
+        <tr class="corpus-row" data-tip="79">
+          <td class="ep-cell"><span class="ep-num">TIP 79</span><span class="ep-title">Review drawdown behavior</span></td>
           <td class="source-cell"><span class="src-title">ASSESSMENT / Journeyman</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"When you think about your ideal mindset state for shorter term trading, especially for me that happens to be at that little spot where I have a slightly forward-looking mentality. I'm not absolutely in this particular mo…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/LOfcZkTvpo4?t=108" target="_blank" rel="noopener">▶ open at 00:01:48</a><span class="yt-range">range 00:01:48–00:05:00</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="79"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 80</span><span class="ep-title">Conduct</span></td>
+        <tr class="corpus-row" data-tip="80">
+          <td class="ep-cell"><span class="ep-num">TIP 80</span><span class="ep-title">Conduct quarterly reviews</span></td>
           <td class="source-cell"><span class="src-title">ASSESSMENT / Journeyman</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"We use the regression line crossover system as a sense making framework to give us a structured fractal sense making framework in every time frame. That's what we do. This is our standard minimum manageable risk box, tha…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/VIfDLWlw9nk?t=67" target="_blank" rel="noopener">▶ open at 00:01:07</a><span class="yt-range">range 00:01:07–00:02:30</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="80"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 81</span><span class="ep-title">Track</span></td>
+        <tr class="corpus-row" data-tip="81">
+          <td class="ep-cell"><span class="ep-num">TIP 81</span><span class="ep-title">Track behavioral drift</span></td>
           <td class="source-cell"><span class="src-title">ASSESSMENT / Journeyman</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"Overconfidence — you've started to be less skeptical and you're optimistic. That's danger because you're not in the zero state and then you believe more. You're acting as if you should be more confident in the system tha…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/apk9GWC17Zw?t=3900" target="_blank" rel="noopener">▶ open at 01:05:00</a><span class="yt-range">range 01:05:00–01:07:45</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="81"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 82</span><span class="ep-title">Benchmark</span></td>
+        <tr class="corpus-row" data-tip="82">
+          <td class="ep-cell"><span class="ep-num">TIP 82</span><span class="ep-title">Benchmark against self</span></td>
           <td class="source-cell"><span class="src-title">ASSESSMENT / Expert</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"Here's his equity curve, here's the production sequence. That's when we got to work. Now it's important to note there's a streak of 10 in a row that don't work. So if 10 losses in a row on a 40 coin flip, if you just say…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/LzmircF6APE?t=64" target="_blank" rel="noopener">▶ open at 00:01:04</a><span class="yt-range">range 00:01:04–00:01:44</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="82"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 83</span><span class="ep-title">Stress</span></td>
+        <tr class="corpus-row" data-tip="83">
+          <td class="ep-cell"><span class="ep-num">TIP 83</span><span class="ep-title">Stress test results</span></td>
           <td class="source-cell"><span class="src-title">ASSESSMENT / Expert</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"Waiting to see the other phone call he gave me on W-A-L-A Godzilla — that was really the reason that he called me. I got to persuade him to start a live trading room that looks only at the Godzillas and makes alerts for …"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/k-1vN8JOQbQ?t=821" target="_blank" rel="noopener">▶ open at 00:13:41</a><span class="yt-range">range 00:13:41–00:27:25</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="83"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 84</span><span class="ep-title">Audit</span></td>
+        <tr class="corpus-row" data-tip="84">
+          <td class="ep-cell"><span class="ep-num">TIP 84</span><span class="ep-title">Audit risk exposure</span></td>
           <td class="source-cell"><span class="src-title">ASSESSMENT / Expert</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"We take advantage of the 50% sell-off and the 75% gain that it takes to get back to the previous high... The 5DDs and the Kata-2s and all that. If you cannot live with that I would start with a 2 ATR percentage. I would …"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/_qs7Qd0MTzc?t=4470" target="_blank" rel="noopener">▶ open at 01:14:30</a><span class="yt-range">range 01:14:30–01:38:15</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="84"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 85</span><span class="ep-title">Examine</span></td>
+        <tr class="corpus-row" data-tip="85">
+          <td class="ep-cell"><span class="ep-num">TIP 85</span><span class="ep-title">Examine identity drift</span></td>
           <td class="source-cell"><span class="src-title">ASSESSMENT / Expert</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"And their integrity as a human, and to trust them to be masters of their own internal process and thoughts, and that there was nothing that we were going to try to fix. And I'm not going to stand in judgment of you, but …"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/UEggLDyMnI8?t=1156" target="_blank" rel="noopener">▶ open at 00:19:16</a><span class="yt-range">range 00:19:16–00:21:20</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="85"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 86</span><span class="ep-title">Conduct</span></td>
+        <tr class="corpus-row" data-tip="86">
+          <td class="ep-cell"><span class="ep-num">TIP 86</span><span class="ep-title">Conduct annual postmortems</span></td>
           <td class="source-cell"><span class="src-title">ASSESSMENT / Expert</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"What comes out of Fletcher's research with the little kids — that resonates very strongly with what we know from childhood education. There's a lot of work being done on the difference between striving and thriving. When…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/MedsJ7jC8P4?t=3174" target="_blank" rel="noopener">▶ open at 00:52:54</a><span class="yt-range">range 00:52:54–00:55:45</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="86"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 87</span><span class="ep-title">Teach</span></td>
+        <tr class="corpus-row" data-tip="87">
+          <td class="ep-cell"><span class="ep-num">TIP 87</span><span class="ep-title">Teach to deepen mastery</span></td>
           <td class="source-cell"><span class="src-title">ASSESSMENT / Master</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"It turns out that the Fletcher treatment for storytelling, science and narrative is a key way to do that because it ties into the brain's natural ability to remember, to communicate through stories to trusted others. Sto…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/7mnKYRZPpF8?t=463" target="_blank" rel="noopener">▶ open at 00:07:43</a><span class="yt-range">range 00:07:43–00:08:10</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="87"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 89</span><span class="ep-title">Breathe</span></td>
+        <tr class="corpus-row" data-tip="89">
+          <td class="ep-cell"><span class="ep-num">TIP 89</span><span class="ep-title">Breathe before reacting</span></td>
           <td class="source-cell"><span class="src-title">EMOTIONAL REGULATION / None</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"work really hard on something but it's not easily had. Chaplin what can you do with the energy of frustration as a way to approach the material from a new direction. So this is kind of an example of some of the work we d…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/qOi198PXb28?t=67" target="_blank" rel="noopener">▶ open at 00:01:07</a><span class="yt-range">range 00:01:07–00:01:35</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="89"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 91</span><span class="ep-title">Step</span></td>
+        <tr class="corpus-row" data-tip="91">
+          <td class="ep-cell"><span class="ep-num">TIP 91</span><span class="ep-title">Step away first</span></td>
           <td class="source-cell"><span class="src-title">EMOTIONAL REGULATION / None</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"If you're feeling nervous then reduce your position size until it's automatic. You want to be disinterested. ... Nervous energy is energy. It's not a negative thing, it's simply, it's value neutral. Make it work for you."</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/ws2DhQD1zNY?t=1871" target="_blank" rel="noopener">▶ open at 00:31:11</a><span class="yt-range">range 00:31:11–00:32:07</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="91"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 93</span><span class="ep-title">Forgive</span></td>
+        <tr class="corpus-row" data-tip="93">
+          <td class="ep-cell"><span class="ep-num">TIP 93</span><span class="ep-title">Forgive yourself quickly</span></td>
           <td class="source-cell"><span class="src-title">EMOTIONAL REGULATION / None</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"So Alcoa gets added to the swing trade group. It was a coron turbo, we'll start it off as a turbo trade that grew into a swing. Our entry on that is from the PSAR flip at about 50-90. ... Cliff Natural Resources we exite…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/C7a7Bo_rdiU?t=11" target="_blank" rel="noopener">▶ open at 00:00:11</a><span class="yt-range">range 00:00:11–00:01:12</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="93"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 94</span><span class="ep-title">Detach</span></td>
+        <tr class="corpus-row" data-tip="94">
+          <td class="ep-cell"><span class="ep-num">TIP 94</span><span class="ep-title">Detach identity from trades</span></td>
           <td class="source-cell"><span class="src-title">EMOTIONAL REGULATION / None</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"Large motor skills or bold corrections — it doesn't have to be refined, but when you get to the point where you can start deciding on how to assess and then react to your assessment against some standard, then you know y…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/UEggLDyMnI8?t=206" target="_blank" rel="noopener">▶ open at 00:03:26</a><span class="yt-range">range 00:03:26–00:04:05</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="94"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 95</span><span class="ep-title">Survival</span></td>
+        <tr class="corpus-row" data-tip="95">
+          <td class="ep-cell"><span class="ep-num">TIP 95</span><span class="ep-title">Survival is strategy</span></td>
           <td class="source-cell"><span class="src-title">RISK MANAGEMENT / None</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"The persistent edge consists of understanding that with your rational mind, but establishing procedures and processes that allow you to not be trapped to that fly paper — to be able to treat the trade as just one in a lo…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/t4NkztDo_tc?t=358" target="_blank" rel="noopener">▶ open at 00:05:58</a><span class="yt-range">range 00:05:58–00:07:26</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="95"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 96</span><span class="ep-title">Risk</span></td>
+        <tr class="corpus-row" data-tip="96">
+          <td class="ep-cell"><span class="ep-num">TIP 96</span><span class="ep-title">Risk fixed amounts</span></td>
           <td class="source-cell"><span class="src-title">RISK MANAGEMENT / None</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"Anything beyond 2.4 — it could go another 0.8, 0.8, 0.8 — four more standard deviations. That's the kind of day that is a range-stat move. So you need to know that some days the S&P crushes it, and the day that it had a …"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/kAAZUmgDExA?t=1611" target="_blank" rel="noopener">▶ open at 00:26:51</a><span class="yt-range">range 00:26:51–00:27:45</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="96"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 97</span><span class="ep-title">Hard</span></td>
+        <tr class="corpus-row" data-tip="97">
+          <td class="ep-cell"><span class="ep-num">TIP 97</span><span class="ep-title">Hard stops always</span></td>
           <td class="source-cell"><span class="src-title">RISK MANAGEMENT / None</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"You're learning the first form — it's a yellow belt or something — and in that form we're concerned about defense, and so you end up going through a set of motions and then you do a front block, in which case your arm co…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/X0WDFsTTfIM?t=108" target="_blank" rel="noopener">▶ open at 00:01:48</a><span class="yt-range">range 00:01:48–00:02:47</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="97"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 98</span><span class="ep-title">Daily</span></td>
+        <tr class="corpus-row" data-tip="98">
+          <td class="ep-cell"><span class="ep-num">TIP 98</span><span class="ep-title">Daily loss limits</span></td>
           <td class="source-cell"><span class="src-title">RISK MANAGEMENT / None</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"To me the first time that you put the first trade on, you're introducing a new variable of the reality of real money and objectivity, and you better be — you need to be ready for that. The best way to be ready for that i…"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/VK4TSYI-2G8?t=2" target="_blank" rel="noopener">▶ open at 00:00:02</a><span class="yt-range">range 00:00:02–00:00:31</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="98"><span class="lock-label">Lock</span></label></td>
         </tr>
-        <tr>
-          <td class="ep-cell"><span class="ep-num">TIP 100</span><span class="ep-title">Stay</span></td>
+        <tr class="corpus-row" data-tip="100">
+          <td class="ep-cell"><span class="ep-num">TIP 100</span><span class="ep-title">Stay the course</span></td>
           <td class="source-cell"><span class="src-title">CONTINUOUS IMPROVEMENT / None</span><span class="src-id" style="margin-top:6px;color:var(--dim);"><em>"I guess the two people that are important in my life is my mom and her mother my grandmother. And there was one night that we had a gathering and there were a group of kids and Grandma was taking care of us, and she was …"</em></span></td>
           <td><a class="yt-link" href="https://youtu.be/XJdcJ5fghe8?t=3383" target="_blank" rel="noopener">▶ open at 00:56:23</a><span class="yt-range">range 00:56:23–00:57:35</span></td>
-          <td class="treatment-cell"><span class="badge badge-todo">TODO</span><span class="note">verified · awaiting build decision</span></td>
+          <td class="treatment-cell"><span class="badge state-badge">DRAFT</span><span class="note state-note">awaiting review</span></td>
+          <td class="lock-cell"><label class="lock-toggle"><input type="checkbox" class="lock-checkbox" data-tip="100"><span class="lock-label">Lock</span></label></td>
         </tr>
       </tbody>
     </table>
@@ -994,6 +1088,37 @@
   </section>
 
 </main>
+
+<script>
+// ─── Lock toggle for corpus mappings ─────────────────────────
+// Per-tip state in localStorage. key = "ogt-tip-final-N".
+// When checked: row gets .final class, DRAFT badge swaps to FINAL.
+(function() {
+  const STORAGE_PREFIX = 'ogt-tip-final-';
+
+  function applyState(row, isFinal) {
+    row.classList.toggle('final', isFinal);
+    const badge = row.querySelector('.state-badge');
+    const note = row.querySelector('.state-note');
+    if (badge) badge.textContent = isFinal ? 'FINAL' : 'DRAFT';
+    if (note) note.textContent = isFinal ? 'locked · ready to build' : 'awaiting review';
+  }
+
+  document.querySelectorAll('.lock-checkbox').forEach(cb => {
+    const tip = cb.dataset.tip;
+    const row = cb.closest('.corpus-row');
+    if (!row) return;
+    const saved = localStorage.getItem(STORAGE_PREFIX + tip) === 'true';
+    cb.checked = saved;
+    applyState(row, saved);
+    cb.addEventListener('change', () => {
+      const isFinal = cb.checked;
+      try { localStorage.setItem(STORAGE_PREFIX + tip, isFinal ? 'true' : 'false'); } catch {}
+      applyState(row, isFinal);
+    });
+  });
+})();
+</script>
 
 </body>
 </html>
