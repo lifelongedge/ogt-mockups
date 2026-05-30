@@ -202,6 +202,78 @@
     font-family: "SF Mono", Menlo, monospace; color: var(--gold); font-size: 0.62rem; letter-spacing: 0.08em;
   }
 
+  /* ─── Matrix view ────────────────────────────────────────── */
+  .matrix-view { display: flex; flex-direction: column; gap: 0.55rem; }
+  .matrix-header,
+  .matrix-row {
+    display: grid;
+    grid-template-columns: 160px repeat(5, 1fr);
+    gap: 0.55rem;
+    align-items: stretch;
+  }
+  .matrix-row-flat {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 0.55rem;
+    align-items: stretch;
+  }
+  .matrix-col-head {
+    text-align: center; color: var(--gold); font-family: "SF Mono", Menlo, monospace;
+    font-size: 0.72rem; letter-spacing: 0.12em; padding: 0.55rem 0;
+    border-bottom: 1px solid var(--line); text-transform: uppercase;
+  }
+  .matrix-cell-empty { /* top-left blank corner */ }
+  .matrix-row-head {
+    background: var(--card-elev); border: 1px solid var(--line); border-left: 3px solid var(--gold);
+    border-radius: 5px; padding: 0.6rem 0.8rem;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .matrix-row-head .cat-num {
+    font-family: "SF Mono", Menlo, monospace; color: var(--gold); font-size: 0.7rem;
+    letter-spacing: 0.08em; margin-bottom: 0.2rem;
+  }
+  .matrix-row-head .cat-title {
+    font-family: Georgia, serif; color: var(--fg); font-size: 0.95rem; line-height: 1.2;
+  }
+  .matrix-row-head .cat-count {
+    color: var(--faint); font-size: 0.7rem; font-family: "SF Mono", Menlo, monospace; margin-top: 0.3rem;
+  }
+  .matrix-cell {
+    background: var(--card); border: 1px solid var(--line); border-radius: 5px;
+    padding: 0.5rem; display: flex; flex-direction: column; gap: 0.35rem; min-height: 100px;
+  }
+  .matrix-cell-flat {
+    background: var(--card); border: 1px solid var(--line); border-radius: 5px;
+    padding: 0.5rem; display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 0.35rem;
+  }
+  .mini-box {
+    background: var(--bg); border: 1px solid var(--line); border-radius: 3px;
+    padding: 0.45rem 0.55rem; transition: all 0.12s; position: relative;
+    cursor: default;
+  }
+  .mini-box:hover { background: var(--card-elev); border-color: var(--faint); }
+  .mini-box.live {
+    border-color: var(--gold); background: rgba(212,165,89,0.08);
+    cursor: pointer;
+  }
+  .mini-box.live:hover { background: rgba(212,165,89,0.14); transform: translateY(-1px); }
+  .mini-box .mini-id {
+    font-family: "SF Mono", Menlo, monospace; color: var(--gold);
+    font-size: 0.65rem; letter-spacing: 0.06em; line-height: 1;
+  }
+  .mini-box.locked .mini-id { color: var(--dim); }
+  .mini-box .mini-title {
+    color: var(--fg); font-size: 0.78rem; line-height: 1.25; margin-top: 0.25rem; font-weight: 500;
+  }
+  .mini-box.locked .mini-title { color: var(--dim); }
+  .mini-box.live::after {
+    content: "▶"; position: absolute; top: 0.4rem; right: 0.5rem; color: var(--gold); font-size: 0.7rem;
+  }
+  .matrix-note {
+    color: var(--faint); font-size: 0.8rem; font-style: italic; margin-top: 0.8rem; text-align: center;
+  }
+
   /* ─── Pricing ────────────────────────────────────────────── */
   .pricing-grid {
     display: grid; grid-template-columns: 1fr 1.4fr; gap: 1.5rem;
@@ -462,16 +534,20 @@
     </p>
 
     <div class="grid-tabs" id="gridTabs">
-      <button class="grid-tab active" data-cat="all">All<span class="count">100</span></button>
+      <button class="grid-tab active" data-cat="matrix">Matrix<span class="count">7 × 5</span></button>
+      <button class="grid-tab" data-cat="all">All Linear<span class="count">100</span></button>
       <button class="grid-tab" data-cat="plan">Planning<span class="count">22</span></button>
       <button class="grid-tab" data-cat="prep">Preparation<span class="count">22</span></button>
       <button class="grid-tab" data-cat="exec">Execution<span class="count">22</span></button>
-      <button class="grid-tab" data-cat="review">Review<span class="count">20</span></button>
-      <button class="grid-tab" data-cat="rest">Emotion · Risk · Persistence<span class="count">14</span></button>
+      <button class="grid-tab" data-cat="assess">Assessment<span class="count">22</span></button>
+      <button class="grid-tab" data-cat="inner">Inner Game<span class="count">12</span></button>
     </div>
 
-    <div class="tech-grid" id="techGrid">
-      <!-- Boxes injected by JS for compactness -->
+    <div class="tech-grid" id="techGrid" style="display:none">
+      <!-- Linear view (hidden by default; matrix view is default) -->
+    </div>
+    <div class="matrix-view" id="techMatrix">
+      <!-- Matrix view injected by JS -->
     </div>
   </section>
 
@@ -672,7 +748,10 @@ function openPreview() {
 }
 
 // ─── 100 techniques data ────────────────────────────────────
-// (id, level, category, title, summary)
+// (id, level, category, title, summary, [isLive])
+// Categories (canonical 7-category structure from source):
+//   plan/prep/exec/assess each have 5x5 Novice→Master breakdown
+//   emotion/risk/improve are flat (no per-level breakdown — all advanced)
 // live flag: 1, 5, 10 are previewable
 const TECHNIQUES = [
   // Planning (1-22)
@@ -765,47 +844,136 @@ const TECHNIQUES = [
   [84,'Expert','review','Audit risk exposure','Measure correlation between positions.'],
   [85,'Expert','review','Examine identity drift','Are you still trading the strategy you claim to trade?'],
   [86,'Expert','review','Conduct annual postmortems','A full year reviewed honestly reveals truths no week can show.'],
-  // Emotion / Risk / Persistence (87-100)
-  [87,'Master','rest','Teach to deepen mastery','Explaining your craft to others exposes weak reasoning.'],
-  [88,'Master','rest','Refine the system continuously','No edge lasts forever. Masters adapt faster.'],
-  [89,'Master','rest','Breathe before reacting','The pause between stimulus and response is where mastery lives.'],
-  [90,'Master','rest','Name the emotion','Labeling reduces emotional grip immediately.'],
-  [91,'Master','rest','Step away first','No good decision is made in emotional flood.'],
-  [92,'Master','rest','Sleep on big choices','Major strategic decisions deserve overnight processing.'],
-  [93,'Master','rest','Forgive yourself quickly','Mistakes are tuition. Self-punishment is interest you do not owe.'],
-  [94,'Master','rest','Detach identity from trades','You are not your P&L. You are the trader behind it.'],
-  [95,'Master','rest','Survival is strategy','Stay in the game long enough and edges compound.'],
-  [96,'Master','rest','Risk fixed amounts','Predefined, consistent risk per trade.'],
-  [97,'Master','rest','Hard stops always','Mental stops are negotiable stops are catastrophic stops.'],
-  [98,'Master','rest','Daily loss limits','When the limit hits, close the platform.'],
-  [99,'Master','rest','Improve one percent','Small daily improvements compound into mastery.'],
-  [100,'Master','rest','Stay the course','The traders who arrive are the ones who did not stop walking.'],
+  // Assessment Master (87-88) — finishes the 5x5 Assessment grid
+  [87,'Master','assess','Teach to deepen mastery','Explaining your craft to others exposes weak reasoning.'],
+  [88,'Master','assess','Refine the system continuously','No edge lasts forever. Masters adapt faster.'],
+  // Cat 5 — Emotional Regulation (89-94, flat)
+  [89,'—','emotion','Breathe before reacting','The pause between stimulus and response is where mastery lives.'],
+  [90,'—','emotion','Name the emotion','Labeling reduces emotional grip immediately.'],
+  [91,'—','emotion','Step away first','No good decision is made in emotional flood.'],
+  [92,'—','emotion','Sleep on big choices','Major strategic decisions deserve overnight processing.'],
+  [93,'—','emotion','Forgive yourself quickly','Mistakes are tuition. Self-punishment is interest you do not owe.'],
+  [94,'—','emotion','Detach identity from trades','You are not your P&L. You are the trader behind it.'],
+  // Cat 6 — Risk Management (95-98, flat)
+  [95,'—','risk','Survival is strategy','Stay in the game long enough and edges compound.'],
+  [96,'—','risk','Risk fixed amounts','Predefined, consistent risk per trade.'],
+  [97,'—','risk','Hard stops always','Mental stops are negotiable stops are catastrophic stops.'],
+  [98,'—','risk','Daily loss limits','When the limit hits, close the platform.'],
+  // Cat 7 — Continuous Improvement (99-100, flat)
+  [99,'—','improve','Improve one percent','Small daily improvements compound into mastery.'],
+  [100,'—','improve','Stay the course','The traders who arrive are the ones who did not stop walking.'],
 ];
 
-function renderGrid(cat) {
+// Category metadata for matrix rendering
+const CATEGORIES = [
+  {key: 'plan',    num: 1, title: 'Planning',               sub: 'Building the map',         structured: true},
+  {key: 'prep',    num: 2, title: 'Preparation',            sub: 'Body · mind · systems',    structured: true},
+  {key: 'exec',    num: 3, title: 'Execution',              sub: 'Acting under pressure',    structured: true},
+  {key: 'assess',  num: 4, title: 'Assessment',             sub: 'Learning every step',      structured: true},
+  {key: 'emotion', num: 5, title: 'Emotional Regulation',   sub: 'The inner game',           structured: false},
+  {key: 'risk',    num: 6, title: 'Risk Management',        sub: 'The sacred discipline',    structured: false},
+  {key: 'improve', num: 7, title: 'Continuous Improvement', sub: 'The long journey',         structured: false},
+];
+const LEVELS = ['Novice','Apprentice','Journeyman','Expert','Master'];
+
+function renderLinear(cat) {
   const wrap = document.getElementById('techGrid');
-  const filtered = cat === 'all' ? TECHNIQUES : TECHNIQUES.filter(t => t[2] === cat);
+  // 'inner' = emotion+risk+improve combined
+  let filtered;
+  if (cat === 'all') filtered = TECHNIQUES;
+  else if (cat === 'inner') filtered = TECHNIQUES.filter(t => ['emotion','risk','improve'].includes(t[2]));
+  else filtered = TECHNIQUES.filter(t => t[2] === cat);
+
   wrap.innerHTML = filtered.map(t => {
     const [id, level, category, title, summary, isLive] = t;
     const liveCls = isLive ? ' live' : ' locked';
     const lock = isLive ? '▶' : '🔒';
     const onclick = isLive ? ` onclick="openPreview(${id})"` : '';
+    const lvlLabel = level === '—' ? '' : ' · ' + level;
     return `
       <div class="tech-box${liveCls}"${onclick} title="${title} — ${summary}">
         <span class="lock-mini">${lock}</span>
-        <div class="tech-id">#${String(id).padStart(3,'0')} · ${level}</div>
+        <div class="tech-id">#${String(id).padStart(3,'0')}${lvlLabel}</div>
         <div class="tech-title">${title}</div>
       </div>
     `;
   }).join('');
 }
-renderGrid('all');
+
+function miniBox(t) {
+  const [id, level, category, title, summary, isLive] = t;
+  const liveCls = isLive ? ' live' : ' locked';
+  const onclick = isLive ? ` onclick="openPreview(${id})"` : '';
+  return `
+    <div class="mini-box${liveCls}"${onclick} title="${title} — ${summary}">
+      <div class="mini-id">#${String(id).padStart(3,'0')}</div>
+      <div class="mini-title">${title}</div>
+    </div>
+  `;
+}
+
+function renderMatrix() {
+  const wrap = document.getElementById('techMatrix');
+  let html = '';
+
+  // Header row
+  html += '<div class="matrix-header"><div class="matrix-cell-empty"></div>';
+  LEVELS.forEach(l => html += `<div class="matrix-col-head">${l}</div>`);
+  html += '</div>';
+
+  // Structured categories (1-4) — 5×5 grid rows
+  CATEGORIES.filter(c => c.structured).forEach(cat => {
+    const tipsInCat = TECHNIQUES.filter(t => t[2] === cat.key);
+    html += `<div class="matrix-row">`;
+    html += `<div class="matrix-row-head">
+      <div class="cat-num">CAT ${cat.num}</div>
+      <div class="cat-title">${cat.title}</div>
+      <div class="cat-count">${cat.sub} · ${tipsInCat.length} techniques</div>
+    </div>`;
+    LEVELS.forEach(level => {
+      const cellTips = tipsInCat.filter(t => t[1] === level);
+      html += `<div class="matrix-cell">${cellTips.map(miniBox).join('')}</div>`;
+    });
+    html += '</div>';
+  });
+
+  // Flat categories (5-7) — single full-width cell
+  CATEGORIES.filter(c => !c.structured).forEach(cat => {
+    const tipsInCat = TECHNIQUES.filter(t => t[2] === cat.key);
+    html += `<div class="matrix-row-flat">`;
+    html += `<div class="matrix-row-head">
+      <div class="cat-num">CAT ${cat.num}</div>
+      <div class="cat-title">${cat.title}</div>
+      <div class="cat-count">${cat.sub} · ${tipsInCat.length} techniques</div>
+    </div>`;
+    html += `<div class="matrix-cell-flat">${tipsInCat.map(miniBox).join('')}</div>`;
+    html += '</div>';
+  });
+
+  html += '<p class="matrix-note">Categories 5–7 are advanced disciplines that don\'t follow the novice→master ladder — they\'re what every working trader returns to, regardless of rung.</p>';
+  wrap.innerHTML = html;
+}
+
+function showView(cat) {
+  const linear = document.getElementById('techGrid');
+  const matrix = document.getElementById('techMatrix');
+  if (cat === 'matrix') {
+    matrix.style.display = '';
+    linear.style.display = 'none';
+    renderMatrix();
+  } else {
+    matrix.style.display = 'none';
+    linear.style.display = '';
+    renderLinear(cat);
+  }
+}
+showView('matrix');
 
 document.querySelectorAll('.grid-tab').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.grid-tab').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    renderGrid(btn.dataset.cat);
+    showView(btn.dataset.cat);
   });
 });
 </script>
