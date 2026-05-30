@@ -96,8 +96,16 @@
   }
   .preview-tile .tile-meta {
     color: var(--faint); font-size: 0.78rem; font-family: "SF Mono", Menlo, monospace;
-    letter-spacing: 0.04em; margin-bottom: 1rem;
+    letter-spacing: 0.04em; margin-bottom: 0.6rem;
   }
+  .preview-tile .tile-includes {
+    color: var(--dim); font-size: 0.78rem; line-height: 1.45;
+    background: rgba(212,165,89,0.05); border: 1px solid rgba(212,165,89,0.18);
+    border-radius: 4px; padding: 0.5rem 0.7rem; margin-bottom: 0.85rem;
+  }
+  .preview-tile .tile-includes strong { color: var(--gold); font-family: "SF Mono", Menlo, monospace; font-size: 0.7rem; letter-spacing: 0.08em; display: block; margin-bottom: 0.25rem; }
+  .preview-tile .tile-includes .pieces span { color: var(--fg); }
+  .preview-tile .tile-includes .pieces span:not(:last-child)::after { content: " · "; color: var(--faint); }
   .preview-tile .tile-cta {
     background: var(--gold); color: var(--bg); padding: 0.55rem 1rem; border-radius: 4px;
     text-align: center; text-decoration: none; font-weight: 600; font-size: 0.88rem;
@@ -201,6 +209,124 @@
     content: "▶ PREVIEW"; position: absolute; bottom: 0.45rem; right: 0.6rem;
     font-family: "SF Mono", Menlo, monospace; color: var(--gold); font-size: 0.62rem; letter-spacing: 0.08em;
   }
+
+  /* ─── Inside-a-technique anatomy ────────────────────────── */
+  .anatomy {
+    display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 2rem;
+    margin-top: 2rem; align-items: start;
+  }
+  .anatomy-steps { display: flex; flex-direction: column; gap: 0.9rem; }
+  .anatomy-step {
+    display: grid; grid-template-columns: 56px 1fr; gap: 1rem;
+    align-items: start; background: var(--card); border: 1px solid var(--line);
+    border-radius: 6px; padding: 1rem 1.2rem; position: relative;
+  }
+  .anatomy-step:not(:last-child)::after {
+    content: ""; position: absolute; left: 31px; bottom: -0.95rem;
+    width: 2px; height: 0.9rem; background: var(--gold);
+  }
+  .anatomy-step .step-num {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--bg); border: 2px solid var(--gold); color: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-family: Georgia, serif; font-size: 1.15rem; font-weight: 500;
+  }
+  .anatomy-step .step-body h4 {
+    font-family: Georgia, serif; color: var(--gold); font-weight: 400;
+    font-size: 1.05rem; margin: 0 0 0.3rem;
+  }
+  .anatomy-step .step-body p {
+    color: var(--dim); font-size: 0.88rem; line-height: 1.5; margin: 0;
+  }
+  .anatomy-step .step-body .step-pill {
+    display: inline-block; background: rgba(212,165,89,0.08); color: var(--gold);
+    border: 1px solid rgba(212,165,89,0.3); padding: 0.1rem 0.5rem; border-radius: 3px;
+    font-family: "SF Mono", Menlo, monospace; font-size: 0.65rem; letter-spacing: 0.06em;
+    margin-top: 0.35rem; text-transform: uppercase;
+  }
+
+  /* Mock worksheet UI (rendered, not a screenshot) */
+  .worksheet-mock {
+    background: var(--card); border: 1px solid var(--line); border-radius: 8px;
+    padding: 1.6rem 1.6rem; font-size: 0.92rem; position: relative;
+  }
+  .worksheet-mock .mock-tag {
+    position: absolute; top: -0.55rem; left: 1.4rem;
+    background: var(--bg); color: var(--gold);
+    padding: 0 0.55rem; font-family: "SF Mono", Menlo, monospace;
+    font-size: 0.7rem; letter-spacing: 0.1em;
+  }
+  .worksheet-mock .mock-step-label {
+    color: var(--gold); font-family: Georgia, serif; font-size: 0.95rem; margin-bottom: 0.7rem;
+  }
+  .worksheet-mock .mock-step-label .stepnum {
+    color: var(--faint); font-family: "SF Mono", Menlo, monospace; font-size: 0.7rem;
+    letter-spacing: 0.1em; margin-right: 0.5rem;
+  }
+  .worksheet-mock label.mock-field-label {
+    display: block; color: var(--gold); font-weight: 500; font-size: 0.88rem; margin-bottom: 0.3rem;
+  }
+  .worksheet-mock .mock-hint {
+    font-size: 0.78rem; color: var(--dim); margin-bottom: 0.4rem; font-style: italic;
+  }
+  .worksheet-mock textarea.mock-textarea {
+    width: 100%; min-height: 70px; padding: 0.6rem 0.75rem;
+    background: var(--bg); color: var(--fg); border: 1px solid var(--line); border-radius: 4px;
+    font-family: inherit; font-size: 0.9rem; line-height: 1.5; resize: vertical;
+  }
+  .worksheet-mock textarea.mock-textarea:focus { outline: 0; border-color: var(--gold); }
+  .worksheet-mock .char-cnt {
+    font-size: 0.7rem; color: var(--faint); margin-top: 0.2rem; text-align: right;
+    font-family: "SF Mono", Menlo, monospace;
+  }
+  .worksheet-mock .char-cnt.met { color: var(--green); }
+  .worksheet-mock hr.mock-divider {
+    border: 0; border-top: 1px dashed var(--line); margin: 1.2rem 0;
+  }
+  .worksheet-mock ul.mock-checklist { list-style: none; padding: 0; margin: 0; }
+  .worksheet-mock ul.mock-checklist li {
+    padding: 0.4rem 0; display: flex; align-items: flex-start; gap: 0.7rem;
+    color: var(--fg); font-size: 0.88rem; line-height: 1.4;
+  }
+  .worksheet-mock ul.mock-checklist input[type="checkbox"] {
+    appearance: none; -webkit-appearance: none;
+    width: 1.1em; height: 1.1em; min-width: 1.1em; margin-top: 0.16em;
+    background: var(--bg); border: 1.5px solid var(--faint); border-radius: 3px;
+    cursor: pointer; position: relative;
+  }
+  .worksheet-mock ul.mock-checklist input[type="checkbox"]:checked {
+    background: var(--gold); border-color: var(--gold);
+  }
+  .worksheet-mock ul.mock-checklist input[type="checkbox"]:checked::after {
+    content: ""; position: absolute; left: 0.3em; top: 0.04em;
+    width: 0.32em; height: 0.65em; border: solid var(--bg); border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+  .worksheet-mock .mock-gate {
+    margin-top: 1.2rem; padding: 1rem 1.1rem; background: #14140f;
+    border: 1px solid var(--line); border-radius: 5px;
+  }
+  .worksheet-mock .mock-gate .gate-status {
+    display: flex; align-items: center; gap: 0.55rem; margin-bottom: 0.6rem;
+    color: var(--dim); font-size: 0.85rem;
+  }
+  .worksheet-mock .mock-gate .gate-status .dot {
+    width: 0.6em; height: 0.6em; border-radius: 50%; background: var(--red);
+  }
+  .worksheet-mock .mock-gate .gate-status.complete { color: var(--green); }
+  .worksheet-mock .mock-gate .gate-status.complete .dot { background: var(--green); }
+  .worksheet-mock .mock-gate .next-btn {
+    background: var(--faint); color: var(--bg); border: 0; padding: 0.55rem 1.1rem;
+    border-radius: 4px; font-family: inherit; font-weight: 600; cursor: not-allowed;
+    font-size: 0.85rem;
+  }
+  .worksheet-mock .mock-gate .next-btn.ready {
+    background: var(--gold); cursor: pointer;
+  }
+  .worksheet-mock .deep-link {
+    margin-top: 1.1rem; text-align: center; font-size: 0.83rem; color: var(--dim);
+  }
+  .worksheet-mock .deep-link a { color: var(--gold); text-decoration: none; border-bottom: 1px dotted var(--gold); }
 
   /* ─── Matrix view ────────────────────────────────────────── */
   .matrix-view { display: flex; flex-direction: column; gap: 0.55rem; }
@@ -401,6 +527,7 @@
 <div class="topbar">
   <div class="brand">Owl Group Trading<span class="sub">100 Techniques</span></div>
   <nav class="nav">
+    <a href="#anatomy">Inside a Technique</a>
     <a href="#climb">The Climb</a>
     <a href="#grid">All 100</a>
     <a href="#pricing">Pricing</a>
@@ -446,6 +573,10 @@
           dragging you into trades you never planned.
         </p>
         <div class="tile-meta">4:56 · V+O · Ken Long</div>
+        <div class="tile-includes">
+          <strong>EACH TECHNIQUE INCLUDES</strong>
+          <div class="pieces"><span>5-min video</span><span>3 principles</span><span>worksheet</span><span>checklist</span><span>completion gate</span></div>
+        </div>
         <button class="tile-cta" onclick="openPreview(3)">▶ Watch the 5-min preview</button>
       </div>
 
@@ -460,6 +591,10 @@
           carry the barrel for a 30-year career.
         </p>
         <div class="tile-meta">2:36 · V+O · Ken Long</div>
+        <div class="tile-includes">
+          <strong>EACH TECHNIQUE INCLUDES</strong>
+          <div class="pieces"><span>3-min video</span><span>3 principles</span><span>worksheet</span><span>checklist</span><span>completion gate</span></div>
+        </div>
         <button class="tile-cta" onclick="openPreview(5)">▶ Watch the 3-min preview</button>
       </div>
 
@@ -475,6 +610,10 @@
           right setup destroys both.
         </p>
         <div class="tile-meta">6:48 · V+O · Ken Long</div>
+        <div class="tile-includes">
+          <strong>EACH TECHNIQUE INCLUDES</strong>
+          <div class="pieces"><span>7-min video</span><span>4 principles</span><span>worksheet</span><span>checklist</span><span>completion gate</span></div>
+        </div>
         <button class="tile-cta" onclick="openPreview(7)">▶ Watch the 7-min preview</button>
       </div>
 
@@ -484,7 +623,97 @@
     <div id="livePlayer" class="live-player">
       <video id="livePlayerVideo" controls preload="metadata" controlsList="nodownload"></video>
     </div>
-    <div id="livePlayerCaption" class="player-caption"><em></em></div>
+    <div id="livePlayerCaption" class="player-caption">
+      <em></em>
+      <div style="margin-top:0.6rem;font-size:0.85rem;">
+        Want to see the worksheet + checklist + completion gate this technique uses?
+        <a href="#anatomy" style="color:var(--gold);text-decoration:none;border-bottom:1px dotted var(--gold);">See what's inside each technique ↓</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── WHAT'S INSIDE EACH TECHNIQUE ────────────────────── -->
+  <section id="anatomy">
+    <div class="section-kicker">Anatomy of a technique</div>
+    <h2>Each technique is a loop. Not just a video.</h2>
+    <p class="section-lead">
+      The video is the start. The worksheet is where you write the technique into your own
+      trading. The checklist locks it as a habit. The completion gate stops you from advancing
+      until each step is actually done. Skip a step and the next technique doesn't unlock.
+    </p>
+
+    <div class="anatomy">
+      <div class="anatomy-steps">
+
+        <div class="anatomy-step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <h4>Watch</h4>
+            <p>5-10 minute Ken video distilled from his live coaching. The principle, the framework, the example. Designed to be re-watched.</p>
+            <span class="step-pill">VIDEO · ~5-10 MIN</span>
+          </div>
+        </div>
+
+        <div class="anatomy-step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <h4>Read</h4>
+            <p>3 to 5 named principles distilled from the video — the part you'll reference later when you've forgotten the words but need the rule. Each principle has a one-line answer.</p>
+            <span class="step-pill">PRINCIPLES · 3-5 NAMED</span>
+          </div>
+        </div>
+
+        <div class="anatomy-step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <h4>Do</h4>
+            <p>The worksheet — you write the technique into your own trading. Plus an action checklist of things to confirm you've actually done (set up the journal, written the rule, screenshotted the setup, etc.).</p>
+            <span class="step-pill">WORKSHEET + CHECKLIST</span>
+          </div>
+        </div>
+
+        <div class="anatomy-step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <h4>Complete</h4>
+            <p>A gate. The next technique doesn't unlock until the worksheet has real content and every checklist item is checked. Skipping isn't an option — that's the whole point.</p>
+            <span class="step-pill">COMPLETION GATE</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Rendered mock of the actual worksheet UI from Ep 1 -->
+      <div class="worksheet-mock">
+        <span class="mock-tag">LIVE PREVIEW — Technique 01</span>
+
+        <div class="mock-step-label"><span class="stepnum">03 / DO</span>Define your reason</div>
+
+        <label class="mock-field-label">Your reason — in one paragraph.</label>
+        <div class="mock-hint">Write to a real person. Make it specific enough that a stranger could quote it back to you.</div>
+        <textarea class="mock-textarea" id="mockReason" placeholder="I trade because…"></textarea>
+        <div class="char-cnt" id="mockCnt">0 / 80 minimum</div>
+
+        <hr class="mock-divider">
+
+        <label class="mock-field-label">Confirm — each item, when actually done.</label>
+        <ul class="mock-checklist">
+          <li><input type="checkbox" id="ck1" onchange="updateMockGate()"><label for="ck1">My reason names a specific outcome or person, not just "make money."</label></li>
+          <li><input type="checkbox" id="ck2" onchange="updateMockGate()"><label for="ck2">It points to a multi-year horizon, not a quick-win fantasy.</label></li>
+          <li><input type="checkbox" id="ck3" onchange="updateMockGate()"><label for="ck3">It's written somewhere I'll see again — not just in my head.</label></li>
+        </ul>
+
+        <div class="mock-gate">
+          <div class="gate-status" id="mockStatus"><span class="dot"></span><span>Complete the worksheet + all 3 checks to unlock Technique 02</span></div>
+          <button class="next-btn" id="mockNext" disabled>Continue to Technique 02 →</button>
+        </div>
+
+        <div class="deep-link">
+          ↳ See the live worksheet in context on the
+          <a href="./episodes/01-set-your-reason.html">full Technique 01 page →</a>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- ─── THE CLIMB ────────────────────────────────────────── -->
@@ -745,6 +974,39 @@
 </footer>
 
 <script>
+// ─── Live mock worksheet (anatomy section) ─────────────────
+function updateMockGate() {
+  const reason = (document.getElementById('mockReason')?.value || '').trim();
+  const cnt = document.getElementById('mockCnt');
+  const status = document.getElementById('mockStatus');
+  const btn = document.getElementById('mockNext');
+  const ck1 = document.getElementById('ck1')?.checked;
+  const ck2 = document.getElementById('ck2')?.checked;
+  const ck3 = document.getElementById('ck3')?.checked;
+  const charsOk = reason.length >= 80;
+  const checksOk = ck1 && ck2 && ck3;
+  if (cnt) {
+    cnt.textContent = `${reason.length} / 80 minimum`;
+    cnt.classList.toggle('met', charsOk);
+  }
+  if (charsOk && checksOk) {
+    status.classList.add('complete');
+    status.innerHTML = '<span class="dot"></span><span>Ready — Technique 02 unlocked</span>';
+    btn.disabled = false;
+    btn.classList.add('ready');
+  } else {
+    status.classList.remove('complete');
+    const remaining = [];
+    if (!charsOk) remaining.push(`worksheet (${80 - reason.length} more chars)`);
+    if (!checksOk) remaining.push(`${3 - [ck1,ck2,ck3].filter(Boolean).length} checks`);
+    status.innerHTML = `<span class="dot"></span><span>Still need: ${remaining.join(' + ')}</span>`;
+    btn.disabled = true;
+    btn.classList.remove('ready');
+  }
+}
+// Wire up the textarea (checkboxes have inline onchange)
+document.getElementById('mockReason')?.addEventListener('input', updateMockGate);
+
 // ─── Live preview reveal ────────────────────────────────────
 // Map technique id → mp4 + caption (built from the hero tile data
 // attributes so we don't repeat ourselves)
