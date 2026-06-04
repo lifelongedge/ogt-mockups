@@ -94,39 +94,88 @@
     letter-spacing:0.04em; margin-top:auto;
   }
 
-  /* ─── First week path ──────────────────── */
-  .path {
+  /* ─── 2x2 Pick-your-path ─────────────── */
+  .matrix-frame {
     background:var(--card); border:1px solid var(--line); border-radius:8px;
-    padding:1.8rem 2rem;
+    padding:1.5rem 1.5rem;
   }
-  .path ol {
-    list-style:none; counter-reset:step; padding:0; margin:0;
+  .matrix-axes {
+    display:grid; grid-template-columns:140px 1fr 1fr; gap:0.5rem;
+    margin-bottom:0.5rem;
   }
-  .path ol li {
-    counter-increment:step; position:relative;
-    padding:1rem 0 1rem 4rem; border-bottom:1px dotted var(--line);
+  .matrix-axes .axis-head {
+    color:var(--gold); font-family:"SF Mono",Menlo,monospace;
+    font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase;
+    text-align:center; padding:0.3rem 0;
   }
-  .path ol li:last-child { border-bottom:0; }
-  .path ol li::before {
-    content:counter(step); position:absolute; left:0; top:1rem;
-    width:2.6em; height:2.6em; line-height:2.6em;
-    background:var(--bg); border:1px solid var(--gold); color:var(--gold);
-    border-radius:50%; text-align:center; font-family:Georgia,serif; font-size:1rem;
+  .matrix-row {
+    display:grid; grid-template-columns:140px 1fr 1fr; gap:0.7rem;
+    margin-bottom:0.7rem;
   }
-  .path ol li h4 {
-    font-family:Georgia,serif; color:var(--fg); font-weight:500;
-    font-size:1.1rem; margin:0 0 0.3rem;
+  .matrix-row-label {
+    color:var(--gold); font-family:"SF Mono",Menlo,monospace;
+    font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase;
+    display:flex; align-items:center; justify-content:flex-end;
+    padding-right:0.5rem; text-align:right;
   }
-  .path ol li p { color:var(--dim); font-size:0.92rem; margin:0 0 0.5rem; line-height:1.55; }
-  .path ol li .step-action a {
-    font-size:0.85rem; padding:0.3rem 0.7rem; background:rgba(212,165,89,0.08);
-    border:1px solid rgba(212,165,89,0.3); border-radius:4px;
-    font-family:"SF Mono",Menlo,monospace; letter-spacing:0.04em; margin-right:0.4rem;
+  @media (max-width:780px) {
+    .matrix-axes { display:none; }
+    .matrix-row { grid-template-columns:1fr; }
+    .matrix-row-label {
+      justify-content:flex-start; padding:0.5rem 0 0.3rem; text-align:left;
+      border-bottom:1px solid var(--line);
+    }
   }
-  .path ol li .step-action a:hover { background:rgba(212,165,89,0.18); }
-  .path .est {
-    color:var(--faint); font-size:0.76rem; font-family:"SF Mono",Menlo,monospace;
-    letter-spacing:0.05em; margin-left:0.5rem;
+  .quad {
+    background:#0e0e0c; border:1px solid var(--line); border-radius:6px;
+    padding:1.1rem 1.2rem; display:flex; flex-direction:column;
+    transition:all 0.15s;
+  }
+  .quad:hover { border-color:var(--faint); }
+  .quad.recommended {
+    border-color:rgba(212,165,89,0.45);
+    background:linear-gradient(180deg, rgba(212,165,89,0.04), #0e0e0c);
+  }
+  .quad-label {
+    color:var(--faint); font-family:"SF Mono",Menlo,monospace;
+    font-size:0.65rem; letter-spacing:0.12em; text-transform:uppercase;
+    margin-bottom:0.4rem;
+  }
+  .quad h4 {
+    font-family:Georgia,serif; color:var(--gold); font-weight:400;
+    font-size:1.05rem; margin:0 0 0.4rem; line-height:1.25;
+  }
+  .quad .who {
+    color:var(--dim); font-size:0.85rem; font-style:italic;
+    margin-bottom:0.7rem; line-height:1.5;
+  }
+  .quad ol {
+    list-style:none; counter-reset:s; padding:0; margin:0 0 0.8rem;
+  }
+  .quad ol li {
+    counter-increment:s; position:relative;
+    padding:0.35rem 0 0.35rem 1.8rem; font-size:0.86rem; color:var(--fg); line-height:1.45;
+  }
+  .quad ol li::before {
+    content:counter(s); position:absolute; left:0; top:0.4rem;
+    width:1.3em; height:1.3em; line-height:1.3em;
+    background:transparent; border:1px solid var(--gold); color:var(--gold);
+    border-radius:50%; text-align:center; font-family:"SF Mono",Menlo,monospace; font-size:0.65rem;
+  }
+  .quad ol li a {
+    font-family:"SF Mono",Menlo,monospace; font-size:0.78rem;
+    border-bottom:1px dotted var(--faint);
+  }
+  .quad ol li a:hover { border-bottom-color:var(--gold); }
+  .quad .total {
+    color:var(--faint); font-size:0.72rem; font-family:"SF Mono",Menlo,monospace;
+    letter-spacing:0.05em; margin-top:auto; padding-top:0.5rem;
+    border-top:1px dotted var(--line);
+  }
+  .quad .prereq {
+    color:var(--red); font-size:0.78rem; font-style:italic;
+    margin-bottom:0.6rem; padding:0.4rem 0.6rem;
+    background:rgba(196,126,83,0.06); border-left:2px solid var(--red); border-radius:0 3px 3px 0;
   }
 
   /* ─── Library card grid ───────────────── */
@@ -278,44 +327,96 @@
     </div>
   </section>
 
-  <!-- ─── FIRST WEEK PATH ───────────────────────── -->
+  <!-- ─── PICK YOUR PATH (2x2) ──────────────────── -->
   <section id="first-week">
-    <div class="section-kicker">Your first week</div>
-    <h2>Five steps. Roughly 3 hours total. Do them in order.</h2>
+    <div class="section-kicker">Pick your path</div>
+    <h2>You are not the same as everyone else who walks in.</h2>
     <p class="section-lead">
-      Don't try to absorb everything at once. The point of the first week is to land in the cohort
-      with enough foundation that Ken's first live session lands with full context.
+      SGC students range from long-time Patreon listeners who finally upgraded, to twenty-year prop traders
+      who are new to Ken specifically. Find yourself on the grid below — your first week looks different
+      depending on where you sit. Pick the quadrant honestly; you're not graded.
     </p>
 
-    <div class="path">
-      <ol>
-        <li>
-          <h4>Pick a frame: read Foundation Session 2<span class="est">15 min</span></h4>
-          <p>The "Top books, thinkers, practitioners who influenced Ken's work" map. You don't need to read all those books — you need the map. It tells you what kind of traders Ken stands on the shoulders of and what intellectual lineage you're entering.</p>
-          <div class="step-action"><a href="library/index.html">Open Foundation Sessions</a> (coming · for now, ask your cohort coach for the PDF)</div>
-        </li>
-        <li>
-          <h4>Learn the master framework: read Foundation Session 3 + the PPEA wiki page<span class="est">25 min</span></h4>
-          <p><strong>Plan · Prepare · Execute · Assess.</strong> Every other technique Ken teaches sits on this scaffold. If you skip PPEA, every later session feels like loose tactics. With PPEA, everything fits.</p>
-          <div class="step-action"><a href="library/ppea.html">Read PPEA wiki →</a></div>
-        </li>
-        <li>
-          <h4>Add the lens: read the RLCO concept page<span class="est">30 min</span></h4>
-          <p>The Regression Line Cross Over is Ken's primary chart-reading lens. Once you see it, you can't unsee it. The wiki page has 8 video moments where Ken teaches it from different angles — watch any 2-3.</p>
-          <div class="step-action"><a href="library/rlco.html">Read RLCO wiki →</a></div>
-        </li>
-        <li>
-          <h4>Show up to your first live session<span class="est">60-90 min</span></h4>
-          <p>Live participation is the whole point of SGC. Even if you only listen, hearing Ken work through a current trade with your cohort is worth 10x reading. <strong>Don't wait until you "feel ready" — you won't.</strong></p>
-          <div class="step-action"><a href="#sessions">See the schedule ↓</a> · <a href="#" title="link your coach will provide">Get the Zoom link</a></div>
-        </li>
-        <li>
-          <h4>Pick one technique and practice it for the rest of the week<span class="est">30-45 min</span></h4>
-          <p>Don't try to use everything at once. Pick MMRB (sizing) OR Frog (signal vs noise) OR Sniper (execution) — one concept. Use it to frame every trade idea you look at, even hypothetical ones. The point is repetition, not P&amp;L.</p>
-          <div class="step-action"><a href="library/mmrb.html">MMRB</a> · <a href="library/frog.html">Frog</a> · <a href="library/sniper.html">Sniper</a></div>
-        </li>
-      </ol>
+    <div class="matrix-frame">
+      <div class="matrix-axes">
+        <div></div>
+        <div class="axis-head">New to Ken / Owl Group</div>
+        <div class="axis-head">Familiar with Ken / Owl Group</div>
+      </div>
+
+      <!-- Row 1: Novice trader -->
+      <div class="matrix-row">
+        <div class="matrix-row-label">Newer trader<br>(&lt;2 yrs · few hundred trades)</div>
+
+        <!-- Quad A: novice + unfamiliar -->
+        <div class="quad">
+          <div class="quad-label">PATH A</div>
+          <h4>New to trading. New to Ken.</h4>
+          <p class="who">You're motivated and you're ready, but the trading world is still mostly new to you. SGC works for you, but pace matters.</p>
+          <div class="prereq">Honest check: if you haven't taken the <a href="https://courses.owlgroup.us/courses/24/about" target="_blank" rel="noopener">Foundations course</a> yet, do that in parallel. SGC builds on it; it's not a substitute.</div>
+          <ol>
+            <li>Read <strong>Foundation Session 2</strong> — the intellectual lineage so you know which thinkers Ken stands on</li>
+            <li>Read <strong>Foundation Session 3</strong> + <a href="library/ppea.html">PPEA wiki</a> — the master scaffold</li>
+            <li>Browse <a href="library/rlco.html">RLCO</a> — watch any 2 video moments, don't try to absorb all 8</li>
+            <li>Show up to your first session <strong>as a listener</strong>. Take notes. Don't ask questions yet.</li>
+            <li>Write a one-paragraph "what I noticed" reflection after</li>
+          </ol>
+          <div class="total">⏱ ~3 hours over week 1 · expect this to compound for months</div>
+        </div>
+
+        <!-- Quad B: novice + familiar -->
+        <div class="quad">
+          <div class="quad-label">PATH B</div>
+          <h4>Newer trader, but you know Ken's world.</h4>
+          <p class="who">Long-time Patreon listener / Foundations course alum. You know the vocabulary; you haven't put enough reps in to make it automatic.</p>
+          <ol>
+            <li>Skip the lineage. Go straight to <a href="library/ppea.html">PPEA</a> + <a href="library/mmrb.html">MMRB</a> — the two that govern execution</li>
+            <li>Show up to your first live session and <strong>ask a question</strong> — you've earned the privilege of asking; the cohort needs to hear from new voices</li>
+            <li>Pick <strong>one</strong> technique to practice this week — RLCO OR Frog, not both</li>
+            <li>Paper-trade or sized-down live, with the technique as the framing lens</li>
+          </ol>
+          <div class="total">⏱ ~2 hours over week 1 · biggest lift is showing up and being present</div>
+        </div>
+      </div>
+
+      <!-- Row 2: Expert trader -->
+      <div class="matrix-row">
+        <div class="matrix-row-label">Experienced<br>trader<br>(years in)</div>
+
+        <!-- Quad C: expert + unfamiliar -->
+        <div class="quad recommended">
+          <div class="quad-label">PATH C</div>
+          <h4>Experienced trader. New to Ken's vocabulary.</h4>
+          <p class="who">You've put on real trades for real years. You're here because something in Ken's framing — process discipline, the RLCO lens, his weekend reports — caught your attention. You don't need the basics. You need the translation.</p>
+          <ol>
+            <li>Read the <a href="library/index.html">Library index</a> — a 5-min vocabulary primer on RLCO, MMRB, PPEA, Frog, Sniper</li>
+            <li>Skim <a href="library/rlco.html">RLCO</a> + <a href="library/ppea.html">PPEA</a> — these are the two that Ken treats as load-bearing; the rest sits on top</li>
+            <li>Show up to your first live session with <strong>your hardest current unresolved question</strong> ready to ask</li>
+            <li>After the session, identify <strong>one thing Ken does that contradicts your current system</strong>. That's where the value is — not where you already agree.</li>
+            <li>Map Ken's vocabulary onto your existing playbook. Where do they overlap? Where do they fight?</li>
+          </ol>
+          <div class="total">⏱ ~90 min over week 1 · the live session does the heavy lifting</div>
+        </div>
+
+        <!-- Quad D: expert + familiar -->
+        <div class="quad">
+          <div class="quad-label">PATH D</div>
+          <h4>Experienced trader. Long-time Owl Group community.</h4>
+          <p class="who">You've been around. You upgraded to SGC for the direct-coaching loop, not the content. You know the wiki concepts already; you've heard Ken explain RLCO a hundred times.</p>
+          <ol>
+            <li>Bring your <strong>single most-unresolved strategic question</strong> to the next live session — the one you've been chewing on for months</li>
+            <li>Browse the Library for any concept where Ken's framing has shifted recently (the wiki shows you the most-recent video moments first)</li>
+            <li>Use the live cohort as your sounding board — your experience is valuable to other students; the back-and-forth is the product</li>
+            <li>Optional: volunteer to share a trade review at an upcoming session</li>
+          </ol>
+          <div class="total">⏱ ~30 min of prep · 100% leverage on live time</div>
+        </div>
+      </div>
     </div>
+
+    <p style="text-align:center; color:var(--faint); font-size:0.82rem; font-style:italic; margin-top:1.2rem;">
+      The four paths converge after a few weeks. The 2×2 is just for finding your starting point.
+    </p>
   </section>
 
   <!-- ─── THE LIBRARY ────────────────────────── -->
@@ -426,9 +527,9 @@
     </details>
 
     <details class="faq-item">
-      <summary>I'm completely new to trading. Am I in the right place?</summary>
+      <summary>What if my path (above) feels wrong for me?</summary>
       <div class="faq-body">
-        SGC assumes you've placed at least a handful of trades and have a brokerage account. If you haven't, start with the foundational <a href="https://courses.owlgroup.us/courses/24/about" target="_blank" rel="noopener">Foundations course</a> first — that's the on-ramp. SGC is the live-coaching layer on top of that foundation.
+        The 2×2 is a starting point, not a label. If you sit between two quadrants, pick the more cautious of the two — over-preparing is cheap, under-preparing wastes live-session time. After 2-3 weeks the paths converge anyway; you'll find your own pace.
       </div>
     </details>
 
