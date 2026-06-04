@@ -177,6 +177,23 @@
     margin-bottom:0.6rem; padding:0.4rem 0.6rem;
     background:rgba(196,126,83,0.06); border-left:2px solid var(--red); border-radius:0 3px 3px 0;
   }
+  .quad .save-path-btn {
+    margin-top:0.7rem; background:transparent; color:var(--dim); border:1px solid var(--line);
+    padding:0.4rem 0.8rem; border-radius:4px; font-family:inherit; font-size:0.78rem;
+    cursor:pointer; transition:all 0.12s; font-family:"SF Mono",Menlo,monospace; letter-spacing:0.04em;
+  }
+  .quad .save-path-btn:hover { color:var(--gold); border-color:var(--gold); background:rgba(212,165,89,0.05); }
+  .quad.saved { border-color:var(--gold); background:linear-gradient(180deg, rgba(212,165,89,0.08), #0e0e0c); }
+  .quad.saved .save-path-btn { color:var(--gold); border-color:var(--gold); background:rgba(212,165,89,0.10); cursor:default; }
+  .quad.dimmed { opacity:0.5; }
+
+  .saved-banner {
+    background:rgba(109,187,109,0.08); border:1px solid rgba(109,187,109,0.35);
+    color:var(--green); border-radius:5px; padding:0.7rem 1rem; margin:0.8rem 0;
+    font-size:0.88rem; display:flex; align-items:center; gap:0.7rem; flex-wrap:wrap;
+  }
+  .saved-banner .reset-link { color:var(--dim); text-decoration:underline; font-size:0.8rem; margin-left:auto; cursor:pointer; }
+  .saved-banner .reset-link:hover { color:var(--gold); }
 
   /* ─── Library card grid ───────────────── */
   .lib-grid {
@@ -337,6 +354,7 @@
       depending on where you sit. Pick the quadrant honestly; you're not graded.
     </p>
 
+    <div id="saved-banner-slot"></div>
     <div class="matrix-frame">
       <div class="matrix-axes">
         <div></div>
@@ -362,6 +380,7 @@
             <li>Write a one-paragraph "what I noticed" reflection after</li>
           </ol>
           <div class="total">⏱ ~3 hours over week 1 · expect this to compound for months</div>
+          <button class="save-path-btn" data-path="A" onclick="savePath(\'A\')">✓ This is my path</button>
         </div>
 
         <!-- Quad B: novice + familiar -->
@@ -376,6 +395,7 @@
             <li>Paper-trade or sized-down live, with the technique as the framing lens</li>
           </ol>
           <div class="total">⏱ ~2 hours over week 1 · biggest lift is showing up and being present</div>
+          <button class="save-path-btn" data-path="B" onclick="savePath(\'B\')">✓ This is my path</button>
         </div>
       </div>
 
@@ -396,6 +416,7 @@
             <li>Map Ken's vocabulary onto your existing playbook. Where do they overlap? Where do they fight?</li>
           </ol>
           <div class="total">⏱ ~90 min over week 1 · the live session does the heavy lifting</div>
+          <button class="save-path-btn" data-path="C" onclick="savePath(\'C\')">✓ This is my path</button>
         </div>
 
         <!-- Quad D: expert + familiar -->
@@ -410,6 +431,7 @@
             <li>Optional: volunteer to share a trade review at an upcoming session</li>
           </ol>
           <div class="total">⏱ ~30 min of prep · 100% leverage on live time</div>
+          <button class="save-path-btn" data-path="D" onclick="savePath(\'D\')">✓ This is my path</button>
         </div>
       </div>
     </div>
@@ -572,5 +594,84 @@
 
 </main>
 
+
+<script>
+// ─── 2x2 path save (localStorage; will sync to backend in v2) ────
+const STORAGE_KEY = 'sgc-path';
+const STORAGE_TS  = 'sgc-path-saved-at';
+
+const PATH_LABELS = {
+  A: 'Path A — newer trader, new to Ken',
+  B: 'Path B — newer trader, familiar with Ken',
+  C: 'Path C — experienced trader, new to Ken',
+  D: 'Path D — experienced trader, familiar with Ken',
+};
+
+function applySavedPath(letter) {
+  document.querySelectorAll('.quad').forEach(q => {
+    q.classList.remove('saved','dimmed','recommended');
+  });
+  if (!letter) {
+    // Restore the default "recommended" highlight on Path C
+    document.querySelectorAll('.quad').forEach(q => {
+      const btn = q.querySelector('.save-path-btn');
+      if (btn && btn.dataset.path === 'C') q.classList.add('recommended');
+      if (btn) btn.textContent = '✓ This is my path';
+    });
+    const slot = document.getElementById('saved-banner-slot');
+    if (slot) slot.innerHTML = '';
+    return;
+  }
+  // Mark saved quad, dim others
+  document.querySelectorAll('.quad').forEach(q => {
+    const btn = q.querySelector('.save-path-btn');
+    if (!btn) return;
+    if (btn.dataset.path === letter) {
+      q.classList.add('saved');
+      btn.textContent = '✓ Saved as your path';
+    } else {
+      q.classList.add('dimmed');
+      btn.textContent = '✓ This is my path';
+    }
+  });
+  // Show banner
+  const slot = document.getElementById('saved-banner-slot');
+  if (slot) {
+    slot.innerHTML = `
+      <div class="saved-banner">
+        <span><strong>Your path is saved:</strong> ${PATH_LABELS[letter]}.
+          You can change it anytime — and once we wire personalization (v2), this is what we'll use to tailor your dashboard, spotlight clips, and reading order.</span>
+        <a class="reset-link" onclick="resetPath()">change</a>
+      </div>`;
+  }
+}
+
+function savePath(letter) {
+  try {
+    localStorage.setItem(STORAGE_KEY, letter);
+    localStorage.setItem(STORAGE_TS, new Date().toISOString());
+  } catch {}
+  applySavedPath(letter);
+  // Scroll banner into view
+  setTimeout(() => {
+    const banner = document.querySelector('.saved-banner');
+    if (banner) banner.scrollIntoView({behavior:'smooth', block:'center'});
+  }, 50);
+}
+
+function resetPath() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(STORAGE_TS);
+  } catch {}
+  applySavedPath(null);
+}
+
+// Restore on load
+try {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (saved && PATH_LABELS[saved]) applySavedPath(saved);
+} catch {}
+</script>
 </body>
 </html>
