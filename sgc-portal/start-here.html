@@ -10,7 +10,17 @@
     --bg:#0e0e0c; --card:#181815; --card-elev:#1f1f1b; --line:#2a2925;
     --fg:#e8e6df; --dim:#9c978a; --faint:#5d594f; --gold:#d4a559; --gold-bright:#e8b96d;
     --green:#6dbb6d; --red:#c47e53; --blue:#5dbacb;
+    --topbar-bg:#14140f; --inset-bg:#0e0e0c; --inset-bg-alt:#1a1a16;
   }
+  [data-theme="light"] {
+    --bg:#faf7ef; --card:#ffffff; --card-elev:#f3eedf; --line:#e0d9c4;
+    --fg:#1a1813; --dim:#5d594f; --faint:#9c978a;
+    --gold:#a5772a; --gold-bright:#8a5f1e;   /* darker on light for contrast */
+    --green:#3d7c3d; --red:#8a4d2d; --blue:#28697a;
+    --topbar-bg:#f0e9d5; --inset-bg:#f7f2e3; --inset-bg-alt:#f3eedf;
+  }
+  [data-theme="light"] body { color-scheme:light; }
+  :root body { color-scheme:dark; }
   * { box-sizing:border-box; }
   body {
     margin:0; padding:0; background:var(--bg); color:var(--fg);
@@ -22,7 +32,7 @@
 
   /* ─── Top bar ────────────────────────────── */
   .topbar {
-    background:#14140f; border-bottom:1px solid var(--line);
+    background:var(--topbar-bg); border-bottom:1px solid var(--line);
     padding:0.7rem 1.6rem; display:flex; align-items:center; gap:1.4rem;
     position:sticky; top:0; z-index:50;
   }
@@ -127,14 +137,14 @@
     }
   }
   .quad {
-    background:#0e0e0c; border:1px solid var(--line); border-radius:6px;
+    background:var(--inset-bg); border:1px solid var(--line); border-radius:6px;
     padding:1.1rem 1.2rem; display:flex; flex-direction:column;
     transition:all 0.15s;
   }
   .quad:hover { border-color:var(--faint); }
   .quad.recommended {
     border-color:rgba(212,165,89,0.45);
-    background:linear-gradient(180deg, rgba(212,165,89,0.04), #0e0e0c);
+    background:linear-gradient(180deg, rgba(212,165,89,0.04), var(--inset-bg));
   }
   .quad-label {
     color:var(--faint); font-family:"SF Mono",Menlo,monospace;
@@ -183,7 +193,7 @@
     cursor:pointer; transition:all 0.12s; font-family:"SF Mono",Menlo,monospace; letter-spacing:0.04em;
   }
   .quad .save-path-btn:hover { color:var(--gold); border-color:var(--gold); background:rgba(212,165,89,0.05); }
-  .quad.saved { border-color:var(--gold); background:linear-gradient(180deg, rgba(212,165,89,0.08), #0e0e0c); }
+  .quad.saved { border-color:var(--gold); background:linear-gradient(180deg, rgba(212,165,89,0.08), var(--inset-bg)); }
   .quad.saved .save-path-btn { color:var(--gold); border-color:var(--gold); background:rgba(212,165,89,0.10); cursor:default; }
   .quad.dimmed { opacity:0.5; }
 
@@ -294,7 +304,16 @@
     <a href="#sessions">Sessions</a>
     <a href="https://www.patreon.com/kenlong" target="_blank" rel="noopener">Patreon</a>
   </nav>
-  <div class="right">v1 · new student</div>
+  <div class="right">
+    <button id="themeToggle" type="button" title="Toggle light / dark theme"
+            style="background:transparent; border:1px solid var(--line); color:var(--dim);
+                   padding:0.32rem 0.7rem; border-radius:4px; cursor:pointer;
+                   font-family:'SF Mono',Menlo,monospace; font-size:0.78rem; letter-spacing:0.06em;
+                   transition:all 0.12s; margin-right:0.8rem;">
+      <span id="themeGlyph">☾</span> <span id="themeLabel">Dark</span>
+    </button>
+    <span>v1 · new student</span>
+  </div>
 </div>
 
 <main>
@@ -331,8 +350,8 @@
       </div>
       <div class="pillar">
         <div class="glyph">⛰</div>
-        <h3>The Foundation Trading book</h3>
-        <p>Ken's structured 10-session walkthrough of his frameworks — PPEA, the three timeframes, decision-making models, trade psychology. Read it slowly; refer to it for years.</p>
+        <h3>The Foundation Trading Concepts</h3>
+        <p>Ken's structured 10-session walkthrough of his frameworks — PPEA, the three timeframes, decision-making models, trade psychology. The book is one artifact in a body of work that also lives in Cornell notes, videos, and live sessions.</p>
         <div class="meta">→ Session-by-session in the Library</div>
       </div>
       <div class="pillar">
@@ -485,46 +504,78 @@
 
   <!-- ─── SESSIONS ───────────────────────────── -->
   <section id="sessions">
-    <div class="section-kicker">Live sessions</div>
-    <h2>When Ken is live</h2>
+    <div class="section-kicker">Live sessions · all times CST</div>
+    <h2>Ken's coaching schedule</h2>
     <p class="section-lead">
-      Every session is recorded; you can replay later if you can't make it live. But live is where the
-      cohort dynamic happens — questions get answered, your trade gets reviewed.
+      <strong style="color:var(--fg);">Wednesday is the SGC session you bought.</strong> The other office hours
+      are open to SGC members as bonus access — each has a focused audience.
+      Same Zoom room for everything. Tuesdays are invite-only; the rest are open.
     </p>
 
     <div class="session-card">
       <ul class="session-list">
         <li>
-          <span class="day">Tuesday</span>
-          <span class="when">7:00 PM ET</span>
-          <span class="what">Cohort coaching call — open Q&amp;A, trade reviews, market read.</span>
+          <span class="day">Alt Sundays</span>
+          <span class="when">9–10 AM CST</span>
+          <span class="what">The Internationals Hour — for SGC members outside US time zones.</span>
           <span class="badge">live</span>
+        </li>
+        <li>
+          <span class="day">Monday</span>
+          <span class="when">8–9 PM CST</span>
+          <span class="what">Automaters, backtesters, systems simulators, technicals.</span>
+          <span class="badge">live</span>
+        </li>
+        <li style="background:rgba(196,126,83,0.04); border-left:2px solid rgba(196,126,83,0.4); padding-left:0.7rem; margin:0.3rem -0.7rem; border-radius:0 4px 4px 0;">
+          <span class="day">Tuesday</span>
+          <span class="when">8–9 PM CST</span>
+          <span class="what">SPY / ES traders — advanced futures and options.</span>
+          <span class="badge" style="background:rgba(196,126,83,0.15); color:var(--red); border-color:rgba(196,126,83,0.4);">invite only</span>
+        </li>
+        <li style="background:rgba(212,165,89,0.05); border-left:3px solid var(--gold); padding-left:0.6rem; margin:0.3rem -0.6rem; border-radius:0 4px 4px 0;">
+          <span class="day"><strong>Wednesday</strong></span>
+          <span class="when">8–9 PM CST</span>
+          <span class="what"><strong>Small Group Coaching</strong> — personal system adapters. <em style="color:var(--gold);">Your main session.</em></span>
+          <span class="badge" style="background:rgba(212,165,89,0.18); color:var(--gold); border-color:var(--gold);">SGC</span>
         </li>
         <li>
           <span class="day">Thursday</span>
-          <span class="when">7:00 PM ET</span>
-          <span class="what">Technique focus — Ken walks one concept deep with examples.</span>
+          <span class="when">8–9 PM CST</span>
+          <span class="what">Open Q&amp;A — invitees plus past or present students from any course.</span>
           <span class="badge">live</span>
         </li>
         <li>
-          <span class="day">Sunday</span>
-          <span class="when">3:00 PM ET</span>
-          <span class="what">Weekend Foundations Q&amp;A — open-format discussion on the book + frameworks.</span>
-          <span class="badge">live</span>
-        </li>
-        <li>
-          <span class="day">Daily</span>
-          <span class="when">8:30 PM CST</span>
-          <span class="what">Nightly strategy podcast — Ken's daily report walk-through (audio + replay).</span>
-          <span class="badge">replay</span>
+          <span class="day">Mon–Thu</span>
+          <span class="when">9:15–9:30 PM CST</span>
+          <span class="what">Nightly report review — short audio-format walk-through; recording lands on Patreon + YouTube.</span>
+          <span class="badge" style="background:rgba(93,186,203,0.10); color:var(--blue); border-color:rgba(93,186,203,0.35);">podcast</span>
         </li>
       </ul>
+
+      <div style="margin-top:1.3rem; padding:1rem 1.1rem; background:var(--inset-bg); border:1px solid var(--gold); border-radius:5px;">
+        <div style="color:var(--gold); font-family:'SF Mono',Menlo,monospace; font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:0.5rem;">Zoom — same link for every session</div>
+        <a href="https://us02web.zoom.us/j/83508526214?pwd=OW9kZ3l3aDl3T0d1QU80UmlhZXF2Zz09" target="_blank" rel="noopener"
+           style="display:inline-block; background:var(--gold); color:var(--bg); padding:0.7rem 1.3rem; border-radius:5px; font-weight:600; font-size:0.95rem; margin-bottom:0.7rem; text-decoration:none;">
+          🎥 Join the Zoom room
+        </a>
+        <div style="color:var(--dim); font-size:0.85rem; line-height:1.55; font-family:'SF Mono',Menlo,monospace;">
+          <div><strong style="color:var(--fg);">Meeting ID:</strong> 835 0852 6214</div>
+          <div><strong style="color:var(--fg);">Password:</strong> tortoise</div>
+        </div>
+        <div style="color:var(--faint); font-size:0.78rem; margin-top:0.6rem; line-height:1.5;">
+          Save the link in your calendar for the sessions you'll attend. The same room hosts every session.
+        </div>
+      </div>
+
       <div class="session-meta">
-        <strong style="color:var(--fg);">Zoom link:</strong> sent in your enrollment email and pinned in Patreon.
+        <strong style="color:var(--fg);">Time zones:</strong>
+        all times listed in <strong>CST</strong> (Central). For Eastern, add 1h (so Mon 8 PM CST = Tue 9 PM ET).
         <br><strong style="color:var(--fg);">Replays:</strong>
-        <a href="https://www.patreon.com/kenlong" target="_blank" rel="noopener">Patreon archive</a>
-        (300+ sessions back to 2022).
-        <br><strong style="color:var(--fg);">Times above are illustrative</strong> — confirm the exact schedule with your cohort coach.
+        recordings post to
+        <a href="https://www.patreon.com/kenlong" target="_blank" rel="noopener">Patreon</a>
+        +
+        <a href="https://www.youtube.com/@KenLongTortoise" target="_blank" rel="noopener">YouTube</a>
+        — 300+ sessions back to 2022.
       </div>
     </div>
   </section>
@@ -544,7 +595,7 @@
     <details class="faq-item">
       <summary>What if I can't make a live session?</summary>
       <div class="faq-body">
-        Every session is recorded and lives in the Patreon archive within 24 hours. The Library will surface the most-relevant clips automatically over time. Showing up live is preferable — that's where Q&amp;A happens — but the asynchronous path works.
+        Every session is recorded and posts to <a href="https://www.patreon.com/kenlong" target="_blank" rel="noopener">Patreon</a> + <a href="https://www.youtube.com/@KenLongTortoise" target="_blank" rel="noopener">YouTube</a> within 24h. The 9:15-9:30 CST nightly report (Mon-Thu) is podcast-format and meant to be listened to async. Showing up live for Wednesday's SGC call is the most leverage you'll get from your membership; everything else gracefully degrades to replay.
       </div>
     </details>
 
@@ -672,6 +723,34 @@ try {
   const saved = localStorage.getItem(STORAGE_KEY);
   if (saved && PATH_LABELS[saved]) applySavedPath(saved);
 } catch {}
+
+// ─── Theme toggle (light / dark, persisted) ──────────────────
+const THEME_KEY = 'sgc-theme';
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  const glyph = document.getElementById('themeGlyph');
+  const label = document.getElementById('themeLabel');
+  if (glyph) glyph.textContent = theme === 'light' ? '☀' : '☾';
+  if (label) label.textContent = theme === 'light' ? 'Light' : 'Dark';
+}
+function toggleTheme() {
+  const cur = document.documentElement.getAttribute('data-theme') || 'dark';
+  const next = cur === 'light' ? 'dark' : 'light';
+  try { localStorage.setItem(THEME_KEY, next); } catch {}
+  applyTheme(next);
+}
+document.getElementById('themeToggle')?.addEventListener('click', toggleTheme);
+// Restore theme on load — saved preference wins; else fall back to system pref
+try {
+  const savedTheme = localStorage.getItem(THEME_KEY);
+  if (savedTheme === 'light' || savedTheme === 'dark') {
+    applyTheme(savedTheme);
+  } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+    applyTheme('light');
+  } else {
+    applyTheme('dark');
+  }
+} catch { applyTheme('dark'); }
 </script>
 </body>
 </html>
