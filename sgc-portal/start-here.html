@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Start Here · SGC Portal · Owl Group Trading</title>
+<meta name="description" content="Welcome to OGT Small Group Coaching with Dr. Ken Long. Here's everything you get and exactly where to start.">
+<style>
+  :root {
+    --bg:#0e0e0c; --card:#181815; --card-elev:#1f1f1b; --line:#2a2925;
+    --fg:#e8e6df; --dim:#9c978a; --faint:#5d594f; --gold:#d4a559; --gold-bright:#e8b96d;
+    --green:#6dbb6d; --red:#c47e53; --blue:#5dbacb;
+  }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; padding:0; background:var(--bg); color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+    font-size:16px; line-height:1.6;
+  }
+  a { color:var(--gold); text-decoration:none; }
+  a:hover { color:var(--gold-bright); }
+
+  /* ─── Top bar ────────────────────────────── */
+  .topbar {
+    background:#14140f; border-bottom:1px solid var(--line);
+    padding:0.7rem 1.6rem; display:flex; align-items:center; gap:1.4rem;
+    position:sticky; top:0; z-index:50;
+  }
+  .topbar .brand { font-family:Georgia,serif; color:var(--gold); font-size:1.05rem; }
+  .topbar .brand .sub { color:var(--dim); font-family:"SF Mono",Menlo,monospace; font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; margin-left:0.5rem; }
+  .topbar nav { display:flex; gap:1.3rem; margin-left:1rem; font-size:0.88rem; }
+  .topbar nav a { color:var(--dim); padding:0.3rem 0; border-bottom:2px solid transparent; transition:all 0.12s; }
+  .topbar nav a:hover { color:var(--fg); }
+  .topbar nav a.active { color:var(--gold); border-bottom-color:var(--gold); }
+  .topbar .right { margin-left:auto; color:var(--dim); font-size:0.82rem; font-family:"SF Mono",Menlo,monospace; letter-spacing:0.04em; }
+
+  main { max-width:980px; margin:0 auto; padding:2rem 1.6rem 4rem; }
+
+  /* ─── Hero ────────────────────────────── */
+  .hero { text-align:center; margin-bottom:3rem; padding:1.5rem 0; }
+  .hero .kicker {
+    font-family:"SF Mono",Menlo,monospace; color:var(--gold);
+    font-size:0.82rem; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:1rem;
+  }
+  .hero h1 {
+    font-family:Georgia,serif; font-weight:400; color:var(--gold);
+    font-size:2.8rem; margin:0 auto 1rem; line-height:1.1; max-width:22ch;
+  }
+  .hero .sub {
+    color:var(--fg); font-size:1.15rem; max-width:55ch; margin:0 auto 1.8rem;
+    font-style:italic; line-height:1.55; color:var(--dim);
+  }
+  .hero .cta-row { display:flex; gap:0.8rem; justify-content:center; flex-wrap:wrap; }
+  .btn {
+    background:var(--gold); color:var(--bg); border:0; padding:0.85rem 1.6rem;
+    border-radius:5px; font-family:inherit; font-weight:600; font-size:0.95rem;
+    cursor:pointer; transition:all 0.12s; text-decoration:none; display:inline-block;
+  }
+  .btn:hover { background:var(--gold-bright); transform:translateY(-1px); color:var(--bg); }
+  .btn.ghost {
+    background:transparent; color:var(--gold); border:1px solid var(--gold);
+  }
+  .btn.ghost:hover { background:rgba(212,165,89,0.08); color:var(--gold-bright); }
+
+  /* ─── What you get (3 cards) ───────────── */
+  section { margin-bottom:3rem; }
+  section h2 {
+    font-family:Georgia,serif; color:var(--gold); font-weight:400;
+    font-size:1.7rem; margin:0 0 0.4rem; line-height:1.2;
+  }
+  section .section-kicker {
+    font-family:"SF Mono",Menlo,monospace; color:var(--dim);
+    font-size:0.75rem; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:0.5rem;
+  }
+  section .section-lead {
+    color:var(--dim); font-size:1rem; line-height:1.6; margin:0 0 1.5rem; max-width:65ch;
+  }
+
+  .three-up {
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:1.2rem;
+  }
+  @media (max-width:780px) { .three-up { grid-template-columns:1fr; } }
+  .pillar {
+    background:var(--card); border:1px solid var(--line); border-radius:8px;
+    padding:1.4rem 1.4rem; display:flex; flex-direction:column;
+  }
+  .pillar .glyph {
+    color:var(--gold); font-family:Georgia,serif; font-size:1.8rem; line-height:1; margin-bottom:0.5rem;
+  }
+  .pillar h3 { font-family:Georgia,serif; font-weight:400; color:var(--gold); font-size:1.2rem; margin:0 0 0.4rem; }
+  .pillar p { color:var(--dim); font-size:0.92rem; line-height:1.55; margin:0 0 0.8rem; }
+  .pillar .meta {
+    color:var(--faint); font-size:0.78rem; font-family:"SF Mono",Menlo,monospace;
+    letter-spacing:0.04em; margin-top:auto;
+  }
+
+  /* ─── First week path ──────────────────── */
+  .path {
+    background:var(--card); border:1px solid var(--line); border-radius:8px;
+    padding:1.8rem 2rem;
+  }
+  .path ol {
+    list-style:none; counter-reset:step; padding:0; margin:0;
+  }
+  .path ol li {
+    counter-increment:step; position:relative;
+    padding:1rem 0 1rem 4rem; border-bottom:1px dotted var(--line);
+  }
+  .path ol li:last-child { border-bottom:0; }
+  .path ol li::before {
+    content:counter(step); position:absolute; left:0; top:1rem;
+    width:2.6em; height:2.6em; line-height:2.6em;
+    background:var(--bg); border:1px solid var(--gold); color:var(--gold);
+    border-radius:50%; text-align:center; font-family:Georgia,serif; font-size:1rem;
+  }
+  .path ol li h4 {
+    font-family:Georgia,serif; color:var(--fg); font-weight:500;
+    font-size:1.1rem; margin:0 0 0.3rem;
+  }
+  .path ol li p { color:var(--dim); font-size:0.92rem; margin:0 0 0.5rem; line-height:1.55; }
+  .path ol li .step-action a {
+    font-size:0.85rem; padding:0.3rem 0.7rem; background:rgba(212,165,89,0.08);
+    border:1px solid rgba(212,165,89,0.3); border-radius:4px;
+    font-family:"SF Mono",Menlo,monospace; letter-spacing:0.04em; margin-right:0.4rem;
+  }
+  .path ol li .step-action a:hover { background:rgba(212,165,89,0.18); }
+  .path .est {
+    color:var(--faint); font-size:0.76rem; font-family:"SF Mono",Menlo,monospace;
+    letter-spacing:0.05em; margin-left:0.5rem;
+  }
+
+  /* ─── Library card grid ───────────────── */
+  .lib-grid {
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:0.9rem;
+  }
+  .lib-card {
+    background:var(--card); border:1px solid var(--line); border-radius:6px;
+    padding:1rem 1.1rem; transition:all 0.15s; display:flex; flex-direction:column;
+  }
+  .lib-card:hover { border-color:var(--gold); transform:translateY(-2px); }
+  .lib-card .name {
+    color:var(--gold); font-family:Georgia,serif; font-size:1.05rem; margin-bottom:0.25rem;
+  }
+  .lib-card .desc {
+    color:var(--dim); font-size:0.82rem; line-height:1.45; flex:1;
+  }
+  .lib-card .moments {
+    color:var(--faint); font-size:0.72rem; font-family:"SF Mono",Menlo,monospace;
+    letter-spacing:0.04em; margin-top:0.6rem;
+  }
+  .lib-more {
+    color:var(--dim); font-size:0.85rem; margin-top:1rem; font-style:italic;
+  }
+
+  /* ─── Sessions table ──────────────────── */
+  .session-card {
+    background:var(--card); border:1px solid var(--line); border-radius:8px;
+    padding:1.5rem 1.6rem;
+  }
+  .session-list { list-style:none; padding:0; margin:0; }
+  .session-list li {
+    padding:0.85rem 0; border-bottom:1px dotted var(--line);
+    display:flex; align-items:center; gap:1rem; flex-wrap:wrap;
+  }
+  .session-list li:last-child { border-bottom:0; }
+  .session-list .day {
+    font-family:Georgia,serif; color:var(--gold); font-size:1.05rem; min-width:7em;
+  }
+  .session-list .when {
+    color:var(--dim); font-size:0.85rem; min-width:8em;
+    font-family:"SF Mono",Menlo,monospace; letter-spacing:0.04em;
+  }
+  .session-list .what { color:var(--fg); font-size:0.92rem; flex:1; }
+  .session-list .badge {
+    background:rgba(212,165,89,0.10); color:var(--gold);
+    border:1px solid rgba(212,165,89,0.3); padding:0.18rem 0.55rem;
+    border-radius:3px; font-size:0.7rem; font-family:"SF Mono",Menlo,monospace;
+    letter-spacing:0.05em;
+  }
+  .session-meta {
+    margin-top:1.2rem; padding-top:1rem; border-top:1px solid var(--line);
+    color:var(--dim); font-size:0.85rem; line-height:1.55;
+  }
+  .session-meta a { font-family:"SF Mono",Menlo,monospace; font-size:0.82rem; }
+
+  /* ─── FAQ ─────────────────────────────── */
+  details.faq-item {
+    border-bottom:1px solid var(--line); padding:1rem 0;
+  }
+  details.faq-item summary {
+    cursor:pointer; list-style:none; font-family:Georgia,serif;
+    color:var(--fg); font-size:1rem; padding-right:2rem; position:relative;
+  }
+  details.faq-item summary::-webkit-details-marker { display:none; }
+  details.faq-item summary::after {
+    content:"+"; position:absolute; right:0; top:0; color:var(--gold);
+    font-size:1.3rem; font-weight:300; transition:transform 0.18s;
+  }
+  details.faq-item[open] summary::after { transform:rotate(45deg); }
+  details.faq-item .faq-body {
+    padding-top:0.7rem; color:var(--dim); font-size:0.92rem; line-height:1.6; max-width:70ch;
+  }
+
+  /* ─── Coming-soon strip ───────────────── */
+  .coming {
+    background:linear-gradient(180deg, rgba(212,165,89,0.04), var(--card));
+    border:1px solid var(--line); border-left:3px solid var(--gold);
+    border-radius:6px; padding:1.2rem 1.4rem; margin-top:2rem;
+    color:var(--dim); font-size:0.9rem; line-height:1.55;
+  }
+  .coming strong { color:var(--gold); font-family:Georgia,serif; font-weight:400; font-size:1rem; display:block; margin-bottom:0.4rem; }
+  .coming ul { margin:0.4rem 0 0 1rem; padding:0; }
+  .coming li { margin:0.2rem 0; }
+
+  footer {
+    margin-top:3rem; padding-top:1.5rem; border-top:1px solid var(--line);
+    color:var(--faint); font-size:0.8rem; text-align:center;
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="brand">Owl Group Trading <span class="sub">SGC Portal</span></span>
+  <nav>
+    <a href="#" class="active">Start Here</a>
+    <a href="library/index.html">Library</a>
+    <a href="#sessions">Sessions</a>
+    <a href="https://www.patreon.com/kenlong" target="_blank" rel="noopener">Patreon</a>
+  </nav>
+  <div class="right">v1 · new student</div>
+</div>
+
+<main>
+
+  <!-- ─── HERO ─────────────────────────────────── -->
+  <div class="hero">
+    <div class="kicker">Welcome to OGT Small Group Coaching</div>
+    <h1>You bought direct coaching with Dr. Ken Long.</h1>
+    <p class="sub">
+      That comes with hours of live calls every week, decades of Ken's archived teaching, and a community
+      of traders climbing the same ladder. Here's how to use all of it — and exactly where to start.
+    </p>
+    <div class="cta-row">
+      <a href="#first-week" class="btn">▶ Your first week, step-by-step</a>
+      <a href="library/index.html" class="btn ghost">Browse the Library</a>
+    </div>
+  </div>
+
+  <!-- ─── WHAT YOU GET ──────────────────────────── -->
+  <section>
+    <div class="section-kicker">What's included</div>
+    <h2>Three things you just got access to</h2>
+    <p class="section-lead">
+      The value of SGC isn't any one piece — it's that all three reinforce each other. Use them together
+      and the climb compounds.
+    </p>
+
+    <div class="three-up">
+      <div class="pillar">
+        <div class="glyph">⚜</div>
+        <h3>Live coaching with Ken</h3>
+        <p>Multiple live calls every week with Dr. Long — trade reviews, framing exercises, real-time market reads. Plus pre-recorded sessions you can replay any time.</p>
+        <div class="meta">→ Schedule below</div>
+      </div>
+      <div class="pillar">
+        <div class="glyph">⛰</div>
+        <h3>The Foundation Trading book</h3>
+        <p>Ken's structured 10-session walkthrough of his frameworks — PPEA, the three timeframes, decision-making models, trade psychology. Read it slowly; refer to it for years.</p>
+        <div class="meta">→ Session-by-session in the Library</div>
+      </div>
+      <div class="pillar">
+        <div class="glyph">⛏</div>
+        <h3>The coaching archive</h3>
+        <p>300+ hours of Ken's prior coaching sessions, distilled into concept pages you can search and jump into. When Ken explained MMRB in 2023, you can be there in two clicks.</p>
+        <div class="meta">→ 5 concept pages live, more compounding weekly</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FIRST WEEK PATH ───────────────────────── -->
+  <section id="first-week">
+    <div class="section-kicker">Your first week</div>
+    <h2>Five steps. Roughly 3 hours total. Do them in order.</h2>
+    <p class="section-lead">
+      Don't try to absorb everything at once. The point of the first week is to land in the cohort
+      with enough foundation that Ken's first live session lands with full context.
+    </p>
+
+    <div class="path">
+      <ol>
+        <li>
+          <h4>Pick a frame: read Foundation Session 2<span class="est">15 min</span></h4>
+          <p>The "Top books, thinkers, practitioners who influenced Ken's work" map. You don't need to read all those books — you need the map. It tells you what kind of traders Ken stands on the shoulders of and what intellectual lineage you're entering.</p>
+          <div class="step-action"><a href="library/index.html">Open Foundation Sessions</a> (coming · for now, ask your cohort coach for the PDF)</div>
+        </li>
+        <li>
+          <h4>Learn the master framework: read Foundation Session 3 + the PPEA wiki page<span class="est">25 min</span></h4>
+          <p><strong>Plan · Prepare · Execute · Assess.</strong> Every other technique Ken teaches sits on this scaffold. If you skip PPEA, every later session feels like loose tactics. With PPEA, everything fits.</p>
+          <div class="step-action"><a href="library/ppea.html">Read PPEA wiki →</a></div>
+        </li>
+        <li>
+          <h4>Add the lens: read the RLCO concept page<span class="est">30 min</span></h4>
+          <p>The Regression Line Cross Over is Ken's primary chart-reading lens. Once you see it, you can't unsee it. The wiki page has 8 video moments where Ken teaches it from different angles — watch any 2-3.</p>
+          <div class="step-action"><a href="library/rlco.html">Read RLCO wiki →</a></div>
+        </li>
+        <li>
+          <h4>Show up to your first live session<span class="est">60-90 min</span></h4>
+          <p>Live participation is the whole point of SGC. Even if you only listen, hearing Ken work through a current trade with your cohort is worth 10x reading. <strong>Don't wait until you "feel ready" — you won't.</strong></p>
+          <div class="step-action"><a href="#sessions">See the schedule ↓</a> · <a href="#" title="link your coach will provide">Get the Zoom link</a></div>
+        </li>
+        <li>
+          <h4>Pick one technique and practice it for the rest of the week<span class="est">30-45 min</span></h4>
+          <p>Don't try to use everything at once. Pick MMRB (sizing) OR Frog (signal vs noise) OR Sniper (execution) — one concept. Use it to frame every trade idea you look at, even hypothetical ones. The point is repetition, not P&amp;L.</p>
+          <div class="step-action"><a href="library/mmrb.html">MMRB</a> · <a href="library/frog.html">Frog</a> · <a href="library/sniper.html">Sniper</a></div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ─── THE LIBRARY ────────────────────────── -->
+  <section id="library">
+    <div class="section-kicker">The Library</div>
+    <h2>Ken's concepts, with the moment he taught each one</h2>
+    <p class="section-lead">
+      Every concept page distills Ken's verbatim framing + the best 5-10 video moments where he taught it,
+      from 300+ hours of his archive. Click any video timestamp — you'll land at the exact second in
+      YouTube.
+    </p>
+
+    <div class="lib-grid">
+      <a href="library/rlco.html" class="lib-card">
+        <div class="name">RLCO</div>
+        <div class="desc">Regression Line Cross Over — Ken's primary lens for reading any chart in any timeframe.</div>
+        <div class="moments">8 video moments</div>
+      </a>
+      <a href="library/mmrb.html" class="lib-card">
+        <div class="name">MMRB</div>
+        <div class="desc">Minimum Manageable Risk Box — the honest answer to "how small should I trade right now?"</div>
+        <div class="moments">11 video moments</div>
+      </a>
+      <a href="library/ppea.html" class="lib-card">
+        <div class="name">PPEA</div>
+        <div class="desc">Plan · Prepare · Execute · Assess — the master scaffold under every other technique.</div>
+        <div class="moments">10 video moments</div>
+      </a>
+      <a href="library/frog.html" class="lib-card">
+        <div class="name">Frog</div>
+        <div class="desc">Ken's signal-vs-noise compression system — the minimum information needed to act.</div>
+        <div class="moments">8 video moments</div>
+      </a>
+      <a href="library/sniper.html" class="lib-card">
+        <div class="name">Sniper</div>
+        <div class="desc">The disciplined trade-of-the-day execution method built on top of RLCO + MMRB.</div>
+        <div class="moments">6 video moments</div>
+      </a>
+    </div>
+    <p class="lib-more">
+      <a href="library/index.html">→ Open the full Library</a> · more concept pages compile weekly as the wiki expands.
+    </p>
+  </section>
+
+  <!-- ─── SESSIONS ───────────────────────────── -->
+  <section id="sessions">
+    <div class="section-kicker">Live sessions</div>
+    <h2>When Ken is live</h2>
+    <p class="section-lead">
+      Every session is recorded; you can replay later if you can't make it live. But live is where the
+      cohort dynamic happens — questions get answered, your trade gets reviewed.
+    </p>
+
+    <div class="session-card">
+      <ul class="session-list">
+        <li>
+          <span class="day">Tuesday</span>
+          <span class="when">7:00 PM ET</span>
+          <span class="what">Cohort coaching call — open Q&amp;A, trade reviews, market read.</span>
+          <span class="badge">live</span>
+        </li>
+        <li>
+          <span class="day">Thursday</span>
+          <span class="when">7:00 PM ET</span>
+          <span class="what">Technique focus — Ken walks one concept deep with examples.</span>
+          <span class="badge">live</span>
+        </li>
+        <li>
+          <span class="day">Sunday</span>
+          <span class="when">3:00 PM ET</span>
+          <span class="what">Weekend Foundations Q&amp;A — open-format discussion on the book + frameworks.</span>
+          <span class="badge">live</span>
+        </li>
+        <li>
+          <span class="day">Daily</span>
+          <span class="when">8:30 PM CST</span>
+          <span class="what">Nightly strategy podcast — Ken's daily report walk-through (audio + replay).</span>
+          <span class="badge">replay</span>
+        </li>
+      </ul>
+      <div class="session-meta">
+        <strong style="color:var(--fg);">Zoom link:</strong> sent in your enrollment email and pinned in Patreon.
+        <br><strong style="color:var(--fg);">Replays:</strong>
+        <a href="https://www.patreon.com/kenlong" target="_blank" rel="noopener">Patreon archive</a>
+        (300+ sessions back to 2022).
+        <br><strong style="color:var(--fg);">Times above are illustrative</strong> — confirm the exact schedule with your cohort coach.
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FAQ ───────────────────────────────── -->
+  <section id="faq">
+    <div class="section-kicker">Common questions</div>
+    <h2>New-student FAQ</h2>
+
+    <details class="faq-item" open>
+      <summary>How do I prepare for my first session?</summary>
+      <div class="faq-body">
+        Read Foundation Sessions 2 + 3 (above). That's it. Ken doesn't expect you to have read his book cover-to-cover. He DOES expect you to be familiar with PPEA so the live framing exercises make sense. Bring a notebook (paper or digital) — the cohort takes notes the old way.
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>What if I can't make a live session?</summary>
+      <div class="faq-body">
+        Every session is recorded and lives in the Patreon archive within 24 hours. The Library will surface the most-relevant clips automatically over time. Showing up live is preferable — that's where Q&amp;A happens — but the asynchronous path works.
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>I'm completely new to trading. Am I in the right place?</summary>
+      <div class="faq-body">
+        SGC assumes you've placed at least a handful of trades and have a brokerage account. If you haven't, start with the foundational <a href="https://courses.owlgroup.us/courses/24/about" target="_blank" rel="noopener">Foundations course</a> first — that's the on-ramp. SGC is the live-coaching layer on top of that foundation.
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Where do I ask questions between sessions?</summary>
+      <div class="faq-body">
+        Patreon comments + the cohort chat (link in your welcome email). Save your highest-value question for the live session — that's where Ken's attention compounds. Quick logistical questions belong in chat.
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>How long until I "get it"?</summary>
+      <div class="faq-body">
+        Ken's honest answer: most students need 2-3 years of consistent engagement before the frameworks become automatic. SGC is built for the long climb. If you're looking for a quick edge, this is the wrong room.
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>What does the Library cover vs. just watching all of Patreon?</summary>
+      <div class="faq-body">
+        The Patreon archive is 300+ unindexed videos. The Library is the same content, but organized by concept — Ken's clearest explanation of MMRB across all 300 videos lives on one page, in order, with timestamps. You'll still watch raw sessions for the live cohort feel; the Library is for "when did Ken explain X?" — that's the gold the archive alone can't deliver.
+      </div>
+    </details>
+  </section>
+
+  <!-- ─── COMING SOON ───────────────────────── -->
+  <div class="coming">
+    <strong>What's coming in the next versions</strong>
+    The portal compounds. v1 (this page) gets you started. v2 personalizes — your sessions logged, your trades tracked, Ken's notes specifically to you, the Spotlight clip auto-picked for what you're working on. v3 opens the cohort layer — accountability pairs, shared notebooks, peer review.
+    <ul>
+      <li><em>v2 (~4 weeks):</em> personal session journal, A/B/C grading, mastery heatmap</li>
+      <li><em>v3 (~8 weeks):</em> cross-student search ("what did other students learn about X")</li>
+      <li><em>v4 (~12 weeks):</em> direct question queue to Ken with SLA, weekly trade-log review</li>
+    </ul>
+  </div>
+
+  <footer>
+    SGC Portal · v1 · Owl Group Trading · Dr. Ken Long · last updated 2026-06-03
+  </footer>
+
+</main>
+
+</body>
+</html>
