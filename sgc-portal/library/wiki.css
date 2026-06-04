@@ -2,7 +2,18 @@
   --bg:#0e0e0c; --card:#181815; --line:#2a2925;
   --fg:#e8e6df; --dim:#9c978a; --faint:#5d594f; --gold:#d4a559; --gold-bright:#e8b96d;
   --green:#6dbb6d; --red:#c47e53; --blue:#5dbacb;
+  --topbar-bg:#14140f; --inset-bg:#0e0e0c;
 }
+[data-theme="light"] {
+  --bg:#faf7ef; --card:#ffffff; --line:#e0d9c4;
+  --fg:#1a1813; --dim:#5d594f; --faint:#9c978a;
+  --gold:#a5772a; --gold-bright:#8a5f1e;
+  --green:#3d7c3d; --red:#8a4d2d; --blue:#28697a;
+  --topbar-bg:#f0e9d5; --inset-bg:#f7f2e3;
+}
+[data-theme="light"] body { color-scheme:light; }
+:root body { color-scheme:dark; }
+
 * { box-sizing:border-box; }
 body {
   margin:0; padding:0; background:var(--bg); color:var(--fg);
@@ -10,16 +21,25 @@ body {
   font-size:16px; line-height:1.6;
 }
 .topbar {
-  background:#14140f; border-bottom:1px solid var(--line);
+  background:var(--topbar-bg); border-bottom:1px solid var(--line);
   padding:0.7rem 1.6rem; position:sticky; top:0; z-index:50;
   display:flex; align-items:center; gap:1.5rem;
 }
 .topbar .brand { font-family:Georgia,serif; color:var(--gold); }
 .topbar .brand .sub { color:var(--dim); font-family:"SF Mono",Menlo,monospace; font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; margin-left:0.5rem; }
 .topbar nav { display:flex; gap:1rem; font-size:0.85rem; }
-.topbar nav a { color:var(--dim); text-decoration:none; padding:0.3rem 0; border-bottom:2px solid transparent; }
+.topbar nav a { color:var(--dim); text-decoration:none; padding:0.3rem 0; border-bottom:2px solid transparent; transition:all 0.12s; }
 .topbar nav a:hover { color:var(--fg); }
 .topbar nav a.active { color:var(--gold); border-bottom-color:var(--gold); }
+.topbar .right { margin-left:auto; display:flex; align-items:center; gap:0.8rem; }
+.topbar .theme-toggle {
+  background:transparent; border:1px solid var(--line); color:var(--dim);
+  padding:0.32rem 0.7rem; border-radius:4px; cursor:pointer;
+  font-family:"SF Mono",Menlo,monospace; font-size:0.78rem; letter-spacing:0.06em;
+  transition:all 0.12s;
+}
+.topbar .theme-toggle:hover { color:var(--gold); border-color:var(--gold); }
+
 main { max-width:880px; margin:0 auto; padding:2.2rem 1.6rem 4rem; }
 h1 { font-family:Georgia,serif; color:var(--gold); font-weight:400; font-size:2.5rem; margin:0 0 0.5rem; line-height:1.15; }
 h2 { font-family:Georgia,serif; color:var(--gold); font-weight:400; font-size:1.45rem; margin:2.2rem 0 0.7rem; padding-bottom:0.4rem; border-bottom:1px solid var(--line); }
@@ -31,7 +51,7 @@ p { margin:0.7rem 0; }
 a { color:var(--gold); }
 blockquote {
   border-left:3px solid var(--gold); margin:0.8rem 0; padding:0.5rem 1.1rem;
-  background:#0e0e0c; color:var(--fg); font-family:Georgia,serif; font-style:italic;
+  background:var(--inset-bg); color:var(--fg); font-family:Georgia,serif; font-style:italic;
   font-size:0.96rem; border-radius:0 4px 4px 0;
 }
 small { color:var(--faint); font-family:"SF Mono",Menlo,monospace; font-size:0.74rem; letter-spacing:0.04em; }
