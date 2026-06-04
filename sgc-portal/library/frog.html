@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Frog · SGC Library</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="wiki.css" />
+</head>
+<body>
+<div class="topbar">
+  <span class="brand">Owl Group Trading <span class="sub">SGC Library</span></span>
+  <nav>
+    <a href="../today.html">Today</a>
+    <a href="index.html" class="active">Library</a>
+  </nav>
+</div>
+<main>
+<header id="title-block-header">
+<h1 class="title">Frog · SGC Library</h1>
+</header>
+<h1 id="frog">Frog</h1>
+<p><em>An intraday trading system that uses descriptive statistics —
+specifically a volatility “Frog box” (30-day range stddev) — to separate
+signal from noise and find symbols poised to make larger-than-normal
+moves.</em></p>
+<h2 id="kens-framing">Ken’s framing</h2>
+<p>Per the SGC rlco_notes: “The Frog system is our design effort to
+reduce intraday trading to a simple system that requires the minimum
+amount of information to take effective action — a low risk idea with
+positive expectancy that can be realistically traded across multiple
+market types. The frog relies on descriptive statistics to help us
+define the difference between signal and noise.” In Ken’s video framing,
+the Frog box is “the standard deviation of the 30-day range… a measure
+of volatility” used as the non-noise signal threshold. Frog 1.0 risked
+one full Frog box; Frog 2.0 / hybrid Frog compresses that to roughly
+one-third (the MMRB / R10), entering after only 0.3–0.4 of a Frog box of
+confirmation so risk can be moved to “no-lose-plus-dinner-for-two”
+before a Frog 1.0 trader would have even entered.</p>
+<h2 id="why-it-matters">Why it matters</h2>
+<p>Frog is the conceptual ancestor of nearly everything else in Ken’s
+day-trading toolkit — MMRB, R10, the Sniper, and the Compound Critical
+States lens. Earning its own page teaches the student to think in
+volatility-normalized units (boxes) rather than dollars or percentages,
+which is what makes positive-expectancy intraday trading possible across
+symbols and market regimes. Understanding “what makes a good Frog
+candidate” is shorthand for understanding what makes any symbol poised
+for a larger-than-normal move tomorrow.</p>
+<h2 id="video-moments-8-from-the-corpus">Video moments — 8 from the
+corpus</h2>
+<h3
+id="cleanest-definition-of-the-frog-box-itself-what-it-is-mathematically-30-day-range-stddev-and-what-it-is-conceptually-the-non-noise-threshold.">1.
+<a href="https://youtu.be/a5SX0TSPSms?t=70">00:01:10–00:02:05</a> —
+Cleanest definition of the Frog box itself — what it is mathematically
+(30-day range stddev) and what it is conceptually (the non-noise
+threshold).</h3>
+<blockquote>
+<p>When I say the Frog box we’re talking about — in frog 1.0 — the Frog
+box itself, which is the standard deviation of the 30-day range. It’s
+sort of a measure of volatility. What we want is a large intraday move
+that would have a number of frog boxes… in frog version 1.0 we were
+using a full frog box as the signal, the first non-noise signal we’re
+looking [for].</p>
+</blockquote>
+<p><small>Source:
+<code>youtube-a5SX0TSPSms-sample-day-trading-lesson-frog-champions.en.vtt</code></small></p>
+<h3
+id="the-pivot-moment-shows-how-frog-1.0-evolved-into-mmrb-r10.-best-single-explanation-of-why-we-compress-the-risk-box.">2.
+<a href="https://youtu.be/a5SX0TSPSms?t=175">00:02:55–00:04:25</a> — The
+pivot moment: shows how Frog 1.0 evolved into MMRB / R10. Best single
+explanation of why we compress the risk box.</h3>
+<blockquote>
+<p>In frog 2.0 and in Sniper trading in general, we’ve learned that you
+don’t have to wait for the hundred percent certainty… you can actually
+tolerate a move of about 0.3 or 0.4 of a frog box off the bottom… by
+that time you might actually be able to take your risk and move that
+above a frog box — and now you’ve actually locked in a
+no-lose-plus-dinner-for-two… This Insight was the beginning of the idea
+of the minimum manageable risk box.</p>
+</blockquote>
+<p><small>Source:
+<code>youtube-a5SX0TSPSms-sample-day-trading-lesson-frog-champions.en.vtt</code></small></p>
+<h3
+id="reframes-the-whole-concept-frog-isnt-about-the-indicator-its-about-identifying-candidates-poised-for-outsized-moves.-directly-answers-the-students-most-common-question.">3.
+<a href="https://youtu.be/a5SX0TSPSms?t=390">00:06:30–00:07:15</a> —
+Reframes the whole concept: Frog isn’t about the indicator, it’s about
+identifying candidates poised for outsized moves. Directly answers the
+student’s most common question.</h3>
+<blockquote>
+<p>How do I find the best frog candidates? I want to say don’t key in on
+the Frog quality number as the thing that is differentiating. What we
+want are candidates that are poised to make a large move… all of these
+things give you a good frog candidate — candidates to be good frog box,
+good frog trades the next day. In other words, it’s simply potential to
+make a larger than normal intraday move in either direction.</p>
+</blockquote>
+<p><small>Source:
+<code>youtube-a5SX0TSPSms-sample-day-trading-lesson-frog-champions.en.vtt</code></small></p>
+<h3
+id="links-frog-directly-into-the-compound-critical-states-framework-edge-ccs-in-our-platform.-best-clip-for-the-how-frog-connects-to-sniper-through-line.">4.
+<a href="https://youtu.be/a5SX0TSPSms?t=450">00:07:30–00:08:30</a> —
+Links Frog directly into the Compound Critical States framework
+(edge-ccs in our platform). Best clip for the ‘how Frog connects to
+Sniper’ through-line.</h3>
+<blockquote>
+<p>[A] critical state defined as the potential to make a larger than
+normal move in either direction in a shorter period of time. And the
+idea that compound critical [states] — we can start stacking these
+things up… a 10-day look back, a 30-day look back and a 150-day look
+back. If these are all in critical states… we now have three different
+demographics that are all contriving and conspiring to make this a large
+potential move. So all of the sniper patterns… give you a compound
+critical state… any sniper setup is going to be a great frog
+candidate.</p>
+</blockquote>
+<p><small>Source:
+<code>youtube-a5SX0TSPSms-sample-day-trading-lesson-frog-champions.en.vtt</code></small></p>
+<h3
+id="two-sentence-operational-rule-for-screening-the-line-a-student-should-be-able-to-recite-cold.">5.
+<a href="https://youtu.be/a5SX0TSPSms?t=525">00:08:45–00:09:05</a> —
+Two-sentence operational rule for screening — the line a student should
+be able to recite cold.</h3>
+<blockquote>
+<p>What makes a good frog candidate? Any sniper pattern. Any frog
+quality number better than three because by definition it is compressed
+to a relatively quiet state where an average move is going to give you a
+large multiple.</p>
+</blockquote>
+<p><small>Source:
+<code>youtube-a5SX0TSPSms-sample-day-trading-lesson-frog-champions.en.vtt</code></small></p>
+<h3
+id="defines-the-signal-to-noise-ratio-concretely-with-the-formula.-anchors-frog-in-descriptive-statistics-which-is-the-sgcs-stated-rationale.">6.
+<a href="https://youtu.be/a5SX0TSPSms?t=545">00:09:05–00:10:55</a> —
+Defines the signal-to-noise ratio concretely with the formula. Anchors
+Frog in descriptive statistics, which is the SGC’s stated
+rationale.</h3>
+<blockquote>
+<p>Any symbol that has a high signal to noise ratio — greater than 0.5…
+The real body of the candle is signal, and the tails are noise. So if
+you take the signal — close minus the open — and divide that by the
+range from the high to the low, you get a number between zero and one.
+It represents the percent of the daily price action that was signal
+rather than noise… what we want is something that has a high
+signal-to-noise ratio because that means it’s making large intraday
+directional moves.</p>
+</blockquote>
+<p><small>Source:
+<code>youtube-a5SX0TSPSms-sample-day-trading-lesson-frog-champions.en.vtt</code></small></p>
+<h3
+id="best-historicalrules-explanation-of-original-frog-1.0-slow-frog-from-the-open-one-hour-anchor-the-90-first-hour-extremum-heuristic-that-justified-it.">7.
+<a href="https://youtu.be/FIociijQCdc?t=400">00:06:40–00:08:10</a> —
+Best historical/rules explanation of original Frog 1.0 — slow frog from
+the open, one-hour anchor, the 90% first-hour-extremum heuristic that
+justified it.</h3>
+<blockquote>
+<p>In version 1.0 of the Frog system we were using full frog boxes to
+bracket the open… in the slow frog from the open, you’d wait a full hour
+and then determine if it had moved a frog box from the open — then you
+could get long. Sometimes waiting that hour would cause you to miss
+large potential moves. The idea of waiting one hour was that 90 percent
+of the time the high or the low of the day is made within the first
+hour.</p>
+</blockquote>
+<p><small>Source:
+<code>youtube-FIociijQCdc-2022-12-14-stod-mini-lesson-frog-1-0-rulesets-and-shift-to-hy.en.vtt</code></small></p>
+<h3
+id="best-clip-on-the-frog-quick-frog-hybrid-frog-evolution-and-the-direct-equivalence-frog-box3-r10-mmrb.-essential-bridge-between-frog-and-the-modern-toolkit.">8.
+<a href="https://youtu.be/FIociijQCdc?t=490">00:08:10–00:09:25</a> —
+Best clip on the Frog → Quick Frog → Hybrid Frog evolution, and the
+direct equivalence Frog-box/3 ≈ R10 ≈ MMRB. Essential bridge between
+Frog and the modern toolkit.</h3>
+<blockquote>
+<p>We then developed the quick frog — instead of waiting that full one
+hour, let’s just wait a half an hour… then we realized you could reduce
+the size of the Frog box as much as down to about one-third, which is
+approximately what that R10 is. Instead of waiting a full frog box move,
+you could just give it an MMRB, quickly get your stop to no-lose, and
+then you’d have 2R in hand at a time when in the Frog rules you were
+just starting to enter.</p>
+</blockquote>
+<p><small>Source:
+<code>youtube-FIociijQCdc-2022-12-14-stod-mini-lesson-frog-1-0-rulesets-and-shift-to-hy.en.vtt</code></small></p>
+<h2 id="sgc-book-anchors">SGC book anchors</h2>
+<p><strong>rlco_notes.docx</strong> — Why RLCO fits so well with the
+Frog</p>
+<blockquote>
+<p>The Frog system is our design effort to reduce intraday trading to a
+simple system that requires the minimum amount of information to take
+effective action — a low risk idea with positive expectancy that can be
+realistically traded across multiple market types. The frog relies on
+descriptive statistics to help us define the difference between signal
+and noise. Combining the statistically derived insights from the RLCO
+framework and the Frog seems to be useful for both strategies in the
+intraday timeframe.</p>
+</blockquote>
+<p><strong>Foundation Trading Book_Cornell
+Notes_Session7_v1.pptx</strong> — Welcome / framing slide (Ernie S.
+quote)</p>
+<blockquote>
+<p>It’s the beginning of your trading adventure. You have yet to be
+introduced to frogs, monkeys, owls and other creatures. You still have
+music to hear, poems to read, battles to be refought — and yes, these
+all relate to being a trader. — Ernie S.</p>
+</blockquote>
+<h2 id="try-it-yourself">Try it yourself</h2>
+<p>Pick five symbols you traded or watched yesterday. For each, compute
+(or look up) the 30-day range standard deviation — that’s its Frog box.
+Then for today’s session, write down: (a) the Frog quality number
+(avg-range divided by Frog box — is it greater than 3?), (b) the
+signal-to-noise ratio of yesterday’s candle (|close-open| / (high-low)),
+and (c) any Sniper setups in play. Now rank the five by how strongly
+each is “poised to make a larger-than-normal move.” Trade-paper one of
+them tomorrow using an MMRB-sized stop (≈ Frog box / 3) and journal
+whether the candidate’s behavior matched your ranking. The goal is to
+feel the difference between a high-Frog-quality compressed symbol and a
+noisy one — in your gut, not just on paper.</p>
+<h2 id="related-concepts">Related concepts</h2>
+<ul>
+<li><a href="mmrb.html">mmrb</a></li>
+<li><a href="sniper.html">sniper</a></li>
+<li><a href="rlco.html">rlco</a></li>
+</ul>
+<h2 id="cross-links-from-other-concepts">Cross-links from other
+concepts</h2>
+<ul>
+<li><strong>from <a href="ppea.html">ppea</a></strong>: Once the
+four-phase loop is in your hands, the <a href="frog.html">frog</a>
+system shows what Prepare and Execute look like on a real intraday
+chart.</li>
+<li><strong>from <a href="rlco.html">rlco</a></strong>: RLCO is most
+reliable when it fires on a symbol the <a href="frog.html">frog</a>
+system has already flagged as primed to move.</li>
+<li><strong>from <a href="mmrb.html">mmrb</a></strong>: The MMRB is
+derived from the same 30-day range stddev that defines the
+<a href="frog.html">frog</a> box — one statistic, two uses.</li>
+</ul>
+<footer>SGC Portal · concept page compiled by multi-agent workflow · 2026-06-03</footer>
+</main>
+</body>
+</html>

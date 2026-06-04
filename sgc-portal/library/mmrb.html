@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>MMRB · SGC Library</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="wiki.css" />
+</head>
+<body>
+<div class="topbar">
+  <span class="brand">Owl Group Trading <span class="sub">SGC Library</span></span>
+  <nav>
+    <a href="../today.html">Today</a>
+    <a href="index.html" class="active">Library</a>
+  </nav>
+</div>
+<main>
+<header id="title-block-header">
+<h1 class="title">MMRB · SGC Library</h1>
+</header>
+<h1 id="mmrb">MMRB</h1>
+<p><em>The Minimum Manageable Risk Box (MMRB) is the smallest stop
+distance — about one-tenth of the 30-day average range — that you can
+defend without being shaken out by noise, so a -1R loss is a tiny
+fraction of your account.</em></p>
+<h2 id="kens-framing">Ken’s framing</h2>
+<p>Ken’s working definition (Mvp foundations Q&amp;A, ~00:44:11): “the
+MMRB that we use now is by definition one-tenth of the range stat.” The
+range stat is one standard deviation of the average range of the last 30
+days. He immediately ties it to position sizing (Mvp ~00:44:34): “if I
+take a minus 1R loss on an MMRB, I’m going to set that equal to a 0.2%
+loss mathematically.” And he names its purpose plainly (Mvp ~00:42:48):
+“we’re taking all our standard patterns and trying to figure out how to
+squeeze the minimum manageable risk box down to the smallest level so
+that the amount of risk that I take or uncertainty is small” — that is
+the essence of sniper trading. Foundation Book Session 6 calls the
+per-share version “Rstat / MyRisk” (p. 181); Session 10 notes the
+morning hook, Rstat, and MMRB collapse into one slide.</p>
+<h2 id="why-it-matters">Why it matters</h2>
+<p>MMRB is the unit Ken uses to convert every chart pattern into a
+measurable risk-to-reward equation: stop distance, position size, the 2R
+battle drill, the “no-lose plus dinner for two” first scale, and the
+“hang an MMRB off the high” trailing exit are all defined in MMRBs.
+Without MMRB the student cannot price a setup, cannot size a sniper
+trade, and cannot decide whether to give back risk on a winner. It is
+the atomic risk unit underneath sniper, kata reentry, R10 stops, and
+frog box scaling.</p>
+<h2 id="video-moments-11-from-the-corpus">Video moments — 11 from the
+corpus</h2>
+<h3
+id="the-cleanest-most-quantitative-definition-ken-gives-anywhere-in-the-corpus-formula-range-stat-10-r-multiple-geometry-9-10r-headroom-and-the-link-to-a-0.2-account-loss-in-one-stretch.">1.
+<a href="https://youtu.be/Mvp_A8kqdUM?t=2648">00:44:08–00:44:48</a> —
+The cleanest, most quantitative definition Ken gives anywhere in the
+corpus — formula (range stat / 10), R-multiple geometry (~9-10R
+headroom), and the link to a 0.2% account loss in one stretch.</h3>
+<blockquote>
+<p>is one standard deviation of the average range of the last 30 days.
+The MMRB that we use now is by definition one-tenth of the range stat.
+So that gives me nine potential rewards — again that’s almost ten. If I
+take a minus 1R loss on an MMRB I’m going to set that equal to a 0.2
+loss mathematically.</p>
+</blockquote>
+<p><small>Source:
+<code>youtube-Mvp_A8kqdUM-foundations-q-a-truly-foundational.en.vtt</code></small></p>
+<h3
+id="kens-one-sentence-statement-of-why-mmrb-exists-it-is-the-sniper-philosophy-condensed.">2.
+<a href="https://youtu.be/Mvp_A8kqdUM?t=2557">00:42:37–00:43:00</a> —
+Ken’s one-sentence statement of WHY MMRB exists — it is the sniper
+philosophy condensed.</h3>
+<blockquote>
+<p>That is the essence of the sniper trading, because we’re taking all
+our standard patterns and trying to figure out how to squeeze the
+minimum manageable risk box down to the smallest level, so that the
+amount of risk that I take or uncertainty is small.</p>
+</blockquote>
+<p><small>Source:
+<code>youtube-Mvp_A8kqdUM-foundations-q-a-truly-foundational.en.vtt</code></small></p>
+<h3
+id="bridges-mmrb-to-the-frog-box-1-frog-3-mmrb-and-gives-a-practical-escape-hatch-when-one-tenth-is-too-tight-to-execute.">3.
+<a href="https://youtu.be/Mvp_A8kqdUM?t=2984">00:49:44–00:50:12</a> —
+Bridges MMRB to the frog box (1 frog ≈ 3 MMRB) and gives a practical
+escape hatch when one-tenth is too tight to execute.</h3>
+<blockquote>
+<p>I take one tenth, I get an MMRB. It turns out that a standard frog
+box is equal to about three of the MMRBs. So if the MMRB that we use,
+one tenth, is too tight to manage, just use a frog box and trade it at
+one third of the normal dollars at risk.</p>
+</blockquote>
+<p><small>Source:
+<code>youtube-Mvp_A8kqdUM-foundations-q-a-truly-foundational.en.vtt</code></small></p>
+<h3
+id="worked-numerical-example-on-a-live-chart-student-watches-ken-go-from-range-stat-to-a-concrete-45-50-cent-mmrb.">4.
+<a href="https://youtu.be/EGr_piGe7y8?t=339">00:05:39–00:06:00</a> —
+Worked numerical example on a live chart — student watches Ken go from
+range stat to a concrete 45-50 cent MMRB.</h3>
+<blockquote>
+<p>Take one tenth of that as the start point — one tenth of the range
+stat to start estimating the minimum manageable risk box. We come up
+with about a 45 cents, so I now take that number, 45 cents, and I just
+come over here and I say look that’s about 50 cents.</p>
+</blockquote>
+<p><small>Source:
+<code>youtube-EGr_piGe7y8-2022-11-03-stod-money-management-mini-lesson.en.vtt</code></small></p>
+<h3
+id="shows-mmrb-used-as-a-kata-2-reentry-trigger-one-mmrb-off-the-bottom-is-the-actionable-signal-not-just-a-sizing-number.">5.
+<a href="https://youtu.be/EGr_piGe7y8?t=542">00:09:02–00:09:35</a> —
+Shows MMRB used as a kata-2 reentry trigger — ‘one MMRB off the bottom’
+is the actionable signal, not just a sizing number.</h3>
+<blockquote>
+<p>Price has moved across the dragon, the dragon is rolling up, it has
+moved an MMRB off the PSAR. Here’s a PSAR flip — you could have waited
+for that to enter, but when it moved one MMRB off this bottom I just
+take one of the two-R markets, money roll it in and re-buy it.</p>
+</blockquote>
+<p><small>Source:
+<code>youtube-EGr_piGe7y8-2022-11-03-stod-money-management-mini-lesson.en.vtt</code></small></p>
+<h3
+id="permission-slip-for-visual-estimation-when-the-indicator-isnt-available-ken-explicitly-says-you-can-eyeball-the-mmrb.">6.
+<a href="https://youtu.be/EGr_piGe7y8?t=1104">00:18:24–00:18:50</a> —
+Permission slip for visual estimation when the indicator isn’t available
+— Ken explicitly says you can eyeball the MMRB.</h3>
+<blockquote>
+<p>If you use the PSAR flip you get a very nice MMRB. Even so, even if
+you don’t have the computation for the R10 MMRB, just by visual
+inspection you can see that that is enough room to give it, and if it
+violates there you don’t want to be long — so set that equal to one
+execution risk.</p>
+</blockquote>
+<p><small>Source:
+<code>youtube-EGr_piGe7y8-2022-11-03-stod-money-management-mini-lesson.en.vtt</code></small></p>
+<h3
+id="the-hang-an-mmrb-off-the-top-trailing-exit-rule-mmrb-doing-work-on-the-exit-side-of-the-trade-not-just-the-entry.">7.
+<a href="https://youtu.be/uE6xWTKgKIE?t=4622">01:17:02–01:17:20</a> —
+The ‘hang an MMRB off the top’ trailing-exit rule — MMRB doing work on
+the exit side of the trade, not just the entry.</h3>
+<blockquote>
+<p>Just take your MMRB and hang a risk box from the top of that and just
+say that’s how much I’m willing to give back. I don’t think you should
+give back more than 30% of a trade if it was a good trade.</p>
+</blockquote>
+<p><small>Source:
+<code>youtube-uE6xWTKgKIE-trade-framing-and-exits.en.vtt</code></small></p>
+<h3
+id="mmrb-as-the-i-can-always-re-enter-permission-addresses-the-emotional-resistance-to-taking-partial-profits.">8.
+<a href="https://youtu.be/uE6xWTKgKIE?t=1874">00:31:14–00:31:35</a> —
+MMRB as the ‘I can always re-enter’ permission — addresses the emotional
+resistance to taking partial profits.</h3>
+<blockquote>
+<p>When that thing moves an MMRB off of the high you can actually
+already say, you know, that’s where I can — I could just take my exit
+there, because if it reverses, comes back up, I can get back in right
+here with my MMRB.</p>
+</blockquote>
+<p><small>Source:
+<code>youtube-uE6xWTKgKIE-trade-framing-and-exits.en.vtt</code></small></p>
+<h3
+id="names-knowing-your-mmrb-as-a-prerequisite-for-trading-the-dragon-horns-reversal-mmrb-is-the-unit-of-trader-competence-here.">9.
+<a href="https://youtu.be/uE6xWTKgKIE?t=4109">01:08:29–01:08:50</a> —
+Names knowing-your-MMRB as a prerequisite for trading the dragon-horns
+reversal — MMRB is the unit of trader competence here.</h3>
+<blockquote>
+<p>If you are a trader who focuses on a single target on a standard
+rapid timeframe and you know what your minimum manageable risk boxes
+are, then I will say absolutely yes — if you see the dragon horns and it
+is reversed and you feel like that was a legitimate trade to lock…</p>
+</blockquote>
+<p><small>Source:
+<code>youtube-uE6xWTKgKIE-trade-framing-and-exits.en.vtt</code></small></p>
+<h3
+id="mmrb-inside-a-pinched-frog-box-as-the-high-conviction-sniper-trigger-the-smallest-possible-risk-inside-an-already-compressed-setup.">10.
+<a href="https://youtu.be/0qNqbKfc6Co?t=567">00:09:27–00:09:50</a> —
+MMRB-inside-a-pinched-frog-box as the high-conviction sniper trigger —
+the smallest possible risk inside an already-compressed setup.</h3>
+<blockquote>
+<p>A specific technical price that tells you when this trade fails — and
+it’s a tiny little sliver of your MMRB already. And this is when, you
+know, you’re freaking desperate to trade — you want to do this right
+because you have a frog box that looks pinched.</p>
+</blockquote>
+<p><small>Source:
+<code>youtube-0qNqbKfc6Co-foundations-qa-2.en.vtt</code></small></p>
+<h3
+id="restates-the-mmrb-13-frog-box-relationship-from-a-different-teaching-session-confirms-the-31-ratio-is-the-canonical-mental-model.">11.
+<a href="https://youtu.be/0qNqbKfc6Co?t=1069">00:17:49–00:18:10</a> —
+Restates the MMRB ≈ (1/3) frog-box relationship from a different
+teaching session — confirms the 3:1 ratio is the canonical mental
+model.</h3>
+<blockquote>
+<p>If that’s the frog box, we know that the MMRB has something like, uh,
+is one-third of a frog box. So that’s about about the size of it.</p>
+</blockquote>
+<p><small>Source:
+<code>youtube-0qNqbKfc6Co-foundations-qa-2.en.vtt</code></small></p>
+<h2 id="sgc-book-anchors">SGC book anchors</h2>
+<p><strong>Foundation Trading Book_Cornell
+Notes_Session10_v1.pptx</strong> — Trader 5 case study (p. 299) —
+example of excellent student notes</p>
+<blockquote>
+<p>Example of the Excellent Notes from Trader 5, pg. 299. Here we see
+the entire concept of the morning hook as well as rstat and MMRB all
+encapsulated in one slide.</p>
+</blockquote>
+<p><strong>Foundation Trading Book_Cornell
+Notes_Session6_v1.pptx</strong> — Section 11 Tortoise Trading Tools
+(pp. 177-189) — Rstat / MyRisk on p. 181</p>
+<blockquote>
+<p>Key Words: Risk-Z Indicator, pg. 180. 30-Period Regression Line
+Slopes, pgs. 180-181. Rstat / MyRisk, pg. 181. Pinch and Superpinch,
+pgs. 184-185. … In this example we used the ‘Rstat / MyRisk &gt; 2’ and
+the ‘Doji’ to find symbols that were compressed like a coiled
+spring.</p>
+</blockquote>
+<h2 id="try-it-yourself">Try it yourself</h2>
+<p>Pick three symbols from your current watchlist (a high-priced, a
+mid-priced, and a sub-$50 name). For each, look up the 30-day average
+range (range stat) on the daily chart and compute MMRB = range_stat /
+10. Then open the 5-minute or 10-minute intraday chart and physically
+draw a horizontal band of that width above and below the current price —
+that is your MMRB. Finally, size a hypothetical trade so a 1R loss
+equals 0.2% of your account, and write down (a) what you would enter at,
+(b) where the MMRB stop sits, and (c) where 2R, 5R, and 9R targets land.
+Compare across the three symbols: which one gives you the cleanest “tiny
+risk, lots of headroom” picture? That is the sniper candidate.</p>
+<h2 id="related-concepts">Related concepts</h2>
+<ul>
+<li><a href="frog.html">frog</a></li>
+<li><a href="rlco.html">rlco</a></li>
+<li><a href="sniper.html">sniper</a></li>
+</ul>
+<h2 id="cross-links-from-other-concepts">Cross-links from other
+concepts</h2>
+<ul>
+<li><strong>from <a href="frog.html">frog</a></strong>: The same 30-day
+range that defines the Frog box also sizes the
+<a href="mmrb.html">mmrb</a> — about one-tenth of that range is the
+smallest stop you can defend.</li>
+<li><strong>from <a href="rlco.html">rlco</a></strong>: Once an RLCO
+fires, the <a href="mmrb.html">mmrb</a> tells you exactly how far the
+stop sits so a wrong cross costs only -1R.</li>
+<li><strong>from <a href="sniper.html">sniper</a></strong>: Every Sniper
+trade is built around an <a href="mmrb.html">mmrb</a> stop — the tight
+risk box is what lets you take the shot at all.</li>
+</ul>
+<footer>SGC Portal · concept page compiled by multi-agent workflow · 2026-06-03</footer>
+</main>
+</body>
+</html>

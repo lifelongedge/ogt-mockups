@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>RLCO · SGC Library</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="wiki.css" />
+</head>
+<body>
+<div class="topbar">
+  <span class="brand">Owl Group Trading <span class="sub">SGC Library</span></span>
+  <nav>
+    <a href="../today.html">Today</a>
+    <a href="index.html" class="active">Library</a>
+  </nav>
+</div>
+<main>
+<header id="title-block-header">
+<h1 class="title">RLCO · SGC Library</h1>
+</header>
+<h1 id="rlco">RLCO</h1>
+<p><em>Regression Line Cross Over — the moment a fast regression line
+(RL10) crosses its slower partner (RL30) outside the Bollinger “river,”
+giving an early read on whether a trend will continue or
+reverse.</em></p>
+<h2 id="kens-framing">Ken’s framing</h2>
+<p>Ken describes the RLCO as a statistical lens, not a signal. “The RL10
+is the trader’s price… the RL30 is a slower version of that — the
+direction of the RL30 is the health of the trend” (swing-details-riskz,
+00:21:43). The framework lays a 10-period and 30-period regression line
+over a 30-period Bollinger Band (“the river”); when both lines push
+outside the river the market is in an “extreme” condition, and the
+crossover of RL10 back through RL30 marks the earliest probabilistic
+clue that the herd may reverse. The canonical SGC write-up (RLCO SetUp
+v0.docx) calls it “a momentum based setup that relies on technical
+indicators to gauge the momentum of a price trend in the medium and
+short term,” distinguishing two outcomes: trend continuation when
+momentum stays strong, trend reversal when momentum decays.</p>
+<h2 id="why-it-matters">Why it matters</h2>
+<p>RLCO is the conceptual root of almost everything Ken teaches
+downstream — Four Seasons / MACD is “RLCO simplified” (strategies-13-22,
+00:44:21), the Owl signals are RL30 outside Z1 (masterclass, 00:02:25),
+and the fractal framework (RL10/30/90/270) extends the same logic across
+timeframes. A student who internalizes RLCO can read a chart the way Ken
+does: as a story about traders, trend health, fair value, and the river
+they’re crossing. Skipping it leaves every later concept ungrounded.</p>
+<h2 id="video-moments-8-from-the-corpus">Video moments — 8 from the
+corpus</h2>
+<h3
+id="kens-clearest-first-principles-explanation-of-what-a-regression-line-is-framed-as-the-basis-of-rl10.-best-teaching-of-the-math-foundation.">1.
+<a href="https://youtu.be/qCn4aVzVFUQ?t=27">00:00:27–00:01:11</a> —
+Ken’s clearest first-principles explanation of what a regression line
+IS, framed as the basis of RL10. Best teaching of the math
+foundation.</h3>
+<blockquote>
+<p>What do you know — the RL10 as the trader’s price… so a regression
+line is the best fit line for a set of data. If I have 10 data points
+where price has closed something like this, the best single line that
+describes that is a regression line. And what that does is, it’s the
+line that minimizes the amount of error from each individual data
+point.</p>
+</blockquote>
+<p><small>Source:
+<code>youtube-qCn4aVzVFUQ-2023-01-02-special-lesson-on-math-rl10-bollinger-bands.en.vtt</code></small></p>
+<h3
+id="ken-contrasts-bollinger-bands-and-regression-lines-side-by-side-the-cleanest-articulation-of-why-rlco-combines-the-two.">2.
+<a href="https://youtu.be/qCn4aVzVFUQ?t=789">00:13:09–00:13:30</a> — Ken
+contrasts Bollinger Bands and regression lines side-by-side — the
+cleanest articulation of why RLCO combines the two.</h3>
+<blockquote>
+<p>Bollinger bands… when it breaks out it’s a signal, or it’s an extreme
+move. Whereas the regression line starts with a single point and then
+works outward from a single point and says, if it gets outside of that
+threshold, now you have a signal. So they’re very closely related.</p>
+</blockquote>
+<p><small>Source:
+<code>youtube-qCn4aVzVFUQ-2023-01-02-special-lesson-on-math-rl10-bollinger-bands.en.vtt</code></small></p>
+<h3
+id="the-canonical-who-is-each-regression-line-teaching-assigns-a-trader-demographic-to-every-line.-the-single-most-quoted-rlco-moment-in-the-corpus.">3.
+<a href="https://youtu.be/QQiLZW_B46c?t=1303">00:21:43–00:22:36</a> —
+The canonical ‘who is each regression line?’ teaching — assigns a
+trader-demographic to every line. The single most-quoted RLCO moment in
+the corpus.</h3>
+<blockquote>
+<p>The RL10 is the price — for me that’s what the traders are trading it
+at… The RL30 is a slower version of that, the direction of the RL30 is
+the health of the trend. The RL90 is the RL30 of the next higher
+timeframe, and the RL270 represents for me the fair value as estimated
+by the long-term buy and holders. So if I take the two extremes I can
+look at the RL10 as the pure trader’s price and the RL270 as the fair
+value.</p>
+</blockquote>
+<p><small>Source:
+<code>youtube-QQiLZW_B46c-swing-details-riskz.en.vtt</code></small></p>
+<h3
+id="the-magic-moment-story-kens-narrative-of-how-rlco-emerges-from-compression.-connects-rlco-to-frog-and-to-who-moves-price-first.">4.
+<a href="https://youtu.be/QQiLZW_B46c?t=1358">00:22:38–00:23:32</a> —
+The ‘magic moment’ story — Ken’s narrative of how RLCO emerges from
+compression. Connects RLCO to Frog and to who-moves-price-first.</h3>
+<blockquote>
+<p>My moment of Zen in the hot tub one night was — hey, there are times
+when all four of those regression lines are tightly compressed, like in
+a frog box, or within one little ATR on a daily chart. So there’s a
+magic moment when all four of those guys agree that the current price is
+correct. Well, it’s either to stay there or somebody’s going to start
+moving it. Who’s going to start moving it? Oh, the traders are. So the
+RL10 is going to break out of that compression and the RL30 will
+follow.</p>
+</blockquote>
+<p><small>Source:
+<code>youtube-QQiLZW_B46c-swing-details-riskz.en.vtt</code></small></p>
+<h3
+id="live-read-of-rl10-vs-rl30-on-tesla-ken-showing-the-framework-in-action-and-naming-the-owl-signal-as-rl30-outside-z1.">5.
+<a href="https://youtu.be/oCPBOyorMqE?t=124">00:02:04–00:02:35</a> —
+Live read of RL10 vs RL30 on Tesla — Ken showing the framework in action
+and naming the Owl signal as RL30-outside-Z1.</h3>
+<blockquote>
+<p>The RL10 — you see how oscillating that thing is, when it gets to
+those oversold conditions and makes turning points… This is that last
+two days of moves that gave you a 15% move in Tesla. This is the RL30
+that gives you those owl-like conditions, owl-like signals — and so this
+is already outside of Z1, so we’re looking to see this has to turn.</p>
+</blockquote>
+<p><small>Source:
+<code>youtube-oCPBOyorMqE-2022-12-29-special-master-class-on-trading-value-ratio-rl30-s.en.vtt</code></small></p>
+<h3
+id="operational-use-ken-turns-the-rl10-slope-into-a-programmable-critical-state-alert.-shows-rlco-becoming-a-rule-not-just-a-chart.">6.
+<a href="https://youtu.be/1FMcKTYaHMo?t=1060">00:17:40–00:18:13</a> —
+Operational use — Ken turns the RL10 slope into a programmable
+critical-state alert. Shows RLCO becoming a rule, not just a chart.</h3>
+<blockquote>
+<p>Green light, the slope of the RL10 improved — not necessarily went
+positive, but improved. So it used to be that steep, now it’s only that
+steep down… As soon as that thing reverses and the RL10 goes positive,
+then I have the critical state at the point where it went from negative
+to positive slope, and rules-based put an alert there.</p>
+</blockquote>
+<p><small>Source:
+<code>youtube-1FMcKTYaHMo-4321-position-sizing.en.vtt</code></small></p>
+<h3
+id="ken-explicitly-genealogizes-rlco---macdfour-seasons.-essential-bridge-for-a-student-who-knows-four-seasons-but-not-its-root.">7.
+<a href="https://youtu.be/zQLKqZ0lyAE?t=2657">00:44:17–00:45:02</a> —
+Ken explicitly genealogizes RLCO -&gt; MACD/Four Seasons. Essential
+bridge for a student who knows Four Seasons but not its root.</h3>
+<blockquote>
+<p>One of the things that we wanted to do was simplify from the RLCO
+down to a MACD, and we’ll call that Four Seasons. So while we’re using
+regression lines in the RLCO framework, we’re using simple moving
+averages to simplify broad trends in price behavior. Up here in the
+regression lines, we’re using the RL10 and RL30 and looking at those to
+create patterns one through seven of generation one.</p>
+</blockquote>
+<p><small>Source:
+<code>youtube-zQLKqZ0lyAE-strategies-13-22.en.vtt</code></small></p>
+<h3
+id="ties-rlco-into-the-full-strategy-stack-rl10-reversal---dragon-turn---rl30-turn---ssc-to-owl-transition.-best-single-moment-for-seeing-rlco-inside-the-strategy-ladder.">8.
+<a href="https://youtu.be/keUjMJcneCM?t=1846">00:30:46–00:31:39</a> —
+Ties RLCO into the full strategy stack: RL10 reversal -&gt; Dragon turn
+-&gt; RL30 turn -&gt; SSC-to-Owl transition. Best single moment for
+seeing RLCO inside the strategy ladder.</h3>
+<blockquote>
+<p>When that RL10 reaches an extreme move and makes that reversal, and
+your MACD histogram was out of the Red River, that reversal is a really
+important turning point signal. When you’re looking at that intraday
+thing — the RL10, when it has made a significant move downward and it’s
+into that oversold and then reverses, and then it’s going to cross the
+Dragon, and somewhere there the Dragon turns and the RL30 turns — that’s
+all part of the SSC to the Owl.</p>
+</blockquote>
+<p><small>Source:
+<code>youtube-keUjMJcneCM-perf-review-market-relationship.en.vtt</code></small></p>
+<h2 id="sgc-book-anchors">SGC book anchors</h2>
+<p><strong>RLCO SetUp v0.docx</strong> — The RLCO Concept + Statistical
+Background + Zebras and Rivers metaphor</p>
+<blockquote>
+<p>The typical time frame used in the charts is 3 minute, although it
+can be used in any time frame. There are four indicators involved:
+Regression line with look back 10 (RL(10)), Regression line with period
+30 (RL(30)), Bollinger bands period 30 at +/- 1 SD, and VWAP. The
+extreme readings by the RLCO are given when both of the regression line
+curves cross outside the region delimited by the upper and lower BB. ‘A
+RLCO outside the river means both RLs are outside. The RL(10) changes
+direction first and moves back to the river, while the RL(30) is still
+moving away — that’s the initial signal that the whole herd may
+change.’</p>
+</blockquote>
+<p><strong>rlco_notes.docx</strong> — Top 10 relevant points about the
+RLCO system</p>
+<blockquote>
+<p>Disciplined: an overlay that can be applied to different systems and
+time frames. Multiple timeframes: the RLCO lens applies from minute
+charts to weekly and monthly. Consistency: regardless of market,
+timeframe, market and direction. Finds critical moments in all market
+conditions. Applies in all 3 directions: helps us when price is moving
+up, down and sideways. Forward looking: regression lines help
+forecasters assess future possibilities with confidence intervals.</p>
+</blockquote>
+<p><strong>Foundation Trading Book_Cornell
+Notes_Session6_v1.pptx</strong> — 30-Period Regression Line Slopes (pgs.
+180-181) — sector application</p>
+<blockquote>
+<p>We can use the slope of the 30 period regression line to find sectors
+that are interesting or sectors to stay away from. In this example, XLE
+and XLF had peaked at +1.99 sigma and was starting to fall, showing a
+declining health in the trend. … TSLA, AA, DVN — JPM we were able to
+discard because of the weakness we spotted on the RL30 slopes on the
+financial sector XLF.</p>
+</blockquote>
+<h2 id="try-it-yourself">Try it yourself</h2>
+<p>Open any 30-minute chart of a symbol you traded last week. Plot the
+RL10, the RL30, and a 30-period Bollinger Band at +/- 1 SD (call the BB
+region “the river”). Walk the day bar by bar and mark every spot where
+RL10 crosses RL30 outside the river. For each cross, write one sentence
+answering: was the RL30 still pointed away from the river mean
+(continuation likely) or already pointed back toward it (reversal
+likely)? Then check what price actually did over the next 6 bars. Do
+this for 3 days; you will start seeing the herd before it turns.</p>
+<h2 id="related-concepts">Related concepts</h2>
+<ul>
+<li><a href="frog.html">frog</a></li>
+<li><a href="sniper.html">sniper</a></li>
+<li><a href="mmrb.html">mmrb</a></li>
+</ul>
+<h2 id="cross-links-from-other-concepts">Cross-links from other
+concepts</h2>
+<ul>
+<li><strong>from <a href="frog.html">frog</a></strong>: Inside the Frog
+box, an <a href="rlco.html">rlco</a> cross is the trigger that tells you
+the larger-than-normal move is starting.</li>
+<li><strong>from <a href="sniper.html">sniper</a></strong>: Many Sniper
+entries use an <a href="rlco.html">rlco</a> cross as the
+pull-the-trigger signal on the opening-range break.</li>
+</ul>
+<footer>SGC Portal · concept page compiled by multi-agent workflow · 2026-06-03</footer>
+</main>
+</body>
+</html>

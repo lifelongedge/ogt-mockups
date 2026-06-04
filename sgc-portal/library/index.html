@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>SGC Concept Library · SGC Library</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="wiki.css" />
+</head>
+<body>
+<div class="topbar">
+  <span class="brand">Owl Group Trading <span class="sub">SGC Library</span></span>
+  <nav>
+    <a href="../today.html">Today</a>
+    <a href="index.html" class="active">Library</a>
+  </nav>
+</div>
+<main>
+<header id="title-block-header">
+<h1 class="title">SGC Concept Library · SGC Library</h1>
+</header>
+<h1 id="sgc-concept-library">SGC Concept Library</h1>
+<p>These five concepts form the core of Ken Long’s intraday trading
+framework — read them in order. Start with <strong>PPEA</strong>, the
+four-phase process (Plan, Prepare, Execute, Assess) that governs every
+trading decision. Then learn the <strong>Frog</strong> system, which
+uses descriptive statistics on the 30-day range to find symbols poised
+to move, and the <strong>MMRB</strong>, the noise-aware stop sizing
+derived from that same statistic. Finish with <strong>RLCO</strong>, the
+regression-line cross that triggers entries, and
+<strong>Sniper</strong>, the short-timeframe trade style that combines
+all four ideas into a single high-volatility shot defended by a tight
+risk box.</p>
+<h2 id="the-5-concept-pages">The 5 concept pages</h2>
+<ul>
+<li><a href="frog.md">Frog</a> — <em>An intraday trading system that
+uses descriptive statistics — specifically a volatility “Frog box”
+(30-day range stddev) — to separate signal from noise and find symbols
+poised to make larger-than-normal moves.</em></li>
+<li><a href="mmrb.md">MMRB</a> — <em>The Minimum Manageable Risk Box
+(MMRB) is the smallest stop distance — about one-tenth of the 30-day
+average range — that you can defend without being shaken out by noise,
+so a -1R loss is a tiny fraction of your account.</em></li>
+<li><a href="ppea.md">PPEA</a> — <em>PPEA — Plan, Prepare, Execute,
+Assess — is Ken Long’s top-level four-phase process that governs every
+trading action, from system design to the next live trade.</em></li>
+<li><a href="rlco.md">RLCO</a> — <em>Regression Line Cross Over — the
+moment a fast regression line (RL10) crosses its slower partner (RL30)
+outside the Bollinger “river,” giving an early read on whether a trend
+will continue or reverse.</em></li>
+<li><a href="sniper.md">Sniper</a> — <em>Sniper is Ken Long’s name for
+short-timeframe, ruthlessly-managed intraday trades taken on a single
+high-volatility target using a small, well-defined setup (often an
+opening-range break) with a tight risk box.</em></li>
+</ul>
+<h2 id="how-this-wiki-is-built">How this wiki is built</h2>
+<p>Compiled by a multi-agent workflow that mined the 341-video Ken Long
+corpus + 14 SGC onboarding docs. Each concept page carries: Ken’s
+verbatim framing, why-it-matters, 5-10 video moments with timestamps +
+quote anchors, SGC book/document anchors, a practice exercise, and
+wikilinks to related concepts.</p>
+<p>Cross-links across the 5 pages:</p>
+<ul>
+<li><a href="ppea.html">ppea</a> → <a href="frog.html">frog</a>: Once
+the four-phase loop is in your hands, the <a href="frog.html">frog</a>
+system shows what Prepare and Execute look like on a real intraday
+chart.</li>
+<li><a href="ppea.html">ppea</a> → <a href="sniper.html">sniper</a>:
+<a href="sniper.html">sniper</a> trades are PPEA compressed into minutes
+— the Plan and Prepare are done before the bell so Execute can be
+ruthless.</li>
+<li><a href="frog.html">frog</a> → <a href="mmrb.html">mmrb</a>: The
+same 30-day range that defines the Frog box also sizes the
+<a href="mmrb.html">mmrb</a> — about one-tenth of that range is the
+smallest stop you can defend.</li>
+<li><a href="frog.html">frog</a> → <a href="rlco.html">rlco</a>: Inside
+the Frog box, an <a href="rlco.html">rlco</a> cross is the trigger that
+tells you the larger-than-normal move is starting.</li>
+<li><a href="rlco.html">rlco</a> → <a href="frog.html">frog</a>: RLCO is
+most reliable when it fires on a symbol the <a href="frog.html">frog</a>
+system has already flagged as primed to move.</li>
+<li><a href="rlco.html">rlco</a> → <a href="mmrb.html">mmrb</a>: Once an
+RLCO fires, the <a href="mmrb.html">mmrb</a> tells you exactly how far
+the stop sits so a wrong cross costs only -1R.</li>
+<li><a href="sniper.html">sniper</a> → <a href="mmrb.html">mmrb</a>:
+Every Sniper trade is built around an <a href="mmrb.html">mmrb</a> stop
+— the tight risk box is what lets you take the shot at all.</li>
+<li><a href="sniper.html">sniper</a> → <a href="rlco.html">rlco</a>:
+Many Sniper entries use an <a href="rlco.html">rlco</a> cross as the
+pull-the-trigger signal on the opening-range break.</li>
+<li><a href="mmrb.html">mmrb</a> → <a href="frog.html">frog</a>: The
+MMRB is derived from the same 30-day range stddev that defines the
+<a href="frog.html">frog</a> box — one statistic, two uses.</li>
+<li><a href="mmrb.html">mmrb</a> → <a href="sniper.html">sniper</a>: The
+MMRB is what makes a <a href="sniper.html">sniper</a> trade defensible —
+without a tight, noise-aware stop the shot is just a guess.</li>
+</ul>
+<footer>SGC Portal · concept page compiled by multi-agent workflow · 2026-06-03</footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SGC Portal · Today · Owl Group Trading</title>
+<style>
+  :root {
+    --bg:#0e0e0c; --card:#181815; --card-elev:#1f1f1b; --line:#2a2925;
+    --fg:#e8e6df; --dim:#9c978a; --faint:#5d594f; --gold:#d4a559; --gold-bright:#e8b96d;
+    --green:#6dbb6d; --red:#c47e53; --blue:#5dbacb;
+  }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; padding:0; background:var(--bg); color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+    font-size:15px; line-height:1.55;
+  }
+  a { color:var(--gold); text-decoration:none; }
+  a:hover { color:var(--gold-bright); }
+
+  /* ─── Top bar ────────────────────────────── */
+  .topbar {
+    background:#14140f; border-bottom:1px solid var(--line);
+    padding:0.7rem 1.6rem; display:flex; align-items:center; gap:1.4rem;
+    position:sticky; top:0; z-index:50;
+  }
+  .topbar .brand {
+    font-family:Georgia,serif; color:var(--gold); font-size:1.05rem;
+  }
+  .topbar .brand .sub {
+    color:var(--dim); font-family:"SF Mono",Menlo,monospace;
+    font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; margin-left:0.6rem;
+  }
+  .topbar nav { display:flex; gap:1.3rem; margin-left:1rem; font-size:0.85rem; }
+  .topbar nav a { color:var(--dim); border-bottom:2px solid transparent; padding:0.3rem 0; transition:all 0.12s; }
+  .topbar nav a:hover { color:var(--fg); }
+  .topbar nav a.active { color:var(--gold); border-bottom-color:var(--gold); }
+  .topbar .right { margin-left:auto; display:flex; align-items:center; gap:1rem; }
+  .topbar .search {
+    background:var(--card); border:1px solid var(--line); border-radius:5px;
+    padding:0.45rem 0.85rem; color:var(--dim); font-size:0.82rem; min-width:220px;
+    cursor:pointer; display:flex; align-items:center; gap:0.5rem;
+  }
+  .topbar .search:hover { border-color:var(--faint); color:var(--fg); }
+  .topbar .search .kbd { background:#14140f; border:1px solid var(--line); border-radius:3px; padding:0.05rem 0.4rem; font-family:"SF Mono",Menlo,monospace; font-size:0.7rem; color:var(--faint); margin-left:auto; }
+  .topbar .avatar {
+    width:32px; height:32px; border-radius:50%;
+    background:linear-gradient(135deg,var(--gold),var(--red));
+    color:var(--bg); font-weight:700; font-size:0.85rem; font-family:Georgia,serif;
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+  }
+
+  /* ─── Cohort strip ───────────────────────── */
+  .cohort-strip {
+    background:var(--card); border-bottom:1px solid var(--line);
+    padding:0.7rem 1.6rem; display:flex; align-items:center; gap:2rem;
+    font-size:0.82rem; flex-wrap:wrap;
+  }
+  .cohort-strip .item { color:var(--dim); display:flex; align-items:center; gap:0.45rem; }
+  .cohort-strip .item .lbl {
+    color:var(--faint); font-family:"SF Mono",Menlo,monospace;
+    font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase;
+  }
+  .cohort-strip .item .val { color:var(--fg); }
+  .cohort-strip .item .val.gold { color:var(--gold); }
+  .cohort-strip .item .val.green { color:var(--green); }
+  .cohort-strip .streak {
+    display:flex; gap:3px;
+  }
+  .cohort-strip .streak .dot {
+    width:8px; height:8px; border-radius:2px; background:var(--line);
+  }
+  .cohort-strip .streak .dot.lit { background:var(--gold); }
+
+  main {
+    max-width:1280px; margin:0 auto; padding:1.4rem 1.6rem 3rem;
+  }
+
+  /* ─── Hero greeting ──────────────────────── */
+  .greet { margin-bottom:1.6rem; }
+  .greet h1 {
+    font-family:Georgia,serif; font-weight:400; color:var(--gold);
+    font-size:1.9rem; margin:0 0 0.3rem; line-height:1.2;
+  }
+  .greet .sub { color:var(--dim); font-size:0.95rem; font-style:italic; }
+
+  /* ─── Grid ────────────────────────────────── */
+  .grid {
+    display:grid; grid-template-columns:1.4fr 1fr; gap:1.3rem;
+  }
+  @media (max-width:900px) {
+    .grid { grid-template-columns:1fr; }
+  }
+
+  /* ─── Card base ───────────────────────────── */
+  .card {
+    background:var(--card); border:1px solid var(--line); border-radius:8px;
+    padding:1.25rem 1.4rem; margin-bottom:1.3rem;
+  }
+  .card .card-head {
+    display:flex; align-items:baseline; gap:0.7rem; margin-bottom:0.85rem;
+  }
+  .card .card-head h2 {
+    font-family:Georgia,serif; color:var(--gold); font-weight:400;
+    font-size:1.15rem; margin:0;
+  }
+  .card .card-head .meta {
+    color:var(--faint); font-size:0.72rem; font-family:"SF Mono",Menlo,monospace;
+    letter-spacing:0.08em; text-transform:uppercase; margin-left:auto;
+  }
+
+  /* ─── Next session card ───────────────────── */
+  .next-session .date {
+    color:var(--gold); font-family:Georgia,serif; font-size:1.45rem;
+    margin-bottom:0.3rem;
+  }
+  .next-session .date .when {
+    color:var(--dim); font-size:0.85rem; margin-left:0.6rem; font-style:italic;
+  }
+  .next-session .topic { color:var(--fg); font-size:1.05rem; margin-bottom:0.7rem; line-height:1.4; }
+  .next-session .prep {
+    background:#0e0e0c; border-left:3px solid var(--gold); border-radius:4px;
+    padding:0.7rem 0.95rem; color:var(--dim); font-size:0.88rem;
+  }
+  .next-session .prep strong { color:var(--gold); font-family:"SF Mono",Menlo,monospace; font-size:0.72rem; letter-spacing:0.08em; text-transform:uppercase; display:block; margin-bottom:0.35rem; }
+  .next-session .actions {
+    display:flex; gap:0.6rem; margin-top:1rem; flex-wrap:wrap;
+  }
+  .btn {
+    background:var(--gold); color:var(--bg); border:0; padding:0.5rem 1rem;
+    border-radius:5px; font-family:inherit; font-weight:600; font-size:0.85rem;
+    cursor:pointer; transition:all 0.12s;
+  }
+  .btn:hover { background:var(--gold-bright); transform:translateY(-1px); }
+  .btn.ghost { background:transparent; color:var(--gold); border:1px solid var(--gold); }
+  .btn.ghost:hover { background:rgba(212,165,89,0.08); }
+
+  /* ─── Ken's note card ─────────────────────── */
+  .ken-note { border-left:3px solid var(--gold); }
+  .ken-note .from {
+    color:var(--dim); font-size:0.78rem; margin-bottom:0.5rem; display:flex; align-items:center; gap:0.5rem;
+  }
+  .ken-note .from .pip {
+    width:24px; height:24px; border-radius:50%;
+    background:#14140f; border:1px solid var(--gold); color:var(--gold);
+    display:flex; align-items:center; justify-content:center;
+    font-family:Georgia,serif; font-size:0.78rem; font-weight:700;
+  }
+  .ken-note .body {
+    color:var(--fg); font-family:Georgia,serif; font-style:italic;
+    font-size:1.02rem; line-height:1.55; margin-bottom:0.9rem;
+  }
+  .ken-note ul.action-items {
+    list-style:none; padding:0; margin:0.6rem 0 0;
+    background:#0e0e0c; border-radius:4px; padding:0.6rem 0.9rem;
+  }
+  .ken-note ul.action-items li {
+    padding:0.4rem 0; display:flex; align-items:flex-start; gap:0.6rem;
+    font-size:0.9rem; color:var(--fg);
+  }
+  .ken-note ul.action-items input[type="checkbox"] {
+    appearance:none; -webkit-appearance:none;
+    width:1.05em; height:1.05em; min-width:1.05em; margin-top:0.18em;
+    background:var(--bg); border:1.5px solid var(--faint); border-radius:3px;
+    cursor:pointer; position:relative;
+  }
+  .ken-note ul.action-items input[type="checkbox"]:checked {
+    background:var(--gold); border-color:var(--gold);
+  }
+  .ken-note ul.action-items input[type="checkbox"]:checked + label {
+    color:var(--dim); text-decoration:line-through;
+  }
+  .ken-note ul.action-items label { cursor:pointer; flex:1; }
+
+  /* ─── Spotlight clip ─────────────────────── */
+  .spotlight .why {
+    color:var(--dim); font-size:0.85rem; margin-bottom:0.7rem; font-style:italic;
+  }
+  .spotlight .why .pin { color:var(--gold); font-family:"SF Mono",Menlo,monospace; font-size:0.72rem; letter-spacing:0.08em; text-transform:uppercase; margin-right:0.4rem; }
+  .spotlight .video-wrap {
+    background:#000; border-radius:5px; overflow:hidden; aspect-ratio:16/9; margin-bottom:0.7rem;
+    position:relative;
+  }
+  .spotlight .video-stub {
+    width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    color:var(--faint); font-family:"SF Mono",Menlo,monospace; font-size:0.75rem; letter-spacing:0.06em;
+    background:radial-gradient(ellipse at center, #1a1a16 0%, #0e0e0c 100%);
+  }
+  .spotlight .video-stub .play {
+    width:60px; height:60px; border-radius:50%;
+    border:2px solid var(--gold); color:var(--gold); font-size:1.5rem;
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:0.7rem; cursor:pointer;
+  }
+  .spotlight .clip-meta {
+    font-size:0.82rem; color:var(--dim); display:flex; gap:1rem; flex-wrap:wrap;
+  }
+  .spotlight .clip-meta .item { display:flex; gap:0.35rem; align-items:center; }
+  .spotlight .clip-meta .item .lbl { color:var(--faint); }
+
+  /* ─── Right column cards ──────────────────── */
+  .focus .focus-pill {
+    display:inline-block; background:rgba(212,165,89,0.08);
+    border:1px solid rgba(212,165,89,0.35); color:var(--gold);
+    padding:0.4rem 0.85rem; border-radius:999px;
+    font-family:"SF Mono",Menlo,monospace; font-size:0.78rem; letter-spacing:0.05em;
+    margin-bottom:0.7rem;
+  }
+  .focus .focus-body { color:var(--fg); font-size:0.92rem; line-height:1.5; margin-bottom:0.9rem; }
+  .focus .focus-progress {
+    display:flex; align-items:center; gap:0.6rem; color:var(--dim); font-size:0.78rem;
+    font-family:"SF Mono",Menlo,monospace; letter-spacing:0.04em;
+  }
+  .focus .focus-progress .bar { flex:1; height:4px; background:var(--line); border-radius:2px; overflow:hidden; }
+  .focus .focus-progress .bar .fill { height:100%; background:var(--gold); width:40%; }
+
+  .trades-list { list-style:none; padding:0; margin:0; }
+  .trades-list li {
+    padding:0.7rem 0; border-bottom:1px dotted var(--line);
+    display:grid; grid-template-columns:auto 1fr auto; gap:0.7rem; align-items:center;
+    font-size:0.88rem;
+  }
+  .trades-list li:last-child { border-bottom:0; }
+  .trades-list .sym { font-family:"SF Mono",Menlo,monospace; color:var(--gold); font-weight:600; }
+  .trades-list .desc { color:var(--dim); }
+  .trades-list .desc .dir { color:var(--green); font-weight:500; }
+  .trades-list .desc .dir.short { color:var(--red); }
+  .trades-list .r { color:var(--fg); font-family:"SF Mono",Menlo,monospace; font-size:0.82rem; text-align:right; }
+  .trades-list .r.up { color:var(--green); }
+  .trades-list .r.down { color:var(--red); }
+
+  .qa-grid {
+    display:grid; grid-template-columns:1fr 1fr; gap:0.6rem;
+  }
+  .qa-grid a {
+    background:#0e0e0c; border:1px solid var(--line); border-radius:5px;
+    padding:0.7rem 0.85rem; display:flex; flex-direction:column; gap:0.2rem;
+    transition:all 0.12s;
+  }
+  .qa-grid a:hover { border-color:var(--faint); background:var(--card-elev); }
+  .qa-grid .glyph { color:var(--gold); font-family:Georgia,serif; font-size:1.1rem; }
+  .qa-grid .title { color:var(--fg); font-size:0.85rem; font-weight:500; }
+  .qa-grid .hint { color:var(--dim); font-size:0.72rem; font-family:"SF Mono",Menlo,monospace; letter-spacing:0.04em; }
+
+  /* ─── Portal nav at bottom ────────────────── */
+  .portal-nav {
+    margin-top:2rem; padding-top:1.5rem; border-top:1px solid var(--line);
+  }
+  .portal-nav h3 {
+    color:var(--dim); font-family:"SF Mono",Menlo,monospace;
+    font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase;
+    margin:0 0 0.85rem; font-weight:500;
+  }
+  .portal-nav-grid {
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:0.7rem;
+  }
+  .portal-nav-grid a {
+    background:var(--card); border:1px solid var(--line); border-radius:6px;
+    padding:0.85rem 1rem; display:flex; flex-direction:column; gap:0.25rem;
+    transition:all 0.12s;
+  }
+  .portal-nav-grid a:hover { border-color:var(--gold); transform:translateY(-1px); }
+  .portal-nav-grid .name {
+    color:var(--gold); font-family:Georgia,serif; font-size:1rem;
+  }
+  .portal-nav-grid .blurb {
+    color:var(--dim); font-size:0.78rem; line-height:1.4;
+  }
+
+  footer {
+    margin-top:2rem; padding-top:1rem; border-top:1px solid var(--line);
+    color:var(--faint); font-size:0.78rem; text-align:center;
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="brand">Owl Group Trading <span class="sub">SGC Portal</span></span>
+  <nav>
+    <a href="#" class="active">Today</a>
+    <a href="#" title="coming soon">Journey</a>
+    <a href="library/index.html">Library</a>
+    <a href="#" title="coming soon">Gold Mine</a>
+    <a href="#" title="coming soon">Practice</a>
+    <a href="#" title="coming soon">Wagon Train</a>
+    <a href="#" title="coming soon">Direct Line</a>
+  </nav>
+  <div class="right">
+    <div class="search" onclick="alert('Search the Gold Mine — coming in Phase 2')">
+      <span>🔍</span> <span>Ask the wiki…</span> <span class="kbd">⌘K</span>
+    </div>
+    <div class="avatar" title="Sundeep Gupta · Cohort 12">SG</div>
+  </div>
+</div>
+
+<div class="cohort-strip">
+  <div class="item"><span class="lbl">Cohort</span><span class="val gold">12 · Q2 2026</span></div>
+  <div class="item"><span class="lbl">Sessions / 30d</span><span class="val">5</span></div>
+  <div class="item">
+    <span class="lbl">A-game freq</span>
+    <span class="val green">60%</span>
+  </div>
+  <div class="item"><span class="lbl">Streak</span>
+    <div class="streak">
+      <div class="dot lit"></div><div class="dot lit"></div><div class="dot lit"></div>
+      <div class="dot lit"></div><div class="dot lit"></div>
+      <div class="dot"></div><div class="dot"></div>
+    </div>
+  </div>
+  <div class="item" style="margin-left:auto;"><span class="lbl">Wiki pages</span><span class="val">47 indexed</span></div>
+</div>
+
+<main>
+
+  <div class="greet">
+    <h1>Good morning, Sundeep.</h1>
+    <p class="sub">Ken's next live session is Thursday. You've got two things he asked you to bring.</p>
+  </div>
+
+  <div class="grid">
+
+    <!-- LEFT column -->
+    <div>
+
+      <!-- Next session -->
+      <div class="card next-session">
+        <div class="card-head">
+          <h2>Next session</h2>
+          <span class="meta">Coaching</span>
+        </div>
+        <div class="date">Thursday, June 5 · 7:00 PM ET <span class="when">in 2 days</span></div>
+        <div class="topic">Ken's walking the cohort through <strong>MMRB</strong> (Minimum Manageable Risk Box) using the index futures from this week's swing setups.</div>
+        <div class="prep">
+          <strong>Bring with you</strong>
+          Your trade journal from Tuesday's coaching call · Your ABC scoring rubric for the last 5 sessions · The MU swing setup you flagged in the chat
+        </div>
+        <div class="actions">
+          <button class="btn">▶ Join the call</button>
+          <button class="btn ghost">Add to calendar</button>
+          <button class="btn ghost">Pre-read materials</button>
+        </div>
+      </div>
+
+      <!-- Ken's last note -->
+      <div class="card ken-note">
+        <div class="card-head">
+          <h2>Ken's last note to you</h2>
+          <span class="meta">Tuesday's session · 6 hours ago</span>
+        </div>
+        <div class="from"><span class="pip">K</span><span>From Dr. Ken Long — after the Tuesday coaching call</span></div>
+        <div class="body">
+          "Sundeep — you walked through three trades and you grew on the first two, then froze on the third. The 5-minute pause at 9:37 is the moment to study. Frame me what you saw, what you felt, and what you'd do differently. We'll work it Thursday. Don't bring the chart — bring the framing."
+        </div>
+        <ul class="action-items">
+          <li><input type="checkbox" id="ai1"><label for="ai1">Write the bi-directional frame on the 9:37 MU setup (before Thursday)</label></li>
+          <li><input type="checkbox" id="ai2"><label for="ai2">Re-read the PPEA section of Foundation Session 3 (pgs. 107-112)</label></li>
+          <li><input type="checkbox" id="ai3"><label for="ai3">Watch Ken's clip on freezing on the third trade — auto-queued in your timeline</label></li>
+        </ul>
+      </div>
+
+      <!-- Spotlight -->
+      <div class="card spotlight">
+        <div class="card-head">
+          <h2>Spotlight from the archive</h2>
+          <span class="meta">Picked for what you're working</span>
+        </div>
+        <p class="why"><span class="pin">Why this clip</span>You flagged "freezing on the third trade" in your Tuesday journal. Ken explained the same pattern to another student (Kim) in a 2024 SGC call — 5:28 walkthrough on how ruthless risk management replaces the freeze.</p>
+        <div class="video-wrap">
+          <div class="video-stub">
+            <div class="play" onclick="alert('Wired in MVP — pulls from the wiki video moments index')">▶</div>
+            <div>Strategies 07-11 · 20:55–26:23 · 5:28</div>
+            <div style="margin-top:0.3rem;">"Kim, stop losing money" — the ruthless-risk-management teach</div>
+          </div>
+        </div>
+        <div class="clip-meta">
+          <div class="item"><span class="lbl">Concept:</span> <a href="library/mmrb.html">MMRB</a></div>
+          <div class="item"><span class="lbl">Related:</span> <a href="library/ppea.html">PPEA</a> · <a href="library/sniper.html">Sniper</a></div>
+          <div class="item" style="margin-left:auto;"><a href="#">⬇ Add to my study list</a></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT column -->
+    <div>
+
+      <!-- This week's focus -->
+      <div class="card focus">
+        <div class="card-head">
+          <h2>This week's focus</h2>
+          <span class="meta">Concept</span>
+        </div>
+        <span class="focus-pill">MMRB · Minimum Manageable Risk Box</span>
+        <p class="focus-body">The risk size where you can see the signal, act on it, and absorb slippage without exceeding your one-hour loss limit. The honest answer to "how small should I trade right now?"</p>
+        <div class="focus-progress">
+          <span>40%</span>
+          <div class="bar"><div class="fill"></div></div>
+          <span>4 / 10 reps</span>
+        </div>
+        <div style="margin-top:0.8rem; display:flex; gap:0.5rem; flex-wrap:wrap;">
+          <a href="library/mmrb.html" class="btn ghost" style="font-size:0.78rem; padding:0.35rem 0.7rem; text-decoration:none;">Read the wiki page</a>
+          <button class="btn ghost" style="font-size:0.78rem; padding:0.35rem 0.7rem;">Today's practice rep →</button>
+        </div>
+      </div>
+
+      <!-- Continuing trades -->
+      <div class="card">
+        <div class="card-head">
+          <h2>Continuing trades</h2>
+          <span class="meta">From your journal</span>
+        </div>
+        <ul class="trades-list">
+          <li>
+            <span class="sym">MU</span>
+            <span class="desc"><span class="dir">long</span> · swing · entered 5/29 · stop 110.50</span>
+            <span class="r up">+1.2R</span>
+          </li>
+          <li>
+            <span class="sym">SPY</span>
+            <span class="desc"><span class="dir">long</span> · RLCO setup · entered 5/30 · stop 522.80</span>
+            <span class="r up">+0.4R</span>
+          </li>
+          <li>
+            <span class="sym">NVDA</span>
+            <span class="desc"><span class="dir short">short</span> · Z3 pinch · entered 6/2 · stop 1180</span>
+            <span class="r down">−0.3R</span>
+          </li>
+          <li>
+            <span class="sym">TLT</span>
+            <span class="desc"><span class="dir">long</span> · core position · since 5/14 · stop 92.20</span>
+            <span class="r up">+2.1R</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Quick actions -->
+      <div class="card">
+        <div class="card-head">
+          <h2>Quick</h2>
+          <span class="meta">One-tap</span>
+        </div>
+        <div class="qa-grid">
+          <a href="#" title="coming soon">
+            <span class="glyph">✎</span>
+            <span class="title">Log a trade</span>
+            <span class="hint">→ journal</span>
+          </a>
+          <a href="#" title="coming soon">
+            <span class="glyph">⊟</span>
+            <span class="title">Grade last session</span>
+            <span class="hint">A / B / C</span>
+          </a>
+          <a href="#" title="coming soon">
+            <span class="glyph">?</span>
+            <span class="title">Ask Ken</span>
+            <span class="hint">1 of 1 left this month</span>
+          </a>
+          <a href="#" title="coming soon">
+            <span class="glyph">⛌</span>
+            <span class="title">Practice rep</span>
+            <span class="hint">~10 min</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Portal section nav -->
+  <div class="portal-nav">
+    <h3>The Portal · 7 sections</h3>
+    <div class="portal-nav-grid">
+      <a href="#" class="active" style="border-color:var(--gold);">
+        <span class="name">Today</span>
+        <span class="blurb">Where you are right now · the home view</span>
+      </a>
+      <a href="#" title="coming soon">
+        <span class="name">Your Journey</span>
+        <span class="blurb">Personal timeline · what Ken said to YOU · mastery heatmap</span>
+      </a>
+      <a href="library/index.html">
+        <span class="name">The Library</span>
+        <span class="blurb">Concept wiki · RLCO · MMRB · PPEA · Frog · Sniper · …</span>
+      </a>
+      <a href="#" title="coming soon">
+        <span class="name">The Gold Mine</span>
+        <span class="blurb">Ask Ken's coaching archive in plain English</span>
+      </a>
+      <a href="#" title="coming soon">
+        <span class="name">Practice Floor</span>
+        <span class="blurb">Drills · flashcards · MMRB calculator · A/B/C rubric</span>
+      </a>
+      <a href="#" title="coming soon">
+        <span class="name">Wagon Train</span>
+        <span class="blurb">Cohort · accountability pairs · shared notebooks</span>
+      </a>
+      <a href="#" title="coming soon">
+        <span class="name">Direct Line</span>
+        <span class="blurb">Question queue · Ken's inbox · trade-log review</span>
+      </a>
+    </div>
+  </div>
+
+  <footer>
+    SGC Portal · prototype · 2026-06-03 · all data hardcoded for design review
+  </footer>
+
+</main>
+
+</body>
+</html>
