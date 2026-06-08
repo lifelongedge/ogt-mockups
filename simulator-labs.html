@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Simulator Lab — All 149 Simulators · Owl Group Trading</title>
+<meta name="description" content="The complete catalog of 149 interactive trading simulators. Turn a knob, watch the math respond. Numbered for reference.">
+<style>
+  :root {
+    --bg:#0e0e0c; --card:#181815; --card-elev:#1f1f1b; --line:#2a2925;
+    --fg:#e8e6df; --dim:#9c978a; --faint:#5d594f; --gold:#d4a559;
+    --gold-bright:#e8b96d; --green:#6dbb6d; --blue:#5dbacb;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+    background:var(--bg);color:var(--fg);font-size:16px;line-height:1.55;}
+  a{color:var(--gold);}
+  .topbar{background:#14140f;border-bottom:1px solid var(--line);padding:0.85rem 1.6rem;
+    display:flex;align-items:center;gap:1.5rem;position:sticky;top:0;z-index:50;}
+  .topbar .brand{font-family:Georgia,serif;color:var(--gold);font-size:1.05rem;letter-spacing:0.02em;}
+  .topbar .brand .sub{color:var(--dim);font-family:"SF Mono",Menlo,monospace;font-size:0.7rem;
+    letter-spacing:0.1em;text-transform:uppercase;margin-left:0.6rem;}
+  .topbar .nav{margin-left:auto;display:flex;gap:1.4rem;font-size:0.88rem;}
+  .topbar .nav a{color:var(--dim);text-decoration:none;border-bottom:1px dotted transparent;transition:color .15s;}
+  .topbar .nav a:hover{color:var(--gold);}
+  .topbar .cta-mini{background:var(--gold);color:var(--bg);border:0;padding:0.45rem 0.95rem;border-radius:4px;
+    font-weight:600;cursor:pointer;font-size:0.85rem;text-decoration:none;transition:transform .1s;}
+  .topbar .cta-mini:hover{transform:translateY(-1px);background:var(--gold-bright);}
+  main{max-width:1200px;margin:0 auto;padding:0 1.6rem;}
+  .hero{padding:4rem 0 3rem;text-align:center;border-bottom:1px solid var(--line);}
+  .hero .kicker{color:var(--gold);font-family:"SF Mono",Menlo,monospace;font-size:0.82rem;
+    letter-spacing:0.18em;text-transform:uppercase;margin-bottom:1rem;}
+  .hero h1{font-family:Georgia,serif;font-weight:400;color:var(--gold);font-size:3.4rem;
+    margin:0 auto 1.1rem;line-height:1.05;max-width:20ch;}
+  .hero h1 .num{font-style:italic;}
+  .hero .subhead{color:var(--fg);font-size:1.25rem;line-height:1.5;max-width:58ch;margin:0 auto 2rem;font-style:italic;}
+  .hero .ladder-tagline{display:inline-flex;gap:0.55rem;align-items:center;flex-wrap:wrap;justify-content:center;
+    background:var(--card);border:1px solid var(--line);border-radius:999px;padding:0.55rem 1.3rem;
+    font-size:0.82rem;color:var(--dim);font-family:"SF Mono",Menlo,monospace;letter-spacing:0.05em;}
+  .hero .ladder-tagline .rung{color:var(--faint);} .hero .ladder-tagline .arrow{color:var(--gold);}
+  section{padding:4rem 0;border-bottom:1px solid var(--line);}
+  section.no-border{border-bottom:0;}
+  section h2{font-family:Georgia,serif;font-weight:400;color:var(--gold);font-size:2.2rem;margin:0 0 0.7rem;line-height:1.15;}
+  section .section-kicker{font-family:"SF Mono",Menlo,monospace;color:var(--dim);font-size:0.78rem;
+    letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.6rem;}
+  section .section-lead{color:var(--fg);font-size:1.1rem;line-height:1.6;max-width:72ch;margin:0 0 2rem;}
+  footer{border-top:1px solid var(--line);padding:2rem 0;color:var(--faint);font-size:0.82rem;text-align:center;}
+  footer a{color:var(--dim);text-decoration:none;border-bottom:1px dotted var(--faint);}
+  @media (max-width:600px){.topbar{flex-wrap:wrap;gap:0.6rem;} .topbar .nav{display:none;}
+    section{padding:2.8rem 0;} .hero{padding:2.5rem 0 2rem;} .hero h1{font-size:2rem;}}
+
+  .grid-tabs{display:flex;gap:0;border-bottom:1px solid var(--line);margin:1.5rem 0 1.6rem;flex-wrap:wrap;}
+  .grid-tab{padding:0.6rem 0.95rem;background:none;border:0;color:var(--dim);font-family:inherit;
+    font-size:0.85rem;cursor:pointer;border-bottom:2px solid transparent;transition:all .12s;}
+  .grid-tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+  .grid-tab:hover{color:var(--fg);}
+  .grid-tab .count{color:var(--faint);font-size:0.74rem;margin-left:0.35rem;}
+  .cat-block{margin-bottom:2.4rem;}
+  .cat-block .cat-head{display:flex;align-items:baseline;gap:0.9rem;border-bottom:1px solid var(--line);
+    padding-bottom:0.6rem;margin-bottom:1rem;flex-wrap:wrap;}
+  .cat-block .cat-head .cat-name{font-family:Georgia,serif;color:var(--gold);font-size:1.45rem;}
+  .cat-block .cat-head .cat-range{font-family:"SF Mono",Menlo,monospace;color:var(--faint);font-size:0.78rem;letter-spacing:0.06em;}
+  .cat-block .cat-head .cat-blurb{color:var(--dim);font-size:0.9rem;flex:1;min-width:240px;}
+  .lab-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:0.6rem;}
+  .lab-box{background:var(--card);border:1px solid var(--line);border-radius:5px;padding:0.7rem 0.85rem;
+    min-height:92px;display:flex;flex-direction:column;position:relative;transition:all .12s;}
+  .lab-box:hover{background:var(--card-elev);border-color:var(--gold);transform:translateY(-1px);}
+  .lab-box .lab-id{font-family:"SF Mono",Menlo,monospace;color:var(--gold);font-size:0.72rem;
+    letter-spacing:0.08em;margin-bottom:0.3rem;}
+  .lab-box .lab-id .lvl{color:var(--faint);}
+  .lab-box .lab-title{color:var(--fg);font-size:0.9rem;line-height:1.3;font-weight:500;margin-bottom:0.25rem;}
+  .lab-box .lab-sub{color:var(--dim);font-size:0.76rem;line-height:1.4;}
+  .levelkey{display:inline-flex;gap:1.1rem;font-family:"SF Mono",Menlo,monospace;font-size:0.74rem;
+    color:var(--dim);margin-bottom:0.5rem;flex-wrap:wrap;}
+  .levelkey b{color:var(--gold);font-weight:400;}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="brand">Owl Group Trading<span class="sub">The Simulator Lab</span></div>
+  <nav class="nav">
+    <a href="./simulator-promo.html">The Course</a>
+    <a href="#catalog">All 149</a>
+    <a href="./simulator-promo.html#pricing">Pricing</a>
+  </nav>
+  <a class="cta-mini" href="./simulator-promo.html#pricing">Enroll →</a>
+</div>
+<main>
+  <section class="hero no-border" style="border-bottom:0">
+    <div class="kicker">The complete catalog · numbered for reference</div>
+    <h1><span class="num">149</span> interactive trading simulators</h1>
+    <p class="subhead">Not slides. Not articles. Simulations where you turn a knob and watch the math respond — one concept per screen, a coach caption under every chart, a check to prove you saw it.</p>
+    <div class="ladder-tagline"><span class="rung">NOVICE</span><span class="arrow">→</span><span class="rung">INTERMEDIATE</span><span class="arrow">→</span><span class="rung">SKILLED</span></div>
+  </section>
+
+  <section id="catalog" class="no-border">
+    <div class="section-kicker">The Curriculum</div>
+    <h2>Every simulator, every category.</h2>
+    <p class="section-lead">Each box is one self-contained simulator. They are numbered so feedback is precise — reference any sim by its number (e.g. &ldquo;#86 needs a clearer caption&rdquo;). Hover for the one-line summary.</p>
+    <div class="levelkey">Level: <span><b>Novice</b> first principles</span><span><b>Intermediate</b> applied</span><span><b>Skilled</b> advanced craft</span></div>
+    <div class="grid-tabs" id="gridTabs"></div>
+    <div id="catalogBody"></div>
+  </section>
+</main>
+<footer>
+  Owl Group Trading · Dr. Ken Long · The Simulator Lab · <a href="./simulator-promo.html">course &amp; pricing</a> · <a href="mailto:hello@owlgrouptrading.com">hello@owlgrouptrading.com</a>
+</footer>
+<script>
+const LABS = [[1, "novice", "indicator-mechanics", "Regression Line Workshop", "See how a line fits through closing prices"], [2, "intermediate", "indicator-mechanics", "RL: Beyond the Close", "Candlesticks vs close-only, range residuals, turning points"], [3, "skilled", "indicator-mechanics", "RLCO Framework", "Regression Line Cross Over: RL(10/30/90/270) alignment and divergence"], [4, "intermediate", "indicator-mechanics", "PSAR Anatomy", "Step through the Parabolic SAR state machine"], [5, "novice", "indicator-mechanics", "MACD Builder", "Build edge's MACD from two moving averages of RL(10)"], [6, "intermediate", "indicator-mechanics", "Dragon Bands", "See how Dragon smooths RL10 into trend bands"], [7, "novice", "indicator-mechanics", "Z-Level Workshop", "Watch Bollinger-style bands squeeze and expand"], [8, "intermediate", "indicator-mechanics", "VWAP Construction", "Build VWAP bar by bar and see where volume anchors it"], [9, "skilled", "indicator-mechanics", "RL Fractal Stack", "RL10/30/90/270 as a fractal hierarchy — excursion and the C3 pinch"], [10, "novice", "indicator-mechanics", "ATR Construction", "Build Average True Range from true range up"], [11, "intermediate", "indicator-mechanics", "ADX Construction", "Directional movement into a trend-strength gauge"], [12, "skilled", "indicator-mechanics", "Boxstairstep & R10", "The per-day R-level accumulator and its arming"], [13, "skilled", "indicator-mechanics", "ZigZag Builder", "The pivot algorithm and the confirmed_on lag"], [14, "skilled", "indicator-mechanics", "GX Index Construction", "Cap^0.75 weighting builds a sector composite"], [15, "novice", "indicator-mechanics", "Log vs Linear", "Same data, two stories"], [16, "novice", "indicator-mechanics", "The Truncated Axis", "How a non-zero baseline exaggerates"], [17, "novice", "indicator-mechanics", "Candlestick Anatomy", "What a candle shows, and what it hides"], [18, "intermediate", "indicator-mechanics", "Heikin-Ashi", "Smoother candles that show no real price"], [19, "intermediate", "indicator-mechanics", "The Timeframe Illusion", "The same trend, three different stories"], [20, "novice", "price-structure", "Swing Pivots", "Detecting highs, lows, and their significance"], [21, "skilled", "price-structure", "S/R Zones (MTF)", "Zones from Dragon/RL pivots, clustered"], [22, "intermediate", "price-structure", "Shelf Detector", "Three-plus touches mark a polarity-flip band"], [23, "novice", "price-structure", "Prior-Day Levels", "PDH, PDL, PDC and the overnight range"], [24, "skilled", "price-structure", "TPO & Congestion", "Where price spent time becomes a magnet"], [25, "intermediate", "signal-quality", "Goodness of Fit", "How well does the regression line explain price?"], [26, "skilled", "signal-quality", "Forward Projection", "Project an indicator forward and watch reality unfold"], [27, "intermediate", "signal-quality", "Divergence Explorer", "When price and momentum disagree"], [28, "intermediate", "signal-quality", "Signal Hit Rate", "Count what happens after a signal fires"], [29, "skilled", "signal-quality", "ZigZag Correlation", "Use look-ahead pivots to detect lead/lag relationships"], [30, "skilled", "signal-quality", "Triple Barrier Scorer", "Set stop and target, then score every entry"], [31, "intermediate", "signal-quality", "OWL Alignment Scorer", "The all-aligned entry: PSAR + Dragon + RL30"], [32, "skilled", "signal-quality", "Five Lenses for Swing", "Where the lenses agree is where the trade is"], [33, "skilled", "signal-quality", "MTF Alignment Stack", "Three timeframes that must agree"], [34, "intermediate", "signal-quality", "Supported Spring Crossing", "The confirmed turn off the bottom"], [35, "intermediate", "signal-quality", "Red River Envelope", "Normal momentum, and its extremes"], [36, "intermediate", "market-structure", "MACD Seasons", "See the momentum cycle in four colors"], [37, "intermediate", "market-structure", "RYG Zone Classifier", "Classify every bar as Red, Yellow, or Green"], [38, "intermediate", "market-structure", "Critical State (Frog)", "Watch volatility compress until it explodes"], [39, "novice", "market-structure", "Trend vs Chop", "Same indicator, two regimes, different results"], [40, "intermediate", "market-structure", "Ninebox Classifier", "The market's temperature in a 3×3 grid"], [41, "intermediate", "market-structure", "Gain / Fail Stat Explorer", "Six measurements hidden in one daily bar"], [42, "intermediate", "market-structure", "Gap Classifier", "Small, medium, big — measured in Frogs"], [43, "intermediate", "market-structure", "Opening Range & OR3", "The day's first vote, and the three-bar commit"], [44, "intermediate", "market-structure", "Closing Range 30", "The last 30 minutes as tomorrow's tell"], [45, "intermediate", "market-structure", "Vol-Regime Sizing", "Same setup, different size in high vs low vol"], [46, "intermediate", "market-structure", "Relative Strength (RS Line)", "Build a ratio chart and read leadership"], [47, "skilled", "market-structure", "Story Stock Lifecycle", "IPO selloff to consolidation to checkpoint to explosion"], [48, "novice", "market-structure", "Intraday Volume Curve", "The U-shaped trading day"], [49, "intermediate", "market-structure", "Overnight vs Intraday", "Decompose the return into gap and session"], [50, "intermediate", "market-structure", "Time-of-Day Edge", "Forward returns by 30-minute slot"], [51, "intermediate", "market-structure", "Day-of-Week Seasonality", "Weekday and turn-of-month effects"], [52, "skilled", "market-structure", "Auction Mechanics", "How MOO and MOC set the reference price"], [53, "intermediate", "market-internals", "Advance / Decline Line", "Breadth that confirms or diverges"], [54, "intermediate", "market-internals", "New Highs / New Lows", "Breadth deterioration before tops"], [55, "novice", "market-internals", "% Above Moving Average", "How much of the market is participating"], [56, "skilled", "market-internals", "Breadth Thrust", "The rare washout-to-thrust signal"], [57, "skilled", "market-internals", "Correlation Regime", "When everything moves together"], [58, "novice", "streaming-alerts", "The Forming Bar", "Watch a bar build tick by tick"], [59, "intermediate", "streaming-alerts", "Scan on Close", "Why signals fire on the closed bar"], [60, "intermediate", "streaming-alerts", "Alert Cooldown & Arming", "Armed once per day, with a cooldown"], [61, "intermediate", "streaming-alerts", "Simulate-Bar Replay", "Replay history through the live relay"], [62, "intermediate", "streaming-alerts", "Watchlist Tiers", "Core, broad, live — coverage vs cost"], [63, "intermediate", "streaming-alerts", "Condition Builder (AST)", "Operands and operators into an evaluable tree"], [64, "skilled", "streaming-alerts", "Crossover Semantics", "xup/xdn, strict vs non-strict, the two snapshots"], [65, "skilled", "streaming-alerts", "Alert Rule Replay", "Drive an AlertCondition bar by bar"], [66, "skilled", "streaming-alerts", "Operand Resolver", "How a condition reads its inputs at eval time"], [67, "novice", "streaming-alerts", "Boolean Logic & Truth Tables", "AND / OR / NOT and how they gate fires"], [68, "intermediate", "events", "Earnings Drift", "Post-earnings announcement drift"], [69, "intermediate", "events", "Gap on News", "Fade or follow, by size and context"], [70, "skilled", "events", "Index Inclusion Flow", "Forced buying on an index add"], [71, "skilled", "events", "Lockup Expiry", "Post-IPO unlock supply shock"], [72, "skilled", "events", "Playbook In-Play Test", "Is X in play for playbook P today?"], [73, "skilled", "system-building", "Entry Signal Builder", "Combine conditions and see how signal quality changes"], [74, "skilled", "system-building", "Walk-Forward Validator", "Drag the IS/OOS divider and watch reality check your theory"], [75, "novice", "system-building", "Expectancy Calculator", "The single number that tells you if a system has edge"], [76, "skilled", "system-building", "Portfolio Constraint", "See what happens when half your signals go untraded"], [77, "skilled", "system-building", "Money Flow vs Price", "Does institutional flow lead or lag price?"], [78, "intermediate", "system-building", "Slippage & Spread", "The quiet tax on every fill"], [79, "intermediate", "system-building", "Order Type Sim", "Market vs limit vs stop"], [80, "skilled", "system-building", "Fill Quality Replay", "Why backtests overstate the edge"], [81, "intermediate", "system-building", "Fills to Trade", "Aggregate fills into a trade unit"], [82, "skilled", "system-building", "SAR Splitting", "Stop-and-reverse becomes two trades"], [83, "intermediate", "system-building", "Open Position (Null Close)", "Why open trades carry a null close"], [84, "intermediate", "system-building", "R-Multiple from Fills", "Compute R with partial exits"], [85, "intermediate", "system-building", "Dedup & Reconcile", "Duplicate fills and the source of truth"], [86, "skilled", "risk-sizing", "CAR25 Simulator", "Watch 100 equity curves fan out from your trade returns"], [87, "skilled", "risk-sizing", "safe_f Workshop", "Watch the convergence loop find the right position size"], [88, "skilled", "risk-sizing", "MTM Drawdown", "See how intra-trade drawdown affects risk measurement"], [89, "novice", "risk-sizing", "Frog Box Explainer", "Why a $5 move means different things on different stocks"], [90, "intermediate", "risk-sizing", "Kelly vs Fixed", "Compare position sizing strategies on the same trades"], [91, "skilled", "risk-sizing", "4321 Turbo Sizer", "Core, turbo, and the riskiest moment — the open"], [92, "intermediate", "risk-sizing", "Core & Turbo, Fractally", "The same split at position, target, and sector"], [93, "intermediate", "risk-sizing", "pR vs xR", "Position risk and execution risk are different numbers"], [94, "intermediate", "risk-sizing", "The Sizing Valve", "Edge opens it, drawdown closes it — feelings don't vote"], [95, "novice", "risk-sizing", "What Is One R?", "Frog Box vs 2×R10 vs ATR(14) — define the unit"], [96, "intermediate", "risk-sizing", "Correlation & Diversification", "The benefit curve as correlation falls"], [97, "skilled", "risk-sizing", "Risk Budgeting", "Spread a fixed risk budget across systems"], [98, "intermediate", "risk-sizing", "Portfolio Heat", "The five-correlated-longs trap"], [99, "intermediate", "risk-sizing", "Equity Curve Blending", "Mix systems, smooth the ride"], [100, "skilled", "risk-sizing", "System Rotation Sim", "Follow the top trailing-CAR25 system"], [101, "skilled", "risk-sizing", "Kelly Across Edges", "Sizing several simultaneous bets"], [102, "novice", "risk-sizing", "Drawdown Recovery Math", "Minus 50% needs plus 100% to get back"], [103, "intermediate", "risk-sizing", "Geometric vs Arithmetic", "Why average return overstates growth"], [104, "skilled", "risk-sizing", "Risk of Ruin", "Ruin probability vs bet size and edge"], [105, "intermediate", "risk-sizing", "Sequence of Returns", "Same returns, different order, different outcome"], [106, "skilled", "risk-sizing", "Volatility Drag", "How variance quietly erodes CAGR"], [107, "intermediate", "data-backtest", "Survivorship Bias", "Dropping the losers inflates the backtest"], [108, "intermediate", "data-backtest", "Look-Ahead Leakage", "One bar of peeking fakes an edge"], [109, "intermediate", "data-backtest", "Adjustment Reconstruction", "adj_close, splits, and ratio reconstruction"], [110, "skilled", "data-backtest", "Point-in-Time Data", "As-of vs restated — revisions break backtests"], [111, "intermediate", "data-backtest", "Coverage Gaps", "Missing bars, holidays, and half-days"], [112, "skilled", "data-backtest", "Overfitting Heatmap", "The sharp peak is curve-fit; the plateau is real"], [113, "skilled", "data-backtest", "Degrees of Freedom", "Every added rule eats statistical power"], [114, "skilled", "data-backtest", "Monte Carlo Permutation", "Is your curve better than a shuffle?"], [115, "skilled", "data-backtest", "Multiple Testing", "Test enough strategies and some shine by luck"], [116, "intermediate", "data-backtest", "The Seal", "Lock the rules before you see out-of-sample"], [117, "intermediate", "decision-science", "Sample-Size Mirage", "How many trades before you trust the edge?"], [118, "intermediate", "decision-science", "Distribution Shapes", "Skew, fat tails, and the lying mean"], [119, "intermediate", "decision-science", "SQN Explorer", "System Quality Number on the Van Tharp scale"], [120, "skilled", "decision-science", "Confidence Interval Bands", "Real edge or noise? Put error bars on it"], [121, "skilled", "decision-science", "Standard Error & Sampling", "Why the average of averages is steadier"], [122, "intermediate", "decision-science", "Conditional Return Explorer", "The forward-return distribution, given a condition"], [123, "intermediate", "decision-science", "Base Rate & Bayes", "Given the signal fired, what's P(up)?"], [124, "intermediate", "decision-science", "FB Count Lab", "How many analogs existed, and what they did"], [125, "skilled", "decision-science", "Scenario Distribution Builder", "Stack conditions, watch the sample collapse"], [126, "intermediate", "decision-science", "Process vs Outcome", "Resulting: don't grade the decision by the P&L"], [127, "skilled", "decision-science", "Calibration Trainer", "Are your 70%s actually 70%?"], [128, "skilled", "decision-science", "Value of Information", "Is more confirmation worth the wait?"], [129, "skilled", "decision-science", "Expected Value Tree", "Enter, wait, or pass — compute the EV"], [130, "intermediate", "trade-craft", "Rule of Four Trainer", "Give one, aim for three, settle for two, keep one"], [131, "novice", "trade-craft", "Risk Box Framer", "Turn entry, stop, and target into an R:R box"], [132, "intermediate", "trade-craft", "Morning Hook Replay", "Gap down, sell to the fail-stat, reverse up"], [133, "intermediate", "trade-craft", "Collapsing Dragon Builder", "Declining price, RL10 turns up, the turn fails and collapses below"], [134, "skilled", "trade-craft", "Scale In, Scale Out", "All-in vs scaled on the same price path"], [135, "intermediate", "trade-craft", "Kata 2 Pattern", "Cata-of-2: two turning points that break the RL10 peak"], [136, "intermediate", "trade-craft", "1-2-3 on the VWAP", "The most common long: test, hold, reclaim"], [137, "intermediate", "trade-craft", "Gap-and-Go (1-2-3)", "Third-day momentum gap, and when to add"], [138, "intermediate", "trade-craft", "Failure to Fail", "The bottom that should have broken, and didn't"], [139, "skilled", "trade-craft", "Anchored VWAP Stack", "Four anchored VWAPs fanned in order — trend agreement across horizons"], [140, "novice", "trader-psychology", "Zero State Execution", "Your baseline decides whether you follow your rules"], [141, "novice", "trader-psychology", "The Aristotelian Middle", "Between paralysis and pride"], [142, "intermediate", "trader-psychology", "FMEA: Ten Ways It Kills You", "Name the failure modes before you trade the system"], [143, "intermediate", "trader-psychology", "Drawdown Resilience", "Drawdowns are certain; ruin is optional"], [144, "novice", "trader-psychology", "Being Stuck Is a Gift", "Spinning wheels vs loaded inertia"], [145, "novice", "behavioral", "Anchoring Trap", "Watch a planted number drag your estimate"], [146, "novice", "behavioral", "Loss Aversion & the Disposition Effect", "Why you sell winners early and marry losers"], [147, "novice", "behavioral", "Confirmation Bias Feed", "Which evidence do you actually click?"], [148, "intermediate", "behavioral", "Recency & Independence", "Streaks, the gambler's fallacy, and base rates"], [149, "novice", "behavioral", "Hindsight Replay", "\"I knew it all along\" — measured"]];
+const CATS = [{"key": "indicator-mechanics", "title": "Indicator Mechanics", "blurb": "How the core math is built — RL, PSAR, MACD, ATR, ADX, Dragon, and the chart literacy beneath them.", "count": 19, "start": 1, "end": 19}, {"key": "price-structure", "title": "Price Structure", "blurb": "Where price remembers: swing pivots, multi-timeframe zones, shelves, prior-day levels.", "count": 5, "start": 20, "end": 24}, {"key": "signal-quality", "title": "Signal Quality", "blurb": "Does the signal actually carry an edge? Hit rate, divergence, goodness-of-fit, foresight.", "count": 11, "start": 25, "end": 35}, {"key": "market-structure", "title": "Market Structure", "blurb": "The shape of the session and the tape: volume curve, time-of-day, relative strength, the lifecycle of a story stock.", "count": 17, "start": 36, "end": 52}, {"key": "market-internals", "title": "Market Internals", "blurb": "The market underneath the index: breadth, new highs/lows, percent above MA, correlation regime.", "count": 5, "start": 53, "end": 57}, {"key": "streaming-alerts", "title": "Streaming & Alerts", "blurb": "How a live rule fires without lying to you: forming bars, scan-on-close, cooldown, the condition AST.", "count": 10, "start": 58, "end": 67}, {"key": "events", "title": "Events", "blurb": "Calendar-driven setups: earnings drift, news gaps, index inclusion, lockup expiry, the in-play test.", "count": 5, "start": 68, "end": 72}, {"key": "system-building", "title": "System Building", "blurb": "Turn an idea into a tradable system: expectancy, entries, walk-forward, fills, R-multiples, execution.", "count": 13, "start": 73, "end": 85}, {"key": "risk-sizing", "title": "Risk & Sizing", "blurb": "The sacred discipline: CAR25, safe-f, drawdown math, risk of ruin, portfolio heat, the Frog Box.", "count": 21, "start": 86, "end": 106}, {"key": "data-backtest", "title": "Data & Backtest", "blurb": "Why most backtests lie: survivorship, look-ahead, overfitting, multiple testing, the seal.", "count": 10, "start": 107, "end": 116}, {"key": "decision-science", "title": "Decision Science", "blurb": "Thinking in bets: sample size, distributions, base rates, calibration, expected value, process vs outcome.", "count": 13, "start": 117, "end": 129}, {"key": "trade-craft", "title": "Trade Craft", "blurb": "The Owl craftsman patterns — kata, fractal stacks, anchored VWAP, scale-in/scale-out, the nine-box.", "count": 10, "start": 130, "end": 139}, {"key": "trader-psychology", "title": "Trader Psychology", "blurb": "The seat between the chair and the screen — stillness, the gift of being stuck, the Aristotelian middle.", "count": 5, "start": 140, "end": 144}, {"key": "behavioral", "title": "Behavioral", "blurb": "The biases that quietly tax you: anchoring, loss aversion, confirmation, recency, hindsight.", "count": 5, "start": 145, "end": 149}];
+const LVL = {novice:'Novice', intermediate:'Intermediate', skilled:'Skilled'};
+function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function labBox(t){
+  const [id,level,cat,title,sub]=t;
+  const lvl = LVL[level]||'';
+  return `<div class="lab-box" title="#${String(id).padStart(3,'0')} · ${esc(title)} — ${esc(sub)}">
+    <div class="lab-id">#${String(id).padStart(3,'0')}${lvl?` · <span class="lvl">${lvl}</span>`:''}</div>
+    <div class="lab-title">${esc(title)}</div>
+    <div class="lab-sub">${esc(sub)}</div>
+  </div>`;
+}
+function catBlock(c){
+  const items = LABS.filter(t=>t[2]===c.key);
+  return `<div class="cat-block">
+    <div class="cat-head">
+      <span class="cat-name">${esc(c.title)}</span>
+      <span class="cat-range">#${String(c.start).padStart(3,'0')}–#${String(c.end).padStart(3,'0')} · ${c.count} sims</span>
+      <span class="cat-blurb">${esc(c.blurb)}</span>
+    </div>
+    <div class="lab-grid">${items.map(labBox).join('')}</div>
+  </div>`;
+}
+function render(catKey){
+  const body = document.getElementById('catalogBody');
+  const blocks = catKey==='all' ? CATS : CATS.filter(c=>c.key===catKey);
+  body.innerHTML = blocks.map(catBlock).join('');
+}
+const tabs = document.getElementById('gridTabs');
+tabs.innerHTML = `<button class="grid-tab active" data-cat="all">All<span class="count">149</span></button>` +
+  CATS.map(c=>`<button class="grid-tab" data-cat="${c.key}">${esc(c.title)}<span class="count">${c.count}</span></button>`).join('');
+tabs.querySelectorAll('.grid-tab').forEach(b=>b.addEventListener('click',()=>{
+  tabs.querySelectorAll('.grid-tab').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active'); render(b.dataset.cat);
+  document.getElementById('catalog').scrollIntoView({behavior:'smooth',block:'start'});
+}));
+render('all');
+</script>
+</body>
+</html>
