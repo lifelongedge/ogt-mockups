@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<!-- codeu sales-page MOCKUP. Not live commerce. Modeled on ogt-mockups/100-techniques-promo.
+     Every <section> carries a numbered "MOCKUP ITEM" badge so feedback can be concrete. -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Code University — Learn how a real platform was built, by breaking it</title>
+<style>
+  :root{
+    --cream:#f7f4ec; --cream2:#efeadd; --ink:#211f1b; --ink2:#4b463d; --muted:#857d6d;
+    --gold:#b8860b; --gold2:#caa14a; --goldsoft:#f3e9cf; --line:#e2dac6; --card:#fffdf7;
+    --nov:#4f8a4f; --int:#c08a2a; --skl:#b1543e; --code:#262219; --codefg:#e9e2cf;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:var(--cream);color:var(--ink);font:17px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+  a{color:var(--gold);text-decoration:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  h1,h2,h3{line-height:1.15;letter-spacing:-.01em}
+  .mono{font-family:var(--mono)}
+  .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+
+  /* numbered mockup-item badge */
+  section{position:relative}
+  .item{position:absolute;top:10px;left:10px;display:flex;align-items:center;gap:7px;z-index:5;
+        font-family:var(--mono);font-size:11px;color:var(--muted)}
+  .item b{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;
+        background:var(--gold);color:#fff;font-size:12px;font-weight:700}
+
+  /* nav */
+  nav{border-bottom:1px solid var(--line);background:rgba(247,244,236,.92);backdrop-filter:blur(6px);position:sticky;top:0;z-index:20}
+  .navrow{display:flex;align-items:center;justify-content:space-between;height:62px}
+  .brand{display:flex;align-items:baseline;gap:10px;font-weight:800;font-size:18px}
+  .brand .sub{font-family:var(--mono);font-size:12px;color:var(--muted);font-weight:500}
+  .navlinks{display:flex;gap:22px;font-size:14px}
+  .navlinks a{color:var(--ink2)}
+  .btn{display:inline-block;background:var(--gold);color:#fff;font-weight:700;padding:10px 18px;border-radius:7px;font-size:15px;border:1px solid var(--gold)}
+  .btn:hover{background:#a5780a}
+  .btn.ghost{background:transparent;color:var(--gold)}
+  .btn.lg{padding:14px 26px;font-size:16px}
+
+  /* hero */
+  .hero{padding:70px 0 56px;text-align:center}
+  .hero h1{font-size:52px;margin:0 0 18px;font-weight:850}
+  .hero h1 em{font-style:normal;color:var(--gold);font-family:var(--mono);font-weight:700}
+  .hero .lede{font-size:21px;color:var(--ink2);max-width:760px;margin:0 auto 30px}
+  .ladder{display:flex;justify-content:center;gap:0;flex-wrap:wrap;margin:30px auto 34px;font-family:var(--mono);font-size:13px;letter-spacing:.08em}
+  .ladder span{padding:7px 16px;color:var(--muted)}
+  .ladder span+span{border-left:1px solid var(--line)}
+  .ladder span.on{color:var(--gold);font-weight:700}
+  .cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .note{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:22px}
+  .stat-row{display:flex;gap:40px;justify-content:center;margin-top:40px;flex-wrap:wrap}
+  .stat{text-align:center}
+  .stat b{display:block;font-size:34px;color:var(--gold);font-weight:850;line-height:1}
+  .stat span{font-size:13px;color:var(--muted);font-family:var(--mono)}
+
+  /* generic section */
+  .sec{padding:64px 0;border-top:1px solid var(--line)}
+  .sec h2{font-size:34px;margin:0 0 8px;font-weight:800}
+  .sec .sub{font-size:18px;color:var(--ink2);margin:0 0 34px;max-width:720px}
+
+  /* anatomy loop */
+  .loop{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:30px}
+  .loop .step{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px 16px}
+  .loop .step .n{font-family:var(--mono);color:var(--gold);font-weight:700;font-size:13px}
+  .loop .step h4{margin:6px 0 6px;font-size:16px}
+  .loop .step p{margin:0;font-size:13.5px;color:var(--ink2)}
+  .codebox{background:var(--code);color:var(--codefg);border-radius:10px;padding:18px 20px;font-family:var(--mono);font-size:13.5px;line-height:1.7;overflow:auto}
+  .codebox .del{color:#e0856f}.codebox .ok{color:#86c98a}.codebox .cm{color:#8a8268}
+
+  /* lab cards */
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;display:flex;flex-direction:column}
+  .card .top{display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+  .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:20px;border:1px solid var(--line);color:var(--muted)}
+  .lvl{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:20px;color:#fff}
+  .lvl.n{background:var(--nov)}.lvl.i{background:var(--int)}.lvl.s{background:var(--skl)}
+  .card .num{font-family:var(--mono);font-size:12px;color:var(--gold);font-weight:700}
+  .card h3{font-size:19px;margin:2px 0 8px}
+  .card p{font-size:14px;color:var(--ink2);margin:0 0 14px;flex:1}
+  .card .meta{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-bottom:12px}
+  .card ul{margin:0 0 16px;padding-left:18px;font-size:13px;color:var(--ink2)}
+  .card ul li{margin-bottom:3px}
+  .card .pv{font-family:var(--mono);font-size:12px;color:var(--gold);font-weight:700}
+
+  /* ladder value */
+  .rungs{display:flex;flex-direction:column;gap:0}
+  .rung{display:grid;grid-template-columns:200px 1fr;gap:24px;padding:20px 0;border-top:1px dashed var(--line)}
+  .rung:first-child{border-top:0}
+  .rung .lab{font-family:var(--mono);font-weight:700;color:var(--gold);font-size:15px}
+  .rung .lab small{display:block;color:var(--muted);font-weight:500;font-size:12px;margin-top:3px}
+  .rung p{margin:0;color:var(--ink2);font-size:15px}
+
+  /* curriculum */
+  .tracks{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+  .track{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 20px 8px}
+  .track .th{display:flex;align-items:baseline;gap:10px;margin-bottom:12px;border-bottom:1px solid var(--line);padding-bottom:10px}
+  .track .th .tn{font-family:var(--mono);font-weight:800;color:var(--gold);font-size:14px}
+  .track .th h3{font-size:18px;margin:0;flex:1}
+  .track .th .ct{font-family:var(--mono);font-size:11px;color:var(--muted)}
+  .lab-row{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid #f0ead9;font-size:14px}
+  .lab-row:last-child{border-bottom:0}
+  .lab-row .id{font-family:var(--mono);font-size:11px;color:var(--muted);width:42px;flex-shrink:0}
+  .lab-row .t{flex:1}
+  .lab-row .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+  .dot.n{background:var(--nov)}.dot.i{background:var(--int)}.dot.s{background:var(--skl)}
+  .built{font-family:var(--mono);font-size:9.5px;background:var(--gold);color:#fff;padding:1px 6px;border-radius:10px;letter-spacing:.05em}
+  .legend{display:flex;gap:18px;margin-top:18px;font-family:var(--mono);font-size:12px;color:var(--muted);flex-wrap:wrap}
+  .legend span{display:flex;align-items:center;gap:6px}
+
+  /* pricing */
+  .prices{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:start}
+  .price{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px 22px;position:relative}
+  .price.feat{border:2px solid var(--gold);box-shadow:0 12px 40px -18px rgba(184,134,11,.5)}
+  .price .badge{position:absolute;top:-12px;left:22px;background:var(--gold);color:#fff;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;padding:4px 10px;border-radius:20px;text-transform:uppercase}
+  .price h3{font-size:20px;margin:4px 0 4px}
+  .price .who{font-size:13px;color:var(--muted);margin-bottom:16px}
+  .price .amt{font-size:40px;font-weight:850;line-height:1}
+  .price .amt small{font-size:15px;color:var(--muted);font-weight:600}
+  .price .was{font-family:var(--mono);font-size:13px;color:var(--muted);text-decoration:line-through;margin-left:6px}
+  .price ul{list-style:none;padding:0;margin:18px 0 22px;font-size:14px}
+  .price ul li{padding:6px 0 6px 24px;position:relative;color:var(--ink2)}
+  .price ul li:before{content:"›";position:absolute;left:6px;color:var(--gold);font-weight:800}
+  .price .btn{width:100%;text-align:center}
+  .founding{text-align:center;font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:18px}
+
+  /* why */
+  .why{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+  .why .w{border-left:3px solid var(--gold);padding:4px 0 4px 18px}
+  .why .w h4{margin:0 0 6px;font-size:18px}
+  .why .w p{margin:0;color:var(--ink2);font-size:15px}
+
+  /* faq */
+  details{border-bottom:1px solid var(--line);padding:16px 0}
+  details summary{cursor:pointer;font-weight:700;font-size:17px;list-style:none;display:flex;justify-content:space-between}
+  details summary::-webkit-details-marker{display:none}
+  details summary:after{content:"+";color:var(--gold);font-weight:800}
+  details[open] summary:after{content:"–"}
+  details p{margin:12px 0 0;color:var(--ink2);font-size:15px}
+
+  /* final + footer */
+  .final{text-align:center;background:var(--cream2)}
+  .final h2{font-size:40px}
+  .final .q{font-family:var(--mono);color:var(--gold);font-size:15px;margin-top:18px}
+  footer{border-top:1px solid var(--line);padding:32px 0;color:var(--muted);font-size:13px}
+  .footrow{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px}
+
+  .mockflag{background:var(--ink);color:var(--cream);text-align:center;font-family:var(--mono);font-size:12px;padding:8px;letter-spacing:.05em}
+
+  @media(max-width:880px){
+    .hero h1{font-size:36px}.cards{grid-template-columns:1fr}.loop{grid-template-columns:1fr 1fr}
+    .tracks{grid-template-columns:1fr}.prices{grid-template-columns:1fr}.why{grid-template-columns:1fr}
+    .rung{grid-template-columns:1fr}.navlinks{display:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="mockflag">MOCKUP — concept sales page for demand-testing. Nothing here is live commerce. Every block is numbered for feedback.</div>
+
+<!-- ITEM 1 — NAV -->
+<nav><div class="wrap navrow">
+  <span class="item"><b>1</b>NAV</span>
+  <div class="brand">Code University <span class="sub">/ codeu</span></div>
+  <div class="navlinks">
+    <a href="#anatomy">Inside a Lab</a>
+    <a href="#ladder">The Climb</a>
+    <a href="#curriculum">All 160</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#faq">FAQ</a>
+  </div>
+  <a href="#pricing" class="btn">Enroll →</a>
+</div></nav>
+
+<!-- ITEM 2 — HERO -->
+<section class="hero"><div class="wrap">
+  <span class="item"><b>2</b>HERO</span>
+  <div class="kicker">A production trading platform · built from scratch with AI · 160 labs</div>
+  <h1>The decisions behind a platform<br>traders <em>actually trade on</em>.</h1>
+  <p class="lede">This isn't a tutorial repo. It's a real trading platform — features used by real
+  traders in live market support — taken apart one lab at a time: how quotes are stored, why
+  contracts are sacred, how a daily cycle survives failure. You'll read the real code. But let's
+  be honest — you'll write yours with AI (and if you're not, why not?). So the skill we really
+  teach is directing AI properly: to build on a system like this, evolve it, and keep it alive in
+  production — exactly how we built the whole platform from scratch, because we couldn't have
+  without it.</p>
+  <div class="ladder">
+    <span class="on">NEWCOMER</span><span>→</span><span>BUILDER</span><span>→</span>
+    <span>MAINTAINER</span><span>→</span><span>ARCHITECT</span><span>→</span><span>PRINCIPAL</span>
+  </div>
+  <div class="cta-row">
+    <a href="#pricing" class="btn lg">Start the climb →</a>
+    <a href="#anatomy" class="btn lg ghost">Try a lab free</a>
+  </div>
+  <div class="stat-row">
+    <div class="stat"><b>160</b><span>hands-on labs</span></div>
+    <div class="stat"><b>8</b><span>tracks</span></div>
+    <div class="stat"><b>0</b><span>setup steps</span></div>
+    <div class="stat"><b>∞</b><span>lifetime access</span></div>
+  </div>
+  <p class="note">No install. No account to start. No toy examples — every lab is a real decision from a production trading platform.</p>
+</div></section>
+
+<!-- ITEM 3 — ANATOMY -->
+<section class="sec" id="anatomy"><div class="wrap">
+  <span class="item"><b>3</b>ANATOMY</span>
+  <div class="kicker">Anatomy of a lab</div>
+  <h2>Each lab is a loop. Not a video.</h2>
+  <p class="sub">Most courses show you correct code and hope it lands. codeu hands you the running
+  system and dares you to break it. You feel the failure, then you fix it. That loop is the whole product.</p>
+  <div class="loop">
+    <div class="step"><div class="n">01</div><h4>Read</h4><p>A real function, on screen, already working. One decision per lab.</p></div>
+    <div class="step"><div class="n">02</div><h4>Edit</h4><p>Change the code in a live editor — the bigger half of the screen.</p></div>
+    <div class="step"><div class="n">03</div><h4>Break</h4><p>Sabotage it on purpose. Watch the chart tear, the data go wrong, the alarm fire.</p></div>
+    <div class="step"><div class="n">04</div><h4>Fix</h4><p>Restore it and watch the system heal. Now you understand <em>why</em>.</p></div>
+    <div class="step"><div class="n">05</div><h4>Prove</h4><p>A challenge — write or choose the answer that shows it clicked.</p></div>
+  </div>
+  <div class="codebox">
+<span class="cm">// Lab 1.1 — Quote Data Architecture · delete the adjustment, watch it tear</span>
+function reconstruct(close, adj_close) {
+  const ratio = adj_close / close;   <span class="cm">// ← delete this line</span>
+  return close <span class="del">* ratio</span>;            <span class="cm">// → returns just `close`</span>
+}
+<span class="del">▶ series tears at the split — adjustment dropped</span>
+<span class="ok">▶ continuous through the split ✓  (ratio restored)</span>
+  </div>
+</div></section>
+
+<!-- ITEM 4 — SAMPLE CARDS -->
+<section class="sec"><div class="wrap">
+  <span class="item"><b>4</b>SAMPLE LABS</span>
+  <div class="kicker">Three of one hundred sixty</div>
+  <h2>A look inside.</h2>
+  <p class="sub">Every lab is self-contained — synthetic data, its own chart, a sandboxed code runner. Nothing to install, nothing to configure.</p>
+  <div class="cards">
+    <div class="card">
+      <div class="top"><span class="tag">Foundations</span><span class="lvl n">Novice</span></div>
+      <div class="num">LAB 1.1</div><h3>Quote Data Architecture</h3>
+      <p>Store one adjustment column and reconstruct prices on demand. Delete the adjustment and watch a split tear the chart in half — the exact bug the design exists to prevent.</p>
+      <div class="meta">~6 min · edit-run-loop · own chart</div>
+      <ul><li>Live code editor</li><li>Reactive chart</li><li>Sabotage step</li><li>Challenge gate</li></ul>
+      <span class="pv">▶ Free preview</span>
+    </div>
+    <div class="card">
+      <div class="top"><span class="tag">Contracts</span><span class="lvl n">Novice</span></div>
+      <div class="num">LAB 3.1</div><h3>Contract Blast Radius</h3>
+      <p>Rename one field and watch every downstream consumer light up red across a live dependency graph. The fastest way to feel why a platform is contract-first.</p>
+      <div class="meta">~8 min · impact graph · routing quiz</div>
+      <ul><li>Force-directed graph</li><li>Rename simulator</li><li>Custodian routing</li><li>Challenge gate</li></ul>
+      <span class="pv">▶ See preview</span>
+    </div>
+    <div class="card">
+      <div class="top"><span class="tag">Visual / Canvas</span><span class="lvl i">Intermediate</span></div>
+      <div class="num">LAB 6.8</div><h3>The Risk-Box Snap Bug</h3>
+      <p>Anchor a box to a price and watch it vanish until you move the mouse — because pixel coordinates aren't ready yet. Learn the one-line fix the hard way.</p>
+      <div class="meta">~9 min · live chart · timing bug</div>
+      <ul><li>Reactive overlay</li><li>Race reproduction</li><li>Fix-and-verify</li><li>Challenge gate</li></ul>
+      <span class="pv">▶ See preview</span>
+    </div>
+  </div>
+</div></section>
+
+<!-- ITEM 5 — VALUE LADDER -->
+<section class="sec" id="ladder"><div class="wrap">
+  <span class="item"><b>5</b>THE CLIMB</span>
+  <div class="kicker">The value ladder</div>
+  <h2>Mastery isn't a course. It's a climb.</h2>
+  <p class="sub">The labs are tagged by level, but the levels don't gate you — they tell you where you are. Here's what each rung means you can actually do.</p>
+  <div class="rungs">
+    <div class="rung"><div class="lab">NEWCOMER<small>day one</small></div><p>You can read the codebase, ship a safe change, and explain why your edit didn't show up. The cache-bust ritual, the field-name traps, the time gotchas — internalized before they cost you a day.</p></div>
+    <div class="rung"><div class="lab">BUILDER<small>shipping</small></div><p>You add an indicator that flows into every consumer, register a new view, and drive a job through its lifecycle. You know what breaks and you break it on purpose first.</p></div>
+    <div class="rung"><div class="lab">MAINTAINER<small>owning</small></div><p>You walk a cross-repo blast radius before you rename anything, handle nullable fields defensively, and respect the golden-file gate. You keep the platform green.</p></div>
+    <div class="rung"><div class="lab">ARCHITECT<small>designing</small></div><p>You reason about storage-vs-API shape, working-set tiers, no-look-ahead windows, and multi-timeframe broadcast. You make the decisions the earlier rungs depend on.</p></div>
+    <div class="rung"><div class="lab">PRINCIPAL<small>mastering</small></div><p>You direct AI against a contract-bound codebase and catch what it missed, design daemons that fail loud and recover, and set the conventions everyone else follows.</p></div>
+  </div>
+</div></section>
+
+<!-- ITEM 6 — CURRICULUM -->
+<section class="sec" id="curriculum"><div class="wrap">
+  <span class="item"><b>6</b>CURRICULUM</span>
+  <div class="kicker">The curriculum</div>
+  <h2>All 160 labs. Every rung.</h2>
+  <p class="sub">Eight tracks. Each lab is referenced by <span class="mono">Track.Lab</span> (e.g. <span class="mono">6.8</span>). Color marks the level.</p>
+  <div class="tracks" id="tracks"></div>
+  <div class="legend">
+    <span><span class="dot n"></span> Novice</span>
+    <span><span class="dot i"></span> Intermediate</span>
+    <span><span class="dot s"></span> Skilled</span>
+    <span><span class="built">BUILT</span> shipping now</span>
+  </div>
+</div></section>
+
+<!-- ITEM 7 — PRICING -->
+<section class="sec" id="pricing"><div class="wrap">
+  <span class="item"><b>7</b>PRICING</span>
+  <div class="kicker">Pricing</div>
+  <h2>Pay per track. Or commit to the climb.</h2>
+  <p class="sub">One lab is always free — feel the loop before you decide. After that, buy a single track or the whole course, once, forever.</p>
+  <div class="prices">
+    <div class="price">
+      <h3>Single Lab</h3><div class="who">Try before you climb</div>
+      <div class="amt">Free</div>
+      <ul><li>One full lab, no account</li><li>The complete edit→break→fix loop</li><li>Runs in your browser</li></ul>
+      <a href="#anatomy" class="btn ghost">Open a lab</a>
+    </div>
+    <div class="price">
+      <h3>Single Track</h3><div class="who">Go deep on one area</div>
+      <div class="amt">$49<small> / track</small></div>
+      <ul><li>All 20 labs in one track</li><li>Lifetime access + updates</li><li>Challenge gates + progress</li><li>Pick any of the 8 tracks</li></ul>
+      <a href="#" class="btn ghost">Choose a track</a>
+    </div>
+    <div class="price feat">
+      <span class="badge">Best value · Founding</span>
+      <h3>Full Course</h3><div class="who">All 160 labs, all 8 tracks</div>
+      <div class="amt">$399 <span class="was">$599</span></div>
+      <ul><li>Every lab, every rung, forever</li><li>New labs added free</li><li>The AI-Native track ($49 value) included</li><li>Completion certificate</li><li>30-day no-questions refund</li></ul>
+      <a href="#" class="btn">Enroll now →</a>
+    </div>
+  </div>
+  <p class="founding">⚜ Founding-cohort pricing — locked for the first 100 enrollments. ~$2.50 per lab.</p>
+</div></section>
+
+<!-- ITEM 8 — WHY DIFFERENT -->
+<section class="sec"><div class="wrap">
+  <span class="item"><b>8</b>WHY DIFFERENT</span>
+  <div class="kicker">Why this is different</div>
+  <h2>A real platform. Not a tutorial repo.</h2>
+  <div class="why">
+    <div class="w"><h4>Used by real traders, in live trading</h4><p>Every lab is a real decision from a platform that supports real traders in live market conditions — the quote store, the contract discipline, the daily cycle that can't miss. Genericized so the idea travels to whatever you build, but never invented for a classroom.</p></div>
+    <div class="w"><h4>Built from scratch with AI — by necessity</h4><p>This platform was built solo, from zero, with AI doing most of the typing. We couldn't have built it otherwise. The course shows what that actually took: the contracts, guardrails, and review discipline that make AI produce software that holds up in production instead of falling apart in week two.</p></div>
+    <div class="w"><h4>The decisions, not just the syntax</h4><p>Aspiring system developers can already write a function. What they're missing is the judgment — store-vs-reconstruct, contract-first, no-look-ahead, fail-loud. These are the calls that separate code that runs from systems that survive, and they're what every lab is about.</p></div>
+    <div class="w"><h4>Break it to learn it — in your browser</h4><p>You don't watch the bug, you cause it, then fix it — in a live editor, the bigger half of every screen, no install or account. The lesson is muscle memory by the time you close the tab.</p></div>
+  </div>
+</div></section>
+
+<!-- ITEM 9 — FAQ -->
+<section class="sec" id="faq"><div class="wrap">
+  <span class="item"><b>9</b>FAQ</span>
+  <div class="kicker">FAQ</div>
+  <h2>Questions.</h2>
+  <div style="max-width:760px">
+    <details open><summary>Do I need access to the platform it's based on?</summary><p>No. Every lab runs entirely in your browser on synthetic, curated data. You never touch the real system, and you need no credentials, server, or repo clone.</p></details>
+    <details><summary>Is this for beginners or experienced engineers?</summary><p>Both. The labs are tagged Newcomer → Principal. A first-week developer starts at the bottom of a track; a senior engineer skips to the Architect and Principal labs. Nothing is gated — the levels just tell you where you are.</p></details>
+    <details><summary>Do I need to know trading?</summary><p>No. The platform happens to be a trading system, but the labs teach engineering — storage design, contracts, time handling, scheduling, AI review. Any domain knowledge you pick up is a bonus.</p></details>
+    <details><summary>Can I use AI to get through the labs?</summary><p>Please do. codeu is built for how developers actually learn now — there's a grounded AI seat in every lab, and an entire track on directing AI well. Using AI is the skill, not the cheat.</p></details>
+    <details><summary>What do I get for the price?</summary><p>Lifetime access to the labs in your tier, every future lab added to those tracks for free, challenge gates, progress tracking, and a completion certificate on the Full Course. The Full Course is a one-time payment.</p></details>
+    <details><summary>Refunds?</summary><p>30 days, no questions asked. If the first few labs don't change how you think about building software, email us and we refund it.</p></details>
+  </div>
+</div></section>
+
+<!-- ITEM 10 — FINAL CTA -->
+<section class="sec final"><div class="wrap">
+  <span class="item"><b>10</b>FINAL CTA</span>
+  <div class="kicker">Start today</div>
+  <h2>Open one lab. Break it. You'll understand.</h2>
+  <p class="sub" style="margin:14px auto 26px;text-align:center">The first lab is free and takes ten minutes. That's all it takes to feel the difference between watching code and breaking it.</p>
+  <div class="cta-row">
+    <a href="#anatomy" class="btn lg">Try a lab free →</a>
+    <a href="#pricing" class="btn lg ghost">See pricing</a>
+  </div>
+  <p class="q">You will get it wrong. That's the point. Break it, fix it, never forget it.</p>
+</div></section>
+
+<!-- ITEM 11 — FOOTER -->
+<footer><div class="wrap footrow">
+  <span class="item" style="position:static"><b>11</b>FOOTER</span>
+  <div><strong>Code University</strong> · the developer's simulation lab · sibling to the Tech Lab</div>
+  <div>© Lifelong Edge · A codeu course · Concept mockup</div>
+</div></footer>
+
+<script>
+// 8 tracks × 20 labs. level: n=novice i=intermediate s=skilled. built:true marks shipping labs.
+const TRACKS = [
+  {n:1, name:"Platform Foundations", labs:[
+    ["Quote Data Architecture","n",true],["Storage Format vs. API Shape","n"],["Pick One Timezone Convention","n"],["Session Filtering at Ingestion","n"],
+    ["Parallel Stores, One Authority Rule","i"],["Manifest as Source of Truth","n"],["Symbol Class Gates Pipeline Work","n"],["Derive vs. Fetch","i"],
+    ["Gap-Aware Resampling","i"],["First-Writer-Wins","i"],["Survivorship-Bias-Free Universes","s"],["Refuse, Don't Paper Over Gaps","i"],
+    ["Cache Pinned to Upstream Hash","s"],["Runtime Filename Discovery","i"],["Working-Set Cache Tier","s"],["Fail Loud on Capacity","i"],
+    ["Single-Writer Daily Rollups","s"],["Warm-Up Rows Are Null, Not Zero","n"],["Self-Describing Column Names","i"],["Fixed Equal-Depth Timeframe Ladder","s"]]},
+  {n:2, name:"Build Mechanics", labs:[
+    ["The Cache-Bust Ritual","n"],["The Job Lifecycle State Machine","i"],["Register Once, Flows Everywhere","i"],["View Registration Contract","n"],
+    ["Add-a-View-Pill: The VIEWS Array","n"],["The Canonical Single-Command Restart","n"],["Reload vs. Reset: State Tiers","i"],["Namespaced Keys & Version Guard","i"],
+    ["Idempotent Jobs Per (Symbol, Type)","i"],["First-Writer-Wins on the Manifest","s"],["Background Subprocess Workers","s"],["Claim Tokens: No Double Execution","s"],
+    ["Retry, Backoff, and Exhaustion","i"],["Stuck-Job Detection & Force-Complete","s"],["The Monitor Tick","i"],["Manifest-Driven View Availability","i"],
+    ["Build Tags: Which Code Is Live","n"],["@stable Selectors as a Contract","s"],["Schedule → Claim Race & FIFO","s"],["Honest Indicator Status","i"]]},
+  {n:3, name:"Contracts & Impact", labs:[
+    ["Contract Blast Radius","n"],["The Field Name IS the Contract","n"],["The Known PnL-Field Bug","n"],["Null-Safety Contract","n"],
+    ["Append-Only Enums, Renames Aren't","n"],["Control-Naming Registry","n"],["Theme-Token Namespacing","n"],["Golden-File Drift Gate","i"],
+    ["Pinned-Scalar Regression","i"],["Safe Consumer Migration","i"],["Single Owner for Shared Math","i"],["@stable Selector Change Protocol","i"],
+    ["Probe Schema Versioning","i"],["Parquet Columns ARE the API","i"],["Epoch Seconds vs Milliseconds","i"],["CODEOWNERS as Tamper-Resistance","s"],
+    ["The Two-Operand DSL Boundary","s"],["Operator Parity Across Evaluators","s"],["The Contract Review Gate","s"],["Atomic Cross-Repo Change","s"]]},
+  {n:4, name:"Data & Time", labs:[
+    ["Epoch Seconds vs Milliseconds","n"],["Timezone Layers","i"],["Session Boundaries: RTH vs Extended","i"],["Who Wins on Overlap","s"],
+    ["Trading-Calendar Off-by-One","i"],["Silent Type Overflow","i"],["UTC → ET at the Right Boundary","n"],["Encoding: UTF-8 vs cp1252","n"],
+    ["No-Look-Ahead Window","s"],["Bar-Open vs Bar-Close Convention","i"],["Date-Only Labels Format in UTC","s"],["Float Round-Off Determinism","s"],
+    ["DST Transitions","s"],["Half-Day Sessions","i"],["Naive ET vs UTC","n"],["A Day Is an ET Calendar Day","i"],
+    ["Point-in-Time Universe","s"],["Explicit ET, Not Bare now()","i"],["ISO-8601 Offset Strings","n"],["Refetch vs Silent Overwrite","i"]]},
+  {n:5, name:"Build &amp; Maintain with AI", labs:[
+    ["Ground the AI","n"],["Direct the AI, Catch What It Missed","n"],["Review-the-Diff","n"],["Failure-Pattern Detector","n"],
+    ["The Sentinel Block","n"],["Facts Only: The Guardrail Preamble","n"],["The Allow-List Is a Security Boundary","i"],["Read-Only vs Safe-Write Tools","i"],
+    ["Prompt-Cache Key Discipline","i"],["The Cost of a Cache Miss","i"],["Spend Caps & Graceful Degradation","i"],["Scaffold, Then Validate","i"],
+    ["Validate-Then-Write","i"],["The IS/OOS Gate","s"],["Survivorship-Bias Refusal in Code","s"],["Tool-Use Loop","s"],
+    ["Transcript Discipline","s"],["Per-Turn Context Schema Versioning","s"],["Classify → Route → Retry","s"],["Prompt-Builder & Template Versioning","s"]]},
+  {n:6, name:"Visual UI / Canvas", labs:[
+    ["Why Your Candles Vanish","n"],["The Field-Name Trap: Every Trade a Win","n"],["Candle Wick vs Body","n"],["PnL Color Semantics","n"],
+    ["No Hardcoded Hex: Theme Colors","n"],["Deep-Linking List → Chart","n"],["Coverage Dots","n"],["The Risk-Box Snap Bug","i"],
+    ["Programmatic Chart Control","i"],["Masking and Chrome","i"],["The StrixEvent Protocol","i"],["Annotation Anchoring","i"],
+    ["Multi-Day Chart Architecture","i"],["Sub-Pane X-Axis Sync","i"],["Replay / Playback Bar","i"],["Per-Day Risk Normalization","s"],
+    ["DOM Stability: The Selector Contract","s"],["The Replay-Flicker Rule","s"],["Interaction Toggles Survive Reloads","s"],["Visual Regression Without Pixel-Diff","s"]]},
+  {n:7, name:"Scheduled Services", labs:[
+    ["The Daily Cycle as a State Machine","n"],["Clock-Driven vs Event-Driven","n"],["Skip the Non-Trading Day","n"],["Idempotent Daily Jobs","n"],
+    ["Atomic Status Writes","n"],["Poll vs Fire-and-Forget","n"],["Watermark Skip Bug + Reconciliation","i"],["SLA Gating: PASS/FAIL/CRITICAL","i"],
+    ["Expected Bar Count from the Calendar","i"],["Auto-Remediation with a Retry Budget","i"],["The Stuck-Cycle Loop","i"],["Escalation Routing on Exhaustion","i"],
+    ["Strike Clustering","s"],["A Third Verdict: DEFER","s"],["The Canary Environment","s"],["Dependency Ordering Between Jobs","i"],
+    ["Graceful Degradation When Upstream Is Late","i"],["Supervised Daemons: KeepAlive","i"],["Supervise the Module, Not the Script","s"],["Cloud Burst with a Budget Cap","s"]]},
+  {n:8, name:"Indicators & Multi-Timeframe", labs:[
+    ["Three Timeframes Every Indicator Carries","n"],["Parse the Recipe From a Column Name","n"],["Parameters Live in the Signal","n"],["Fixed-Point Decimals in Names","n"],
+    ["The Stat Suffix Is the Lens","n"],["Warm-Up Nulls: Absence Is Not Zero","n"],["Broadcast a Higher-TF Signal Down","i"],["The Causality Invariant in One Line","i"],
+    ["Pre-First-Close Rows Must Be NULL","i"],["for_date vs as_of","i"],["Why Backtests Use Strictly-Before","i"],["Resample 1-Min Into a Coarser Bar","i"],
+    ["Daily-Indicator-Onto-Intraday","i"],["Z-Score for Cross-Symbol Comparability","i"],["_stat vs _z, Reciprocal at zs=1","s"],["Sample vs Population Stddev","s"],
+    ["Single Canonical Implementation","s"],["The 30m-on-10m Broadcast","s"],["When a Variant Earns a New Name","s"],["Consumer Rules: ET + RTH-Only","s"]]},
+];
+const elTracks = document.getElementById('tracks');
+TRACKS.forEach(tr=>{
+  const labs = tr.labs.map((l,i)=>{
+    const [title,lvl,built]=l;
+    return `<div class="lab-row"><span class="id">${tr.n}.${i+1}</span>
+      <span class="t">${title}</span>${built?'<span class="built">BUILT</span>':''}
+      <span class="dot ${lvl}" title="${lvl==='n'?'novice':lvl==='i'?'intermediate':'skilled'}"></span></div>`;
+  }).join('');
+  elTracks.insertAdjacentHTML('beforeend',
+    `<div class="track"><div class="th"><span class="tn">T${tr.n}</span><h3>${tr.name}</h3><span class="ct">20 labs</span></div>${labs}</div>`);
+});
+</script>
+</body>
+</html>
