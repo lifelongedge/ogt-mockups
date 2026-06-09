@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<!-- Edge S2 platform — concept sales page MOCKUP. Numbered blocks for feedback. -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edge S2 — Own your edge. The entire stack.</title>
+<style>
+  :root{
+    --bg:#0b0d12; --bg2:#10131b; --panel:#161a24; --panel2:#1b2030; --line:#262d3b;
+    --ink:#e8eaef; --ink2:#aab1bf; --muted:#6c7484;
+    --gold:#d4af37; --gold2:#e3c45e; --green:#3ecf8e; --red:#e5604d; --blue:#5b8def;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:var(--bg);color:var(--ink);font:17px/1.65 var(--sans);-webkit-font-smoothing:antialiased}
+  a{color:var(--gold);text-decoration:none}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+  h1,h2,h3{line-height:1.12;letter-spacing:-.015em;margin:0}
+  .mono{font-family:var(--mono)}
+  .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+  .gold{color:var(--gold)}
+
+  section{position:relative}
+  .item{position:absolute;top:10px;left:10px;z-index:6;display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;color:var(--muted);opacity:.65}
+  .item b{display:grid;place-items:center;width:19px;height:19px;border-radius:50%;background:rgba(212,175,55,.18);color:var(--gold);font-size:11px;font-weight:700;border:1px solid rgba(212,175,55,.4)}
+
+  .mockflag{background:#000;color:var(--muted);text-align:center;font-family:var(--mono);font-size:11.5px;padding:7px;letter-spacing:.04em;border-bottom:1px solid var(--line)}
+
+  nav{position:sticky;top:0;z-index:30;background:rgba(11,13,18,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .navrow{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .brand{display:flex;align-items:center;gap:11px;font-weight:800;font-size:19px;letter-spacing:-.02em}
+  .brand .mk{width:26px;height:26px;border-radius:6px;background:linear-gradient(135deg,var(--gold),#9a7b1e);display:grid;place-items:center;color:#0b0d12;font-weight:900;font-size:14px}
+  .navlinks{display:flex;gap:24px;font-size:14px}
+  .navlinks a{color:var(--ink2)}.navlinks a:hover{color:var(--ink)}
+  .btn{display:inline-block;background:var(--gold);color:#0b0d12;font-weight:800;padding:11px 20px;border-radius:8px;font-size:15px;border:1px solid var(--gold)}
+  .btn:hover{background:var(--gold2)}
+  .btn.ghost{background:transparent;color:var(--gold)}
+  .btn.lg{padding:15px 28px;font-size:16px}
+
+  /* hero */
+  .hero{padding:72px 0 64px;background:radial-gradient(1100px 460px at 50% -8%,rgba(212,175,55,.10),transparent 60%)}
+  .hero .grid{display:grid;grid-template-columns:1.05fr 1fr;gap:48px;align-items:center}
+  .hero h1{font-size:54px;font-weight:850;margin-bottom:20px}
+  .hero h1 em{font-style:normal;color:var(--gold)}
+  .hero .lede{font-size:20px;color:var(--ink2);margin-bottom:30px;max-width:560px}
+  .cta-row{display:flex;gap:14px;flex-wrap:wrap}
+  .trust{margin-top:26px;font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+  .trust b{color:var(--ink2);font-weight:600}
+
+  /* terminal mock */
+  .term{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 30px 80px -30px rgba(0,0,0,.8)}
+  .term .bar{display:flex;align-items:center;gap:7px;padding:10px 14px;border-bottom:1px solid var(--line);background:var(--bg2)}
+  .term .bar i{width:11px;height:11px;border-radius:50%;background:#2c333f;display:block}
+  .term .bar .ttl{margin-left:8px;font-family:var(--mono);font-size:11px;color:var(--muted)}
+  .term .body{display:grid;grid-template-columns:1.5fr 1fr;grid-template-rows:auto auto;gap:1px;background:var(--line)}
+  .pane{background:var(--panel);padding:12px 14px}
+  .pane.chart{grid-row:1 / span 2}
+  .pane .ph{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-bottom:8px;letter-spacing:.06em}
+  .pane .ph .sym{color:var(--ink);font-weight:700;letter-spacing:0}
+  table.scan{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:11px}
+  table.scan td{padding:4px 2px;color:var(--ink2)}
+  table.scan td.s{color:var(--ink);font-weight:600}
+  table.scan td.g{color:var(--green);text-align:right}
+  table.scan td.r{color:var(--red);text-align:right}
+  .stat2{display:flex;gap:16px;margin-top:6px}
+  .stat2 div{font-family:var(--mono);font-size:10px;color:var(--muted)}
+  .stat2 b{display:block;color:var(--gold);font-size:16px;font-weight:800}
+
+  /* generic */
+  .sec{padding:72px 0;border-top:1px solid var(--line)}
+  .sec h2{font-size:36px;font-weight:820;margin-bottom:10px}
+  .sec .sub{font-size:18px;color:var(--ink2);max-width:740px;margin-bottom:38px}
+  .center{text-align:center}.center .sub{margin-left:auto;margin-right:auto}
+
+  /* problem */
+  .prob{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .prob .x{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px 22px}
+  .prob .x h4{font-size:17px;margin-bottom:6px;color:var(--ink)}
+  .prob .x h4:before{content:"✕  ";color:var(--red);font-weight:800}
+  .prob .x p{margin:0;color:var(--ink2);font-size:14.5px}
+
+  /* pillars */
+  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .pil{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px 22px;transition:border-color .15s}
+  .pil:hover{border-color:rgba(212,175,55,.5)}
+  .pil .ic{width:40px;height:40px;border-radius:10px;background:var(--panel2);border:1px solid var(--line);display:grid;place-items:center;margin-bottom:14px}
+  .pil h3{font-size:19px;margin-bottom:8px}
+  .pil p{margin:0 0 12px;color:var(--ink2);font-size:14.5px}
+  .pil ul{margin:0;padding-left:16px;font-size:13px;color:var(--muted)}
+  .pil ul li{margin-bottom:3px}
+
+  /* hardened band */
+  .hard{background:linear-gradient(180deg,var(--bg2),var(--bg));}
+  .hardgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:30px}
+  .hc{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px 18px}
+  .hc .n{font-family:var(--mono);color:var(--gold);font-size:12px;font-weight:700;margin-bottom:8px}
+  .hc h4{font-size:15.5px;margin-bottom:5px}
+  .hc p{margin:0;font-size:13px;color:var(--ink2)}
+  .hardline{font-family:var(--mono);font-size:13.5px;color:var(--ink2);background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:0 10px 10px 0;padding:16px 20px}
+
+  /* customize */
+  .cust{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+  .cust ul{list-style:none;padding:0;margin:0}
+  .cust ul li{padding:12px 0 12px 30px;position:relative;border-top:1px solid var(--line);color:var(--ink2);font-size:15px}
+  .cust ul li:first-child{border-top:0}
+  .cust ul li:before{content:"›";position:absolute;left:8px;top:11px;color:var(--gold);font-weight:900;font-size:18px}
+  .cust ul li b{color:var(--ink)}
+  .codebox{background:#06070a;border:1px solid var(--line);border-radius:12px;padding:18px 20px;font-family:var(--mono);font-size:13px;line-height:1.75;color:#cfd4df;overflow:auto}
+  .codebox .cm{color:#5d6675}.codebox .k{color:var(--gold2)}.codebox .g{color:var(--green)}
+
+  /* philosophy */
+  .animals{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:26px}
+  .an{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px;text-align:center}
+  .an .e{font-size:30px;margin-bottom:8px}
+  .an h4{font-size:16px;margin-bottom:6px;color:var(--gold)}
+  .an p{margin:0;font-size:13px;color:var(--ink2)}
+  .seasons{text-align:center;font-family:var(--mono);font-size:13px;color:var(--muted)}
+  .seasons b{color:var(--ink2)}
+
+  /* who */
+  .who{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .who .w{border-top:2px solid var(--gold);padding-top:16px}
+  .who .w h4{font-size:17px;margin-bottom:6px}
+  .who .w p{margin:0;color:var(--ink2);font-size:14.5px}
+
+  /* pricing */
+  .prices{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:start}
+  .price{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:28px 24px;position:relative}
+  .price.feat{border:2px solid var(--gold);background:linear-gradient(180deg,rgba(212,175,55,.07),var(--panel))}
+  .price .badge{position:absolute;top:-12px;left:24px;background:var(--gold);color:#0b0d12;font-family:var(--mono);font-size:10px;letter-spacing:.08em;padding:4px 11px;border-radius:20px;text-transform:uppercase;font-weight:700}
+  .price h3{font-size:21px;margin-bottom:4px}
+  .price .who2{font-size:13px;color:var(--muted);margin-bottom:18px}
+  .price .amt{font-size:42px;font-weight:850;line-height:1}
+  .price .amt small{font-size:15px;color:var(--muted);font-weight:600}
+  .price ul{list-style:none;padding:0;margin:20px 0 24px;font-size:14px}
+  .price ul li{padding:7px 0 7px 24px;position:relative;color:var(--ink2)}
+  .price ul li:before{content:"›";position:absolute;left:5px;color:var(--gold);font-weight:800}
+  .price .btn{width:100%;text-align:center}
+  .price .btn.ghost{border:1px solid var(--line)}
+  .founding{text-align:center;font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:20px}
+
+  /* faq */
+  details{border-bottom:1px solid var(--line);padding:18px 0}
+  details summary{cursor:pointer;font-weight:700;font-size:17px;list-style:none;display:flex;justify-content:space-between;gap:20px}
+  details summary::-webkit-details-marker{display:none}
+  details summary:after{content:"+";color:var(--gold);font-weight:800}
+  details[open] summary:after{content:"–"}
+  details p{margin:12px 0 0;color:var(--ink2);font-size:15px}
+
+  .final{text-align:center;background:radial-gradient(900px 360px at 50% 120%,rgba(212,175,55,.12),transparent 60%)}
+  .final h2{font-size:42px}
+  .final .q{font-family:var(--mono);color:var(--gold);font-size:15px;margin-top:18px}
+  footer{border-top:1px solid var(--line);padding:34px 0;color:var(--muted);font-size:13px}
+  .footrow{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;align-items:center}
+
+  @media(max-width:900px){
+    .hero .grid,.cust{grid-template-columns:1fr}.hero h1{font-size:38px}
+    .pillars,.hardgrid,.animals,.who,.prices,.prob{grid-template-columns:1fr}
+    .navlinks{display:none}.hardgrid{grid-template-columns:1fr 1fr}.animals{grid-template-columns:1fr 1fr}
+  }
+</style>
+</head>
+<body>
+
+<div class="mockflag">CONCEPT MOCKUP · Edge S2 sales page · numbered blocks for feedback · not live commerce</div>
+
+<!-- ITEM 1 — NAV -->
+<nav><div class="wrap navrow">
+  <span class="item"><b>1</b>NAV</span>
+  <div class="brand"><span class="mk">E</span>Edge&nbsp;S2</div>
+  <div class="navlinks">
+    <a href="#platform">Platform</a>
+    <a href="#hardened">Hardened</a>
+    <a href="#customize">Customize</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#faq">FAQ</a>
+  </div>
+  <a href="#pricing" class="btn">Request access →</a>
+</div></nav>
+
+<!-- ITEM 2 — HERO -->
+<section class="hero"><div class="wrap">
+  <span class="item"><b>2</b>HERO</span>
+  <div class="grid">
+    <div>
+      <div class="kicker">The trader's own platform</div>
+      <h1 style="margin-top:14px">Own your edge.<br><em>The entire stack.</em></h1>
+      <p class="lede">Edge&nbsp;S2 is a hardened, self-hosted trading platform — market data, 600+ indicators,
+      system backtesting, real-time scanning, execution simulation, and an AI that knows your book —
+      built to run unattended and bend to exactly how <em>you</em> trade.</p>
+      <div class="cta-row">
+        <a href="#pricing" class="btn lg">Request access →</a>
+        <a href="#platform" class="btn lg ghost">See what's inside</a>
+      </div>
+      <p class="trust">Self-host on your own machine, or run it managed in the cloud.
+      <b>Your data. Your rules. Your source.</b></p>
+    </div>
+    <div class="term" aria-hidden="true">
+      <div class="bar"><i></i><i></i><i></i><span class="ttl">edge-s2 · workbench · SPY · 1-min</span></div>
+      <div class="body">
+        <div class="pane chart">
+          <div class="ph"><span class="sym">SPY</span><span>RTH · Dragon · PSAR</span></div>
+          <svg viewBox="0 0 320 180" width="100%" height="150">
+            <line x1="0" y1="150" x2="320" y2="150" stroke="#242d3b"/>
+            <path d="M0,120 C40,110 70,90 110,96 C150,102 180,70 220,60 C260,52 290,44 320,40" fill="none" stroke="#d4af37" stroke-width="1.6" opacity=".85"/>
+            <g>
+              <rect x="14" y="92" width="7" height="34" fill="#3ecf8e"/><line x1="17.5" y1="84" x2="17.5" y2="132" stroke="#3ecf8e"/>
+              <rect x="36" y="100" width="7" height="22" fill="#e5604d"/><line x1="39.5" y1="92" x2="39.5" y2="128" stroke="#e5604d"/>
+              <rect x="58" y="86" width="7" height="30" fill="#3ecf8e"/><line x1="61.5" y1="78" x2="61.5" y2="122" stroke="#3ecf8e"/>
+              <rect x="80" y="96" width="7" height="20" fill="#3ecf8e"/><line x1="83.5" y1="90" x2="83.5" y2="120" stroke="#3ecf8e"/>
+              <rect x="102" y="104" width="7" height="26" fill="#e5604d"/><line x1="105.5" y1="96" x2="105.5" y2="136" stroke="#e5604d"/>
+              <rect x="124" y="80" width="7" height="34" fill="#3ecf8e"/><line x1="127.5" y1="72" x2="127.5" y2="120" stroke="#3ecf8e"/>
+              <rect x="146" y="74" width="7" height="26" fill="#3ecf8e"/><line x1="149.5" y1="66" x2="149.5" y2="106" stroke="#3ecf8e"/>
+              <rect x="168" y="82" width="7" height="22" fill="#e5604d"/><line x1="171.5" y1="74" x2="171.5" y2="110" stroke="#e5604d"/>
+              <rect x="190" y="64" width="7" height="30" fill="#3ecf8e"/><line x1="193.5" y1="56" x2="193.5" y2="100" stroke="#3ecf8e"/>
+              <rect x="212" y="56" width="7" height="24" fill="#3ecf8e"/><line x1="215.5" y1="48" x2="215.5" y2="86" stroke="#3ecf8e"/>
+              <rect x="234" y="60" width="7" height="20" fill="#e5604d"/><line x1="237.5" y1="52" x2="237.5" y2="88" stroke="#e5604d"/>
+              <rect x="256" y="48" width="7" height="26" fill="#3ecf8e"/><line x1="259.5" y1="40" x2="259.5" y2="80" stroke="#3ecf8e"/>
+            </g>
+            <circle cx="259" cy="40" r="3" fill="#d4af37"/>
+          </svg>
+        </div>
+        <div class="pane">
+          <div class="ph"><span>IN-PLAY SCAN</span><span>CAR25</span></div>
+          <table class="scan">
+            <tr><td class="s">NVDA</td><td>z3 pinch</td><td class="g">+38%</td></tr>
+            <tr><td class="s">AAPL</td><td>frog pop</td><td class="g">+24%</td></tr>
+            <tr><td class="s">TSLA</td><td>Dragon flip</td><td class="r">−12%</td></tr>
+            <tr><td class="s">MSFT</td><td>RL10 cross</td><td class="g">+19%</td></tr>
+            <tr><td class="s">AMD</td><td>SSC armed</td><td class="g">+31%</td></tr>
+          </table>
+        </div>
+        <div class="pane">
+          <div class="ph"><span>SYSTEM · sysBMR</span><span>OOS</span></div>
+          <svg viewBox="0 0 150 56" width="100%" height="46">
+            <path d="M0,50 C20,46 35,40 55,34 C75,28 90,30 110,20 C128,12 140,10 150,6" fill="none" stroke="#3ecf8e" stroke-width="1.8"/>
+          </svg>
+          <div class="stat2"><div>CAR25<b>21.4%</b></div><div>safe-f<b>0.27</b></div><div>DD₉₅<b>−14%</b></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- ITEM 3 — PROBLEM -->
+<section class="sec"><div class="wrap">
+  <span class="item"><b>3</b>PROBLEM</span>
+  <div class="kicker">Why another platform</div>
+  <h2 style="margin:10px 0 8px">You've outgrown your tools.</h2>
+  <p class="sub">A charting site, a spreadsheet, a broker UI, and three browser tabs is not a trading operation. And the polished SaaS alternatives all share the same flaw — they end where the vendor's roadmap ends.</p>
+  <div class="prob">
+    <div class="x"><h4>You rent your edge</h4><p>Cancel the subscription and your studies, your scans, your history all vanish. You never owned any of it.</p></div>
+    <div class="x"><h4>It's a black box</h4><p>You can't see how the indicator is computed, whether the backtest leaks the future, or why two screens disagree. You just have to trust it.</p></div>
+    <div class="x"><h4>You can't change it</h4><p>Your edge is specific. The tool is generic. When you need one custom scan, one new indicator, one workflow tweak — you file a feature request and wait forever.</p></div>
+    <div class="x"><h4>Your data isn't yours</h4><p>Your fills, your watchlists, your journal — sitting on someone else's server, mined, and one breach away from public.</p></div>
+  </div>
+</div></section>
+
+<!-- ITEM 4 — PLATFORM PILLARS -->
+<section class="sec" id="platform"><div class="wrap">
+  <span class="item"><b>4</b>PLATFORM</span>
+  <div class="kicker">One platform, end to end</div>
+  <h2 style="margin:10px 0 8px">Everything a serious operation runs on.</h2>
+  <p class="sub">Data, charts, research, scanning, execution, analytics, and AI — one coherent stack where every part speaks the same language and nothing is bolted on.</p>
+  <div class="pillars">
+    <div class="pil"><div class="ic gold">◷</div><h3>Data you can trust</h3><p>Adjustment-correct quotes across nine timeframes, validated for coverage every day, kept warm in memory for instant recall.</p><ul><li>Daily · 30-min · 1-min · extended hours</li><li>Split/dividend reconstruction, no rewrites</li><li>Survivorship-bias-free universes</li></ul></div>
+    <div class="pil"><div class="ic">▦</div><h3>Charts that think</h3><p>Candlesticks layered with 600+ indicators — Dragon bands, MACD Seasons, PSAR, regression lines — plus risk ladders, multi-day context, and bar-by-bar replay.</p><ul><li>Drop trades onto the chart in one click</li><li>Per-day risk-normalized overlays</li><li>Replay any session to study it</li></ul></div>
+    <div class="pil"><div class="ic">⚙</div><h3>Build &amp; validate systems</h3><p>Turn an idea into a tested system: backtest, size with Monte-Carlo risk (CAR25 · safe-f), walk-forward, then paper- and shadow-trade it before a dollar is at stake.</p><ul><li>No-look-ahead by construction</li><li>In-sample / out-of-sample kept sacred</li><li>Reproducible, traceable results</li></ul></div>
+    <div class="pil"><div class="ic">◎</div><h3>Scan the whole tape</h3><p>Real-time streaming scanners and risk-normalized end-of-day scans, fired into alert rules you write in a simple condition language.</p><ul><li>Live Polygon stream + EOD in-play engine</li><li>Bayesian "what usually happens next" odds</li><li>Thematic playbooks, in-play tested</li></ul></div>
+    <div class="pil"><div class="ic">▤</div><h3>Know your trades</h3><p>Ingest your broker fills, reconstruct every trade, and study them — PnL by day, risk multiples, keep%, and a deliberate-practice loop that turns mistakes into reps.</p><ul><li>Fill → trade-unit assembly</li><li>Calendar · treemap · scatter analytics</li><li>Send any trade to a study playlist</li></ul></div>
+    <div class="pil"><div class="ic gold">✦</div><h3>An AI that knows your book</h3><p>A conversational assistant grounded in your data, your rules, and your contracts — and an AI co-pilot for building systems and reviewing changes. Facts only, never hype.</p><ul><li>"Is my system actually profitable?"</li><li>AI-assisted system building</li><li>Bring your own AI key</li></ul></div>
+  </div>
+</div></section>
+
+<!-- ITEM 5 — HARDENED -->
+<section class="sec hard" id="hardened"><div class="wrap">
+  <span class="item"><b>5</b>HARDENED</span>
+  <div class="kicker">Built to run unattended</div>
+  <h2 style="margin:10px 0 8px">Hardened like infrastructure. Because it is.</h2>
+  <p class="sub">Most trading tools are a pretty front-end over a fragile pipe. Edge&nbsp;S2 is built like a system that has to be right — with the monitoring, validation, and recovery to prove it. It works while you sleep and tells you the moment something's off.</p>
+  <div class="hardgrid">
+    <div class="hc"><div class="n">01</div><h4>Daily data SLA</h4><p>Every symbol validated for completeness before any scan runs. A clear PASS / FAIL / CRITICAL verdict, never a silent gap.</p></div>
+    <div class="hc"><div class="n">02</div><h4>Self-healing</h4><p>A missing day re-fetches itself, re-validates, and escalates to you only when it genuinely can't fix itself.</p></div>
+    <div class="hc"><div class="n">03</div><h4>Always watching</h4><p>Monitoring daemons track jobs, compute load, and drift, and surface problems in a single daily digest.</p></div>
+    <div class="hc"><div class="n">04</div><h4>Nightly backups</h4><p>Every artifact — studies, journals, systems — backed up within a 24-hour recovery window. Nothing irreplaceable lives in one place.</p></div>
+    <div class="hc"><div class="n">05</div><h4>Ground-truth pinned</h4><p>Core calculations are locked to blessed values; any drift fires an alarm. The number you trusted yesterday is the number you get today.</p></div>
+    <div class="hc"><div class="n">06</div><h4>Regression-tested</h4><p>Contracts, visuals, and performance checked every day, including a real disaster-recovery drill on a chaos machine each month.</p></div>
+    <div class="hc"><div class="n">07</div><h4>Contract-first</h4><p>Every component declares its interface. Change one thing and the platform tells you exactly what it touches — nothing breaks in the dark.</p></div>
+    <div class="hc"><div class="n">08</div><h4>Reproducible</h4><p>No look-ahead, point-in-time universes, deterministic math. A result you got is a result you can get again — and defend.</p></div>
+  </div>
+  <div class="hardline">It runs the same hardened daily cycle a desk would — fetch, validate, compute, back up, monitor — on your machine, for an operation of one.</div>
+</div></section>
+
+<!-- ITEM 6 — CUSTOMIZE -->
+<section class="sec" id="customize"><div class="wrap">
+  <span class="item"><b>6</b>CUSTOMIZE</span>
+  <div class="kicker">Yours to bend</div>
+  <h2 style="margin:10px 0 8px">A platform that ends where you decide.</h2>
+  <p class="sub">Your edge is specific. So the platform is open. Add an indicator and it flows into every chart and scan. Register a view and it appears in your workbench. And you don't have to do it alone — the platform is built to be extended with AI at your side.</p>
+  <div class="cust">
+    <ul>
+      <li><b>Add your own indicators.</b> Register the math once — it appears in every chart, scan, and payload automatically.</li>
+      <li><b>Build your own views.</b> A custom dashboard, a new analytic, your morning ritual — mounted right beside the built-ins.</li>
+      <li><b>Encode your own systems &amp; playbooks.</b> Your rules, your setups, your in-play tests — first-class, backtestable, trackable.</li>
+      <li><b>Define your own scans &amp; alerts.</b> A plain condition language for the rules you actually watch for.</li>
+      <li><b>Customize with AI.</b> Describe what you want; the AI extends the platform against its own contracts — and you review the change.</li>
+      <li><b>You hold the source.</b> Self-hosted means nothing is hidden and nothing is locked. It's your platform, in every sense.</li>
+    </ul>
+    <div class="codebox">
+<span class="cm"># add an indicator — once</span>
+register(<span class="g">"my_squeeze"</span>, compute=my_squeeze)
+
+<span class="cm"># it now exists everywhere</span>
+GET /quotes?cols=<span class="k">my_squeeze</span>      <span class="cm"># API ✓</span>
+scan: <span class="k">my_squeeze</span> &gt; 2.0           <span class="cm"># scanner ✓</span>
+alert when <span class="k">my_squeeze</span> xup 0       <span class="cm"># alerts ✓</span>
+chart overlay: <span class="k">my_squeeze</span>          <span class="cm"># canvas ✓</span>
+
+<span class="cm"># or just ask the AI</span>
+<span class="g">"add a squeeze indicator and put it</span>
+<span class="g"> on the chart and the in-play scan"</span>
+    </div>
+  </div>
+</div></section>
+
+<!-- ITEM 7 — PHILOSOPHY -->
+<section class="sec center"><div class="wrap">
+  <span class="item"><b>7</b>PHILOSOPHY</span>
+  <div class="kicker">Built on a philosophy</div>
+  <h2 style="margin:10px 0 8px">A point of view, not just a feature list.</h2>
+  <p class="sub">Edge&nbsp;S2 is shaped by how good traders actually think — slow deliberation over fast reaction, patience over noise. Four temperaments, woven through the whole platform.</p>
+  <div class="animals">
+    <div class="an"><div class="e">🦉</div><h4>The Owl</h4><p>Patient observation. Watch before you act.</p></div>
+    <div class="an"><div class="e">🐢</div><h4>The Tortoise</h4><p>Steady compounding. Survive, then win.</p></div>
+    <div class="an"><div class="e">🐸</div><h4>The Frog</h4><p>Explosive opportunity, sized to the risk.</p></div>
+    <div class="an"><div class="e">🐉</div><h4>The Dragon</h4><p>Dynamic support and resistance, alive on the chart.</p></div>
+  </div>
+  <p class="seasons">Read the tape through the <b>four MACD Seasons</b> — and trade the regime, not the candle.</p>
+</div></section>
+
+<!-- ITEM 8 — WHO -->
+<section class="sec"><div class="wrap">
+  <span class="item"><b>8</b>WHO IT'S FOR</span>
+  <div class="kicker">Who runs Edge S2</div>
+  <h2 style="margin:10px 0 8px">For the trader who builds.</h2>
+  <div class="who">
+    <div class="w"><h4>The serious independent</h4><p>You've outgrown a charting site and a spreadsheet. You want one operation, hardened, that you actually own.</p></div>
+    <div class="w"><h4>The systematic trader</h4><p>You test before you risk. You need reproducible, no-look-ahead research and honest CAR25 / safe-f sizing — not a backtest that lies to you.</p></div>
+    <div class="w"><h4>The builder-trader</h4><p>You think in systems and you're fluent with AI. You want a platform you can extend on a weekend, not a roadmap you wait on for a year.</p></div>
+  </div>
+</div></section>
+
+<!-- ITEM 9 — PRICING -->
+<section class="sec" id="pricing"><div class="wrap">
+  <span class="item"><b>9</b>PRICING</span>
+  <div class="kicker">Access</div>
+  <h2 style="margin:10px 0 8px">Run it your way.</h2>
+  <p class="sub">Let us host it, or own the whole thing and host it yourself. Either way, your data and your studies are yours.</p>
+  <div class="prices">
+    <div class="price">
+      <h3>Cloud</h3><div class="who2">We run it, you trade</div>
+      <div class="amt">$149<small> / mo</small></div>
+      <ul><li>Managed, single-tenant instance</li><li>Daily data pipeline handled for you</li><li>Backups, monitoring, updates included</li><li>Full charts, systems, scans, AI</li></ul>
+      <a href="#" class="btn ghost">Start a trial</a>
+    </div>
+    <div class="price feat">
+      <span class="badge">Best for customizers</span>
+      <h3>Self-Hosted</h3><div class="who2">Own it. Bend it. Keep it private.</div>
+      <div class="amt">$199<small> / mo</small></div>
+      <ul><li>Full source — nothing hidden, nothing locked</li><li>Runs on your machine; data never leaves</li><li>Add your own indicators, views, systems</li><li>AI-assisted customization</li><li>Priority access to new modules</li></ul>
+      <a href="#" class="btn">Request access →</a>
+    </div>
+    <div class="price">
+      <h3>Trading Desk</h3><div class="who2">Teams &amp; prop</div>
+      <div class="amt">Custom</div>
+      <ul><li>Multi-seat, shared universes</li><li>Dedicated onboarding &amp; support</li><li>Custom data feeds &amp; brokers</li><li>SLA &amp; deployment options</li></ul>
+      <a href="#" class="btn ghost">Talk to us</a>
+    </div>
+  </div>
+  <p class="founding">⚜ Founding-trader pricing — locked for life for the first cohort. Bring your own market-data and AI keys.</p>
+</div></section>
+
+<!-- ITEM 10 — FAQ -->
+<section class="sec" id="faq"><div class="wrap">
+  <span class="item"><b>10</b>FAQ</span>
+  <div class="kicker">FAQ</div>
+  <h2 style="margin:10px 0 8px">Straight answers.</h2>
+  <div style="max-width:780px">
+    <details open><summary>Is my data actually private?</summary><p>On Self-Hosted, yes — completely. The platform runs on your hardware and your fills, watchlists, journals, and studies never leave your machine. On Cloud, your instance is single-tenant and isolated; we host it, but it's yours alone.</p></details>
+    <details><summary>Do I need to be a programmer?</summary><p>No, to trade with it. The workbench, charts, scans, and systems are point-and-click. You only touch code when you want to customize — and even then, the built-in AI does most of the work against the platform's own guardrails while you review.</p></details>
+    <details><summary>Where does the market data come from?</summary><p>You bring your own data feed and AI key. The platform is built to ingest a real-time stream and end-of-day history, validate it daily, and keep it adjustment-correct. Your subscriptions stay yours.</p></details>
+    <details><summary>Can it really not look ahead?</summary><p>No-look-ahead is structural, not a setting you can forget. Research windows stop strictly before the decision bar, universes resolve point-in-time (delisted names included), and core math is pinned to blessed values. A result you get is one you can reproduce and defend.</p></details>
+    <details><summary>What can I customize?</summary><p>Indicators, views, systems, playbooks, scans, and alert rules — all first-class. Add an indicator once and it flows into every chart, scan, and API response automatically. With Self-Hosted you hold the full source.</p></details>
+    <details><summary>What if I get stuck?</summary><p>Every component is documented by an explicit contract, the platform ships with guides and a built-in AI assistant grounded in your setup, and Self-Hosted and Desk tiers include direct support.</p></details>
+  </div>
+</div></section>
+
+<!-- ITEM 11 — FINAL CTA -->
+<section class="sec final"><div class="wrap">
+  <span class="item"><b>11</b>FINAL CTA</span>
+  <div class="kicker">Take it back</div>
+  <h2 style="margin:14px 0 8px">Stop renting your edge.</h2>
+  <p class="sub" style="margin:0 auto 26px">Run the hardened, customizable platform a desk would build — for an operation of one.</p>
+  <div class="cta-row" style="justify-content:center">
+    <a href="#pricing" class="btn lg">Request access →</a>
+    <a href="#platform" class="btn lg ghost">See what's inside</a>
+  </div>
+  <p class="q">Your data. Your rules. Your source. Your edge.</p>
+</div></section>
+
+<!-- ITEM 12 — FOOTER -->
+<footer><div class="wrap footrow">
+  <span class="item" style="position:static"><b>12</b>FOOTER</span>
+  <div><strong>Edge S2</strong> · the trader's own platform · self-hosted or managed</div>
+  <div>© Lifelong Edge · Concept mockup</div>
+</div></footer>
+
+</body>
+</html>
