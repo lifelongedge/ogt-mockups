@@ -126,6 +126,20 @@
   .who .w h4{font-size:17px;margin-bottom:6px}
   .who .w p{margin:0;color:var(--ink2);font-size:14.5px}
 
+  /* day flow */
+  .flow{display:flex;align-items:stretch;gap:10px;margin-bottom:24px}
+  .flow .fcol{flex:1;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px 16px}
+  .flow .fcol .pn{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+  .flow .fcol h4{font-size:16px;margin-bottom:6px}
+  .flow .fcol p{margin:0 0 12px;font-size:13px;color:var(--ink2)}
+  .flow .fcol .mods{font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.7}
+  .flow .arrow{display:flex;align-items:center;color:var(--gold);font-size:20px;flex-shrink:0}
+  .rail{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .rail .rl{font-family:var(--mono);font-size:12.5px;color:var(--ink2);background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .rail .rl b{color:var(--gold);font-weight:700}
+  .rail .rl.bb{border-left:3px solid var(--gold)}
+  @media(max-width:900px){ .flow{flex-direction:column} .flow .arrow{transform:rotate(90deg);justify-content:center} .rail{grid-template-columns:1fr} }
+
   /* pricing */
   .prices{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:start}
   .price{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:28px 24px;position:relative}
@@ -174,6 +188,7 @@
   <div class="brand"><span class="mk">E</span>Edge&nbsp;S2</div>
   <div class="navlinks">
     <a href="#platform">Platform</a>
+    <a href="#flow">A&nbsp;Day</a>
     <a href="#hardened">Hardened</a>
     <a href="#customize">Customize</a>
     <a href="#pricing">Pricing</a>
@@ -278,9 +293,46 @@
   </div>
 </div></section>
 
-<!-- ITEM 5 — HARDENED -->
+<!-- ITEM 5 — DAY FLOW -->
+<section class="sec" id="flow"><div class="wrap">
+  <span class="item"><b>5</b>DAY FLOW</span>
+  <div class="kicker">How a day flows</div>
+  <h2 style="margin:10px 0 8px">Plan. Prepare. Execute. Assess.</h2>
+  <p class="sub">The whole platform is organized around the way you actually trade — four phases, one rail always at hand, one hardened backbone underneath.</p>
+  <div class="flow">
+    <div class="fcol">
+      <div class="pn">01 · Plan</div><h4>Decide what to trade</h4>
+      <p>Build and validate systems, encode your playbooks, study the odds — away from the noise.</p>
+      <div class="mods">Systembuild · Backtest · Playbooks · Distributions · Strategy Matrix · Case Studies</div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="fcol">
+      <div class="pn">02 · Prepare</div><h4>Walk in ready</h4>
+      <p>Scan for what's in play, read the regime, arm your alerts, resolve today's watchlist.</p>
+      <div class="mods">InPlay · Pulse · Scope · Mosaic · Daycadence · Alerts</div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="fcol">
+      <div class="pn">03 · Execute</div><h4>Act in the moment</h4>
+      <p>Live charts, firing scans, the AI in the seat with you — and a portfolio that paper-trades itself.</p>
+      <div class="mods">Canvas · Pulse live · Alerts · Papertrader · Paperfolio</div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="fcol">
+      <div class="pn">04 · Assess</div><h4>Learn from every trade</h4>
+      <p>Ingest your fills, see day &amp; swing P&amp;L, grade the decisions you made, drill them into reps.</p>
+      <div class="mods">Assemble · Vector · Navigate · Distill · Study</div>
+    </div>
+  </div>
+  <div class="rail">
+    <div class="rl"><b>Always at hand</b> — the AI assistant, your charts, and your watchlists ride alongside every phase.</div>
+    <div class="rl bb"><b>Underneath it all</b> — a hardened daily cycle that fetches, validates, backs up, and monitors itself.</div>
+  </div>
+</div></section>
+
+<!-- ITEM 6 — HARDENED -->
 <section class="sec hard" id="hardened"><div class="wrap">
-  <span class="item"><b>5</b>HARDENED</span>
+  <span class="item"><b>6</b>HARDENED</span>
   <div class="kicker">Built to run unattended</div>
   <h2 style="margin:10px 0 8px">Hardened like infrastructure. Because it is.</h2>
   <p class="sub">Most trading tools are a pretty front-end over a fragile pipe. Edge&nbsp;S2 is built like a system that has to be right — with the monitoring, validation, and recovery to prove it. It works while you sleep and tells you the moment something's off.</p>
@@ -297,9 +349,9 @@
   <div class="hardline">It runs the same hardened daily cycle a desk would — fetch, validate, compute, back up, monitor — on your machine, for an operation of one.</div>
 </div></section>
 
-<!-- ITEM 6 — CUSTOMIZE -->
+<!-- ITEM 7 — CUSTOMIZE -->
 <section class="sec" id="customize"><div class="wrap">
-  <span class="item"><b>6</b>CUSTOMIZE</span>
+  <span class="item"><b>7</b>CUSTOMIZE</span>
   <div class="kicker">Yours to bend</div>
   <h2 style="margin:10px 0 8px">A platform that ends where you decide.</h2>
   <p class="sub">Your edge is specific. So the platform is open. Add an indicator and it flows into every chart and scan. Register a view and it appears in your workbench. And you don't have to do it alone — the platform is built to be extended with AI at your side.</p>
@@ -329,9 +381,9 @@ chart overlay: <span class="k">my_squeeze</span>          <span class="cm"># can
   </div>
 </div></section>
 
-<!-- ITEM 7 — PHILOSOPHY -->
+<!-- ITEM 8 — PHILOSOPHY -->
 <section class="sec center"><div class="wrap">
-  <span class="item"><b>7</b>PHILOSOPHY</span>
+  <span class="item"><b>8</b>PHILOSOPHY</span>
   <div class="kicker">Built on a philosophy</div>
   <h2 style="margin:10px 0 8px">A point of view, not just a feature list.</h2>
   <p class="sub">Edge&nbsp;S2 is shaped by how good traders actually think — slow deliberation over fast reaction, patience over noise. Four temperaments, woven through the whole platform.</p>
@@ -344,9 +396,9 @@ chart overlay: <span class="k">my_squeeze</span>          <span class="cm"># can
   <p class="seasons">Read the tape through the <b>four MACD Seasons</b> — and trade the regime, not the candle.</p>
 </div></section>
 
-<!-- ITEM 8 — WHO -->
+<!-- ITEM 9 — WHO -->
 <section class="sec"><div class="wrap">
-  <span class="item"><b>8</b>WHO IT'S FOR</span>
+  <span class="item"><b>9</b>WHO IT'S FOR</span>
   <div class="kicker">Who runs Edge S2</div>
   <h2 style="margin:10px 0 8px">For the trader who builds.</h2>
   <div class="who">
@@ -356,9 +408,9 @@ chart overlay: <span class="k">my_squeeze</span>          <span class="cm"># can
   </div>
 </div></section>
 
-<!-- ITEM 9 — PRICING -->
+<!-- ITEM 10 — PRICING -->
 <section class="sec" id="pricing"><div class="wrap">
-  <span class="item"><b>9</b>PRICING</span>
+  <span class="item"><b>10</b>PRICING</span>
   <div class="kicker">Access</div>
   <h2 style="margin:10px 0 8px">Run it your way.</h2>
   <p class="sub">Let us host it, or own the whole thing and host it yourself. Either way, your data and your studies are yours.</p>
@@ -388,9 +440,9 @@ chart overlay: <span class="k">my_squeeze</span>          <span class="cm"># can
   <p class="founding">⚜ Founding-trader pricing — locked for life for the first cohort. Bring your own market-data and AI keys.</p>
 </div></section>
 
-<!-- ITEM 10 — FAQ -->
+<!-- ITEM 11 — FAQ -->
 <section class="sec" id="faq"><div class="wrap">
-  <span class="item"><b>10</b>FAQ</span>
+  <span class="item"><b>11</b>FAQ</span>
   <div class="kicker">FAQ</div>
   <h2 style="margin:10px 0 8px">Straight answers.</h2>
   <div style="max-width:780px">
@@ -404,9 +456,9 @@ chart overlay: <span class="k">my_squeeze</span>          <span class="cm"># can
   </div>
 </div></section>
 
-<!-- ITEM 11 — FINAL CTA -->
+<!-- ITEM 12 — FINAL CTA -->
 <section class="sec final"><div class="wrap">
-  <span class="item"><b>11</b>FINAL CTA</span>
+  <span class="item"><b>12</b>FINAL CTA</span>
   <div class="kicker">Take it back</div>
   <h2 style="margin:14px 0 8px">Stop renting your edge.</h2>
   <p class="sub" style="margin:0 auto 26px">Run the hardened, customizable platform a desk would build — for an operation of one.</p>
@@ -417,9 +469,9 @@ chart overlay: <span class="k">my_squeeze</span>          <span class="cm"># can
   <p class="q">Your data. Your rules. Your source. Your edge.</p>
 </div></section>
 
-<!-- ITEM 12 — FOOTER -->
+<!-- ITEM 13 — FOOTER -->
 <footer><div class="wrap footrow">
-  <span class="item" style="position:static"><b>12</b>FOOTER</span>
+  <span class="item" style="position:static"><b>13</b>FOOTER</span>
   <div><strong>Edge S2</strong> · the trader's own platform · self-hosted or managed</div>
   <div>© Lifelong Edge · Concept mockup</div>
 </div></footer>
