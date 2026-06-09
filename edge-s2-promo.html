@@ -135,7 +135,8 @@
   .price .who2{font-size:13px;color:var(--muted);margin-bottom:18px}
   .price .amt{font-size:42px;font-weight:850;line-height:1}
   .price .amt small{font-size:15px;color:var(--muted);font-weight:600}
-  .price ul{list-style:none;padding:0;margin:20px 0 24px;font-size:14px}
+  .price .plus{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-top:7px}
+  .price ul{list-style:none;padding:0;margin:16px 0 24px;font-size:14px}
   .price ul li{padding:7px 0 7px 24px;position:relative;color:var(--ink2)}
   .price ul li:before{content:"›";position:absolute;left:5px;color:var(--gold);font-weight:800}
   .price .btn{width:100%;text-align:center}
@@ -186,11 +187,13 @@
   <span class="item"><b>2</b>HERO</span>
   <div class="grid">
     <div>
-      <div class="kicker">The trader's own platform</div>
+      <div class="kicker">The trader's second brain</div>
       <h1 style="margin-top:14px">Own your edge.<br><em>The entire stack.</em></h1>
-      <p class="lede">Edge&nbsp;S2 is a hardened, self-hosted trading platform — market data, 600+ indicators,
-      system backtesting, real-time scanning, execution simulation, and an AI that knows your book —
-      built to run unattended and bend to exactly how <em>you</em> trade.</p>
+      <p class="lede">Edge&nbsp;S2 is your second brain for trading — it does everything for you
+      <em>except pull the trigger</em>. Ingest your fills and it frames every trade, scores the
+      decisions you made, runs your scans and systems, even paper-trades a whole portfolio on
+      autopilot. It won't trade your real money — that line is yours. (Want a live bot? Build it on
+      the open platform; we won't ship one.)</p>
       <div class="cta-row">
         <a href="#pricing" class="btn lg">Request access →</a>
         <a href="#platform" class="btn lg ghost">See what's inside</a>
@@ -268,9 +271,9 @@
   <div class="pillars">
     <div class="pil"><div class="ic gold">◷</div><h3>Data you can trust</h3><p>Adjustment-correct quotes across nine timeframes, validated for coverage every day, kept warm in memory for instant recall.</p><ul><li>Daily · 30-min · 1-min · extended hours</li><li>Split/dividend reconstruction, no rewrites</li><li>Survivorship-bias-free universes</li></ul></div>
     <div class="pil"><div class="ic">▦</div><h3>Charts that think</h3><p>Candlesticks layered with 600+ indicators — Dragon bands, MACD Seasons, PSAR, regression lines — plus risk ladders, multi-day context, and bar-by-bar replay.</p><ul><li>Drop trades onto the chart in one click</li><li>Per-day risk-normalized overlays</li><li>Replay any session to study it</li></ul></div>
-    <div class="pil"><div class="ic">⚙</div><h3>Build &amp; validate systems</h3><p>Turn an idea into a tested system: backtest, size with Monte-Carlo risk (CAR25 · safe-f), walk-forward, then paper- and shadow-trade it before a dollar is at stake.</p><ul><li>No-look-ahead by construction</li><li>In-sample / out-of-sample kept sacred</li><li>Reproducible, traceable results</li></ul></div>
+    <div class="pil"><div class="ic">⚙</div><h3>Build &amp; validate systems</h3><p>Turn an idea into a tested system: backtest, size with Monte-Carlo risk (CAR25 · safe-f), walk-forward, then paper- and shadow-trade it before a dollar is at stake.</p><ul><li>No-look-ahead by construction</li><li>In-sample / out-of-sample kept sacred</li><li>Auto paper-trade a portfolio, hands-free</li><li>Reproducible, traceable results</li></ul></div>
     <div class="pil"><div class="ic">◎</div><h3>Scan the whole tape</h3><p>Real-time streaming scanners and risk-normalized end-of-day scans, fired into alert rules you write in a simple condition language.</p><ul><li>Live Polygon stream + EOD in-play engine</li><li>Bayesian "what usually happens next" odds</li><li>Thematic playbooks, in-play tested</li></ul></div>
-    <div class="pil"><div class="ic">▤</div><h3>Know your trades</h3><p>Ingest your broker fills, reconstruct every trade, and study them — PnL by day, risk multiples, keep%, and a deliberate-practice loop that turns mistakes into reps.</p><ul><li>Fill → trade-unit assembly</li><li>Calendar · treemap · scatter analytics</li><li>Send any trade to a study playlist</li></ul></div>
+    <div class="pil"><div class="ic gold">▤</div><h3>Every trade, framed</h3><p>Drop in your Interactive Brokers log and the platform rebuilds every trade — day-trade and swing P&amp;L, full stats. Click any trade and the chart snaps straight to that setup. No more scrolling to match a date. That's hours of your life back, every week.</p><ul><li>IB trade-log assembly → day &amp; swing P&amp;L</li><li>One click → chart auto-frames the trade</li><li>Trade stats, risk multiples, keep% (Navigate)</li><li>Flag &amp; grade your decisions (Vector)</li></ul></div>
     <div class="pil"><div class="ic gold">✦</div><h3>An AI that knows your book</h3><p>A conversational assistant grounded in your data, your rules, and your contracts — and an AI co-pilot for building systems and reviewing changes. Facts only, never hype.</p><ul><li>"Is my system actually profitable?"</li><li>AI-assisted system building</li><li>Bring your own AI key</li></ul></div>
   </div>
 </div></section>
@@ -362,14 +365,16 @@ chart overlay: <span class="k">my_squeeze</span>          <span class="cm"># can
   <div class="prices">
     <div class="price">
       <h3>Cloud</h3><div class="who2">We run it, you trade</div>
-      <div class="amt">$149<small> / mo</small></div>
+      <div class="amt">$999<small> / mo</small></div>
+      <div class="plus">+ your market-data subscription</div>
       <ul><li>Managed, single-tenant instance</li><li>Daily data pipeline handled for you</li><li>Backups, monitoring, updates included</li><li>Full charts, systems, scans, AI</li></ul>
       <a href="#" class="btn ghost">Start a trial</a>
     </div>
     <div class="price feat">
       <span class="badge">Best for customizers</span>
       <h3>Self-Hosted</h3><div class="who2">Own it. Bend it. Keep it private.</div>
-      <div class="amt">$199<small> / mo</small></div>
+      <div class="amt">$1,999<small> / mo</small></div>
+      <div class="plus">+ your data fees</div>
       <ul><li>Full source — nothing hidden, nothing locked</li><li>Runs on your machine; data never leaves</li><li>Add your own indicators, views, systems</li><li>AI-assisted customization</li><li>Priority access to new modules</li></ul>
       <a href="#" class="btn">Request access →</a>
     </div>
@@ -390,6 +395,7 @@ chart overlay: <span class="k">my_squeeze</span>          <span class="cm"># can
   <h2 style="margin:10px 0 8px">Straight answers.</h2>
   <div style="max-width:780px">
     <details open><summary>Is my data actually private?</summary><p>On Self-Hosted, yes — completely. The platform runs on your hardware and your fills, watchlists, journals, and studies never leave your machine. On Cloud, your instance is single-tenant and isolated; we host it, but it's yours alone.</p></details>
+    <details><summary>Will it trade for me?</summary><p>It will paper-trade a portfolio on autopilot — so you can watch a system run hands-free and judge it before risking a cent — but it will never place a live order. Edge S2 is a second brain, not a bot; the trigger is always yours. If you want live automation, the platform is open and you can build it on top. We don't ship one out of the box.</p></details>
     <details><summary>Do I need to be a programmer?</summary><p>No, to trade with it. The workbench, charts, scans, and systems are point-and-click. You only touch code when you want to customize — and even then, the built-in AI does most of the work against the platform's own guardrails while you review.</p></details>
     <details><summary>Where does the market data come from?</summary><p>You bring your own data feed and AI key. The platform is built to ingest a real-time stream and end-of-day history, validate it daily, and keep it adjustment-correct. Your subscriptions stay yours.</p></details>
     <details><summary>Can it really not look ahead?</summary><p>No-look-ahead is structural, not a setting you can forget. Research windows stop strictly before the decision bar, universes resolve point-in-time (delisted names included), and core math is pinned to blessed values. A result you get is one you can reproduce and defend.</p></details>
