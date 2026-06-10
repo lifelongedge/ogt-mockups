@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<!-- Edge S2 — STRAIGHT-TALK edition. The honest doc you hand a real prospect. Numbered blocks for feedback. -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edge S2 — Straight talk. What it is, what it costs, who it's for.</title>
+<style>
+  :root{
+    --bg:#0b0d12; --bg2:#10131b; --panel:#161a24; --panel2:#1b2030; --line:#262d3b;
+    --ink:#e8eaef; --ink2:#aab1bf; --muted:#6c7484;
+    --gold:#d4af37; --gold2:#e3c45e; --green:#3ecf8e; --amber:#e0a32e; --red:#e5604d; --blue:#5b8def;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:var(--bg);color:var(--ink);font:17px/1.65 var(--sans);-webkit-font-smoothing:antialiased}
+  a{color:var(--gold);text-decoration:none}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+  h1,h2,h3{line-height:1.14;letter-spacing:-.015em;margin:0}
+  .mono{font-family:var(--mono)}
+  .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+  .gold{color:var(--gold)} .blue{color:var(--blue)} .green{color:var(--green)} .amber{color:var(--amber)}
+
+  section{position:relative}
+  .item{position:absolute;top:10px;left:10px;z-index:6;display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;color:var(--muted);opacity:.65}
+  .item b{display:grid;place-items:center;width:19px;height:19px;border-radius:50%;background:rgba(91,141,239,.18);color:var(--blue);font-size:11px;font-weight:700;border:1px solid rgba(91,141,239,.4)}
+
+  .mockflag{background:#000;color:var(--muted);text-align:center;font-family:var(--mono);font-size:11.5px;padding:7px;letter-spacing:.04em;border-bottom:1px solid var(--line)}
+
+  nav{position:sticky;top:0;z-index:30;background:rgba(11,13,18,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .navrow{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .brand{display:flex;align-items:center;gap:11px;font-weight:800;font-size:19px;letter-spacing:-.02em}
+  .brand .mk{width:26px;height:26px;border-radius:6px;background:linear-gradient(135deg,var(--gold),#9a7b1e);display:grid;place-items:center;color:#0b0d12;font-weight:900;font-size:14px}
+  .brand .st{font-family:var(--mono);font-size:11px;color:var(--blue);border:1px solid rgba(91,141,239,.4);border-radius:5px;padding:2px 7px;letter-spacing:.06em}
+  .navlinks{display:flex;gap:22px;font-size:14px}
+  .navlinks a{color:var(--ink2)}.navlinks a:hover{color:var(--ink)}
+  .btn{display:inline-block;background:var(--gold);color:#0b0d12;font-weight:800;padding:11px 20px;border-radius:8px;font-size:15px;border:1px solid var(--gold)}
+  .btn:hover{background:var(--gold2)}
+  .btn.ghost{background:transparent;color:var(--gold)}
+  .btn.lg{padding:15px 28px;font-size:16px}
+
+  .hero{padding:60px 0 48px;background:radial-gradient(1100px 460px at 50% -8%,rgba(91,141,239,.08),transparent 60%)}
+  .hero h1{font-size:46px;font-weight:850;margin-bottom:18px;max-width:880px}
+  .hero h1 em{font-style:normal;color:var(--gold)}
+  .hero .lede{font-size:19px;color:var(--ink2);margin-bottom:18px;max-width:760px}
+  .hero .note{font-family:var(--mono);font-size:13px;color:var(--muted);max-width:760px;border-left:3px solid var(--blue);padding:10px 16px;background:var(--panel)}
+
+  .sec{padding:64px 0;border-top:1px solid var(--line)}
+  .sec h2{font-size:33px;font-weight:820;margin-bottom:10px}
+  .sec .sub{font-size:18px;color:var(--ink2);max-width:780px;margin-bottom:34px}
+
+  /* honest frame — three plain statements */
+  .frame{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .frame .f{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px 22px}
+  .frame .f .lab{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px}
+  .frame .f.is .lab{color:var(--green)} .frame .f.isnt .lab{color:var(--red)} .frame .f.costs .lab{color:var(--amber)}
+  .frame .f p{margin:0;color:var(--ink2);font-size:14.5px}
+  .frame .f ul{margin:8px 0 0;padding-left:17px;color:var(--ink2);font-size:14px}
+  .frame .f ul li{margin-bottom:4px}
+
+  /* persona cards */
+  .ps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .pc{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:0;overflow:hidden;display:flex;flex-direction:column}
+  .pc .top{padding:20px 22px 16px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,var(--panel2),var(--panel))}
+  .pc .tag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--blue);text-transform:uppercase}
+  .pc .top h3{font-size:20px;margin:8px 0 6px}
+  .pc .top .one{font-size:14px;color:var(--ink2);margin:0}
+  .pc .rows{padding:6px 22px 20px}
+  .pc .row{padding:13px 0;border-top:1px solid var(--line)}
+  .pc .row:first-child{border-top:0}
+  .pc .row .rl{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+  .pc .row .rv{font-size:14px;color:var(--ink2)}
+  .pc .row .rv b{color:var(--ink);font-weight:700}
+  .pc .fit{display:inline-block;font-family:var(--mono);font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;letter-spacing:.04em}
+  .fit.cloud{background:rgba(62,207,142,.14);color:var(--green);border:1px solid rgba(62,207,142,.4)}
+  .fit.either{background:rgba(224,163,46,.14);color:var(--amber);border:1px solid rgba(224,163,46,.4)}
+  .fit.self{background:rgba(91,141,239,.14);color:var(--blue);border:1px solid rgba(91,141,239,.4)}
+  .pc .row.caveat .rv{color:var(--ink2)} .pc .row.caveat .rl{color:var(--amber)}
+
+  /* AI block */
+  .ai{display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:start}
+  .ai .col h3{font-size:18px;margin-bottom:14px}
+  .ai .why h3{color:var(--green)} .ai .limit h3{color:var(--amber)}
+  .ai ul{list-style:none;padding:0;margin:0}
+  .ai ul li{padding:11px 0 11px 26px;position:relative;border-top:1px solid var(--line);color:var(--ink2);font-size:14.5px}
+  .ai ul li:first-child{border-top:0}
+  .ai .why ul li:before{content:"✓";position:absolute;left:2px;top:11px;color:var(--green);font-weight:800}
+  .ai .limit ul li:before{content:"!";position:absolute;left:5px;top:11px;color:var(--amber);font-weight:900}
+  .ai ul li b{color:var(--ink)}
+
+  /* maturity table */
+  table.mat{width:100%;border-collapse:collapse;font-size:14.5px}
+  table.mat th{text-align:left;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:0 12px 12px;border-bottom:1px solid var(--line)}
+  table.mat td{padding:14px 12px;border-bottom:1px solid var(--line);color:var(--ink2);vertical-align:top}
+  table.mat td.cap{color:var(--ink);font-weight:600;width:30%}
+  .pill{display:inline-block;font-family:var(--mono);font-size:11px;font-weight:700;padding:3px 9px;border-radius:5px;white-space:nowrap}
+  .pill.prod{background:rgba(62,207,142,.14);color:var(--green)}
+  .pill.solid{background:rgba(91,141,239,.14);color:var(--blue)}
+  .pill.prog{background:rgba(224,163,46,.14);color:var(--amber)}
+  .pill.data{background:rgba(212,175,55,.14);color:var(--gold)}
+  .pill.early{background:rgba(229,96,77,.14);color:var(--red)}
+
+  /* developer-tyranny + data + not-for-you generic two-col */
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:start}
+  .card2{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:22px 24px}
+  .card2 h3{font-size:18px;margin-bottom:12px}
+  .card2 p{color:var(--ink2);font-size:14.5px;margin:0 0 12px}
+  .card2 ul{margin:0;padding-left:18px;color:var(--ink2);font-size:14.5px}
+  .card2 ul li{margin-bottom:7px}
+
+  .notfor{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--red);border-radius:0 12px 12px 0;padding:8px 26px}
+  .notfor li{padding:13px 0;border-top:1px solid var(--line);color:var(--ink2);font-size:15px;list-style:none}
+  .notfor li:first-child{border-top:0}
+  .notfor li b{color:var(--ink)}
+
+  /* cost */
+  .costgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .cb{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:22px 22px}
+  .cb h4{font-size:17px;margin-bottom:2px}
+  .cb .px{font-family:var(--mono);font-size:13px;color:var(--gold);margin-bottom:14px}
+  .cb .ln{font-size:13.5px;color:var(--ink2);padding:8px 0;border-top:1px solid var(--line)}
+  .cb .ln:first-of-type{border-top:0}
+  .cb .ln b{color:var(--ink)}
+
+  details{border-bottom:1px solid var(--line);padding:18px 0}
+  details summary{cursor:pointer;font-weight:700;font-size:16.5px;list-style:none;display:flex;justify-content:space-between;gap:20px}
+  details summary::-webkit-details-marker{display:none}
+  details summary:after{content:"+";color:var(--blue);font-weight:800}
+  details[open] summary:after{content:"–"}
+  details p{margin:12px 0 0;color:var(--ink2);font-size:15px}
+
+  .final{text-align:center;background:radial-gradient(900px 360px at 50% 120%,rgba(91,141,239,.10),transparent 60%)}
+  .final h2{font-size:36px;margin-bottom:10px}
+  .final .sub{margin:0 auto 26px}
+  .final .q{font-family:var(--mono);color:var(--blue);font-size:14px;margin-top:18px}
+  footer{border-top:1px solid var(--line);padding:30px 0;color:var(--muted);font-size:13px}
+  .footrow{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;align-items:center}
+
+  @media(max-width:900px){
+    .hero h1{font-size:33px}
+    .frame,.ps,.ai,.twocol,.costgrid{grid-template-columns:1fr}
+    .navlinks{display:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="mockflag">CONCEPT MOCKUP · Edge S2 — STRAIGHT-TALK edition · the version handed to a real prospect · numbered blocks for feedback</div>
+
+<!-- ITEM 1 — NAV -->
+<nav><div class="wrap navrow">
+  <span class="item"><b>1</b>NAV</span>
+  <div class="brand"><span class="mk">E</span>Edge&nbsp;S2 <span class="st">straight talk</span></div>
+  <div class="navlinks">
+    <a href="#frame">The frame</a>
+    <a href="#who">Which one are you</a>
+    <a href="#ai">The AI question</a>
+    <a href="#maturity">What's real today</a>
+    <a href="#cost">Cost</a>
+    <a href="#faq">Hard questions</a>
+  </div>
+  <a href="#talk" class="btn">Have a conversation →</a>
+</div></nav>
+
+<!-- ITEM 2 — HERO -->
+<section class="hero"><div class="wrap">
+  <span class="item"><b>2</b>HERO</span>
+  <div class="kicker">No gloss. The real version.</div>
+  <h1 style="margin-top:14px">Edge S2 is a complete trading operation you change with AI <em>instead of waiting on a developer.</em></h1>
+  <p class="lede">The marketing page sells the dream. This page tells you what it actually is, what it asks of
+  you, what's rock-solid today, and where it's still maturing — so you can decide with your eyes open.</p>
+  <p class="note">If you've been burned by a developer you couldn't fire, and seduced by an AI you can't fully
+  trust, those two scars are exactly what this page is written for. Read it before you read the price.</p>
+</div></section>
+
+<!-- ITEM 3 — THE HONEST FRAME -->
+<section class="sec" id="frame"><div class="wrap">
+  <span class="item"><b>3</b>FRAME</span>
+  <div class="kicker">Read this first</div>
+  <h2 style="margin:10px 0 8px">Three plain statements.</h2>
+  <p class="sub">Everything else on this page hangs off these. If any one of them is a dealbreaker, we'd rather you know now.</p>
+  <div class="frame">
+    <div class="f is">
+      <div class="lab">What it is</div>
+      <p>One owned, end-to-end stack — data, charts, honest backtesting, scans, alerts, trade analytics, and a
+      data-grounded AI assistant — that you can extend by describing what you want.</p>
+    </div>
+    <div class="f isnt">
+      <div class="lab">What it isn't</div>
+      <p>It is not a money-printing bot, not an oracle, and not turnkey magic.</p>
+      <ul>
+        <li>It never places a live order — the trigger is always yours.</li>
+        <li>The AI proposes; you review and approve.</li>
+        <li>You bring your own market-data and AI keys.</li>
+      </ul>
+    </div>
+    <div class="f costs">
+      <div class="lab">What it costs you</div>
+      <p>A real monthly fee, a few hours to learn the workbench, and the discipline to review what the AI
+      builds. The more you want to own and customize, the more technical comfort it asks for.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- ITEM 4 — WHICH ONE ARE YOU -->
+<section class="sec" id="who"><div class="wrap">
+  <span class="item"><b>4</b>PERSONAS</span>
+  <div class="kicker">Honest matchmaking</div>
+  <h2 style="margin:10px 0 8px">Which one are you?</h2>
+  <p class="sub">Most platforms pretend everyone is the same buyer. You aren't. Find the row that's actually you,
+  and read the caveat at the bottom of the card — that's the part most vendors hide.</p>
+  <div class="ps">
+
+    <!-- Persona 1 -->
+    <div class="pc">
+      <div class="top">
+        <div class="tag">Persona 1</div>
+        <h3>The end-of-day manager</h3>
+        <p class="one">Small office, conservative. TC2000 for the visual, a spreadsheet for the rest, a stack of
+        proposals you can't independently vet — and an AI chat that sounds confident and is sometimes wrong.</p>
+      </div>
+      <div class="rows">
+        <div class="row"><div class="rl">Honest fit</div><div class="rv"><span class="fit cloud">Cloud / managed</span> &nbsp;Don't self-host. You live in the chat assistant and a point-and-click workbench — no code, no VSCode.</div></div>
+        <div class="row"><div class="rl">What it actually gives you</div><div class="rv">A way to take any proposal — "buy when X crosses Y" — and get an honest, reproducible answer: backtested with no look-ahead, the math shown, sized by real risk (CAR25 / safe-f), on <b>your</b> liquid stocks and ETFs. Confidence means you can check it yourself.</div></div>
+        <div class="row"><div class="rl">What you bring</div><div class="rv">An end-of-day data subscription (cheap and easy), your watchlists, and the ideas you want vetted.</div></div>
+        <div class="row"><div class="rl">The real commitment</div><div class="rv">A managed monthly fee and a few hours to learn the workbench. You still make every decision.</div></div>
+        <div class="row caveat"><div class="rl">Straight caveat</div><div class="rv">This will not make you a programmer, and you won't touch source. If your dream is fully bespoke custom software, that's Persona 3 — not you, and that's fine.</div></div>
+      </div>
+    </div>
+
+    <!-- Persona 2 -->
+    <div class="pc">
+      <div class="top">
+        <div class="tag">Persona 2</div>
+        <h3>The willing builder</h3>
+        <p class="one">Like Persona 1, but you'll learn and get your hands dirty for an edge. You want intraday too.
+        You're on thinkorswim, TradingView, or NinjaTrader and you've scripted an indicator or two.</p>
+      </div>
+      <div class="rows">
+        <div class="row"><div class="rl">Honest fit</div><div class="rv"><span class="fit either">Cloud now, self-host when ready</span> &nbsp;Start managed, move to your own machine once you're comfortable. You'll use the AI customization actively.</div></div>
+        <div class="row"><div class="rl">What it actually gives you</div><div class="rv">You graduate from "I scripted one indicator and it's stuck inside TradingView" to "I register it once and it's in every chart, scan, alert, and backtest." Plus the honest backtesting your current tools fake, live intraday in-play scans, and a system you can paper-trade before risking a dollar.</div></div>
+        <div class="row"><div class="rl">What you bring</div><div class="rv">A real-time data feed for intraday, a BYO AI key, and a willingness to spend some weekends extending it.</div></div>
+        <div class="row"><div class="rl">The real commitment</div><div class="rv">A genuine learning curve. You build with the AI and the platform's guardrails, and you review and test what comes back. Self-hosting means running a few daemons — packaged and supported.</div></div>
+        <div class="row caveat"><div class="rl">Straight caveat</div><div class="rv">Intraday is solid. The deepest institutional-signal modules need a specific data vendor; without it you run the (large) data-feed-fed core, which is most of the platform.</div></div>
+      </div>
+    </div>
+
+    <!-- Persona 3 -->
+    <div class="pc">
+      <div class="top">
+        <div class="tag">Persona 3</div>
+        <h3>The DIY quant shop</h3>
+        <p class="one">Technical, hedge-fund-leaning, still a small shop. You read code, you value reproducibility and
+        point-in-time correctness, and you refuse to rent a black box you can't inspect.</p>
+      </div>
+      <div class="rows">
+        <div class="row"><div class="rl">Honest fit</div><div class="rv"><span class="fit self">Self-hosted, full source</span> &nbsp;This is who the architecture was built for. You extend aggressively and own your ops.</div></div>
+        <div class="row"><div class="rl">What it actually gives you</div><div class="rv">The whole contract-first, ground-truth-pinned, reproducible platform as source. Extension points that survive upgrades, no-look-ahead by construction, honest Bandy risk math (optimal-f convergence, not Kelly hype), and the AI as a force-multiplier over a documented codebase.</div></div>
+        <div class="row"><div class="rl">What you bring</div><div class="rv">Your data (possibly institutional), infrastructure comfort, and the engineering judgment to review AI output.</div></div>
+        <div class="row"><div class="rl">The real commitment</div><div class="rv">You own ops. Upgrades stay clean if you keep your work in user-space rather than editing core. The license buys updates, support, and the data service — you already hold the bits.</div></div>
+        <div class="row caveat"><div class="rl">Straight caveat</div><div class="rv">It's a sophisticated multi-repo platform, not a tidy single binary. Some infrastructure is still being decoupled from our cloud — we'll tell you exactly which pieces before you sign.</div></div>
+      </div>
+    </div>
+
+  </div>
+</div></section>
+
+<!-- ITEM 5 — THE AI QUESTION -->
+<section class="sec" id="ai"><div class="wrap">
+  <span class="item"><b>5</b>THE AI QUESTION</span>
+  <div class="kicker">The thing that burned you</div>
+  <h2 style="margin:10px 0 8px">"I like the AI. I don't trust it. Why is this different?"</h2>
+  <p class="sub">Fair. A general chatbot hallucinates because it's guessing from the open internet with nothing to
+  check itself against. Here, the AI works inside a system designed to keep it honest — and we'll be just as
+  honest about where it still falls short.</p>
+  <div class="ai">
+    <div class="col why">
+      <h3>Why it hallucinates less here</h3>
+      <ul>
+        <li><b>Grounded in your data, not the web.</b> It answers from your actual quotes, fills, and the platform's own documented contracts — not a vague memory of the internet.</li>
+        <li><b>Facts only.</b> It's instructed to state numbers it actually computed and looked at, and to label anything speculative as speculation.</li>
+        <li><b>It shows the math.</b> Core calculations are pinned to blessed ground-truth values. You can see how an indicator is computed instead of trusting a black box.</li>
+        <li><b>Propose, then approve.</b> The AI drafts a change; nothing touches your platform until you review and accept it.</li>
+        <li><b>Tests catch the breakage.</b> A wrong change trips a ground-truth alarm or a contract check before it can ship. The guardrails are the safety net.</li>
+      </ul>
+    </div>
+    <div class="col limit">
+      <h3>Where it still falls short</h3>
+      <ul>
+        <li><b>It still makes mistakes.</b> We don't claim zero hallucination. We claim a system where its claims are checkable and its changes are gated.</li>
+        <li><b>It can misread your intent.</b> A vague request gets a literal answer. Clear questions get better results — a skill you build.</li>
+        <li><b>You stay accountable.</b> It's an assistant. Your trades and your decisions are yours, always.</li>
+        <li><b>Big changes need real review.</b> The deeper the customization, the more your judgment (or our support) matters. The AI does most of the typing, not all of the thinking.</li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+
+<!-- ITEM 6 — WHAT'S REAL TODAY -->
+<section class="sec" id="maturity"><div class="wrap">
+  <span class="item"><b>6</b>MATURITY</span>
+  <div class="kicker">No vaporware</div>
+  <h2 style="margin:10px 0 8px">What's real today — and what's still maturing.</h2>
+  <p class="sub">Every platform demo shows the best five minutes. Here's the honest grading instead. The first three
+  rows are the bedrock; the last three are where we'll set expectations before you buy.</p>
+  <table class="mat">
+    <thead><tr><th>Capability</th><th>Status</th><th>The honest read</th></tr></thead>
+    <tbody>
+      <tr><td class="cap">EOD quotes, charts, scans, backtesting — liquid US stocks &amp; ETFs</td><td><span class="pill prod">Production</span></td><td>The bedrock, and Persona 1's exact use case. Adjustment-correct, validated daily, no look-ahead. This is the most battle-tested part of the platform.</td></tr>
+      <tr><td class="cap">Intraday streaming, in-play scans, condition-language alerts</td><td><span class="pill solid">Solid</span></td><td>Runs live on a real-time feed. Persona 2's territory. Mature and in daily use.</td></tr>
+      <tr><td class="cap">Trade ingestion (Interactive Brokers) + day/swing P&amp;L + analytics</td><td><span class="pill solid">Solid</span></td><td>Drop in your log, every trade is rebuilt and framed on the chart. Reliable today.</td></tr>
+      <tr><td class="cap">Data-grounded AI assistant + AI-assisted customization</td><td><span class="pill prog">Working, improving</span></td><td>Genuinely useful now and getting better. The guardrails described above are real; the breadth of what it can build keeps expanding.</td></tr>
+      <tr><td class="cap">Self-host packaging for someone who isn't the author</td><td><span class="pill prog">In progress</span></td><td>The platform runs; the one-command install-and-run experience for a stranger is being hardened. Early self-host customers get hands-on onboarding.</td></tr>
+      <tr><td class="cap">Institutional sector / breadth signal modules (GICS, Mosaic)</td><td><span class="pill data">Needs that data</span></td><td>These depend on a specific institutional data vendor and a producer pipeline. Without that feed they're dark — offered as an add-on, not assumed.</td></tr>
+      <tr><td class="cap">Multi-tenant cloud at scale</td><td><span class="pill early">Early</span></td><td>Single-tenant managed instances work. Large-scale multi-tenant operation is still maturing — relevant only to the Desk tier.</td></tr>
+    </tbody>
+  </table>
+</div></section>
+
+<!-- ITEM 7 — THE DEVELOPER-TYRANNY ANSWER -->
+<section class="sec"><div class="wrap">
+  <span class="item"><b>7</b>NO MORE HOSTAGE</span>
+  <div class="kicker">The scar this is built for</div>
+  <h2 style="margin:10px 0 8px">You were held hostage by a developer once. Here's how this is structured so it doesn't happen again.</h2>
+  <div class="twocol" style="margin-top:8px">
+    <div class="card2">
+      <h3>What changes</h3>
+      <ul>
+        <li><b>You stop hiring the bottleneck.</b> A new scan or indicator is a plain-English request you review the same day — not a ticket you file and wait months on.</li>
+        <li><b>Nothing is hidden from you.</b> The math is visible and pinned. Every component documents its own interface, so a change tells you exactly what it touches.</li>
+        <li><b>Self-hosted means you hold the source.</b> No one can switch it off, lock you out, or hold your studies for ransom.</li>
+        <li><b>Your work outlives our updates.</b> What you build lives in your own space and survives upgrades to the core.</li>
+      </ul>
+    </div>
+    <div class="card2">
+      <h3>What stays honest</h3>
+      <ul>
+        <li><b>You may still want help — and that's allowed.</b> Persona 1 should lean on the managed tier and our support, not become a reluctant engineer.</li>
+        <li><b>The AI is the new leverage, not a free lunch.</b> It does the developer's typing against guardrails; your judgment still signs off.</li>
+        <li><b>We earn the renewal every month.</b> Because you hold the source, we keep you by shipping updates, support, and data — not by locking the door.</li>
+        <li><b>We'll tell you when something isn't ready.</b> See the maturity table above — that candor is the relationship.</li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+
+<!-- ITEM 8 — WHAT YOU BRING -->
+<section class="sec"><div class="wrap">
+  <span class="item"><b>8</b>WHAT YOU BRING</span>
+  <div class="kicker">No hidden dependencies</div>
+  <h2 style="margin:10px 0 8px">What you supply, in plain terms.</h2>
+  <div class="twocol" style="margin-top:8px">
+    <div class="card2">
+      <h3>Market data</h3>
+      <p>You bring your own feed, and it stays yours. End-of-day history for liquid US stocks and ETFs is inexpensive
+      and simple — that's all Persona 1 needs. Intraday needs a real-time feed (Persona 2 and 3).</p>
+      <p style="margin:0">The institutional sector/breadth modules need a specific vendor feed; if you don't have it,
+      you run the large core that doesn't, and those modules stay off until you add it.</p>
+    </div>
+    <div class="card2">
+      <h3>AI key &amp; your machine</h3>
+      <p>You bring your own AI key, so your spend is yours and your conversations aren't pooled with anyone else's.
+      Managed (Cloud) runs on our hardware as a single isolated instance; self-hosted runs entirely on yours, where
+      your data never leaves.</p>
+      <p style="margin:0">No part of this quietly phones home with your fills, your watchlists, or your journal.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- ITEM 9 — COST IN PLAIN TERMS -->
+<section class="sec" id="cost"><div class="wrap">
+  <span class="item"><b>9</b>COST</span>
+  <div class="kicker">Money and time, both</div>
+  <h2 style="margin:10px 0 8px">The real cost — not just the sticker.</h2>
+  <p class="sub">Pricing is finalized in a conversation, because the right tier depends on which persona you are.
+  What matters more than the number is the honest effort each path asks of you.</p>
+  <div class="costgrid">
+    <div class="cb">
+      <h4>Managed (Cloud)</h4>
+      <div class="px">Persona 1 · most of Persona 2</div>
+      <div class="ln"><b>Money:</b> a monthly fee, plus your own data subscription.</div>
+      <div class="ln"><b>Time to value:</b> a few hours to learn the workbench.</div>
+      <div class="ln"><b>Effort:</b> low. We run the pipeline, backups, and updates.</div>
+      <div class="ln"><b>You own:</b> your data and studies, on an isolated instance.</div>
+    </div>
+    <div class="cb">
+      <h4>Self-hosted</h4>
+      <div class="px">Persona 2 graduating · Persona 3</div>
+      <div class="ln"><b>Money:</b> a higher monthly fee for full source + updates + support.</div>
+      <div class="ln"><b>Time to value:</b> a guided setup, then ongoing customization.</div>
+      <div class="ln"><b>Effort:</b> real. You run a few daemons and review AI changes.</div>
+      <div class="ln"><b>You own:</b> everything — the source, the box, the data.</div>
+    </div>
+    <div class="cb">
+      <h4>Desk</h4>
+      <div class="px">Small teams &amp; prop</div>
+      <div class="ln"><b>Money:</b> custom, multi-seat.</div>
+      <div class="ln"><b>Time to value:</b> dedicated onboarding.</div>
+      <div class="ln"><b>Effort:</b> shared — we deploy and support alongside you.</div>
+      <div class="ln"><b>You own:</b> shared universes, custom feeds and brokers.</div>
+    </div>
+  </div>
+</div></section>
+
+<!-- ITEM 10 — WHO SHOULD NOT BUY -->
+<section class="sec"><div class="wrap">
+  <span class="item"><b>10</b>NOT FOR YOU IF</span>
+  <div class="kicker">We'd rather lose the sale than mislead you</div>
+  <h2 style="margin:10px 0 8px">Don't buy this if…</h2>
+  <p class="sub">A short, honest disqualifier list. If you're nodding along to these, another product will serve you better and we'll say so.</p>
+  <ul class="notfor">
+    <li><b>You want a bot that trades your money for you.</b> We don't ship live automation. The trigger stays yours, by design.</li>
+    <li><b>You want zero learning on day one.</b> The managed tier is close, but you still learn the workbench. Nothing here is a slot machine.</li>
+    <li><b>You want someone else accountable for your trades.</b> This sharpens your decisions; it never makes them for you.</li>
+    <li><b>You refuse to bring your own data or AI keys.</b> Ownership of those is the whole point — it's why your edge stays private.</li>
+    <li><b>You expect every module live regardless of your data.</b> Some need a specific feed. We tell you which, up front.</li>
+  </ul>
+</div></section>
+
+<!-- ITEM 11 — HARD QUESTIONS -->
+<section class="sec" id="faq"><div class="wrap">
+  <span class="item"><b>11</b>HARD QUESTIONS</span>
+  <div class="kicker">The ones a skeptic actually asks</div>
+  <h2 style="margin:10px 0 8px">Straight answers to the uncomfortable questions.</h2>
+  <div style="max-width:800px">
+    <details open><summary>What happens to me if you disappear?</summary><p>On self-hosted you hold the full source and the platform runs on your machine, so a vendor outage or shutdown doesn't switch you off. On managed, your data and studies are yours and exportable. The honest risk in any small-vendor relationship is pace of updates and support — which is exactly why self-hosted exists for the people who can't tolerate that risk.</p></details>
+    <details><summary>I'm not technical. Will I actually be able to use this?</summary><p>Yes, on the managed tier. The workbench, charts, scans, and the chat assistant are point-and-click and plain English. You won't open a code editor. What you gain is the ability to vet an idea yourself instead of trusting a proposal or a confident-but-wrong chatbot. What you won't gain is the ability to rewrite the platform's internals — and you won't need to.</p></details>
+    <details><summary>Can I really trust the AI with my trading decisions?</summary><p>Trust it to research, frame, and check — not to decide. It's grounded in your data and the platform's pinned ground-truth, instructed to state only what it computed, and every change it proposes is reviewed before it lands. It still makes mistakes, which is why the guardrails and your sign-off exist. It is a sharper second opinion, never the final word.</p></details>
+    <details><summary>Why does it cost what it costs when AI is getting cheap?</summary><p>You're paying for the hardened operation around the AI — the validated daily data, the no-look-ahead backtesting, the pinned ground-truth, the monitoring and backups, and the support — plus ongoing updates. The AI key spend is yours and separate. The price is for the system that keeps the AI honest and the data correct, which is the part that's hard to build.</p></details>
+    <details><summary>What actually breaks, and how often?</summary><p>The bedrock — EOD data, charts, backtests, scans on liquid names — is the most battle-tested part and rarely surprises. The newer surfaces (broad self-host packaging, the institutional-signal modules, multi-tenant cloud) are where rough edges live, which is why the maturity table grades them honestly. Early self-host customers get hands-on onboarding for precisely this reason.</p></details>
+    <details><summary>How is this different from just using ChatGPT plus TradingView?</summary><p>Two things a general chatbot and a charting site can't give you together: an AI grounded in your own data and the platform's documented rules rather than the open web, and honest backtesting that can't look ahead by construction. The chatbot guesses and can't check itself; the charting site shows you a price but won't tell you whether your system is reproducibly profitable. Edge S2 closes both gaps in one stack.</p></details>
+  </div>
+</div></section>
+
+<!-- ITEM 12 — NEXT STEP -->
+<section class="sec final" id="talk"><div class="wrap">
+  <span class="item"><b>12</b>NEXT STEP</span>
+  <div class="kicker">A conversation, not a checkout</div>
+  <h2 style="margin:14px 0 8px">Tell us which persona you are.</h2>
+  <p class="sub" style="margin:0 auto 22px">We'll show you the part of the platform that matches, set honest expectations
+  on the rest, and recommend the tier that fits — even if that recommendation is "not yet."</p>
+  <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+    <a href="#who" class="btn lg">Find your persona ↑</a>
+    <a href="#" class="btn lg ghost">Book a straight-talk call →</a>
+  </div>
+  <p class="q">Your data. Your decisions. Honestly graded.</p>
+</div></section>
+
+<!-- ITEM 13 — FOOTER -->
+<footer><div class="wrap footrow">
+  <span class="item" style="position:static"><b>13</b>FOOTER</span>
+  <div><strong>Edge S2</strong> · straight-talk edition · the honest counterpart to the promo page</div>
+  <div>© Lifelong Edge · Concept mockup</div>
+</div></footer>
+
+</body>
+</html>
