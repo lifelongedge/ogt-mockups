@@ -117,6 +117,19 @@
 
   /* cost */
   .costgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+
+  /* data sources */
+  .byod{font-family:var(--mono);font-size:14px;color:var(--ink2);background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:0 10px 10px 0;padding:16px 20px;margin-bottom:30px}
+  .byod b{color:var(--ink)}
+  .dsrc{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .prov{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px 20px;display:flex;flex-direction:column}
+  .prov .nm{font-size:17px;font-weight:800;margin-bottom:2px}
+  .prov .nm small{font-weight:500;font-size:12px;color:var(--muted)}
+  .prov .role{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px}
+  .prov.primary .role{color:var(--green)} .prov.optional .role{color:var(--gold)} .prov.fallback .role{color:var(--blue)} .prov.internal .role{color:var(--muted)}
+  .prov .cov{font-size:13.5px;color:var(--ink2);margin:0 0 10px}
+  .prov .cov b{color:var(--ink)}
+  .prov .nb{font-size:12.5px;color:var(--muted);margin:auto 0 0;padding-top:10px;border-top:1px solid var(--line)}
   .cb{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:22px 22px}
   .cb h4{font-size:17px;margin-bottom:2px}
   .cb .px{font-family:var(--mono);font-size:13px;color:var(--gold);margin-bottom:14px}
@@ -141,6 +154,7 @@
   @media(max-width:900px){
     .hero h1{font-size:33px}
     .frame,.ps,.ai,.twocol,.costgrid{grid-template-columns:1fr}
+    .dsrc{grid-template-columns:1fr 1fr}
     .navlinks{display:none}
   }
 </style>
@@ -158,6 +172,7 @@
     <a href="#who">Which one are you</a>
     <a href="#ai">The AI question</a>
     <a href="#maturity">What's real today</a>
+    <a href="#data">Data</a>
     <a href="#cost">Cost</a>
     <a href="#faq">Hard questions</a>
   </div>
@@ -367,9 +382,45 @@
   </div>
 </div></section>
 
-<!-- ITEM 9 — COST IN PLAIN TERMS -->
+<!-- ITEM 9 — DATA SOURCES -->
+<section class="sec" id="data"><div class="wrap">
+  <span class="item"><b>9</b>DATA SOURCES</span>
+  <div class="kicker">Bring your own data</div>
+  <h2 style="margin:10px 0 8px">We don't sell you a data subscription.</h2>
+  <p class="sub">Edge S2 is bring-your-own-data. You hold the vendor relationship and the bill, and your feed
+  stays yours. The platform connects to the providers below; you pick the ones that fit your markets and budget.</p>
+  <div class="byod">Why it matters: a feed you own is a feed no one can revoke, meter, or mine. <b>Your data, your account, your terms.</b></div>
+  <div class="dsrc">
+    <div class="prov primary">
+      <div class="nm">Massive <small>(formerly Polygon)</small></div>
+      <div class="role">Primary feed</div>
+      <p class="cov">Real-time and end-of-day for <b>Stocks, Indices, Futures, and Options</b>.</p>
+      <p class="nb">Tested today for Stocks. The other asset classes are supported on demand.</p>
+    </div>
+    <div class="prov optional">
+      <div class="nm">Norgate Data</div>
+      <div class="role">For honest backtests</div>
+      <p class="cov"><b>US equities, end-of-day.</b> Point-in-time, survivorship-bias-free universes.</p>
+      <p class="nb">Required if you want survivorship-bias-free lists for system backtesting.</p>
+    </div>
+    <div class="prov fallback">
+      <div class="nm">Yahoo</div>
+      <div class="role">Light / fallback</div>
+      <p class="cov">End-of-day and intraday history, with no account required.</p>
+      <p class="nb">A quick way to get started or to fill a gap.</p>
+    </div>
+    <div class="prov internal">
+      <div class="nm">IQFeed</div>
+      <div class="role">Internal</div>
+      <p class="cov">A high-fidelity feed we run internally.</p>
+      <p class="nb">Used in-house; available to discuss for Desk deployments.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- ITEM 10 — COST IN PLAIN TERMS -->
 <section class="sec" id="cost"><div class="wrap">
-  <span class="item"><b>9</b>COST</span>
+  <span class="item"><b>10</b>COST</span>
   <div class="kicker">Money and time, both</div>
   <h2 style="margin:10px 0 8px">The real cost: money and time.</h2>
   <p class="sub">Pricing is finalized in a conversation, because the right tier depends on which persona you are.
@@ -402,9 +453,9 @@
   </div>
 </div></section>
 
-<!-- ITEM 10 — WHO SHOULD NOT BUY -->
+<!-- ITEM 11 — WHO SHOULD NOT BUY -->
 <section class="sec"><div class="wrap">
-  <span class="item"><b>10</b>NOT FOR YOU IF</span>
+  <span class="item"><b>11</b>NOT FOR YOU IF</span>
   <div class="kicker">We'd rather lose the sale than mislead you</div>
   <h2 style="margin:10px 0 8px">Don't buy this if…</h2>
   <p class="sub">A short, honest disqualifier list. If you're nodding along to these, another product will serve you better and we'll say so.</p>
@@ -417,9 +468,9 @@
   </ul>
 </div></section>
 
-<!-- ITEM 11 — HARD QUESTIONS -->
+<!-- ITEM 12 — HARD QUESTIONS -->
 <section class="sec" id="faq"><div class="wrap">
-  <span class="item"><b>11</b>HARD QUESTIONS</span>
+  <span class="item"><b>12</b>HARD QUESTIONS</span>
   <div class="kicker">The ones a skeptic actually asks</div>
   <h2 style="margin:10px 0 8px">Straight answers to the uncomfortable questions.</h2>
   <div style="max-width:800px">
@@ -432,9 +483,9 @@
   </div>
 </div></section>
 
-<!-- ITEM 12 — NEXT STEP -->
+<!-- ITEM 13 — NEXT STEP -->
 <section class="sec final" id="talk"><div class="wrap">
-  <span class="item"><b>12</b>NEXT STEP</span>
+  <span class="item"><b>13</b>NEXT STEP</span>
   <div class="kicker">Start with a conversation</div>
   <h2 style="margin:14px 0 8px">Tell us which persona you are.</h2>
   <p class="sub" style="margin:0 auto 22px">We'll show you the part of the platform that matches, set honest expectations
@@ -446,9 +497,9 @@
   <p class="q">Your data. Your decisions. Honestly graded.</p>
 </div></section>
 
-<!-- ITEM 13 — FOOTER -->
+<!-- ITEM 14 — FOOTER -->
 <footer><div class="wrap footrow">
-  <span class="item" style="position:static"><b>13</b>FOOTER</span>
+  <span class="item" style="position:static"><b>14</b>FOOTER</span>
   <div><strong>Edge S2</strong> · straight-talk edition · the honest counterpart to the promo page</div>
   <div>© Lifelong Edge · Concept mockup</div>
 </div></footer>
