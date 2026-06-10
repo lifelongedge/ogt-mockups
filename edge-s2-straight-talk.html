@@ -130,6 +130,15 @@
   .prov .cov{font-size:13.5px;color:var(--ink2);margin:0 0 10px}
   .prov .cov b{color:var(--ink)}
   .prov .nb{font-size:12.5px;color:var(--muted);margin:auto 0 0;padding-top:10px;border-top:1px solid var(--line)}
+
+  /* live demos */
+  .demos{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .demo{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px 22px;display:flex;flex-direction:column;transition:border-color .15s}
+  .demo:hover{border-color:rgba(91,141,239,.5)}
+  .demo .dn{display:grid;place-items:center;width:34px;height:34px;border-radius:9px;background:rgba(91,141,239,.14);color:var(--blue);font-family:var(--mono);font-weight:800;font-size:15px;border:1px solid rgba(91,141,239,.4);margin-bottom:14px}
+  .demo h4{font-size:18px;margin-bottom:9px}
+  .demo p{margin:0;color:var(--ink2);font-size:14.5px}
+  .demo .time{display:inline-block;font-family:var(--mono);font-size:11px;font-weight:700;color:var(--amber);background:rgba(224,163,46,.14);border-radius:5px;padding:4px 9px;margin-top:14px;align-self:flex-start}
   .cb{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:22px 22px}
   .cb h4{font-size:17px;margin-bottom:2px}
   .cb .px{font-family:var(--mono);font-size:13px;color:var(--gold);margin-bottom:14px}
@@ -155,6 +164,7 @@
     .hero h1{font-size:33px}
     .frame,.ps,.ai,.twocol,.costgrid{grid-template-columns:1fr}
     .dsrc{grid-template-columns:1fr 1fr}
+    .demos{grid-template-columns:1fr}
     .navlinks{display:none}
   }
 </style>
@@ -174,6 +184,7 @@
     <a href="#maturity">What's real today</a>
     <a href="#data">Data</a>
     <a href="#cost">Cost</a>
+    <a href="#demo">Live demo</a>
     <a href="#faq">Hard questions</a>
   </div>
   <a href="#talk" class="btn">Have a conversation →</a>
@@ -482,9 +493,39 @@
   </div>
 </div></section>
 
-<!-- ITEM 13 — NEXT STEP -->
+<!-- ITEM 13 — LIVE DEMO -->
+<section class="sec" id="demo"><div class="wrap">
+  <span class="item"><b>13</b>LIVE DEMO</span>
+  <div class="kicker">A real feel, not a slideshow</div>
+  <h2 style="margin:10px 0 8px">If you're interested, we'll show you live.</h2>
+  <p class="sub">Pick one, or all three. These are hands-on sessions on real data, run with you over a call so you
+  can judge the platform on your own terms.</p>
+  <div class="demos">
+    <div class="demo">
+      <div class="dn">1</div>
+      <h4>Publish a system to Edge Labs</h4>
+      <p>You give us a system definition. We show you how to produce the same report we publish on Edge Labs and
+      walk you through each step, so you see exactly how an idea becomes a defensible result.</p>
+      <span class="time">≈ 15–30 minutes</span>
+    </div>
+    <div class="demo">
+      <div class="dn">2</div>
+      <h4>Find your edge in your own trades</h4>
+      <p>Hand us a trade file. We ingest it on the spot and show you the metrics for your actual trades — day and
+      swing P&amp;L, risk multiples, and the decisions behind them.</p>
+    </div>
+    <div class="demo">
+      <div class="dn">3</div>
+      <h4>Reshape the intraday cockpit</h4>
+      <p>We show you the intraday cockpit view I trade from — how and what I trade. Then you ask to change it to
+      fit your style, and we do it live in front of you.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- ITEM 14 — NEXT STEP -->
 <section class="sec final" id="talk"><div class="wrap">
-  <span class="item"><b>13</b>NEXT STEP</span>
+  <span class="item"><b>14</b>NEXT STEP</span>
   <div class="kicker">Start with a conversation</div>
   <h2 style="margin:14px 0 8px">Tell us which persona you are.</h2>
   <p class="sub" style="margin:0 auto 22px">We'll show you the part of the platform that matches, set honest expectations
@@ -496,9 +537,9 @@
   <p class="q">Your data. Your decisions. Honestly graded.</p>
 </div></section>
 
-<!-- ITEM 14 — FOOTER -->
+<!-- ITEM 15 — FOOTER -->
 <footer><div class="wrap footrow">
-  <span class="item" style="position:static"><b>14</b>FOOTER</span>
+  <span class="item" style="position:static"><b>15</b>FOOTER</span>
   <div><strong>Edge S2</strong> · straight-talk edition · the honest counterpart to the promo page</div>
   <div>© Lifelong Edge · Concept mockup</div>
 </div></footer>
