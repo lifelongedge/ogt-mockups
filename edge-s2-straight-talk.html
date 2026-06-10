@@ -4,6 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>try{var _t=localStorage.getItem('edge-s2-theme');if(_t)document.documentElement.setAttribute('data-theme',_t);}catch(e){}</script>
 <title>Edge S2 — Straight talk. What it is, what it costs, who it's for.</title>
 <style>
   :root{
@@ -13,7 +14,21 @@
     --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
     --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   }
+  :root[data-theme="light"]{
+    --bg:#f7f8fa; --bg2:#eceff4; --panel:#ffffff; --panel2:#f1f4f8; --line:#dde2ea;
+    --ink:#1b1f27; --ink2:#4c5462; --muted:#8b93a1;
+    --gold:#9a7616; --gold2:#b08c20; --green:#1f9d63; --amber:#b5791a; --red:#cf4632; --blue:#3a6fd0;
+  }
+  :root[data-theme="light"] nav{background:rgba(247,248,250,.86)}
+  :root[data-theme="light"] .btn{color:#fff}
+  :root[data-theme="light"] .btn.ghost{color:var(--gold);background:transparent}
+  :root[data-theme="light"] .brand .mk{color:#fff}
+  :root[data-theme="light"] .price .badge{color:#fff}
+  .navright{display:flex;align-items:center;gap:12px}
+  .themebtn{font-family:var(--mono);font-size:12px;color:var(--ink2);background:transparent;border:1px solid var(--line);border-radius:7px;padding:7px 11px;cursor:pointer;letter-spacing:.04em;white-space:nowrap}
+  .themebtn:hover{color:var(--ink);border-color:var(--muted)}
   *{box-sizing:border-box}
+  body{transition:background .2s ease,color .2s ease}
   html,body{margin:0}
   body{background:var(--bg);color:var(--ink);font:17px/1.65 var(--sans);-webkit-font-smoothing:antialiased}
   a{color:var(--gold);text-decoration:none}
@@ -187,7 +202,10 @@
     <a href="#demo">Live demo</a>
     <a href="#faq">Hard questions</a>
   </div>
-  <a href="#talk" class="btn">Have a conversation →</a>
+  <div class="navright">
+    <button class="themebtn" id="themeToggle" type="button" aria-label="Toggle light or dark theme">◐ Dark</button>
+    <a href="#talk" class="btn">Have a conversation →</a>
+  </div>
 </div></nav>
 
 <!-- ITEM 2 — HERO -->
@@ -543,6 +561,20 @@
   <div><strong>Edge S2</strong> · straight-talk edition · the honest counterpart to the promo page</div>
   <div>© Lifelong Edge · Concept mockup</div>
 </div></footer>
+
+<script>
+(function(){
+  var root=document.documentElement, btn=document.getElementById('themeToggle');
+  function label(){btn.textContent='◐ '+(root.getAttribute('data-theme')==='light'?'Light':'Dark');}
+  label();
+  btn.addEventListener('click',function(){
+    var next=root.getAttribute('data-theme')==='light'?'dark':'light';
+    root.setAttribute('data-theme',next);
+    try{localStorage.setItem('edge-s2-theme',next);}catch(e){}
+    label();
+  });
+})();
+</script>
 
 </body>
 </html>
