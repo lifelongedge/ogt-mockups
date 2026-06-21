@@ -9,6 +9,14 @@
 | [Trade Review Dashboard](https://lifelongedge.github.io/ogt-mockups/trade-review-dashboard.html) | Personalized AI trade analysis with coaching |
 | **[Edge S2 Briefing View](https://lifelongedge.github.io/ogt-mockups/edge-s2-briefing-view.html)** | **THE PRODUCT VISION** — three-pane app with contextual guide |
 
+## Course Clip Reviews
+
+Internal review pages where the user (Sundeep) approves video clips proposed for upcoming OGT courses. Each clip card shows the YouTube embed cued to the proposed in/out times + an auto-extracted transcript excerpt.
+
+| Review | Description |
+|--------|-------------|
+| [Bar-by-Bar Drill Pack](https://lifelongedge.github.io/ogt-mockups/courses/bbb-clips/) | 60 candidate clips across 3 SKUs (Vocabulary / Drill Mechanic / IWM Case Study) + cold opens. Source: Dr. Ken Long Tortoise strategy podcast Sessions 1-10 (2020-10-20 → 2021-01-04). Review pass v1 |
+
 ## Real-Data Weekly Briefings
 
 Generated from actual Tortoise reports by the `edge-ogt-engine` pipeline — real portfolio rankings, MACD seasons, risk data, and week-over-week change detection:

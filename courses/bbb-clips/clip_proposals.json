@@ -1,0 +1,743 @@
+{
+  "generated_for": "bar-by-bar-training Drill Pack \u2014 review pass v1",
+  "source": "Ken Long Tortoise Capital strategy podcast Sessions 1-10 (2020-10-20 to 2021-01-04)",
+  "sessions": {
+    "S1": {
+      "yt": "BFOC_BqIC14",
+      "title": "strategy20201020podcast",
+      "len": "43:42",
+      "date": "2020-10-20"
+    },
+    "S2": {
+      "yt": "vZqveq0Xdp8",
+      "title": "strategy20201104podcast",
+      "len": "44:45",
+      "date": "2020-11-04"
+    },
+    "S3": {
+      "yt": "yHJuIfn3JNU",
+      "title": "strategy20201109podcast",
+      "len": "41:33",
+      "date": "2020-11-09"
+    },
+    "S4": {
+      "yt": "DAqkXiZFbZc",
+      "title": "strategy20201111podcast",
+      "len": "34:15",
+      "date": "2020-11-11"
+    },
+    "S5": {
+      "yt": "FIjDmBzBozQ",
+      "title": "strategy20201211podcast lesson",
+      "len": "1:10:57",
+      "date": "2020-12-11"
+    },
+    "S6": {
+      "yt": "g5IMojy5HtM",
+      "title": "strategy20201221podcast lesson",
+      "len": "1:18:44",
+      "date": "2020-12-21"
+    },
+    "S7": {
+      "yt": "fVjQ3aBwBCY",
+      "title": "strategy20201229podcast 30R IWM",
+      "len": "1:24:37",
+      "date": "2020-12-29"
+    },
+    "S8": {
+      "yt": "CVscJwHWo64",
+      "title": "strategy20201230podcast 12R IWM",
+      "len": "2:00:41",
+      "date": "2020-12-30"
+    },
+    "S9": {
+      "yt": "MDjMClAixRw",
+      "title": "strategy20201231podcast",
+      "len": "1:53:46",
+      "date": "2020-12-31"
+    },
+    "S10": {
+      "yt": "pPrseVOjMxY",
+      "title": "strategy20210104podcast",
+      "len": "1:58:51",
+      "date": "2021-01-04"
+    }
+  },
+  "totals": {
+    "COLD-OPEN": 1,
+    "BBB-1": 27,
+    "BBB-2": 14,
+    "BBB-3": 18,
+    "ALL": 60
+  },
+  "proposals": {
+    "COLD-OPEN": [
+      {
+        "clip_id": "co-cold-open c-s6",
+        "label": "COLD-OPEN C \u2014 'first trade' construction hook",
+        "session": "S6",
+        "session_title": "strategy20201221podcast lesson",
+        "session_yt": "g5IMojy5HtM",
+        "session_date": "2020-12-21",
+        "start": 1767,
+        "end": 1827,
+        "excerpt": "that's the first trade i'd put my stop down here below the belly down here below the belly of the dragon so i lock in my first trade that's my first trade so now i'm long again uh by about this time my uh my exit's gonna be up here and just my exit's gonna be up here and just tracking the tracking the um i will just\u2026"
+      }
+    ],
+    "BBB-1": [
+      {
+        "clip_id": "bbb-1-m11-s1-25",
+        "label": "M1.1 \u2014 The Dragon",
+        "session": "S1",
+        "session_title": "strategy20201020podcast",
+        "session_yt": "BFOC_BqIC14",
+        "session_date": "2020-10-20",
+        "start": 25,
+        "end": 100,
+        "excerpt": "through the dragon and then almost through the the dragon and then almost through the p uh and so there had real concern that p uh and so there had real concern that another day like another day like that um a move of that size would take that um a move of that size would take us back down through the Binger band us\u2026"
+      },
+      {
+        "clip_id": "bbb-1-m11-s1-149",
+        "label": "M1.1 \u2014 The Dragon",
+        "session": "S1",
+        "session_title": "strategy20201020podcast",
+        "session_yt": "BFOC_BqIC14",
+        "session_date": "2020-10-20",
+        "start": 149,
+        "end": 224,
+        "excerpt": "Gap up uh a move back up through the edge of the Dragon the spine of the edge of the Dragon the spine of the Dragon almost you know on pass Z1 and Dragon almost you know on pass Z1 and then almost up to uh the tip of the then almost up to uh the tip of the Dragon but then a sell off to give back Dragon but then a se\u2026"
+      },
+      {
+        "clip_id": "bbb-1-m11-s2-393",
+        "label": "M1.1 \u2014 The Dragon",
+        "session": "S2",
+        "session_title": "strategy20201104podcast",
+        "session_yt": "vZqveq0Xdp8",
+        "session_date": "2020-11-04",
+        "start": 393,
+        "end": 468,
+        "excerpt": "ran all the way up through z1 up to the peak of the dragon where it just peak of the dragon where it just exactly hit resistance like we exactly hit resistance like we planned for and then had a afternoon planned for and then had a afternoon uh sell-off that took it halfway back uh sell-off that took it halfway back\u2026"
+      },
+      {
+        "clip_id": "bbb-1-m11-s2-707",
+        "label": "M1.1 \u2014 The Dragon",
+        "session": "S2",
+        "session_title": "strategy20201104podcast",
+        "session_yt": "vZqveq0Xdp8",
+        "session_date": "2020-11-04",
+        "start": 707,
+        "end": 782,
+        "excerpt": "pcr entry is plus notice it's right across the dragon so it's cleared across the dragon so it's cleared all of this resistance in the dragon so all of this resistance in the dragon so you just mark off where that trailing you just mark off where that trailing pcr pcr is and then when i'm trading intraday um you can \u2026"
+      },
+      {
+        "clip_id": "bbb-1-m12-s1-231",
+        "label": "M1.2 \u2014 RLCO / RL10",
+        "session": "S1",
+        "session_title": "strategy20201020podcast",
+        "session_yt": "BFOC_BqIC14",
+        "session_date": "2020-10-20",
+        "start": 231,
+        "end": 306,
+        "excerpt": "surge in the same way that this peak rl10 is higher than that Peak rl10 so rl10 is higher than that Peak rl10 so it's just running out of a little a it's just running out of a little a little bit running out of enthusiasm little bit running out of enthusiasm here you here you know um so that's the two Dragon Peak uh\u2026"
+      },
+      {
+        "clip_id": "bbb-1-m12-s1-307",
+        "label": "M1.2 \u2014 RLCO / RL10",
+        "session": "S1",
+        "session_title": "strategy20201020podcast",
+        "session_yt": "BFOC_BqIC14",
+        "session_date": "2020-10-20",
+        "start": 307,
+        "end": 382,
+        "excerpt": "already and now the difference from the rl10 and the p is not much it's less rl10 and the p is not much it's less than a 1 than a 1 ATR so that could very easily spend the ATR so that could very easily spend the spell the spell the end of this little move that took us end of this little move that took us back to bac\u2026"
+      },
+      {
+        "clip_id": "bbb-1-m12-s2-373",
+        "label": "M1.2 \u2014 RLCO / RL10",
+        "session": "S2",
+        "session_title": "strategy20201104podcast",
+        "session_yt": "vZqveq0Xdp8",
+        "session_date": "2020-11-04",
+        "start": 373,
+        "end": 448,
+        "excerpt": "so we had the rl10 rolled over uh it crossed the baby dragon here uh it crossed the baby dragon here yesterday today it entered z minus one yesterday today it entered z minus one we got the uh got the big gap up from we got the uh got the big gap up from this close it gapped all the way up this close it gapped all t\u2026"
+      },
+      {
+        "clip_id": "bbb-1-m12-s2-501",
+        "label": "M1.2 \u2014 RLCO / RL10",
+        "session": "S2",
+        "session_title": "strategy20201104podcast",
+        "session_yt": "vZqveq0Xdp8",
+        "session_date": "2020-11-04",
+        "start": 501,
+        "end": 576,
+        "excerpt": "one out when it takes out the previous rl10 so when it takes out the previous rl10 so either one or both of those either one or both of those gives you an entry and um even if you gives you an entry and um even if you just play that first just play that first burst and you take just the uh burst and you take just th\u2026"
+      },
+      {
+        "clip_id": "bbb-1-m13-s1-992",
+        "label": "M1.3 \u2014 Z-score / Z3",
+        "session": "S1",
+        "session_title": "strategy20201020podcast",
+        "session_yt": "BFOC_BqIC14",
+        "session_date": "2020-10-20",
+        "start": 992,
+        "end": 1067,
+        "excerpt": "where I kind of like uh get a Z3 breakdown can I get a Z3 break you know those are three short positions let's see probably a breakout above the above the vwap maybe the vwap maybe the Z3 maybe the next Z3 something like that uh treating this like a yellow about a yellow zone in here so on your uh on your little sco\u2026"
+      },
+      {
+        "clip_id": "bbb-1-m13-s1-1076",
+        "label": "M1.3 \u2014 Z-score / Z3",
+        "session": "S1",
+        "session_title": "strategy20201020podcast",
+        "session_yt": "BFOC_BqIC14",
+        "session_date": "2020-10-20",
+        "start": 1076,
+        "end": 1151,
+        "excerpt": "breakout from a Z3 Z3 Z3 Z3 bench uh the argument for one is that it bench uh the argument for one is that it if it holds support here at the bottom if it holds support here at the bottom of the channel and it crosses the of the channel and it crosses the vwap then instead of waiting for the Z3 vwap then instead of \u2026"
+      },
+      {
+        "clip_id": "bbb-1-m13-s2-1818",
+        "label": "M1.3 \u2014 Z-score / Z3",
+        "session": "S2",
+        "session_title": "strategy20201104podcast",
+        "session_yt": "vZqveq0Xdp8",
+        "session_date": "2020-11-04",
+        "start": 1818,
+        "end": 1893,
+        "excerpt": "the that z3 is starting to act like a lid on that z3 is starting to act like a lid on this thing this thing so there's the exit that's about five execution right there stop and reverse just the re-entry in stop and reverse just the re-entry in the usual way the usual way with a stop right where that stop is why with\u2026"
+      },
+      {
+        "clip_id": "bbb-1-m13-s2-2224",
+        "label": "M1.3 \u2014 Z-score / Z3",
+        "session": "S2",
+        "session_title": "strategy20201104podcast",
+        "session_yt": "vZqveq0Xdp8",
+        "session_date": "2020-11-04",
+        "start": 2224,
+        "end": 2299,
+        "excerpt": "breakdown below the z3 our first target would be below the z3 our first target would be here here at the v web so we're looking to get at the v web so we're looking to get there it blew right through that it hits a bottom way down here the um rl10 bottoms out and then we play this cut recovery move and then we play \u2026"
+      },
+      {
+        "clip_id": "bbb-1-m14-s1-707",
+        "label": "M1.4 \u2014 Frog box",
+        "session": "S1",
+        "session_title": "strategy20201020podcast",
+        "session_yt": "BFOC_BqIC14",
+        "session_date": "2020-10-20",
+        "start": 707,
+        "end": 782,
+        "excerpt": "swing now the uh the companies that worked the Frog Champion um win almost worked the Frog Champion um win almost 4% um Google 1.4 Alcoa was the only 4% um Google 1.4 Alcoa was the only metal that that bucked the trend that's metal that that bucked the trend that's at 1.3 Apple Nicola at 1.3 Apple Nicola Twitter fro\u2026"
+      },
+      {
+        "clip_id": "bbb-1-m14-s1-2442",
+        "label": "M1.4 \u2014 Frog box",
+        "session": "S1",
+        "session_title": "strategy20201020podcast",
+        "session_yt": "BFOC_BqIC14",
+        "session_date": "2020-10-20",
+        "start": 2442,
+        "end": 2517,
+        "excerpt": "leg uh here's Mexico the Frog champion 10cent move right out of the gate breaks above yesterday's vwap you will not lose money on that trade sorry there's um here's your sniper exit maybe that that might have been your your manager exit or this one might have been supported summer supported summer Crossing if that l\u2026"
+      },
+      {
+        "clip_id": "bbb-1-m14-s2-1602",
+        "label": "M1.4 \u2014 Frog box",
+        "session": "S2",
+        "session_title": "strategy20201104podcast",
+        "session_yt": "vZqveq0Xdp8",
+        "session_date": "2020-11-04",
+        "start": 1602,
+        "end": 1677,
+        "excerpt": "but you can just trade brazil in the regular way like a hybrid frog and then regular way like a hybrid frog and then keep a fifth keep a fifth for a swing trade uh technology postured for a swing trade uh technology postured really well today really well today and so did treasuries we'll see how that and so did trea\u2026"
+      },
+      {
+        "clip_id": "bbb-1-m14-s2-2221",
+        "label": "M1.4 \u2014 Frog box",
+        "session": "S2",
+        "session_title": "strategy20201104podcast",
+        "session_yt": "vZqveq0Xdp8",
+        "session_date": "2020-11-04",
+        "start": 2221,
+        "end": 2296,
+        "excerpt": "twitter had twitter had been smashed so we had a hybrid frog trade on a so we had a hybrid frog trade on a breakdown breakdown below the z3 our first target would be below the z3 our first target would be here here at the v web so we're looking to get at the v web so we're looking to get there it blew right through \u2026"
+      },
+      {
+        "clip_id": "bbb-1-m15-s1-300",
+        "label": "M1.5 \u2014 PSAR",
+        "session": "S1",
+        "session_title": "strategy20201020podcast",
+        "session_yt": "BFOC_BqIC14",
+        "session_date": "2020-10-20",
+        "start": 300,
+        "end": 375,
+        "excerpt": "believe in um it's resting right on the PSAR in um it's resting right on the PSAR already and now the difference from the already and now the difference from the rl10 and the p is not much it's less rl10 and the p is not much it's less than a 1 than a 1 ATR so that could very easily spend the ATR so that could very \u2026"
+      },
+      {
+        "clip_id": "bbb-1-m15-s1-930",
+        "label": "M1.5 \u2014 PSAR",
+        "session": "S1",
+        "session_title": "strategy20201020podcast",
+        "session_yt": "BFOC_BqIC14",
+        "session_date": "2020-10-20",
+        "start": 930,
+        "end": 1005,
+        "excerpt": "um at the PSAR so if it can break out I'm long at PSAR so if it can break out I'm long at 142 and a half with a belief that it's 142 and a half with a belief that it's it gets to here pretty it gets to here pretty quick and then we'll find out if it has quick and then we'll find out if it has more legs you'd like to\u2026"
+      },
+      {
+        "clip_id": "bbb-1-m15-s2-2270",
+        "label": "M1.5 \u2014 PSAR",
+        "session": "S2",
+        "session_title": "strategy20201104podcast",
+        "session_yt": "vZqveq0Xdp8",
+        "session_date": "2020-11-04",
+        "start": 2270,
+        "end": 2345,
+        "excerpt": "crosses the baby dragon winter turns to spring uh the psar has winter turns to spring uh the psar has flipped flipped uh it's getting ready to cross the v web uh it's getting ready to cross the v web so just go ahead and buy it there with a so just go ahead and buy it there with a stop you could either pick the drag\u2026"
+      },
+      {
+        "clip_id": "bbb-1-m15-s2-2599",
+        "label": "M1.5 \u2014 PSAR",
+        "session": "S2",
+        "session_title": "strategy20201104podcast",
+        "session_yt": "vZqveq0Xdp8",
+        "session_date": "2020-11-04",
+        "start": 2599,
+        "end": 2674,
+        "excerpt": "little tighter because of the psar take a fractional should have re-entered darn it but we take the short now it's a z1 but we take the short now it's a z1 z1 breakdown and our stop would be here z1 breakdown and our stop would be here and are targeting and are targeting coming back to the to the v web there and we \u2026"
+      },
+      {
+        "clip_id": "bbb-1-m16-s2-2514",
+        "label": "M1.6 \u2014 SSC",
+        "session": "S2",
+        "session_title": "strategy20201104podcast",
+        "session_yt": "vZqveq0Xdp8",
+        "session_date": "2020-11-04",
+        "start": 2514,
+        "end": 2589,
+        "excerpt": "just get paid there's the ssc entry there's the ssc entry is now the exit for this trade here and the stop and reverse gives you a managerial exit there or it would have been a sniper sniper right there so either exits about the same on that one one excuse me uh it um you just re-enter and that single position has a\u2026"
+      },
+      {
+        "clip_id": "bbb-1-m16-s2-2650",
+        "label": "M1.6 \u2014 SSC",
+        "session": "S2",
+        "session_title": "strategy20201104podcast",
+        "session_yt": "vZqveq0Xdp8",
+        "session_date": "2020-11-04",
+        "start": 2650,
+        "end": 2725,
+        "excerpt": "by bar standard patterns ssc cotta one cota2 standard patterns ssc cotta one cota2 hybrid frogs same usual suspects hybrid frogs same usual suspects all the same trade geometry all set up all the same trade geometry all set up from daily charts from daily charts standard this is standard work standard this is standa\u2026"
+      },
+      {
+        "clip_id": "bbb-1-m16-s3-721",
+        "label": "M1.6 \u2014 SSC",
+        "session": "S3",
+        "session_title": "strategy20201109podcast",
+        "session_yt": "yHJuIfn3JNU",
+        "session_date": "2020-11-09",
+        "start": 721,
+        "end": 796,
+        "excerpt": "the way down to 99 so that's minus 7% and then this was the uh the SSC so 7% and then this was the uh the SSC so there's a there's a winter a 7% selloff inate yeah that winter a 7% selloff inate yeah that constitutes a winter went from well constitutes a winter went from well above the vwap to a stretch below the ab\u2026"
+      },
+      {
+        "clip_id": "bbb-1-m17-s1-50",
+        "label": "M1.7 \u2014 Critical state",
+        "session": "S1",
+        "session_title": "strategy20201020podcast",
+        "session_yt": "BFOC_BqIC14",
+        "session_date": "2020-10-20",
+        "start": 50,
+        "end": 125,
+        "excerpt": "risk uh and but we also said this could this could also be a uh a critical state this could also be a uh a critical state from which we could see a move up um we're so big move up big move down and we also considered the possibility and we also considered the possibility of a like a sideways grinding move of a like \u2026"
+      },
+      {
+        "clip_id": "bbb-1-m17-s1-94",
+        "label": "M1.7 \u2014 Critical state",
+        "session": "S1",
+        "session_title": "strategy20201020podcast",
+        "session_yt": "BFOC_BqIC14",
+        "session_date": "2020-10-20",
+        "start": 94,
+        "end": 169,
+        "excerpt": "close um right it leave us right in a perfect critical state right in here maximum uncertainty and uh ready to break in any break in any direction all right and uh what we got was one brief move mov North followed by continued harsh North followed by continued harsh selling in the selling in the afternoon to bring i\u2026"
+      },
+      {
+        "clip_id": "bbb-1-m17-s3-283",
+        "label": "M1.7 \u2014 Critical state",
+        "session": "S3",
+        "session_title": "strategy20201109podcast",
+        "session_yt": "yHJuIfn3JNU",
+        "session_date": "2020-11-09",
+        "start": 283,
+        "end": 358,
+        "excerpt": "PS so tomorrow to me it just I think this is a critical State ready to go this is a critical State ready to go hard in either direction if this were to hard in either direction if this were to start up uh I I would take this start up uh I I would take this as the U as the support level and just as the U as the suppo\u2026"
+      },
+      {
+        "clip_id": "bbb-1-m17-s6-1359",
+        "label": "M1.7 \u2014 Critical state",
+        "session": "S6",
+        "session_title": "strategy20201221podcast lesson",
+        "session_yt": "g5IMojy5HtM",
+        "session_date": "2020-12-21",
+        "start": 1359,
+        "end": 1434,
+        "excerpt": "entitled to say this this is a a critical state this this is a a critical state because the whole market is in play because the whole market is in play right now that's where the price is at right now that's where the price is at that moment at the yellow dot that moment at the yellow dot right in the middle of that\u2026"
+      }
+    ],
+    "BBB-2": [
+      {
+        "clip_id": "bbb-2-m2a-s5-1666",
+        "label": "M2.A \u2014 'Sheet of paper' (worksheet origin)",
+        "session": "S5",
+        "session_title": "strategy20201211podcast lesson",
+        "session_yt": "FIjDmBzBozQ",
+        "session_date": "2020-12-11",
+        "start": 1666,
+        "end": 1746,
+        "excerpt": "right so on your on your little sheet of paper there now you suffer you know where do whoops where do you put your uh where do you put your where ah crap sorry where do you put your risk is it here you know is at five at six at seven at eight how much how much room do you give eight how much how much room do you giv\u2026"
+      },
+      {
+        "clip_id": "bbb-2-m2b-s5-1569",
+        "label": "M2.B \u2014 'Where would you stop?' prompt",
+        "session": "S5",
+        "session_title": "strategy20201211podcast lesson",
+        "session_yt": "FIjDmBzBozQ",
+        "session_date": "2020-12-11",
+        "start": 1569,
+        "end": 1649,
+        "excerpt": "mean so where would you put your stop at uh four five six seven or eight now uh if you if you didn't own eight now uh if you if you didn't own this position yet or if you own this this position yet or if you own this position uh position uh from I'm going to say I'll give you from I'm going to say I'll give you cred\u2026"
+      },
+      {
+        "clip_id": "bbb-2-m2b-s5-1696",
+        "label": "M2.B \u2014 'Where would you stop?' prompt",
+        "session": "S5",
+        "session_title": "strategy20201211podcast lesson",
+        "session_yt": "FIjDmBzBozQ",
+        "session_date": "2020-12-11",
+        "start": 1696,
+        "end": 1776,
+        "excerpt": "sorry where do you put your risk is it here you know is at five at six at seven at eight how much how much room do you give eight how much how much room do you give that all right so go ahead and lock that that all right so go ahead and lock that in how much do I personally risk on owl in how much do I personally ri\u2026"
+      },
+      {
+        "clip_id": "bbb-2-m2b-s6-1529",
+        "label": "M2.B \u2014 'Where would you stop?' prompt",
+        "session": "S6",
+        "session_title": "strategy20201221podcast lesson",
+        "session_yt": "g5IMojy5HtM",
+        "session_date": "2020-12-21",
+        "start": 1529,
+        "end": 1609,
+        "excerpt": "and if it if you got long at one where would you put your stop at this where would you put your stop at this dotted line at four dotted line at four at five or at six etcetera or if you got at five or at six etcetera or if you got short at four short at four would you put your stop at the yellow at would you put you\u2026"
+      },
+      {
+        "clip_id": "bbb-2-m2c-s5-1271",
+        "label": "M2.C \u2014 'Lock in your answer' prompt",
+        "session": "S5",
+        "session_title": "strategy20201211podcast lesson",
+        "session_yt": "FIjDmBzBozQ",
+        "session_date": "2020-12-11",
+        "start": 1271,
+        "end": 1346,
+        "excerpt": "absolutely I absolutely want to lock in in um 30 cents a um 30 cents a share on a 7 Cent risk that doesn't I'm share on a 7 Cent risk that doesn't I'm not afraid of not afraid of that so I like the I like moving my stop that so I like the I like moving my stop to here just because I like to keep the to here just bec\u2026"
+      },
+      {
+        "clip_id": "bbb-2-m2c-s5-1395",
+        "label": "M2.C \u2014 'Lock in your answer' prompt",
+        "session": "S5",
+        "session_title": "strategy20201211podcast lesson",
+        "session_yt": "FIjDmBzBozQ",
+        "session_date": "2020-12-11",
+        "start": 1395,
+        "end": 1470,
+        "excerpt": "today you know I I'm more than happy to lock in the gains and most of the rest lock in the gains and most of the rest of the market was down in the morning of the market was down in the morning so um this is one where uh I would so um this is one where uh I would activate the activate the [Music] [Music] sniper and \u2026"
+      },
+      {
+        "clip_id": "bbb-2-m2c-s6-1547",
+        "label": "M2.C \u2014 'Lock in your answer' prompt",
+        "session": "S6",
+        "session_title": "strategy20201221podcast lesson",
+        "session_yt": "g5IMojy5HtM",
+        "session_date": "2020-12-21",
+        "start": 1547,
+        "end": 1622,
+        "excerpt": "position so go ahead and lock in your plan um let's see lock in your plan um let's see let me pick on somebody in here i see let me pick on somebody in here i see lisa lisa uh lisa i expect you to put some your uh uh lisa i expect you to put some your uh answers in the box here answers in the box here start holding \u2026"
+      },
+      {
+        "clip_id": "bbb-2-m2c-s6-1780",
+        "label": "M2.C \u2014 'Lock in your answer' prompt",
+        "session": "S6",
+        "session_title": "strategy20201221podcast lesson",
+        "session_yt": "g5IMojy5HtM",
+        "session_date": "2020-12-21",
+        "start": 1780,
+        "end": 1855,
+        "excerpt": "so i lock in my first trade that's my first trade so now i'm long again uh by about this time my uh my exit's gonna be up here and just my exit's gonna be up here and just tracking the tracking the um i will just um i will just let me get that out of the way i'm just let me get that out of the way i'm just going to \u2026"
+      },
+      {
+        "clip_id": "bbb-2-m2d-s5-2579",
+        "label": "M2.D \u2014 First-trade stop-placement narration",
+        "session": "S5",
+        "session_title": "strategy20201211podcast lesson",
+        "session_yt": "FIjDmBzBozQ",
+        "session_date": "2020-12-11",
+        "start": 2579,
+        "end": 2669,
+        "excerpt": "six at the belly of the Dragon uh chi Wang what would you Wang what would you be for your stop uh chi Wing has got to stop at seven okay so let's we'll just put that seven okay so let's we'll just put that in there now make a decision uh if you were going to add a decision uh if you were going to add a second positi\u2026"
+      },
+      {
+        "clip_id": "bbb-2-m2d-s5-2985",
+        "label": "M2.D \u2014 First-trade stop-placement narration",
+        "session": "S5",
+        "session_title": "strategy20201211podcast lesson",
+        "session_yt": "FIjDmBzBozQ",
+        "session_date": "2020-12-11",
+        "start": 2985,
+        "end": 3075,
+        "excerpt": "call this the belly of the Dragon let's call it uh this one here and third one maybe down at the previous swing low or the let's call it previous swing low or the let's call it the vwap okay so that would the vwap okay so that would be four five and five and six all right so what is your strategies six all right so \u2026"
+      },
+      {
+        "clip_id": "bbb-2-m2d-s6-1767",
+        "label": "M2.D \u2014 First-trade stop-placement narration",
+        "session": "S6",
+        "session_title": "strategy20201221podcast lesson",
+        "session_yt": "g5IMojy5HtM",
+        "session_date": "2020-12-21",
+        "start": 1767,
+        "end": 1857,
+        "excerpt": "that's the first trade i'd put my stop down here below the belly down here below the belly of the dragon so i lock in my first trade that's my first trade so now i'm long again uh by about this time my uh my exit's gonna be up here and just my exit's gonna be up here and just tracking the tracking the um i will just\u2026"
+      },
+      {
+        "clip_id": "bbb-2-m2d-s10-1824",
+        "label": "M2.D \u2014 First-trade stop-placement narration",
+        "session": "S10",
+        "session_title": "strategy20210104podcast",
+        "session_yt": "pPrseVOjMxY",
+        "session_date": "2021-01-04",
+        "start": 1824,
+        "end": 1914,
+        "excerpt": "you know from peak of the dragon to belly of the dragon it looked like this you know that size of a box and now this size of a box is getting smaller size of a box is getting smaller and now this time and now this time it's even smaller so what we got is it's even smaller so what we got is actually a period of decli\u2026"
+      },
+      {
+        "clip_id": "bbb-2-m2e-s10-2662",
+        "label": "M2.E \u2014 'Talk to me about your...' Q&A",
+        "session": "S10",
+        "session_title": "strategy20210104podcast",
+        "session_yt": "pPrseVOjMxY",
+        "session_date": "2021-01-04",
+        "start": 2662,
+        "end": 2742,
+        "excerpt": "talk to me about your third position so you're gonna you're looking for a third position at seven third position at seven okay okay so if you get if we get a seven here all right all right we get a bit of a pullback you still okay we're going to get our our"
+      },
+      {
+        "clip_id": "bbb-2-m2f-s3-1374",
+        "label": "M2.F \u2014 Scratch + re-entry across VWAP",
+        "session": "S3",
+        "session_title": "strategy20201109podcast",
+        "session_yt": "yHJuIfn3JNU",
+        "session_date": "2020-11-09",
+        "start": 1374,
+        "end": 1464,
+        "excerpt": "took the re-entry when it crossed the vwap and re-entry when it crossed the vwap and took out the Z3 so that's going to be this entry here and our standard stop on this would be to the VW and that's about 30 cents of risk so this is a second entry using the Kata 2 so the 2 so the pullback um held support at the PSAR\u2026"
+      }
+    ],
+    "BBB-3": [
+      {
+        "clip_id": "bbb-3-m3-s7-592",
+        "label": "M3 \u2014 IWM mentioned",
+        "session": "S7",
+        "session_title": "strategy20201229podcast 30R IWM",
+        "session_yt": "fVjQ3aBwBCY",
+        "session_date": "2020-12-29",
+        "start": 592,
+        "end": 672,
+        "excerpt": "November what you had was Prior was you had uh iwm the Russell um underperforming the underperforming the S&amp;P so let me get a S&amp;P line in here so S&amp;P so let me get a S&amp;P line in here so it's been like it's been like this there has been this outperformance this there has been this outperformance of th\u2026"
+      },
+      {
+        "clip_id": "bbb-3-m3-s7-635",
+        "label": "M3 \u2014 IWM mentioned",
+        "session": "S7",
+        "session_title": "strategy20201229podcast 30R IWM",
+        "session_yt": "fVjQ3aBwBCY",
+        "session_date": "2020-12-29",
+        "start": 635,
+        "end": 715,
+        "excerpt": "surprising good news it's been like this for iwm it almost for iwm it almost immediately started to get better closed immediately started to get better closed the Gap and has been really the Gap and has been really outperforming so this is a risk on outperforming so this is a risk on trade that is US Centric all rig\u2026"
+      },
+      {
+        "clip_id": "bbb-3-m3-s8-2576",
+        "label": "M3 \u2014 IWM mentioned",
+        "session": "S8",
+        "session_title": "strategy20201230podcast 12R IWM",
+        "session_yt": "CVscJwHWo64",
+        "session_date": "2020-12-30",
+        "start": 2576,
+        "end": 2656,
+        "excerpt": "that's what led to the 30 R trade 30 execution R trade inside um iwm so when execution R trade inside um iwm so when you see a lot of s and here we go again you see a lot of s and here we go again spy 3.8 to one spy 3.8 to one ojoy uh Rapture there's Honeywell at ojoy uh Rapture there's Honeywell at 2.1 I was hoping\u2026"
+      },
+      {
+        "clip_id": "bbb-3-m3-s8-2694",
+        "label": "M3 \u2014 IWM mentioned",
+        "session": "S8",
+        "session_title": "strategy20201230podcast 12R IWM",
+        "session_yt": "CVscJwHWo64",
+        "session_date": "2020-12-30",
+        "start": 2694,
+        "end": 2774,
+        "excerpt": "uh this one is iwm the Russell this is on one minute iwm the Russell this is on one minute chart so this big blue line is the um uh chart so this big blue line is the um uh is is the close and the open so is is the close and the open so yesterday closed down here with the yesterday closed down here with the vwap uh \u2026"
+      },
+      {
+        "clip_id": "bbb-3-m31-s7-4147",
+        "label": "M3.1 \u2014 30R IWM headline frame",
+        "session": "S7",
+        "session_title": "strategy20201229podcast 30R IWM",
+        "session_yt": "fVjQ3aBwBCY",
+        "session_date": "2020-12-29",
+        "start": 4147,
+        "end": 4237,
+        "excerpt": "about 30 R 30 execution R so remember now when we R 30 execution R so remember now when we say the execution R what we're doing for say the execution R what we're doing for position sizing is taking five times the position sizing is taking five times the execution r execution r to be a position sizing risk so a 30 R\u2026"
+      },
+      {
+        "clip_id": "bbb-3-m31-s7-4834",
+        "label": "M3.1 \u2014 30R IWM headline frame",
+        "session": "S7",
+        "session_title": "strategy20201229podcast 30R IWM",
+        "session_yt": "fVjQ3aBwBCY",
+        "session_date": "2020-12-29",
+        "start": 4834,
+        "end": 4924,
+        "excerpt": "intraday frog boxes and the minimum manageable risk boxes and you made 30 R manageable risk boxes and you made 30 R in that last yellow in that last yellow box that's the point of hybrid box that's the point of hybrid trading so if you're not a day trader at trading so if you're not a day trader at all then the same\u2026"
+      },
+      {
+        "clip_id": "bbb-3-m31-s8-2572",
+        "label": "M3.1 \u2014 30R IWM headline frame",
+        "session": "S8",
+        "session_title": "strategy20201230podcast 12R IWM",
+        "session_yt": "CVscJwHWo64",
+        "session_date": "2020-12-30",
+        "start": 2572,
+        "end": 2662,
+        "excerpt": "saw that a couple days ago why that that's what led to the 30 R trade 30 that's what led to the 30 R trade 30 execution R trade inside um iwm so when execution R trade inside um iwm so when you see a lot of s and here we go again you see a lot of s and here we go again spy 3.8 to one spy 3.8 to one ojoy uh Rapture t\u2026"
+      },
+      {
+        "clip_id": "bbb-3-m32-s8-7085",
+        "label": "M3.2 \u2014 12R IWM headline frame",
+        "session": "S8",
+        "session_title": "strategy20201230podcast 12R IWM",
+        "session_yt": "CVscJwHWo64",
+        "session_date": "2020-12-30",
+        "start": 7085,
+        "end": 7175,
+        "excerpt": "for the rest of the day but that's what 12r looks like and that's 12r looks like and that's 12r on a very small range day okay yeah uh just a final thing the pocket is anytime you get a a uh like a roll over anytime you get a a uh like a roll over in the rl10 or the dragon rolls over in the rl10 or the dragon rolls \u2026"
+      },
+      {
+        "clip_id": "bbb-3-m32-s8-7180",
+        "label": "M3.2 \u2014 12R IWM headline frame",
+        "session": "S8",
+        "session_title": "strategy20201230podcast 12R IWM",
+        "session_yt": "CVscJwHWo64",
+        "session_date": "2020-12-30",
+        "start": 7180,
+        "end": 7270,
+        "excerpt": "today 12 12 R today and so what's 12 R 12 12 12 R today and so what's 12 R 12 execution R equals how much position execution R equals how much position sizing are 2.4 so on this 2.4 so on this trade we earned a full week's worth of trade we earned a full week's worth of position sizing capture okay because remember \u2026"
+      },
+      {
+        "clip_id": "bbb-3-m33-s7-1675",
+        "label": "M3.3 \u2014 WOAY exit + alternatives",
+        "session": "S7",
+        "session_title": "strategy20201229podcast 30R IWM",
+        "session_yt": "fVjQ3aBwBCY",
+        "session_date": "2020-12-29",
+        "start": 1675,
+        "end": 1765,
+        "excerpt": "here's the WOAY exit here and then if you uh if you take the take the sniper exit here at the P or the uh managerial exit P or the uh managerial exit here this is a natural this is a natural here this is a natural this is a natural place to add add either here or above place to add add either here or above above the\u2026"
+      },
+      {
+        "clip_id": "bbb-3-m33-s8-111",
+        "label": "M3.3 \u2014 WOAY exit + alternatives",
+        "session": "S8",
+        "session_title": "strategy20201230podcast 12R IWM",
+        "session_yt": "CVscJwHWo64",
+        "session_date": "2020-12-30",
+        "start": 111,
+        "end": 201,
+        "excerpt": "not I mean if we were doing this on a um a wo way exit managerial a wo way exit managerial stop of the Ballinger band stop of the Ballinger band mean happens to mean happens to be um the 2 ATR be um the 2 ATR stop which means that this would have stop which means that this would have been enough to get us out and th\u2026"
+      },
+      {
+        "clip_id": "bbb-3-m33-s8-2766",
+        "label": "M3.3 \u2014 WOAY exit + alternatives",
+        "session": "S8",
+        "session_title": "strategy20201230podcast 12R IWM",
+        "session_yt": "CVscJwHWo64",
+        "session_date": "2020-12-30",
+        "start": 2766,
+        "end": 2856,
+        "excerpt": "big big red arrow the first one is the woo way exit right so that's this uh so it stays in place until we get uh three get uh three three three dots above our three three dots above our entry so that would be you know one two entry so that would be you know one two three so here here is where our entry three so here\u2026"
+      },
+      {
+        "clip_id": "bbb-3-m33-s9-6487",
+        "label": "M3.3 \u2014 WOAY exit + alternatives",
+        "session": "S9",
+        "session_title": "strategy20201231podcast",
+        "session_yt": "MDjMClAixRw",
+        "session_date": "2020-12-31",
+        "start": 6487,
+        "end": 6577,
+        "excerpt": "woo way exit here or the managerial exit here which which one do you want to take the uh you want to take the wi or the uh the uh you want to take the wi or the uh the sniper exit at the sniper exit at Blue yeah that's what I would do too add Blue yeah that's what I would do too add had 15 bars and nothing and I wan\u2026"
+      },
+      {
+        "clip_id": "bbb-3-m34-s7-2210",
+        "label": "M3.4 \u2014 Progressive sizing bar-by-bar",
+        "session": "S7",
+        "session_title": "strategy20201229podcast 30R IWM",
+        "session_yt": "fVjQ3aBwBCY",
+        "session_date": "2020-12-29",
+        "start": 2210,
+        "end": 2300,
+        "excerpt": "your that's what your trade looks like in the first bar uh I'm I'm going to give you a second position at six because that happened position at six because that happened all inside one bar and that caught you all inside one bar and that caught you by surprise but I'm going to let you by surprise but I'm going to let\u2026"
+      },
+      {
+        "clip_id": "bbb-3-m34-s8-4503",
+        "label": "M3.4 \u2014 Progressive sizing bar-by-bar",
+        "session": "S8",
+        "session_title": "strategy20201230podcast 12R IWM",
+        "session_yt": "CVscJwHWo64",
+        "session_date": "2020-12-30",
+        "start": 4503,
+        "end": 4593,
+        "excerpt": "if I'm committing to add a third position at 7.5 I pre-move my position at 7.5 I pre-move my stop to where I want it to stop to where I want it to be once I put the entry be once I put the entry in and that way my stop is already in in and that way my stop is already in okay so here we go how nice is that price is n\u2026"
+      },
+      {
+        "clip_id": "bbb-3-m34-s8-5662",
+        "label": "M3.4 \u2014 Progressive sizing bar-by-bar",
+        "session": "S8",
+        "session_title": "strategy20201230podcast 12R IWM",
+        "session_yt": "CVscJwHWo64",
+        "session_date": "2020-12-30",
+        "start": 5662,
+        "end": 5752,
+        "excerpt": "um are you thinking about a second position at all you you're going to put a second position on at four okay okay here we go uh you got your second position there the price is at the yellow dot slightly the price is at the yellow dot slightly just slightly underwater you've locked in the blue box of gains I mean I'm\u2026"
+      },
+      {
+        "clip_id": "bbb-3-m34-s9-2971",
+        "label": "M3.4 \u2014 Progressive sizing bar-by-bar",
+        "session": "S9",
+        "session_title": "strategy20201231podcast",
+        "session_yt": "MDjMClAixRw",
+        "session_date": "2020-12-31",
+        "start": 2971,
+        "end": 3061,
+        "excerpt": "so a second position at 14 okay so the idea would be there okay okay so on this bar let me Zoom that in a little bit so uh a little bit so uh it um it hit here it fell back to here it um it hit here it fell back to here it moved as high as Here and Now is it moved as high as Here and Now is sitting right sitting rig\u2026"
+      },
+      {
+        "clip_id": "bbb-3-m35-s9-3607",
+        "label": "M3.5 \u2014 Named violation thresholds (S9 NYE)",
+        "session": "S9",
+        "session_title": "strategy20201231podcast",
+        "session_yt": "MDjMClAixRw",
+        "session_date": "2020-12-31",
+        "start": 3607,
+        "end": 3697,
+        "excerpt": "um oh okay I see yeah short below the belly of the Dragon we'll call that one belly of the Dragon we'll call that one 17 then no we'll call that 17 then no we'll call that 18 no we'll call that 17 so 18 will be 18 no we'll call that 17 so 18 will be this one this one 17 would be here and um call this one 19 18 19 so\u2026"
+      }
+    ]
+  }
+}

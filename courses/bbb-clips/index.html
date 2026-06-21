@@ -1,0 +1,1377 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Bar-by-Bar Drill Pack — Clip Review</title>
+  <style>
+    :root {
+      --bg: #0e0e0c;
+      --bg-card: #181815;
+      --bg-card-hover: #1f1f1c;
+      --fg: #e8e6df;
+      --fg-dim: #9c978a;
+      --fg-faint: #5d594f;
+      --accent: #d4a559;
+      --accent-dim: #8a6a35;
+      --border: #2a2925;
+      --quote-bar: #d4a559;
+      --warn: #c97a3e;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code, pre { font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 0.92em; }
+    header { padding: 2.5rem 2rem 1.5rem; max-width: 1100px; margin: 0 auto; border-bottom: 1px solid var(--border); }
+    h1 { font-family: Georgia, "Times New Roman", serif; font-size: 2.2rem; margin: 0 0 0.4rem; font-weight: 400; letter-spacing: -0.01em; }
+    .subtitle { color: var(--fg-dim); font-size: 1.05rem; margin: 0 0 1.2rem; }
+    .meta-row { display: flex; flex-wrap: wrap; gap: 1.5rem; color: var(--fg-faint); font-size: 0.85rem; }
+    .meta-row strong { color: var(--fg-dim); font-weight: 500; }
+    nav { padding: 1rem 2rem; max-width: 1100px; margin: 0 auto; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--bg); z-index: 10; display: flex; flex-wrap: wrap; gap: 1.2rem; font-size: 0.9rem; }
+    nav a { color: var(--fg-dim); }
+    nav a:hover { color: var(--accent); }
+    main { max-width: 1100px; margin: 0 auto; padding: 0 2rem 4rem; }
+    section { padding: 2.5rem 0 1.5rem; border-bottom: 1px solid var(--border); }
+    section h2 { font-family: Georgia, serif; font-size: 1.5rem; font-weight: 400; margin: 0 0 0.4rem; letter-spacing: -0.01em; }
+    .section-summary { color: var(--fg-dim); margin: 0 0 0.4rem; font-size: 0.95rem; }
+    .section-meta { color: var(--fg-faint); margin: 0 0 1.8rem; font-size: 0.82rem; font-family: "SF Mono", Menlo, monospace; }
+    .slot-label { font-family: Georgia, serif; font-size: 1.15rem; font-weight: 500; margin: 2.4rem 0 1rem; color: var(--fg); border-top: 1px dashed var(--border); padding-top: 1.4rem; }
+    .slot-count { color: var(--fg-faint); font-size: 0.85rem; font-family: "SF Mono", Menlo, monospace; font-weight: 400; }
+    .clip { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 0 0 1.25rem; transition: background 120ms ease; }
+    .clip:hover { background: var(--bg-card-hover); }
+    .clip-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; margin: 0 0 0.6rem; flex-wrap: wrap; }
+    .clip-title { font-size: 1.02rem; font-weight: 500; margin: 0; color: var(--fg); line-height: 1.4; }
+    .clip-title .id { color: var(--accent); font-family: "SF Mono", Menlo, monospace; font-weight: 600; margin-right: 0.5rem; font-size: 0.82em; }
+    .clip-dur { color: var(--fg-faint); font-size: 0.82rem; font-family: "SF Mono", Menlo, monospace; white-space: nowrap; }
+    .clip-grid { display: grid; grid-template-columns: 420px 1fr; gap: 1.25rem; align-items: start; }
+    @media (max-width: 750px) { .clip-grid { grid-template-columns: 1fr; } }
+    .embed-wrap { position: relative; width: 100%; max-width: 420px; aspect-ratio: 16/9; background: #000; border-radius: 4px; overflow: hidden; }
+    .embed-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .right { font-size: 0.88rem; min-width: 0; }
+    .meta-line { color: var(--fg-faint); margin: 0 0 0.6rem; font-family: "SF Mono", Menlo, monospace; font-size: 0.78rem; }
+    .meta-line strong { color: var(--fg-dim); font-weight: 500; }
+    .quote { border-left: 3px solid var(--quote-bar); padding: 0.5rem 0 0.5rem 0.9rem; margin: 0 0 0.8rem; color: var(--fg); font-style: italic; line-height: 1.5; font-size: 0.9rem; }
+    .quote .who { display: block; font-style: normal; color: var(--fg-faint); font-size: 0.74rem; margin-bottom: 0.3rem; font-family: "SF Mono", Menlo, monospace; }
+    .actions { margin-top: 0.4rem; display: flex; gap: 1rem; font-size: 0.82rem; }
+    .actions a { font-family: "SF Mono", Menlo, monospace; }
+    .empty { color: var(--fg-faint); font-style: italic; }
+    footer { max-width: 1100px; margin: 0 auto; padding: 2rem; color: var(--fg-faint); font-size: 0.8rem; text-align: center; border-top: 1px solid var(--border); }
+    table.sessions-table { width: 100%; border-collapse: collapse; margin: 1rem 0 0; font-size: 0.85rem; }
+    table.sessions-table th, table.sessions-table td { text-align: left; padding: 0.5rem 0.8rem; border-bottom: 1px solid var(--border); }
+    table.sessions-table th { color: var(--fg-dim); font-weight: 500; font-family: "SF Mono", Menlo, monospace; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    table.sessions-table td { color: var(--fg-dim); }
+    table.sessions-table td strong { color: var(--fg); font-family: "SF Mono", Menlo, monospace; }
+    details { margin: 1.5rem 0; }
+    summary { cursor: pointer; color: var(--accent); font-size: 0.92rem; }
+    summary:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Bar-by-Bar Drill Pack — Clip Review</h1>
+  <p class="subtitle">bar-by-bar-training Drill Pack — review pass v1. 60 candidate clips proposed across 3 SKUs + cold opens. Review, prune, comment.</p>
+  <div class="meta-row">
+    <span><strong>Source:</strong> Ken Long Tortoise Capital strategy podcast Sessions 1-10 (2020-10-20 to 2021-01-04)</span>
+    <span><strong>Sessions:</strong> 10 (~12 hrs raw)</span>
+    <span><strong>Candidates:</strong> 60 clips → target ~25-30 final</span>
+  </div>
+</header>
+
+<nav>
+  <a href="#cold-open">Cold Open (1)</a>
+  <a href="#bbb-1">BBB-1 Vocabulary (27)</a>
+  <a href="#bbb-2">BBB-2 Drill Mechanic (14)</a>
+  <a href="#bbb-3">BBB-3 IWM Case Study (18)</a>
+  <a href="#sources" style="margin-left:auto;">Source sessions</a>
+</nav>
+
+<main>
+  <details>
+    <summary>How to review this page</summary>
+    <p style="color: var(--fg-dim); font-size: 0.92rem; line-height: 1.6; max-width: 720px; margin: 1rem 0;">
+      Each section below corresponds to one course SKU (or the shared cold-open pool). Inside each section, candidates are grouped by <em>module slot</em> — the position in the finished course where one of these clips will land. Each module slot has 1-4 candidate clips; you pick the winner (or ask for a different cut).
+    </p>
+    <p style="color: var(--fg-dim); font-size: 0.92rem; line-height: 1.6; max-width: 720px; margin: 1rem 0;">
+      The embedded player starts at the proposed in-time and stops at the out-time. Click <code>↗ open on YouTube</code> to scrub around the candidate in context (the player may need a manual seek if YouTube ignores the end-time parameter — that's a known YT IFrame quirk, not a bug here).
+    </p>
+    <p style="color: var(--fg-dim); font-size: 0.92rem; line-height: 1.6; max-width: 720px; margin: 1rem 0;">
+      Transcript excerpts are auto-extracted from YouTube auto-subs and include rolling-caption fragments — they're directionally accurate but not verbatim, and they're here to help you orient quickly, not as the final script.
+    </p>
+    <p style="color: var(--fg-dim); font-size: 0.92rem; line-height: 1.6; max-width: 720px; margin: 1rem 0;">
+      Reply with thumbs / no / "trim to start at X" / "go longer" for each clip you want to act on. Anything you don't comment on stays in the candidate pool for the next review pass.
+    </p>
+  </details>
+
+  
+    <section id="cold-open">
+      <h2>Cold Open — series-wide hooks</h2>
+      <p class="section-summary">Quotable opening moments. One of these (or a hybrid) opens each SKU.</p>
+      <p class="section-meta">1 candidate clip proposed.</p>
+      <h3 class="slot-label">COLD-OPEN C — &#x27;first trade&#x27; construction hook &nbsp;<span class="slot-count">(1 candidate)</span></h3>
+
+    <article class="clip" id="co-cold-open c-s6">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">co-cold-open c-s6</span> COLD-OPEN C — &#x27;first trade&#x27; construction hook</h3>
+        <span class="clip-dur">29:27 – 30:27 &nbsp;·&nbsp; 60s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S6 &nbsp;·&nbsp; 2020-12-21 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=g5IMojy5HtM&t=1767s" target="_blank" rel="noopener">strategy20201221podcast lesson</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/g5IMojy5HtM?start=1767&end=1827&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>that&#x27;s the first trade i&#x27;d put my stop down here below the belly down here below the belly of the dragon so i lock in my first trade that&#x27;s my first trade so now i&#x27;m long again uh by about this time my uh my exit&#x27;s gonna be up here and just my exit&#x27;s gonna be up here and just tracking the tracking the um i will just…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=g5IMojy5HtM&t=1767s" target="_blank" rel="noopener">↗ open on YouTube at 29:27</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+    </section>
+    
+    <section id="bbb-1">
+      <h2>BBB-1 — The Chart Vocabulary (~50 min finished, $19.97)</h2>
+      <p class="section-summary">Seven chart primitives. Each module slot needs 1-2 winning clips that introduce + show the primitive on a real chart.</p>
+      <p class="section-meta">27 candidate clips proposed.</p>
+      <h3 class="slot-label">M1.1 — The Dragon &nbsp;<span class="slot-count">(4 candidates)</span></h3>
+
+    <article class="clip" id="bbb-1-m11-s1-25">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-1-m11-s1-25</span> M1.1 — The Dragon</h3>
+        <span class="clip-dur">0:25 – 1:40 &nbsp;·&nbsp; 75s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S1 &nbsp;·&nbsp; 2020-10-20 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=BFOC_BqIC14&t=25s" target="_blank" rel="noopener">strategy20201020podcast</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/BFOC_BqIC14?start=25&end=100&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>through the dragon and then almost through the the dragon and then almost through the p uh and so there had real concern that p uh and so there had real concern that another day like another day like that um a move of that size would take that um a move of that size would take us back down through the Binger band us…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=BFOC_BqIC14&t=25s" target="_blank" rel="noopener">↗ open on YouTube at 0:25</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="clip" id="bbb-1-m11-s1-149">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-1-m11-s1-149</span> M1.1 — The Dragon</h3>
+        <span class="clip-dur">2:29 – 3:44 &nbsp;·&nbsp; 75s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S1 &nbsp;·&nbsp; 2020-10-20 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=BFOC_BqIC14&t=149s" target="_blank" rel="noopener">strategy20201020podcast</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/BFOC_BqIC14?start=149&end=224&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>Gap up uh a move back up through the edge of the Dragon the spine of the edge of the Dragon the spine of the Dragon almost you know on pass Z1 and Dragon almost you know on pass Z1 and then almost up to uh the tip of the then almost up to uh the tip of the Dragon but then a sell off to give back Dragon but then a se…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=BFOC_BqIC14&t=149s" target="_blank" rel="noopener">↗ open on YouTube at 2:29</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="clip" id="bbb-1-m11-s2-393">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-1-m11-s2-393</span> M1.1 — The Dragon</h3>
+        <span class="clip-dur">6:33 – 7:48 &nbsp;·&nbsp; 75s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S2 &nbsp;·&nbsp; 2020-11-04 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=vZqveq0Xdp8&t=393s" target="_blank" rel="noopener">strategy20201104podcast</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/vZqveq0Xdp8?start=393&end=468&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>ran all the way up through z1 up to the peak of the dragon where it just peak of the dragon where it just exactly hit resistance like we exactly hit resistance like we planned for and then had a afternoon planned for and then had a afternoon uh sell-off that took it halfway back uh sell-off that took it halfway back…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=vZqveq0Xdp8&t=393s" target="_blank" rel="noopener">↗ open on YouTube at 6:33</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="clip" id="bbb-1-m11-s2-707">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-1-m11-s2-707</span> M1.1 — The Dragon</h3>
+        <span class="clip-dur">11:47 – 13:02 &nbsp;·&nbsp; 75s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S2 &nbsp;·&nbsp; 2020-11-04 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=vZqveq0Xdp8&t=707s" target="_blank" rel="noopener">strategy20201104podcast</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/vZqveq0Xdp8?start=707&end=782&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>pcr entry is plus notice it&#x27;s right across the dragon so it&#x27;s cleared across the dragon so it&#x27;s cleared all of this resistance in the dragon so all of this resistance in the dragon so you just mark off where that trailing you just mark off where that trailing pcr pcr is and then when i&#x27;m trading intraday um you can …</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=vZqveq0Xdp8&t=707s" target="_blank" rel="noopener">↗ open on YouTube at 11:47</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+<h3 class="slot-label">M1.2 — RLCO / RL10 &nbsp;<span class="slot-count">(4 candidates)</span></h3>
+
+    <article class="clip" id="bbb-1-m12-s1-231">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-1-m12-s1-231</span> M1.2 — RLCO / RL10</h3>
+        <span class="clip-dur">3:51 – 5:06 &nbsp;·&nbsp; 75s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S1 &nbsp;·&nbsp; 2020-10-20 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=BFOC_BqIC14&t=231s" target="_blank" rel="noopener">strategy20201020podcast</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/BFOC_BqIC14?start=231&end=306&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>surge in the same way that this peak rl10 is higher than that Peak rl10 so rl10 is higher than that Peak rl10 so it&#x27;s just running out of a little a it&#x27;s just running out of a little a little bit running out of enthusiasm little bit running out of enthusiasm here you here you know um so that&#x27;s the two Dragon Peak uh…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=BFOC_BqIC14&t=231s" target="_blank" rel="noopener">↗ open on YouTube at 3:51</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="clip" id="bbb-1-m12-s1-307">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-1-m12-s1-307</span> M1.2 — RLCO / RL10</h3>
+        <span class="clip-dur">5:07 – 6:22 &nbsp;·&nbsp; 75s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S1 &nbsp;·&nbsp; 2020-10-20 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=BFOC_BqIC14&t=307s" target="_blank" rel="noopener">strategy20201020podcast</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/BFOC_BqIC14?start=307&end=382&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>already and now the difference from the rl10 and the p is not much it&#x27;s less rl10 and the p is not much it&#x27;s less than a 1 than a 1 ATR so that could very easily spend the ATR so that could very easily spend the spell the spell the end of this little move that took us end of this little move that took us back to bac…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=BFOC_BqIC14&t=307s" target="_blank" rel="noopener">↗ open on YouTube at 5:07</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="clip" id="bbb-1-m12-s2-373">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-1-m12-s2-373</span> M1.2 — RLCO / RL10</h3>
+        <span class="clip-dur">6:13 – 7:28 &nbsp;·&nbsp; 75s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S2 &nbsp;·&nbsp; 2020-11-04 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=vZqveq0Xdp8&t=373s" target="_blank" rel="noopener">strategy20201104podcast</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/vZqveq0Xdp8?start=373&end=448&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>so we had the rl10 rolled over uh it crossed the baby dragon here uh it crossed the baby dragon here yesterday today it entered z minus one yesterday today it entered z minus one we got the uh got the big gap up from we got the uh got the big gap up from this close it gapped all the way up this close it gapped all t…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=vZqveq0Xdp8&t=373s" target="_blank" rel="noopener">↗ open on YouTube at 6:13</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="clip" id="bbb-1-m12-s2-501">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-1-m12-s2-501</span> M1.2 — RLCO / RL10</h3>
+        <span class="clip-dur">8:21 – 9:36 &nbsp;·&nbsp; 75s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S2 &nbsp;·&nbsp; 2020-11-04 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=vZqveq0Xdp8&t=501s" target="_blank" rel="noopener">strategy20201104podcast</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/vZqveq0Xdp8?start=501&end=576&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>one out when it takes out the previous rl10 so when it takes out the previous rl10 so either one or both of those either one or both of those gives you an entry and um even if you gives you an entry and um even if you just play that first just play that first burst and you take just the uh burst and you take just th…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=vZqveq0Xdp8&t=501s" target="_blank" rel="noopener">↗ open on YouTube at 8:21</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+<h3 class="slot-label">M1.3 — Z-score / Z3 &nbsp;<span class="slot-count">(4 candidates)</span></h3>
+
+    <article class="clip" id="bbb-1-m13-s1-992">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-1-m13-s1-992</span> M1.3 — Z-score / Z3</h3>
+        <span class="clip-dur">16:32 – 17:47 &nbsp;·&nbsp; 75s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S1 &nbsp;·&nbsp; 2020-10-20 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=BFOC_BqIC14&t=992s" target="_blank" rel="noopener">strategy20201020podcast</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/BFOC_BqIC14?start=992&end=1067&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>where I kind of like uh get a Z3 breakdown can I get a Z3 break you know those are three short positions let&#x27;s see probably a breakout above the above the vwap maybe the vwap maybe the Z3 maybe the next Z3 something like that uh treating this like a yellow about a yellow zone in here so on your uh on your little sco…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=BFOC_BqIC14&t=992s" target="_blank" rel="noopener">↗ open on YouTube at 16:32</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="clip" id="bbb-1-m13-s1-1076">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-1-m13-s1-1076</span> M1.3 — Z-score / Z3</h3>
+        <span class="clip-dur">17:56 – 19:11 &nbsp;·&nbsp; 75s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S1 &nbsp;·&nbsp; 2020-10-20 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=BFOC_BqIC14&t=1076s" target="_blank" rel="noopener">strategy20201020podcast</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/BFOC_BqIC14?start=1076&end=1151&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>breakout from a Z3 Z3 Z3 Z3 bench uh the argument for one is that it bench uh the argument for one is that it if it holds support here at the bottom if it holds support here at the bottom of the channel and it crosses the of the channel and it crosses the vwap then instead of waiting for the Z3 vwap then instead of …</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=BFOC_BqIC14&t=1076s" target="_blank" rel="noopener">↗ open on YouTube at 17:56</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="clip" id="bbb-1-m13-s2-1818">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-1-m13-s2-1818</span> M1.3 — Z-score / Z3</h3>
+        <span class="clip-dur">30:18 – 31:33 &nbsp;·&nbsp; 75s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S2 &nbsp;·&nbsp; 2020-11-04 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=vZqveq0Xdp8&t=1818s" target="_blank" rel="noopener">strategy20201104podcast</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/vZqveq0Xdp8?start=1818&end=1893&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>the that z3 is starting to act like a lid on that z3 is starting to act like a lid on this thing this thing so there&#x27;s the exit that&#x27;s about five execution right there stop and reverse just the re-entry in stop and reverse just the re-entry in the usual way the usual way with a stop right where that stop is why with…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=vZqveq0Xdp8&t=1818s" target="_blank" rel="noopener">↗ open on YouTube at 30:18</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="clip" id="bbb-1-m13-s2-2224">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-1-m13-s2-2224</span> M1.3 — Z-score / Z3</h3>
+        <span class="clip-dur">37:04 – 38:19 &nbsp;·&nbsp; 75s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S2 &nbsp;·&nbsp; 2020-11-04 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=vZqveq0Xdp8&t=2224s" target="_blank" rel="noopener">strategy20201104podcast</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/vZqveq0Xdp8?start=2224&end=2299&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>breakdown below the z3 our first target would be below the z3 our first target would be here here at the v web so we&#x27;re looking to get at the v web so we&#x27;re looking to get there it blew right through that it hits a bottom way down here the um rl10 bottoms out and then we play this cut recovery move and then we play …</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=vZqveq0Xdp8&t=2224s" target="_blank" rel="noopener">↗ open on YouTube at 37:04</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+<h3 class="slot-label">M1.4 — Frog box &nbsp;<span class="slot-count">(4 candidates)</span></h3>
+
+    <article class="clip" id="bbb-1-m14-s1-707">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-1-m14-s1-707</span> M1.4 — Frog box</h3>
+        <span class="clip-dur">11:47 – 13:02 &nbsp;·&nbsp; 75s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S1 &nbsp;·&nbsp; 2020-10-20 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=BFOC_BqIC14&t=707s" target="_blank" rel="noopener">strategy20201020podcast</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/BFOC_BqIC14?start=707&end=782&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>swing now the uh the companies that worked the Frog Champion um win almost worked the Frog Champion um win almost 4% um Google 1.4 Alcoa was the only 4% um Google 1.4 Alcoa was the only metal that that bucked the trend that&#x27;s metal that that bucked the trend that&#x27;s at 1.3 Apple Nicola at 1.3 Apple Nicola Twitter fro…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=BFOC_BqIC14&t=707s" target="_blank" rel="noopener">↗ open on YouTube at 11:47</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="clip" id="bbb-1-m14-s1-2442">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-1-m14-s1-2442</span> M1.4 — Frog box</h3>
+        <span class="clip-dur">40:42 – 41:57 &nbsp;·&nbsp; 75s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S1 &nbsp;·&nbsp; 2020-10-20 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=BFOC_BqIC14&t=2442s" target="_blank" rel="noopener">strategy20201020podcast</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/BFOC_BqIC14?start=2442&end=2517&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>leg uh here&#x27;s Mexico the Frog champion 10cent move right out of the gate breaks above yesterday&#x27;s vwap you will not lose money on that trade sorry there&#x27;s um here&#x27;s your sniper exit maybe that that might have been your your manager exit or this one might have been supported summer supported summer Crossing if that l…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=BFOC_BqIC14&t=2442s" target="_blank" rel="noopener">↗ open on YouTube at 40:42</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="clip" id="bbb-1-m14-s2-1602">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-1-m14-s2-1602</span> M1.4 — Frog box</h3>
+        <span class="clip-dur">26:42 – 27:57 &nbsp;·&nbsp; 75s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S2 &nbsp;·&nbsp; 2020-11-04 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=vZqveq0Xdp8&t=1602s" target="_blank" rel="noopener">strategy20201104podcast</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/vZqveq0Xdp8?start=1602&end=1677&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>but you can just trade brazil in the regular way like a hybrid frog and then regular way like a hybrid frog and then keep a fifth keep a fifth for a swing trade uh technology postured for a swing trade uh technology postured really well today really well today and so did treasuries we&#x27;ll see how that and so did trea…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=vZqveq0Xdp8&t=1602s" target="_blank" rel="noopener">↗ open on YouTube at 26:42</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="clip" id="bbb-1-m14-s2-2221">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-1-m14-s2-2221</span> M1.4 — Frog box</h3>
+        <span class="clip-dur">37:01 – 38:16 &nbsp;·&nbsp; 75s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S2 &nbsp;·&nbsp; 2020-11-04 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=vZqveq0Xdp8&t=2221s" target="_blank" rel="noopener">strategy20201104podcast</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/vZqveq0Xdp8?start=2221&end=2296&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>twitter had twitter had been smashed so we had a hybrid frog trade on a so we had a hybrid frog trade on a breakdown breakdown below the z3 our first target would be below the z3 our first target would be here here at the v web so we&#x27;re looking to get at the v web so we&#x27;re looking to get there it blew right through …</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=vZqveq0Xdp8&t=2221s" target="_blank" rel="noopener">↗ open on YouTube at 37:01</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+<h3 class="slot-label">M1.5 — PSAR &nbsp;<span class="slot-count">(4 candidates)</span></h3>
+
+    <article class="clip" id="bbb-1-m15-s1-300">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-1-m15-s1-300</span> M1.5 — PSAR</h3>
+        <span class="clip-dur">5:00 – 6:15 &nbsp;·&nbsp; 75s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S1 &nbsp;·&nbsp; 2020-10-20 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=BFOC_BqIC14&t=300s" target="_blank" rel="noopener">strategy20201020podcast</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/BFOC_BqIC14?start=300&end=375&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>believe in um it&#x27;s resting right on the PSAR in um it&#x27;s resting right on the PSAR already and now the difference from the already and now the difference from the rl10 and the p is not much it&#x27;s less rl10 and the p is not much it&#x27;s less than a 1 than a 1 ATR so that could very easily spend the ATR so that could very …</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=BFOC_BqIC14&t=300s" target="_blank" rel="noopener">↗ open on YouTube at 5:00</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="clip" id="bbb-1-m15-s1-930">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-1-m15-s1-930</span> M1.5 — PSAR</h3>
+        <span class="clip-dur">15:30 – 16:45 &nbsp;·&nbsp; 75s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S1 &nbsp;·&nbsp; 2020-10-20 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=BFOC_BqIC14&t=930s" target="_blank" rel="noopener">strategy20201020podcast</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/BFOC_BqIC14?start=930&end=1005&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>um at the PSAR so if it can break out I&#x27;m long at PSAR so if it can break out I&#x27;m long at 142 and a half with a belief that it&#x27;s 142 and a half with a belief that it&#x27;s it gets to here pretty it gets to here pretty quick and then we&#x27;ll find out if it has quick and then we&#x27;ll find out if it has more legs you&#x27;d like to…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=BFOC_BqIC14&t=930s" target="_blank" rel="noopener">↗ open on YouTube at 15:30</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="clip" id="bbb-1-m15-s2-2270">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-1-m15-s2-2270</span> M1.5 — PSAR</h3>
+        <span class="clip-dur">37:50 – 39:05 &nbsp;·&nbsp; 75s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S2 &nbsp;·&nbsp; 2020-11-04 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=vZqveq0Xdp8&t=2270s" target="_blank" rel="noopener">strategy20201104podcast</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/vZqveq0Xdp8?start=2270&end=2345&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>crosses the baby dragon winter turns to spring uh the psar has winter turns to spring uh the psar has flipped flipped uh it&#x27;s getting ready to cross the v web uh it&#x27;s getting ready to cross the v web so just go ahead and buy it there with a so just go ahead and buy it there with a stop you could either pick the drag…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=vZqveq0Xdp8&t=2270s" target="_blank" rel="noopener">↗ open on YouTube at 37:50</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="clip" id="bbb-1-m15-s2-2599">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-1-m15-s2-2599</span> M1.5 — PSAR</h3>
+        <span class="clip-dur">43:19 – 44:34 &nbsp;·&nbsp; 75s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S2 &nbsp;·&nbsp; 2020-11-04 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=vZqveq0Xdp8&t=2599s" target="_blank" rel="noopener">strategy20201104podcast</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/vZqveq0Xdp8?start=2599&end=2674&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>little tighter because of the psar take a fractional should have re-entered darn it but we take the short now it&#x27;s a z1 but we take the short now it&#x27;s a z1 z1 breakdown and our stop would be here z1 breakdown and our stop would be here and are targeting and are targeting coming back to the to the v web there and we …</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=vZqveq0Xdp8&t=2599s" target="_blank" rel="noopener">↗ open on YouTube at 43:19</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+<h3 class="slot-label">M1.6 — SSC &nbsp;<span class="slot-count">(3 candidates)</span></h3>
+
+    <article class="clip" id="bbb-1-m16-s2-2514">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-1-m16-s2-2514</span> M1.6 — SSC</h3>
+        <span class="clip-dur">41:54 – 43:09 &nbsp;·&nbsp; 75s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S2 &nbsp;·&nbsp; 2020-11-04 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=vZqveq0Xdp8&t=2514s" target="_blank" rel="noopener">strategy20201104podcast</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/vZqveq0Xdp8?start=2514&end=2589&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>just get paid there&#x27;s the ssc entry there&#x27;s the ssc entry is now the exit for this trade here and the stop and reverse gives you a managerial exit there or it would have been a sniper sniper right there so either exits about the same on that one one excuse me uh it um you just re-enter and that single position has a…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=vZqveq0Xdp8&t=2514s" target="_blank" rel="noopener">↗ open on YouTube at 41:54</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="clip" id="bbb-1-m16-s2-2650">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-1-m16-s2-2650</span> M1.6 — SSC</h3>
+        <span class="clip-dur">44:10 – 45:25 &nbsp;·&nbsp; 75s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S2 &nbsp;·&nbsp; 2020-11-04 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=vZqveq0Xdp8&t=2650s" target="_blank" rel="noopener">strategy20201104podcast</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/vZqveq0Xdp8?start=2650&end=2725&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>by bar standard patterns ssc cotta one cota2 standard patterns ssc cotta one cota2 hybrid frogs same usual suspects hybrid frogs same usual suspects all the same trade geometry all set up all the same trade geometry all set up from daily charts from daily charts standard this is standard work standard this is standa…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=vZqveq0Xdp8&t=2650s" target="_blank" rel="noopener">↗ open on YouTube at 44:10</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="clip" id="bbb-1-m16-s3-721">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-1-m16-s3-721</span> M1.6 — SSC</h3>
+        <span class="clip-dur">12:01 – 13:16 &nbsp;·&nbsp; 75s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S3 &nbsp;·&nbsp; 2020-11-09 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=yHJuIfn3JNU&t=721s" target="_blank" rel="noopener">strategy20201109podcast</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/yHJuIfn3JNU?start=721&end=796&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>the way down to 99 so that&#x27;s minus 7% and then this was the uh the SSC so 7% and then this was the uh the SSC so there&#x27;s a there&#x27;s a winter a 7% selloff inate yeah that winter a 7% selloff inate yeah that constitutes a winter went from well constitutes a winter went from well above the vwap to a stretch below the ab…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=yHJuIfn3JNU&t=721s" target="_blank" rel="noopener">↗ open on YouTube at 12:01</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+<h3 class="slot-label">M1.7 — Critical state &nbsp;<span class="slot-count">(4 candidates)</span></h3>
+
+    <article class="clip" id="bbb-1-m17-s1-50">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-1-m17-s1-50</span> M1.7 — Critical state</h3>
+        <span class="clip-dur">0:50 – 2:05 &nbsp;·&nbsp; 75s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S1 &nbsp;·&nbsp; 2020-10-20 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=BFOC_BqIC14&t=50s" target="_blank" rel="noopener">strategy20201020podcast</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/BFOC_BqIC14?start=50&end=125&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>risk uh and but we also said this could this could also be a uh a critical state this could also be a uh a critical state from which we could see a move up um we&#x27;re so big move up big move down and we also considered the possibility and we also considered the possibility of a like a sideways grinding move of a like …</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=BFOC_BqIC14&t=50s" target="_blank" rel="noopener">↗ open on YouTube at 0:50</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="clip" id="bbb-1-m17-s1-94">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-1-m17-s1-94</span> M1.7 — Critical state</h3>
+        <span class="clip-dur">1:34 – 2:49 &nbsp;·&nbsp; 75s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S1 &nbsp;·&nbsp; 2020-10-20 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=BFOC_BqIC14&t=94s" target="_blank" rel="noopener">strategy20201020podcast</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/BFOC_BqIC14?start=94&end=169&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>close um right it leave us right in a perfect critical state right in here maximum uncertainty and uh ready to break in any break in any direction all right and uh what we got was one brief move mov North followed by continued harsh North followed by continued harsh selling in the selling in the afternoon to bring i…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=BFOC_BqIC14&t=94s" target="_blank" rel="noopener">↗ open on YouTube at 1:34</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="clip" id="bbb-1-m17-s3-283">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-1-m17-s3-283</span> M1.7 — Critical state</h3>
+        <span class="clip-dur">4:43 – 5:58 &nbsp;·&nbsp; 75s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S3 &nbsp;·&nbsp; 2020-11-09 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=yHJuIfn3JNU&t=283s" target="_blank" rel="noopener">strategy20201109podcast</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/yHJuIfn3JNU?start=283&end=358&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>PS so tomorrow to me it just I think this is a critical State ready to go this is a critical State ready to go hard in either direction if this were to hard in either direction if this were to start up uh I I would take this start up uh I I would take this as the U as the support level and just as the U as the suppo…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=yHJuIfn3JNU&t=283s" target="_blank" rel="noopener">↗ open on YouTube at 4:43</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="clip" id="bbb-1-m17-s6-1359">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-1-m17-s6-1359</span> M1.7 — Critical state</h3>
+        <span class="clip-dur">22:39 – 23:54 &nbsp;·&nbsp; 75s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S6 &nbsp;·&nbsp; 2020-12-21 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=g5IMojy5HtM&t=1359s" target="_blank" rel="noopener">strategy20201221podcast lesson</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/g5IMojy5HtM?start=1359&end=1434&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>entitled to say this this is a a critical state this this is a a critical state because the whole market is in play because the whole market is in play right now that&#x27;s where the price is at right now that&#x27;s where the price is at that moment at the yellow dot that moment at the yellow dot right in the middle of that…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=g5IMojy5HtM&t=1359s" target="_blank" rel="noopener">↗ open on YouTube at 22:39</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+    </section>
+    
+    <section id="bbb-2">
+      <h2>BBB-2 — The Drill Mechanic (~70 min finished, $19.97)</h2>
+      <p class="section-summary">The actual bar-by-bar Q&amp;A pattern. Each module slot needs 1 clip that captures Ken running the drill format with a live audience.</p>
+      <p class="section-meta">14 candidate clips proposed.</p>
+      <h3 class="slot-label">M2.A — &#x27;Sheet of paper&#x27; (worksheet origin) &nbsp;<span class="slot-count">(1 candidate)</span></h3>
+
+    <article class="clip" id="bbb-2-m2a-s5-1666">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-2-m2a-s5-1666</span> M2.A — &#x27;Sheet of paper&#x27; (worksheet origin)</h3>
+        <span class="clip-dur">27:46 – 29:06 &nbsp;·&nbsp; 80s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S5 &nbsp;·&nbsp; 2020-12-11 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=FIjDmBzBozQ&t=1666s" target="_blank" rel="noopener">strategy20201211podcast lesson</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/FIjDmBzBozQ?start=1666&end=1746&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>right so on your on your little sheet of paper there now you suffer you know where do whoops where do you put your uh where do you put your where ah crap sorry where do you put your risk is it here you know is at five at six at seven at eight how much how much room do you give eight how much how much room do you giv…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=FIjDmBzBozQ&t=1666s" target="_blank" rel="noopener">↗ open on YouTube at 27:46</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+<h3 class="slot-label">M2.B — &#x27;Where would you stop?&#x27; prompt &nbsp;<span class="slot-count">(3 candidates)</span></h3>
+
+    <article class="clip" id="bbb-2-m2b-s5-1569">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-2-m2b-s5-1569</span> M2.B — &#x27;Where would you stop?&#x27; prompt</h3>
+        <span class="clip-dur">26:09 – 27:29 &nbsp;·&nbsp; 80s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S5 &nbsp;·&nbsp; 2020-12-11 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=FIjDmBzBozQ&t=1569s" target="_blank" rel="noopener">strategy20201211podcast lesson</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/FIjDmBzBozQ?start=1569&end=1649&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>mean so where would you put your stop at uh four five six seven or eight now uh if you if you didn&#x27;t own eight now uh if you if you didn&#x27;t own this position yet or if you own this this position yet or if you own this position uh position uh from I&#x27;m going to say I&#x27;ll give you from I&#x27;m going to say I&#x27;ll give you cred…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=FIjDmBzBozQ&t=1569s" target="_blank" rel="noopener">↗ open on YouTube at 26:09</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="clip" id="bbb-2-m2b-s5-1696">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-2-m2b-s5-1696</span> M2.B — &#x27;Where would you stop?&#x27; prompt</h3>
+        <span class="clip-dur">28:16 – 29:36 &nbsp;·&nbsp; 80s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S5 &nbsp;·&nbsp; 2020-12-11 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=FIjDmBzBozQ&t=1696s" target="_blank" rel="noopener">strategy20201211podcast lesson</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/FIjDmBzBozQ?start=1696&end=1776&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>sorry where do you put your risk is it here you know is at five at six at seven at eight how much how much room do you give eight how much how much room do you give that all right so go ahead and lock that that all right so go ahead and lock that in how much do I personally risk on owl in how much do I personally ri…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=FIjDmBzBozQ&t=1696s" target="_blank" rel="noopener">↗ open on YouTube at 28:16</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="clip" id="bbb-2-m2b-s6-1529">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-2-m2b-s6-1529</span> M2.B — &#x27;Where would you stop?&#x27; prompt</h3>
+        <span class="clip-dur">25:29 – 26:49 &nbsp;·&nbsp; 80s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S6 &nbsp;·&nbsp; 2020-12-21 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=g5IMojy5HtM&t=1529s" target="_blank" rel="noopener">strategy20201221podcast lesson</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/g5IMojy5HtM?start=1529&end=1609&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>and if it if you got long at one where would you put your stop at this where would you put your stop at this dotted line at four dotted line at four at five or at six etcetera or if you got at five or at six etcetera or if you got short at four short at four would you put your stop at the yellow at would you put you…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=g5IMojy5HtM&t=1529s" target="_blank" rel="noopener">↗ open on YouTube at 25:29</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+<h3 class="slot-label">M2.C — &#x27;Lock in your answer&#x27; prompt &nbsp;<span class="slot-count">(4 candidates)</span></h3>
+
+    <article class="clip" id="bbb-2-m2c-s5-1271">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-2-m2c-s5-1271</span> M2.C — &#x27;Lock in your answer&#x27; prompt</h3>
+        <span class="clip-dur">21:11 – 22:26 &nbsp;·&nbsp; 75s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S5 &nbsp;·&nbsp; 2020-12-11 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=FIjDmBzBozQ&t=1271s" target="_blank" rel="noopener">strategy20201211podcast lesson</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/FIjDmBzBozQ?start=1271&end=1346&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>absolutely I absolutely want to lock in in um 30 cents a um 30 cents a share on a 7 Cent risk that doesn&#x27;t I&#x27;m share on a 7 Cent risk that doesn&#x27;t I&#x27;m not afraid of not afraid of that so I like the I like moving my stop that so I like the I like moving my stop to here just because I like to keep the to here just bec…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=FIjDmBzBozQ&t=1271s" target="_blank" rel="noopener">↗ open on YouTube at 21:11</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="clip" id="bbb-2-m2c-s5-1395">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-2-m2c-s5-1395</span> M2.C — &#x27;Lock in your answer&#x27; prompt</h3>
+        <span class="clip-dur">23:15 – 24:30 &nbsp;·&nbsp; 75s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S5 &nbsp;·&nbsp; 2020-12-11 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=FIjDmBzBozQ&t=1395s" target="_blank" rel="noopener">strategy20201211podcast lesson</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/FIjDmBzBozQ?start=1395&end=1470&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>today you know I I&#x27;m more than happy to lock in the gains and most of the rest lock in the gains and most of the rest of the market was down in the morning of the market was down in the morning so um this is one where uh I would so um this is one where uh I would activate the activate the [Music] [Music] sniper and …</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=FIjDmBzBozQ&t=1395s" target="_blank" rel="noopener">↗ open on YouTube at 23:15</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="clip" id="bbb-2-m2c-s6-1547">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-2-m2c-s6-1547</span> M2.C — &#x27;Lock in your answer&#x27; prompt</h3>
+        <span class="clip-dur">25:47 – 27:02 &nbsp;·&nbsp; 75s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S6 &nbsp;·&nbsp; 2020-12-21 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=g5IMojy5HtM&t=1547s" target="_blank" rel="noopener">strategy20201221podcast lesson</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/g5IMojy5HtM?start=1547&end=1622&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>position so go ahead and lock in your plan um let&#x27;s see lock in your plan um let&#x27;s see let me pick on somebody in here i see let me pick on somebody in here i see lisa lisa uh lisa i expect you to put some your uh uh lisa i expect you to put some your uh answers in the box here answers in the box here start holding …</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=g5IMojy5HtM&t=1547s" target="_blank" rel="noopener">↗ open on YouTube at 25:47</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="clip" id="bbb-2-m2c-s6-1780">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-2-m2c-s6-1780</span> M2.C — &#x27;Lock in your answer&#x27; prompt</h3>
+        <span class="clip-dur">29:40 – 30:55 &nbsp;·&nbsp; 75s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S6 &nbsp;·&nbsp; 2020-12-21 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=g5IMojy5HtM&t=1780s" target="_blank" rel="noopener">strategy20201221podcast lesson</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/g5IMojy5HtM?start=1780&end=1855&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>so i lock in my first trade that&#x27;s my first trade so now i&#x27;m long again uh by about this time my uh my exit&#x27;s gonna be up here and just my exit&#x27;s gonna be up here and just tracking the tracking the um i will just um i will just let me get that out of the way i&#x27;m just let me get that out of the way i&#x27;m just going to …</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=g5IMojy5HtM&t=1780s" target="_blank" rel="noopener">↗ open on YouTube at 29:40</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+<h3 class="slot-label">M2.D — First-trade stop-placement narration &nbsp;<span class="slot-count">(4 candidates)</span></h3>
+
+    <article class="clip" id="bbb-2-m2d-s5-2579">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-2-m2d-s5-2579</span> M2.D — First-trade stop-placement narration</h3>
+        <span class="clip-dur">42:59 – 44:29 &nbsp;·&nbsp; 90s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S5 &nbsp;·&nbsp; 2020-12-11 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=FIjDmBzBozQ&t=2579s" target="_blank" rel="noopener">strategy20201211podcast lesson</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/FIjDmBzBozQ?start=2579&end=2669&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>six at the belly of the Dragon uh chi Wang what would you Wang what would you be for your stop uh chi Wing has got to stop at seven okay so let&#x27;s we&#x27;ll just put that seven okay so let&#x27;s we&#x27;ll just put that in there now make a decision uh if you were going to add a decision uh if you were going to add a second positi…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=FIjDmBzBozQ&t=2579s" target="_blank" rel="noopener">↗ open on YouTube at 42:59</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="clip" id="bbb-2-m2d-s5-2985">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-2-m2d-s5-2985</span> M2.D — First-trade stop-placement narration</h3>
+        <span class="clip-dur">49:45 – 51:15 &nbsp;·&nbsp; 90s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S5 &nbsp;·&nbsp; 2020-12-11 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=FIjDmBzBozQ&t=2985s" target="_blank" rel="noopener">strategy20201211podcast lesson</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/FIjDmBzBozQ?start=2985&end=3075&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>call this the belly of the Dragon let&#x27;s call it uh this one here and third one maybe down at the previous swing low or the let&#x27;s call it previous swing low or the let&#x27;s call it the vwap okay so that would the vwap okay so that would be four five and five and six all right so what is your strategies six all right so …</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=FIjDmBzBozQ&t=2985s" target="_blank" rel="noopener">↗ open on YouTube at 49:45</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="clip" id="bbb-2-m2d-s6-1767">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-2-m2d-s6-1767</span> M2.D — First-trade stop-placement narration</h3>
+        <span class="clip-dur">29:27 – 30:57 &nbsp;·&nbsp; 90s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S6 &nbsp;·&nbsp; 2020-12-21 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=g5IMojy5HtM&t=1767s" target="_blank" rel="noopener">strategy20201221podcast lesson</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/g5IMojy5HtM?start=1767&end=1857&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>that&#x27;s the first trade i&#x27;d put my stop down here below the belly down here below the belly of the dragon so i lock in my first trade that&#x27;s my first trade so now i&#x27;m long again uh by about this time my uh my exit&#x27;s gonna be up here and just my exit&#x27;s gonna be up here and just tracking the tracking the um i will just…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=g5IMojy5HtM&t=1767s" target="_blank" rel="noopener">↗ open on YouTube at 29:27</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="clip" id="bbb-2-m2d-s10-1824">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-2-m2d-s10-1824</span> M2.D — First-trade stop-placement narration</h3>
+        <span class="clip-dur">30:24 – 31:54 &nbsp;·&nbsp; 90s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S10 &nbsp;·&nbsp; 2021-01-04 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=pPrseVOjMxY&t=1824s" target="_blank" rel="noopener">strategy20210104podcast</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/pPrseVOjMxY?start=1824&end=1914&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>you know from peak of the dragon to belly of the dragon it looked like this you know that size of a box and now this size of a box is getting smaller size of a box is getting smaller and now this time and now this time it&#x27;s even smaller so what we got is it&#x27;s even smaller so what we got is actually a period of decli…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=pPrseVOjMxY&t=1824s" target="_blank" rel="noopener">↗ open on YouTube at 30:24</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+<h3 class="slot-label">M2.E — &#x27;Talk to me about your...&#x27; Q&amp;A &nbsp;<span class="slot-count">(1 candidate)</span></h3>
+
+    <article class="clip" id="bbb-2-m2e-s10-2662">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-2-m2e-s10-2662</span> M2.E — &#x27;Talk to me about your...&#x27; Q&amp;A</h3>
+        <span class="clip-dur">44:22 – 45:42 &nbsp;·&nbsp; 80s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S10 &nbsp;·&nbsp; 2021-01-04 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=pPrseVOjMxY&t=2662s" target="_blank" rel="noopener">strategy20210104podcast</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/pPrseVOjMxY?start=2662&end=2742&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>talk to me about your third position so you&#x27;re gonna you&#x27;re looking for a third position at seven third position at seven okay okay so if you get if we get a seven here all right all right we get a bit of a pullback you still okay we&#x27;re going to get our our</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=pPrseVOjMxY&t=2662s" target="_blank" rel="noopener">↗ open on YouTube at 44:22</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+<h3 class="slot-label">M2.F — Scratch + re-entry across VWAP &nbsp;<span class="slot-count">(1 candidate)</span></h3>
+
+    <article class="clip" id="bbb-2-m2f-s3-1374">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-2-m2f-s3-1374</span> M2.F — Scratch + re-entry across VWAP</h3>
+        <span class="clip-dur">22:54 – 24:24 &nbsp;·&nbsp; 90s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S3 &nbsp;·&nbsp; 2020-11-09 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=yHJuIfn3JNU&t=1374s" target="_blank" rel="noopener">strategy20201109podcast</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/yHJuIfn3JNU?start=1374&end=1464&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>took the re-entry when it crossed the vwap and re-entry when it crossed the vwap and took out the Z3 so that&#x27;s going to be this entry here and our standard stop on this would be to the VW and that&#x27;s about 30 cents of risk so this is a second entry using the Kata 2 so the 2 so the pullback um held support at the PSAR…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=yHJuIfn3JNU&t=1374s" target="_blank" rel="noopener">↗ open on YouTube at 22:54</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+    </section>
+    
+    <section id="bbb-3">
+      <h2>BBB-3 — The IWM Case Study (~90 min finished, $19.97)</h2>
+      <p class="section-summary">The natural S7→S8→S9→S10 arc on one symbol. Each module slot needs the cleanest version of that moment in the original session.</p>
+      <p class="section-meta">18 candidate clips proposed.</p>
+      <h3 class="slot-label">M3 — IWM mentioned &nbsp;<span class="slot-count">(4 candidates)</span></h3>
+
+    <article class="clip" id="bbb-3-m3-s7-592">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-3-m3-s7-592</span> M3 — IWM mentioned</h3>
+        <span class="clip-dur">9:52 – 11:12 &nbsp;·&nbsp; 80s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S7 &nbsp;·&nbsp; 2020-12-29 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=fVjQ3aBwBCY&t=592s" target="_blank" rel="noopener">strategy20201229podcast 30R IWM</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/fVjQ3aBwBCY?start=592&end=672&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>November what you had was Prior was you had uh iwm the Russell um underperforming the underperforming the S&amp;amp;P so let me get a S&amp;amp;P line in here so S&amp;amp;P so let me get a S&amp;amp;P line in here so it&#x27;s been like it&#x27;s been like this there has been this outperformance this there has been this outperformance of th…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=fVjQ3aBwBCY&t=592s" target="_blank" rel="noopener">↗ open on YouTube at 9:52</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="clip" id="bbb-3-m3-s7-635">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-3-m3-s7-635</span> M3 — IWM mentioned</h3>
+        <span class="clip-dur">10:35 – 11:55 &nbsp;·&nbsp; 80s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S7 &nbsp;·&nbsp; 2020-12-29 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=fVjQ3aBwBCY&t=635s" target="_blank" rel="noopener">strategy20201229podcast 30R IWM</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/fVjQ3aBwBCY?start=635&end=715&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>surprising good news it&#x27;s been like this for iwm it almost for iwm it almost immediately started to get better closed immediately started to get better closed the Gap and has been really the Gap and has been really outperforming so this is a risk on outperforming so this is a risk on trade that is US Centric all rig…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=fVjQ3aBwBCY&t=635s" target="_blank" rel="noopener">↗ open on YouTube at 10:35</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="clip" id="bbb-3-m3-s8-2576">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-3-m3-s8-2576</span> M3 — IWM mentioned</h3>
+        <span class="clip-dur">42:56 – 44:16 &nbsp;·&nbsp; 80s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S8 &nbsp;·&nbsp; 2020-12-30 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=CVscJwHWo64&t=2576s" target="_blank" rel="noopener">strategy20201230podcast 12R IWM</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/CVscJwHWo64?start=2576&end=2656&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>that&#x27;s what led to the 30 R trade 30 execution R trade inside um iwm so when execution R trade inside um iwm so when you see a lot of s and here we go again you see a lot of s and here we go again spy 3.8 to one spy 3.8 to one ojoy uh Rapture there&#x27;s Honeywell at ojoy uh Rapture there&#x27;s Honeywell at 2.1 I was hoping…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=CVscJwHWo64&t=2576s" target="_blank" rel="noopener">↗ open on YouTube at 42:56</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="clip" id="bbb-3-m3-s8-2694">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-3-m3-s8-2694</span> M3 — IWM mentioned</h3>
+        <span class="clip-dur">44:54 – 46:14 &nbsp;·&nbsp; 80s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S8 &nbsp;·&nbsp; 2020-12-30 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=CVscJwHWo64&t=2694s" target="_blank" rel="noopener">strategy20201230podcast 12R IWM</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/CVscJwHWo64?start=2694&end=2774&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>uh this one is iwm the Russell this is on one minute iwm the Russell this is on one minute chart so this big blue line is the um uh chart so this big blue line is the um uh is is the close and the open so is is the close and the open so yesterday closed down here with the yesterday closed down here with the vwap uh …</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=CVscJwHWo64&t=2694s" target="_blank" rel="noopener">↗ open on YouTube at 44:54</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+<h3 class="slot-label">M3.1 — 30R IWM headline frame &nbsp;<span class="slot-count">(3 candidates)</span></h3>
+
+    <article class="clip" id="bbb-3-m31-s7-4147">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-3-m31-s7-4147</span> M3.1 — 30R IWM headline frame</h3>
+        <span class="clip-dur">69:07 – 70:37 &nbsp;·&nbsp; 90s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S7 &nbsp;·&nbsp; 2020-12-29 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=fVjQ3aBwBCY&t=4147s" target="_blank" rel="noopener">strategy20201229podcast 30R IWM</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/fVjQ3aBwBCY?start=4147&end=4237&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>about 30 R 30 execution R so remember now when we R 30 execution R so remember now when we say the execution R what we&#x27;re doing for say the execution R what we&#x27;re doing for position sizing is taking five times the position sizing is taking five times the execution r execution r to be a position sizing risk so a 30 R…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=fVjQ3aBwBCY&t=4147s" target="_blank" rel="noopener">↗ open on YouTube at 69:07</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="clip" id="bbb-3-m31-s7-4834">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-3-m31-s7-4834</span> M3.1 — 30R IWM headline frame</h3>
+        <span class="clip-dur">80:34 – 82:04 &nbsp;·&nbsp; 90s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S7 &nbsp;·&nbsp; 2020-12-29 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=fVjQ3aBwBCY&t=4834s" target="_blank" rel="noopener">strategy20201229podcast 30R IWM</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/fVjQ3aBwBCY?start=4834&end=4924&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>intraday frog boxes and the minimum manageable risk boxes and you made 30 R manageable risk boxes and you made 30 R in that last yellow in that last yellow box that&#x27;s the point of hybrid box that&#x27;s the point of hybrid trading so if you&#x27;re not a day trader at trading so if you&#x27;re not a day trader at all then the same…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=fVjQ3aBwBCY&t=4834s" target="_blank" rel="noopener">↗ open on YouTube at 80:34</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="clip" id="bbb-3-m31-s8-2572">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-3-m31-s8-2572</span> M3.1 — 30R IWM headline frame</h3>
+        <span class="clip-dur">42:52 – 44:22 &nbsp;·&nbsp; 90s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S8 &nbsp;·&nbsp; 2020-12-30 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=CVscJwHWo64&t=2572s" target="_blank" rel="noopener">strategy20201230podcast 12R IWM</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/CVscJwHWo64?start=2572&end=2662&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>saw that a couple days ago why that that&#x27;s what led to the 30 R trade 30 that&#x27;s what led to the 30 R trade 30 execution R trade inside um iwm so when execution R trade inside um iwm so when you see a lot of s and here we go again you see a lot of s and here we go again spy 3.8 to one spy 3.8 to one ojoy uh Rapture t…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=CVscJwHWo64&t=2572s" target="_blank" rel="noopener">↗ open on YouTube at 42:52</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+<h3 class="slot-label">M3.2 — 12R IWM headline frame &nbsp;<span class="slot-count">(2 candidates)</span></h3>
+
+    <article class="clip" id="bbb-3-m32-s8-7085">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-3-m32-s8-7085</span> M3.2 — 12R IWM headline frame</h3>
+        <span class="clip-dur">118:05 – 119:35 &nbsp;·&nbsp; 90s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S8 &nbsp;·&nbsp; 2020-12-30 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=CVscJwHWo64&t=7085s" target="_blank" rel="noopener">strategy20201230podcast 12R IWM</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/CVscJwHWo64?start=7085&end=7175&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>for the rest of the day but that&#x27;s what 12r looks like and that&#x27;s 12r looks like and that&#x27;s 12r on a very small range day okay yeah uh just a final thing the pocket is anytime you get a a uh like a roll over anytime you get a a uh like a roll over in the rl10 or the dragon rolls over in the rl10 or the dragon rolls …</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=CVscJwHWo64&t=7085s" target="_blank" rel="noopener">↗ open on YouTube at 118:05</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="clip" id="bbb-3-m32-s8-7180">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-3-m32-s8-7180</span> M3.2 — 12R IWM headline frame</h3>
+        <span class="clip-dur">119:40 – 121:10 &nbsp;·&nbsp; 90s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S8 &nbsp;·&nbsp; 2020-12-30 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=CVscJwHWo64&t=7180s" target="_blank" rel="noopener">strategy20201230podcast 12R IWM</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/CVscJwHWo64?start=7180&end=7270&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>today 12 12 R today and so what&#x27;s 12 R 12 12 12 R today and so what&#x27;s 12 R 12 execution R equals how much position execution R equals how much position sizing are 2.4 so on this 2.4 so on this trade we earned a full week&#x27;s worth of trade we earned a full week&#x27;s worth of position sizing capture okay because remember …</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=CVscJwHWo64&t=7180s" target="_blank" rel="noopener">↗ open on YouTube at 119:40</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+<h3 class="slot-label">M3.3 — WOAY exit + alternatives &nbsp;<span class="slot-count">(4 candidates)</span></h3>
+
+    <article class="clip" id="bbb-3-m33-s7-1675">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-3-m33-s7-1675</span> M3.3 — WOAY exit + alternatives</h3>
+        <span class="clip-dur">27:55 – 29:25 &nbsp;·&nbsp; 90s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S7 &nbsp;·&nbsp; 2020-12-29 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=fVjQ3aBwBCY&t=1675s" target="_blank" rel="noopener">strategy20201229podcast 30R IWM</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/fVjQ3aBwBCY?start=1675&end=1765&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>here&#x27;s the WOAY exit here and then if you uh if you take the take the sniper exit here at the P or the uh managerial exit P or the uh managerial exit here this is a natural this is a natural here this is a natural this is a natural place to add add either here or above place to add add either here or above above the…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=fVjQ3aBwBCY&t=1675s" target="_blank" rel="noopener">↗ open on YouTube at 27:55</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="clip" id="bbb-3-m33-s8-111">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-3-m33-s8-111</span> M3.3 — WOAY exit + alternatives</h3>
+        <span class="clip-dur">1:51 – 3:21 &nbsp;·&nbsp; 90s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S8 &nbsp;·&nbsp; 2020-12-30 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=CVscJwHWo64&t=111s" target="_blank" rel="noopener">strategy20201230podcast 12R IWM</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/CVscJwHWo64?start=111&end=201&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>not I mean if we were doing this on a um a wo way exit managerial a wo way exit managerial stop of the Ballinger band stop of the Ballinger band mean happens to mean happens to be um the 2 ATR be um the 2 ATR stop which means that this would have stop which means that this would have been enough to get us out and th…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=CVscJwHWo64&t=111s" target="_blank" rel="noopener">↗ open on YouTube at 1:51</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="clip" id="bbb-3-m33-s8-2766">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-3-m33-s8-2766</span> M3.3 — WOAY exit + alternatives</h3>
+        <span class="clip-dur">46:06 – 47:36 &nbsp;·&nbsp; 90s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S8 &nbsp;·&nbsp; 2020-12-30 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=CVscJwHWo64&t=2766s" target="_blank" rel="noopener">strategy20201230podcast 12R IWM</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/CVscJwHWo64?start=2766&end=2856&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>big big red arrow the first one is the woo way exit right so that&#x27;s this uh so it stays in place until we get uh three get uh three three three dots above our three three dots above our entry so that would be you know one two entry so that would be you know one two three so here here is where our entry three so here…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=CVscJwHWo64&t=2766s" target="_blank" rel="noopener">↗ open on YouTube at 46:06</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="clip" id="bbb-3-m33-s9-6487">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-3-m33-s9-6487</span> M3.3 — WOAY exit + alternatives</h3>
+        <span class="clip-dur">108:07 – 109:37 &nbsp;·&nbsp; 90s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S9 &nbsp;·&nbsp; 2020-12-31 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=MDjMClAixRw&t=6487s" target="_blank" rel="noopener">strategy20201231podcast</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/MDjMClAixRw?start=6487&end=6577&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>woo way exit here or the managerial exit here which which one do you want to take the uh you want to take the wi or the uh the uh you want to take the wi or the uh the sniper exit at the sniper exit at Blue yeah that&#x27;s what I would do too add Blue yeah that&#x27;s what I would do too add had 15 bars and nothing and I wan…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=MDjMClAixRw&t=6487s" target="_blank" rel="noopener">↗ open on YouTube at 108:07</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+<h3 class="slot-label">M3.4 — Progressive sizing bar-by-bar &nbsp;<span class="slot-count">(4 candidates)</span></h3>
+
+    <article class="clip" id="bbb-3-m34-s7-2210">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-3-m34-s7-2210</span> M3.4 — Progressive sizing bar-by-bar</h3>
+        <span class="clip-dur">36:50 – 38:20 &nbsp;·&nbsp; 90s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S7 &nbsp;·&nbsp; 2020-12-29 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=fVjQ3aBwBCY&t=2210s" target="_blank" rel="noopener">strategy20201229podcast 30R IWM</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/fVjQ3aBwBCY?start=2210&end=2300&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>your that&#x27;s what your trade looks like in the first bar uh I&#x27;m I&#x27;m going to give you a second position at six because that happened position at six because that happened all inside one bar and that caught you all inside one bar and that caught you by surprise but I&#x27;m going to let you by surprise but I&#x27;m going to let…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=fVjQ3aBwBCY&t=2210s" target="_blank" rel="noopener">↗ open on YouTube at 36:50</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="clip" id="bbb-3-m34-s8-4503">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-3-m34-s8-4503</span> M3.4 — Progressive sizing bar-by-bar</h3>
+        <span class="clip-dur">75:03 – 76:33 &nbsp;·&nbsp; 90s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S8 &nbsp;·&nbsp; 2020-12-30 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=CVscJwHWo64&t=4503s" target="_blank" rel="noopener">strategy20201230podcast 12R IWM</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/CVscJwHWo64?start=4503&end=4593&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>if I&#x27;m committing to add a third position at 7.5 I pre-move my position at 7.5 I pre-move my stop to where I want it to stop to where I want it to be once I put the entry be once I put the entry in and that way my stop is already in in and that way my stop is already in okay so here we go how nice is that price is n…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=CVscJwHWo64&t=4503s" target="_blank" rel="noopener">↗ open on YouTube at 75:03</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="clip" id="bbb-3-m34-s8-5662">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-3-m34-s8-5662</span> M3.4 — Progressive sizing bar-by-bar</h3>
+        <span class="clip-dur">94:22 – 95:52 &nbsp;·&nbsp; 90s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S8 &nbsp;·&nbsp; 2020-12-30 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=CVscJwHWo64&t=5662s" target="_blank" rel="noopener">strategy20201230podcast 12R IWM</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/CVscJwHWo64?start=5662&end=5752&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>um are you thinking about a second position at all you you&#x27;re going to put a second position on at four okay okay here we go uh you got your second position there the price is at the yellow dot slightly the price is at the yellow dot slightly just slightly underwater you&#x27;ve locked in the blue box of gains I mean I&#x27;m…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=CVscJwHWo64&t=5662s" target="_blank" rel="noopener">↗ open on YouTube at 94:22</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="clip" id="bbb-3-m34-s9-2971">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-3-m34-s9-2971</span> M3.4 — Progressive sizing bar-by-bar</h3>
+        <span class="clip-dur">49:31 – 51:01 &nbsp;·&nbsp; 90s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S9 &nbsp;·&nbsp; 2020-12-31 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=MDjMClAixRw&t=2971s" target="_blank" rel="noopener">strategy20201231podcast</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/MDjMClAixRw?start=2971&end=3061&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>so a second position at 14 okay so the idea would be there okay okay so on this bar let me Zoom that in a little bit so uh a little bit so uh it um it hit here it fell back to here it um it hit here it fell back to here it moved as high as Here and Now is it moved as high as Here and Now is sitting right sitting rig…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=MDjMClAixRw&t=2971s" target="_blank" rel="noopener">↗ open on YouTube at 49:31</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+<h3 class="slot-label">M3.5 — Named violation thresholds (S9 NYE) &nbsp;<span class="slot-count">(1 candidate)</span></h3>
+
+    <article class="clip" id="bbb-3-m35-s9-3607">
+      <div class="clip-head">
+        <h3 class="clip-title"><span class="id">bbb-3-m35-s9-3607</span> M3.5 — Named violation thresholds (S9 NYE)</h3>
+        <span class="clip-dur">60:07 – 61:37 &nbsp;·&nbsp; 90s</span>
+      </div>
+      <p class="meta-line"><strong>Source:</strong> S9 &nbsp;·&nbsp; 2020-12-31 &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=MDjMClAixRw&t=3607s" target="_blank" rel="noopener">strategy20201231podcast</a></p>
+      <div class="clip-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/MDjMClAixRw?start=3607&end=3697&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote"><span class="who">transcript excerpt — auto-extracted, may include rolling-cap fragments</span>um oh okay I see yeah short below the belly of the Dragon we&#x27;ll call that one belly of the Dragon we&#x27;ll call that one 17 then no we&#x27;ll call that 17 then no we&#x27;ll call that 18 no we&#x27;ll call that 17 so 18 will be 18 no we&#x27;ll call that 17 so 18 will be this one this one 17 would be here and um call this one 19 18 19 so…</p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=MDjMClAixRw&t=3607s" target="_blank" rel="noopener">↗ open on YouTube at 60:07</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+    </section>
+    
+
+  <section id="sources">
+    <h2>Source sessions</h2>
+    <p class="section-summary">The 10 sessions all candidate clips are drawn from. Series identity: Dr. Ken Long, nightly Tortoise Capital strategy podcast, 2020-10-20 through 2021-01-04.</p>
+    <table class="sessions-table">
+      <thead><tr><th>#</th><th>Date</th><th>Length</th><th>Title (YouTube)</th></tr></thead>
+      <tbody><tr><td><strong>S1</strong></td><td>2020-10-20</td><td>43:42</td><td><a href='https://www.youtube.com/watch?v=BFOC_BqIC14' target='_blank' rel='noopener'>strategy20201020podcast</a></td></tr>
+<tr><td><strong>S2</strong></td><td>2020-11-04</td><td>44:45</td><td><a href='https://www.youtube.com/watch?v=vZqveq0Xdp8' target='_blank' rel='noopener'>strategy20201104podcast</a></td></tr>
+<tr><td><strong>S3</strong></td><td>2020-11-09</td><td>41:33</td><td><a href='https://www.youtube.com/watch?v=yHJuIfn3JNU' target='_blank' rel='noopener'>strategy20201109podcast</a></td></tr>
+<tr><td><strong>S4</strong></td><td>2020-11-11</td><td>34:15</td><td><a href='https://www.youtube.com/watch?v=DAqkXiZFbZc' target='_blank' rel='noopener'>strategy20201111podcast</a></td></tr>
+<tr><td><strong>S5</strong></td><td>2020-12-11</td><td>1:10:57</td><td><a href='https://www.youtube.com/watch?v=FIjDmBzBozQ' target='_blank' rel='noopener'>strategy20201211podcast lesson</a></td></tr>
+<tr><td><strong>S6</strong></td><td>2020-12-21</td><td>1:18:44</td><td><a href='https://www.youtube.com/watch?v=g5IMojy5HtM' target='_blank' rel='noopener'>strategy20201221podcast lesson</a></td></tr>
+<tr><td><strong>S7</strong></td><td>2020-12-29</td><td>1:24:37</td><td><a href='https://www.youtube.com/watch?v=fVjQ3aBwBCY' target='_blank' rel='noopener'>strategy20201229podcast 30R IWM</a></td></tr>
+<tr><td><strong>S8</strong></td><td>2020-12-30</td><td>2:00:41</td><td><a href='https://www.youtube.com/watch?v=CVscJwHWo64' target='_blank' rel='noopener'>strategy20201230podcast 12R IWM</a></td></tr>
+<tr><td><strong>S9</strong></td><td>2020-12-31</td><td>1:53:46</td><td><a href='https://www.youtube.com/watch?v=MDjMClAixRw' target='_blank' rel='noopener'>strategy20201231podcast</a></td></tr>
+<tr><td><strong>S10</strong></td><td>2021-01-04</td><td>1:58:51</td><td><a href='https://www.youtube.com/watch?v=pPrseVOjMxY' target='_blank' rel='noopener'>strategy20210104podcast</a></td></tr></tbody>
+    </table>
+  </section>
+</main>
+
+<footer>
+  Generated by ogtcoursecraft · source-of-truth: <code>ogt-coursecraft/bar-by-bar-training/</code> · 60 candidate clips · review pass v1
+</footer>
+
+</body>
+</html>
