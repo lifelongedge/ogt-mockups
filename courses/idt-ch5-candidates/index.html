@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Intraday Decision Tree — Chapter 5 Candidates</title>
+  <style>
+    :root {
+      --bg: #0e0e0c;
+      --bg-card: #181815;
+      --bg-card-hover: #1f1f1c;
+      --fg: #e8e6df;
+      --fg-dim: #9c978a;
+      --fg-faint: #5d594f;
+      --accent: #d4a559;
+      --accent-dim: #8a6a35;
+      --border: #2a2925;
+      --quote-bar: #d4a559;
+      --warn: #c97a3e;
+      --good: #6aa84f;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code { font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 0.9em; color: var(--fg-dim); }
+    header { padding: 2.5rem 2rem 1.5rem; max-width: 1100px; margin: 0 auto; border-bottom: 1px solid var(--border); }
+    h1 { font-family: Georgia, "Times New Roman", serif; font-size: 2rem; margin: 0 0 0.4rem; font-weight: 400; letter-spacing: -0.01em; }
+    .subtitle { color: var(--fg-dim); font-size: 1rem; margin: 0 0 1.2rem; line-height: 1.55; }
+    .meta-row { display: flex; flex-wrap: wrap; gap: 1.5rem; color: var(--fg-faint); font-size: 0.85rem; }
+    .meta-row strong { color: var(--fg-dim); font-weight: 500; }
+    main { max-width: 1100px; margin: 0 auto; padding: 0 2rem 4rem; }
+    section { padding: 2rem 0 1.5rem; border-bottom: 1px solid var(--border); }
+    .scene {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.75rem;
+      margin: 0 0 1.75rem;
+    }
+    .scene-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; margin: 0 0 0.5rem; flex-wrap: wrap; }
+    .scene-title { font-family: Georgia, serif; font-size: 1.3rem; font-weight: 500; margin: 0; color: var(--fg); line-height: 1.35; }
+    .scene-id { color: var(--accent); font-family: "SF Mono", Menlo, monospace; font-weight: 600; margin-right: 0.6rem; font-size: 0.88em; }
+    .scene-dur { color: var(--fg-faint); font-size: 0.85rem; font-family: "SF Mono", Menlo, monospace; white-space: nowrap; }
+    .scene-blurb { color: var(--fg-dim); font-size: 0.95rem; line-height: 1.55; margin: 0.6rem 0 1.1rem; }
+    .scene-grid { display: grid; grid-template-columns: 480px 1fr; gap: 1.5rem; align-items: start; }
+    @media (max-width: 800px) { .scene-grid { grid-template-columns: 1fr; } }
+    .embed-wrap { position: relative; width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 6px; overflow: hidden; }
+    .embed-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .right { font-size: 0.9rem; min-width: 0; }
+    .meta-line { color: var(--fg-faint); margin: 0 0 0.4rem; font-family: "SF Mono", Menlo, monospace; font-size: 0.78rem; line-height: 1.5; }
+    .meta-line strong { color: var(--fg-dim); font-weight: 500; }
+    .meta-line a { color: var(--accent); }
+    .quote { border-left: 3px solid var(--quote-bar); padding: 0.55rem 0 0.55rem 0.95rem; margin: 0.9rem 0 0.4rem; color: var(--fg); font-style: italic; line-height: 1.55; font-size: 0.88rem; }
+    .quote .who { display: block; font-style: normal; color: var(--fg-faint); font-size: 0.72rem; margin-bottom: 0.4rem; font-family: "SF Mono", Menlo, monospace; }
+    .verdict { margin-top: 1.4rem; padding-top: 1rem; border-top: 1px dashed var(--border); font-size: 0.85rem; color: var(--fg-dim); }
+    .verdict strong { color: var(--fg); }
+    .role { display: inline-block; padding: 0.1rem 0.55rem; border-radius: 3px; font-size: 0.72rem; font-family: "SF Mono", Menlo, monospace; background: var(--accent-dim); color: var(--bg); margin-left: 0.6rem; font-weight: 600; letter-spacing: 0.03em; }
+    .note-box { background: var(--bg-card); border-left: 3px solid var(--warn); padding: 0.9rem 1.15rem; margin: 1rem 0 1.5rem; font-size: 0.9rem; color: var(--fg-dim); border-radius: 0 6px 6px 0; line-height: 1.55; }
+    .note-box strong { color: var(--fg); }
+    details { margin: 1.5rem 0; }
+    summary { cursor: pointer; color: var(--accent); font-size: 0.92rem; padding: 0.5rem 0; }
+    .actions { margin-top: 0.6rem; display: flex; gap: 1.2rem; font-size: 0.83rem; flex-wrap: wrap; }
+    .actions a { font-family: "SF Mono", Menlo, monospace; }
+    footer { max-width: 1100px; margin: 0 auto; padding: 2rem; color: var(--fg-faint); font-size: 0.8rem; text-align: center; border-top: 1px solid var(--border); }
+    .verdict-badges { margin-top: 0.6rem; }
+    .badge { display: inline-block; padding: 0.15rem 0.7rem; margin: 0 0.3rem 0.3rem 0; border-radius: 3px; font-size: 0.72rem; font-family: "SF Mono", Menlo, monospace; color: var(--fg); background: transparent; border: 1px solid var(--border); }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Intraday Decision Tree — Chapter 5 Candidates</h1>
+  <p class="subtitle">
+    Elias Aleem bought this course today. The old Chapter 5 was reusing "The Four Brothers" identity material from Trader's OS Course 1 — topic mismatch. That's been removed; the course now ships as 4 chapters / 30 min. This page is the material for a real Chapter 5 recut from Ken's actual coaching sessions in <code>kenlong-transcripts</code>. Watch each candidate; decide which stay in.
+  </p>
+  <div class="meta-row">
+    <span><strong>Target runtime:</strong> 5–6 min finished</span>
+    <span><strong>Source:</strong> 4 different Ken Long coaching sessions (2023)</span>
+    <span><strong>Fit for:</strong> new mkb-5.mp4 that extends the manifest sequence to 5 chapters</span>
+  </div>
+</header>
+
+<main>
+  <div class="note-box">
+    <strong>How to review each clip:</strong> the YouTube embed is cued to the proposed in-time (start). YouTube's IFrame API doesn't strictly honor <code>end</code> — the video will keep playing past the proposed out-time. Watch until the natural end of the teaching arc, then decide: does this scene earn its place in Chapter 5 or should we substitute? The "open on YouTube" link opens the same moment on the full source video if you want more context around it.
+  </div>
+
+  <section>
+    <div class="scene" id="scene-5-1">
+      <div class="scene-head">
+        <h3 class="scene-title"><span class="scene-id">SCENE 5.1</span>Why the last 30 minutes is different <span class="role">OPENER</span></h3>
+        <span class="scene-dur">start 2:29 · ~90s clip</span>
+      </div>
+      <p class="scene-blurb">
+        Frames the WHY behind reading the close as a distinct discipline. Ken explains the 13 30-minute sessions per day: the first 30 min behaves strangely because opening orders are processing, and the last 30–60 min behaves strangely because intraday leverage is unwinding. This isn't preference — it's a structural property of how the market clears.
+      </p>
+      <p class="meta-line">
+        <strong>Source:</strong> <a href="https://www.youtube.com/watch?v=C6KOd3YjK7g" target="_blank" rel="noopener">2023-04-30 — Special Foundations Q&amp;A on 3-min vs 30-min timeframes</a>
+        &nbsp;·&nbsp; <strong>Video ID:</strong> <code>C6KOd3YjK7g</code>
+      </p>
+      <div class="scene-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/C6KOd3YjK7g?start=149&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote">
+            <span class="who">transcript excerpt around 2:34 — YouTube auto-sub, rolling caption</span>
+            "…in the last 30 minutes of the day, maybe even the last hour, there's going to be something that's not present on any other timeframe. The fact that we're doing intraday trading and it's in the last hour and a considerable number of people are using leverage intraday that have to get out of positions, that makes the last hour of the day really important and different…"
+          </p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=C6KOd3YjK7g&t=149s" target="_blank" rel="noopener">↗ open on YouTube at 2:29</a>
+          </div>
+          <div class="verdict">
+            <strong>Why this fits Chapter 5:</strong> it earns the concept before showing what to do with it. Without this scene the buyer just gets tactics; with it, the tactics have a "here's why the tape is different" foundation. The 3-min vs 30-min framing is also on-topic for the course as a whole.
+            <div class="verdict-badges">
+              <span class="badge">Q&A session</span>
+              <span class="badge">clean audio</span>
+              <span class="badge">structural framing</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scene" id="scene-5-2">
+      <div class="scene-head">
+        <h3 class="scene-title"><span class="scene-id">SCENE 5.2</span>The VWAP Magnet <span class="role">MECHANIC</span></h3>
+        <span class="scene-dur">start 22:43 · ~90s clip</span>
+      </div>
+      <p class="scene-blurb">
+        The specific tradable phenomenon that emerges from Scene 5.1. When a strong intraday move pulls price away from the VWAP AND leveraged holders start unwinding in the last 30 minutes, price gets pulled back to the VWAP — the "VWAP magnet." Ken names the measurement (FadeStat, FailStat) that quantifies this so you know how strong the pull will be before you take the trade.
+      </p>
+      <p class="meta-line">
+        <strong>Source:</strong> <a href="https://www.youtube.com/watch?v=d_S1TCk2qnE" target="_blank" rel="noopener">2023-07-12 — Foundations Q&amp;A Special</a>
+        &nbsp;·&nbsp; <strong>Video ID:</strong> <code>d_S1TCk2qnE</code>
+      </p>
+      <div class="scene-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/d_S1TCk2qnE?start=1363&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote">
+            <span class="who">transcript excerpt around 22:48 — YouTube auto-sub, rolling caption</span>
+            "…the last 30 minutes can be quite volatile because all the intraday Traders with leverage are unwinding their leverage, and so if they were long with leverage now suddenly they are motivated sellers, and you get some kind of thing that we call the VWAP magnet, in which price may have pulled away to a very strong move… and now these guys that are holding winning leveraged positions now suddenly have to start selling in that last 30 minutes it's not unusual to see that price quickly collapse and come down to the VWAP…"
+          </p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=d_S1TCk2qnE&t=1363s" target="_blank" rel="noopener">↗ open on YouTube at 22:43</a>
+          </div>
+          <div class="verdict">
+            <strong>Why this fits Chapter 5:</strong> converts the structural framing into a named, tradable pattern. The buyer learns the phenomenon (VWAP magnet) and the measurement (FadeStat / FailStat) — same shape as how Chapter 3 delivered its named mechanics (rational vs irrational exuberance, the iron rule). Ends on the specific indicator name, which is a natural handoff to the practice quiz.
+            <div class="verdict-badges">
+              <span class="badge">Q&A session</span>
+              <span class="badge">names indicators</span>
+              <span class="badge">tradable phenomenon</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scene" id="scene-5-3">
+      <div class="scene-head">
+        <h3 class="scene-title"><span class="scene-id">SCENE 5.3</span>Watch-list categories receive today's close <span class="role">HANDOFF</span></h3>
+        <span class="scene-dur">start 1:04:07 · ~90s clip</span>
+      </div>
+      <p class="scene-blurb">
+        This is the connective tissue. Ken names Category 1 (any continuation pattern from today's price action) and Category 2 (any new swing pattern that fired today). These are the two containers today's close hands into for tomorrow's frame. Chapter 4 introduced these categories in the intraday context; this scene revisits them from the closing-read angle — where the close writes to.
+      </p>
+      <p class="meta-line">
+        <strong>Source:</strong> <a href="https://www.youtube.com/watch?v=WlqQChOychs" target="_blank" rel="noopener">OR3 gaps &amp; symbols — undated</a>
+        &nbsp;·&nbsp; <strong>Video ID:</strong> <code>WlqQChOychs</code>
+      </p>
+      <div class="scene-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/WlqQChOychs?start=3847&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote">
+            <span class="who">transcript excerpt around 1:04:12 — YouTube auto-sub, rolling caption</span>
+            "…there are three ways I add symbols to my watch list. The first category — I'm going to number category three — is any continuation… so any continuation pattern that's category one. Category 2 is any new swing pattern and I'm going to…"
+          </p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=WlqQChOychs&t=3847s" target="_blank" rel="noopener">↗ open on YouTube at 1:04:07</a>
+          </div>
+          <div class="verdict">
+            <strong>Why this fits Chapter 5:</strong> the categories are the buckets tomorrow's watch list gets sorted into, and the closing read is when that sort happens. Without this scene the module ends on "how to read the close" but doesn't say what to DO with the read. With it, the buyer sees the write-target for the read.
+            <div class="verdict-badges">
+              <span class="badge">names categories 1 &amp; 2</span>
+              <span class="badge">connects to Chapter 4</span>
+              <span class="badge">⚠ some numbering ambiguity in raw transcript — verify on tape</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scene" id="scene-5-4">
+      <div class="scene-head">
+        <h3 class="scene-title"><span class="scene-id">SCENE 5.4</span>Three sources / prep the night before <span class="role">PUNCHLINE</span></h3>
+        <span class="scene-dur">start 1:07 · ~60s clip</span>
+      </div>
+      <p class="scene-blurb">
+        The punchline that closes the arc. Ken names "three sources of new symbols for the day ahead" — the exact language the sales-page bullet promised. The closing read isn't the end of today; it's the input to tomorrow's three-sources sort. This bridges cleanly into Markets Course 1 (Where Tomorrow's Trades Come From), which is what a well-designed Chapter 5 SHOULD do.
+      </p>
+      <p class="meta-line">
+        <strong>Source:</strong> <a href="https://www.youtube.com/watch?v=yIBxW5NdMD4" target="_blank" rel="noopener">Market classification + MACD — undated</a>
+        &nbsp;·&nbsp; <strong>Video ID:</strong> <code>yIBxW5NdMD4</code>
+      </p>
+      <div class="scene-grid">
+        <div class="embed-wrap">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/yIBxW5NdMD4?start=67&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="right">
+          <p class="quote">
+            <span class="who">transcript excerpt around 1:12 — YouTube auto-sub, rolling caption</span>
+            "…I'm looking to generate three sources of new symbols for the day ahead, and those sources are any trade that is still open… all of those can be done with prep the night before… the big gappers, whether it's this one or that one, I actually have to wait and see the action…"
+          </p>
+          <div class="actions">
+            <a href="https://www.youtube.com/watch?v=yIBxW5NdMD4&t=67s" target="_blank" rel="noopener">↗ open on YouTube at 1:07</a>
+          </div>
+          <div class="verdict">
+            <strong>Why this fits Chapter 5:</strong> matches the sales-page promise word-for-word ("hands into the next morning's three-sources sort") and creates a clean product-catalog bridge — the buyer who finishes Chapter 5 has been primed for Markets Course 1. That's not a coincidence; it's the intended arc.
+            <div class="verdict-badges">
+              <span class="badge">names "three sources"</span>
+              <span class="badge">bridges to Course 1</span>
+              <span class="badge">early in video → clean audio</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 style="font-family: Georgia, serif; font-size: 1.3rem; font-weight: 500; margin: 0 0 1rem;">Combined runtime + risks</h2>
+    <p style="color: var(--fg-dim); line-height: 1.6; margin: 0 0 1rem;">
+      If all four scenes survive review: <strong>5:30 finished</strong>, bringing the course from 30 to ~35 min. That still isn't the 37 min the original manifest claimed, but it's honest — no reused Course 1 content, no filler.
+    </p>
+    <div class="note-box">
+      <strong>Risks worth naming before the splice:</strong>
+      <ul style="margin: 0.5rem 0 0; padding-left: 1.2rem; line-height: 1.7;">
+        <li><strong>Multi-session audio.</strong> Four different sessions = four different mic setups + room tones. The cut will read as compilation unless we audio-level pass every scene. Real work, but not blocking.</li>
+        <li><strong>Q&amp;A artifacts.</strong> Scenes 5.1 and 5.2 come from Foundations Q&amp;A specials. Audience "yeah / makes sense" reactions and question interjections will need to be trimmed around cleanly.</li>
+        <li><strong>Scene 5.3 numbering ambiguity.</strong> The transcript shows Ken saying "I'm going to number category three… is any continuation" then immediately "so any continuation pattern that's category one." Might be a mid-sentence correction that reads fine on tape or might be confusing. Verify on the video before committing to this cut.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <details>
+      <summary>How this proposal was built</summary>
+      <p style="color: var(--fg-dim); font-size: 0.9rem; line-height: 1.6; max-width: 780px;">
+        Grep-ed the <code>kenlong-transcripts</code> private corpus (393 videos, 5.2M words) for closing-read teaching content. Ranked all files by a weighted score of high-specificity phrases ("closing read," "tomorrow's lean," "last 30 minutes," "close of the day") + medium-specificity phrases + weak signals. Top candidates were read in full context around each strong hit. Selected the four passages above as the cleanest teaching arc that matches the sales-page promise — structural framing → tradable mechanic → handoff container → punchline that bridges to the next course. Character positions in the clean transcripts were mapped back to VTT timestamps by phrase-anchoring, so every YouTube embed is cued to the exact moment the transcript excerpt appears in the source video.
+      </p>
+    </details>
+  </section>
+</main>
+
+<footer>
+  Generated by ogtcoursecraft &middot; source-of-truth: <code>kenlong-transcripts</code> (private repo) &middot; review pass v1
+</footer>
+
+</body>
+</html>

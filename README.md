@@ -16,6 +16,7 @@ Internal review pages where the user (Sundeep) approves video clips proposed for
 | Review | Description |
 |--------|-------------|
 | [Bar-by-Bar Drill Pack](https://lifelongedge.github.io/ogt-mockups/courses/bbb-clips/) | 60 candidate clips across 3 SKUs (Vocabulary / Drill Mechanic / IWM Case Study) + cold opens. Source: Dr. Ken Long Tortoise strategy podcast Sessions 1-10 (2020-10-20 → 2021-01-04). Review pass v1 |
+| [Intraday Decision Tree — Chapter 5 candidates](https://lifelongedge.github.io/ogt-mockups/courses/idt-ch5-candidates/) | 4 candidate scenes for a new Chapter 5 (The Closing Read) after the previous chapter's topic mismatch was removed. Source: kenlong-transcripts corpus, 4 different 2023 coaching sessions. Review pass v1 |
 
 ## Real-Data Weekly Briefings
 
