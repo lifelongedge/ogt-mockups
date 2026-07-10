@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>The Frog Box — v1 review</title>
+  <style>
+    :root { --bg:#0e0e0c; --card:#181815; --fg:#e8e6df; --dim:#9c978a; --faint:#5d594f; --amber:#d4a559; --border:#2a2925; --good:#6aa84f; }
+    * { box-sizing: border-box; }
+    html, body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; }
+    a { color:var(--amber); text-decoration:none; } a:hover { text-decoration:underline; }
+    code { font-family:"SF Mono",Menlo,monospace; font-size:.9em; color:var(--dim); }
+    header { padding:2.5rem 2rem 1.5rem; max-width:1000px; margin:0 auto; border-bottom:1px solid var(--border); }
+    h1 { font-family:Georgia,serif; font-size:2rem; font-weight:400; margin:0 0 .4rem; }
+    .sub { color:var(--dim); line-height:1.55; }
+    main { max-width:1000px; margin:0 auto; padding:1.5rem 2rem 4rem; }
+    video { width:100%; aspect-ratio:16/9; background:#000; border-radius:8px; }
+    table { width:100%; border-collapse:collapse; margin:1.4rem 0; font-size:.9rem; }
+    th, td { text-align:left; padding:.45rem .8rem; border-bottom:1px solid var(--border); }
+    th { color:var(--dim); font-family:"SF Mono",Menlo,monospace; font-size:.75rem; text-transform:uppercase; letter-spacing:.06em; }
+    td.t { font-family:"SF Mono",Menlo,monospace; color:var(--amber); white-space:nowrap; }
+    .note { background:var(--card); border-left:3px solid var(--amber); padding:.9rem 1.15rem; margin:1.4rem 0; font-size:.9rem; color:var(--dim); border-radius:0 6px 6px 0; line-height:1.6; }
+    .note strong { color:var(--fg); }
+    h2 { font-family:Georgia,serif; font-size:1.25rem; font-weight:500; margin:2.2rem 0 .8rem; }
+  </style>
+</head>
+<body>
+<header>
+  <h1>The Frog Box — v1 cut for review</h1>
+  <p class="sub">Format A Concept Card, 7:09 finished, from <code>courses/topical-frog-box/plan.md</code>. All 7 cuts verified against footage; slides HTML+CSS rendered; lower-thirds define terms on first use. Pilot for the topical-video pipeline (growogtx handoff 2026-07-10).</p>
+</header>
+<main>
+  <video controls preload="metadata" src="https://storage.googleapis.com/courses.owlgrouptrading.com/_preview/frog-box-v1.mp4"></video>
+
+  <h2>Chapters</h2>
+  <table>
+    <thead><tr><th>Start</th><th>Segment</th><th>Kind</th></tr></thead>
+    <tbody>
+      <tr><td class="t">0:00</td><td>The frog at the pond (cold open)</td><td>cut · STA interview</td></tr>
+      <tr><td class="t">0:23</td><td>Title card</td><td>slide</td></tr>
+      <tr><td class="t">0:27</td><td>What the frog box is</td><td>cut · STA interview (contiguous with cold open)</td></tr>
+      <tr><td class="t">1:33</td><td>Definition card</td><td>slide</td></tr>
+      <tr><td class="t">1:41</td><td>Chart: inside vs beyond the box</td><td>slide (schematic)</td></tr>
+      <tr><td class="t">1:49</td><td>Three boxes to a day (whiteboard)</td><td>cut · foundations Q&amp;A · LT: Range Stat, MMRB</td></tr>
+      <tr><td class="t">2:33</td><td>Chart: the family of rulers</td><td>slide (schematic, to scale)</td></tr>
+      <tr><td class="t">2:43</td><td>Why the MMRB exists</td><td>cut · STA interview · LT: 1R</td></tr>
+      <tr><td class="t">4:07</td><td>Chart: Tesla risk box</td><td>slide (schematic)</td></tr>
+      <tr><td class="t">4:15</td><td>Sizing Tesla in box units</td><td>cut · 2023-04-14 session · LT: PSAR, R10 · native TSLA chart on screen</td></tr>
+      <tr><td class="t">5:54</td><td>Compression: the Z3 pinch (optional beat)</td><td>cut · foundations Q&amp;A · LT: Z3</td></tr>
+      <tr><td class="t">6:16</td><td>Nothing sacred about it (honesty caveat)</td><td>cut · STA interview</td></tr>
+      <tr><td class="t">6:53</td><td>Maxim card</td><td>slide</td></tr>
+      <tr><td class="t">6:59</td><td>End card</td><td>slide</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Review notes</h2>
+  <div class="note">
+    <strong>Deviations from plan.md worth your eye:</strong>
+    <ul style="margin:.5rem 0 0; padding-left:1.2rem; line-height:1.7;">
+      <li><strong>Cut 1 → title → cut 2 boundary:</strong> cold open ends after "…out of your range" (41:57); cut 2 resumes on "And we saw…" — zero gap, zero repeat. Check the title card doesn't feel like it interrupts one continuous thought.</li>
+      <li><strong>Z3 pinch kept (the optional beat):</strong> starts earlier than planned (5:31 vs 5:35) to catch "the aggressive play is to say…". The ~7s drawing silence mid-cut is real; his on-screen sketching carries it. Drop this beat if it feels dead (saves ~23s).</li>
+      <li><strong>Proportions cut bonus:</strong> the plan assumed Ken sketches off-screen; the whiteboard is actually ON screen. The chart_ladder slide right after now reinforces rather than substitutes.</li>
+      <li><strong>"Wrist box":</strong> Ken's pronunciation of "risk box" in both the Vimeo and 2023-04-14 audio. The 1R lower-third glosses it once.</li>
+      <li><strong>Sources are 360p</strong> (the two YouTube sessions) upscaled to 720; the Vimeo interview is native 720. Slides are crisp 1080-rendered. Footage softness is inherited from the uploads.</li>
+    </ul>
+  </div>
+
+  <h2>If approved, next steps</h2>
+  <p class="sub">1) Recompute YouTube packaging chapters from the table above (plan.md's estimates were close: actual 7:09 vs est 7:16). 2) Upload to the channel as unlisted for a final look, then public. 3) Update plan.md status, SESSIONSTATE, and the template spec with production learnings.</p>
+</main>
+</body>
+</html>
