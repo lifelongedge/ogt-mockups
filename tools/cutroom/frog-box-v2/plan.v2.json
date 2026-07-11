@@ -1,7 +1,7 @@
 {
   "schema": "coursecraft-plan-v2",
   "course": "topical-frog-box",
-  "revision": 1,
+  "revision": 2,
   "revised": "2026-07-11",
   "title": "The Frog Box",
   "format": "A",
@@ -32,9 +32,51 @@
     }
   ],
   "voices": [
-    { "id": "sonia",  "label": "Sonia (British, female)",     "sample": "vo-sonia.mp3" },
-    { "id": "aria",   "label": "Aria (US, female)",           "sample": "vo-aria.mp3" },
-    { "id": "william","label": "William (Australian, male)",  "sample": "vo-william.mp3" }
+    {
+      "id": "aria",
+      "label": "Aria (US, female, news-read)",
+      "sample": "vo-aria.mp3"
+    },
+    {
+      "id": "jenny",
+      "label": "Jenny (US, female, warm)",
+      "sample": "vo-jenny.mp3"
+    },
+    {
+      "id": "michelle",
+      "label": "Michelle (US, female, clear)",
+      "sample": "vo-michelle.mp3"
+    },
+    {
+      "id": "emma",
+      "label": "Emma (US, female, crisp)",
+      "sample": "vo-emma.mp3"
+    },
+    {
+      "id": "ava",
+      "label": "Ava (US, female, polished)",
+      "sample": "vo-ava.mp3"
+    },
+    {
+      "id": "andrew",
+      "label": "Andrew (US, male, younger: flag: male may read as 'another coach')",
+      "sample": "vo-andrew.mp3"
+    },
+    {
+      "id": "neerja",
+      "label": "Neerja (Indian English, female)",
+      "sample": "vo-neerja.mp3"
+    },
+    {
+      "id": "neerja-exp",
+      "label": "Neerja Expressive (Indian English, female)",
+      "sample": "vo-neerja-exp.mp3"
+    },
+    {
+      "id": "prabhat",
+      "label": "Prabhat (Indian English, male)",
+      "sample": "vo-prabhat.mp3"
+    }
   ],
   "segments": [
     {

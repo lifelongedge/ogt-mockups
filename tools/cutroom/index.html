@@ -111,7 +111,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const BUILD = 'cutroom-11a';
+const BUILD = 'cutroom-11b';
 console.log('[cutroom] build', BUILD);
 
 // ---------- config / mode ----------
@@ -148,7 +148,13 @@ async function load() {
   published = await res.json();
   const saved = localStorage.getItem(LS_KEY);
   if (saved) {
-    try { plan = JSON.parse(saved); toast('Loaded local edits (localStorage)'); }
+    try {
+      plan = JSON.parse(saved);
+      // voices + media_base always follow the published plan (voice slate can grow after local edits began)
+      plan.voices = published.voices;
+      plan.media_base = published.media_base;
+      toast('Loaded local edits (localStorage)');
+    }
     catch { plan = structuredClone(published); }
   } else {
     plan = structuredClone(published);
