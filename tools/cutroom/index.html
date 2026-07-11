@@ -75,6 +75,18 @@
   .voicebox input { accent-color:var(--amber); }
   .voicebox audio { height:28px; flex:1; }
   .why { font-size:.75rem; color:var(--dim); font-style:italic; line-height:1.45; margin:.4rem 0 .8rem; }
+  /* transcript panel */
+  .tx { max-height:36vh; overflow-y:auto; border:1px solid var(--border); border-radius:6px; background:var(--card); padding:.3rem 0; }
+  .cue { display:flex; gap:.55rem; align-items:baseline; padding:.18rem .6rem; font-size:.78rem; line-height:1.45; cursor:pointer; border-left:3px solid transparent; }
+  .cue:hover { background:var(--card2); }
+  .cue .ct { font-family:"SF Mono",Menlo,monospace; font-size:.68rem; color:var(--faint); white-space:nowrap; min-width:44px; }
+  .cue .cx { color:var(--dim); flex:1; }
+  .cue.inrange { border-left-color:var(--amber-dim); }
+  .cue.inrange .cx { color:var(--fg); }
+  .cue.now { background:var(--card2); border-left-color:var(--amber); }
+  .cue .setbtns { visibility:hidden; display:flex; gap:.25rem; }
+  .cue:hover .setbtns { visibility:visible; }
+  .cue .setbtns button { padding:.02rem .35rem; font-size:.62rem; }
 </style>
 </head>
 <body>
@@ -113,7 +125,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const BUILD = 'cutroom-11c';
+const BUILD = 'cutroom-11d';
 console.log('[cutroom] build', BUILD);
 
 // ---------- config / mode ----------
@@ -180,6 +192,15 @@ function mediaUrl(file) {
   return (plan.media_base || '').replace(/\/?$/, '/') + file;
 }
 function srcById(id) { return plan.sources.find(s => s.id === id); }
+const txCache = {};
+async function loadTranscript(srcId) {
+  if (txCache[srcId]) return txCache[srcId];
+  try {
+    const r = await fetch(`${COURSE}/transcript-${srcId}.json`, {cache:'no-cache'});
+    txCache[srcId] = (await r.json()).cues || [];
+  } catch { txCache[srcId] = []; }
+  return txCache[srcId];
+}
 function segDur(s) {
   if (s.type === 'slide') return s.duration || 0;
   if (s.type === 'explainer') return s.est_duration || 0;
@@ -308,6 +329,9 @@ function select(i) {
           <button class="small" data-t="out" data-d="2">+2s</button>
         </div>
         <div class="hint">Nudges save instantly. "Play segment" always uses the current trims.</div>
+      </div>
+      <div class="field"><label>Transcript (click line = seek · IN/OUT = set trim from line)</label>
+        <div class="tx" id="tx">loading transcript…</div>
       </div>` : ''}
     ${s.type==='explainer' ? `
       <div class="field"><label>Voice</label><div id="voices"></div></div>
@@ -339,7 +363,9 @@ function select(i) {
     videoEl = $('vid');
     videoEl.addEventListener('timeupdate', () => {
       if (stopAt !== null && videoEl.currentTime >= stopAt) { videoEl.pause(); stopAt = null; }
+      highlightNow();
     });
+    loadTranscript(s.source).then(cues => renderTx(cues, s));
     $('playSeg').onclick = () => { videoEl.currentTime = s.in; stopAt = s.out; videoEl.play(); };
     $('playCtx').onclick = () => { videoEl.currentTime = Math.max(0, s.in-5); stopAt = s.out+5; videoEl.play(); };
     box.querySelectorAll('button[data-t]').forEach(b => b.onclick = (e) => {
@@ -381,6 +407,53 @@ function select(i) {
   $('inclBtn').onclick = () => { snapshot(`${s.include?'exclude':'include'} ${s.label}`); s.include = !s.include; persist(); select(i); };
   $('upBtn').onclick = () => { if (i>0){ snapshot(`move up: ${s.label}`); [plan.segments[i-1],plan.segments[i]]=[plan.segments[i],plan.segments[i-1]]; selIdx=i-1; persist(); select(selIdx);} };
   $('dnBtn').onclick = () => { if (i<plan.segments.length-1){ snapshot(`move down: ${s.label}`); [plan.segments[i+1],plan.segments[i]]=[plan.segments[i],plan.segments[i+1]]; selIdx=i+1; persist(); select(selIdx);} };
+}
+
+// ---------- transcript panel ----------
+let txCues = [];
+function renderTx(cues, s) {
+  txCues = cues;
+  const box = $('tx'); if (!box) return;
+  if (!cues.length) { box.innerHTML = '<div class="cue"><span class="cx">No transcript available for this source.</span></div>'; return; }
+  box.innerHTML = cues.map((c, i) => `
+    <div class="cue${(c.t < s.out && c.e > s.in) ? ' inrange' : ''}" data-i="${i}" data-t="${c.t}">
+      <span class="ct">${fmt(c.t)}</span>
+      <span class="cx">${c.x}</span>
+      <span class="setbtns">
+        <button data-set="in" title="Set IN to ${fmt(c.t)}">IN</button>
+        <button data-set="out" title="Set OUT to ${fmt(c.e)}">OUT</button>
+      </span>
+    </div>`).join('');
+  // seek on click; set trims from line buttons
+  box.querySelectorAll('.cue').forEach(el => {
+    el.onclick = (e) => {
+      if (e.target.dataset.set) return; // handled below
+      if (videoEl) { videoEl.currentTime = parseFloat(el.dataset.t); stopAt = null; videoEl.play(); }
+    };
+  });
+  box.querySelectorAll('button[data-set]').forEach(b => {
+    b.onclick = (e) => {
+      e.stopPropagation();
+      const cue = txCues[parseInt(b.closest('.cue').dataset.i)];
+      const seg = plan.segments[selIdx];
+      if (b.dataset.set === 'in') { snapshot(`set IN from transcript (${fmt(cue.t)})`); seg.in = cue.t; if (seg.out <= seg.in) seg.out = seg.in + 0.5; }
+      else { snapshot(`set OUT from transcript (${fmt(cue.e)})`); seg.out = cue.e; if (seg.in >= seg.out) seg.in = Math.max(0, seg.out - 0.5); }
+      persist(); render(); select(selIdx);
+    };
+  });
+  // scroll to the first in-range cue
+  const first = box.querySelector('.cue.inrange');
+  if (first) first.scrollIntoView({block:'center'});
+}
+function highlightNow() {
+  const box = $('tx'); if (!box || !videoEl || !txCues.length) return;
+  const ct = videoEl.currentTime;
+  const idx = txCues.findIndex(c => c.t <= ct && ct < c.e);
+  box.querySelectorAll('.cue.now').forEach(el => el.classList.remove('now'));
+  if (idx >= 0) {
+    const el = box.querySelector(`.cue[data-i="${idx}"]`);
+    if (el) { el.classList.add('now'); if (!videoEl.paused) el.scrollIntoView({block:'nearest'}); }
+  }
 }
 
 // ---------- export ----------
