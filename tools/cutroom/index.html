@@ -87,6 +87,11 @@
   .cue .setbtns { visibility:hidden; display:flex; gap:.25rem; }
   .cue:hover .setbtns { visibility:visible; }
   .cue .setbtns button { padding:.02rem .35rem; font-size:.62rem; }
+  .txsearch { display:flex; gap:.5rem; align-items:center; margin:0 0 .4rem; }
+  .txsearch input { flex:1; background:var(--card); color:var(--fg); border:1px solid var(--border); border-radius:5px; padding:.35rem .6rem; font-size:.8rem; }
+  .txsearch input:focus { outline:none; border-color:var(--amber-dim); }
+  .txsearch .cnt { font-family:"SF Mono",Menlo,monospace; font-size:.7rem; color:var(--faint); white-space:nowrap; }
+  .cue mark { background:var(--amber-dim); color:#0e0e0c; border-radius:2px; padding:0 .1em; }
 </style>
 </head>
 <body>
@@ -125,7 +130,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const BUILD = 'cutroom-11d';
+const BUILD = 'cutroom-11e';
 console.log('[cutroom] build', BUILD);
 
 // ---------- config / mode ----------
@@ -331,6 +336,10 @@ function select(i) {
         <div class="hint">Nudges save instantly. "Play segment" always uses the current trims.</div>
       </div>
       <div class="field"><label>Transcript (click line = seek · IN/OUT = set trim from line)</label>
+        <div class="txsearch">
+          <input type="text" id="txq" placeholder="Search transcript… (Esc clears)" autocomplete="off">
+          <span class="cnt" id="txcnt"></span>
+        </div>
         <div class="tx" id="tx">loading transcript…</div>
       </div>` : ''}
     ${s.type==='explainer' ? `
@@ -411,24 +420,45 @@ function select(i) {
 
 // ---------- transcript panel ----------
 let txCues = [];
+let txSeg = null;
+function escRe(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
 function renderTx(cues, s) {
-  txCues = cues;
+  txCues = cues; txSeg = s;
+  const q = $('txq');
+  if (q) {
+    q.oninput = () => buildTxList(q.value);
+    q.onkeydown = (e) => { if (e.key === 'Escape') { q.value=''; buildTxList(''); q.blur(); } e.stopPropagation(); };
+  }
+  buildTxList(q ? q.value : '');
+}
+function buildTxList(query) {
   const box = $('tx'); if (!box) return;
-  if (!cues.length) { box.innerHTML = '<div class="cue"><span class="cx">No transcript available for this source.</span></div>'; return; }
-  box.innerHTML = cues.map((c, i) => `
+  const s = txSeg;
+  if (!txCues.length) { box.innerHTML = '<div class="cue"><span class="cx">No transcript available for this source.</span></div>'; $('txcnt').textContent=''; return; }
+  const ql = (query||'').trim().toLowerCase();
+  const rows = [];
+  let matches = 0;
+  txCues.forEach((c, i) => {
+    const hit = ql && c.x.toLowerCase().includes(ql);
+    if (ql && !hit) return;
+    if (hit) matches++;
+    const text = ql ? c.x.replace(new RegExp(escRe(query.trim()), 'gi'), m => `<mark>${m}</mark>`) : c.x;
+    rows.push(`
     <div class="cue${(c.t < s.out && c.e > s.in) ? ' inrange' : ''}" data-i="${i}" data-t="${c.t}">
       <span class="ct">${fmt(c.t)}</span>
-      <span class="cx">${c.x}</span>
+      <span class="cx">${text}</span>
       <span class="setbtns">
         <button data-set="in" title="Set IN to ${fmt(c.t)}">IN</button>
         <button data-set="out" title="Set OUT to ${fmt(c.e)}">OUT</button>
       </span>
-    </div>`).join('');
-  // seek on click; set trims from line buttons
+    </div>`);
+  });
+  $('txcnt').textContent = ql ? `${matches} line${matches===1?'':'s'}` : `${txCues.length} lines`;
+  box.innerHTML = rows.length ? rows.join('') : '<div class="cue"><span class="cx">No matches.</span></div>';
   box.querySelectorAll('.cue').forEach(el => {
     el.onclick = (e) => {
-      if (e.target.dataset.set) return; // handled below
-      if (videoEl) { videoEl.currentTime = parseFloat(el.dataset.t); stopAt = null; videoEl.play(); }
+      if (e.target.dataset.set) return;
+      if (videoEl && el.dataset.t !== undefined) { videoEl.currentTime = parseFloat(el.dataset.t); stopAt = null; videoEl.play(); }
     };
   });
   box.querySelectorAll('button[data-set]').forEach(b => {
@@ -441,9 +471,10 @@ function renderTx(cues, s) {
       persist(); render(); select(selIdx);
     };
   });
-  // scroll to the first in-range cue
-  const first = box.querySelector('.cue.inrange');
-  if (first) first.scrollIntoView({block:'center'});
+  if (!ql) {
+    const first = box.querySelector('.cue.inrange');
+    if (first) first.scrollIntoView({block:'center'});
+  }
 }
 function highlightNow() {
   const box = $('tx'); if (!box || !videoEl || !txCues.length) return;
