@@ -1,0 +1,165 @@
+{
+  "schema": "coursecraft-plan-v2",
+  "course": "topical-frog-box",
+  "revision": 1,
+  "revised": "2026-07-11",
+  "title": "The Frog Box",
+  "format": "A",
+  "essay_anchor": "/essays/frog-box",
+  "notes": "v2 restructure per owner direction 2026-07-11: (a) raw cuts where Ken is storytelling and the visual is fine, (b) explainer segments with a DISTINCT synth voice + animation so viewers always know what is Ken and what is explanation, (c) overdub segments that keep Ken's coaching audio and replace the cohort-only screen visuals with custom animation. Timestamps in seconds against the source files (same trims verified for v1).",
+  "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/frog-box-v2/",
+  "sources": [
+    {
+      "id": "vimeo",
+      "label": "STA interview (native 720p, talking head + slides)",
+      "file": "vimeo-796990395-ken-long-interview.mp4",
+      "proxy": "vimeo-796990395-ken-long-interview.proxy.mp4",
+      "url": "https://vimeo.com/796990395"
+    },
+    {
+      "id": "qa2",
+      "label": "Foundations Q&A 2 (360p native, live whiteboard)",
+      "file": "youtube-0qNqbKfc6Co-foundations-qa-2.mp4",
+      "proxy": "youtube-0qNqbKfc6Co-foundations-qa-2.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=0qNqbKfc6Co"
+    },
+    {
+      "id": "sniper",
+      "label": "2023-04-14 weekend reports (360p native, platform screen)",
+      "file": "youtube-0DJnzZx7Jmk-2023-04-14-weekend-reports-daily-swing-and-sniper.mp4",
+      "proxy": "youtube-0DJnzZx7Jmk-2023-04-14-weekend-reports-daily-swing-and-sniper.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=0DJnzZx7Jmk"
+    }
+  ],
+  "voices": [
+    { "id": "sonia",  "label": "Sonia (British, female)",     "sample": "vo-sonia.mp3" },
+    { "id": "aria",   "label": "Aria (US, female)",           "sample": "vo-aria.mp3" },
+    { "id": "william","label": "William (Australian, male)",  "sample": "vo-william.mp3" }
+  ],
+  "segments": [
+    {
+      "id": "s01",
+      "type": "cut",
+      "include": true,
+      "label": "Cold open: the frog at the pond",
+      "source": "vimeo",
+      "in": 2494.0,
+      "out": 2517.0,
+      "lower_third": null,
+      "why": "Pure storytelling, his face on camera. Works for everyone as-is.",
+      "note_to_coursecraft": ""
+    },
+    {
+      "id": "s02",
+      "type": "slide",
+      "include": true,
+      "label": "Title card",
+      "slide_id": "title",
+      "duration": 4,
+      "note_to_coursecraft": ""
+    },
+    {
+      "id": "s03",
+      "type": "cut",
+      "include": true,
+      "label": "What it is, in his words",
+      "source": "vimeo",
+      "in": 2517.0,
+      "out": 2583.0,
+      "lower_third": null,
+      "why": "Interview talking-head. Visually fine. Contiguous take with the cold open.",
+      "note_to_coursecraft": ""
+    },
+    {
+      "id": "s04",
+      "type": "explainer",
+      "include": true,
+      "label": "EXPLAINER: the definition + the band, animated",
+      "voice": "sonia",
+      "vo_script": "Here is the frog box in one picture. Take the last thirty days and measure each day's range, high to low. The standard deviation of those ranges is the frog box: one number for this stock's normal wiggle. Say the box is two dollars. A move of a dollar twenty stays inside the box. That is noise. Sit still. Now a gap of four dollars fifty: more than two boxes. That is not noise. The stock is in play.",
+      "est_duration": 32,
+      "animation_brief": "Band chart animates in sync with the VO: seven daily candles draw left to right on 'the last thirty days'; the $2.00 box fades in on 'one number for this stock's normal wiggle'; the $1.20 move pulses inside the box on 'that is noise, sit still'; the gap-day candle punches up past the band with the $4.50 arrow on 'the stock is in play'. Reuses the chart_band geometry from v1, animated. Replaces v1's static definition + chart_band slides.",
+      "note_to_coursecraft": ""
+    },
+    {
+      "id": "s05",
+      "type": "overdub",
+      "include": true,
+      "label": "OVERDUB: three boxes to a day (his audio, ladder animates)",
+      "source": "qa2",
+      "in": 580.0,
+      "out": 624.0,
+      "lower_third": "lt_cut3",
+      "animation_brief": "Keep Ken's audio. Replace the 360p whiteboard screen with the family-of-rulers ladder building live: frog box bracket appears as he says 'a frog box looks like this'; the x3 average-day bracket extends as he says 'three frog boxes is equal to about an average range'; Range Stat bracket at x4; the MMRB sliver drops in on 'divide that by 10'. Reuses chart_ladder geometry from v1, animated to his cadence.",
+      "why": "His whiteboard IS on screen in the source but at 360p it reads as scrawl to a newcomer. The audio is a perfect 44-second explanation.",
+      "note_to_coursecraft": ""
+    },
+    {
+      "id": "s06",
+      "type": "cut",
+      "include": true,
+      "label": "Why the MMRB exists (1R discipline)",
+      "source": "vimeo",
+      "in": 2601.0,
+      "out": 2685.5,
+      "lower_third": "lt_cut4",
+      "why": "Interview talking-head, visually fine. The 1R lower-third glosses 'wrist box' = 'risk box'.",
+      "note_to_coursecraft": ""
+    },
+    {
+      "id": "s07",
+      "type": "overdub",
+      "include": true,
+      "label": "OVERDUB: sizing Tesla in box units (his audio, risk box animates)",
+      "source": "sniper",
+      "in": 949.0,
+      "out": 1047.5,
+      "lower_third": "lt_cut5",
+      "animation_brief": "Keep Ken's audio. Replace the trading-platform screen (worst newbie visual in v1) with the TSLA schematic animating: candles settle into the April 2023 base; PSAR dots appear as he says 'the space between the PSAR dots'; the $185-to-$182 risk box draws with its bracket on 'that's a three dollar risk'; label 'R10 = about $1 = one frog box' lands on 'Tesla's R10 over here is a dollar'; 'risk = 3 x MMRB' lands on 'three times an MMRB'. Reuses chart_tesla geometry from v1, animated to his cadence.",
+      "why": "The platform grid + tiny candles are cohort-only visuals. His audio walks the sizing perfectly.",
+      "note_to_coursecraft": ""
+    },
+    {
+      "id": "s08",
+      "type": "cut",
+      "include": true,
+      "label": "Compression: the Z3 pinch (optional beat)",
+      "source": "qa2",
+      "in": 331.0,
+      "out": 353.5,
+      "lower_third": "lt_cut6",
+      "why": "OPTIONAL. Drop-first candidate if the video runs long or the mid-cut drawing silence drags. Could also become an overdub later (Z3 channel pinch animation).",
+      "note_to_coursecraft": ""
+    },
+    {
+      "id": "s09",
+      "type": "cut",
+      "include": true,
+      "label": "Nothing sacred about it (honesty caveat)",
+      "source": "vimeo",
+      "in": 2852.8,
+      "out": 2889.5,
+      "lower_third": null,
+      "why": "The trust segment. His face, his words, untouched. Never cut for length.",
+      "note_to_coursecraft": ""
+    },
+    {
+      "id": "s10",
+      "type": "slide",
+      "include": true,
+      "label": "Maxim card",
+      "slide_id": "maxim",
+      "duration": 6,
+      "note_to_coursecraft": ""
+    },
+    {
+      "id": "s11",
+      "type": "slide",
+      "include": true,
+      "label": "End card",
+      "slide_id": "end",
+      "duration": 10,
+      "note_to_coursecraft": ""
+    }
+  ]
+}

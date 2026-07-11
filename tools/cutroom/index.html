@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cutroom</title>
+<style>
+  :root {
+    --bg:#0e0e0c; --card:#181815; --card2:#1f1f1c; --fg:#e8e6df; --dim:#9c978a;
+    --faint:#5d594f; --amber:#d4a559; --amber-dim:#8a6a35; --border:#2a2925;
+    --cut:#d4a559; --explainer:#7baad4; --overdub:#6aa84f; --slide:#9c978a;
+    --excl:#c45656;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html,body { background:var(--bg); color:var(--fg); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
+  a { color:var(--amber); text-decoration:none; }
+  button { font-family:inherit; background:var(--card2); color:var(--fg); border:1px solid var(--border); border-radius:5px; padding:.35rem .7rem; cursor:pointer; font-size:.82rem; }
+  button:hover { border-color:var(--amber-dim); }
+  button.primary { background:var(--amber-dim); border-color:var(--amber-dim); color:#0e0e0c; font-weight:600; }
+  button.small { padding:.15rem .45rem; font-size:.72rem; }
+  header { display:flex; align-items:center; gap:1rem; padding:.8rem 1.4rem; border-bottom:1px solid var(--border); position:sticky; top:0; background:var(--bg); z-index:20; flex-wrap:wrap; }
+  header h1 { font-family:Georgia,serif; font-size:1.15rem; font-weight:400; }
+  header .meta { color:var(--faint); font-size:.78rem; font-family:"SF Mono",Menlo,monospace; }
+  header .spacer { flex:1; }
+  .toast { position:fixed; bottom:1.2rem; left:50%; transform:translateX(-50%); background:var(--amber-dim); color:#0e0e0c; padding:.5rem 1.1rem; border-radius:6px; font-size:.85rem; font-weight:600; opacity:0; transition:opacity .25s; z-index:99; pointer-events:none; }
+  .toast.show { opacity:1; }
+
+  main { display:grid; grid-template-columns: 1fr 420px; gap:0; min-height:calc(100vh - 56px); }
+  @media (max-width:1100px){ main { grid-template-columns:1fr; } }
+
+  /* ---- timeline ---- */
+  #timeline { padding:1.2rem 1.4rem 3rem; overflow-x:auto; }
+  .lane-legend { display:flex; gap:1.4rem; margin:0 0 .9rem; font-size:.72rem; color:var(--faint); font-family:"SF Mono",Menlo,monospace; }
+  .lane-legend b { font-weight:600; }
+  .lane-legend .k { display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:.35rem; vertical-align:-1px; }
+  .seg { display:grid; grid-template-columns: 54px 1fr; gap:.7rem; margin:0 0 .55rem; cursor:pointer; }
+  .seg .tc { font-family:"SF Mono",Menlo,monospace; font-size:.72rem; color:var(--faint); padding-top:.55rem; text-align:right; }
+  .segcard { border:1px solid var(--border); border-radius:8px; background:var(--card); padding:.55rem .8rem .6rem; transition:border-color .15s, opacity .15s; position:relative; }
+  .seg.sel .segcard { border-color:var(--amber); box-shadow:0 0 0 1px var(--amber); }
+  .seg.excluded .segcard { opacity:.38; }
+  .seg.excluded .segcard::after { content:"EXCLUDED"; position:absolute; top:.5rem; right:.7rem; color:var(--excl); font-size:.66rem; font-family:"SF Mono",Menlo,monospace; font-weight:700; }
+  .seghead { display:flex; align-items:baseline; gap:.6rem; flex-wrap:wrap; }
+  .type-pill { font-size:.62rem; font-family:"SF Mono",Menlo,monospace; font-weight:700; letter-spacing:.06em; padding:.08rem .45rem; border-radius:3px; color:#0e0e0c; }
+  .type-cut .type-pill { background:var(--cut); } .type-explainer .type-pill { background:var(--explainer); }
+  .type-overdub .type-pill { background:var(--overdub); } .type-slide .type-pill { background:var(--slide); }
+  .seglabel { font-size:.9rem; }
+  .segdur { margin-left:auto; font-family:"SF Mono",Menlo,monospace; font-size:.72rem; color:var(--faint); }
+  .lanes { display:grid; grid-template-columns: 64px 1fr; gap:.15rem .5rem; margin-top:.45rem; font-size:.7rem; }
+  .lanes .ln { color:var(--faint); font-family:"SF Mono",Menlo,monospace; text-align:right; }
+  .lanes .lv { border-radius:3px; padding:.12rem .5rem; background:var(--card2); color:var(--dim); overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+  .lanes .lv.v-src { border-left:3px solid var(--cut); } .lanes .lv.v-anim { border-left:3px solid var(--explainer); }
+  .lanes .lv.v-slide { border-left:3px solid var(--slide); }
+  .lanes .lv.a-ken { border-left:3px solid var(--cut); } .lanes .lv.a-vo { border-left:3px solid var(--explainer); }
+  .lanes .lv.a-sil { border-left:3px solid var(--faint); }
+  .lanes .lv.o-lt { border-left:3px solid var(--overdub); } .lanes .lv.o-none { border-left:3px solid transparent; color:var(--faint); }
+  .notebadge { margin-top:.4rem; font-size:.72rem; color:var(--amber); }
+
+  /* ---- inspector ---- */
+  #inspector { border-left:1px solid var(--border); padding:1.1rem 1.2rem 3rem; position:sticky; top:56px; height:calc(100vh - 56px); overflow-y:auto; }
+  @media (max-width:1100px){ #inspector { position:static; height:auto; border-left:none; border-top:1px solid var(--border);} }
+  #inspector h2 { font-family:Georgia,serif; font-size:1rem; font-weight:500; margin-bottom:.7rem; }
+  .field { margin:0 0 .85rem; }
+  .field label { display:block; font-size:.68rem; text-transform:uppercase; letter-spacing:.07em; color:var(--faint); font-family:"SF Mono",Menlo,monospace; margin-bottom:.3rem; }
+  .field textarea, .field input[type=text], .field select {
+    width:100%; background:var(--card); color:var(--fg); border:1px solid var(--border); border-radius:5px; padding:.45rem .6rem; font-size:.83rem; font-family:inherit;
+  }
+  .field textarea { min-height:70px; resize:vertical; line-height:1.45; }
+  video { width:100%; background:#000; border-radius:6px; aspect-ratio:16/9; }
+  .trimrow { display:flex; align-items:center; gap:.4rem; flex-wrap:wrap; margin:.3rem 0; }
+  .trimrow .tv { font-family:"SF Mono",Menlo,monospace; font-size:.85rem; color:var(--amber); min-width:84px; }
+  .rowbtns { display:flex; gap:.5rem; flex-wrap:wrap; margin:.9rem 0; }
+  .hint { font-size:.72rem; color:var(--faint); line-height:1.5; margin-top:.4rem; }
+  .empty { color:var(--faint); font-size:.85rem; padding:2rem 0; text-align:center; }
+  .voicebox { border:1px solid var(--border); border-radius:6px; padding:.6rem .7rem; margin:.4rem 0; display:flex; align-items:center; gap:.6rem; }
+  .voicebox input { accent-color:var(--amber); }
+  .voicebox audio { height:28px; flex:1; }
+  .why { font-size:.75rem; color:var(--dim); font-style:italic; line-height:1.45; margin:.4rem 0 .8rem; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Cutroom <span style="color:var(--faint)">·</span> <span id="ctitle" style="color:var(--amber)"></span></h1>
+  <span class="meta" id="cmeta"></span>
+  <span class="spacer"></span>
+  <button id="resetBtn" title="Discard local edits, reload the published plan">Reset to published</button>
+  <button id="copyBtn">Copy plan JSON</button>
+  <button class="primary" id="exportBtn">Export plan JSON</button>
+</header>
+
+<main>
+  <div id="timeline">
+    <div class="lane-legend">
+      <span><b>LANES per segment:</b></span>
+      <span><span class="k" style="background:var(--cut)"></span>Ken (source)</span>
+      <span><span class="k" style="background:var(--explainer)"></span>explainer / animation</span>
+      <span><span class="k" style="background:var(--overdub)"></span>overdub / overlay</span>
+      <span><span class="k" style="background:var(--slide)"></span>slide</span>
+    </div>
+    <div id="segs"></div>
+  </div>
+
+  <aside id="inspector">
+    <div class="empty" id="noSel">Select a segment to inspect and edit.<br><br>
+      <span style="font-size:.75rem">Keys: ↑/↓ select · space play/pause · x include/exclude</span>
+    </div>
+    <div id="insp" style="display:none"></div>
+  </aside>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const BUILD = 'cutroom-11a';
+console.log('[cutroom] build', BUILD);
+
+// ---------- config / mode ----------
+const qs = new URLSearchParams(location.search);
+const COURSE = qs.get('course') || 'frog-box-v2';
+// media override: ?media=<base-url-or-relative-path>  (Mac local mode uses e.g. ?media=../../courses/topical-frog-box/proxies/)
+const MEDIA_OVERRIDE = qs.get('media');
+const LS_KEY = `cutroom:${COURSE}`;
+
+let plan = null;        // working copy
+let published = null;   // pristine copy
+let selIdx = -1;
+let videoEl = null;
+let stopAt = null;
+
+const $ = id => document.getElementById(id);
+const toast = msg => { const t=$('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'), 1800); };
+const fmt = s => { s=Math.max(0,s); const m=Math.floor(s/60), ss=(s%60); return `${m}:${ss.toFixed(1).padStart(4,'0')}`; };
+
+function mediaUrl(file) {
+  if (MEDIA_OVERRIDE) return MEDIA_OVERRIDE.replace(/\/?$/, '/') + file;
+  return (plan.media_base || '').replace(/\/?$/, '/') + file;
+}
+function srcById(id) { return plan.sources.find(s => s.id === id); }
+function segDur(s) {
+  if (s.type === 'slide') return s.duration || 0;
+  if (s.type === 'explainer') return s.est_duration || 0;
+  return Math.max(0, (s.out || 0) - (s.in || 0));
+}
+
+// ---------- load ----------
+async function load() {
+  const res = await fetch(`${COURSE}/plan.v2.json`, {cache:'no-cache'});
+  published = await res.json();
+  const saved = localStorage.getItem(LS_KEY);
+  if (saved) {
+    try { plan = JSON.parse(saved); toast('Loaded local edits (localStorage)'); }
+    catch { plan = structuredClone(published); }
+  } else {
+    plan = structuredClone(published);
+  }
+  $('ctitle').textContent = plan.title;
+  render();
+}
+function persist() { localStorage.setItem(LS_KEY, JSON.stringify(plan)); renderMeta(); }
+function renderMeta() {
+  const total = plan.segments.filter(s=>s.include).reduce((a,s)=>a+segDur(s),0);
+  const inc = plan.segments.filter(s=>s.include).length;
+  $('cmeta').textContent = `rev ${plan.revision} · ${inc}/${plan.segments.length} segments · est ${fmt(total)} · ${MEDIA_OVERRIDE?'LOCAL media':'GCS media'}`;
+}
+
+// ---------- timeline render ----------
+function laneModel(s) {
+  // returns {video:[cls,label], audio:[cls,label], overlay:[cls,label]}
+  if (s.type === 'cut') return {
+    video: ['v-src', `Ken on screen · ${s.source} ${fmt(s.in)}→${fmt(s.out)}`],
+    audio: ['a-ken', 'Ken (source audio)'],
+    overlay: s.lower_third ? ['o-lt', `lower-third: ${s.lower_third}`] : ['o-none','(none)'],
+  };
+  if (s.type === 'overdub') return {
+    video: ['v-anim', 'CUSTOM ANIMATION (replaces his screen)'],
+    audio: ['a-ken', `Ken (source audio) · ${s.source} ${fmt(s.in)}→${fmt(s.out)}`],
+    overlay: s.lower_third ? ['o-lt', `lower-third: ${s.lower_third}`] : ['o-none','(none)'],
+  };
+  if (s.type === 'explainer') return {
+    video: ['v-anim', 'CUSTOM ANIMATION'],
+    audio: ['a-vo', `synth VO (${s.voice||'?'}) · ~${s.est_duration||'?'}s`],
+    overlay: ['o-none','(none)'],
+  };
+  return { // slide
+    video: ['v-slide', `slide: ${s.slide_id} · ${s.duration}s`],
+    audio: ['a-sil', 'silence'],
+    overlay: ['o-none','(none)'],
+  };
+}
+
+function render() {
+  renderMeta();
+  const wrap = $('segs'); wrap.innerHTML = '';
+  let t = 0;
+  plan.segments.forEach((s, i) => {
+    const el = document.createElement('div');
+    el.className = `seg type-${s.type}` + (i===selIdx?' sel':'') + (s.include?'':' excluded');
+    const lanes = laneModel(s);
+    el.innerHTML = `
+      <div class="tc">${s.include ? fmt(t) : '—'}</div>
+      <div class="segcard">
+        <div class="seghead">
+          <span class="type-pill">${s.type.toUpperCase()}</span>
+          <span class="seglabel">${s.label}</span>
+          <span class="segdur">${segDur(s).toFixed(1)}s</span>
+        </div>
+        <div class="lanes">
+          <span class="ln">VIDEO</span><span class="lv ${lanes.video[0]}">${lanes.video[1]}</span>
+          <span class="ln">AUDIO</span><span class="lv ${lanes.audio[0]}">${lanes.audio[1]}</span>
+          <span class="ln">OVERLAY</span><span class="lv ${lanes.overlay[0]}">${lanes.overlay[1]}</span>
+        </div>
+        ${s.note_to_coursecraft ? `<div class="notebadge">✎ note: ${s.note_to_coursecraft.slice(0,90)}</div>` : ''}
+      </div>`;
+    el.onclick = () => select(i);
+    wrap.appendChild(el);
+    if (s.include) t += segDur(s);
+  });
+}
+
+// ---------- inspector ----------
+function select(i) {
+  selIdx = i;
+  render();
+  const s = plan.segments[i];
+  $('noSel').style.display = 'none';
+  const box = $('insp'); box.style.display = 'block';
+  const hasMedia = (s.type==='cut'||s.type==='overdub');
+  const src = hasMedia ? srcById(s.source) : null;
+
+  box.innerHTML = `
+    <h2><span class="type-pill" style="background:var(--${s.type})">${s.type.toUpperCase()}</span> &nbsp;${s.label}</h2>
+    ${s.why ? `<div class="why">${s.why}</div>` : ''}
+    ${hasMedia ? `
+      <video id="vid" src="${mediaUrl(src.proxy)}" preload="metadata" controls></video>
+      <div class="rowbtns">
+        <button id="playSeg" class="primary">▶ Play segment</button>
+        <button id="playCtx">▶ ±5s context</button>
+      </div>
+      <div class="field"><label>IN point</label>
+        <div class="trimrow">
+          <span class="tv" id="inV">${fmt(s.in)}</span>
+          <button class="small" data-t="in" data-d="-2">−2s</button>
+          <button class="small" data-t="in" data-d="-0.5">−.5</button>
+          <button class="small" data-t="in" data-d="-0.1">−.1</button>
+          <button class="small" data-t="in" data-d="0.1">+.1</button>
+          <button class="small" data-t="in" data-d="0.5">+.5</button>
+          <button class="small" data-t="in" data-d="2">+2s</button>
+        </div>
+      </div>
+      <div class="field"><label>OUT point</label>
+        <div class="trimrow">
+          <span class="tv" id="outV">${fmt(s.out)}</span>
+          <button class="small" data-t="out" data-d="-2">−2s</button>
+          <button class="small" data-t="out" data-d="-0.5">−.5</button>
+          <button class="small" data-t="out" data-d="-0.1">−.1</button>
+          <button class="small" data-t="out" data-d="0.1">+.1</button>
+          <button class="small" data-t="out" data-d="0.5">+.5</button>
+          <button class="small" data-t="out" data-d="2">+2s</button>
+        </div>
+        <div class="hint">Nudges save instantly. "Play segment" always uses the current trims.</div>
+      </div>` : ''}
+    ${s.type==='explainer' ? `
+      <div class="field"><label>Voice</label><div id="voices"></div></div>
+      <div class="field"><label>VO script (the synth voice reads exactly this)</label>
+        <textarea id="voScript">${s.vo_script||''}</textarea></div>
+      <div class="field"><label>Est. duration (s)</label>
+        <input type="text" id="estDur" value="${s.est_duration||''}"></div>` : ''}
+    ${(s.type==='explainer'||s.type==='overdub') ? `
+      <div class="field"><label>Animation brief (what I build)</label>
+        <textarea id="animBrief" style="min-height:110px">${s.animation_brief||''}</textarea></div>` : ''}
+    ${s.type==='slide' ? `<div class="field"><label>Slide</label>
+        <input type="text" value="${s.slide_id} · ${s.duration}s" disabled></div>` : ''}
+    <div class="field"><label>Segment type</label>
+      <select id="typeSel">
+        ${['cut','overdub','explainer','slide'].map(t=>`<option ${t===s.type?'selected':''}>${t}</option>`).join('')}
+      </select>
+      <div class="hint">cut ⇄ overdub is the common flip: same audio, keep or replace his screen.</div>
+    </div>
+    <div class="field"><label>Note to coursecraft (free text, travels with export)</label>
+      <textarea id="segNote">${s.note_to_coursecraft||''}</textarea></div>
+    <div class="rowbtns">
+      <button id="inclBtn">${s.include?'Exclude ✗':'Include ✓'}</button>
+      <button id="upBtn">↑ Move up</button>
+      <button id="dnBtn">↓ Move down</button>
+    </div>`;
+
+  // wire
+  if (hasMedia) {
+    videoEl = $('vid');
+    videoEl.addEventListener('timeupdate', () => {
+      if (stopAt !== null && videoEl.currentTime >= stopAt) { videoEl.pause(); stopAt = null; }
+    });
+    $('playSeg').onclick = () => { videoEl.currentTime = s.in; stopAt = s.out; videoEl.play(); };
+    $('playCtx').onclick = () => { videoEl.currentTime = Math.max(0, s.in-5); stopAt = s.out+5; videoEl.play(); };
+    box.querySelectorAll('button[data-t]').forEach(b => b.onclick = (e) => {
+      e.stopPropagation();
+      const k = b.dataset.t, d = parseFloat(b.dataset.d);
+      s[k] = Math.max(0, +(s[k]+d).toFixed(1));
+      if (s.out <= s.in) s.out = s.in + 0.5;
+      $('inV').textContent = fmt(s.in); $('outV').textContent = fmt(s.out);
+      persist(); render();
+      // preview the nudged boundary immediately
+      videoEl.currentTime = (k==='in') ? s.in : Math.max(s.in, s.out-2);
+      stopAt = (k==='in') ? Math.min(s.out, s.in+3) : s.out;
+      videoEl.play();
+    });
+  } else { videoEl = null; }
+
+  if (s.type==='explainer') {
+    const vbox = $('voices');
+    (plan.voices||[]).forEach(v => {
+      const d = document.createElement('div'); d.className='voicebox';
+      d.innerHTML = `<input type="radio" name="voice" ${s.voice===v.id?'checked':''} value="${v.id}">
+        <span style="font-size:.8rem; min-width:150px">${v.label}</span>
+        <audio controls preload="none" src="${mediaUrl(v.sample)}"></audio>`;
+      d.querySelector('input').onchange = () => { s.voice = v.id; persist(); render(); };
+      vbox.appendChild(d);
+    });
+    $('voScript').onchange = e => { s.vo_script = e.target.value; persist(); };
+    $('estDur').onchange = e => { s.est_duration = parseFloat(e.target.value)||s.est_duration; persist(); render(); };
+  }
+  const ab = $('animBrief'); if (ab) ab.onchange = e => { s.animation_brief = e.target.value; persist(); };
+  $('segNote').onchange = e => { s.note_to_coursecraft = e.target.value; persist(); render(); };
+  $('typeSel').onchange = e => {
+    s.type = e.target.value;
+    if (s.type==='overdub' && !s.animation_brief) s.animation_brief = 'TODO: describe the animation that replaces his screen while his audio plays.';
+    persist(); select(i);
+  };
+  $('inclBtn').onclick = () => { s.include = !s.include; persist(); select(i); };
+  $('upBtn').onclick = () => { if (i>0){ [plan.segments[i-1],plan.segments[i]]=[plan.segments[i],plan.segments[i-1]]; selIdx=i-1; persist(); select(selIdx);} };
+  $('dnBtn').onclick = () => { if (i<plan.segments.length-1){ [plan.segments[i+1],plan.segments[i]]=[plan.segments[i],plan.segments[i+1]]; selIdx=i+1; persist(); select(selIdx);} };
+}
+
+// ---------- export ----------
+function exportJson(download) {
+  plan.edited = new Date().toISOString();
+  plan.edited_with = BUILD;
+  const txt = JSON.stringify(plan, null, 2);
+  if (download) {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([txt], {type:'application/json'}));
+    a.download = `${COURSE}.plan.v2.edited.json`;
+    a.click();
+    toast('Exported. Send the file (or paste the copy) to coursecraft.');
+  } else {
+    navigator.clipboard.writeText(txt).then(()=>toast('Plan JSON copied to clipboard'));
+  }
+}
+$('exportBtn').onclick = () => exportJson(true);
+$('copyBtn').onclick = () => exportJson(false);
+$('resetBtn').onclick = () => {
+  if (confirm('Discard ALL local edits and reload the published plan?')) {
+    localStorage.removeItem(LS_KEY); plan = structuredClone(published); selIdx=-1;
+    $('insp').style.display='none'; $('noSel').style.display='block';
+    render(); toast('Reset to published');
+  }
+};
+
+// ---------- keys ----------
+document.addEventListener('keydown', e => {
+  if (['TEXTAREA','INPUT','SELECT'].includes(document.activeElement.tagName)) return;
+  if (e.key==='ArrowDown'){ e.preventDefault(); select(Math.min(plan.segments.length-1, selIdx+1)); }
+  if (e.key==='ArrowUp'){ e.preventDefault(); select(Math.max(0, selIdx-1)); }
+  if (e.key===' ' && videoEl){ e.preventDefault(); videoEl.paused ? videoEl.play() : videoEl.pause(); }
+  if (e.key==='x' && selIdx>=0){ const s=plan.segments[selIdx]; s.include=!s.include; persist(); select(selIdx); }
+});
+
+load();
+</script>
+</body>
+</html>

@@ -19,6 +19,12 @@ Internal review pages where the user (Sundeep) approves video clips proposed for
 | [Intraday Decision Tree — Chapter 5 candidates](https://lifelongedge.github.io/ogt-mockups/courses/idt-ch5-candidates/) | 4 candidate scenes for a new Chapter 5 (The Closing Read) after the previous chapter's topic mismatch was removed. Source: kenlong-transcripts corpus, 4 different 2023 coaching sessions. Review pass v1 |
 | [The Frog Box — v1 cut](https://lifelongedge.github.io/ogt-mockups/courses/frog-box-v1/) | Finished 7:09 topical-video pilot (Format A Concept Card) for owner review. Video streams from GCS _preview. Source: courses/topical-frog-box/plan.md in ogt-coursecraft |
 
+## Tools
+
+| Tool | Description |
+|------|-------------|
+| [Cutroom](https://lifelongedge.github.io/ogt-mockups/tools/cutroom/?course=frog-box-v2) | Three-lane timeline editor for the topical-video pipeline. Owner trims/reorders/annotates segments (cut / explainer / overdub), picks the synth voice, exports plan JSON back to coursecraft. Media streams from GCS; works from any browser |
+
 ## Real-Data Weekly Briefings
 
 Generated from actual Tortoise reports by the `edge-ogt-engine` pipeline — real portfolio rankings, MACD seasons, risk data, and week-over-week change detection:
