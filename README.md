@@ -18,7 +18,7 @@ Internal review pages where the user (Sundeep) approves video clips proposed for
 | [Bar-by-Bar Drill Pack](https://lifelongedge.github.io/ogt-mockups/courses/bbb-clips/) | 60 candidate clips across 3 SKUs (Vocabulary / Drill Mechanic / IWM Case Study) + cold opens. Source: Dr. Ken Long Tortoise strategy podcast Sessions 1-10 (2020-10-20 → 2021-01-04). Review pass v1 |
 | [Intraday Decision Tree — Chapter 5 candidates](https://lifelongedge.github.io/ogt-mockups/courses/idt-ch5-candidates/) | 4 candidate scenes for a new Chapter 5 (The Closing Read) after the previous chapter's topic mismatch was removed. Source: kenlong-transcripts corpus, 4 different 2023 coaching sessions. Review pass v1 |
 | [The Frog Box — v1 cut](https://lifelongedge.github.io/ogt-mockups/courses/frog-box-v1/) | Finished 7:09 topical-video pilot (Format A Concept Card) for owner review. Video streams from GCS _preview. Source: courses/topical-frog-box/plan.md in ogt-coursecraft |
-| [Tesla overdub: original vs output](https://lifelongedge.github.io/ogt-mockups/courses/frog-box-v2-tesla-compare/) | Side-by-side evaluation of the v2 overdub concept: Ken's audio over his platform screen (v1) vs the same audio over a cadence-synced animated reconstruction. First output of the animation renderer |
+| [Tesla overdub: original vs output](https://lifelongedge.github.io/ogt-mockups/courses/frog-box-v2-tesla-compare/) | The Tesla trilogy: original platform-screen cut vs cadence-synced overdub vs the new "What happened" outcome segment (real bars, contrast-voice narration, R-arithmetic verdict) |
 
 ## Tools
 

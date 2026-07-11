@@ -1,7 +1,7 @@
 {
   "schema": "coursecraft-plan-v2",
   "course": "topical-frog-box",
-  "revision": 3,
+  "revision": 4,
   "revised": "2026-07-11",
   "title": "The Frog Box",
   "format": "A",
@@ -124,6 +124,35 @@
       "lower_third": "lt_cut5",
       "animation_brief": "Keep Ken's audio. Replace the trading-platform screen (worst newbie visual in v1) with the TSLA schematic animating: candles settle into the April 2023 base; PSAR dots appear as he says 'the space between the PSAR dots'; the $185-to-$182 risk box draws with its bracket on 'that's a three dollar risk'; label 'R10 = about $1 = one frog box' lands on 'Tesla's R10 over here is a dollar'; 'risk = 3 x MMRB' lands on 'three times an MMRB'. Reuses chart_tesla geometry from v1, animated to his cadence.",
       "why": "The platform grid + tiny candles are cohort-only visuals. His audio walks the sizing perfectly.",
+      "note_to_coursecraft": ""
+    },
+    {
+      "id": "s07b",
+      "type": "outcome",
+      "include": true,
+      "label": "WHAT HAPPENED: the week after the frame (real bars)",
+      "voice": "ava",
+      "vo_script": "So what happened? The frame was set on Friday, April fourteenth, with Tesla at one eighty five. Long above one eighty five. Short below one eighty two. Three dollars of risk. One thing to know going in: Tesla was scheduled to report earnings the following Wednesday.\nMonday gapped open at one eighty six thirty two, above the trigger. The long was on. It ran to almost one ninety, then faded.\nTuesday closed back inside the box.\nWednesday, price gapped below the entire box and opened at one seventy nine ten. The long's stop was one eighty two, but a gap does not honor your stop. The fill was the open: a loss of seven dollars and twenty two cents. Minus two point four R, not minus one. That is gap risk.\nThe same open filled the short side. Then earnings hit, and Thursday opened at one sixty six, fourteen dollars lower. By Friday's close the short showed plus four point seven R, even after its own bad fill.\nOne frame. Both directions. The tape decided.",
+      "est_duration": 68,
+      "animation": "anim-tesla-outcome.html",
+      "data": {
+        "symbol": "TSLA",
+        "frame_date": "2023-04-14",
+        "levels": {
+          "long_above": 185.0,
+          "short_below": 182.0,
+          "risk": 3.0
+        },
+        "window": "2023-04-17..2023-04-21",
+        "source": "quotes_eod/parquet_data/symbol=TSLA.parquet",
+        "verdict": {
+          "long_r": -2.4,
+          "short_r": 4.7,
+          "note": "long stopped via gap-through (fill 179.10 vs stop 182); short filled same open, earnings crash followed"
+        }
+      },
+      "editorial_rules": "frame-vs-price only (never Ken's personal P&L); synth voice only; publish outcome for every featured frame; scheduled catalysts disclosed on screen",
+      "why": "The honesty segment: timestamped video + our own quote store = verifiable outcomes, including losses beyond -1R.",
       "note_to_coursecraft": ""
     },
     {

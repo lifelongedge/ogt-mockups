@@ -130,7 +130,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const BUILD = 'cutroom-11e';
+const BUILD = 'cutroom-11f';
 console.log('[cutroom] build', BUILD);
 
 // ---------- config / mode ----------
@@ -208,7 +208,7 @@ async function loadTranscript(srcId) {
 }
 function segDur(s) {
   if (s.type === 'slide') return s.duration || 0;
-  if (s.type === 'explainer') return s.est_duration || 0;
+  if (s.type === 'explainer' || s.type === 'outcome') return s.est_duration || 0;
   return Math.max(0, (s.out || 0) - (s.in || 0));
 }
 
@@ -251,6 +251,11 @@ function laneModel(s) {
     video: ['v-anim', 'CUSTOM ANIMATION (replaces his screen)'],
     audio: ['a-ken', `Ken (source audio) · ${s.source} ${fmt(s.in)}→${fmt(s.out)}`],
     overlay: s.lower_third ? ['o-lt', `lower-third: ${s.lower_third}`] : ['o-none','(none)'],
+  };
+  if (s.type === 'outcome') return {
+    video: ['v-anim', `REAL-BARS ANIMATION (${(s.data||{}).symbol||'?'} · ${(s.data||{}).window||''})`],
+    audio: ['a-vo', `synth VO (${s.voice||'?'}) · ~${s.est_duration||'?'}s`],
+    overlay: ['o-none','(none)'],
   };
   if (s.type === 'explainer') return {
     video: ['v-anim', 'CUSTOM ANIMATION'],
@@ -342,20 +347,20 @@ function select(i) {
         </div>
         <div class="tx" id="tx">loading transcript…</div>
       </div>` : ''}
-    ${s.type==='explainer' ? `
+    ${(s.type==='explainer'||s.type==='outcome') ? `
       <div class="field"><label>Voice</label><div id="voices"></div></div>
       <div class="field"><label>VO script (the synth voice reads exactly this)</label>
         <textarea id="voScript">${s.vo_script||''}</textarea></div>
       <div class="field"><label>Est. duration (s)</label>
         <input type="text" id="estDur" value="${s.est_duration||''}"></div>` : ''}
-    ${(s.type==='explainer'||s.type==='overdub') ? `
+    ${(s.type==='explainer'||s.type==='overdub'||s.type==='outcome') ? `
       <div class="field"><label>Animation brief (what I build)</label>
         <textarea id="animBrief" style="min-height:110px">${s.animation_brief||''}</textarea></div>` : ''}
     ${s.type==='slide' ? `<div class="field"><label>Slide</label>
         <input type="text" value="${s.slide_id} · ${s.duration}s" disabled></div>` : ''}
     <div class="field"><label>Segment type</label>
       <select id="typeSel">
-        ${['cut','overdub','explainer','slide'].map(t=>`<option ${t===s.type?'selected':''}>${t}</option>`).join('')}
+        ${['cut','overdub','explainer','outcome','slide'].map(t=>`<option ${t===s.type?'selected':''}>${t}</option>`).join('')}
       </select>
       <div class="hint">cut ⇄ overdub is the common flip: same audio, keep or replace his screen.</div>
     </div>
