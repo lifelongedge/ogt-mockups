@@ -1,7 +1,7 @@
 {
   "schema": "coursecraft-plan-v2",
   "course": "topical-frog-box",
-  "revision": 2,
+  "revision": 3,
   "revised": "2026-07-11",
   "title": "The Frog Box",
   "format": "A",
@@ -33,49 +33,14 @@
   ],
   "voices": [
     {
-      "id": "aria",
-      "label": "Aria (US, female, news-read)",
-      "sample": "vo-aria.mp3"
-    },
-    {
-      "id": "jenny",
-      "label": "Jenny (US, female, warm)",
-      "sample": "vo-jenny.mp3"
-    },
-    {
-      "id": "michelle",
-      "label": "Michelle (US, female, clear)",
-      "sample": "vo-michelle.mp3"
-    },
-    {
-      "id": "emma",
-      "label": "Emma (US, female, crisp)",
-      "sample": "vo-emma.mp3"
-    },
-    {
       "id": "ava",
       "label": "Ava (US, female, polished)",
       "sample": "vo-ava.mp3"
     },
     {
       "id": "andrew",
-      "label": "Andrew (US, male, younger: flag: male may read as 'another coach')",
+      "label": "Andrew (US, male, conversational)",
       "sample": "vo-andrew.mp3"
-    },
-    {
-      "id": "neerja",
-      "label": "Neerja (Indian English, female)",
-      "sample": "vo-neerja.mp3"
-    },
-    {
-      "id": "neerja-exp",
-      "label": "Neerja Expressive (Indian English, female)",
-      "sample": "vo-neerja-exp.mp3"
-    },
-    {
-      "id": "prabhat",
-      "label": "Prabhat (Indian English, male)",
-      "sample": "vo-prabhat.mp3"
     }
   ],
   "segments": [
@@ -117,7 +82,7 @@
       "type": "explainer",
       "include": true,
       "label": "EXPLAINER: the definition + the band, animated",
-      "voice": "jenny",
+      "voice": "ava",
       "vo_script": "Here is the frog box in one picture. Take the last thirty days and measure each day's range, high to low. The standard deviation of those ranges is the frog box: one number for this stock's normal wiggle. Say the box is two dollars. A move of a dollar twenty stays inside the box. That is noise. Sit still. Now a gap of four dollars fifty: more than two boxes. That is not noise. The stock is in play.",
       "est_duration": 32,
       "animation_brief": "Band chart animates in sync with the VO: seven daily candles draw left to right on 'the last thirty days'; the $2.00 box fades in on 'one number for this stock's normal wiggle'; the $1.20 move pulses inside the box on 'that is noise, sit still'; the gap-day candle punches up past the band with the $4.50 arrow on 'the stock is in play'. Reuses the chart_band geometry from v1, animated. Replaces v1's static definition + chart_band slides.",
