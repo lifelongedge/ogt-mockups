@@ -1,7 +1,7 @@
 {
   "schema": "coursecraft-plan-v2",
   "course": "topical-frog-box",
-  "revision": 4,
+  "revision": 5,
   "revised": "2026-07-11",
   "title": "The Frog Box",
   "format": "A",
@@ -122,7 +122,7 @@
       "in": 949.0,
       "out": 1047.5,
       "lower_third": "lt_cut5",
-      "animation_brief": "Keep Ken's audio. Replace the trading-platform screen (worst newbie visual in v1) with the TSLA schematic animating: candles settle into the April 2023 base; PSAR dots appear as he says 'the space between the PSAR dots'; the $185-to-$182 risk box draws with its bracket on 'that's a three dollar risk'; label 'R10 = about $1 = one frog box' lands on 'Tesla's R10 over here is a dollar'; 'risk = 3 x MMRB' lands on 'three times an MMRB'. Reuses chart_tesla geometry from v1, animated to his cadence.",
+      "animation_brief": "Keep Ken's audio. Replace the trading-platform screen (worst newbie visual in v1) with the TSLA schematic animating: candles settle into the April 2023 base; PSAR dots appear as he says 'the space between the PSAR dots'; the $185-to-$182 risk box draws with its bracket on 'that's a three dollar risk'; label 'R10 = about $1' lands on 'Tesla's R10 over here is a dollar'; the risk-box label carries '= one frog box' (the $3 box 182-185 is the frog box, NOT R10 \u2014 owner correction 2026-07-11); 'risk = 3 x MMRB' lands on 'three times an MMRB'. Reuses chart_tesla geometry from v1, animated to his cadence.",
       "why": "The platform grid + tiny candles are cohort-only visuals. His audio walks the sizing perfectly.",
       "note_to_coursecraft": ""
     },
