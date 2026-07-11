@@ -83,6 +83,8 @@
   <h1>Cutroom <span style="color:var(--faint)">·</span> <span id="ctitle" style="color:var(--amber)"></span></h1>
   <span class="meta" id="cmeta"></span>
   <span class="spacer"></span>
+  <button id="undoBtn" disabled title="Undo last change (Ctrl+Z)">↩ Undo</button>
+  <button id="redoBtn" disabled title="Redo (Ctrl+Shift+Z)">↪ Redo</button>
   <button id="resetBtn" title="Discard local edits, reload the published plan">Reset to published</button>
   <button id="copyBtn">Copy plan JSON</button>
   <button class="primary" id="exportBtn">Export plan JSON</button>
@@ -111,7 +113,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const BUILD = 'cutroom-11b';
+const BUILD = 'cutroom-11c';
 console.log('[cutroom] build', BUILD);
 
 // ---------- config / mode ----------
@@ -126,6 +128,48 @@ let published = null;   // pristine copy
 let selIdx = -1;
 let videoEl = null;
 let stopAt = null;
+
+// ---------- undo / redo ----------
+const undoStack = [];   // snapshots BEFORE each mutation: {plan, selIdx, label}
+const redoStack = [];
+const UNDO_MAX = 100;
+function snapshot(label) {
+  undoStack.push({ plan: structuredClone(plan), selIdx, label });
+  if (undoStack.length > UNDO_MAX) undoStack.shift();
+  redoStack.length = 0;
+  updateUndoButtons();
+}
+function updateUndoButtons() {
+  const u = document.getElementById('undoBtn'), r = document.getElementById('redoBtn');
+  if (!u) return;
+  u.disabled = undoStack.length === 0;
+  r.disabled = redoStack.length === 0;
+  u.title = undoStack.length ? `Undo: ${undoStack[undoStack.length-1].label} (Ctrl+Z)` : 'Nothing to undo';
+  r.title = redoStack.length ? `Redo: ${redoStack[redoStack.length-1].label} (Ctrl+Shift+Z)` : 'Nothing to redo';
+}
+function restoreState(state) {
+  plan = state.plan;
+  selIdx = Math.min(state.selIdx, plan.segments.length - 1);
+  persist(); render();
+  if (selIdx >= 0) select(selIdx);
+  else { document.getElementById('insp').style.display='none'; document.getElementById('noSel').style.display='block'; }
+}
+function doUndo() {
+  if (!undoStack.length) return;
+  const prev = undoStack.pop();
+  redoStack.push({ plan: structuredClone(plan), selIdx, label: prev.label });
+  restoreState(prev);
+  updateUndoButtons();
+  toast(`Undid: ${prev.label}`);
+}
+function doRedo() {
+  if (!redoStack.length) return;
+  const next = redoStack.pop();
+  undoStack.push({ plan: structuredClone(plan), selIdx, label: next.label });
+  restoreState(next);
+  updateUndoButtons();
+  toast(`Redid: ${next.label}`);
+}
 
 const $ = id => document.getElementById(id);
 const toast = msg => { const t=$('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'), 1800); };
@@ -301,6 +345,7 @@ function select(i) {
     box.querySelectorAll('button[data-t]').forEach(b => b.onclick = (e) => {
       e.stopPropagation();
       const k = b.dataset.t, d = parseFloat(b.dataset.d);
+      snapshot(`trim ${k} ${d>0?'+':''}${d}s on ${s.label}`);
       s[k] = Math.max(0, +(s[k]+d).toFixed(1));
       if (s.out <= s.in) s.out = s.in + 0.5;
       $('inV').textContent = fmt(s.in); $('outV').textContent = fmt(s.out);
@@ -319,22 +364,23 @@ function select(i) {
       d.innerHTML = `<input type="radio" name="voice" ${s.voice===v.id?'checked':''} value="${v.id}">
         <span style="font-size:.8rem; min-width:150px">${v.label}</span>
         <audio controls preload="none" src="${mediaUrl(v.sample)}"></audio>`;
-      d.querySelector('input').onchange = () => { s.voice = v.id; persist(); render(); };
+      d.querySelector('input').onchange = () => { snapshot(`voice → ${v.id}`); s.voice = v.id; persist(); render(); };
       vbox.appendChild(d);
     });
-    $('voScript').onchange = e => { s.vo_script = e.target.value; persist(); };
-    $('estDur').onchange = e => { s.est_duration = parseFloat(e.target.value)||s.est_duration; persist(); render(); };
+    $('voScript').onchange = e => { snapshot('edit VO script'); s.vo_script = e.target.value; persist(); };
+    $('estDur').onchange = e => { snapshot('edit est duration'); s.est_duration = parseFloat(e.target.value)||s.est_duration; persist(); render(); };
   }
-  const ab = $('animBrief'); if (ab) ab.onchange = e => { s.animation_brief = e.target.value; persist(); };
-  $('segNote').onchange = e => { s.note_to_coursecraft = e.target.value; persist(); render(); };
+  const ab = $('animBrief'); if (ab) ab.onchange = e => { snapshot('edit animation brief'); s.animation_brief = e.target.value; persist(); };
+  $('segNote').onchange = e => { snapshot('edit note'); s.note_to_coursecraft = e.target.value; persist(); render(); };
   $('typeSel').onchange = e => {
+    snapshot(`type → ${e.target.value} on ${s.label}`);
     s.type = e.target.value;
     if (s.type==='overdub' && !s.animation_brief) s.animation_brief = 'TODO: describe the animation that replaces his screen while his audio plays.';
     persist(); select(i);
   };
-  $('inclBtn').onclick = () => { s.include = !s.include; persist(); select(i); };
-  $('upBtn').onclick = () => { if (i>0){ [plan.segments[i-1],plan.segments[i]]=[plan.segments[i],plan.segments[i-1]]; selIdx=i-1; persist(); select(selIdx);} };
-  $('dnBtn').onclick = () => { if (i<plan.segments.length-1){ [plan.segments[i+1],plan.segments[i]]=[plan.segments[i],plan.segments[i+1]]; selIdx=i+1; persist(); select(selIdx);} };
+  $('inclBtn').onclick = () => { snapshot(`${s.include?'exclude':'include'} ${s.label}`); s.include = !s.include; persist(); select(i); };
+  $('upBtn').onclick = () => { if (i>0){ snapshot(`move up: ${s.label}`); [plan.segments[i-1],plan.segments[i]]=[plan.segments[i],plan.segments[i-1]]; selIdx=i-1; persist(); select(selIdx);} };
+  $('dnBtn').onclick = () => { if (i<plan.segments.length-1){ snapshot(`move down: ${s.label}`); [plan.segments[i+1],plan.segments[i]]=[plan.segments[i],plan.segments[i+1]]; selIdx=i+1; persist(); select(selIdx);} };
 }
 
 // ---------- export ----------
@@ -357,6 +403,7 @@ $('copyBtn').onclick = () => exportJson(false);
 $('resetBtn').onclick = () => {
   if (confirm('Discard ALL local edits and reload the published plan?')) {
     localStorage.removeItem(LS_KEY); plan = structuredClone(published); selIdx=-1;
+    undoStack.length = 0; redoStack.length = 0; updateUndoButtons();
     $('insp').style.display='none'; $('noSel').style.display='block';
     render(); toast('Reset to published');
   }
@@ -368,8 +415,12 @@ document.addEventListener('keydown', e => {
   if (e.key==='ArrowDown'){ e.preventDefault(); select(Math.min(plan.segments.length-1, selIdx+1)); }
   if (e.key==='ArrowUp'){ e.preventDefault(); select(Math.max(0, selIdx-1)); }
   if (e.key===' ' && videoEl){ e.preventDefault(); videoEl.paused ? videoEl.play() : videoEl.pause(); }
-  if (e.key==='x' && selIdx>=0){ const s=plan.segments[selIdx]; s.include=!s.include; persist(); select(selIdx); }
+  if (e.key==='x' && selIdx>=0){ const s=plan.segments[selIdx]; snapshot(`${s.include?'exclude':'include'} ${s.label}`); s.include=!s.include; persist(); select(selIdx); }
+  if ((e.metaKey||e.ctrlKey) && e.key.toLowerCase()==='z'){ e.preventDefault(); e.shiftKey ? doRedo() : doUndo(); }
+  if ((e.metaKey||e.ctrlKey) && e.key.toLowerCase()==='y'){ e.preventDefault(); doRedo(); }
 });
+document.getElementById('undoBtn').onclick = doUndo;
+document.getElementById('redoBtn').onclick = doRedo;
 
 load();
 </script>
