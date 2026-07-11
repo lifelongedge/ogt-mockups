@@ -25,6 +25,12 @@
     .syncrow { margin:1.2rem 0 0; }
     button { font-family:inherit; background:#1f1f1c; color:var(--fg); border:1px solid var(--border); border-radius:5px; padding:.45rem .9rem; cursor:pointer; font-size:.85rem; }
     button:hover { border-color:var(--amber); }
+    .fixwrap { margin-top:.7rem; }
+    .fixwrap label { display:block; font-size:.68rem; text-transform:uppercase; letter-spacing:.07em; color:var(--faint); font-family:"SF Mono",Menlo,monospace; margin-bottom:.3rem; }
+    .fixwrap textarea { width:100%; min-height:64px; background:var(--card); color:var(--fg); border:1px solid var(--border); border-radius:6px; padding:.5rem .7rem; font-size:.85rem; font-family:inherit; line-height:1.5; resize:vertical; }
+    .fixwrap textarea:focus { outline:none; border-color:var(--amber); }
+    .toast { position:fixed; bottom:1.2rem; left:50%; transform:translateX(-50%); background:#8a6a35; color:#0e0e0c; padding:.5rem 1.1rem; border-radius:6px; font-size:.85rem; font-weight:600; opacity:0; transition:opacity .25s; pointer-events:none; }
+    .toast.show { opacity:1; }
   </style>
 </head>
 <body>
@@ -35,24 +41,28 @@
 <main>
   <div class="syncrow">
     <button id="playBoth">▶ Play both from 0:00</button>
+    <button id="copyFixes">⎘ Copy corrections</button>
   </div>
   <div class="grid" style="margin-top:1rem;">
     <div class="cell">
       <h2>Original <span class="pill" style="background:var(--dim)">V1 CUT</span></h2>
       <video id="vA" controls preload="metadata" src="https://storage.googleapis.com/courses.owlgrouptrading.com/_preview/tesla-original.mp4"></video>
       <p class="cellnote">360p source upscaled. Platform grid, watch-list pane, webcam strip. The chart he's marking up is real but reads as cohort-only context. Lower-third defines PSAR / R10 at the top of the cut.</p>
+      <div class="fixwrap"><label>Corrections for this segment (autosaves, use Copy corrections when done)</label><textarea data-panel="original" placeholder="e.g. trim the first 3 seconds"></textarea></div>
     </div>
     <div class="cell">
       <h2>Overdub output <span class="pill" style="background:var(--good)">V2 CONCEPT</span></h2>
-      <video id="vB" controls preload="metadata" src="https://storage.googleapis.com/courses.owlgrouptrading.com/_preview/overdub-tesla-preview.mp4"></video>
-      <p class="cellnote">Same audio, animated reconstruction: candles settle → PSAR floor appears (~0:19) → risk box draws (~0:28) → R10/frog-box chip (~0:37) → 3×MMRB (~0:45) → Range Stat arrow (~0:52) → the here-to-here sweep (~1:06) → yellow-zone plan with long/short markers (~1:18).</p>
+      <video id="vB" controls preload="metadata" src="https://storage.googleapis.com/courses.owlgrouptrading.com/_preview/overdub-tesla-preview.mp4?v=2"></video>
+      <p class="cellnote">Same audio, animated reconstruction: candles settle → PSAR floor appears (~0:19) → risk box draws (~0:28) → R10 chip (~0:37; the $3 box carries the one-frog-box label) → 3×MMRB (~0:45) → Range Stat arrow (~0:52) → the here-to-here sweep (~1:06) → yellow-zone plan with long/short markers (~1:18).</p>
+      <div class="fixwrap"><label>Corrections for this segment</label><textarea data-panel="overdub" placeholder="e.g. keep R10 = $1, the one-frog-box label belongs on the risk box"></textarea></div>
     </div>
   </div>
 
   <div class="cell" style="margin-top:1.5rem;">
     <h2>What happened <span class="pill" style="background:var(--amber)">OUTCOME · NEW</span></h2>
-    <video id="vC" controls preload="metadata" src="https://storage.googleapis.com/courses.owlgrouptrading.com/_preview/outcome-tesla-preview.mp4"></video>
+    <video id="vC" controls preload="metadata" src="https://storage.googleapis.com/courses.owlgrouptrading.com/_preview/outcome-tesla-preview.mp4?v=2"></video>
     <p class="cellnote">1:07. Ava (contrast voice) narrates the real week against the frame: Monday's long trigger (0:18) → Tuesday back inside (0:27) → Wednesday's gap through the box, stop never fills, −2.4R not −1R (0:29–0:47) → short fills the same open → earnings → +4.7R by Friday (0:56) → "one frame, both directions, the tape decided" (1:02). Every bar is real OHLC from the Owl quote store; the earnings disclosure is on screen before Monday's bar draws.</p>
+      <div class="fixwrap"><label>Corrections for this segment</label><textarea data-panel="outcome" placeholder="e.g. the VO should name the fill price before the R math"></textarea></div>
   </div>
 
   <div class="note">
@@ -62,6 +72,26 @@
   </div>
 </main>
 <script>
+const LSFIX = 'tesla-compare-fixes';
+const saved = JSON.parse(localStorage.getItem(LSFIX) || '{}');
+document.querySelectorAll('.fixwrap textarea').forEach(ta => {
+  ta.value = saved[ta.dataset.panel] || '';
+  ta.addEventListener('input', () => {
+    saved[ta.dataset.panel] = ta.value;
+    localStorage.setItem(LSFIX, JSON.stringify(saved));
+  });
+});
+document.getElementById('copyFixes').onclick = () => {
+  const parts = [];
+  document.querySelectorAll('.fixwrap textarea').forEach(ta => {
+    if (ta.value.trim()) parts.push(`[${ta.dataset.panel}]\n${ta.value.trim()}`);
+  });
+  const txt = parts.length ? `Tesla trilogy corrections (${new Date().toISOString().slice(0,10)}):\n\n` + parts.join('\n\n') : '(no corrections entered)';
+  navigator.clipboard.writeText(txt).then(() => {
+    const t = document.createElement('div'); t.className='toast show'; t.textContent='Corrections copied — paste to coursecraft';
+    document.body.appendChild(t); setTimeout(()=>t.remove(), 2000);
+  });
+};
 document.getElementById('playBoth').onclick = () => {
   const a = document.getElementById('vA'), b = document.getElementById('vB');
   a.currentTime = 0; b.currentTime = 0;
