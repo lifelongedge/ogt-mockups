@@ -87,9 +87,10 @@
       "include": true,
       "label": "EXPLAINER: the four seasons on the MACD pane",
       "voice": "ava",
-      "vo_script": "DRAFT: price chart on top, MACD pane below. Name each season as its quadrant shades in: winter (signal line below zero and sinking), spring (below zero, slope turning up), summer (above zero and rising), fall (above zero and rolling over). Anchored to what the indicator is doing, not to price. Two questions decide the season: above or below zero, and which way is the slope pointing.",
+      "vo_script": "RECORDED 2026-07-12 (macd-explainer.mp3/.srt): Here is the lens in one picture. Price on top. The MACD and its signal line below, with a zero line through the middle. Winter: the signal line is below zero and sinking. A downtrend in force. Spring: still below zero, but the slope has turned up. Something is emerging. Summer: above zero and rising. The uptrend is established. Fall: still above zero, but rolling over. Momentum fading at the peak. That is the whole rule. Two questions: above or below zero, and which way is the slope pointing.",
       "est_duration": 40,
-      "animation_brief": "NEW COMPONENT: indicator sub-pane. Price candles top 60%, MACD pane bottom 40% (MACD + signal lines, histogram, zero line). Seasons shade the sub-pane in four tinted bands as each is named. Build the pane generically (any oscillator series + zero line)."
+      "animation_brief": "NEW COMPONENT: indicator sub-pane. Price candles top 60%, MACD pane bottom 40% (MACD + signal lines, histogram, zero line). Seasons shade the sub-pane in four tinted bands as each is named. Build the pane generically (any oscillator series + zero line).",
+      "animation": "anim-macd-seasons.html"
     },
     {
       "id": "s04",
