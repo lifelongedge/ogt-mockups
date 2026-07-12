@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Template examples — three topics, three stress tests</title>
+  <style>
+    :root { --bg:#0e0e0c; --card:#181815; --fg:#e8e6df; --dim:#9c978a; --faint:#5d594f; --amber:#d4a559; --border:#2a2925; --good:#6aa84f; --blue:#7baad4; --red:#c45656; }
+    * { box-sizing:border-box; }
+    html, body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; }
+    a { color:var(--amber); text-decoration:none; } a:hover { text-decoration:underline; }
+    code { font-family:"SF Mono",Menlo,monospace; font-size:.88em; color:var(--dim); }
+    header { padding:2.2rem 2rem 1.3rem; max-width:1100px; margin:0 auto; border-bottom:1px solid var(--border); }
+    h1 { font-family:Georgia,serif; font-size:1.9rem; font-weight:400; margin:0 0 .4rem; }
+    .sub { color:var(--dim); line-height:1.6; max-width:880px; }
+    main { max-width:1100px; margin:0 auto; padding:1rem 2rem 4rem; }
+    h2 { font-family:Georgia,serif; font-size:1.35rem; font-weight:500; margin:2.4rem 0 .4rem; }
+    h2 .chip { font-size:.62rem; font-family:"SF Mono",Menlo,monospace; font-weight:700; letter-spacing:.06em; padding:.12rem .5rem; border-radius:3px; color:#0e0e0c; margin-left:.6rem; vertical-align:3px; }
+    .lead { color:var(--dim); line-height:1.6; margin:.3rem 0 1rem; max-width:880px; }
+    table { width:100%; border-collapse:collapse; margin:.8rem 0 1.2rem; font-size:.86rem; }
+    th, td { text-align:left; padding:.45rem .7rem; border-bottom:1px solid var(--border); vertical-align:top; }
+    th { color:var(--dim); font-family:"SF Mono",Menlo,monospace; font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; }
+    td.t { font-family:"SF Mono",Menlo,monospace; white-space:nowrap; }
+    td.num { font-family:"SF Mono",Menlo,monospace; text-align:right; }
+    th.num { text-align:right; }
+    .pill { display:inline-block; font-size:.6rem; font-family:"SF Mono",Menlo,monospace; font-weight:700; letter-spacing:.05em; padding:.1rem .42rem; border-radius:3px; color:#0e0e0c; }
+    .p-cut { background:var(--amber); } .p-exp { background:var(--blue); } .p-ovr { background:var(--good); }
+    .p-out { background:#c9a03e; } .p-sld { background:var(--dim); } .p-new { background:var(--red); color:#fff; }
+    .note { background:var(--card); border-left:3px solid var(--amber); padding:.9rem 1.15rem; margin:1.2rem 0; font-size:.9rem; color:var(--dim); border-radius:0 6px 6px 0; line-height:1.65; }
+    .note strong { color:var(--fg); }
+    .lesson { background:var(--card); border-left:3px solid var(--good); padding:.9rem 1.15rem; margin:1rem 0; font-size:.9rem; color:var(--dim); border-radius:0 6px 6px 0; line-height:1.65; }
+    .lesson strong { color:var(--good); }
+    .green { color:var(--good); } .red { color:var(--red); } .amber { color:var(--amber); }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Template stress test: three more topics</h1>
+  <p class="sub">The frog box proved the segment grammar on one topic. Before finalizing <code>docs/topical-video-templates.md</code>, here are three draft structures chosen to press the template from different directions: a mechanical rule, a regime concept, and a psychology topic. Each table is a proposed segment sequence; timestamps are unmined (that happens after the structures are agreed). All corpus counts and outcome statistics below are real — from <code>kenlong-transcripts</code> and the Owl quote store.</p>
+</header>
+<main>
+
+  <h2>Example 1 — Five Down Days (5DD) <span class="chip" style="background:var(--good)">MECHANICAL RULE</span></h2>
+  <p class="lead">Corpus: 225 mentions across 35 sessions. Essay live at <code>/essays/five-down-days-5dd</code>. The rule is decidable — five consecutive lower closes, buy stop 5¢ above the signal-day high, void 5¢ below its low — which unlocks something the Tesla anecdote couldn't: <strong>running every instance</strong>.</p>
+  <table>
+    <thead><tr><th>#</th><th>Segment</th><th>Type</th><th>Content</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Cold open</td><td><span class="pill p-cut">CUT</span></td><td>His most vivid telling of the snapback theory ("everyone who wanted to sell has sold")</td></tr>
+      <tr><td>2</td><td>Title card</td><td><span class="pill p-sld">SLIDE</span></td><td>Five Down Days · with Dr. Ken Long</td></tr>
+      <tr><td>3</td><td>The rule, animated</td><td><span class="pill p-exp">EXPLAINER</span></td><td>Contrast voice + animation: 5 bars close lower one by one → entry stop draws above bar 5's high → void line below its low. The whole rule in one picture</td></tr>
+      <tr><td>4</td><td>Him walking a live 5DD</td><td><span class="pill p-ovr">OVERDUB</span></td><td>Best corpus cut of Ken framing an actual 5DD; his audio, clean animated chart replacing the platform screen</td></tr>
+      <tr><td>5</td><td>What happened — one instance</td><td><span class="pill p-out">OUTCOME</span></td><td>TSLA signal 2023-04-10: filled 4/11, gapped through the void on earnings 4/20, <span class="red">−2.26R, not −1R</span>. Same gap week as the frog-box video — the two videos cross-reference</td></tr>
+      <tr><td>6</td><td>What happened — every instance</td><td><span class="pill p-out">OUTCOME</span> <span class="pill p-new">AGGREGATE · NEW</span></td><td>The rule run honestly over 5 liquid symbols since 2020 (table below, real data)</td></tr>
+      <tr><td>7</td><td>When it fails</td><td><span class="pill p-cut">CUT</span></td><td>His caveat: bull-market tool; in downtrends the sixth day down is just Tuesday</td></tr>
+      <tr><td>8–9</td><td>Maxim + end card</td><td><span class="pill p-sld">SLIDE</span></td><td>Standard close</td></tr>
+    </tbody>
+  </table>
+
+  <p class="lead"><strong>The aggregate outcome, computed from the quote store</strong> (split-adjusted daily bars, 2020-01-01 to present; fill = max(entry, next open); stop = void level; exit = stop or close of 10th session after fill; bars spanning both entry and void in one day counted as ambiguous and excluded):</p>
+  <table>
+    <thead><tr><th>Symbol</th><th class="num">Signals</th><th class="num">Filled</th><th class="num">Voided</th><th class="num">Ambig.</th><th class="num">Avg R</th><th class="num">Win %</th><th class="num">Best</th><th class="num">Worst</th></tr></thead>
+    <tbody>
+      <tr><td class="t">SPY</td><td class="num">13</td><td class="num">7</td><td class="num">4</td><td class="num">2</td><td class="num">+0.55</td><td class="num">43%</td><td class="num green">+3.5R</td><td class="num">−1.00R</td></tr>
+      <tr><td class="t">QQQ</td><td class="num">13</td><td class="num">6</td><td class="num">5</td><td class="num">2</td><td class="num red">−0.17</td><td class="num">33%</td><td class="num green">+2.1R</td><td class="num">−1.14R</td></tr>
+      <tr><td class="t">IWM</td><td class="num">21</td><td class="num">12</td><td class="num">9</td><td class="num">0</td><td class="num green">+1.01</td><td class="num">58%</td><td class="num green">+5.0R</td><td class="num">−1.51R</td></tr>
+      <tr><td class="t">TSLA</td><td class="num">20</td><td class="num">8</td><td class="num">12</td><td class="num">0</td><td class="num">+0.35</td><td class="num">38%</td><td class="num green">+7.7R</td><td class="num red">−2.24R</td></tr>
+      <tr><td class="t">AAPL</td><td class="num">18</td><td class="num">7</td><td class="num">11</td><td class="num">0</td><td class="num green">+1.79</td><td class="num">71%</td><td class="num green">+6.1R</td><td class="num">−1.00R</td></tr>
+      <tr style="border-top:2px solid var(--border)"><td class="t"><strong>Pooled</strong></td><td class="num">85</td><td class="num">40</td><td class="num">41</td><td class="num">4</td><td class="num green"><strong>+0.76</strong></td><td class="num"><strong>50%</strong></td><td class="num green">+7.7R</td><td class="num red">−2.24R</td></tr>
+    </tbody>
+  </table>
+  <div class="lesson"><strong>What this teaches the template:</strong> mechanical rules want a second outcome flavor — <code>outcome</code> mode <code>aggregate</code> — with a stats table animated on screen. It also surfaced a pipeline guard the hard way: the first run reported TSLA at <span class="red">−31R</span>, which turned out to be the Aug-2022 3-for-1 split (raw OHLC is unadjusted in the store). <strong>Rule for the template: every outcome computation runs on split-adjusted bars, and ambiguous daily bars are counted and disclosed, never silently resolved.</strong></div>
+
+  <h2>Example 2 — MACD Seasons <span class="chip" style="background:var(--blue)">REGIME CONCEPT</span></h2>
+  <p class="lead">Corpus: 188 mentions across 58 sessions. Essay live at <code>/essays/macd-seasons</code>. A regime lens, not a trade trigger — which breaks the entry/stop outcome model and demands a different verification shape.</p>
+  <table>
+    <thead><tr><th>#</th><th>Segment</th><th>Type</th><th>Content</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Cold open</td><td><span class="pill p-cut">CUT</span></td><td>His seasons metaphor cold — "markets have seasons the way the year does"</td></tr>
+      <tr><td>2</td><td>Title card</td><td><span class="pill p-sld">SLIDE</span></td><td>MACD Seasons · with Dr. Ken Long</td></tr>
+      <tr><td>3</td><td>The four seasons, animated</td><td><span class="pill p-exp">EXPLAINER</span></td><td>Contrast voice: MACD pane under a price chart — <span class="pill p-new">NEW ANIMATION CLASS</span> (indicator sub-pane, histogram + signal lines) — seasons shade in as each quadrant is named</td></tr>
+      <tr><td>4</td><td>Him classifying a live market</td><td><span class="pill p-ovr">OVERDUB</span></td><td>Ken reading the current season on a real symbol; animation renders the MACD read cleanly</td></tr>
+      <tr><td>5</td><td>What happened — a year of seasons</td><td><span class="pill p-out">OUTCOME</span> <span class="pill p-new">REGIME REPLAY · NEW</span></td><td>SPY across a full year, seasons labeled by the rule as-of each day (no hindsight), with per-season forward returns from the quote store. Verification for a lens = "did the labels mean anything," not "did a stop hold"</td></tr>
+      <tr><td>6</td><td>When it fails</td><td><span class="pill p-cut">CUT</span></td><td>His caveat on whipsaw seasons / transitions</td></tr>
+      <tr><td>7–8</td><td>Maxim + end card</td><td><span class="pill p-sld">SLIDE</span></td><td>Standard close</td></tr>
+    </tbody>
+  </table>
+  <div class="lesson"><strong>What this teaches the template:</strong> the outcome type generalizes to <em>verification against history</em>, with the shape depending on what the concept claims. Trade rules verify entries and stops; regime lenses verify labels. Proposed: <code>outcome</code> gets a <code>mode</code> field — <code>single</code> (Tesla), <code>aggregate</code> (5DD), <code>regime_replay</code> (this). Same editorial rules bind all three. Also: the indicator sub-pane is a new animation component worth building once, generically (MACD now, RSI/PSAR later).</div>
+
+  <h2>Example 3 — The Zero State <span class="chip" style="background:var(--red)">PSYCHOLOGY</span></h2>
+  <p class="lead">Corpus: 481 mentions across 100 sessions — the deepest coverage of the three. No essay yet (queued). Nothing to chart, nothing to backtest: the degenerate case that tells us where the template's floor is.</p>
+  <table>
+    <thead><tr><th>#</th><th>Segment</th><th>Type</th><th>Content</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Cold open</td><td><span class="pill p-cut">CUT</span></td><td>His best zero-state story — the corpus has 100 sessions to mine; storytelling is the asset here</td></tr>
+      <tr><td>2</td><td>Title card</td><td><span class="pill p-sld">SLIDE</span></td><td>The Zero State · with Dr. Ken Long</td></tr>
+      <tr><td>3</td><td>What it is</td><td><span class="pill p-cut">CUT</span></td><td>Him defining it — his face, his words. No overdub: there is no screen to replace</td></tr>
+      <tr><td>4</td><td>The practice card</td><td><span class="pill p-exp">EXPLAINER</span> <span class="pill p-new">TYPOGRAPHY-ONLY</span></td><td>Contrast voice over an animated checklist card: the reset steps, one line landing at a time. No charts — type and pacing carry it</td></tr>
+      <tr><td>5</td><td>Him coaching it live</td><td><span class="pill p-cut">CUT</span></td><td>A cohort moment where he walks someone back to zero — the emotional center of the video</td></tr>
+      <tr><td>6</td><td>When it fails</td><td><span class="pill p-cut">CUT</span></td><td>What breaks the state; his honesty about his own lapses if the corpus has it</td></tr>
+      <tr><td>7–8</td><td>Maxim + end card</td><td><span class="pill p-sld">SLIDE</span></td><td>Standard close</td></tr>
+    </tbody>
+  </table>
+  <div class="lesson"><strong>What this teaches the template:</strong> production intensity should scale <em>inversely</em> with how chartable the topic is. Psychology topics are cut-heavy (4 of 8 segments raw Ken), the explainer degrades gracefully to typography-only animation, and <strong>no outcome segment exists — and must not be faked</strong>. The template should say this explicitly so nobody reaches for a chart on a topic that has none.</div>
+
+  <h2>Decisions to finalize the template</h2>
+  <div class="note">
+    <strong>1. Outcome modes.</strong> Add <code>mode: single | aggregate | regime_replay</code> to the outcome type, all bound by the same rules (frame-vs-price, synth voice, publish every outcome, catalysts disclosed, split-adjusted bars, ambiguity counted).<br><br>
+    <strong>2. New animation components.</strong> (a) indicator sub-pane (MACD first, generic after); (b) animated stats table for aggregates; (c) typography-only card for psychology. Each built once, reused everywhere.<br><br>
+    <strong>3. Topic classes in the template doc.</strong> Mechanical rule / regime lens / discretionary frame / psychology — each with its default segment mix and the outcome mode it earns (psychology: none).<br><br>
+    <strong>4. Cross-referencing.</strong> The 5DD and frog-box videos share the April 2023 TSLA gap week from two angles. Deliberate cross-links between videos ("we saw this same week in the frog box video") compound the library the same way the essays' hub-and-spoke does.<br><br>
+    <strong>5. Pipeline guards go in the doc.</strong> Split-adjustment mandatory; daily-bar ambiguity disclosed; every number on screen traces to the quote store or the transcript.
+  </div>
+
+  <p class="lead" style="margin-top:1.5rem">Approve, adjust, or strike any of the five — then the template doc gets rewritten to match, and these three structures become real plan.v2 files in the mining queue.</p>
+</main>
+</body>
+</html>
