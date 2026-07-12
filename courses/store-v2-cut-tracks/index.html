@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Store catalog v2 — cut tracks for all 8 courses</title>
+  <style>
+    :root { --bg:#0e0e0c; --card:#181815; --fg:#e8e6df; --dim:#9c978a; --faint:#5d594f; --amber:#d4a559; --border:#2a2925; --good:#6aa84f; }
+    * { box-sizing:border-box; }
+    html, body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; }
+    a { color:var(--amber); text-decoration:none; }
+    code { font-family:"SF Mono",Menlo,monospace; font-size:.88em; color:var(--dim); }
+    header { padding:2.2rem 2rem 1.3rem; max-width:1240px; margin:0 auto; border-bottom:1px solid var(--border); }
+    h1 { font-family:Georgia,serif; font-size:1.8rem; font-weight:400; margin:0 0 .4rem; }
+    .sub { color:var(--dim); line-height:1.6; max-width:940px; }
+    main { max-width:1240px; margin:0 auto; padding:1.2rem 2rem 4rem; }
+    h3 { font-family:Georgia,serif; font-size:1.15rem; font-weight:500; margin:1.6rem 0 .5rem; }
+    p { line-height:1.6; margin:.5rem 0; color:var(--dim); max-width:1000px; font-size:.92rem; }
+    p strong { color:var(--fg); }
+    p.li { margin-left:1rem; }
+    .tw { overflow-x:auto; margin:.7rem 0 1.1rem; }
+    table { border-collapse:collapse; font-size:.82rem; min-width:800px; }
+    th, td { text-align:left; padding:.4rem .6rem; border-bottom:1px solid var(--border); vertical-align:top; }
+    th { color:var(--faint); font-family:"SF Mono",Menlo,monospace; font-size:.68rem; text-transform:uppercase; letter-spacing:.05em; white-space:nowrap; }
+    td:first-child { white-space:nowrap; color:var(--faint); }
+    details { border:1px solid var(--border); border-radius:8px; margin:.9rem 0; padding:0 1.2rem; background:var(--card); }
+    details[open] { padding-bottom:1rem; }
+    summary { cursor:pointer; padding:.9rem 0; font-family:Georgia,serif; font-size:1.05rem; color:var(--fg); }
+    summary:hover { color:var(--amber); }
+    .fixwrap { margin-top:1rem; }
+    .fixwrap label { display:block; font-size:.68rem; text-transform:uppercase; letter-spacing:.07em; color:var(--faint); font-family:"SF Mono",Menlo,monospace; margin-bottom:.3rem; }
+    .fixwrap textarea { width:100%; min-height:56px; background:#111110; color:var(--fg); border:1px solid var(--border); border-radius:6px; padding:.5rem .7rem; font-size:.85rem; font-family:inherit; line-height:1.5; resize:vertical; }
+    .fixwrap textarea:focus { outline:none; border-color:var(--amber); }
+    button { font-family:inherit; background:#1f1f1c; color:var(--fg); border:1px solid var(--border); border-radius:5px; padding:.45rem .9rem; cursor:pointer; font-size:.85rem; margin:.8rem 0 0; }
+    button:hover { border-color:var(--amber); }
+    .toast { position:fixed; bottom:1.2rem; left:50%; transform:translateX(-50%); background:#8a6a35; color:#0e0e0c; padding:.5rem 1.1rem; border-radius:6px; font-size:.85rem; font-weight:600; }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Store catalog v2: cut tracks for all 8 courses</h1>
+  <p class="sub">Every published $19.97 course analyzed against the approved v2 grammar (cut / overdub / explainer / outcome / slide). The ranked queue orders the catalog by quality-per-effort; each course section holds the full scene-by-scene track. Drop corrections in any course box and copy them all at once. Doc of record: <code>ogt-coursecraft/docs/store-v2-cut-tracks.md</code>.</p>
+  <button id="copyFixes">⎘ Copy all corrections</button>
+</header>
+<main>
+<p>Treatments: KEEP CUT (Ken untouched) · OVERDUB (his audio, clean animation) ·</p>
+<p>EXPLAINER (Ava + animation) · OUTCOME(single | aggregate | regime_replay) ·</p>
+<p>SLIDE · TRIM/DROP.</p>
+<h3>Ranked queue (quality per effort — lowest-hanging fruit first)</h3>
+<div class="tw"><table>
+<tr><th>Rank</th><th>Course</th><th>Effort</th><th>Why here</th></tr>
+<tr><td>1</td><td><strong>Story Stocks</strong> (c-mkc)</td><td>MED</td><td>Catalog-best outcome material sitting in the footage: a framed real trade (UMAC $9, $2 stop, catalyst named) and an explicit dated prediction (&quot;592 by Friday&quot;) — both scoreable bar-by-bar. Half the runtime stays CUT/SLIDE.</td></tr>
+<tr><td>2</td><td><strong>Strategic Decision / AI</strong></td><td>MED</td><td>~70% stays CUT (judgment content, aged well). Two overdub builds + one 30s disclaimer explainer. Verdict: v2 yes, re-record no — conditional on cutting/outcome-framing the Oct-2024 market-walk tail.</td></tr>
+<tr><td>3</td><td><strong>Trading Session</strong> (c-tosm2)</td><td>MED</td><td>60% stays CUT. Its one decidable claim is 5DD — the aggregate study is ALREADY COMPUTED (topical-5dd). One new component (sort board). Metadata cleanup mandatory.</td></tr>
+<tr><td>4</td><td><strong>Mental Model</strong> (c-tosm1)</td><td>MED</td><td>17 of 25 scenes stay CUT per the psychology rule. One hero component (teeter-totter, reusable everywhere), one small study, trims.</td></tr>
+<tr><td>5</td><td><strong>Disciplined Operator</strong> (c-tosm3)</td><td>MED</td><td>Zero data work (nothing decidable in footage). Two new components (soccer-lifecycle morph = hero sequence; portfolio-heat gauge reusable in future risk modules).</td></tr>
+<tr><td>6</td><td><strong>Intraday Decision Tree</strong> (c-mkb)</td><td>HIGH</td><td>Most decidable course in the catalog: 4-5 outcome studies + flagship decision-tree explainer. 5DD study reused for free. Chapter 5&#x27;s weak 360p footage becomes the showcase.</td></tr>
+<tr><td>7</td><td><strong>Tomorrow&#x27;s Trades</strong> (c-mka)</td><td>HIGH</td><td>The flagship backtest lives here (buyer evidence: above yesterday&#x27;s high). 15 of 24 scenes need production. Also fixes an editorial violation (scene 8&#x27;s personal-log expectancy claim).</td></tr>
+<tr><td>8</td><td><strong>Swing Logic</strong> (2022)</td><td>HIGH</td><td>Full re-cut, not segment replacement (podcast wrapper woven throughout). Strongest systematic teaching audio in the catalog; the dated Oct-2022 symbol walk becomes the outcome reel. 67-card deck survives untouched.</td></tr>
+</table></div>
+<h3>Verification flags (check before any re-cut)</h3>
+<p class="li">1. <strong>swing-logic duration</strong>: source transcript runs 1:38:32; sales page says ~63 min. Verify the delivered unlisted video length — either the listing is wrong by 35 min or a trimmed upload exists.</p>
+<p class="li">2. <strong>strategic-decision duration</strong>: source runs 91:28; listed ~64 min. Verify <code>OGT_PROD_YT_STRATEGIC</code> in prod — the Oct-2024 market-walk tail may already be cut (if so, rank-2 gets even easier).</p>
+<p class="li">3. <strong>c-mka scene 8</strong> currently rests on &quot;continuations Ken&#x27;s logged&quot; (personal-log expectancy) — violates the outcome editorial rules; v2 replaces with a rule-based aggregate.</p>
+<p class="li">4. <strong>c-tosm2 metadata rot</strong>: sting <code>_note</code>s reference Module 1 sources; &quot;Leavenworth/Levenworth&quot; spelled inconsistently across cards; Chapter 2 card timing may have drifted (the &quot;by ear&quot; quote sits at ~0:30 of the source clip). c-mka&#x27;s sting <code>prompt</code> fields carry stale copy-paste from c-open-01 (the <code>_note</code> fields are authoritative).</p>
+<p class="li">5. <strong>story-stocks row 15</strong>: &quot;592 by Friday&quot; levels fit SPY mid-Dec 2024 — confirm symbol/date from video frames before cutting.</p>
+<h3>Shared infrastructure (build once, use across the catalog)</h3>
+<p><strong>Studies already done:</strong> 5DD aggregate (feeds c-mkb ch4, c-tosm2 ch4, swing-logic ch4 — computed for topical-5dd: 85 signals / 40 fills / +0.76R / 50% win since 2020, split-adjusted).</p>
+<p><strong>New quote-store studies proposed:</strong> buyer evidence above-yesterday&#x27;s-high (mka, flagship), 10-day-high runway (mka), level-reaction frequency (mka), pyramid-vs-flat R (mkb), rangestat no-back-inside exit (mkb), big-gap RL10 fade (mkb), VWAP magnet fadestat (mkb), Z3P compression bracket (swing-logic), 10d-AVWAP story trail via the playbooks in-play set (mkc), timeframe-alignment rangestat (tosm1). Singles: UMAC, &quot;592 by Friday&quot;, WMBB3 instance, DIA 2023-07-12, TSLA/DVN/QQQ/Godzilla Oct-2022 frames, Tesla Oct-2024 frame.</p>
+<p><strong>New animation components proposed</strong> (each named by first use, all reusable): teeter-totter (tosm1), soccer-lifecycle morph (tosm3), portfolio-heat gauge (tosm3), three-bucket sort board (tosm2), decision-tree branching (mkb), stacked-frames 3/5/10d (mkc), six-pattern menu (mka), three-source flow (mka), position-stack core+turbo (tosm1/tosm2). Existing components cover everything else: band chart, ladder, risk box on candles, real-bars outcome week, MACD sub-pane, animated stats table, typography practice card.</p>
+<h3 style="margin-top:2rem">The eight cut tracks</h3>
+<details id="mental-model"><summary>1. Mental Model (c-tosm1, ~34 min, 25 scenes) — MED</summary>
+<p><strong>Course read.</strong> Pure mindset module cut from three Zoom coaching sessions (apk9GWC17Zw, hvajbAcWx3Y, keUjMJcneCM, KMa-sBc_3gg per the clips-course1 manifest). Footage = Ken webcam + student webcams + occasional cohort-only screen shares (100-maxims AI doc in Ch1, heat maps in Ch3). v1 liability: cards annotate weak visuals instead of replacing them, leaving 2-5 min static talking-head stretches. Psychology rule applies: cut-heavy, exactly one decidable market claim in 34 minutes.</p>
+<div class="tw"><table>
+<tr><th>#</th><th>time</th><th>scene</th><th>class</th><th>v2</th><th>note</th></tr>
+<tr><td>1</td><td>0:00-3:20</td><td>Coaching&#x27;s Eye</td><td>mindset</td><td>KEEP CUT</td><td>Storytelling to camera; trim dead air only</td></tr>
+<tr><td>2</td><td>3:20-4:50</td><td>100 Maxims</td><td>mindset + cohort visual</td><td>OVERDUB</td><td>AI-maxims doc share is cohort-only; typography card cycling 4-5 real maxims</td></tr>
+<tr><td>3</td><td>4:50-5:10</td><td>★ Tool User vs System Architect</td><td>key moment</td><td>KEEP CUT</td><td>Canonical line; sting fires here; untouchable</td></tr>
+<tr><td>4</td><td>5:10-8:00</td><td>Driving the Machine</td><td>analogy</td><td>KEEP CUT</td><td>Trim tangents ~20-30s</td></tr>
+<tr><td>5</td><td>8:00-8:58</td><td>Closing Frame</td><td>bridge</td><td>TRIM/DROP</td><td>Keep ~20s of 58s</td></tr>
+<tr><td>6</td><td>8:58</td><td>Chapter 1b card</td><td>card</td><td>SLIDE</td><td>As-is</td></tr>
+<tr><td>7</td><td>8:59-9:28</td><td>Alex&#x27;s Seed</td><td>student voice</td><td>KEEP CUT + EXPLAINER</td><td>Insert 25s Ava explainer after: &quot;core-and-turbo&quot; undefined for newcomers (new position-stack component)</td></tr>
+<tr><td>8</td><td>9:28-10:55</td><td>Ken&#x27;s Fractal Reframe</td><td>framework</td><td>KEEP CUT</td><td>Clean teaching to camera</td></tr>
+<tr><td>9</td><td>10:55-11:17</td><td>★ I&#x27;ve Never Said It That Way</td><td>key moment</td><td>KEEP CUT</td><td>Teacher-learns-from-student moment IS the product</td></tr>
+<tr><td>10</td><td>11:17</td><td>Chapter 2 card</td><td>card</td><td>SLIDE</td><td>As-is</td></tr>
+<tr><td>11</td><td>11:18-11:38</td><td>Naming the Four</td><td>framework</td><td>KEEP CUT</td><td>Canonical naming</td></tr>
+<tr><td>12</td><td>11:38-14:40</td><td>Intuition</td><td>psychology</td><td>KEEP CUT</td><td>Typography capability-card overlays; trim ~20s</td></tr>
+<tr><td>13</td><td>14:40-18:00</td><td>Imagination + Common Sense</td><td>psychology</td><td>KEEP CUT</td><td>Same; &quot;good parts don&#x27;t look funny&quot; overlay card</td></tr>
+<tr><td>14</td><td>18:00-20:01</td><td>Emotion</td><td>psychology</td><td>KEEP CUT</td><td>Bridges to Ch3; leave intact</td></tr>
+<tr><td>15</td><td>20:01</td><td>Chapter 3 card</td><td>card</td><td>SLIDE</td><td>As-is</td></tr>
+<tr><td>16</td><td>20:02-22:15</td><td>George Sets Up the Question</td><td>student setup</td><td>TRIM/DROP</td><td>Compress 2:13 to ~45-60s</td></tr>
+<tr><td>17</td><td>22:15-22:35</td><td>★ The Great Big Teeter-Totter</td><td>key moment</td><td>KEEP CUT</td><td>Canonical metaphor</td></tr>
+<tr><td>18</td><td>22:35-28:00</td><td>Bulls + Bears + Demographics</td><td>market model</td><td>OVERDUB</td><td>Longest scene (5:25) over cohort heat-map share. NEW teeter-totter component (fulcrum + timeframe participants as weights); band chart for the multi-TF beat</td></tr>
+<tr><td>19</td><td>28:00-28:20</td><td>★ Emotional Maniacs Move the Teeter</td><td>key moment</td><td>KEEP CUT</td><td>Canonical</td></tr>
+<tr><td>20</td><td>28:20-29:20</td><td>When Timeframes Align</td><td>decidable claim</td><td>OUTCOME(aggregate)</td><td>The one computable claim: SPY 2018-2025, daily+weekly RL10 slopes same sign vs mixed; frequency of ≥1× rangestat move next 5 sessions. Publish whatever it shows</td></tr>
+<tr><td>21</td><td>29:20</td><td>Chapter 4 card</td><td>card</td><td>SLIDE</td><td>As-is</td></tr>
+<tr><td>22</td><td>29:21-30:40</td><td>Watching the Lions</td><td>story</td><td>KEEP CUT</td><td>Safari story — the grammar&#x27;s exact CUT case</td></tr>
+<tr><td>23</td><td>30:40-31:25</td><td>Picking the Weakest</td><td>story</td><td>KEEP CUT</td><td>Typography overlay implied by card</td></tr>
+<tr><td>24</td><td>31:25-31:45</td><td>★ Not Efficient — Efficient ENOUGH</td><td>key moment</td><td>KEEP CUT</td><td>Lion stat, not markets — no outcome</td></tr>
+<tr><td>25</td><td>31:45-33:45</td><td>Knowing the Territory</td><td>synthesis</td><td>KEEP CUT</td><td>One closing typography card</td></tr>
+</table></div>
+<p><strong>Top 3 wins:</strong> (1) teeter-totter overdub — fixes the largest weak stretch, component reusable everywhere Ken uses the metaphor; (2) the single aggregate outcome — one verified stats table separates this from every other trading-psychology video; (3) trim + typography pass + core-and-turbo explainer — cheapest work, closes the only newcomer gap.</p>
+<div class="fixwrap"><label>Corrections for this course (autosaves)</label><textarea data-panel="mental-model" placeholder="e.g. keep the whole symbol walk in swing-logic"></textarea></div>
+</details>
+<details id="trading-session"><summary>2. Trading Session (c-tosm2, ~27 min, 20 scenes) — MED</summary>
+<p><strong>Course read.</strong> Five clips from four Zoom sessions, all identified and quote-verified in kenlong-transcripts: cohort-6-intro-overview (XvcsfWFFW20, Ch1+Ch3), cohort-1-burnout-resilience (3jnbqQEniyQ, 2025-07-28, Ch2 rifle metaphor), really-good-sunday (q-df0MVvWBA 13:00-19:46, Ch4), 4321-position-sizing (1FMcKTYaHMo ~1:34:50-1:42:00, Ch5 Leavenworth B). Cohort-only visuals: daily-report grids, small charts, webcam tiles. Metadata rot found (see flags).</p>
+<div class="tw"><table>
+<tr><th>#</th><th>time</th><th>scene</th><th>class</th><th>v2</th><th>note</th></tr>
+<tr><td>1</td><td>0:00-2:00</td><td>Recording the Mindset First</td><td>ritual</td><td>KEEP CUT</td><td>Psychology; trim lingering report share</td></tr>
+<tr><td>2</td><td>2:00-3:40</td><td>Three Categories of Symbols</td><td>method</td><td>OVERDUB</td><td>NEW three-bucket sort board (symbols animating into continuation/new/intraday bins)</td></tr>
+<tr><td>3</td><td>3:40-4:40</td><td>The Kata-2 Detour</td><td>named system</td><td>OVERDUB</td><td>Band chart to his cadence. Params not stated → not decidable → no aggregate yet; flag Kata-2 formalization</td></tr>
+<tr><td>4</td><td>4:40-4:59</td><td>Closing Frame</td><td>maxim</td><td>SLIDE</td><td>Typography card: &quot;The sort is the plan&quot;</td></tr>
+<tr><td>5</td><td>4:59-5:00</td><td>Chapter 2 card</td><td>card</td><td>SLIDE</td><td>Keep</td></tr>
+<tr><td>6</td><td>5:00-7:00</td><td>Sundeep Names His Routine</td><td>student voice</td><td>KEEP CUT</td><td>Authentic cohort tape is the asset</td></tr>
+<tr><td>7</td><td>7:00-9:40</td><td>★ Front Sight Post, Rear Sight</td><td>marquee metaphor</td><td>KEEP CUT</td><td>Hero moment untouched; optional light sight-alignment inset; fix stale sting note</td></tr>
+<tr><td>8</td><td>9:40-10:58</td><td>Drift Over to the Noise</td><td>skill</td><td>KEEP CUT</td><td>Verify card timing vs source (&quot;by ear&quot; at ~0:30 of clip)</td></tr>
+<tr><td>9</td><td>10:58-11:00</td><td>Chapter 3 card</td><td>card</td><td>SLIDE</td><td>Keep</td></tr>
+<tr><td>10</td><td>11:00-12:00</td><td>Core = Swing, Turbo = Today</td><td>framework</td><td>OVERDUB</td><td>Risk-box component: swing box holding while intraday entries fire inside it</td></tr>
+<tr><td>11</td><td>12:00-12:34</td><td>Continuation as Compounding Attention</td><td>principle</td><td>KEEP CUT</td><td>Optional &quot;Attention compounds&quot; card</td></tr>
+<tr><td>12</td><td>12:34-12:36</td><td>Chapter 4 card</td><td>card</td><td>SLIDE</td><td>Keep</td></tr>
+<tr><td>13</td><td>12:36-15:20</td><td>Mechanical Patterns Have Their Own Power</td><td>decidable rule</td><td>OVERDUB + OUTCOME(aggregate)</td><td>Ken names five-day-down. 5DD study ALREADY COMPUTED (topical-5dd); insert stats table. Tests &quot;works because believed&quot; honestly</td></tr>
+<tr><td>14</td><td>15:20-18:00</td><td>★ Detect the Shift</td><td>credo</td><td>KEEP CUT</td><td>Discretionary regime read → no outcome on his rule; optional regime_replay via MACD-seasons labels clearly framed as our proxy</td></tr>
+<tr><td>15</td><td>18:00-19:20</td><td>Manageable Risk Earns the Trade</td><td>principle</td><td>OVERDUB</td><td>Regime shift compressing the risk box (band chart + risk box)</td></tr>
+<tr><td>16</td><td>19:20-19:22</td><td>Chapter 5 card</td><td>card</td><td>SLIDE</td><td>Fix &quot;Leavenworth&quot; spelling everywhere</td></tr>
+<tr><td>17</td><td>19:22-22:10</td><td>The Leavenworth B</td><td>army story</td><td>KEEP CUT</td><td>Untouchable</td></tr>
+<tr><td>18</td><td>22:10-24:40</td><td>★ My Leavenworth B Should Win the War</td><td>key moment</td><td>KEEP CUT</td><td>Trim inside cut toward the ★ line</td></tr>
+<tr><td>19</td><td>24:40-26:30</td><td>Confirm and Affirm</td><td>synthesis</td><td>KEEP CUT</td><td>End on Ken; maxim typography card final frame</td></tr>
+<tr><td>20</td><td>26:30-26:32</td><td>Bridge to Module 3</td><td>card</td><td>SLIDE</td><td>Keep</td></tr>
+</table></div>
+<p><strong>Top 3 wins:</strong> (1) 5DD aggregate in Ch4 — near-zero cost, engine exists; (2) core+turbo risk-box overdub — strongest chapter for the cheapest overdub; (3) three-bucket sort board — the headline sales-copy feature gets its component; bonus: if the cohort-6 date pins, the named swing list (silver, PLTR, UMAC, NVDA, CAT) supports a &quot;did the continuations continue?&quot; single with failures published.</p>
+<div class="fixwrap"><label>Corrections for this course (autosaves)</label><textarea data-panel="trading-session" placeholder="e.g. keep the whole symbol walk in swing-logic"></textarea></div>
+</details>
+<details id="disciplined-operator"><summary>3. Disciplined Operator (c-tosm3, ~42 min, 30 scenes) — MED</summary>
+<p><strong>Course read.</strong> Zoom cohort sessions (Ken with Tom Hardison, Alex, Hammad). Two-thirds pure psychology/story (rigidity-revenge, monkey-drive, Aristotle, Frankenstein) — stays CUT. Three visualizable frameworks trapped as words on cards: soccer trade-lifecycle, A/B/C Z-bands, portfolio heat. No symbol/date/decidable rule anywhere → <strong>zero outcomes</strong>.</p>
+<div class="tw"><table>
+<tr><th>#</th><th>time</th><th>scene</th><th>class</th><th>v2</th><th>note</th></tr>
+<tr><td>1</td><td>0:00-3:20</td><td>The Pathologies Every Operator Carries</td><td>psychology</td><td>KEEP CUT</td><td>Typography card naming rigidity/revenge</td></tr>
+<tr><td>2</td><td>3:20-6:20</td><td>The Stupid Gate Story</td><td>story</td><td>KEEP CUT</td><td>Untouchable; trim dead air</td></tr>
+<tr><td>3</td><td>6:20-7:30</td><td>Tonight We Get to Explore</td><td>logistics</td><td>TRIM/DROP</td><td>Keep the &quot;explore, don&#x27;t fix&quot; line only</td></tr>
+<tr><td>4</td><td>7:30-7:32</td><td>Ch 1b card</td><td>card</td><td>SLIDE</td><td>Keep</td></tr>
+<tr><td>5</td><td>7:32-10:00</td><td>How Long Will You Watch the Monkey Drive?</td><td>key moment</td><td>KEEP CUT</td><td>Signature question; typography card on quote</td></tr>
+<tr><td>6</td><td>10:00-12:01</td><td>Take the Wheel for Your Kids</td><td>reframe</td><td>KEEP CUT</td><td>&quot;Stop. Flip. Drive.&quot; card at close</td></tr>
+<tr><td>7</td><td>12:00-12:01</td><td>Ch 2 card</td><td>card</td><td>SLIDE</td><td>Keep</td></tr>
+<tr><td>8</td><td>12:01-13:50</td><td>Protect the Goal First</td><td>framework p1</td><td>OVERDUB</td><td>NEW soccer-pitch→chart morph: risk box under entry (beat 1)</td></tr>
+<tr><td>9</td><td>13:50-14:40</td><td>★ Then Get the Ball</td><td>framework p2</td><td>OVERDUB</td><td>Entry marker snaps in on the sting (beat 2)</td></tr>
+<tr><td>10</td><td>14:40-15:40</td><td>Go to the Goal — Find Space</td><td>framework p3</td><td>OVERDUB</td><td>Trade in flight, congestion shaded (beat 3)</td></tr>
+<tr><td>11</td><td>15:40-15:59</td><td>Shoot and Score</td><td>framework p4</td><td>OVERDUB</td><td>Exit beat + four-phase summary frame (beat 4)</td></tr>
+<tr><td>12</td><td>15:59-16:01</td><td>Ch 3 card</td><td>card</td><td>SLIDE</td><td>Keep</td></tr>
+<tr><td>13</td><td>16:01-18:40</td><td>Pride Is the First Deadly Sin</td><td>philosophy</td><td>KEEP CUT</td><td>Typography card only</td></tr>
+<tr><td>14</td><td>18:40-21:20</td><td>Aristotle Puts Judgment in the Middle</td><td>spectrum model</td><td>KEEP CUT + light EXPLAINER tail</td><td>Ava typography spectrum strip (timidity ← judgment → pride)</td></tr>
+<tr><td>15</td><td>21:20-22:50</td><td>Both Failure Modes Cost the Same</td><td>principle</td><td>KEEP CUT</td><td>Lands in his cadence</td></tr>
+<tr><td>16</td><td>22:50-22:52</td><td>Ch 3b card</td><td>card</td><td>SLIDE</td><td>Keep</td></tr>
+<tr><td>17</td><td>22:52-24:10</td><td>The B Game Is Your Center of Mass</td><td>Z-bands</td><td>OVERDUB</td><td>Band chart: personal-mean distribution, Z±1 shading as he speaks</td></tr>
+<tr><td>18</td><td>24:10-25:30</td><td>★ Z+1 Is Where the A Game Begins</td><td>Z-bands</td><td>OVERDUB</td><td>Z+1 boundary draws on the sting; A/C tails at ±2σ</td></tr>
+<tr><td>19</td><td>25:30-27:11</td><td>Rate the Session, Not the P&amp;L</td><td>principle</td><td>KEEP CUT</td><td>&quot;Grade the session A/B/C tonight&quot; card</td></tr>
+<tr><td>20</td><td>27:11-27:13</td><td>Ch 4 card</td><td>card</td><td>SLIDE</td><td>Keep</td></tr>
+<tr><td>21</td><td>27:13-29:40</td><td>Three Guns, One Stream of Fire</td><td>parable</td><td>KEEP CUT</td><td>Minimal typography overlays for the numbers</td></tr>
+<tr><td>22</td><td>29:40-31:40</td><td>Disciplined Fire Wins</td><td>principle</td><td>KEEP CUT</td><td>&quot;Rotate. Pause. Conserve.&quot; card; rhetorical, not decidable</td></tr>
+<tr><td>23</td><td>31:40-31:43</td><td>Ch 4b card</td><td>card</td><td>SLIDE</td><td>Keep</td></tr>
+<tr><td>24</td><td>31:43-34:10</td><td>The Frankenstein Creature</td><td>key moment</td><td>KEEP CUT</td><td>Best 20 seconds in the course; do not touch</td></tr>
+<tr><td>25</td><td>34:10-36:10</td><td>Minimum Mission-Essential Set</td><td>doctrine</td><td>KEEP CUT</td><td>Practice card question</td></tr>
+<tr><td>26</td><td>36:10-36:13</td><td>Ch 5 card</td><td>card</td><td>SLIDE</td><td>Keep</td></tr>
+<tr><td>27</td><td>36:13-38:50</td><td>Define It Before You Need It</td><td>mechanical</td><td>KEEP CUT → OVERDUB at definition</td><td>Open on the Ken/Tom exchange, then NEW portfolio-heat gauge: positions stacking as ladder rungs</td></tr>
+<tr><td>28</td><td>38:50-40:40</td><td>★ Portfolio Heat Is System-Level Risk</td><td>mechanical</td><td>OVERDUB</td><td>Rungs collapse to one number on the sting; &quot;worst trade ≠ worst day&quot; card. No outcome (nothing named)</td></tr>
+<tr><td>29</td><td>40:40-41:39</td><td>Dynamic Risk Threshold</td><td>mechanical</td><td>EXPLAINER</td><td>Ava + heat gauge mode 2: threshold moving against an equity path</td></tr>
+<tr><td>30</td><td>41:39-41:41</td><td>Five chapters, one operator</td><td>card</td><td>SLIDE</td><td>Keeps Module 4 hand-off</td></tr>
+</table></div>
+<p><strong>Top 3 wins:</strong> (1) the soccer chapter as one continuous 4-beat overdub — the course&#x27;s hero sequence and the store&#x27;s hero-GIF replacement; (2) A/B/C Z-bands on the existing band chart — most abstract 2.5 min becomes most concrete, pure reuse; (3) portfolio-heat gauge — one component used three ways, directly reusable in every future risk module.</p>
+<div class="fixwrap"><label>Corrections for this course (autosaves)</label><textarea data-panel="disciplined-operator" placeholder="e.g. keep the whole symbol walk in swing-logic"></textarea></div>
+</details>
+<details id="tomorrows-trades"><summary>4. Tomorrow&#x27;s Trades (c-mka, ~42 min, 24 scenes) — HIGH</summary>
+<p><strong>Course read.</strong> The most chartable manifest in the arc: 18 of 24 scenes teach on price structure. Two central claims are decidable rules — &quot;break above yesterday&#x27;s high = new buyers&quot; and &quot;continuations have runway to the 10-day high&quot; — the strongest aggregate-outcome candidates in the catalog. Editorial flag: scene 8&#x27;s &quot;across all the successful continuations Ken&#x27;s logged&quot; is personal-log expectancy, forbidden by the outcome rules — v2 replaces it with the rule-based aggregate. Sting prompt fields carry stale c-open-01 copy-paste (the _note fields are authoritative).</p>
+<div class="tw"><table>
+<tr><th>#</th><th>time</th><th>scene</th><th>class</th><th>v2</th><th>note</th></tr>
+<tr><td>1</td><td>0:00-1:00</td><td>Gratitude, Forgiveness, Then the Sort</td><td>ritual</td><td>KEEP CUT</td><td>Psychology — no outcome ever</td></tr>
+<tr><td>2</td><td>1:00-3:20</td><td>★ Three Sources of New Symbols</td><td>framework</td><td>OVERDUB</td><td>Keep audio + sting; NEW three-source flow diagram</td></tr>
+<tr><td>3</td><td>3:20-5:20</td><td>Source 1: Open Swings</td><td>platform screen</td><td>OVERDUB</td><td>Open-positions board; risk-box reuse for &quot;risk boxes already set&quot;</td></tr>
+<tr><td>4</td><td>5:20-6:29</td><td>Sources 2+3</td><td>bridge</td><td>OVERDUB</td><td>Same diagram, staged reveals</td></tr>
+<tr><td>5</td><td>6:29-6:30</td><td>Ch 2 card</td><td>card</td><td>SLIDE</td><td>As-is</td></tr>
+<tr><td>6</td><td>6:30-9:10</td><td>Re-Enter What Already Worked</td><td>principle</td><td>KEEP CUT</td><td>Sets up scene-7 outcome</td></tr>
+<tr><td>7</td><td>9:10-12:00</td><td>The 10-Day-High Target</td><td>decidable</td><td>OVERDUB + OUTCOME(aggregate)</td><td>Band chart w/ runway. Rule: close in trade direction after up-day → touch prior 10d high before violating prior day&#x27;s low, within 5 sessions? Liquid universe, full history</td></tr>
+<tr><td>8</td><td>12:00-13:59</td><td>Continuation as Positive Expectancy</td><td>personal-log claim</td><td>OUTCOME(aggregate)</td><td>EDITORIAL FIX — replace anecdote with the scene-7 rule run&#x27;s stats table, publish whatever it says</td></tr>
+<tr><td>9</td><td>13:59-14:00</td><td>Ch 3 card</td><td>card</td><td>SLIDE</td><td>As-is</td></tr>
+<tr><td>10</td><td>14:00-16:40</td><td>Above Yesterday&#x27;s High = New Buyers</td><td>decidable</td><td>OVERDUB + OUTCOME(aggregate)</td><td>FLAGSHIP backtest: cross above yesterday&#x27;s high → close location + next-day follow-through, full quote store, ambiguity disclosed</td></tr>
+<tr><td>11</td><td>16:40-18:20</td><td>The RL10/RL270 Discrepancy</td><td>definitional</td><td>OVERDUB + EXPLAINER</td><td>Ava defines regression line; render from real edge-transform rl_series values</td></tr>
+<tr><td>12</td><td>18:20-20:00</td><td>★ Five ATRs of Runway, One ATR of Risk</td><td>key moment</td><td>OVERDUB</td><td>Sting kept; 1-ATR box vs 5-ATR runway to RL270</td></tr>
+<tr><td>13</td><td>20:00-22:59</td><td>Reading the Recovery</td><td>narrative</td><td>KEEP CUT + OUTCOME(single, conditional)</td><td>If footage names the recovery symbol+date, resolve bar-by-bar; publish even if failed</td></tr>
+<tr><td>14</td><td>22:59-23:00</td><td>Ch 4 card</td><td>card</td><td>SLIDE</td><td>As-is</td></tr>
+<tr><td>15</td><td>23:00-25:30</td><td>Frame the Night Before</td><td>framework</td><td>KEEP CUT</td><td>Practice card at close</td></tr>
+<tr><td>16</td><td>25:30-28:20</td><td>The Six-Pattern Menu</td><td>definitional ×6</td><td>OVERDUB + EXPLAINER</td><td>NEW six-pattern menu: mini candle-shape per pattern (O3, 123, WMBB3, SSC, collapsing Dragon, continuation) + Ava glossary beat</td></tr>
+<tr><td>17</td><td>28:20-30:50</td><td>The Big-Gap Exception</td><td>caveat</td><td>KEEP CUT</td><td>Honesty caveat — exactly the CUT class</td></tr>
+<tr><td>18</td><td>30:50-31:59</td><td>WMBB3</td><td>mechanics walk</td><td>OVERDUB + OUTCOME(single)</td><td>MACD sub-pane rebuild of the 4-5 bar sequence; extract demo symbol+date from footage, replay on real bars, win or failure</td></tr>
+<tr><td>19</td><td>31:59-32:00</td><td>Ch 5 card</td><td>card</td><td>SLIDE</td><td>As-is</td></tr>
+<tr><td>20</td><td>32:00-34:40</td><td>Two Price Levels with Power</td><td>decidable</td><td>OVERDUB + OUTCOME(aggregate)</td><td>Reaction frequency at yesterday&#x27;s H/L + 10d H/L: touch → N-bar reversal vs punch-through</td></tr>
+<tr><td>21</td><td>34:40-36:40</td><td>★ Daily → 10-Day → 30-Day</td><td>key framework</td><td>OVERDUB</td><td>Sting kept; nested band-chart, three zoom levels</td></tr>
+<tr><td>22</td><td>36:40-39:10</td><td>Yellow Zones and Decision Bias</td><td>platform vocab</td><td>OVERDUB + EXPLAINER</td><td>Ava defines RYG zones once (edge-vocab EV-004), then day-frame with zone shading</td></tr>
+<tr><td>23</td><td>39:10-41:39</td><td>The Essence of Sniper Trading</td><td>credo</td><td>KEEP CUT</td><td>&quot;Stalk, not search&quot; — emotional close is Ken&#x27;s</td></tr>
+<tr><td>24</td><td>41:39-42:00</td><td>Five chapters</td><td>bridge</td><td>SLIDE</td><td>Fold into outro</td></tr>
+</table></div>
+<p><strong>Top 3 wins:</strong> (1) buyer-evidence aggregate — the central claim becomes published evidence, back-stopping three other scenes; (2) 10-day-high runway aggregate — animates the concept AND fixes the scene-8 grammar violation; (3) WMBB3 single outcome on the MACD sub-pane — densest mechanics walk, components already exist.</p>
+<div class="fixwrap"><label>Corrections for this course (autosaves)</label><textarea data-panel="tomorrows-trades" placeholder="e.g. keep the whole symbol walk in swing-logic"></textarea></div>
+</details>
+<details id="intraday-decision-tree"><summary>5. Intraday Decision Tree (c-mkb, ~33 min, 19 scenes) — HIGH</summary>
+<p><strong>Course read.</strong> The most mechanically decidable course in the catalog: PSAR-flip exits, rangestat trail boundary, gap-size pattern selection, 5DD trigger, VWAP magnet — nearly every chapter is verifiable. Ken&#x27;s audio is uniformly strong doctrine; visuals are cohort chart shares + 360p whiteboard scrawl in the recut Chapter 5. The two ★ moments stay untouched CUTs.</p>
+<div class="tw"><table>
+<tr><th>#</th><th>time</th><th>scene</th><th>class</th><th>v2</th><th>note</th></tr>
+<tr><td>1</td><td>0:00-2:00</td><td>When RL10 Wiggles</td><td>chart walkthrough</td><td>OVERDUB</td><td>RL10/RL30/SMA30/PSAR as clean band-chart animation</td></tr>
+<tr><td>2</td><td>2:00-4:40</td><td>Give the Reversal a Chance</td><td>principle</td><td>OVERDUB</td><td>PSAR-as-leash on same animated chart</td></tr>
+<tr><td>3</td><td>4:40-7:29</td><td>Don&#x27;t Exit on the Wiggle</td><td>charted instance</td><td>OVERDUB + OUTCOME(single, conditional)</td><td>RL30-rollover exit vs PSAR hold; pull symbol/date from footage if identifiable</td></tr>
+<tr><td>4</td><td>7:29-7:30</td><td>Ch 2 card</td><td>card</td><td>SLIDE</td><td>Keep</td></tr>
+<tr><td>5</td><td>7:30-10:00</td><td>Respect the P</td><td>doctrine</td><td>KEEP CUT</td><td>&quot;That P never got hit by price&quot; to camera</td></tr>
+<tr><td>6</td><td>10:00-11:00</td><td>★ The Zero-Defect Exit</td><td>key moment</td><td>KEEP CUT</td><td>Untouched; sting stays</td></tr>
+<tr><td>7</td><td>11:00-14:29</td><td>Layering Judgment On Top</td><td>psychology</td><td>KEEP CUT</td><td>Mindset — no outcome ever</td></tr>
+<tr><td>8</td><td>14:29-14:30</td><td>Ch 3 card</td><td>card</td><td>SLIDE</td><td>Keep</td></tr>
+<tr><td>9</td><td>14:30-17:10</td><td>Cash the Rational Exuberance</td><td>add rule</td><td>OVERDUB + OUTCOME(aggregate)</td><td>Ladder + risk box; pyramid-vs-flat R on QQQ/IWM day-trend days 2022-2026</td></tr>
+<tr><td>10</td><td>17:10-18:20</td><td>★ Never Let Irrational Retrace Inside Rational</td><td>key + decidable</td><td>KEEP CUT + OUTCOME(aggregate)</td><td>Quote untouched; then: once past rangestat boundary, exit any close back inside — vs PSAR-only, on &gt;2× rangestat winner days, SPY/QQQ/IWM/DIA</td></tr>
+<tr><td>11</td><td>18:20-20:30</td><td>The Choice: O3 vs RL10 Bracket vs…</td><td>THE decision tree</td><td>EXPLAINER</td><td>FLAGSHIP: Ava + branching-tree animation; hero art (branching_paths.png) is the visual seed</td></tr>
+<tr><td>12</td><td>20:30-22:29</td><td>Big-Gap Default: RL10 Bracket</td><td>decidable</td><td>OVERDUB + OUTCOME(aggregate)</td><td>gapz ≥ +1σ → fade toward RL10, target prior-day level; big-gap days 2022-2026, publish whatever it says</td></tr>
+<tr><td>13</td><td>22:29-22:30</td><td>Ch 4 card</td><td>card</td><td>SLIDE</td><td>Keep</td></tr>
+<tr><td>14</td><td>22:30-25:00</td><td>Category 1: Continuations from Today</td><td>process</td><td>KEEP CUT</td><td>Ken carries it</td></tr>
+<tr><td>15</td><td>25:00-27:30</td><td>Category 2: New Swing Patterns</td><td>setup catalog</td><td>OVERDUB</td><td>Seven-setups grid as clean typography</td></tr>
+<tr><td>16</td><td>27:30-29:29</td><td>The 5DD Trigger Mechanics</td><td>fully decidable</td><td>OVERDUB + OUTCOME(aggregate)</td><td>5DD study ALREADY COMPUTED (topical-5dd) — reuse</td></tr>
+<tr><td>17</td><td>29:30</td><td>Ch 5 card</td><td>card</td><td>SLIDE</td><td>Keep (recut chapter)</td></tr>
+<tr><td>18</td><td>29:31-31:03</td><td>Why the Last 30 Minutes Trades Differently</td><td>verbal + 360p</td><td>OVERDUB</td><td>Leverage-unwind mechanics animated; source visual unusable</td></tr>
+<tr><td>19</td><td>31:03-32:30</td><td>★ The VWAP Magnet</td><td>decidable + whiteboard scrawl</td><td>OVERDUB + OUTCOME(single + aggregate)</td><td>FadeStat/FailStat/GainStat over real bars. Single: DIA 2023-07-12 (the session&#x27;s own date). Aggregate: 15:30 VWAP deviation ≥ 2× fadestat → close within 1× fadestat, SPY+DIA 1-min 2023-2026</td></tr>
+</table></div>
+<p><strong>Top 3 wins:</strong> (1) the decision-tree explainer — the course is named for it and it becomes the memorable artifact of the SKU; (2) the 5DD aggregate — free reuse of the topical-5dd study; (3) the Chapter 5 VWAP-magnet rebuild — weakest footage + most chartable claim = patch becomes showcase.</p>
+<div class="fixwrap"><label>Corrections for this course (autosaves)</label><textarea data-panel="intraday-decision-tree" placeholder="e.g. keep the whole symbol walk in swing-logic"></textarea></div>
+</details>
+<details id="story-stocks"><summary>6. Story Stocks (c-mkc, ~39 min, 20 scenes) — MED · **RANK 1 FRUIT**</summary>
+<p><strong>Course read.</strong> Cut from <code>situational-framing-story-stocks</code> (transcript in catalog; datable ~mid-Dec 2024 by internal anchors: TSLA 225→400 post-election, NVDA 140, PLTR 76→80). The footage contains two live named framings: <strong>UMAC</strong> (the &quot;$9 robot stock,&quot; Don Jr. narrative, $9 entry / $2 stop) and an explicit falsifiable prediction (&quot;<strong>592 by Friday</strong>&quot; off a cracked 10-day AVWAP — levels fit SPY mid-Dec 2024, confirm from frames). The edge-playbooks story_stocks draft supplies a decidable in-play set for the AVWAP-trail aggregate.</p>
+<div class="tw"><table>
+<tr><th>#</th><th>time</th><th>scene</th><th>class</th><th>v2</th><th>note</th></tr>
+<tr><td>1</td><td>0:00-2:30</td><td>Exceptional Circumstances, Exceptional Tools</td><td>principle</td><td>KEEP CUT</td><td>&quot;Normal stuff anti-works&quot; to camera</td></tr>
+<tr><td>2</td><td>2:30-4:40</td><td>★ The 5-10-20-30 Toolkit</td><td>framework</td><td>OVERDUB</td><td>Whiteboard → typography quadrant animation; sting kept</td></tr>
+<tr><td>3</td><td>4:40-6:59</td><td>When the Pattern Library Fails</td><td>psychology</td><td>KEEP CUT</td><td>No outcome ever</td></tr>
+<tr><td>4</td><td>6:59-7:00</td><td>Ch 2 card</td><td>card</td><td>SLIDE</td><td>Keep</td></tr>
+<tr><td>5</td><td>7:00-10:00</td><td>The $9 Robot Stock</td><td>named example</td><td>OVERDUB + OUTCOME(single)</td><td>UMAC ~Dec 2024: $9 entry, $7 stop, 9→18 thesis. Real split-adjusted bars; likely an honest stop-out before the later run — publish regardless. Catalyst disclosed</td></tr>
+<tr><td>6</td><td>10:00-12:40</td><td>★ Chips Out of the Stack</td><td>sizing process</td><td>KEEP CUT + micro-EXPLAINER</td><td>Not chartable, NO outcome; one Ava card for the arithmetic ($1,000 ÷ $2 = 500 shares)</td></tr>
+<tr><td>7</td><td>12:40-14:59</td><td>The $2 Stop, Decision Made</td><td>discipline</td><td>KEEP CUT</td><td>Stop resolution covered by row 5</td></tr>
+<tr><td>8</td><td>14:59-15:00</td><td>Ch 3 card</td><td>card</td><td>SLIDE</td><td>Keep</td></tr>
+<tr><td>9</td><td>15:00-17:30</td><td>The Recognition Tests</td><td>framework</td><td>EXPLAINER</td><td>Checklist animation. NOT aggregate-able (social/news data absent from quote store) — don&#x27;t fake a stats table</td></tr>
+<tr><td>10</td><td>17:30-20:00</td><td>The Narrative Lifecycle</td><td>concept</td><td>EXPLAINER</td><td>Lifecycle arc diagram</td></tr>
+<tr><td>11</td><td>20:00-22:59</td><td>Catalyst Categories</td><td>move shapes</td><td>EXPLAINER</td><td>Real-bars vignettes (earnings drift / FDA gap / M&amp;A grind / inclusion) labeled as exemplars, not outcomes</td></tr>
+<tr><td>12</td><td>22:59-23:00</td><td>Ch 4 card</td><td>card</td><td>SLIDE</td><td>Keep</td></tr>
+<tr><td>13</td><td>23:00-25:30</td><td>The 10-Day VWAP as Story Trail</td><td>mechanical rule</td><td>OVERDUB + OUTCOME(aggregate)</td><td>Exit on close below rising 10d AVWAP, run over the playbooks in-play set; stats table</td></tr>
+<tr><td>14</td><td>25:30-28:00</td><td>Stacked Frames Tell the Same Story</td><td>mechanical</td><td>OVERDUB</td><td>NEW stacked-frames component (3d/5d rolling + 10d anchored rolling over in sequence)</td></tr>
+<tr><td>15</td><td>28:00-30:59</td><td>Cracks Before the Break</td><td>named live framing</td><td>OVERDUB + OUTCOME(single)</td><td>THE PRIZE: verbatim walkthrough — AVWAP cracked, 5d rolled, 3d down, 597/602, &quot;592 by Friday.&quot; Rebuild real bars, score frame-vs-price. PLTR 76→80 available as second single</td></tr>
+<tr><td>16</td><td>30:59-31:00</td><td>Ch 5 card</td><td>card</td><td>SLIDE</td><td>Keep</td></tr>
+<tr><td>17</td><td>31:00-33:40</td><td>Narrative Decay Precedes Chart Decay</td><td>non-chart tells</td><td>KEEP CUT</td><td>Mostly non-chartable data; Ken carries it</td></tr>
+<tr><td>18</td><td>33:40-36:20</td><td>Reduce the Stop as It Goes</td><td>process rule</td><td>KEEP CUT</td><td>Underspecified for aggregate</td></tr>
+<tr><td>19</td><td>36:20-38:00</td><td>★ The Simple Rule Beats the Smart One</td><td>honesty caveat</td><td>KEEP CUT</td><td>His &quot;average loss got higher&quot; confession untouched</td></tr>
+<tr><td>20</td><td>38:00-38:59</td><td>Five chapters, one different game</td><td>recap</td><td>SLIDE</td><td>Typography recap into outro</td></tr>
+</table></div>
+<p><strong>Top 3 wins:</strong> (1) the UMAC single — a framed real micro-cap trade, powerful either way under publish-every-outcome; (2) &quot;592 by Friday&quot; — an explicit, decidable, time-boxed prediction spoken on camera, scored bar-by-bar via the course&#x27;s own method; (3) the AVWAP-trail aggregate via the playbooks in-play set — central mechanical claim becomes a stats table.</p>
+<div class="fixwrap"><label>Corrections for this course (autosaves)</label><textarea data-panel="story-stocks" placeholder="e.g. keep the whole symbol walk in swing-logic"></textarea></div>
+</details>
+<details id="swing-logic"><summary>7. Swing Logic (2022, listed ~63 min — source 98 min, 15 chapters) — HIGH · full re-cut</summary>
+<p><strong>Course read.</strong> Source recovered: the 2022-10-01 Saturday-night Tortoise Capital strategy podcast (rmfIYAVNQOA), full VTT. Live podcast, not a produced course: subscriber greeting by name, balky brush tool, member chart markups, Oct-2022 macro (election window, escalation risk), member-priced promo close. Liability = wrapper decay woven throughout. The first 35 minutes contain some of the most systematically complete timeframe-integration audio Ken recorded. <strong>Flag: VTT runs 1:38:32 vs listed ~63 min — verify the delivered video before planning.</strong> The 67-card deck is concept-keyed and survives v2 untouched.</p>
+<div class="tw"><table>
+<tr><th>#</th><th>time</th><th>chapter</th><th>class</th><th>v2</th><th>note</th></tr>
+<tr><td>1</td><td>0:00-0:47</td><td>Podcast open, greeting</td><td>housekeeping</td><td>DROP → SLIDE</td><td>Names a subscriber; not evergreen</td></tr>
+<tr><td>2</td><td>0:47-5:05</td><td>Three-timeframe framework</td><td>definition</td><td>OVERDUB</td><td>Nested-gears hero art exists in inbox</td></tr>
+<tr><td>3</td><td>5:05-11:24</td><td>Intraday: normal → abnormal → critical; Z3P bracket; battle drill</td><td>decidable</td><td>OVERDUB + OUTCOME(aggregate)</td><td>Z3P compression bracket rule over the quote store; band chart + risk box reuse</td></tr>
+<tr><td>4</td><td>11:24-18:46</td><td>Six mechanical swing systems + WR claims</td><td>decidable</td><td>OVERDUB + OUTCOME(aggregate)</td><td>Ken states 60-65% WR on camera — verify 5DD/channeling claims, publish whatever comes out</td></tr>
+<tr><td>5</td><td>18:46-23:51</td><td>Auto Framer: R:R off the daily report</td><td>mechanics</td><td>OVERDUB</td><td>Ladder + risk box exact fit</td></tr>
+<tr><td>6</td><td>23:51-29:28</td><td>Hybrid trading, cross-TF sizing</td><td>mixed</td><td>CUT/OVERDUB mix</td><td>Keep his voice; replace platform grids only</td></tr>
+<tr><td>7</td><td>29:28-35:15</td><td>RLCO patterns, super pinch, fractal timeframes</td><td>taxonomy</td><td>OVERDUB</td><td>The fractal thesis earns the cleanest animation</td></tr>
+<tr><td>8</td><td>35:15-39:58</td><td>Schedule, check/hold analogy, groups</td><td>community</td><td>KEEP CUT (heavy trim)</td><td>Keep check/hold ~90s; drop logistics</td></tr>
+<tr><td>9</td><td>39:58-44:47</td><td>Stats teach-in: RL30 slope, z-scores</td><td>statistics</td><td>OVERDUB</td><td>Bell-curve scrawl → stats table + band chart</td></tr>
+<tr><td>10</td><td>44:47-51:19</td><td>Sector dashboard + Oct-2022 macro</td><td>dated regime read</td><td>KEEP CUT (trim macro) + OUTCOME(regime_replay)</td><td>Label Oct-2022 as-of; show what the board did next, ≥2 symbols</td></tr>
+<tr><td>11</td><td>51:19-54:38</td><td>XLY vs XLP psychology gauge</td><td>concept</td><td>OVERDUB</td><td>Evergreen</td></tr>
+<tr><td>12</td><td>54:38-1:07:56</td><td>Chart reviews: QQQ MTFMLA, Ken H&#x27;s 13R</td><td>member markups</td><td>OVERDUB + OUTCOME(single)</td><td>QQQ weekly critical state = named frame with date; Ken H&#x27;s P&amp;L handled frame-vs-price only</td></tr>
+<tr><td>13</td><td>1:07:56-1:10:55</td><td>Collapsing Dragon — #1 favorite pattern</td><td>story + pattern</td><td>KEEP CUT + OUTCOME(single)</td><td>Keep his face; resolve the framed example on real bars</td></tr>
+<tr><td>14</td><td>1:10:55-1:33:14</td><td>Symbol walk: TWTR/Elon, Godzilla, TSLA, DVN</td><td>dated frames</td><td>HEAVY TRIM + OUTCOME(single ×3-4)</td><td>Most decayed 22 min = best outcome material. Keep TSLA either-direction, DVN, one Godzilla; failures published; drop the rest</td></tr>
+<tr><td>15</td><td>1:33:14-1:38:32</td><td>Wrap: promo + sign-off</td><td>promo</td><td>DROP → SLIDE</td><td>Member pricing can&#x27;t ship</td></tr>
+</table></div>
+<p><strong>Top 3 wins:</strong> (1) Z3P compression aggregate — the marquee named pattern becomes evidence; (2) the dated symbol walk becomes the outcome reel — worst liability into best material; (3) overdub the first 35 minutes — textbook case, components cover almost every diagram. <strong>Verdict: full re-cut to ~55-65 min; targeted replacement doesn&#x27;t work (wrapper woven through).</strong></p>
+<div class="fixwrap"><label>Corrections for this course (autosaves)</label><textarea data-panel="swing-logic" placeholder="e.g. keep the whole symbol walk in swing-logic"></textarea></div>
+</details>
+<details id="strategic-decision"><summary>8. Strategic Decision / AI (2024, listed ~64 min — source 91 min, 15 chapters) — MED</summary>
+<p><strong>Course read.</strong> Source recovered: eZo3WpGhLmU (~mid-Oct 2024 by internal anchors). A hosted Q&amp;A: a ~15-min tour-de-force on AI in trading, nine swing questions, a dated market walk. The judgment core (three use cases, &quot;AI is like alcohol, money and fame,&quot; prompting-as-questioning, the self-audit demo) aged WELL — it anticipates the cognitive-offload discourse. Aged badly: &quot;Claude 3.5 Sonnet is the best-rated LLM&quot; (2024 snapshot) and the Oct-2024 market tail. <strong>Flag: verify what the ~64-min prod embed actually contains — the tail may already be cut.</strong> Verdict: <strong>v2 yes, re-record no</strong> — on condition the market-walk tail is cut or outcome-framed.</p>
+<div class="tw"><table>
+<tr><th>#</th><th>time</th><th>chapter</th><th>class</th><th>v2</th><th>note</th></tr>
+<tr><td>1</td><td>0:00-0:57</td><td>Host greeting, share fumbling</td><td>housekeeping</td><td>SLIDE (drop footage)</td><td>Cold-open on ch.3 instead</td></tr>
+<tr><td>2</td><td>0:57-2:45</td><td>Ken&#x27;s AI credentials</td><td>authority</td><td>KEEP CUT</td><td>Army University, doctoral lecture — keep intact</td></tr>
+<tr><td>3</td><td>2:45-5:20</td><td>&quot;AI is like alcohol, money, fame&quot;; 3 use cases</td><td>framework</td><td>KEEP CUT + typography EXPLAINER</td><td>The signature maxim = the cold open</td></tr>
+<tr><td>4</td><td>5:20-8:44</td><td>Human-AI team; hallucination story</td><td>caveat</td><td>KEEP CUT</td><td>Honesty caveat, exactly what CUT is for</td></tr>
+<tr><td>5</td><td>8:44-13:27</td><td>Use case 2 needs a strong human; AI vs ML</td><td>judgment</td><td>KEEP CUT (OVERDUB only if slide on screen)</td><td>Audio self-sufficient</td></tr>
+<tr><td>6</td><td>13:27-15:56</td><td>Prompting = asking questions; &quot;Claude 3.5 Sonnet is my default&quot;</td><td>judgment + DATED</td><td>KEEP CUT + 20-30s Ava disclaimer</td><td>Model names date fast; principles are model-agnostic. NOT outcome-eligible (no bars, no rule)</td></tr>
+<tr><td>7</td><td>15:56-17:30</td><td>The nine questions</td><td>agenda</td><td>SLIDE</td><td>Trim</td></tr>
+<tr><td>8</td><td>17:30-36:00</td><td>Swing Q&amp;A: 1R/2-3R frame, battle drill</td><td>trading process</td><td>KEEP CUT + OVERDUB at screen refs</td><td>Risk box + band chart reuse</td></tr>
+<tr><td>9</td><td>36:00-42:50</td><td>Learning-ecosystem one-pager (v0.8)</td><td>diagram</td><td>OVERDUB</td><td>Highest-value diagram in the course, currently low-res share</td></tr>
+<tr><td>10</td><td>42:50-53:44</td><td>The self-audit prompt demo</td><td>AI workflow — core</td><td>KEEP CUT + typography OVERDUB of the top-10 list</td><td>Best segment; rebuild also removes 2024-dated model output from screen</td></tr>
+<tr><td>11</td><td>53:44-54:21</td><td>&quot;…and I validated it&quot;</td><td>judgment</td><td>KEEP CUT</td><td>The anti-oracle thesis in one line</td></tr>
+<tr><td>12</td><td>54:21-60:30</td><td>Exits + personal stats (67% WR, 0.97R)</td><td>self-disclosure</td><td>KEEP CUT — explicitly NO outcome</td><td>Personal P&amp;L is fine to camera, forbidden as an outcome</td></tr>
+<tr><td>13</td><td>60:30-65:00</td><td>Influences: Deming, Tharp, Douglas…</td><td>lineage</td><td>KEEP CUT + name-card EXPLAINER</td><td>Cheap, evergreen</td></tr>
+<tr><td>14</td><td>65:00-~87:00</td><td>Oct-2024 market walk (ADX/risk-Z, NVDA, TSLA frame)</td><td>DATED commentary</td><td>CUT MOST; one optional OUTCOME(single) on the TSLA frame</td><td>Named symbol + framed levels qualify; the NVDA directional opinion has no frame = cherry-pick bait, leave out</td></tr>
+<tr><td>15</td><td>~87:00-91:28</td><td>Wrap, &quot;go Chiefs&quot;</td><td>sign-off</td><td>Trim to short CUT + end SLIDE</td><td>The dated line goes</td></tr>
+</table></div>
+<p><strong>Top 3 wins:</strong> (1) the self-audit demo rebuilt (cut + typography overdub) — the course&#x27;s unique idea, and the rebuild solves the aging problem; (2) the learning-ecosystem one-pager as animated overdub; (3) the &quot;alcohol, money, fame&quot; maxim as the cold open with a 3-use-cases card — a real thesis statement in the first 90 seconds.</p>
+<div class="fixwrap"><label>Corrections for this course (autosaves)</label><textarea data-panel="strategic-decision" placeholder="e.g. keep the whole symbol walk in swing-logic"></textarea></div>
+</details>
+</main>
+<script>
+const LSFIX = 'store-v2-cut-track-fixes';
+const saved = JSON.parse(localStorage.getItem(LSFIX) || '{}');
+document.querySelectorAll('.fixwrap textarea').forEach(ta => {
+  ta.value = saved[ta.dataset.panel] || '';
+  ta.addEventListener('input', () => {
+    saved[ta.dataset.panel] = ta.value;
+    localStorage.setItem(LSFIX, JSON.stringify(saved));
+  });
+});
+document.getElementById('copyFixes').onclick = () => {
+  const parts = [];
+  document.querySelectorAll('.fixwrap textarea').forEach(ta => {
+    if (ta.value.trim()) parts.push(`[${ta.dataset.panel}]\n${ta.value.trim()}`);
+  });
+  const txt = parts.length ? `Store v2 cut-track corrections (${new Date().toISOString().slice(0,10)}):\n\n` + parts.join('\n\n') : '(no corrections entered)';
+  navigator.clipboard.writeText(txt).then(() => {
+    const t = document.createElement('div'); t.className='toast'; t.textContent='Corrections copied';
+    document.body.appendChild(t); setTimeout(()=>t.remove(), 2000);
+  });
+};
+</script>
+</body>
+</html>

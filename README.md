@@ -21,6 +21,7 @@ Internal review pages where the user (Sundeep) approves video clips proposed for
 | [Tesla overdub: original vs output](https://lifelongedge.github.io/ogt-mockups/courses/frog-box-v2-tesla-compare/) | The Tesla trilogy: original platform-screen cut vs cadence-synced overdub vs the new "What happened" outcome segment (real bars, contrast-voice narration, R-arithmetic verdict) |
 | [Template stress test: three more topics](https://lifelongedge.github.io/ogt-mockups/courses/template-examples/) | Draft structures for 5DD (mechanical rule + real aggregate outcome stats), MACD Seasons (regime replay), Zero State (psychology floor). Five decisions to finalize the topical-video template |
 | [Animation components: first VO renders](https://lifelongedge.github.io/ogt-mockups/courses/anim-previews/) | MACD indicator sub-pane, 5DD animated stats table, Zero State practice card — Ava VO, SRT-anchored, with correction boxes |
+| [Store catalog v2: cut tracks for all 8 courses](https://lifelongedge.github.io/ogt-mockups/courses/store-v2-cut-tracks/) | Scene-by-scene v2 treatment for every published $19.97 course, ranked by quality-per-effort, with correction boxes |
 
 ## Tools
 
