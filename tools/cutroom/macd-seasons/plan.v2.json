@@ -1,0 +1,256 @@
+{
+  "schema": "coursecraft-plan-v2",
+  "course": "topical-macd-seasons",
+  "revision": 2,
+  "revised": "2026-07-12",
+  "status": "DRAFT \u2014 cuts MINED 2026-07-12 (VTT-verified; final trim in cutroom); regime replay COMPUTED 2026-07-12 v2 (method matched to Ken's stated rule after mining surfaced it \u2014 see s05 method note)",
+  "title": "MACD Seasons",
+  "topic_class": "regime_lens",
+  "essay_anchor": "/essays/macd-seasons",
+  "notes": "Owner adjustment 2026-07-12: replay TWO symbols, SPY + TSLA; rule generalized \u2014 regime_replay always >=2 contrasting symbols. NEW animation component: indicator sub-pane (MACD + signal line under price), built generically. METHOD NOTE: mining surfaced Ken's operative rule verbatim ('when that signal line is moving down we're in the winter... the slope of that signal line gives us four seasons' \u2014 zQLKqZ0lyAE 2950-3056s), so the replay was recomputed with season = signal line vs zero + signal-line slope (v1 had used histogram sign as the slope proxy; v1 numbers superseded). MINING NOTE: no corpus passage says 'not a timing signal' explicitly \u2014 closest is the soft caveat at zQLKqZ0lyAE 3059-3080s ('wherever you make your entry, just drop a line down and see if your decisions are in line with the broad seasonal approach'); the replay data carries the bias-not-trigger lesson instead.",
+  "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/macd-seasons/",
+  "sources": [
+    {
+      "id": "strat1322",
+      "label": "Strategies 13-22 (primary, 17 mentions)",
+      "file": "youtube-zQLKqZ0lyAE-strategies-13-22.mp4",
+      "proxy": "youtube-zQLKqZ0lyAE-strategies-13-22.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=zQLKqZ0lyAE"
+    },
+    {
+      "id": "sta",
+      "label": "STA interview (Kansas cornfields seasons metaphor, chart-free)",
+      "file": "youtube--i6j5xPw1OU-special-interview-with-society-for-technical-analy.mp4",
+      "proxy": "youtube--i6j5xPw1OU-special-interview-with-society-for-technical-analy.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=-i6j5xPw1OU"
+    },
+    {
+      "id": "stod1007",
+      "label": "2022-10-07 STOD weekend reports (failed-spring whipsaw)",
+      "file": "youtube-T_YTwTbBtEM-2022-10-07-stod-weekend-reports.mp4",
+      "proxy": "youtube-T_YTwTbBtEM-2022-10-07-stod-weekend-reports.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=T_YTwTbBtEM"
+    },
+    {
+      "id": "swing0211",
+      "label": "2023-02-11 weekend swing trading (spring-back-into-winter)",
+      "file": "youtube-TVulkxXkfB8-2023-02-11-weekend-swing-trading.mp4",
+      "proxy": "youtube-TVulkxXkfB8-2023-02-11-weekend-swing-trading.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=TVulkxXkfB8"
+    }
+  ],
+  "voices": [
+    {
+      "id": "ava",
+      "label": "Ava (US, female, polished)",
+      "sample": "vo-ava.mp3"
+    },
+    {
+      "id": "andrew",
+      "label": "Andrew (US, male, conversational)",
+      "sample": "vo-andrew.mp3"
+    }
+  ],
+  "segments": [
+    {
+      "id": "s01",
+      "type": "cut",
+      "include": true,
+      "label": "Cold open: winter until it isn't",
+      "source": "sta",
+      "in": 2990.0,
+      "out": 3023.0,
+      "status": "MINED (verified vs VTT; optional head from 2958s 'living in Kansas as I do, near to cornfields' \u2014 needs a breath-point trim)",
+      "quote_anchor": "every time that MACD goes below the zero line and you look up at price, something significant just happened, and it's not good... when the MACD line is below the zero line and sinking, we just think of that as the winter. It's bad, getting worse, no hope in sight \u2014 and it's going to continue to be winter until it isn't",
+      "alternates": [
+        {
+          "label": "full four-seasons farming arc (planting/crops/harvest, 64s)",
+          "source": "sta",
+          "in": 3002.0,
+          "out": 3066.0,
+          "note": "overlaps top pick \u2014 choose one"
+        }
+      ],
+      "why": "Interview audio, zero chart dependence; 'winter until it isn't' is a natural cold-open button."
+    },
+    {
+      "id": "s02",
+      "type": "slide",
+      "include": true,
+      "label": "Title card",
+      "slide_id": "title",
+      "duration": 4
+    },
+    {
+      "id": "s03",
+      "type": "explainer",
+      "include": true,
+      "label": "EXPLAINER: the four seasons on the MACD pane",
+      "voice": "ava",
+      "vo_script": "DRAFT: price chart on top, MACD pane below. Name each season as its quadrant shades in: winter (signal line below zero and sinking), spring (below zero, slope turning up), summer (above zero and rising), fall (above zero and rolling over). Anchored to what the indicator is doing, not to price. Two questions decide the season: above or below zero, and which way is the slope pointing.",
+      "est_duration": 40,
+      "animation_brief": "NEW COMPONENT: indicator sub-pane. Price candles top 60%, MACD pane bottom 40% (MACD + signal lines, histogram, zero line). Seasons shade the sub-pane in four tinted bands as each is named. Build the pane generically (any oscillator series + zero line)."
+    },
+    {
+      "id": "s04",
+      "type": "overdub",
+      "include": true,
+      "label": "OVERDUB: the definitional walk (winter/short, spring crossing, summer legs, fall rollover)",
+      "source": "strat1322",
+      "in": 2950.0,
+      "out": 3056.0,
+      "status": "MINED (verified vs VTT; 3036-3056 tail = 'the slope of that signal line gives us four seasons... it feels just like farming and agriculture')",
+      "quote_anchor": "when that signal line is moving down we're in the winter... winter, spring, summer, fall... that's when you want to be short... this spring gets into the supported spring crossing... leg one in the spring and leg two in the summer... when the summer has gone as far as it can go and starts to roll over... that run is done... you now have a directional bias",
+      "alternates": [
+        {
+          "label": "live read montage: UDOW winter = automatic short (21s)",
+          "source": "strat1322",
+          "in": 238.0,
+          "out": 259.0
+        },
+        {
+          "label": "live read montage: Apple hooking up through the dragon = auto long (19s)",
+          "source": "strat1322",
+          "in": 595.0,
+          "out": 614.0,
+          "note": "pair with UDOW for a 40s two-read montage \u2014 could be a second overdub beat"
+        }
+      ],
+      "animation_brief": "Keep his audio. Price + MACD sub-pane; season bands shade as he names them; short/long posture chips land on 'that's when you want to be short' / 'leg one in the spring'; his drawing gestures ('the dragon', 'the river') replaced by the clean regression-line pair on the price pane.",
+      "why": "Continuous 106s solo teaching naming every season and its posture \u2014 and it contains his operative season rule verbatim (the replay method now matches it)."
+    },
+    {
+      "id": "s05",
+      "type": "outcome",
+      "include": true,
+      "mode": "regime_replay",
+      "label": "WHAT HAPPENED: a year of seasons, two symbols",
+      "voice": "ava",
+      "vo_script": "DRAFT (mirrors the verified v2 data below): We labeled every trading day of twenty twenty-two by the rule, exactly as stated, using only what was known at each close. First the S and P five hundred, down nineteen and a half percent that year. Fall, above zero and rolling over, appeared on forty-four days. The next five sessions from those days averaged minus two percent, and fewer than one day in four saw the market higher a week later. Fall was the warning. The other three seasons were a coin flip that year. The lens described the bear. It did not rescue it.\nNow Tesla. Same year, same rule, a stock that fell sixty-five percent. The seasons changed twenty-six times, and all four of them averaged a negative week ahead. When the tape is that hostile, no season pays.\nZoom out to twenty twenty through twenty twenty-five and the labels separate. On Tesla, summer averaged plus two point six percent per five sessions. Spring, plus one point eight. And fall averaged minus point four: the only losing season. Over years, on the right name, the labels carry real information. A season is a posture, not a prediction. Which is exactly what he tells you it is.",
+      "est_duration": 85,
+      "animation_brief": "Real SPY + TSLA 2022 price with the MACD sub-pane, season bands shading as-of; per-season stat chips land as named; zoom-out table for 2020-2025 TSLA at the end. Uses the indicator sub-pane component from s03/s04.",
+      "data": {
+        "symbols": [
+          "SPY",
+          "TSLA"
+        ],
+        "window": "2022 replay year + 2020-2025 zoom-out",
+        "method": "v2 (2026-07-12, supersedes v1 histogram-sign proxy): MACD(12,26,9) on split-adjusted daily closes; season = signal line vs zero + day-over-day signal-line slope (winter = below & sinking, spring = below & rising, summer = above & rising, fall = above & falling) \u2014 matches Ken's stated rule in s04 verbatim; labeled as-of each close, no hindsight; fwd5 = close T to close T+5",
+        "computed": "2026-07-12, quotes_eod via adj_close ratio",
+        "replay_2022": {
+          "SPY": {
+            "year_return_pct": -19.5,
+            "season_changes": 22,
+            "median_episode_sessions": 9,
+            "seasons": {
+              "fall": {
+                "days": 44,
+                "avg_fwd5_pct": -2.01,
+                "win5_pct": 23
+              },
+              "spring": {
+                "days": 78,
+                "avg_fwd5_pct": 0.03,
+                "win5_pct": 51
+              },
+              "summer": {
+                "days": 48,
+                "avg_fwd5_pct": -0.02,
+                "win5_pct": 50
+              },
+              "winter": {
+                "days": 81,
+                "avg_fwd5_pct": -0.02,
+                "win5_pct": 52
+              }
+            }
+          },
+          "TSLA": {
+            "year_return_pct": -65.0,
+            "season_changes": 26,
+            "median_episode_sessions": 8,
+            "seasons": {
+              "fall": {
+                "days": 47,
+                "avg_fwd5_pct": -3.84,
+                "win5_pct": 28
+              },
+              "spring": {
+                "days": 82,
+                "avg_fwd5_pct": -0.87,
+                "win5_pct": 39
+              },
+              "summer": {
+                "days": 42,
+                "avg_fwd5_pct": -1.19,
+                "win5_pct": 36
+              },
+              "winter": {
+                "days": 80,
+                "avg_fwd5_pct": -2.3,
+                "win5_pct": 39
+              }
+            }
+          }
+        },
+        "zoom_out_2020_2025": {
+          "TSLA": {
+            "summer_avg_fwd5_pct": 2.61,
+            "spring_avg_fwd5_pct": 1.81,
+            "winter_avg_fwd5_pct": 1.51,
+            "fall_avg_fwd5_pct": -0.43,
+            "fall_win5_pct": 45,
+            "note": "fall is the only losing season on the volatile name over the long window"
+          },
+          "SPY": {
+            "note": "all four seasons +0.12..+0.67 fwd5, win 58-63% \u2014 index drift dominates; the lens differentiates on the volatile single name, not the index"
+          }
+        },
+        "source": "quotes_eod/parquet_data/symbol={SPY,TSLA}.parquet (split-adjusted via adj_close/close)"
+      },
+      "editorial_rules": "frame-vs-price only; synth voice only; labels computed as-of, no hindsight; publish the whipsaw cost, not just the clean transitions; split-adjusted bars only"
+    },
+    {
+      "id": "s06",
+      "type": "cut",
+      "include": true,
+      "label": "When it fails: winter, failed spring, winter",
+      "source": "stod1007",
+      "in": 993.0,
+      "out": 1044.0,
+      "status": "MINED (verified vs VTT; trimmed head at 993s avoids the throat-clear at ~1002s \u2014 verify breath boundary in cutroom; full context from 979s)",
+      "quote_anchor": "you have a winter, failed spring, and winter, and that is an instant short... when it cannot get up into the summer and fails like it did here and goes back into the winter, you get this kind of move... the magnitude of that next leg down would really be shocking if you weren't ready for it",
+      "alternates": [
+        {
+          "label": "'old man winter will come back' \u2014 plant carefully (chart-free, pairs with cold open)",
+          "source": "sta",
+          "in": 3034.0,
+          "out": 3091.0
+        },
+        {
+          "label": "'spring back into winter... auto short' (tight 12s from 528.6s)",
+          "source": "swing0211",
+          "in": 521.0,
+          "out": 540.0
+        }
+      ],
+      "why": "The failed-spring whipsaw named explicitly, with the consequence. The 2022 replay data (spring = coin flip in the bear) just proved the same thing from the other side."
+    },
+    {
+      "id": "s07",
+      "type": "slide",
+      "include": true,
+      "label": "Maxim card",
+      "slide_id": "maxim",
+      "duration": 6
+    },
+    {
+      "id": "s08",
+      "type": "slide",
+      "include": true,
+      "label": "End card",
+      "slide_id": "end",
+      "duration": 10
+    }
+  ]
+}

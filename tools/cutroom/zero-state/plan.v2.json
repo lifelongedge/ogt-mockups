@@ -1,0 +1,204 @@
+{
+  "schema": "coursecraft-plan-v2",
+  "course": "topical-zero-state",
+  "revision": 2,
+  "revised": "2026-07-12",
+  "status": "DRAFT \u2014 cuts MINED 2026-07-12 (VTT-verified candidates; final trim to breath boundaries happens in cutroom against the fetched video). Deepest corpus coverage of any topic (481 mentions / 100 sessions).",
+  "title": "The Zero State",
+  "topic_class": "psychology",
+  "essay_anchor": null,
+  "notes": "Essay not yet written (queued) \u2014 the mining pass below can inform the essay. TEMPLATE RULE THIS COURSE ANCHORS: psychology topics get NO outcome segment and one must never be faked; cut-heavy, typography-only explainer. Mining note: Y6B-G8GtU3c is a solo Saturday podcast (segment 23 of 'strategies') and dominates; the live-coaching moment comes from cohort-session files added to sources. VTT style: YouTube ASR rolling captions \u2014 each line appears in two consecutive cues; times = first appearance of opening line to close of final spoken cue.",
+  "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/zero-state/",
+  "sources": [
+    {
+      "id": "strat2328",
+      "label": "Strategies 23-28 solo podcast (39 mentions \u2014 primary)",
+      "file": "youtube-Y6B-G8GtU3c-strategies-23-28.mp4",
+      "proxy": "youtube-Y6B-G8GtU3c-strategies-23-28.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=Y6B-G8GtU3c"
+    },
+    {
+      "id": "or3gap",
+      "label": "Patterns/symbols OR3 gapstat session (coaching George)",
+      "file": "youtube-fOmhSUFWQ80-patterns-symbols-or3-gapstat.mp4",
+      "proxy": "youtube-fOmhSUFWQ80-patterns-symbols-or3-gapstat.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=fOmhSUFWQ80"
+    },
+    {
+      "id": "qa3v30",
+      "label": "2023-04-30 special foundations Q&A 3min vs 30min ('we are never late')",
+      "file": "youtube-C6KOd3YjK7g-2023-04-30-special-foundations-q-a-on-3-min-vs-30-min.mp4",
+      "proxy": "youtube-C6KOd3YjK7g-2023-04-30-special-foundations-q-a-on-3-min-vs-30-min.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=C6KOd3YjK7g"
+    },
+    {
+      "id": "swinglesson",
+      "label": "2023-02-04 important swing lesson (seven breaths)",
+      "file": "youtube-6UN18nd2SGU-2023-02-04-important-swing-lesson.mp4",
+      "proxy": "youtube-6UN18nd2SGU-2023-02-04-important-swing-lesson.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=6UN18nd2SGU"
+    },
+    {
+      "id": "swingreview",
+      "label": "2023-03-30 swing and sniper review (Rivian lapse)",
+      "file": "youtube-Hy_qLWcsrKw-2023-03-30-excellent-swing-and-sniper-review.mp4",
+      "proxy": "youtube-Hy_qLWcsrKw-2023-03-30-excellent-swing-and-sniper-review.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=Hy_qLWcsrKw"
+    }
+  ],
+  "voices": [
+    {
+      "id": "ava",
+      "label": "Ava (US, female, polished)",
+      "sample": "vo-ava.mp3"
+    },
+    {
+      "id": "andrew",
+      "label": "Andrew (US, male, conversational)",
+      "sample": "vo-andrew.mp3"
+    }
+  ],
+  "segments": [
+    {
+      "id": "s01",
+      "type": "cut",
+      "include": true,
+      "label": "Cold open: the Ranger point man",
+      "source": "strat2328",
+      "in": 639.0,
+      "out": 691.0,
+      "status": "MINED (verified vs VTT; trim in cutroom)",
+      "quote_anchor": "you don't put a guy walking point who doesn't want to be there... that feeling of responsibility and presence and mindfulness, confident in the knowledge that i was willing trained fit and prepared... equals ready to act",
+      "alternates": [
+        {
+          "label": "clap-and-bang instant reset (kinetic 35s)",
+          "source": "strat2328",
+          "in": 2671.0,
+          "out": 2706.0
+        },
+        {
+          "label": "full point-man story w/ platoon diagrams",
+          "source": "strat2328",
+          "in": 464.0,
+          "out": 691.0,
+          "note": "3:47 \u2014 too long unless heavily trimmed"
+        }
+      ],
+      "why": "His zero-state origin story with combat stakes, landing on 'ready to act' \u2014 the phrase that recurs all episode."
+    },
+    {
+      "id": "s02",
+      "type": "slide",
+      "include": true,
+      "label": "Title card",
+      "slide_id": "title",
+      "duration": 4
+    },
+    {
+      "id": "s03",
+      "type": "cut",
+      "include": true,
+      "label": "What it is, in his words (canonical definition)",
+      "source": "strat2328",
+      "in": 92.0,
+      "out": 200.0,
+      "status": "MINED (verified vs VTT; consider trimming the grid aside ~140-175s in cutroom)",
+      "quote_anchor": "the zero state \u2014 a self-defined state of awareness and readiness which is your optimal trading state... ready \u2014 ready for what \u2014 ready to act",
+      "alternates": [
+        {
+          "label": "26s single-breath restatement",
+          "source": "strat2328",
+          "in": 1098.0,
+          "out": 1125.0
+        },
+        {
+          "label": "'it's a muscle' trainability claim (34s follow-on)",
+          "source": "strat2328",
+          "in": 694.0,
+          "out": 728.0
+        }
+      ],
+      "why": "The definition delivered to camera at the top of the segment. The 'muscle' alternate pairs well appended."
+    },
+    {
+      "id": "s04",
+      "type": "explainer",
+      "include": true,
+      "label": "EXPLAINER: the practice card (typography only)",
+      "voice": "ava",
+      "vo_script": "DRAFT (every step traces to transcript passages \u2014 see practice_card_trace): His reset, in his own words. Take a deep breath. Write down everything that is making you mad, every grievance, on one card. Flip it over. Name each feeling in one word. Stay with them until the inside is empty. Seal the cards. Burn them, and watch the smoke until it is gone. Then do the next obvious thing. And when there is no time for the ritual, the speed run: one clap, one deep breath. Let's go. The old samurai manual says within seven breaths the warrior is ready to commit. He asks his traders: how many breaths does it take you?",
+      "est_duration": 42,
+      "animation_brief": "NEW COMPONENT: typography-only practice card. No charts. Animated checklist card, one line landing at a time with the VO, generous dwell. Dark theme, owl-amber accent, large type.",
+      "practice_card_trace": {
+        "owl_meditation_steps": "strat2328 2429-2706s: deep breath; grievances on a 3x5/5x8 card; flip, name each emotion one word; until inside is empty; envelope, stone bowl, burn, watch smoke dissipate",
+        "speed_run": "strat2328 2671-2706s: 'a clap on my hand and one deep breath \u2014 let's go, bang, i'm in the zero state'",
+        "seven_breaths": "swinglesson 1908-1925s: 'the hagakure says within seven breaths the samurai is ready to commit'; 'how many heartbeats does it take you' 1867-1925s"
+      }
+    },
+    {
+      "id": "s05",
+      "type": "cut",
+      "include": true,
+      "label": "Him coaching it live: George's exits",
+      "source": "or3gap",
+      "in": 3192.0,
+      "out": 3298.0,
+      "status": "MINED (verified vs VTT; starts at 'my coaching with George' 3192s to skip prior whiteboard reference; full context from 3174s)",
+      "quote_anchor": "he makes his entries he is in the zero state, but when he makes his exits he's not... your emotional state is always in the professional zero state band so that you can trade many decisions no matter which way it's going and simply respond to price",
+      "alternates": [
+        {
+          "label": "'we are never late' Q&A reset (tight 90s)",
+          "source": "qa3v30",
+          "in": 3373.0,
+          "out": 3462.0,
+          "note": "most quotable line in the corpus; strong contender to ALSO include as its own beat"
+        },
+        {
+          "label": "'how many heartbeats' challenge to the room",
+          "source": "swinglesson",
+          "in": 1867.0,
+          "out": 1925.0
+        }
+      ],
+      "why": "Named real coaching relationship, specific diagnosis (entries yes, exits no), and a prescription. Ends on the cohort call-and-response."
+    },
+    {
+      "id": "s06",
+      "type": "cut",
+      "include": true,
+      "label": "When it fails: his own lapse (Rivian)",
+      "source": "swingreview",
+      "in": 1867.0,
+      "out": 1902.0,
+      "status": "MINED (verified vs VTT)",
+      "quote_anchor": "got me out at just a minus two R loss... but i didn't have the willpower or the zero state to turn that into a stop and reverse... there was clearly too much emotion",
+      "alternates": [
+        {
+          "label": "what breaks it: joy, fear, greed taxonomy",
+          "source": "strat2328",
+          "in": 971.0,
+          "out": 1095.0,
+          "note": "trims well to 990-1025s; could run BEFORE the Rivian lapse as setup"
+        }
+      ],
+      "why": "His honesty about his own lapse, on a real trade, with real numbers, in 35s. Note: he is pointing at a chart in the source \u2014 keep as raw cut (the honesty is the visual), do not overdub.",
+      "note_to_coursecraft": "Consider running the 4b taxonomy (971-1095 trim) then the Rivian lapse \u2014 setup then receipt."
+    },
+    {
+      "id": "s07",
+      "type": "slide",
+      "include": true,
+      "label": "Maxim card",
+      "slide_id": "maxim",
+      "duration": 6
+    },
+    {
+      "id": "s08",
+      "type": "slide",
+      "include": true,
+      "label": "End card",
+      "slide_id": "end",
+      "duration": 10
+    }
+  ]
+}

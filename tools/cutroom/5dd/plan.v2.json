@@ -1,0 +1,260 @@
+{
+  "schema": "coursecraft-plan-v2",
+  "course": "topical-5dd",
+  "revision": 2,
+  "revised": "2026-07-12",
+  "status": "DRAFT \u2014 cuts MINED 2026-07-12 (VTT-verified; final trim in cutroom against fetched video); aggregate + failure outcome data computed and verified",
+  "title": "Five Down Days",
+  "topic_class": "mechanical_rule",
+  "essay_anchor": "/essays/five-down-days-5dd",
+  "notes": "Owner adjustment 2026-07-12: 'also frame the failure' \u2014 s07 gives a losing instance the identical single-mode outcome treatment as the Tesla winner, and s08's aggregate carries the 2022 downtrend row so the bull-market caveat is data, not just words. Cross-link: the TSLA 2023-04-10 5DD signal (worst pooled outcome, -2.26R) is the SAME earnings-gap week as the frog-box Tesla trilogy \u2014 say so on screen and in the description. MINING NOTES 2026-07-12: neither source contains the canonical 'everyone who wanted to sell has sold' telling \u2014 cold open uses the first-mouse/second-mouse storytelling instead (flag to growogtx if the canonical telling is wanted, it lives in another transcript). His 'when it fails' framing celebrates the failure TRADE rather than warning off the long \u2014 s07's SPY 2022 data carries the warning, and his cut lands right after it as the characterful payoff.",
+  "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/5dd/",
+  "sources": [
+    {
+      "id": "swingqa",
+      "label": "Swing trading Q&A (top 5DD corpus source, 37 mentions)",
+      "file": "youtube-_qs7Qd0MTzc-swing-trading-qa.mp4",
+      "proxy": "youtube-_qs7Qd0MTzc-swing-trading-qa.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=_qs7Qd0MTzc"
+    },
+    {
+      "id": "minilessons",
+      "label": "Foundations Q&A mini lessons (34 mentions)",
+      "file": "youtube-_yLbzgXA-n4-foundations-qa-mini-lessons.mp4",
+      "proxy": "youtube-_yLbzgXA-n4-foundations-qa-mini-lessons.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=_yLbzgXA-n4"
+    }
+  ],
+  "voices": [
+    {
+      "id": "ava",
+      "label": "Ava (US, female, polished)",
+      "sample": "vo-ava.mp3"
+    },
+    {
+      "id": "andrew",
+      "label": "Andrew (US, male, conversational)",
+      "sample": "vo-andrew.mp3"
+    }
+  ],
+  "segments": [
+    {
+      "id": "s01",
+      "type": "cut",
+      "include": true,
+      "label": "Cold open: the snapback theory",
+      "source": "minilessons",
+      "in": 3828.0,
+      "out": 3859.0,
+      "status": "MINED (verified vs VTT; start at 'the first mouse, the innovator, buys it')",
+      "why": "Most vivid storytelling in the assigned sources; the 10-day-high reward anchor ties it straight to the 5DD frame.",
+      "quote_anchor": "the first mouse, the innovator, buys it because it's sold off so hard; he figures... what could possibly go wrong. The second mouse waits for a little bit of evidence that the turnaround has actually occurred... measuring the amount of risk he's taking versus the reward of getting back to the 10-day high",
+      "alternates": [
+        {
+          "label": "5DD thesis in his voice ('reasons to believe this could be an abnormally good move')",
+          "source": "swingqa",
+          "in": 253.0,
+          "out": 277.0
+        }
+      ]
+    },
+    {
+      "id": "s02",
+      "type": "slide",
+      "include": true,
+      "label": "Title card",
+      "slide_id": "title",
+      "duration": 4
+    },
+    {
+      "id": "s03",
+      "type": "explainer",
+      "include": true,
+      "label": "EXPLAINER: the rule in one picture",
+      "voice": "ava",
+      "vo_script": "DRAFT: Five days. Each close lower than the last. That is the whole signal. The fifth bar is the signal day. The entry is a buy stop just above its high: the market must come UP to get you in. The void is just below its low: if price touches there first, the setup is dead and you never enter. The distance between them is your R, one unit of risk, defined before you ever own a share.",
+      "est_duration": 30,
+      "animation_brief": "Five candles close lower one by one (count chips 1..5 land per close); entry stop line draws above bar 5's high on 'buy stop just above its high'; void line below its low; the R bracket spans them on 'one unit of risk'. Schematic candles, same visual family as the frog-box band chart."
+    },
+    {
+      "id": "s04",
+      "type": "overdub",
+      "include": true,
+      "label": "OVERDUB: him walking a live 5DD",
+      "source": "minilessons",
+      "in": 1891.0,
+      "out": 1976.0,
+      "status": "MINED (verified vs VTT; optional lead-in from 1762s 'here's another 5dd... Devon Energy... it is so violent')",
+      "animation_brief": "Keep his audio. Animate Devon Energy's actual bars (pull real OHLC from quotes_eod for the session date once the video date is confirmed in cutroom): five bars count down as he counts aloud, yellow zone draws on 'my trade frame becomes this yellow zone', entry line +5c above the high and void -5c below the low land as he names them, 1R bracket, then the reward arrow back to the 10-day high on 'that becomes my reward'.",
+      "why": "Names the symbol, counts the five bars aloud, states entry/void, computes reward-to-risk \u2014 one continuous 85s take. The heavy on-screen pointing is exactly what an overdub replaces.",
+      "quote_anchor": "fifth day down, fourth day down, third day down, second day down, first day down... my trade frame becomes this yellow zone. I calculate the mechanical entry as five cents above today's high, mechanical sale five cents below today's low... that's a 1R mechanical risk... back to the 10-day high... probably three and a half to four to one, Devon Energy",
+      "alternates": [
+        {
+          "label": "Boeing compact walkthrough ('that's exactly what a 5DD looks like')",
+          "source": "minilessons",
+          "in": 1360.0,
+          "out": 1416.0
+        },
+        {
+          "label": "whiteboard mechanics (zero day, five lower closes, entry/void)",
+          "source": "swingqa",
+          "in": 153.0,
+          "out": 210.0
+        }
+      ]
+    },
+    {
+      "id": "s05",
+      "type": "outcome",
+      "include": true,
+      "mode": "single",
+      "label": "WHAT HAPPENED: one instance, bar by bar (TSLA April 2023)",
+      "voice": "ava",
+      "vo_script": "DRAFT (mirrors the verified data below): signal 2023-04-10 after five lower closes; filled next day; gapped through the void on earnings week; the fill was the open, not the stop. Minus two point two six R, not minus one. If this week looks familiar: it is the same Tesla earnings gap from the frog box video, seen from the other side.",
+      "est_duration": 55,
+      "data": {
+        "symbol": "TSLA",
+        "signal_date": "2023-04-10",
+        "window": "2023-04-11..2023-04-25",
+        "source": "quotes_eod/parquet_data/symbol=TSLA.parquet (split-adjusted via adj_close/close)",
+        "verdict": {
+          "r": -2.26,
+          "how": "gap through void, filled at open"
+        },
+        "cross_link": "topical-frog-box s07b \u2014 same earnings-gap week"
+      },
+      "editorial_rules": "frame-vs-price only (never Ken's personal P&L); synth voice only; publish outcome for EVERY featured frame; scheduled catalysts disclosed on screen; split-adjusted bars only; ambiguous daily bars counted and disclosed"
+    },
+    {
+      "id": "s06",
+      "type": "outcome",
+      "include": true,
+      "mode": "aggregate",
+      "label": "WHAT HAPPENED: every instance since 2020",
+      "voice": "ava",
+      "vo_script": "DRAFT: We ran the rule, exactly as stated, on five liquid names from twenty-twenty forward. Eighty-five signals. Forty filled. Forty-one voided before entry: the rule said no. Average result on the fills, plus zero point seven six R. Half won. The best made seven point seven R. The worst lost two and a quarter, on a gap. Four signals were ambiguous on daily bars, so we counted them and left them out rather than guess. And the symbols disagree: Apple paid nearly one point eight R on average. The Q's lost money. Same rule. Different tape.",
+      "est_duration": 50,
+      "animation": "animated stats table (NEW component)",
+      "data": {
+        "universe": [
+          "SPY",
+          "QQQ",
+          "IWM",
+          "TSLA",
+          "AAPL"
+        ],
+        "period": "2020-01-01..2026-07-10",
+        "method": "5 consecutive lower closes; entry buy-stop +5bps above signal high; void -5bps below signal low; fill = max(entry, next open); stop = void; exit = stop or close of 10th session after fill; split-adjusted bars",
+        "pooled": {
+          "signals": 85,
+          "filled": 40,
+          "voided": 41,
+          "ambiguous": 4,
+          "avg_r": 0.76,
+          "win_pct": 50,
+          "best_r": 7.7,
+          "worst_r": -2.24
+        },
+        "per_symbol": {
+          "SPY": {
+            "filled": 7,
+            "avg_r": 0.55,
+            "win_pct": 43
+          },
+          "QQQ": {
+            "filled": 6,
+            "avg_r": -0.17,
+            "win_pct": 33
+          },
+          "IWM": {
+            "filled": 12,
+            "avg_r": 1.01,
+            "win_pct": 58
+          },
+          "TSLA": {
+            "filled": 8,
+            "avg_r": 0.35,
+            "win_pct": 38
+          },
+          "AAPL": {
+            "filled": 7,
+            "avg_r": 1.79,
+            "win_pct": 71
+          }
+        }
+      },
+      "editorial_rules": "frame-vs-price only; synth voice only; publish every outcome; split-adjusted bars only; ambiguous bars counted and disclosed"
+    },
+    {
+      "id": "s07",
+      "type": "outcome",
+      "include": true,
+      "mode": "single",
+      "label": "FRAME THE FAILURE: January 2022, the first dip-buy of the bear",
+      "voice": "ava",
+      "vo_script": "DRAFT: Now the honest part. January tenth, twenty twenty-two. The S and P five hundred, days off its all-time high, printed five straight lower closes. The rule fired. Filled the next day at four sixty-five ninety-seven. Five sessions later it hit the stop. Minus one R, exactly as designed. Then the market kept falling for nine more months, another twenty-five percent. The rule fired four times in twenty twenty-two and was stopped in three of them. The loss control worked every time: each failure cost about one R. What failed was the premise. In a downtrend, the sixth day down is just Tuesday.",
+      "est_duration": 55,
+      "data": {
+        "symbol": "SPY",
+        "signal_date": "2022-01-10",
+        "fill": 465.97,
+        "exit_date": "2022-01-18",
+        "verdict": {
+          "r": -1.0,
+          "how": "clean stop"
+        },
+        "context_2022": {
+          "filled": 4,
+          "stopped": 3,
+          "avg_r": 0.13,
+          "note": "Jun 14 -1.0R, Dec 7 -1.0R; the one winner Jul 14 +3.5R; QQQ Dec 20 -1.0R and TSLA Aug 22 -1.52R also stopped that year"
+        },
+        "source": "quotes_eod/parquet_data/symbol=SPY.parquet (split-adjusted)"
+      },
+      "editorial_rules": "frame-vs-price only; synth voice only; publish every outcome; split-adjusted bars only",
+      "why": "Owner direction 2026-07-12: frame the failure, don't just say the caveat. The framed failure shows the losses were contained (-1R each) while the premise failed \u2014 that IS the lesson."
+    },
+    {
+      "id": "s08",
+      "type": "cut",
+      "include": true,
+      "label": "When it fails, in his words (he trades the failure)",
+      "source": "swingqa",
+      "in": 2757.0,
+      "out": 2812.0,
+      "status": "MINED (verified vs VTT; 2780-2812 extension = the 'surprised into that position' story)",
+      "why": "Punchiest failure line in either source, explicitly 5DD-branded. Runs right after s07's data proved the failure mode; his relish for the failure trade is the honest payoff, with an editor caption 'when the snapback doesn't come'.",
+      "quote_anchor": "if it fails that support level it can go to the next support level uncontroversially \u2014 and I like the 5dd failure trade more than I like the successful 5dd long trade, and I love the 5dd long trade",
+      "alternates": [
+        {
+          "label": "crowd psychology of continuation ('maybe there's more of that coming... go with the flow')",
+          "source": "swingqa",
+          "in": 277.0,
+          "out": 317.0
+        },
+        {
+          "label": "Home Depot deep-winter no-support ('if this fails it's going to fail huge')",
+          "source": "minilessons",
+          "in": 2376.0,
+          "out": 2390.0
+        }
+      ]
+    },
+    {
+      "id": "s09",
+      "type": "slide",
+      "include": true,
+      "label": "Maxim card",
+      "slide_id": "maxim",
+      "duration": 6
+    },
+    {
+      "id": "s10",
+      "type": "slide",
+      "include": true,
+      "label": "End card (essay + daily note + frog-box cross-link)",
+      "slide_id": "end",
+      "duration": 10
+    }
+  ]
+}
