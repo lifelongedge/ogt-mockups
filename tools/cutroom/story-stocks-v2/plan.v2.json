@@ -1,0 +1,281 @@
+{
+  "schema": "coursecraft-plan-v2",
+  "course": "story-stocks-v2",
+  "revision": 1,
+  "revised": "2026-07-13",
+  "status": "DRAFT — store v2 course 1 of 8. Source timestamps mapped + verified 2026-07-13; outcome data computed and verified (data-notes.md); awaiting owner cutroom pass + the s19 attribution decision.",
+  "title": "Story Stocks (v2)",
+  "topic_class": "discretionary_frame + process",
+  "store_sku": "story-stocks",
+  "replaces": "c-mkc (baked 2026, one continuous video + scene cards)",
+  "notes": "Cut track: docs/store-v2-cut-tracks.md §6. Verified data: courses/story-stocks-v2/data-notes.md (session pinned Tue 2024-12-10; UMAC double-before-stop; SPY 592-by-Friday failed-then-arrived). TWO-SOURCE FINDING: baked rows 18-19 came from closing-range-30 (hmOGS0tNCbo), NOT the story-stocks session — and those lines are spoken by a COHORT MEMBER, not Ken, while the baked cards say 'Ken's trail rule'/'Ken's confession'. OWNER DECISION REQUIRED at s19. Baked scenes 13+15 shared one source passage — v2 assigns it once (s16) and gives s14 the daily-VWAP guide + stacked-lookback material. Unused source flagged strong for future: Intel vacuum-zone walk (00:30:48-00:49:57), PSAR trend-length A-E grading (00:58:03-01:19:57).",
+  "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/story-stocks-v2/",
+  "sources": [
+    {
+      "id": "src",
+      "label": "2024-12-10 situational framing / story stocks cohort session (81 min)",
+      "file": "youtube-JpLWt_-s-EA-situational-framing-story-stocks.mp4",
+      "proxy": "youtube-JpLWt_-s-EA-situational-framing-story-stocks.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=JpLWt_-s-EA"
+    },
+    {
+      "id": "cr30",
+      "label": "closing-range-30 session (rows 18-19 source; cohort-member exchange)",
+      "file": "youtube-hmOGS0tNCbo-closing-range-30.mp4",
+      "proxy": "youtube-hmOGS0tNCbo-closing-range-30.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=hmOGS0tNCbo"
+    }
+  ],
+  "voices": [
+    { "id": "ava", "label": "Ava (US, female, polished)", "sample": "vo-ava.mp3" },
+    { "id": "andrew", "label": "Andrew (US, male, conversational)", "sample": "vo-andrew.mp3" }
+  ],
+  "segments": [
+    {
+      "id": "s01",
+      "type": "cut",
+      "include": true,
+      "label": "Cold open: normal stuff anti-works",
+      "source": "src",
+      "in": 7.0,
+      "out": 122.0,
+      "status": "MAPPED (verbatim verified at 21s; optional extension to 151s for the 80/20 team riff)",
+      "quote_anchor": "when the world is normal you just use your normal stuff... the normal stuff not only doesn't work it anti-works"
+    },
+    {
+      "id": "s02",
+      "type": "slide",
+      "include": true,
+      "label": "Title card",
+      "slide_id": "title",
+      "duration": 4
+    },
+    {
+      "id": "s03",
+      "type": "overdub",
+      "include": true,
+      "label": "OVERDUB: the 5-10-20-30 toolkit",
+      "source": "src",
+      "in": 122.0,
+      "out": 215.0,
+      "status": "MAPPED (192-211s verbatim). The creativity/systems/data/AI sequence is spoken earlier at 42-84s inside s01's window — overdub may draw on both passes",
+      "animation_brief": "Typography quadrant animation (5 concepts / 10 tasks / 20 skills / 30 use cases) to his cadence; sting kept.",
+      "quote_anchor": "I'm using the 510 2030 model... five key Concepts 10 critical tasks 20 individual skills and 30 use cases"
+    },
+    {
+      "id": "s04",
+      "type": "cut",
+      "include": true,
+      "label": "When the pattern library fails",
+      "source": "src",
+      "in": 589.0,
+      "out": 726.0,
+      "status": "MAPPED (med confidence; wider window from 465s adds the Army engagement-area analogy — strong optional material). 215-465s (AI book factory digression, contains profanity) intentionally skipped",
+      "quote_anchor": "what are the Deep signals that tell us that this thing is more likely now than ever to make a one day three day 5 day 10 day 30day exceptional move"
+    },
+    {
+      "id": "s05",
+      "type": "slide",
+      "include": true,
+      "label": "Chapter 2 card",
+      "slide_id": "ch2",
+      "duration": 2
+    },
+    {
+      "id": "s06",
+      "type": "overdub",
+      "include": true,
+      "label": "OVERDUB: the $9 robot stock (UMAC framing)",
+      "source": "src",
+      "in": 768.0,
+      "out": 849.0,
+      "status": "MAPPED (verbatim 'bought today at nine bucks' at 828s). Second sub-window 1137-1253 ('9 to 18 vs Nvidia 140 to 280... damn near an option') — cutroom decides one longer cut or two beats",
+      "animation_brief": "Keep his audio. Real split-adjusted UMAC bars: the Nov run to 23.62, the crash, his $9 entry zone, the $7 stop line, the 18 target. Risk-box + real-bars components.",
+      "quote_anchor": "this is where I bought today at nine bucks... the probability of this thing going from 9 to 18 is greater than Nvidia going from 140 to 280"
+    },
+    {
+      "id": "s06b",
+      "type": "outcome",
+      "include": true,
+      "mode": "single",
+      "label": "WHAT HAPPENED: the 18-versus-7 race",
+      "voice": "ava",
+      "vo_script": "TO WRITE from data-notes.md (verified): framed Dec 10 at nine twenty-eight close; catalyst (Don Jr. advisory news) disclosed; first touch of eighteen: December 27, twelve sessions later; first touch of seven: February 27, two months after the double. The asymmetric bet paid two to one before the stop was ever threatened.",
+      "est_duration": 55,
+      "data_ref": "data-notes.md — Outcome 2 (verified 2026-07-13)",
+      "editorial_rules": "frame-vs-price only; synth voice only; publish every outcome; catalysts disclosed; split-adjusted bars"
+    },
+    {
+      "id": "s07",
+      "type": "cut",
+      "include": true,
+      "label": "Chips out of the stack (+ Ava arithmetic card)",
+      "source": "src",
+      "in": 1254.0,
+      "out": 1413.0,
+      "status": "MAPPED (near-exact fit vs baked; includes the $1,000 / $2 = 500-share arithmetic, the 11/13/15 ladder, and 'three facts: Don Jr... Elon... $9')",
+      "micro_explainer": "one Ava typography card for the arithmetic only",
+      "quote_anchor": "how many chips out of my chip stack... if I want a $2 stop I can buy 500 shares"
+    },
+    {
+      "id": "s08",
+      "type": "cut",
+      "include": true,
+      "label": "The $2 stop, decision made",
+      "source": "src",
+      "in": 1413.0,
+      "out": 1468.0,
+      "status": "MAPPED (55s distinct; stop placement also spoken at 1265-1279 inside s07; wider to 1499 catches 'that is a way to do trade framing for circumstantial trading')",
+      "quote_anchor": "it's going to go to 1250 before there's any consequences so that's a $3.50 move for me on a $2 risk"
+    },
+    {
+      "id": "s09",
+      "type": "slide",
+      "include": true,
+      "label": "Chapter 3 card",
+      "slide_id": "ch3",
+      "duration": 2
+    },
+    {
+      "id": "s10",
+      "type": "explainer",
+      "include": true,
+      "label": "EXPLAINER: the four recognition tests",
+      "voice": "ava",
+      "vo_script": "TO WRITE — the volume/news/social/catalyst checklist. NOTE: the baked card content is authored (not in source); the underlying footage (921-1066: UMAC dare/false-hope/true-despair/neglect-day read) can run as an overdub beat before or after this explainer if the cutroom pass wants Ken's read kept",
+      "est_duration": 40,
+      "animation_brief": "Checklist card animation. NOT aggregate-able (social/news data absent from quote store) — no stats table."
+    },
+    {
+      "id": "s11",
+      "type": "overdub",
+      "include": true,
+      "label": "OVERDUB: the narrative lifecycle (upgraded from explainer — Ken narrates it in source)",
+      "source": "src",
+      "in": 1471.0,
+      "out": 1613.0,
+      "status": "MAPPED (high confidence: FB IPO lockup, PLTR/TSLA/AAPL/AMZN hype-selloff-grind arc, 'kata 2 about 18 months after the success wave', closes mapping UMAC onto the phases)",
+      "animation_brief": "Lifecycle arc diagram animating through IPO -> hype -> harsh selloff -> grind -> second wave as he names each phase with real examples.",
+      "quote_anchor": "like Facebook had that enormous IPO then the lockup period was over and that's everybody selling... they all get the hype and the harsh selloff"
+    },
+    {
+      "id": "s12",
+      "type": "explainer",
+      "include": true,
+      "label": "EXPLAINER: catalyst categories (+ PLTR gap-and-crack vignette)",
+      "voice": "ava",
+      "vo_script": "TO WRITE — earnings drift / FDA / M&A / index inclusion taxonomy (authored content, not in source). The PLTR 76-to-80 gap-and-crack footage (1613-1709) runs as the real-bars vignette inside it",
+      "est_duration": 45,
+      "animation_brief": "Move-shape thumbnails via the real-bars component, labeled as exemplars, not outcomes."
+    },
+    {
+      "id": "s13",
+      "type": "slide",
+      "include": true,
+      "label": "Chapter 4 card",
+      "slide_id": "ch4",
+      "duration": 2
+    },
+    {
+      "id": "s14",
+      "type": "overdub",
+      "include": true,
+      "label": "OVERDUB: the 10-day anchored VWAP as story trail",
+      "source": "src",
+      "in": 1746.0,
+      "out": 1807.0,
+      "status": "MAPPED — the shared 2997-3169 passage is assigned to s16; this scene uses the PLTR daily-VWAP guide ('the all-time mother of great signals') plus optional stacked-lookback support from 3313-3483",
+      "animation_brief": "AVWAP line under a rising story stock; trail-engage and trail-violate moments marked.",
+      "quote_anchor": "big thick Orange Line... the all-time mother of great signals"
+    },
+    {
+      "id": "s14b",
+      "type": "outcome",
+      "include": true,
+      "mode": "single",
+      "label": "WHAT HAPPENED: three endings from one entry (the trail applied to UMAC)",
+      "voice": "ava",
+      "vo_script": "TO WRITE from data-notes.md epilogue (computed, method disclosed as daily typical-price approximation): strict one-touch trail exits December 19 at ten fifty-five, plus zero point seven eight R, before the big leg; the course's own re-enter discipline catches the re-cross December 20 and rides to January 7 at fourteen sixty-eight; no exit rule at all round-trips to six eighty-seven by late February. Same entry. Three exits. Three outcomes.",
+      "est_duration": 60,
+      "data_ref": "data-notes.md — epilogue (computed 2026-07-13)",
+      "animation_brief": "Real UMAC bars with the AVWAP trail; three exit paths branch and land as a three-row table (animated stats table component).",
+      "editorial_rules": "frame-vs-price only; synth voice only; approximation method disclosed on screen"
+    },
+    {
+      "id": "s15",
+      "type": "overdub",
+      "include": true,
+      "label": "OVERDUB: stacked frames tell the same story",
+      "source": "src",
+      "in": 3313.0,
+      "out": 3483.0,
+      "status": "MAPPED (trim the daily-report spreadsheet fumbling 3393-3447)",
+      "animation_brief": "NEW stacked-frames component: 3-day rolling / 5-day rolling / 10-day anchored panes rolling over in sequence.",
+      "quote_anchor": "it broke through all three of the three five and 10 day anchored vwaps it came through the dragon that thing is right on the thin ice"
+    },
+    {
+      "id": "s16",
+      "type": "overdub",
+      "include": true,
+      "label": "OVERDUB: cracks before the break (the live SPY framing)",
+      "source": "src",
+      "in": 2997.0,
+      "out": 3169.0,
+      "status": "MAPPED (the prize; 2997 start adds the 'here's the other thing that broke today' setup; optional tail 3172-3197 = two range-stat days to 590)",
+      "animation_brief": "Keep his audio. Real SPY bars Dec 2024: 10d AVWAP cracks, 5-day rolls, 3-day down, SMA3-2h break; levels 597 / 602 / 592 land as he names them.",
+      "quote_anchor": "the 10day anchored vwap today that cracked and the five day rolled over and the 3-day is all pointing down... 592 is in range... you could see 592 by Friday"
+    },
+    {
+      "id": "s16b",
+      "type": "outcome",
+      "include": true,
+      "mode": "single",
+      "label": "WHAT HAPPENED: 592 by Friday",
+      "voice": "ava",
+      "vo_script": "TO WRITE from data-notes.md Outcome 1 (verified): framed Tuesday December 10; by Friday the 13th, 592 never printed — the market bounced to 608 against the call first. The following Wednesday, on a scheduled Fed decision day, one session took out 597 and 592 in a single move. The structural read was right. The clock was wrong. Six sessions, not two.",
+      "est_duration": 60,
+      "data_ref": "data-notes.md — Outcome 1 (verified 2026-07-13)",
+      "animation_brief": "Real SPY bars Dec 10-20; the frame's levels persist; the failed-by-Friday beat lands BEFORE the FOMC-day resolution; catalyst chip on screen before the Dec 18 bar draws.",
+      "editorial_rules": "frame-vs-price only; synth voice only; publish every outcome; scheduled catalyst (FOMC 12/18) disclosed on screen"
+    },
+    {
+      "id": "s17",
+      "type": "slide",
+      "include": true,
+      "label": "Chapter 5 card",
+      "slide_id": "ch5",
+      "duration": 2
+    },
+    {
+      "id": "s18",
+      "type": "cut",
+      "include": true,
+      "label": "Narrative decay precedes chart decay",
+      "source": "src",
+      "in": 1709.0,
+      "out": 1848.0,
+      "status": "MAPPED (low-conf on card specifics — social/analyst tells are authored, footage is the kata-2 sharks read). Optional strong tail: 4793-4848 wrap ('Palantir cracked yesterday, it's a pure trade for me now... fully funded with profits')",
+      "quote_anchor": "when the buying is over and it just disappears that kata 2 is all of the Sharks still harvesting the failed dreams"
+    },
+    {
+      "id": "s19",
+      "type": "cut",
+      "include": true,
+      "label": "Reduce the stop + the simple rule (ATTRIBUTION DECISION REQUIRED)",
+      "source": "cr30",
+      "in": 3038.0,
+      "out": 3072.0,
+      "status": "MAPPED to closing-range-30 (NOT the story-stocks session). ⚠ The lines are spoken by a COHORT MEMBER (the range-bar trader, 'move the stop to the elbow' exchange from ~2809s), but the published v1 cards attribute them as Ken's trail rule and Ken's confession.",
+      "owner_decision": "Three options: (a) keep the cut, re-card honestly as a cohort exchange Ken affirms; (b) replace with a Ken-voiced equivalent from the corpus (mine for his own reduce-the-stop / average-loss statement); (c) drop the beat and let an Ava explainer state the rule neutrally. v1's attribution should be corrected regardless of which.",
+      "quote_anchor": "you got to reduce the stop loss but make it simple... that made the average loss higher... you end up giving back more"
+    },
+    {
+      "id": "s20",
+      "type": "slide",
+      "include": true,
+      "label": "Maxim + end card (essay cross-link)",
+      "slide_id": "end",
+      "duration": 10
+    }
+  ]
+}
