@@ -1,0 +1,46 @@
+{
+  "schema": "coursecraft-plan-v2",
+  "course": "strategic-decision-v2",
+  "revision": 1,
+  "revised": "2026-07-14",
+  "status": "DRAFT — chapter windows VTT-anchored from the cut track (91-min source timeline). VERIFY FIRST: listed ~64 min vs source 91:28 — check OGT_PROD_YT_STRATEGIC in prod; the Oct-2024 market-walk tail may already be absent from what buyers receive.",
+  "title": "Strategic Decision Mastery: Integrating AI into Trading (v2)",
+  "topic_class": "judgment_process (psychology-adjacent: cut-heavy, no aggregate outcomes)",
+  "store_sku": "strategic-decision",
+  "replaces": "strategic-decision v1 (2024-10 hosted Q&A recording + 55-card deck)",
+  "notes": "Cut track: docs/store-v2-cut-tracks.md §8. Verdict: v2 not re-record — the judgment core aged well; the one dated claim (Claude 3.5 Sonnet) gets a 30s Ava disclaimer, and the Oct-2024 market-walk tail is cut except an optional TSLA single outcome. Personal stats (67% WR, 0.97R) stay as to-camera self-disclosure and are explicitly NOT outcome material.",
+  "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/strategic-decision-v2/",
+  "sources": [
+    {
+      "id": "src",
+      "label": "~2024-10-20 AbleWayTech hosted Q&A (91 min)",
+      "file": "youtube-eZo3WpGhLmU-swing-trading-qa-2.mp4",
+      "proxy": "youtube-eZo3WpGhLmU-swing-trading-qa-2.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=eZo3WpGhLmU"
+    }
+  ],
+  "voices": [
+    { "id": "ava", "label": "Ava (US, female, polished)", "sample": "vo-ava.mp3" },
+    { "id": "andrew", "label": "Andrew (US, male, conversational)", "sample": "vo-andrew.mp3" }
+  ],
+  "segments": [
+    { "id": "s01", "type": "slide", "include": true, "label": "Title card (replaces 0-57s host greeting + screen-share fumbling)", "slide_id": "title", "duration": 4 },
+    { "id": "s02", "type": "cut", "include": true, "label": "COLD OPEN: AI is like alcohol, money, and fame", "source": "src", "in": 165.0, "out": 320.0, "status": "Cut track moves this to the front — the signature maxim opens the course; three-use-cases framework inside", "quote_anchor": "AI is like alcohol, money and fame — it makes you more of whatever you are" },
+    { "id": "s02b", "type": "explainer", "include": true, "label": "EXPLAINER: the three use cases, fixed as a card", "voice": "ava", "vo_script": "TO WRITE — typography card cementing the three-use-cases framework right after the maxim lands.", "est_duration": 25, "animation_brief": "Typography card, three rows landing one at a time." },
+    { "id": "s03", "type": "cut", "include": true, "label": "Ken's AI credentials", "source": "src", "in": 57.0, "out": 165.0, "status": "Runs after the cold open in v2 order", "quote_anchor": "St. Mary's doctoral lecture; Army University innovations; PPEA framework" },
+    { "id": "s04", "type": "cut", "include": true, "label": "Human-AI team performance + the hallucination story", "source": "src", "in": 320.0, "out": 524.0, "quote_anchor": "hallucination anecdote ~485s — honesty caveat, untouched" },
+    { "id": "s05", "type": "cut", "include": true, "label": "Use case 2 needs a strong human; AI vs ML", "source": "src", "in": 524.0, "out": 807.0, "status": "OVERDUB only if a slide is on screen — verify footage in cutroom", "quote_anchor": "200 master's theses" },
+    { "id": "s06", "type": "cut", "include": true, "label": "Prompting is the skill of asking questions (+ the dated model claim)", "source": "src", "in": 807.0, "out": 956.0, "quote_anchor": "Claude 3.5 Sonnet is my default, best-rated" },
+    { "id": "s06b", "type": "explainer", "include": true, "label": "EXPLAINER: the model-name disclaimer (20-30s)", "voice": "ava", "vo_script": "TO WRITE — model names date fast; the principles are model-agnostic; his selection criteria (safety and ethics) remained a real differentiator. NOT an outcome — no bars, no decidable rule.", "est_duration": 28, "animation_brief": "Single typography card." },
+    { "id": "s07", "type": "slide", "include": true, "label": "Agenda card (replaces 956-1050s transition)", "slide_id": "agenda", "duration": 5 },
+    { "id": "s08", "type": "cut", "include": true, "label": "Swing Q&A: the standard trade frame + battle drill", "source": "src", "in": 1050.0, "out": 2160.0, "status": "CUT with OVERDUB at cohort-screen references (risk box + band chart reuse); trim inside the 18.5-min block during cutroom pass", "quote_anchor": "1R risk / 2-3R reward; pattern ready-to-trade; target handling" },
+    { "id": "s09", "type": "overdub", "include": true, "label": "OVERDUB: the learning-ecosystem one-pager", "source": "src", "in": 2160.0, "out": 2570.0, "animation_brief": "Rebuild the one-page flashcard (v0.8, unchanged since 2019) as a clean animated diagram to his cadence; PPEA as number one; relentless assessment loop.", "quote_anchor": "learning ecosystem one-pager" },
+    { "id": "s10", "type": "cut", "include": true, "label": "The self-audit prompt demo (+ typography overdub of the top-10 list)", "source": "src", "in": 2570.0, "out": 3224.0, "status": "The course's core. Keep his narration as CUT; the on-screen 2024 model output is replaced by typography cards revealing the top-10 list one by one (solves the dating problem too)", "animation_brief": "Typography cards, one per item, landing as he reads/validates each.", "quote_anchor": "what does Ken publicly teach are the top-10 trader problems" },
+    { "id": "s11", "type": "cut", "include": true, "label": "That IS what I believe (the anti-oracle thesis)", "source": "src", "in": 3224.0, "out": 3261.0, "quote_anchor": "that's what an AI says Dr. Ken Long says — and I validated it, because it IS what I believe" },
+    { "id": "s12", "type": "cut", "include": true, "label": "Exits + his personal stats (self-disclosure, NO outcome)", "source": "src", "in": 3261.0, "out": 3630.0, "status": "Personal P&L is fine as to-camera self-disclosure; explicitly forbidden as outcome material", "quote_anchor": "67% win rate, 0.97R average, 2:1 payoff" },
+    { "id": "s13", "type": "cut", "include": true, "label": "Influences: Deming, Tharp, Douglas, Schwager, Steenbarger", "source": "src", "in": 3630.0, "out": 3900.0, "status": "+ typography name-cards", "quote_anchor": "influences lineage" },
+    { "id": "s14", "type": "cut", "include": false, "label": "Oct-2024 market walk — CUT BY DEFAULT (dated); optional TSLA single outcome", "source": "src", "in": 3900.0, "out": 5220.0, "status": "include=false pending owner call. If the TSLA 9d/30m frame walk names explicit levels (verify in cutroom), a single outcome on that frame is defensible; the NVDA directional opinion has no frame — cherry-pick bait, leave out", "owner_decision": "keep the tail out entirely, or keep ONLY the TSLA frame + its outcome segment" },
+    { "id": "s15", "type": "cut", "include": true, "label": "Goodbye (trimmed; the 'go Chiefs' dated line goes)", "source": "src", "in": 5220.0, "out": 5300.0, "status": "Trim to a clean short goodbye inside this window during cutroom pass" },
+    { "id": "s16", "type": "slide", "include": true, "label": "Maxim + end card", "slide_id": "end", "duration": 10 }
+  ]
+}
