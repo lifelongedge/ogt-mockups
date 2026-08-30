@@ -50,6 +50,8 @@
   .transport .t{font-family:"SF Mono",Menlo,monospace;font-size:.76rem;
                 color:var(--faint);min-width:66px;text-align:right}
 
+  .cover{font-size:.72rem;color:var(--faint);margin:.45rem 0 0}
+  .cover b{color:var(--amber);font-weight:400}
   .corr{margin:1.1rem 0 0}
   .corr label{display:block;font-family:"SF Mono",Menlo,monospace;font-size:.66rem;
     text-transform:uppercase;letter-spacing:.08em;color:var(--faint);margin-bottom:.35rem}
@@ -90,12 +92,24 @@
   <span class="mono">build_v2.py render</span> will frame-step into the cut.</p>
 
   <div class="callout">
-    <b>Two things these drafts are not.</b> They are not timed to Ken — every
-    one runs 40 seconds, while the real segments run 3:19 to 13:18 and will not
-    settle until the cutroom pass trims them and the beats re-anchor to his
-    cadence. And they carry no audio; under his voice the on-screen text
-    shrinks, because right now the captions are carrying meaning his narration
-    will carry instead.
+    <b>Play them with Ken.</b> An overdub is his audio over our picture, so
+    three transports: <b>with Ken</b> plays the real source audio from the
+    segment's IN point at the animation's own speed — the honest test of whether
+    the opening beats land under his actual words. <b>silent</b> is the pure
+    design read. <b>over the whole segment</b> stretches the 40 seconds of beats
+    across the entire window with him talking throughout, which shows how much
+    screen time is still unfilled. In the two audio modes the audio is the
+    clock and the canvas follows it, so the picture cannot drift against him.
+    Audio streams from the same GCS cutroom proxy the cutroom uses.
+  </div>
+
+  <div class="callout">
+    <b>What these drafts are not.</b> They are not timed to him — every one runs
+    40 seconds against segments of 3:19 to 13:18, and the coverage figure under
+    each transport says how thin that is. Nothing settles until the cutroom pass
+    trims the windows and the beats re-anchor to his cadence. Expect the
+    on-screen text to shrink once his narration carries the meaning the captions
+    are carrying now.
   </div>
 
   <div class="callout">
@@ -130,6 +144,13 @@
   <button id="copy">Copy all corrections</button>
 </div>
 <div class="toast" id="toast"></div>
+
+<!-- One shared element for all eight segments: same 360p cutroom proxy, seeked
+     to each segment's IN point. Range requests mean nothing downloads until
+     you press play. -->
+<!-- no crossorigin attribute: it opts the element into a CORS check the bucket
+     does not answer, and plain playback does not need one. -->
+<audio id="ken" preload="none"></audio>
 
 <script>
 var SEGS = [
@@ -173,6 +194,24 @@ var SEGS = [
        + 'date is drawn — the resolution belongs to s12b.' }
 ];
 
+/* Source windows [in, out] in seconds, straight from plan.v2.json. An overdub
+ * is Ken's audio over our picture, so these drafts can only really be judged
+ * with him talking underneath. Audio is the 360p cutroom proxy on GCS — the
+ * same object the cutroom streams, so no new asset and no new permissions. */
+var WINDOW = {
+  s02:[47,305], s03:[305,684], s04:[684,1126], s05:[1126,1431],
+  s07:[1768,2115], s09:[2398,2687], s11:[3079,3278], s12:[3278,4076]
+};
+var MEDIA = 'https://storage.googleapis.com/courses.owlgrouptrading.com/'
+          + '_cutroom/swing-logic-v2/'
+          + 'youtube-rmfIYAVNQOA-2022-10-01-weekend-swing-patterns.proxy.mp4';
+
+function mmss(s) {
+  s = Math.max(0, Math.round(s));
+  var h = (s / 3600) | 0, m = ((s % 3600) / 60) | 0, x = s % 60;
+  return (h ? h + ':' + (m < 10 ? '0' : '') : '') + m + ':' + (x < 10 ? '0' : '') + x;
+}
+
 var KEY = 'swing-logic-v2-overdub-corrections';
 var store = {};
 try { store = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { store = {}; }
@@ -190,9 +229,12 @@ SEGS.forEach(function (s) {
     + '<div class="stage"><iframe id="f-' + s.id + '" src="anim-' + s.id + '.html" '
     + 'scrolling="no" title="' + s.id + '"></iframe></div>'
     + '<div class="transport">'
-    + '<button data-play="' + s.id + '">▶ play</button>'
+    + '<button data-play="' + s.id + '" data-mode="live">▶ with Ken</button>'
+    + '<button data-play="' + s.id + '" data-mode="silent">▶ silent</button>'
+    + '<button data-play="' + s.id + '" data-mode="full">▶ over the whole segment</button>'
     + '<input type="range" id="r-' + s.id + '" min="0" max="1000" value="0">'
     + '<span class="t mono" id="t-' + s.id + '">0.0s</span></div>'
+    + '<div class="cover mono" id="v-' + s.id + '"></div>'
     + '<div class="corr"><label>Corrections for ' + s.id + '</label>'
     + '<textarea id="c-' + s.id + '" placeholder="What is wrong, what is missing, '
     + 'what should it say instead…"></textarea></div>';
@@ -210,13 +252,25 @@ window.addEventListener('resize', fit);
 window.addEventListener('load', fit);
 fit();
 
-/* ---- transport: drive renderFrame(t) directly, same origin ---- */
-var playing = {};
+/* ---- transport ----------------------------------------------------------
+ * Three ways to watch, because they answer different questions:
+ *   live   — Ken from the segment's IN point, animation at its own 40s speed.
+ *            Does the opening land under his actual words?
+ *   silent — no audio, animation alone. Pure design read.
+ *   full   — the 40s of beats stretched across the entire segment, Ken talking
+ *            the whole way. Shows how much screen time is still unfilled.
+ * In live and full the AUDIO is the clock and the canvas follows it, so the
+ * picture cannot drift against him.
+ * ------------------------------------------------------------------------ */
+var audio = document.getElementById('ken');
+var playing = null;          // {id, mode, btn}
+
 function win(id) {
   var f = document.getElementById('f-' + id);
   try { return f.contentWindow; } catch (e) { return null; }
 }
 function dur(id) { var w = win(id); return (w && w.ANIM_DURATION) || 40; }
+
 function draw(id, t) {
   var w = win(id);
   if (!w || typeof w.renderFrame !== 'function') return;
@@ -224,39 +278,79 @@ function draw(id, t) {
   document.getElementById('t-' + id).textContent = t.toFixed(1) + 's';
   document.getElementById('r-' + id).value = Math.round(t / dur(id) * 1000);
 }
-function tick(id, btn) {
-  if (!playing[id]) return;
-  var d = dur(id), t = playing[id].t + 1 / 60;
-  if (t >= d) { stop(id, btn); draw(id, d); return; }
-  playing[id].t = t;
-  draw(id, t);
-  requestAnimationFrame(function () { tick(id, btn); });
+
+function label(btn) {
+  return btn.getAttribute('data-mode') === 'live' ? '▶ with Ken'
+       : btn.getAttribute('data-mode') === 'silent' ? '▶ silent'
+       : '▶ over the whole segment';
 }
-function stop(id, btn) { playing[id] = null; if (btn) btn.textContent = '▶ play'; }
+
+function stop() {
+  if (!playing) return;
+  audio.pause();
+  playing.btn.textContent = label(playing.btn);
+  playing = null;
+}
+
+function frame() {
+  if (!playing) return;
+  var p = playing, id = p.id, d = dur(id), t;
+
+  if (p.mode === 'silent') {
+    t = p.t + 1 / 60;
+    p.t = t;
+    if (t >= d) { draw(id, d); stop(); return; }
+  } else {
+    var w = WINDOW[id], el = audio.currentTime - w[0];
+    if (el < 0) el = 0;
+    if (p.mode === 'live') {
+      t = el;
+      if (t >= d || audio.currentTime >= w[1]) { draw(id, d); stop(); return; }
+    } else {                                  // stretched over the whole window
+      t = d * (el / (w[1] - w[0]));
+      if (audio.currentTime >= w[1]) { draw(id, d); stop(); return; }
+    }
+  }
+  draw(id, Math.min(t, d));
+  requestAnimationFrame(frame);
+}
 
 document.addEventListener('click', function (e) {
-  var id = e.target.getAttribute && e.target.getAttribute('data-play');
+  var btn = e.target;
+  var id = btn.getAttribute && btn.getAttribute('data-play');
   if (!id) return;
-  if (playing[id]) { stop(id, e.target); return; }
-  // only one at a time — eight canvases animating at once is unreadable
-  Object.keys(playing).forEach(function (k) {
-    if (playing[k]) {
-      playing[k] = null;
-      var b = document.querySelector('[data-play="' + k + '"]');
-      if (b) b.textContent = '▶ play';
-    }
-  });
-  var start = parseFloat(document.getElementById('r-' + id).value) / 1000 * dur(id);
-  playing[id] = { t: start >= dur(id) - 0.05 ? 0 : start };
-  e.target.textContent = '❚❚ pause';
-  tick(id, e.target);
+  var mode = btn.getAttribute('data-mode');
+
+  if (playing && playing.id === id && playing.mode === mode) { stop(); return; }
+  stop();   // one at a time: eight canvases and eight voices is unusable
+
+  var w = WINDOW[id];
+  playing = { id: id, mode: mode, btn: btn, t: 0 };
+  btn.textContent = '❚❚ pause';
+
+  if (mode === 'silent') {
+    requestAnimationFrame(frame);
+    return;
+  }
+  audio.currentTime = w[0];
+  var go = audio.play();
+  if (go && go.catch) {
+    go.catch(function () {
+      // autoplay policy, or the proxy did not load — fall back rather than hang
+      var v = document.getElementById('v-' + id);
+      if (v) v.textContent = 'audio would not start — try “silent”, '
+                           + 'or check the GCS proxy is reachable';
+      playing.mode = 'silent';
+    });
+  }
+  requestAnimationFrame(frame);
 });
 
 document.addEventListener('input', function (e) {
   var t = e.target;
   if (t.id && t.id.indexOf('r-') === 0) {
     var id = t.id.slice(2);
-    stop(id, document.querySelector('[data-play="' + id + '"]'));
+    stop();
     draw(id, t.value / 1000 * dur(id));
   }
   if (t.id && t.id.indexOf('c-') === 0) {
@@ -279,6 +373,17 @@ SEGS.forEach(function (s) {
   if (store[s.id]) el.value = store[s.id];
 });
 counts();
+
+// Say plainly how little of each segment the draft currently covers. This is
+// the number that decides how much more animation each one needs.
+audio.src = MEDIA;
+SEGS.forEach(function (s) {
+  var w = WINDOW[s.id], len = w[1] - w[0], d = dur(s.id) || 40;
+  document.getElementById('v-' + s.id).innerHTML =
+    'source ' + mmss(w[0]) + '–' + mmss(w[1]) + ' &middot; segment ' + mmss(len)
+    + ' &middot; draft ' + d.toFixed(0) + 's covers <b>'
+    + Math.round(d / len * 100) + '%</b> of it';
+});
 
 document.getElementById('copy').onclick = function () {
   var out = ['swing-logic-v2 overdub drafts — corrections', ''];
