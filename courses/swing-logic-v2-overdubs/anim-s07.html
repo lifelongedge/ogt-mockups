@@ -1,0 +1,143 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>s07 — RLCO patterns + fractal timeframes</title>
+<style>html,body{margin:0;background:#0d0d0b;overflow:hidden}canvas{display:block}</style>
+<canvas id="c" width="1280" height="720"></canvas>
+<script src="anim/lib.js"></script>
+<script>
+/* s07 OVERDUB — "RLCO patterns + fractal timeframes" (src 29:28-35:15)
+ *
+ * The course thesis: the same shape shows up at every timeframe, so the
+ * pattern library is small and the timeframe is a choice. Gallery, then the
+ * fractal zoom on one pattern across weekly / daily / 65-minute.
+ *
+ * Shapes are authored archetypes, not instances — marked on screen. The
+ * Collapsing Dragon meets real bars in s13b (ADBE).
+ *
+ * DRAFT timing (40s).
+ */
+var x = document.getElementById('c').getContext('2d');
+window.ANIM_DURATION = 40;
+
+var PATTERNS = [
+  { name: 'OWL', kind: 'owl' },
+  { name: 'SSC', kind: 'ssc' },
+  { name: 'COLLAPSING DRAGON', kind: 'dragon' },
+  { name: 'SUPER PINCH', kind: 'super' },
+  { name: 'Z3 PINCH', kind: 'z3' }
+];
+
+// each archetype as a 0..1 x 0..1 polyline
+function shape(kind) {
+  var p = [], i, u;
+  if (kind === 'owl') {
+    for (i = 0; i <= 30; i++) {
+      u = i / 30;
+      p.push([u, 0.5 + Math.sin(u * Math.PI * 2) * 0.30 * (1 - u * 0.3)]);
+    }
+  } else if (kind === 'ssc') {
+    for (i = 0; i <= 30; i++) {
+      u = i / 30;
+      p.push([u, u < 0.55 ? 0.8 - u * 0.9 : 0.31 + Math.sin((u - 0.55) * 9) * 0.06]);
+    }
+  } else if (kind === 'dragon') {
+    for (i = 0; i <= 34; i++) {
+      u = i / 34;
+      if (u < 0.30) p.push([u, 0.60 + Math.sin(u * 16) * 0.10]);
+      else if (u < 0.46) p.push([u, 0.62 - (u - 0.30) * 0.55]);   // the hump
+      else if (u < 0.56) p.push([u, 0.53 - (u - 0.46) * 2.9]);    // the crack
+      else p.push([u, 0.24 - (u - 0.56) * 0.34 + Math.sin(u * 22) * 0.03]);
+    }
+  } else if (kind === 'super') {
+    for (i = 0; i <= 36; i++) {
+      u = i / 36;
+      p.push([u, 0.5 + Math.sin(i * 2.1) * 0.40 * Math.pow(1 - u, 1.7)]);
+    }
+  } else {
+    for (i = 0; i <= 32; i++) {
+      u = i / 32;
+      p.push([u, 0.5 + Math.sin(i * 1.75) * 0.34 * (1 - u * 0.86)]);
+    }
+  }
+  return p;
+}
+
+function drawShape(kind, gx, gy, w, h, p, color, alpha, lw) {
+  var s = shape(kind), pts = [];
+  for (var i = 0; i < s.length; i++) pts.push([gx + s[i][0] * w, gy + (1 - s[i][1]) * h]);
+  A.polyline(x, pts, p, color, lw || 2, alpha);
+}
+
+window.renderFrame = function (t) {
+  A.clear(x);
+  A.titleCard(x, 'Same shape, every timeframe', 'the pattern library is small',
+              t, 0.2, 2.4);
+  var body = A.beat(t, 3.4, 0.8);
+  if (body <= 0.01) return;
+
+  A.chrome(x, { seg: 's07 OVERDUB', label: 'RLCO patterns · fractal timeframes',
+                illustrative: true, alpha: body });
+
+  var zoom = A.beat(t, 19.0, 1.6);       // gallery recedes, one pattern takes over
+
+  // --- gallery ---
+  var galleryA = body * (1 - zoom * 0.82);
+  for (var i = 0; i < PATTERNS.length; i++) {
+    var a = A.beat(t, 4.2 + i * 1.5, 0.7) * galleryA;
+    if (a <= 0.01) continue;
+    var cw = 214, gx = 62 + i * 232, gy = 168;
+    var isHero = PATTERNS[i].kind === 'dragon';
+    x.save(); x.globalAlpha = a;
+    A.rr(x, gx, gy, cw, 178, 8);
+    x.fillStyle = A.C.panel; x.fill();
+    x.strokeStyle = (isHero && zoom > 0.2) ? A.C.amber : A.C.border;
+    x.lineWidth = (isHero && zoom > 0.2) ? 1.6 : 1;
+    x.stroke();
+    x.restore();
+    drawShape(PATTERNS[i].kind, gx + 24, gy + 34, cw - 48, 96,
+              A.lin(t, 4.4 + i * 1.5, 1.1),
+              isHero && zoom > 0.2 ? A.C.amber : A.C.dim, a);
+    A.text(x, PATTERNS[i].name, gx + cw / 2, gy + 158, A.F.small,
+           isHero && zoom > 0.2 ? A.C.amber : A.C.dim, 'center', a);
+  }
+
+  // --- fractal zoom: one pattern, three timeframes ---
+  if (zoom > 0.01) {
+    var frames = ['WEEKLY', 'DAILY', '65-MINUTE'];
+    // Deliberately identical amplitude. Scaling them down made the three panes
+    // look like three different shapes, which is the opposite of the point.
+    var scales = [1.0, 1.0, 1.0];
+    for (var k = 0; k < 3; k++) {
+      var fa = A.beat(t, 20.5 + k * 2.2, 0.9) * body;
+      if (fa <= 0.01) continue;
+      var bw = 348, bx = 96 + k * 372, by = 402, bh = 200;
+      x.save(); x.globalAlpha = fa;
+      A.rr(x, bx, by, bw, bh, 8);
+      x.fillStyle = A.C.panel; x.fill();
+      x.strokeStyle = A.C.border; x.lineWidth = 1; x.stroke();
+      x.restore();
+      A.text(x, frames[k], bx + 16, by - 12, A.F.label, A.C.faint, 'left', fa);
+
+      // the identical archetype, only the amplitude and bar count change
+      var s = shape('dragon'), pts = [];
+      for (var j = 0; j < s.length; j++) {
+        pts.push([bx + 22 + s[j][0] * (bw - 44),
+                  by + bh / 2 - (s[j][1] - 0.5) * bh * 0.82 * scales[k]]);
+      }
+      A.polyline(x, pts, A.lin(t, 20.8 + k * 2.2, 1.2), A.C.amber, 2.2, fa);
+      A.text(x, ['months', 'weeks', 'hours'][k], bx + bw - 16, by + bh - 14,
+             A.F.small, A.C.faint, 'right', fa * 0.8);
+    }
+
+    // (the gallery card already names it — a second caption here doubled up)
+  }
+
+  var cl = A.beat(t, 30.5, 1.0);
+  if (cl > 0.01) {
+    A.text(x, 'Learn the shape once. Then only choose which clock you are on.',
+           640, 668, '300 24px Georgia, serif', A.C.fg, 'center', cl);
+  }
+};
+
+renderFrame(0);
+</script>

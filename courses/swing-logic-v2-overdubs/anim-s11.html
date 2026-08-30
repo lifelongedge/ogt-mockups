@@ -1,0 +1,140 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>s11 — XLY vs XLP psychology gauge</title>
+<style>html,body{margin:0;background:#0d0d0b;overflow:hidden}canvas{display:block}</style>
+<canvas id="c" width="1280" height="720"></canvas>
+<script src="anim/lib.js"></script>
+<script src="anim/data.js"></script>
+<script>
+/* s11 OVERDUB — "XLY vs XLP psychology gauge" (src 51:19-54:38)
+ *
+ * Evergreen concept, real series: discretionary over staples is a read on
+ * whether the crowd feels like buying things it does not need. 2022 rebased
+ * to 100 at the start of the year, ending on the frame date.
+ *
+ * DRAFT timing (40s).
+ */
+var x = document.getElementById('c').getContext('2d');
+window.ANIM_DURATION = 40;
+
+var R = window.ANIMDATA.xly_xlp;   // [date, xly, xlp, ratio]
+var BOX = { x: 96, y: 176, w: 720, h: 292 };
+var RBOX = { x: 96, y: 528, w: 720, h: 118 };
+
+var bounds = (function () {
+  var lo = 1e9, hi = -1e9, rlo = 1e9, rhi = -1e9;
+  for (var i = 0; i < R.length; i++) {
+    lo = Math.min(lo, R[i][1], R[i][2]);
+    hi = Math.max(hi, R[i][1], R[i][2]);
+    rlo = Math.min(rlo, R[i][3]); rhi = Math.max(rhi, R[i][3]);
+  }
+  var m = (hi - lo) * 0.10, rm = (rhi - rlo) * 0.14;
+  return { lo: lo - m, hi: hi + m, rlo: rlo - rm, rhi: rhi + rm };
+})();
+
+function yv(v) { return BOX.y + BOX.h - (v - bounds.lo) / (bounds.hi - bounds.lo) * BOX.h; }
+function yr(v) { return RBOX.y + RBOX.h - (v - bounds.rlo) / (bounds.rhi - bounds.rlo) * RBOX.h; }
+function xi(i) { return BOX.x + i / (R.length - 1) * BOX.w; }
+
+function series(idx, color, p, alpha) {
+  var pts = [];
+  for (var i = 0; i < R.length; i++) pts.push([xi(i), yv(R[i][idx])]);
+  A.polyline(x, pts, p, color, 2.2, alpha);
+}
+
+// the gauge: needle swings from greed to fear as the ratio falls
+function gauge(cx, cy, rad, frac, alpha) {
+  if (alpha <= 0.01) return;
+  x.save();
+  x.globalAlpha = alpha;
+  var a0 = Math.PI * 0.82, a1 = Math.PI * 2.18;
+  // arc, coloured fear -> greed
+  for (var i = 0; i < 60; i++) {
+    var u0 = i / 60, u1 = (i + 1) / 60;
+    x.beginPath();
+    x.arc(cx, cy, rad, A.lerp(a0, a1, u0), A.lerp(a0, a1, u1));
+    x.strokeStyle = u0 < 0.4 ? A.C.red : (u0 > 0.6 ? A.C.green : A.C.amberDim);
+    x.globalAlpha = alpha * 0.55;
+    x.lineWidth = 12; x.stroke();
+  }
+  x.globalAlpha = alpha;
+  A.text(x, 'FEAR', cx - rad - 4, cy + 34, A.F.small, A.C.red, 'center');
+  A.text(x, 'GREED', cx + rad + 4, cy + 34, A.F.small, A.C.green, 'center');
+  A.text(x, 'XLY / XLP', cx, cy - rad - 22, A.F.label, A.C.faint, 'center');
+
+  var ang = A.lerp(a0, a1, frac);
+  x.strokeStyle = A.C.fg; x.lineWidth = 3; x.lineCap = 'round';
+  x.beginPath();
+  x.moveTo(cx, cy);
+  x.lineTo(cx + Math.cos(ang) * rad * 0.86, cy + Math.sin(ang) * rad * 0.86);
+  x.stroke();
+  x.beginPath(); x.arc(cx, cy, 7, 0, Math.PI * 2);
+  x.fillStyle = A.C.fg; x.fill();
+  x.restore();
+}
+
+window.renderFrame = function (t) {
+  A.clear(x);
+  A.titleCard(x, 'Discretionary over Staples',
+              'what the crowd buys when it feels safe', t, 0.2, 2.4);
+  var body = A.beat(t, 3.4, 0.8);
+  if (body <= 0.01) return;
+
+  A.chrome(x, { seg: 's11 OVERDUB', label: 'XLY vs XLP psychology gauge',
+                sourceNote: 'XLY / XLP daily · rebased 100 at 2021-12-01 · Norgate',
+                alpha: body });
+
+  A.pane(x, BOX, 'REBASED TO 100', body);
+  A.hline(x, yv(100), BOX.x, BOX.x + BOX.w, A.C.border, 1, [4, 4], body);
+
+  var p1 = A.lin(t, 4.0, 3.4), p2 = A.lin(t, 6.4, 3.4);
+  series(2, A.C.blue, p2, body);      // XLP first: the defensive baseline
+  series(1, A.C.amber, p1, body);     // XLY
+
+  if (p1 > 0.9) {
+    var last = R[R.length - 1];
+    A.text(x, 'XLY  ' + last[1].toFixed(0), BOX.x + BOX.w + 12, yv(last[1]) + 5,
+           A.F.num, A.C.amber, 'left', body);
+    A.text(x, 'XLP  ' + last[2].toFixed(0), BOX.x + BOX.w + 12, yv(last[2]) + 5,
+           A.F.num, A.C.blue, 'left', body);
+  }
+
+  // the ratio, which is the actual instrument
+  var rp = A.beat(t, 12.0, 1.0) * body;
+  if (rp > 0.01) {
+    A.pane(x, RBOX, 'THE RATIO', rp);
+    var pts = [];
+    for (var i = 0; i < R.length; i++) pts.push([xi(i), yr(R[i][3])]);
+    A.polyline(x, pts, A.lin(t, 12.4, 3.0), A.C.violet, 2.2, rp);
+    A.hline(x, yr(1), RBOX.x, RBOX.x + RBOX.w, A.C.border, 1, [4, 4], rp);
+    A.text(x, '1.00 = they move together', RBOX.x + 8, yr(1) - 8,
+           A.F.small, A.C.faint, 'left', rp * 0.9);
+  }
+
+  // gauge tracks the ratio across the year
+  var ga = A.beat(t, 18.0, 1.2) * body;
+  if (ga > 0.01) {
+    var sweep = A.lin(t, 19.0, 6.0);
+    var idx = Math.floor(sweep * (R.length - 1));
+    var v = R[idx][3];
+    var frac = (v - bounds.rlo) / (bounds.rhi - bounds.rlo);
+    gauge(1032, 356, 128, frac, ga);
+    A.text(x, R[idx][0], 1032, 528, A.F.small, A.C.faint, 'center', ga);
+    A.text(x, v.toFixed(3), 1032, 556, A.F.num, A.C.violet, 'center', ga);
+    // marker riding the ratio line
+    if (rp > 0.5) {
+      x.save(); x.globalAlpha = ga;
+      x.beginPath(); x.arc(xi(idx), yr(v), 4.5, 0, Math.PI * 2);
+      x.fillStyle = A.C.violet; x.fill(); x.restore();
+    }
+  }
+
+  var cl = A.beat(t, 30.5, 1.0);
+  if (cl > 0.01) {
+    A.text(x, 'It fell all year. That is not a forecast — it is a mood, priced.',
+           640, 692, '300 24px Georgia, serif', A.C.fg, 'center', cl);
+  }
+};
+
+renderFrame(0);
+</script>

@@ -1,0 +1,190 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>s03 — normal / abnormal / critical state, Z3P</title>
+<style>html,body{margin:0;background:#0d0d0b;overflow:hidden}canvas{display:block}</style>
+<canvas id="c" width="1280" height="720"></canvas>
+<script src="anim/lib.js"></script>
+<script>
+/* s03 OVERDUB — "normal range -> abnormality -> critical state; Z3P bracket;
+ * battle drill" (src 5:05-11:24)
+ *
+ * The three-state grammar is the spine of the course, and in the source it is a
+ * brush-tool scribble. The shape here is authored, not market data — marked as
+ * such. s03b is where the Z3P rule meets real bars.
+ *
+ * DRAFT timing (40s).
+ */
+var x = document.getElementById('c').getContext('2d');
+window.ANIM_DURATION = 40;
+
+var BOX = { x: 120, y: 168, w: 880, h: 286 };
+
+// Authored path, stitched so the phases join continuously — the first pass had
+// visible steps at the phase boundaries.
+var PATH = (function () {
+  var pts = [], n = 240, base = 0.62;
+  var bEnd = base + Math.sin(0.68 * 26) * 0.055 * 3.4 - 0.30;
+  var cOff = Math.sin(0.68 * 34) * 0.055;
+  for (var i = 0; i < n; i++) {
+    var u = i / (n - 1), v;
+    if (u < 0.42) {
+      v = base + Math.sin(u * 26) * 0.055;
+    } else if (u < 0.68) {
+      var k = (u - 0.42) / 0.26;
+      v = base + Math.sin(u * 26) * 0.055 * (1 + k * 2.4) - k * k * 0.30;
+    } else {
+      // 0.93 squeezed the pinch flat — the bracket became a hairline, not a box
+      var m = (u - 0.68) / 0.32;
+      v = bEnd + Math.sin(u * 34) * 0.055 * (1 - m * 0.70) - cOff * (1 - m * 0.70);
+    }
+    pts.push(v);
+  }
+  return pts;
+})();
+
+function px(i) { return BOX.x + i / (PATH.length - 1) * BOX.w; }
+function py(v) { return BOX.y + (1 - v) * BOX.h; }
+
+function envelope(i) {
+  var u = i / (PATH.length - 1);
+  if (u < 0.42) return 0.075;
+  if (u < 0.68) return 0.075 * (1 + (u - 0.42) / 0.26 * 2.6);
+  return 0.075 * 3.6 * (1 - (u - 0.68) / 0.32 * 0.90);
+}
+
+function band(upto, alpha) {
+  if (alpha <= 0.01 || upto < 2) return;
+  x.save(); x.globalAlpha = alpha * 0.16; x.fillStyle = A.C.blue;
+  x.beginPath();
+  for (var i = 0; i < upto; i++) x.lineTo(px(i), py(PATH[i] + envelope(i)));
+  for (var j = upto - 1; j >= 0; j--) x.lineTo(px(j), py(PATH[j] - envelope(j)));
+  x.closePath(); x.fill();
+  x.restore();
+}
+
+// phase tags live ABOVE the chart so nothing lands on the price
+function tag(label, sub, cx, color, alpha) {
+  if (alpha <= 0.01) return;
+  x.save(); x.globalAlpha = alpha;
+  x.font = A.F.label;
+  var w = x.measureText(label).width + 40;
+  A.rr(x, cx - w / 2, 108, w, 30, 5);
+  x.fillStyle = A.C.bg; x.fill();
+  x.strokeStyle = color; x.lineWidth = 1.2; x.stroke();
+  A.text(x, label, cx, 128, A.F.label, color, 'center');
+  A.text(x, sub, cx, 154, A.F.small, A.C.faint, 'center', alpha * 0.9);
+  x.restore();
+}
+
+// the pinch extent, in path indices
+var I0 = Math.floor(PATH.length * 0.80);
+var PINCH = (function () {
+  var lo = 1e9, hi = -1e9;
+  for (var k = I0; k < PATH.length; k++) {
+    if (PATH[k] < lo) lo = PATH[k];
+    if (PATH[k] > hi) hi = PATH[k];
+  }
+  return { lo: lo - 0.012, hi: hi + 0.012 };
+})();
+
+window.renderFrame = function (t) {
+  A.clear(x);
+  A.titleCard(x, 'Normal → abnormal → critical state',
+              'and the bracket that plays it', t, 0.2, 2.4);
+  var body = A.beat(t, 3.4, 0.8);
+  if (body <= 0.01) return;
+
+  A.chrome(x, { seg: 's03 OVERDUB', label: 'range of normal · Z3P bracket · battle drill',
+                illustrative: true, alpha: body });
+
+  var draw = A.lin(t, 3.8, 8.0);
+  var upto = Math.max(2, Math.floor(PATH.length * draw));
+
+  band(upto, A.beat(t, 4.6, 1.2) * body);
+  var pts = [];
+  for (var i = 0; i < upto; i++) pts.push([px(i), py(PATH[i])]);
+  A.polyline(x, pts, 1, A.C.fg, 2.2, body);
+
+  var tagsOut = 1 - A.beat(t, 22.4, 0.8);
+  tag('NORMAL', 'the range of normal holds', px(48), A.C.blue,
+      A.beat(t, 6.0, 0.7) * tagsOut * body);
+  tag('ABNORMAL', 'the range expands', px(132), A.C.amber,
+      A.beat(t, 9.2, 0.7) * tagsOut * body);
+  tag('CRITICAL STATE', 'abnormal compression', px(212), A.C.green,
+      A.beat(t, 12.2, 0.7) * tagsOut * body);
+
+  // ---- Z3P bracket ----
+  var zb = A.beat(t, 14.8, 1.0) * body;
+  if (zb > 0.01) {
+    var yTop = py(PINCH.hi), yBot = py(PINCH.lo);
+    var xL = px(I0) - 26, xR = BOX.x + BOX.w + 14;
+    A.hline(x, yTop, xL, xL + (xR - xL) * zb, A.C.green, 1.6, [6, 5], zb);
+    A.hline(x, yBot, xL, xL + (xR - xL) * zb, A.C.red, 1.6, [6, 5], zb);
+    if (zb > 0.6) {
+      A.text(x, 'BRACKET HIGH', xR + 12, yTop + 5, A.F.small, A.C.green, 'left', zb);
+      A.text(x, 'BRACKET LOW', xR + 12, yBot + 5, A.F.small, A.C.red, 'left', zb);
+    }
+
+    // the pinch height IS the risk — one box, not two
+    var rb = A.beat(t, 17.4, 1.0) * body;
+    if (rb > 0.01) {
+      x.save(); x.globalAlpha = rb;
+      x.fillStyle = 'rgba(255,255,255,0.07)';
+      x.fillRect(xL, yTop, xR - xL, yBot - yTop);
+      x.strokeStyle = A.C.dim; x.lineWidth = 1; x.setLineDash([3, 3]);
+      x.strokeRect(xL, yTop, xR - xL, yBot - yTop);
+      A.text(x, 'pinch height = 1R', (xL + xR) / 2, yTop - 12,
+             A.F.small, A.C.fg, 'center', rb);
+      x.restore();
+    }
+
+    // both directions, because Z3P does not claim to know which
+    var ar = A.beat(t, 19.6, 1.2) * body, ax = xR + 132;
+    if (ar > 0.01) {
+      [[yTop, -1, A.C.green], [yBot, 1, A.C.red]].forEach(function (d) {
+        x.save(); x.globalAlpha = ar; x.strokeStyle = d[2]; x.fillStyle = d[2];
+        x.lineWidth = 2.5;
+        var len = 74 * ar;
+        x.beginPath(); x.moveTo(ax, d[0]); x.lineTo(ax, d[0] + d[1] * len); x.stroke();
+        x.beginPath();
+        x.moveTo(ax, d[0] + d[1] * (len + 15));
+        x.lineTo(ax - 8, d[0] + d[1] * len);
+        x.lineTo(ax + 8, d[0] + d[1] * len);
+        x.closePath(); x.fill();
+        x.restore();
+      });
+      A.text(x, 'either way', ax + 22, (yTop + yBot) / 2 + 4,
+             A.F.small, A.C.dim, 'left', ar);
+    }
+  }
+
+  // ---- battle drill ----
+  var bd = A.beat(t, 23.6, 1.0) * body;
+  if (bd > 0.01) {
+    var by = 520;
+    A.text(x, 'THE 2-HOUR BATTLE DRILL', 640, by - 20, A.F.label, A.C.faint, 'center', bd);
+    for (var s = 0; s < 4; s++) {
+      var on = A.beat(t, 24.4 + s * 1.4, 0.5);
+      var sx = 118 + s * 262;
+      x.save(); x.globalAlpha = bd;
+      A.rr(x, sx, by, 226, 52, 6);
+      x.fillStyle = on > 0.5 ? A.C.panel2 : A.C.panel; x.fill();
+      x.strokeStyle = on > 0.5 ? A.C.amberDim : A.C.border; x.lineWidth = 1; x.stroke();
+      A.text(x, String(s + 1), sx + 20, by + 33, A.F.label,
+             on > 0.5 ? A.C.amber : A.C.faint);
+      A.text(x, ['re-read the range', 'is it still abnormal?',
+                 'bracket, or stand down', 'reset the clock'][s],
+             sx + 40, by + 32, A.F.small, on > 0.5 ? A.C.fg : A.C.dim);
+      x.restore();
+    }
+  }
+
+  var cl = A.beat(t, 32.5, 1.0);
+  if (cl > 0.01) {
+    A.text(x, 'You are not predicting direction. You are pricing a boundary.',
+           640, 646, '300 25px Georgia, serif', A.C.fg, 'center', cl);
+  }
+};
+
+renderFrame(0);
+</script>

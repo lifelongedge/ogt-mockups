@@ -1,0 +1,153 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>s05 — Auto Framer</title>
+<style>html,body{margin:0;background:#0d0d0b;overflow:hidden}canvas{display:block}</style>
+<canvas id="c" width="1280" height="720"></canvas>
+<script src="anim/lib.js"></script>
+<script>
+/* s05 OVERDUB — "Auto Framer: reward-to-risk off the daily report" (18:46-23:51)
+ *
+ * Risk is the daily range. Reward is the 10-day high. The Auto Framer just does
+ * that arithmetic for every name on the report, every night. The shape is
+ * authored so the numbers stay round and legible; real bars can be swapped in
+ * once the cutroom pass picks a symbol worth naming.
+ *
+ * DRAFT timing (40s).
+ */
+var x = document.getElementById('c').getContext('2d');
+window.ANIM_DURATION = 40;
+
+var BOX = { x: 118, y: 172, w: 700, h: 386 };
+var ENTRY = 48.20, RANGE = 1.55, TEN_HIGH = 53.10;
+var STOP = ENTRY - RANGE, REWARD = TEN_HIGH - ENTRY;
+var RR = REWARD / RANGE;
+
+// authored daily bars easing up into the entry
+var BARS = (function () {
+  var out = [], p = 45.1;
+  for (var i = 0; i < 34; i++) {
+    var drift = Math.sin(i * 0.42) * 0.5 + i * 0.10;
+    var o = p, c = 45.1 + drift + Math.sin(i * 1.7) * 0.34;
+    var h = Math.max(o, c) + 0.30 + Math.abs(Math.sin(i * 2.3)) * 0.42;
+    var l = Math.min(o, c) - 0.28 - Math.abs(Math.cos(i * 1.9)) * 0.40;
+    out.push(['', +o.toFixed(2), +h.toFixed(2), +l.toFixed(2), +c.toFixed(2)]);
+    p = c;
+  }
+  out[out.length - 1][4] = ENTRY;
+  out[out.length - 1][2] = ENTRY + 0.22;
+  return out;
+})();
+
+var S = A.scaleFor(BARS.concat([['', 0, TEN_HIGH + 0.6, STOP - 0.6, 0]]), BOX, 0.02);
+
+function ladder(t, alpha) {
+  if (alpha <= 0.01) return;
+  var lx = 900, lw = 258;
+  x.save(); x.globalAlpha = alpha;
+  A.text(x, 'AUTO FRAMER', lx, 196, A.F.label, A.C.faint);
+
+  var rows = [
+    ['10-day high', TEN_HIGH.toFixed(2), A.C.green, 6.4],
+    ['entry (last)', ENTRY.toFixed(2), A.C.fg, 7.4],
+    ['daily range', RANGE.toFixed(2), A.C.dim, 9.0],
+    ['stop = entry − range', STOP.toFixed(2), A.C.red, 10.4]
+  ];
+  for (var i = 0; i < rows.length; i++) {
+    var a = A.beat(t, rows[i][3], 0.6) * alpha;
+    if (a <= 0.01) continue;
+    var ry = 236 + i * 52;
+    x.globalAlpha = a;
+    A.rr(x, lx, ry, lw, 40, 5);
+    x.fillStyle = A.C.panel; x.fill();
+    x.strokeStyle = A.C.border; x.lineWidth = 1; x.stroke();
+    A.text(x, rows[i][0], lx + 14, ry + 25, A.F.small, A.C.dim);
+    A.text(x, rows[i][1], lx + lw - 14, ry + 26, A.F.num, rows[i][2], 'right');
+  }
+
+  // the payoff line counts up as the arithmetic lands
+  var ra = A.beat(t, 22.5, 1.6) * alpha;
+  if (ra > 0.01) {
+    var ry2 = 236 + 4 * 52 + 16;
+    x.globalAlpha = ra;
+    A.rr(x, lx, ry2, lw, 78, 6);
+    x.fillStyle = 'rgba(224,164,65,0.10)'; x.fill();
+    x.strokeStyle = A.C.amberDim; x.lineWidth = 1.2; x.stroke();
+    A.text(x, 'REWARD-TO-RISK', lx + lw / 2, ry2 + 26, A.F.small, A.C.amberDim, 'center');
+    A.text(x, (RR * A.lin(t, 22.5, 2.2)).toFixed(2) + ' : 1',
+           lx + lw / 2, ry2 + 62, '500 30px "SF Mono", Menlo, monospace',
+           A.C.amber, 'center');
+  }
+  x.restore();
+}
+
+window.renderFrame = function (t) {
+  A.clear(x);
+  A.titleCard(x, 'The Auto Framer', 'risk is the range · reward is the 10-day high',
+              t, 0.2, 2.4);
+  var body = A.beat(t, 3.4, 0.8);
+  if (body <= 0.01) return;
+
+  A.chrome(x, { seg: 's05 OVERDUB', label: 'reward-to-risk off the daily report',
+                illustrative: true, alpha: body });
+
+  A.pane(x, BOX, 'DAILY', body);
+  A.candles(x, BARS, BOX, S, A.lin(t, 3.8, 3.4), { alpha: body });
+
+  var ex = A.beat(t, 7.2, 0.8);
+  A.level(x, S, BOX, ENTRY, 'entry ' + ENTRY.toFixed(2), A.C.fg, ex,
+          { alpha: body, dash: null });
+
+  // risk box: one daily range below the entry
+  var rk = A.beat(t, 9.2, 1.0);
+  if (rk > 0.01) {
+    x.save(); x.globalAlpha = rk * body;
+    var y0 = S.y(ENTRY), y1 = S.y(STOP);
+    x.fillStyle = 'rgba(192,85,74,0.18)';
+    x.fillRect(BOX.x, y0, BOX.w, y1 - y0);
+    x.strokeStyle = A.C.red; x.lineWidth = 1; x.setLineDash([5, 4]);
+    x.strokeRect(BOX.x, y0, BOX.w, y1 - y0);
+    A.text(x, '1R = one daily range = ' + RANGE.toFixed(2),
+           BOX.x + 14, (y0 + y1) / 2 + 5, A.F.small, A.C.red, 'left', rk * body);
+    x.restore();
+  }
+
+  // reward: up to the 10-day high
+  var rw = A.beat(t, 14.5, 1.0);
+  if (rw > 0.01) {
+    x.save(); x.globalAlpha = rw * body;
+    var t0 = S.y(TEN_HIGH), t1 = S.y(ENTRY);
+    x.fillStyle = 'rgba(111,174,107,0.14)';
+    x.fillRect(BOX.x, t0, BOX.w, t1 - t0);
+    x.restore();
+    A.level(x, S, BOX, TEN_HIGH, '10-day high ' + TEN_HIGH.toFixed(2),
+            A.C.green, rw, { alpha: body });
+  }
+
+  // the R ruler: how many risk boxes fit in the reward
+  var ru = A.beat(t, 18.4, 1.4);
+  if (ru > 0.01) {
+    var n = Math.floor(RR), rx = BOX.x + BOX.w - 118;
+    for (var i = 0; i < n; i++) {
+      var a = A.beat(t, 18.4 + i * 0.55, 0.45) * body;
+      if (a <= 0.01) continue;
+      var by = S.y(ENTRY + RANGE * (i + 1)), bh = S.y(ENTRY + RANGE * i) - by;
+      x.save(); x.globalAlpha = a;
+      x.strokeStyle = A.C.green; x.lineWidth = 1; x.setLineDash([3, 3]);
+      x.strokeRect(rx, by, 96, bh);
+      A.text(x, (i + 1) + 'R', rx + 48, by + bh / 2 + 5, A.F.small, A.C.green, 'center', a);
+      x.restore();
+    }
+  }
+
+  ladder(t, body);
+
+  var cl = A.beat(t, 30.0, 1.0);
+  if (cl > 0.01) {
+    A.text(x, 'Every name on the report gets framed this way, every night — '
+             + 'before you have an opinion.',
+           640, 664, '300 23px Georgia, serif', A.C.fg, 'center', cl);
+  }
+};
+
+renderFrame(0);
+</script>
