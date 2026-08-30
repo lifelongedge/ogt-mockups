@@ -25,7 +25,7 @@
   .toast { position:fixed; bottom:1.2rem; left:50%; transform:translateX(-50%); background:var(--amber-dim); color:#0e0e0c; padding:.5rem 1.1rem; border-radius:6px; font-size:.85rem; font-weight:600; opacity:0; transition:opacity .25s; z-index:99; pointer-events:none; }
   .toast.show { opacity:1; }
 
-  main { display:grid; grid-template-columns: 1fr 420px; gap:0; min-height:calc(100vh - 56px); }
+  main { display:grid; grid-template-columns: 1fr clamp(560px, 52vw, 1100px); gap:0; min-height:calc(100vh - 56px); }
   @media (max-width:1100px){ main { grid-template-columns:1fr; } }
 
   /* ---- timeline ---- */
@@ -65,7 +65,12 @@
     width:100%; background:var(--card); color:var(--fg); border:1px solid var(--border); border-radius:5px; padding:.45rem .6rem; font-size:.83rem; font-family:inherit;
   }
   .field textarea { min-height:70px; resize:vertical; line-height:1.45; }
-  video { width:100%; background:#000; border-radius:6px; aspect-ratio:16/9; }
+  /* The viewer is pinned to the top of the inspector so it never scrolls out of
+     reach while you work the transcript below it. */
+  .viewer { position:sticky; top:0; z-index:6; background:var(--bg); padding:.15rem 0 .55rem; margin-bottom:.5rem; border-bottom:1px solid var(--border); }
+  .viewer .rowbtns { margin:.6rem 0 0; }
+  @media (max-width:1100px){ .viewer { position:static; } }
+  video { width:100%; max-height:52vh; background:#000; border-radius:6px; aspect-ratio:16/9; object-fit:contain; display:block; }
   .trimrow { display:flex; align-items:center; gap:.4rem; flex-wrap:wrap; margin:.3rem 0; }
   .trimrow .tv { font-family:"SF Mono",Menlo,monospace; font-size:.85rem; color:var(--amber); min-width:84px; }
   .rowbtns { display:flex; gap:.5rem; flex-wrap:wrap; margin:.9rem 0; }
@@ -312,10 +317,12 @@ function select(i) {
     <h2><span class="type-pill" style="background:var(--${s.type})">${s.type.toUpperCase()}</span> &nbsp;${s.label}</h2>
     ${s.why ? `<div class="why">${s.why}</div>` : ''}
     ${hasMedia ? `
-      <video id="vid" src="${mediaUrl(src.proxy)}" preload="metadata" controls></video>
-      <div class="rowbtns">
-        <button id="playSeg" class="primary">▶ Play segment</button>
-        <button id="playCtx">▶ ±5s context</button>
+      <div class="viewer">
+        <video id="vid" src="${mediaUrl(src.proxy)}" preload="metadata" controls></video>
+        <div class="rowbtns">
+          <button id="playSeg" class="primary">▶ Play segment</button>
+          <button id="playCtx">▶ ±5s context</button>
+        </div>
       </div>
       <div class="field"><label>IN point</label>
         <div class="trimrow">
@@ -478,8 +485,21 @@ function buildTxList(query) {
   });
   if (!ql) {
     const first = box.querySelector('.cue.inrange');
-    if (first) first.scrollIntoView({block:'center'});
+    if (first) scrollCueIntoView(box, first, 'center');
   }
+}
+// Scroll ONLY the transcript box. scrollIntoView() walks every scrollable
+// ancestor, which dragged the whole inspector up on each timeupdate and took
+// the video with it.
+function scrollCueIntoView(box, el, mode) {
+  const top = el.offsetTop - box.offsetTop;
+  if (mode === 'center') {
+    box.scrollTop = top - (box.clientHeight - el.offsetHeight) / 2;
+    return;
+  }
+  if (top < box.scrollTop) box.scrollTop = top;
+  else if (top + el.offsetHeight > box.scrollTop + box.clientHeight)
+    box.scrollTop = top + el.offsetHeight - box.clientHeight;
 }
 function highlightNow() {
   const box = $('tx'); if (!box || !videoEl || !txCues.length) return;
@@ -488,7 +508,7 @@ function highlightNow() {
   box.querySelectorAll('.cue.now').forEach(el => el.classList.remove('now'));
   if (idx >= 0) {
     const el = box.querySelector(`.cue[data-i="${idx}"]`);
-    if (el) { el.classList.add('now'); if (!videoEl.paused) el.scrollIntoView({block:'nearest'}); }
+    if (el) { el.classList.add('now'); if (!videoEl.paused) scrollCueIntoView(box, el, 'nearest'); }
   }
 }
 
