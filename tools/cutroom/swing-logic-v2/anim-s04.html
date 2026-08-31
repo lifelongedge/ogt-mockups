@@ -1,0 +1,129 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>s04 — six mechanical swing systems</title>
+<style>html,body{margin:0;background:#0d0d0b;overflow:hidden}canvas{display:block}</style>
+<canvas id="c" width="1280" height="720"></canvas>
+<script src="anim/lib.js"></script>
+<script>
+/* s04 OVERDUB — "six mechanical swing systems + the WR claims" (src 11:24-18:46)
+ *
+ * The menu, with the win-rate numbers exactly as he states them on camera.
+ * This segment must NOT resolve them: s04b is where the computed 5DD aggregate
+ * lands (85 signals / 40 fills / +0.76R / 50% win since 2020). The claim chips
+ * here are quotes, tagged as quotes, and the closing line hands off.
+ *
+ * DRAFT timing (40s).
+ */
+var x = document.getElementById('c').getContext('2d');
+window.ANIM_DURATION = 40;
+
+// glyph: a tiny authored shape that says what the system looks for
+var SYS = [
+  { name: 'FIVE-DAY DOWN', rule: 'five consecutive down closes, then buy the turn',
+    glyph: 'down5', claim: '60–65% win rate · 1.5–2:1 payoff', at: 14.6 },
+  { name: 'WASHOUT', rule: 'oversold on 10-day Williams %R — buy the dip',
+    glyph: 'washout', claim: '65% win rate in bull markets', at: 17.4 },
+  { name: 'TRIPLE SCREEN', rule: 'three timeframes agree before you act', glyph: 'three' },
+  { name: '551W', rule: 'the weekly variant of the same compression logic', glyph: 'pinch' },
+  { name: 'OVERREACTION', rule: 'an outsized bar, then the snap back', glyph: 'spike' },
+  { name: 'CHANNELING', rule: 'ride the band, fade the edge', glyph: 'chan' }
+];
+
+function glyph(kind, gx, gy, w, h, alpha, color) {
+  x.save();
+  x.globalAlpha = alpha; x.strokeStyle = color; x.lineWidth = 1.8;
+  x.lineJoin = 'round'; x.lineCap = 'round';
+  var pts = [];
+  var i;
+  if (kind === 'down5') {
+    for (i = 0; i <= 10; i++) pts.push([i / 10, i < 6 ? 0.15 + i * 0.13 : 0.93 - (i - 6) * 0.17]);
+  } else if (kind === 'washout') {
+    for (i = 0; i <= 14; i++) {
+      var u = i / 14;
+      pts.push([u, u < 0.5 ? 0.3 + u * 1.1 : 0.85 - (u - 0.5) * 1.35]);
+    }
+  } else if (kind === 'three') {
+    for (i = 0; i <= 12; i++) pts.push([i / 12, 0.72 - i / 12 * 0.5]);
+  } else if (kind === 'pinch') {
+    for (i = 0; i <= 16; i++) {
+      var v = i / 16;
+      pts.push([v, 0.5 + Math.sin(i * 1.9) * 0.36 * (1 - v * 0.92)]);
+    }
+  } else if (kind === 'spike') {
+    for (i = 0; i <= 12; i++) pts.push([i / 12, i === 6 ? 0.95 : (i < 6 ? 0.45 : 0.38)]);
+  } else {
+    for (i = 0; i <= 16; i++) pts.push([i / 16, 0.5 + Math.sin(i * 0.85) * 0.30 - i / 16 * 0.18]);
+  }
+  x.beginPath();
+  for (i = 0; i < pts.length; i++) {
+    var X = gx + pts[i][0] * w, Y = gy + (1 - pts[i][1]) * h;
+    if (i === 0) x.moveTo(X, Y); else x.lineTo(X, Y);
+  }
+  x.stroke();
+  x.restore();
+}
+
+function card(s, i, t) {
+  var col = i % 3, row = (i / 3) | 0;
+  var cw = 348, ch = 176, gx = 118 + col * 368, gy = 178 + row * 208;
+  var a = A.beat(t, 4.0 + i * 1.35, 0.75);
+  if (a <= 0.01) return;
+  var hot = s.claim ? A.beat(t, s.at, 0.6) : 0;
+
+  x.save();
+  x.globalAlpha = a;
+  A.rr(x, gx, gy, cw, ch, 8);
+  x.fillStyle = A.C.panel; x.fill();
+  x.strokeStyle = hot > 0.4 ? A.C.amberDim : A.C.border; x.lineWidth = 1; x.stroke();
+
+  A.text(x, s.name, gx + 22, gy + 36, A.F.label, hot > 0.4 ? A.C.amber : A.C.fg);
+  A.para(x, s.rule, gx + 22, gy + 62, cw - 152, 22,
+         '300 15px Georgia, serif', A.C.dim, a * 0.95);
+  glyph(s.glyph, gx + cw - 104, gy + 26, 80, 48, a * 0.85,
+        hot > 0.4 ? A.C.amber : A.C.faint);
+
+  if (s.claim) {
+    var ca = hot;
+    if (ca > 0.01) {
+      var cy2 = gy + ch - 34;
+      A.rr(x, gx + 22, cy2 - 19, cw - 44, 30, 4);
+      x.globalAlpha = a * ca * 0.16; x.fillStyle = A.C.amber; x.fill();
+      x.globalAlpha = a * ca;
+      x.strokeStyle = A.C.amberDim; x.lineWidth = 1; x.stroke();
+      A.text(x, s.claim, gx + cw / 2, cy2 + 1, A.F.small, A.C.amber, 'center', a * ca);
+    }
+  }
+  x.restore();
+}
+
+window.renderFrame = function (t) {
+  A.clear(x);
+  A.titleCard(x, 'Six mechanical systems', 'the menu, before the evidence',
+              t, 0.2, 2.2);
+  var body = A.beat(t, 3.2, 0.8);
+  if (body <= 0.01) return;
+
+  A.chrome(x, { seg: 's04 OVERDUB', label: 'six mechanical swing systems + the WR claims',
+                illustrative: true, alpha: body });
+
+  A.text(x, 'MECHANICAL — the rule fires whether you feel like it or not',
+         640, 128, A.F.label, A.C.faint, 'center', A.beat(t, 3.6, 0.8));
+
+  for (var i = 0; i < SYS.length; i++) card(SYS[i], i, t);
+
+  // the claims are quotes, and are labelled as quotes
+  var q = A.beat(t, 20.2, 1.0) * (1 - A.beat(t, 31.5, 0.8));
+  if (q > 0.01) {
+    A.text(x, 'STATED ON CAMERA · 2022-10-01 · not a backtest result',
+           640, 646, A.F.small, A.C.amberDim, 'center', q);
+  }
+
+  var hand = A.beat(t, 32.5, 1.0);
+  if (hand > 0.01) {
+    A.text(x, 'Next: what the quote store says about those numbers.',
+           640, 650, '300 25px Georgia, serif', A.C.fg, 'center', hand);
+  }
+};
+
+renderFrame(0);
+</script>

@@ -1,0 +1,180 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>s09 — RL30 slope, z-scores, the sideways bell curve</title>
+<style>html,body{margin:0;background:#0d0d0b;overflow:hidden}canvas{display:block}</style>
+<canvas id="c" width="1280" height="720"></canvas>
+<script src="anim/lib.js"></script>
+<script src="anim/data.js"></script>
+<script>
+/* s09 OVERDUB — "stats teach-in: RL30 slope, z-scores, sideways bell curve"
+ * (src 39:58-44:47)
+ *
+ * Pure methodology, so this is the one place a bell curve earns its keep. Real
+ * SPY series throughout — he names the S&P as the baseline at 44:23, and a
+ * fabricated distribution would be indefensible in a segment whose whole
+ * subject is what the distribution says.
+ *
+ * Follows his order exactly: regression line -> slope value -> roll the window
+ * -> 180 values -> mean and SD -> the curve on its side -> 2/3 is normal ->
+ * the tails are where you get paid.
+ *
+ * DRAFT timing (40s).
+ */
+var x = document.getElementById('c').getContext('2d');
+window.ANIM_DURATION = 40;
+
+var D = window.ANIMDATA;
+var CLOSE = D.spy_close, HIST = D.spy_rl30_hist;
+
+var P1 = { x: 92, y: 176, w: 520, h: 232 };     // price + regression
+var P2 = { x: 92, y: 470, w: 520, h: 176 };     // the slope series
+var P3 = { x: 700, y: 176, w: 300, h: 470 };    // the sideways distribution
+
+function priceScale(box) {
+  var lo = Infinity, hi = -Infinity;
+  for (var i = 0; i < CLOSE.length; i++) {
+    if (CLOSE[i][1] < lo) lo = CLOSE[i][1];
+    if (CLOSE[i][1] > hi) hi = CLOSE[i][1];
+  }
+  var m = (hi - lo) * 0.10; lo -= m; hi += m;
+  return {
+    y: function (p) { return box.y + box.h - (p - lo) / (hi - lo) * box.h; },
+    x: function (i) { return box.x + i / (CLOSE.length - 1) * box.w; }
+  };
+}
+var S1 = priceScale(P1);
+
+// least-squares fit over the trailing 30 closes ending at index `end`
+function fit(end) {
+  var n = 30, sx = 0, sy = 0, sxx = 0, sxy = 0;
+  for (var i = 0; i < n; i++) {
+    var xi = i, yi = CLOSE[end - n + 1 + i][1];
+    sx += xi; sy += yi; sxx += xi * xi; sxy += xi * yi;
+  }
+  var b = (n * sxy - sx * sy) / (n * sxx - sx * sx);
+  return { slope: b, a: (sy - b * sx) / n, n: n, end: end };
+}
+
+window.renderFrame = function (t) {
+  A.clear(x);
+  A.titleCard(x, 'The 30-period regression slope',
+              'and how it becomes a z-score', t, 0.2, 2.4);
+  var body = A.beat(t, 3.4, 0.8);
+  if (body <= 0.01) return;
+
+  A.chrome(x, { seg: 's09 OVERDUB', label: 'RL30 slope · 180-day distribution · z-score',
+                sourceNote: 'SPY daily · Norgate · window ending 2022-09-30',
+                alpha: body });
+
+  // ---- pane 1: closes, then the regression line through the last 30 ----
+  A.pane(x, P1, 'SPY DAILY CLOSE', body);
+  var pts = [];
+  for (var i = 0; i < CLOSE.length; i++) pts.push([S1.x(i), S1.y(CLOSE[i][1])]);
+  A.polyline(x, pts, A.lin(t, 3.8, 2.6), A.C.dim, 1.8, body);
+
+  // the window rolls: this is "drop one day, add one day, recompute"
+  var rollP = A.lin(t, 9.6, 7.0);
+  var endIdx = Math.round(A.lerp(40, CLOSE.length - 1, rollP));
+  var f = fit(endIdx);
+  var winA = A.beat(t, 6.6, 0.8) * body;
+  if (winA > 0.01) {
+    var x0 = S1.x(f.end - f.n + 1), x1 = S1.x(f.end);
+    x.save(); x.globalAlpha = winA * 0.13; x.fillStyle = A.C.amber;
+    x.fillRect(x0, P1.y, x1 - x0, P1.h); x.restore();
+    A.polyline(x, [[x0, S1.y(f.a)], [x1, S1.y(f.a + f.slope * (f.n - 1))]],
+               1, A.C.amber, 2.4, winA);
+    A.text(x, '30-day window', (x0 + x1) / 2, P1.y + 20, A.F.small,
+           A.C.amber, 'center', winA);
+    A.text(x, 'slope ' + (f.slope >= 0 ? '+' : '') + f.slope.toFixed(2) + ' /bar',
+           P1.x + P1.w, P1.y + P1.h + 26, A.F.num,
+           f.slope >= 0 ? A.C.green : A.C.red, 'right', winA);
+  }
+
+  // ---- pane 2: every slope value the rolling window produced ----
+  var s2 = A.beat(t, 11.0, 1.0) * body;
+  if (s2 > 0.01) {
+    A.pane(x, P2, '180 SLOPE VALUES', s2);
+    var sl = D.spy_rl30, lo = 1e9, hi = -1e9, j;
+    for (j = 0; j < sl.length; j++) {
+      if (sl[j][1] < lo) lo = sl[j][1];
+      if (sl[j][1] > hi) hi = sl[j][1];
+    }
+    var sy = function (v) { return P2.y + P2.h - (v - lo) / (hi - lo) * P2.h; };
+    A.hline(x, sy(0), P2.x, P2.x + P2.w, A.C.border, 1, null, s2);
+    var sp = [];
+    for (j = 0; j < sl.length; j++)
+      sp.push([P2.x + j / (sl.length - 1) * P2.w, sy(sl[j][1])]);
+    A.polyline(x, sp, A.lin(t, 11.4, 3.2), A.C.blue, 1.8, s2);
+    A.text(x, 'zero = perfectly sideways', P2.x + P2.w - 8, sy(0) - 10,
+           A.F.small, A.C.faint, 'right', s2 * 0.9);
+  }
+
+  // ---- pane 3: the same values as a distribution, on its side ----
+  var s3 = A.beat(t, 16.5, 1.2) * body;
+  if (s3 > 0.01) {
+    A.pane(x, P3, 'THE SAME 180 VALUES, SORTED', s3);
+    var counts = HIST.counts, edges = HIST.edges;
+    var maxC = Math.max.apply(null, counts);
+    var vLo = edges[0], vHi = edges[edges.length - 1];
+    var vy = function (v) { return P3.y + P3.h - (v - vLo) / (vHi - vLo) * P3.h; };
+
+    // +/-1 SD shading = "two thirds of the last 180 days"
+    var sd = A.beat(t, 22.0, 1.0);
+    if (sd > 0.01) {
+      x.save(); x.globalAlpha = sd * s3 * 0.15; x.fillStyle = A.C.blue;
+      x.fillRect(P3.x, vy(HIST.mean + HIST.sd), P3.w,
+                 vy(HIST.mean - HIST.sd) - vy(HIST.mean + HIST.sd));
+      x.restore();
+    }
+
+    var barP = A.lin(t, 17.0, 2.6);
+    for (var b = 0; b < counts.length; b++) {
+      var mid = (edges[b] + edges[b + 1]) / 2;
+      var inNorm = Math.abs(mid - HIST.mean) <= HIST.sd;
+      var w = counts[b] / maxC * (P3.w - 40) * barP;
+      var yb = vy(edges[b + 1]), hb = Math.max(2, vy(edges[b]) - yb - 2);
+      x.save(); x.globalAlpha = s3 * (inNorm ? 0.95 : 0.75);
+      x.fillStyle = inNorm ? A.C.blue : A.C.amber;
+      x.fillRect(P3.x, yb, w, hb);
+      x.restore();
+    }
+
+    if (sd > 0.4) {
+      A.hline(x, vy(HIST.mean), P3.x, P3.x + P3.w, A.C.fg, 1.2, [4, 4], sd * s3);
+      A.text(x, 'average', P3.x + P3.w + 10, vy(HIST.mean) + 4,
+             A.F.small, A.C.fg, 'left', sd * s3);
+      A.text(x, '+1 SD', P3.x + P3.w + 10, vy(HIST.mean + HIST.sd) + 4,
+             A.F.small, A.C.blue, 'left', sd * s3);
+      A.text(x, '−1 SD', P3.x + P3.w + 10, vy(HIST.mean - HIST.sd) + 4,
+             A.F.small, A.C.blue, 'left', sd * s3);
+      // spelled out: the vulgar-fraction glyph has no fallback in the mono face
+      A.text(x, '2/3 of the last 180 days', P3.x + P3.w + 10,
+             vy(HIST.mean) - 24, A.F.small, A.C.dim, 'left', sd * s3);
+    }
+
+    // where today sits
+    var nowA = A.beat(t, 26.5, 1.0);
+    if (nowA > 0.01) {
+      var zNow = D.spy_rl30_marks.now.z;
+      var vNow = HIST.mean + zNow * HIST.sd;
+      A.hline(x, vy(vNow), P3.x - 16, P3.x + P3.w, A.C.red, 2.2, null, nowA * s3);
+      A.text(x, 'today  z = ' + zNow.toFixed(2), P3.x + P3.w + 10, vy(vNow) + 4,
+             A.F.num, A.C.red, 'left', nowA * s3);
+    }
+  }
+
+  // ---- the payoff line ----
+  var tl = A.beat(t, 30.0, 1.0) * (1 - A.beat(t, 36.5, 0.8));
+  if (tl > 0.01) {
+    A.text(x, 'The middle two-thirds is normal. You are not paid there.',
+           640, 688, '300 24px Georgia, serif', A.C.dim, 'center', tl);
+  }
+  var cl = A.beat(t, 37.0, 1.0);
+  if (cl > 0.01) {
+    A.text(x, 'Abnormal is the signal: revert, or fall off the edge.',
+           640, 688, '300 25px Georgia, serif', A.C.fg, 'center', cl);
+  }
+};
+
+renderFrame(0);
+</script>

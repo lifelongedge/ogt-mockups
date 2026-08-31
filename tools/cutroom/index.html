@@ -71,6 +71,19 @@
   .viewer .rowbtns { margin:.6rem 0 0; }
   @media (max-width:1100px){ .viewer { position:static; } }
   video { width:100%; max-height:52vh; background:#000; border-radius:6px; aspect-ratio:16/9; object-fit:contain; display:block; }
+
+  /* ---- animation overlay ----
+     An overdub is Ken's audio over our picture, so the draft animation sits ON
+     the video: the video keeps playing (and keeps supplying the audio and the
+     trim scrubber) while the canvas covers his cohort-only screen. */
+  .vstack { position:relative; }
+  .animlayer { position:absolute; top:0; left:0; width:1280px; height:720px; border:0;
+               transform-origin:top left; border-radius:6px; background:#000;
+               display:none; pointer-events:none; }
+  .vstack.anim .animlayer { display:block; }
+  .viewtabs { display:flex; gap:.35rem; align-items:center; margin:.55rem 0 0; flex-wrap:wrap; }
+  .viewtabs button.on { background:var(--amber-dim); border-color:var(--amber-dim); color:#0e0e0c; font-weight:600; }
+  .viewtabs .cov { margin-left:auto; font-size:.68rem; color:var(--faint); font-family:"SF Mono",Menlo,monospace; }
   .trimrow { display:flex; align-items:center; gap:.4rem; flex-wrap:wrap; margin:.3rem 0; }
   .trimrow .tv { font-family:"SF Mono",Menlo,monospace; font-size:.85rem; color:var(--amber); min-width:84px; }
   .rowbtns { display:flex; gap:.5rem; flex-wrap:wrap; margin:.9rem 0; }
@@ -303,6 +316,90 @@ function render() {
   });
 }
 
+// ---------- animation overlay ----------
+// Convention, so no plan field is needed and nothing can be lost on export:
+// an animation for segment <id> lives at `${COURSE}/anim-<id>.html` and exposes
+// a deterministic renderFrame(t) plus ANIM_DURATION. If it is not there, the
+// toggle simply never appears.
+let animLayer = null, animMode = 'source', animDur = 40, animReady = false, animRaf = null;
+
+// The iframe stays intrinsically 1280x720 and is scaled by transform only.
+// Setting an explicit height as well scaled it twice. The video can also be
+// clamped by max-height on a short viewport, so fit to whichever axis binds and
+// centre on the other — otherwise the overlay drifts off his picture.
+function fitAnim() {
+  const f = animLayer, v = $('vid');
+  if (!f || !v) return;
+  const w = v.clientWidth, h = v.clientHeight;
+  if (!w || !h) return;
+  const k = Math.min(w / 1280, h / 720);
+  f.style.transform = `translate(${(w - 1280 * k) / 2}px, ${(h - 720 * k) / 2}px) scale(${k})`;
+}
+
+function animTime(s) {
+  if (!videoEl) return 0;
+  const el = videoEl.currentTime - s.in;
+  if (animMode === 'stretch') {
+    const span = Math.max(0.1, s.out - s.in);
+    return Math.max(0, Math.min(animDur, animDur * (el / span)));
+  }
+  return Math.max(0, Math.min(animDur, el));   // 1:1, holds on the last frame
+}
+
+// Every scene opens on a title card fading up from black, so renderFrame(0) is
+// an empty frame. Park on a representative frame whenever the playhead is
+// outside the segment; inside it, always show the truthful mapped frame.
+const ANIM_POSTER = 0.62;
+function paintAnim(s) {
+  if (!animReady || animMode === 'source' || !animLayer) return;
+  const w = animLayer.contentWindow;
+  if (!w || typeof w.renderFrame !== 'function') return;
+  const ct = videoEl ? videoEl.currentTime : 0;
+  const inside = ct >= s.in && ct <= s.out;
+  w.renderFrame(inside ? animTime(s) : animDur * ANIM_POSTER);
+}
+
+// rAF only while the video is actually rolling; timeupdate alone is ~4Hz and
+// the animation stutters against his voice.
+function animLoop(s) {
+  if (animRaf) cancelAnimationFrame(animRaf);
+  animRaf = null;
+  if (animMode === 'source' || !animReady || !videoEl || videoEl.paused) { paintAnim(s); return; }
+  paintAnim(s);
+  animRaf = requestAnimationFrame(() => animLoop(s));
+}
+
+function setupAnim(s) {
+  animLayer = $('animLayer');
+  animReady = false; animMode = 'source';
+  if (animRaf) { cancelAnimationFrame(animRaf); animRaf = null; }
+  const tabs = $('viewtabs'), stack = $('vstack');
+  if (!animLayer || !tabs) return;
+  stack.classList.remove('anim');
+  tabs.style.display = 'none';
+
+  animLayer.onload = () => {
+    const w = animLayer.contentWindow;
+    if (!w || typeof w.renderFrame !== 'function') return;   // 404 or not an anim
+    animReady = true;
+    animDur = w.ANIM_DURATION || 40;
+    tabs.style.display = 'flex';
+    const span = Math.max(1, s.out - s.in);
+    $('animCov').textContent =
+      `draft ${animDur.toFixed(0)}s · segment ${fmt(span)} · covers ${Math.round(animDur / span * 100)}%`;
+    fitAnim();
+    tabs.querySelectorAll('button[data-view]').forEach(b => b.onclick = () => {
+      animMode = b.dataset.view;
+      tabs.querySelectorAll('button[data-view]').forEach(x => x.classList.toggle('on', x === b));
+      stack.classList.toggle('anim', animMode !== 'source');
+      fitAnim();
+      animLoop(s);
+    });
+  };
+  animLayer.src = `${COURSE}/anim-${s.id}.html`;
+}
+window.addEventListener('resize', fitAnim);
+
 // ---------- inspector ----------
 function select(i) {
   selIdx = i;
@@ -318,7 +415,16 @@ function select(i) {
     ${s.why ? `<div class="why">${s.why}</div>` : ''}
     ${hasMedia ? `
       <div class="viewer">
-        <video id="vid" src="${mediaUrl(src.proxy)}" preload="metadata" controls></video>
+        <div class="vstack" id="vstack">
+          <video id="vid" src="${mediaUrl(src.proxy)}" preload="metadata" controls></video>
+          <iframe class="animlayer" id="animLayer" scrolling="no" title="animation"></iframe>
+        </div>
+        <div class="viewtabs" id="viewtabs" style="display:none">
+          <button data-view="source" class="on">Ken's screen</button>
+          <button data-view="live">Animation</button>
+          <button data-view="stretch">Animation · stretched</button>
+          <span class="cov" id="animCov"></span>
+        </div>
         <div class="rowbtns">
           <button id="playSeg" class="primary">▶ Play segment</button>
           <button id="playCtx">▶ ±5s context</button>
@@ -385,7 +491,13 @@ function select(i) {
     videoEl.addEventListener('timeupdate', () => {
       if (stopAt !== null && videoEl.currentTime >= stopAt) { videoEl.pause(); stopAt = null; }
       highlightNow();
+      paintAnim(s);
     });
+    videoEl.addEventListener('seeked', () => paintAnim(s));
+    videoEl.addEventListener('pause', () => paintAnim(s));
+    videoEl.addEventListener('play', () => animLoop(s));
+    videoEl.addEventListener('loadedmetadata', () => { fitAnim(); paintAnim(s); });
+    setupAnim(s);
     loadTranscript(s.source).then(cues => renderTx(cues, s));
     $('playSeg').onclick = () => { videoEl.currentTime = s.in; stopAt = s.out; videoEl.play(); };
     $('playCtx').onclick = () => { videoEl.currentTime = Math.max(0, s.in-5); stopAt = s.out+5; videoEl.play(); };
@@ -402,7 +514,12 @@ function select(i) {
       stopAt = (k==='in') ? Math.min(s.out, s.in+3) : s.out;
       videoEl.play();
     });
-  } else { videoEl = null; }
+  } else {
+    videoEl = null;
+    // selecting a slide must not leave the previous segment's loop running
+    if (animRaf) { cancelAnimationFrame(animRaf); animRaf = null; }
+    animLayer = null; animReady = false; animMode = 'source';
+  }
 
   if (s.type==='explainer') {
     const vbox = $('voices');

@@ -1,0 +1,128 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>s02 — core / swing / intraday</title>
+<style>html,body{margin:0;background:#0d0d0b;overflow:hidden}canvas{display:block}</style>
+<canvas id="c" width="1280" height="720"></canvas>
+<script src="anim/lib.js"></script>
+<script>
+/* s02 OVERDUB — "core / swing / intraday framework" (src 0:47-5:05)
+ *
+ * Replaces the hand-drawn framework he sketches with a balky brush tool.
+ * The gears are the point: they are not three separate strategies, they are
+ * one machine, and the small fast one cannot turn against the big slow one
+ * for long. Hero art reference: inbox/clips-course1/c-swing-logic.hero.nested_gears.png
+ *
+ * DRAFT timing (40s). Re-anchor to Ken's cadence after the cutroom pass.
+ */
+var x = document.getElementById('c').getContext('2d');
+window.ANIM_DURATION = 40;
+
+var CY = 318;
+// lx = label column; the gears are packed tight to mesh, the labels are not
+var GEARS = [
+  { name: 'CORE', teeth: 30, r: 150, cx: 415, cy: CY, lx: 340, color: A.C.blue,
+    hold: 'two weeks → forever', note: 'BMR + Permanent Portfolio' },
+  { name: 'SWING', teeth: 19, r: 95, cx: 660, cy: CY, lx: 655, color: A.C.amber,
+    hold: '2 – 10 days', note: 'the frame this course is about' },
+  { name: 'INTRADAY', teeth: 12, r: 60, cx: 815, cy: CY, lx: 970, color: A.C.green,
+    hold: 'minutes → hours', note: 'turbo, inside the swing box' }
+];
+
+// trapezoidal teeth — alternating radii alone reads as a sawblade, not a gear
+function gearPath(g, ang) {
+  x.beginPath();
+  var ri = g.r * 0.88, step = Math.PI * 2 / g.teeth, tw = step * 0.30;
+  for (var i = 0; i < g.teeth; i++) {
+    var a = ang + i * step;
+    var pts = [[ri, a - tw * 1.5], [g.r, a - tw * 0.62],
+               [g.r, a + tw * 0.62], [ri, a + tw * 1.5]];
+    for (var k = 0; k < 4; k++) {
+      var px = g.cx + Math.cos(pts[k][1]) * pts[k][0];
+      var py = g.cy + Math.sin(pts[k][1]) * pts[k][0];
+      if (i === 0 && k === 0) x.moveTo(px, py); else x.lineTo(px, py);
+    }
+  }
+  x.closePath();
+}
+
+function drawGear(g, i, spin, alpha) {
+  if (alpha <= 0.01) return;
+  // equal tooth-passing rate is what makes a mesh read as a mesh
+  var ang = (i % 2 ? -1 : 1) * spin / g.teeth;
+  x.save();
+  x.globalAlpha = alpha;
+  gearPath(g, ang);
+  x.fillStyle = A.C.panel2; x.fill();
+  x.strokeStyle = g.color; x.lineWidth = 2; x.stroke();
+  // hub
+  x.beginPath(); x.arc(g.cx, g.cy, g.r * 0.2, 0, Math.PI * 2);
+  x.strokeStyle = g.color; x.globalAlpha = alpha * 0.55; x.stroke();
+  // one marked tooth so the rotation is legible at speed
+  var m = ang;
+  x.globalAlpha = alpha;
+  x.beginPath();
+  x.moveTo(g.cx + Math.cos(m) * g.r * 0.2, g.cy + Math.sin(m) * g.r * 0.2);
+  x.lineTo(g.cx + Math.cos(m) * g.r * 0.98, g.cy + Math.sin(m) * g.r * 0.98);
+  x.strokeStyle = g.color; x.lineWidth = 2.5; x.stroke();
+  x.restore();
+}
+
+// Labels sit under their own gear. Leader lines out to a right-hand column
+// crossed the other two gears and read as a tangle.
+var LABEL_Y = 556;
+function label(g, alpha) {
+  if (alpha <= 0.01) return;
+  x.save();
+  // elbow leader: down out of the gear, across to its own label column
+  var y0 = g.cy + g.r + 14, ym = LABEL_Y - 66;
+  x.strokeStyle = g.color; x.globalAlpha = alpha * 0.4; x.lineWidth = 1;
+  x.beginPath();
+  x.moveTo(g.cx, y0); x.lineTo(g.cx, ym);
+  x.lineTo(g.lx, ym); x.lineTo(g.lx, LABEL_Y - 40);
+  x.stroke();
+  x.globalAlpha = alpha;
+  A.text(x, g.name, g.lx, LABEL_Y - 14, A.F.label, g.color, 'center');
+  A.text(x, g.hold, g.lx, LABEL_Y + 14, '300 21px Georgia, serif', A.C.fg, 'center', alpha);
+  A.text(x, g.note, g.lx, LABEL_Y + 36, A.F.small, A.C.faint, 'center', alpha * 0.9);
+  x.restore();
+}
+
+window.renderFrame = function (t) {
+  A.clear(x);
+
+  var intro = A.titleCard(x, 'Three timeframes, one machine',
+                          'core · swing · intraday', t, 0.2, 2.6);
+  var body = A.beat(t, 3.6, 0.8);
+  if (body <= 0.01) return;
+
+  A.chrome(x, { seg: 's02 OVERDUB', label: 'core / swing / intraday framework',
+                illustrative: true, alpha: body });
+
+  // spin starts when the first gear lands and never stops
+  var spin = Math.max(0, t - 4.2) * 2.15;
+
+  var appear = [A.beat(t, 4.2, 1.1), A.beat(t, 8.6, 1.1), A.beat(t, 12.8, 1.1)];
+  for (var i = 0; i < GEARS.length; i++) drawGear(GEARS[i], i, spin, appear[i]);
+
+  label(GEARS[0], A.beat(t, 5.4, 0.8));
+  label(GEARS[1], A.beat(t, 9.8, 0.8));
+  label(GEARS[2], A.beat(t, 14.0, 0.8));
+
+  // the thesis line
+  var th = A.beat(t, 18.6, 1.0) * (1 - A.beat(t, 30.5, 0.8));
+  if (th > 0.01) {
+    A.text(x, 'They are geared together. The intraday wheel spins fastest '
+             + 'and matters least —', 640, 664, A.F.body, A.C.dim, 'center', th);
+    A.text(x, 'it cannot turn against the core for long.',
+           640, 692, A.F.body, A.C.dim, 'center', th);
+  }
+
+  var cl = A.beat(t, 31.5, 1.0);
+  if (cl > 0.01) {
+    A.text(x, 'Trade the frame you are in. Size it in the frame above.',
+           640, 676, '300 25px Georgia, serif', A.C.fg, 'center', cl);
+  }
+};
+
+renderFrame(0);
+</script>

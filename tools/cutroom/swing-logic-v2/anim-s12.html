@@ -1,0 +1,158 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>s12 — QQQ multi-timeframe, the weekly critical state</title>
+<style>html,body{margin:0;background:#0d0d0b;overflow:hidden}canvas{display:block}</style>
+<canvas id="c" width="1280" height="720"></canvas>
+<script src="anim/lib.js"></script>
+<script src="anim/data.js"></script>
+<script>
+/* s12 OVERDUB — "chart reviews: QQQ MTFMLA + weekly critical state"
+ * (src 54:38-1:07:56)
+ *
+ * Replaces the cohort member's marked-up screen share. Everything drawn here is
+ * real QQQ, cut off at the frame date — no bar after 2022-09-30 appears, because
+ * the resolution belongs to s12b, not here.
+ *
+ * Carries the RL30 dashboard beat he narrates at 1:05:32 ("30 days ago that
+ * upward slope was incredibly steep... now this thing is horrible"). The
+ * computed z-score peaked at +2.16 in August and sits at −1.10 on the frame
+ * date, so his description holds and the numbers are shown rather than asserted.
+ *
+ * Ken H's 13R is deliberately absent: frame-vs-price only.
+ *
+ * DRAFT timing (40s).
+ */
+var x = document.getElementById('c').getContext('2d');
+window.ANIM_DURATION = 40;
+
+var D = window.ANIMDATA;
+var WK = D.qqq_weekly, DY = D.qqq_daily, LV = D.qqq_levels, RL = D.qqq_rl30;
+
+var PW = { x: 92, y: 186, w: 620, h: 262 };    // weekly
+var PD = { x: 92, y: 512, w: 620, h: 148 };    // daily
+var PR = { x: 782, y: 186, w: 404, h: 262 };   // RL30 z dashboard
+
+var SW = A.scaleFor(WK, PW, 0.06);
+var SD = A.scaleFor(DY, PD, 0.10);
+
+window.renderFrame = function (t) {
+  A.clear(x);
+  A.titleCard(x, 'QQQ: the weekly critical state',
+              'as of Friday, 30 September 2022', t, 0.2, 2.4);
+  var body = A.beat(t, 3.4, 0.8);
+  if (body <= 0.01) return;
+
+  A.chrome(x, { seg: 's12 OVERDUB', label: 'multi-timeframe read · weekly critical state',
+                sourceNote: 'QQQ · Norgate · nothing after 2022-09-30 is drawn',
+                alpha: body });
+
+  // ---- weekly ----
+  A.pane(x, PW, 'WEEKLY', body);
+  A.candles(x, WK, PW, SW, A.lin(t, 3.8, 3.0), { alpha: body });
+
+  // "it's fallen from 405"
+  var fh = A.beat(t, 7.4, 0.9);
+  if (fh > 0.01) {
+    A.level(x, SW, PW, LV.prior_high, 'prior high ' + LV.prior_high.toFixed(0),
+            A.C.faint, fh, { alpha: body });
+    // A vertical rule anywhere in the middle of the chart read as a stray
+    // artifact; the drop is a fact about the whole span, so state it as one.
+    var fall = A.beat(t, 8.6, 1.0);
+    if (fall > 0.01) {
+      A.text(x, '−' + ((1 - LV.frame_close / LV.prior_high) * 100).toFixed(0)
+               + '% from the high',
+             PW.x + 8, SW.y(LV.prior_high) + 20, A.F.num, A.C.red, 'left', fall * body);
+    }
+  }
+
+  // the critical-state box on the last weekly bars
+  var cs = A.beat(t, 12.0, 1.1);
+  if (cs > 0.01) {
+    var n = 6, x0 = SW.x(WK.length - n) - SW.bw, x1 = SW.x(WK.length - 1) + SW.bw;
+    var hi = -1e9, lo = 1e9;
+    for (var i = WK.length - n; i < WK.length; i++) {
+      hi = Math.max(hi, WK[i][2]); lo = Math.min(lo, WK[i][3]);
+    }
+    x.save(); x.globalAlpha = cs * body;
+    x.strokeStyle = A.C.amber; x.lineWidth = 1.6; x.setLineDash([6, 4]);
+    x.strokeRect(x0, SW.y(hi), x1 - x0, SW.y(lo) - SW.y(hi));
+    x.fillStyle = 'rgba(224,164,65,0.09)';
+    x.fillRect(x0, SW.y(hi), x1 - x0, SW.y(lo) - SW.y(hi));
+    A.text(x, 'WEEKLY CRITICAL STATE', x1, SW.y(hi) - 12,
+           A.F.small, A.C.amber, 'right', cs * body);
+    x.restore();
+  }
+
+  // ---- daily, with the two levels he names ----
+  var dA = A.beat(t, 16.5, 1.0) * body;
+  if (dA > 0.01) {
+    A.pane(x, PD, 'DAILY   ·   close ' + LV.frame_close.toFixed(2), dA);
+    A.candles(x, DY, PD, SD, A.lin(t, 16.8, 2.2), { alpha: dA });
+    // the two levels crowd each other and the close, so split them left/right
+    A.level(x, SD, PD, LV.cash, 'cash  ' + LV.cash.toFixed(0),
+            A.C.green, A.beat(t, 19.6, 0.8), { alpha: dA });
+    A.level(x, SD, PD, LV.add_below, 'add below  ' + LV.add_below.toFixed(0),
+            A.C.red, A.beat(t, 21.0, 0.8), { alpha: dA, labelRight: true });
+  }
+
+  // ---- RL30 slope dashboard ----
+  var rA = A.beat(t, 24.5, 1.1) * body;
+  if (rA > 0.01) {
+    A.pane(x, PR, 'RL30 SLOPE · Z-SCORE', rA);
+    var lo2 = 1e9, hi2 = -1e9, j;
+    for (j = 0; j < RL.length; j++) {
+      lo2 = Math.min(lo2, RL[j][2]); hi2 = Math.max(hi2, RL[j][2]);
+    }
+    var m2 = (hi2 - lo2) * 0.12; lo2 -= m2; hi2 += m2;
+    var zy = function (v) { return PR.y + PR.h - (v - lo2) / (hi2 - lo2) * PR.h; };
+
+    // the normal band: +/-1 SD is unremarkable, outside it is not
+    x.save(); x.globalAlpha = rA * 0.13; x.fillStyle = A.C.blue;
+    x.fillRect(PR.x, zy(1), PR.w, zy(-1) - zy(1)); x.restore();
+    A.hline(x, zy(0), PR.x, PR.x + PR.w, A.C.border, 1, null, rA);
+    A.text(x, '+1σ', PR.x + PR.w + 8, zy(1) + 4, A.F.small, A.C.faint, 'left', rA);
+    A.text(x, '−1σ', PR.x + PR.w + 8, zy(-1) + 4, A.F.small, A.C.faint, 'left', rA);
+
+    var zp = [];
+    for (j = 0; j < RL.length; j++)
+      zp.push([PR.x + j / (RL.length - 1) * PR.w, zy(RL[j][2])]);
+    A.polyline(x, zp, A.lin(t, 25.0, 3.0), A.C.violet, 2.2, rA);
+
+    // the two readings he contrasts
+    var mk = A.beat(t, 29.2, 1.0);
+    if (mk > 0.01) {
+      var peak = D.qqq_rl30_marks.peak_90d, now = D.qqq_rl30_marks.now.z;
+      var pi = 0, best = -1e9;
+      for (j = 0; j < RL.length; j++) if (RL[j][2] > best) { best = RL[j][2]; pi = j; }
+      var pxp = PR.x + pi / (RL.length - 1) * PR.w;
+      x.save(); x.globalAlpha = mk * rA;
+      x.beginPath(); x.arc(pxp, zy(peak), 5, 0, Math.PI * 2);
+      x.fillStyle = A.C.green; x.fill();
+      A.text(x, 'peak +' + peak.toFixed(2), pxp, zy(peak) - 14,
+             A.F.small, A.C.green, 'center', mk * rA);
+      x.beginPath();
+      x.arc(PR.x + PR.w, zy(now), 5, 0, Math.PI * 2);
+      x.fillStyle = A.C.red; x.fill();
+      A.text(x, 'now ' + now.toFixed(2), PR.x + PR.w - 6, zy(now) + 26,
+             A.F.num, A.C.red, 'right', mk * rA);
+      x.restore();
+    }
+
+    var q = A.beat(t, 32.0, 1.0);
+    if (q > 0.01) {
+      A.para(x, '“Thirty days ago that upward slope was incredibly steep. '
+              + 'A mere thirty days later, this thing is horrible.”',
+             PR.x, PR.y + PR.h + 56, PR.w, 26, '300 17px Georgia, serif',
+             A.C.dim, q * rA);
+    }
+  }
+
+  var cl = A.beat(t, 36.0, 1.0);
+  if (cl > 0.01) {
+    A.text(x, 'Three clocks, one read. What happened next is the next segment.',
+           640, 700, '300 23px Georgia, serif', A.C.fg, 'center', cl);
+  }
+};
+
+renderFrame(0);
+</script>
