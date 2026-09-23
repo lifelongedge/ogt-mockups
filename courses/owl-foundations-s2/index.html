@@ -224,10 +224,10 @@ pre .k { color: var(--info); } pre .s { color: var(--fg); } pre .c { color: var(
           <div class="unit"><span>2 · The chart architecture</span><span>2/4</span></div>
           <div class="lrow"><span class="no">2.1</span><span>The River: SMA30 ±1 ±2 ±3σ<small>read · inside the River today?</small></span><span class="ck done">✓</span></div>
           <div class="lrow on" tabindex="0"><span class="no">2.2</span><span>The Dragon: the noise boundary<small>find · last RL10 × Dragon</small></span><span class="ck cur"></span></div>
-          <div class="lrow"><span class="no">2.3</span><span>Regression echelons RL10 · 30 · 90 · 270<small>read · stacked with price?</small></span><span class="ck done">✓</span></div>
-          <div class="lrow"><span class="no">2.4</span><span>MACD Seasons: trade the regime<small>read · season + last change</small></span><span class="ck"></span></div>
+          <div class="lrow"><span class="no">2.3</span><span>Regression lines RL10 · 30 · 90 · 270<small>read · stacked with price?</small></span><span class="ck done">✓</span></div>
+          <div class="lrow"><span class="no">2.4</span><span>MACD Seasons: read the regime<small>read · season + last change</small></span><span class="ck"></span></div>
           <div class="unit"><span>3 · Risk geometry</span><span>1/4</span></div>
-          <div class="lrow"><span class="no">3.1</span><span>The Frog box is 1R<small>measure · today's range in Frogs</small></span><span class="ck done">✓</span></div>
+          <div class="lrow"><span class="no">3.1</span><span>The risk box: the Frog as 1R<small>measure · today's range in Frogs</small></span><span class="ck done">✓</span></div>
           <div class="lrow"><span class="no">3.2</span><span>xR is not 1R: the MMRB<small>place · stop at a pivot, read xR</small></span><span class="ck"></span></div>
           <div class="lrow"><span class="no">3.3</span><span>The trade frame, both directions<small>frame · R:R gate ≥ 2</small></span><span class="ck"></span></div>
           <div class="lrow"><span class="no">3.4</span><span>NL+D42 and the 2R battle drill<small>drill · step forward from entry</small></span><span class="ck"></span></div>
@@ -325,7 +325,7 @@ pre .k { color: var(--info); } pre .s { color: var(--fg); } pre .c { color: var(
             <div class="crumb">Foundations · Unit 3 · Risk geometry</div>
             <h3>3.3 The trade frame, both directions</h3>
             <div class="skill">Skill: size in 1R (the Frog), execute at xR (the pivot), and let the gate decide</div>
-            <p>1R is the symbol's own daily volatility unit, the 30-day Frog box. xR is the distance from entry to the execution stop at a local pivot. The frame has no opinion: entry a nickel past yesterday's extreme, stop a nickel past the other extreme, target the 10-day extreme. Reward-to-risk below 2.0 is rejected.</p>
+            <p>1R is a risk box built from the symbol's own daily ranges. The method has several (Frog, RangeStat, ATR); Foundations uses the 30-day Frog. xR is the distance from entry to the execution stop at a local pivot. The frame has no opinion: entry a nickel past yesterday's extreme, stop a nickel past the other extreme, target the 10-day extreme. Reward-to-risk below 2.0 is rejected.</p>
             <p class="attr">Owl Group reading of <code>frame</code>, <code>frog</code>. Frame arithmetic is display arithmetic (TD-003), not canonical math.</p>
             <table class="frametbl" id="ft3"></table>
             <div class="try"><b>Try it.</b> Which direction passes the gate today, and how many Frogs is xR? Say it, then press Check.<div class="acts"><button class="mini" data-g="long">Long passes</button><button class="mini" data-g="short">Short passes</button><button class="mini" data-g="neither">Neither</button></div><div class="ans" id="ans3"></div></div>
