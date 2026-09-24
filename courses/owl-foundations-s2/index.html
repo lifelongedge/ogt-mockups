@@ -563,6 +563,43 @@ pre .k { color: var(--info); } pre .s { color: var(--fg); } pre .c { color: var(
   </div>
 </section>
 
+<!-- ===================== SHEET 9: THE 1.2 EXPERIMENT ===================== -->
+<section class="sheet" id="s9">
+  <h2><span class="n">9</span>Experiment for lesson 1.2: two ways to show the market</h2>
+  <p class="cap">Lesson 1.2 says the method starts every trade framing with the index. Today it asks the student to select the index and read it alone, which teaches the habit but not the comparison. Both charts below are IWM on the same bars and the same as-of; they differ only in how the market is shown. <span class="q">Plan §5 row x, the one new chart primitive the course wants. Pick one and it becomes an engine ask; until then 1.2 ships as a read on the index alone.</span></p>
+  <div class="two">
+    <div>
+      <div class="frame">
+        <div class="topbar"><span class="logo"><i>S</i><b>2</b></span><span>A · rebased on the price pane</span><div class="tright"><span class="pill">one pane</span></div></div>
+        <div class="app" style="grid-template-columns: 1fr; height: 380px">
+          <div class="center">
+            <div class="hdr"><span class="big">IWM</span><span class="name">with SPY rebased</span><span class="last" id="h9alast"></span></div>
+            <div class="ranges"><span class="sp"><span>as of</span><input type="range" id="as9a" min="60" max="577" value="577"><span class="asoflbl" id="al9a">live</span><button class="mini" data-step="-1" data-c="9a">◀</button><button class="mini" data-step="1" data-c="9a">▶</button></span></div>
+            <div class="chartwrap"><canvas id="c9a"></canvas><div class="legend" id="lg9a"></div><div class="tip" id="tp9a" hidden></div></div>
+            <div class="prov" id="pv9a"></div>
+          </div>
+        </div>
+      </div>
+      <p class="fine" style="margin-top:8px">Divergence is immediate: one glance says whether the symbol is carrying its market or fighting it. The cost is that the anchor is arbitrary, so the gap means "since the left edge" and nothing more, and a second price line shares the pane with the method's own lines.</p>
+    </div>
+    <div>
+      <div class="frame">
+        <div class="topbar"><span class="logo"><i>S</i><b>2</b></span><span>B · its own pane, with its own River</span><div class="tright"><span class="pill">two panes</span></div></div>
+        <div class="app" style="grid-template-columns: 1fr; height: 380px">
+          <div class="center">
+            <div class="hdr"><span class="big">IWM</span><span class="name">with the SPY pane</span><span class="last" id="h9blast"></span></div>
+            <div class="ranges"><span class="sp"><span>as of</span><input type="range" id="as9b" min="60" max="577" value="577"><span class="asoflbl" id="al9b">live</span><button class="mini" data-step="-1" data-c="9b">◀</button><button class="mini" data-step="1" data-c="9b">▶</button></span></div>
+            <div class="chartwrap"><canvas id="c9b"></canvas><div class="legend" id="lg9b"></div><div class="tip" id="tp9b" hidden></div></div>
+            <div class="prov" id="pv9b"></div>
+          </div>
+        </div>
+      </div>
+      <p class="fine" style="margin-top:8px">The pane carries the one thing 1.2 actually checks: where the index sits against <em>its own</em> River, in the index's own prices. Nothing is rebased, so nothing is arbitrary. The cost is vertical space, and it competes with the MACDRL pane for it.</p>
+    </div>
+  </div>
+  <p class="cap" style="margin-top:14px"><b>The recommendation is B.</b> Lesson 1.2's check is <code>inside_river</code> on the index, and B draws exactly that, so what the student sees is what the app marks. A's divergence is a genuinely useful read, but it answers a question the course does not ask until the Swing course covers relative strength, and a rebased line on the price pane is the kind of chart element a beginner mistakes for one of the method's own.</p>
+</section>
+
 </div>
 
 <script>
@@ -593,6 +630,7 @@ function calc(rows) {
   return { n, o, h, l, c, rl10, rl30, rl90, dragon, skin, belly, sma30, sma10, sd30, z, macd, season, frog, psar, pdir, hi10, lo10, range };
 }
 const IND = {}; for (const s in BARS) IND[s] = calc(BARS[s]);
+const IDX = 'SPY';   // the market index for lesson 1.2; in the app this resolves through the market pack
 
 /* ---------- lesson computations ---------- */
 function lastCrossUp(I, i) { for (let k = i; k > 30; k--) if (I.rl10[k - 1] <= I.dragon[k - 1] && I.rl10[k] > I.dragon[k]) return k; return -1; }
@@ -638,7 +676,7 @@ function draw(st) {
   const cv = $('c' + st.id), wrap = cv.parentElement; const W = wrap.clientWidth, H = wrap.clientHeight; if (!W || !H) return;
   const dpr = window.devicePixelRatio || 1; cv.width = W * dpr; cv.height = H * dpr; const g = cv.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0);
   const I = st.I, L = st.layers, n = st.asof + 1, i0 = Math.max(0, n - st.range), N = n - i0;
-  const padL = 8, padR = 62, padT = 30, ribbonH = L.season ? 14 : 0, macdH = L.macd ? 84 : 0, axisH = 22, padB = axisH + ribbonH + macdH + 6;
+  const padL = 8, padR = 62, padT = 30, ribbonH = L.season ? 14 : 0, macdH = L.macd ? 84 : 0, idxH = L.idxpane ? 88 : 0, axisH = 22, padB = axisH + ribbonH + macdH + idxH + 6;
   const bw = (W - padL - padR) / N; const x = (i) => padL + (i - i0 + 0.5) * bw;
   let lo = Infinity, hi = -Infinity; const see = (v) => { if (v != null && !isNaN(v)) { if (v < lo) lo = v; if (v > hi) hi = v; } };
   for (let i = i0; i < n; i++) { see(I.l[i]); see(I.h[i]); if (L.z) { see(I.sma30[i] + 3 * I.sd30[i]); see(I.sma30[i] - 3 * I.sd30[i]); } if (L.dragon) { see(I.skin[i]); see(I.belly[i]); } }
@@ -666,9 +704,9 @@ function draw(st) {
     line(I.rl30, css('--fg2'), 1.3, [5, 3]); legend.push(['line', css('--summer'), 'RL10 (coloured by season)'], ['line', css('--fg2'), 'RL30']);
   }
   if (L.psarrl) { g.fillStyle = css('--warn'); for (let i = i0; i < n; i++) { if (isNaN(I.psar[i])) continue; g.beginPath(); g.arc(x(i), y(I.psar[i]), Math.min(2.2, bw * 0.3), 0, 7); g.fill(); } legend.push(['line', css('--warn'), 'PSAR on RL10 (0.02 / 0.14)']); }
-  if (L.season) { const yb = H - axisH - macdH - ribbonH; let runStart = i0; for (let i = i0; i <= n; i++) { if (i === n || I.season[i] !== I.season[runStart]) { const s = I.season[runStart]; g.fillStyle = css('--' + (s || 'muted')); g.fillRect(x(runStart) - bw / 2, yb, x(i - 1) - x(runStart) + bw, ribbonH - 2); if ((i - runStart) * bw > 40 && s) { g.fillStyle = '#fff'; g.font = '9px ' + css('--font'); g.fillText(s, x(runStart) - bw / 2 + 4, yb + 10); } runStart = i; } } }
+  if (L.season) { const yb = H - axisH - idxH - macdH - ribbonH; let runStart = i0; for (let i = i0; i <= n; i++) { if (i === n || I.season[i] !== I.season[runStart]) { const s = I.season[runStart]; g.fillStyle = css('--' + (s || 'muted')); g.fillRect(x(runStart) - bw / 2, yb, x(i - 1) - x(runStart) + bw, ribbonH - 2); if ((i - runStart) * bw > 40 && s) { g.fillStyle = '#fff'; g.font = '9px ' + css('--font'); g.fillText(s, x(runStart) - bw / 2 + 4, yb + 10); } runStart = i; } } }
   if (L.macd) { // MACDRL pane: SMA(RL10,10) - SMA(RL10,30), zero line, ±1σ 30-bar envelope, bars by season
-    const top = H - axisH - macdH, bot = H - axisH - 4; g.fillStyle = css('--inset'); g.fillRect(padL, top, W - padL - padR, bot - top);
+    const top = H - axisH - idxH - macdH, bot = H - axisH - idxH - 4; g.fillStyle = css('--inset'); g.fillRect(padL, top, W - padL - padR, bot - top);
     let mlo = 0, mhi = 0; const env = []; for (let i = i0; i < n; i++) { const v = I.macd[i]; if (isNaN(v)) { env.push(NaN); continue; } let m = 0, c2 = 0; for (let j = Math.max(0, i - 29); j <= i; j++) if (!isNaN(I.macd[j])) { m += I.macd[j]; c2++; } m /= c2; let vv = 0; for (let j = Math.max(0, i - 29); j <= i; j++) if (!isNaN(I.macd[j])) vv += (I.macd[j] - m) ** 2; const sdv = Math.sqrt(vv / c2); env.push([m - sdv, m + sdv]); mlo = Math.min(mlo, v, m - sdv); mhi = Math.max(mhi, v, m + sdv); }
     const my = (v) => bot - 4 - (v - mlo) / ((mhi - mlo) || 1) * (bot - top - 8);
     g.fillStyle = 'rgba(96,165,250,0.10)'; g.beginPath(); let f1 = true; for (let i = i0; i < n; i++) { const e = env[i - i0]; if (!e || isNaN(e[0])) continue; if (f1) { g.moveTo(x(i), my(e[1])); f1 = false; } else g.lineTo(x(i), my(e[1])); } for (let i = n - 1; i >= i0; i--) { const e = env[i - i0]; if (!e || isNaN(e[0])) continue; g.lineTo(x(i), my(e[0])); } g.closePath(); g.fill();
@@ -677,6 +715,46 @@ function draw(st) {
     g.fillStyle = css('--muted'); g.font = '10px ' + css('--mono'); g.fillText('MACDRL = SMA(RL10,10) − SMA(RL10,30) · ±1σ over 30 bars · bars coloured by season', padL + 6, top + 11);
     g.fillText(I.macd[n - 1].toFixed(2), W - padR + 6, my(I.macd[n - 1]) + 3);
     legend.push(['band', 'rgba(96,165,250,0.35)', 'MACDRL pane']);
+  }
+  if (L.idxline && IND[IDX] && st.sym !== IDX) { // VARIANT A — the index rebased onto this pane
+    const J = IND[IDX], jb = BARS[IDX]; const map = new Map(jb.map((r, k) => [r[0], k]));
+    const k0 = map.get(st.rows[i0][0]); 
+    if (k0 != null) { const scale = I.c[i0] / J.c[k0];
+      g.beginPath(); g.strokeStyle = css('--info'); g.lineWidth = 1.6; g.setLineDash([5, 3]); let started = false;
+      for (let i = i0; i < n; i++) { const k = map.get(st.rows[i][0]); if (k == null) continue; const v = J.c[k] * scale;
+        if (!started) { g.moveTo(x(i), y(v)); started = true; } else g.lineTo(x(i), y(v)); }
+      g.stroke(); g.setLineDash([]);
+      const kl = map.get(st.rows[n - 1][0]); if (kl != null) { const v = J.c[kl] * scale;
+        g.fillStyle = css('--info'); g.font = '10px ' + css('--mono'); g.fillText(IDX, W - padR + 6, y(v) + 3); }
+      legend.push(['line', css('--info'), `${IDX} rebased to this window's first bar`]);
+    }
+  }
+  if (L.idxpane && IND[IDX]) { // VARIANT B — the index in its own pane, with its own River
+    const J = IND[IDX], jb = BARS[IDX]; const map = new Map(jb.map((r, k) => [r[0], k]));
+    const top = H - axisH - idxH, bot = H - axisH - 4;
+    g.fillStyle = css('--inset'); g.fillRect(padL, top, W - padL - padR, bot - top);
+    let lo2 = Infinity, hi2 = -Infinity; const idx = [];
+    for (let i = i0; i < n; i++) { const k = map.get(st.rows[i][0]); idx.push(k);
+      if (k == null) continue; const u = J.sma30[k] + J.sd30[k], d = J.sma30[k] - J.sd30[k];
+      for (const v of [J.c[k], u, d]) if (!isNaN(v)) { lo2 = Math.min(lo2, v); hi2 = Math.max(hi2, v); } }
+    const jy = (v) => bot - 4 - (v - lo2) / ((hi2 - lo2) || 1) * (bot - top - 8);
+    g.fillStyle = 'rgba(96,165,250,0.22)'; g.beginPath(); let f2 = true;
+    for (let i = i0; i < n; i++) { const k = idx[i - i0]; if (k == null || isNaN(J.sd30[k])) continue; const v = J.sma30[k] + J.sd30[k];
+      if (f2) { g.moveTo(x(i), jy(v)); f2 = false; } else g.lineTo(x(i), jy(v)); }
+    for (let i = n - 1; i >= i0; i--) { const k = idx[i - i0]; if (k == null || isNaN(J.sd30[k])) continue; g.lineTo(x(i), jy(J.sma30[k] - J.sd30[k])); }
+    g.closePath(); g.fill();
+    g.beginPath(); g.strokeStyle = css('--info'); g.lineWidth = 1.5; let f3 = true;
+    for (let i = i0; i < n; i++) { const k = idx[i - i0]; if (k == null) continue;
+      if (f3) { g.moveTo(x(i), jy(J.c[k])); f3 = false; } else g.lineTo(x(i), jy(J.c[k])); }
+    g.stroke();
+    const kl = idx[n - 1 - i0];
+    if (kl != null) { const inside = J.c[kl] <= J.sma30[kl] + J.sd30[kl] && J.c[kl] >= J.sma30[kl] - J.sd30[kl];
+      const where = inside ? 'inside the River' : (J.c[kl] > J.sma30[kl] ? 'above the River' : 'below the River');
+      const txt = `${IDX} · ${where} · close ${J.c[kl].toFixed(2)}`;
+      g.font = '10px ' + css('--mono'); const tw = g.measureText(txt).width;
+      g.fillStyle = css('--surface'); g.fillRect(padL + 3, top + 2, tw + 8, 14);
+      g.fillStyle = inside ? css('--muted') : css('--warn'); g.fillText(txt, padL + 7, top + 12); }
+    legend.push(['band', css('--river'), `${IDX} with its own River`]);
   }
   // pick marker
   if (st.pick != null && st.pick >= i0 && st.pick < n) { g.strokeStyle = css('--info'); g.lineWidth = 1.5; g.setLineDash([3, 3]); g.beginPath(); g.moveTo(x(st.pick), padT); g.lineTo(x(st.pick), H - padB); g.stroke(); g.setLineDash([]); g.fillStyle = css('--info'); g.font = '10px ' + css('--mono'); g.fillText('your pick', x(st.pick) + 4, padT + 10); }
@@ -722,6 +800,11 @@ s4.onAsof = (st) => { const pts = owl(st.I, st.asof, st.dir); const k = pts.filt
 function renderLog4() { const agree = log4.filter(l => l.includes('✓')).length; $('log4').textContent = log4.length ? `${log4.length} decision${log4.length > 1 ? 's' : ''} · ${agree} agree with the checklist\n` + log4.slice(0, 8).join('\n') : 'No decisions yet.'; }
 setAsof(s4, idx('IWM', '2025-08-13'));
 document.querySelectorAll('#s4 [data-dir]').forEach(b => b.onclick = () => { s4.dir = b.dataset.dir; $('dl4').classList.toggle('on', s4.dir === 'long'); $('ds4').classList.toggle('on', s4.dir === 'short'); setAsof(s4, s4.asof); });
+/* ---------- sheet 9: the 1.2 experiment ---------- */
+const s9a = mkChart('9a', 'IWM', { range: 126, layers: { rl: true, bb: true, idxline: true } });
+const s9b = mkChart('9b', 'IWM', { range: 126, layers: { rl: true, bb: true, idxpane: true } });
+setAsof(s9a, idx('IWM', '2025-04-08'));
+setAsof(s9b, idx('IWM', '2025-04-08'));
 document.querySelectorAll('#s4 [data-d]').forEach(b => b.onclick = () => { pending4 = b.dataset.d; $('log4').textContent = `Committed: ${pending4} at ${s4.rows[s4.asof][0]}. Press ▶ to reveal the next bar.\n` + log4.slice(0, 7).join('\n'); });
 </script>
 
