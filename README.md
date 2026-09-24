@@ -22,6 +22,7 @@ Internal review pages where the user (Sundeep) approves video clips proposed for
 | [Animation components: first VO renders](https://lifelongedge.github.io/ogt-mockups/courses/anim-previews/) | MACD indicator sub-pane, 5DD animated stats table, Zero State practice card — Ava VO, SRT-anchored, with correction boxes |
 | [Store catalog v2: cut tracks for all 8 courses](https://lifelongedge.github.io/ogt-mockups/courses/store-v2-cut-tracks/) | Scene-by-scene v2 treatment for every published $19.97 course, ranked by quality-per-effort, with correction boxes |
 | [Owl Group Foundations on S2 Desktop](https://lifelongedge.github.io/ogt-mockups/courses/owl-foundations-s2/) | How the Owl Group basics are taught inside Edge S2 Desktop as method-pack lessons: course map (5 units / 19 lessons), live as-of chart lessons on real IWM + SPY bars (find, frame, five-point checklist, D3A drill), reflect/AAR lessons, the course YAML, and an exists/seeded/new ledger against s2desktop 0.1.0 and tortoise-0.1.3 |
+| [Owl Group Foundations — course preview](https://lifelongedge.github.io/ogt-mockups/courses/owl-foundations-s2/preview.html) | The owner read-through copy of the Foundations bundle (edition 2026.09), rendered from the YAML by edge-s2desktop `tools/build_course_preview.py` with no hand edits: every lesson, its check, its fixture pin. Describes chart presets rather than drawing them |
 
 ## Tools
 

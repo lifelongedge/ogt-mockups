@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Owl Group Foundations — course preview</title>
+<style>
+:root { --bg:#0f1216; --panel:#161b22; --line:#232a33; --fg:#e6edf3; --dim:#8b97a6;
+        --accent:#4ea3ff; --warn:#d9a441; --ok:#3fb950; --bad:#f85149; }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+        font:16px/1.65 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; }
+a { color:var(--accent); text-decoration:none; } a:hover { text-decoration:underline; }
+code { font:13px/1.5 Consolas,Menlo,monospace; color:#b9c6d4; }
+.wrap { display:grid; grid-template-columns:280px minmax(0,1fr); gap:0; }
+nav { position:sticky; top:0; align-self:start; height:100vh; overflow:auto;
+       border-right:1px solid var(--line); padding:22px 18px; background:var(--panel); }
+nav h1 { font-size:15px; margin:0 0 4px; }
+nav .ed { color:var(--dim); font-size:12px; margin-bottom:16px; }
+nav ul { list-style:none; margin:0; padding:0; }
+nav .nu { font-size:12px; text-transform:uppercase; letter-spacing:.06em;
+           color:var(--dim); margin:14px 0 6px; }
+nav .nu ul { text-transform:none; letter-spacing:0; font-size:13px; margin-top:5px; }
+nav .nu ul li { margin:3px 0; } nav .nu ul a { color:var(--fg); }
+main { padding:26px 34px 80px; max-width:900px; }
+.hero { border-bottom:1px solid var(--line); padding-bottom:20px; margin-bottom:8px; }
+.hero h1 { margin:0 0 6px; font-size:28px; }
+.hero .by { color:var(--dim); font-size:14px; }
+.notice { background:#1d232c; border:1px solid var(--line); border-left:3px solid var(--warn);
+           padding:12px 16px; border-radius:4px; margin:18px 0; font-size:14px; color:#c9d4e0; }
+.facts { display:flex; flex-wrap:wrap; gap:8px; margin:16px 0 4px; }
+.facts div { background:var(--panel); border:1px solid var(--line); border-radius:4px;
+              padding:7px 12px; font-size:13px; }
+.facts b { color:var(--dim); font-weight:400; margin-right:5px; }
+.unit > h2 { font-size:20px; margin:44px 0 4px; padding-top:16px; border-top:1px solid var(--line); }
+.unit > h2 span { display:block; font-size:11px; text-transform:uppercase; letter-spacing:.09em;
+                   color:var(--dim); margin-bottom:3px; }
+.lesson { background:var(--panel); border:1px solid var(--line); border-radius:6px;
+           padding:18px 20px; margin:16px 0; }
+.lesson header { display:flex; align-items:baseline; gap:10px; margin-bottom:8px; }
+.lesson h3 { margin:0; font-size:17px; flex:1; }
+.lid { color:var(--dim); font:13px Consolas,monospace; }
+.kind { font-size:11px; text-transform:uppercase; letter-spacing:.07em; color:var(--dim);
+         border:1px solid var(--line); border-radius:3px; padding:2px 7px; }
+.k-reflect, .k-journal { color:var(--warn); border-color:#3a3020; }
+.skill { margin:6px 0 10px; font-size:14px; color:#c9d4e0; }
+.skill span, .terms span:first-child, .meta span, .tryit > span, .pin > span
+  { color:var(--dim); font-size:11px; text-transform:uppercase; letter-spacing:.07em;
+     margin-right:7px; }
+.concept p { margin:8px 0; }
+.terms { margin:10px 0; }
+.term { display:inline-block; font:12px Consolas,monospace; background:#1d232c;
+         border:1px solid var(--line); border-radius:3px; padding:2px 7px; margin-right:5px;
+         cursor:help; }
+.term.missing { border-color:var(--bad); color:var(--bad); }
+.meta { font-size:13px; color:#a9b6c4; margin:10px 0; }
+.meta div { margin:3px 0; }
+.tryit { background:#131922; border:1px solid var(--line); border-left:3px solid var(--accent);
+          border-radius:4px; padding:11px 14px; margin:12px 0; font-size:14px; }
+.tryit p { margin:4px 0 0; }
+.check { border:1px solid var(--line); border-radius:4px; margin:12px 0; overflow:hidden; }
+.ctop { background:#1a212b; padding:7px 13px; display:flex; gap:9px; align-items:center; }
+.clab { font-size:11px; text-transform:uppercase; letter-spacing:.07em; color:var(--dim); }
+.ckind { font:12px Consolas,monospace; color:var(--accent); }
+.crow { display:flex; gap:10px; padding:6px 13px; font-size:13.5px; border-top:1px solid var(--line); }
+.crow span { color:var(--dim); min-width:106px; font-size:11px; text-transform:uppercase;
+              letter-spacing:.07em; padding-top:2px; }
+.pin { font-size:13px; margin-top:10px; color:#c9d4e0; }
+.pin.none { color:var(--dim); }
+.body { border-top:1px solid var(--line); margin-top:12px; padding-top:6px; }
+.body h3, .body h4 { font-size:15px; margin:14px 0 4px; }
+blockquote { border-left:2px solid var(--line); margin:10px 0; padding-left:14px; color:#c2cdd9;
+              font-style:italic; }
+.missing { color:var(--bad); }
+dl.gloss { margin:0; }
+.g { border-top:1px solid var(--line); padding:11px 0; }
+.g dt { font:13px Consolas,monospace; color:var(--accent); }
+.g dd { margin:3px 0 0; font-size:14px; color:#c9d4e0; }
+.gstep { display:block; color:var(--dim); font-size:12px; margin-top:2px; }
+footer { margin-top:50px; border-top:1px solid var(--line); padding-top:18px;
+          font-size:12.5px; color:var(--dim); }
+footer table { border-collapse:collapse; margin:10px 0; }
+footer td { padding:3px 16px 3px 0; vertical-align:top; }
+footer td:first-child { color:var(--dim); } footer td:last-child { color:#c9d4e0; }
+.v.ok { color:var(--ok); } .v.bad { color:var(--bad); }
+@media (max-width:820px) { .wrap { grid-template-columns:1fr; }
+  nav { position:static; height:auto; border-right:0; border-bottom:1px solid var(--line); }
+  main { padding:20px 16px 60px; } }
+</style></head><body>
+<div class="wrap">
+<nav><h1>Owl Group Foundations</h1><div class="ed">edition 2026.09</div><ul><li class="nu">Unit 1 &middot; Market, System, Self<ul><li><a href="#l1.1">1.1 Two totems, one habit</a></li><li><a href="#l1.2">1.2 Market first: the index carries half the move</a></li><li><a href="#l1.3">1.3 Noise, and critical states</a></li></ul></li><li class="nu">Unit 2 &middot; The chart architecture<ul><li><a href="#l2.1">2.1 The River: SMA30 with bands at one, two and three sigma</a></li><li><a href="#l2.2">2.2 The Dragon: the noise boundary</a></li><li><a href="#l2.3">2.3 Regression lines: RL10, RL30, RL90, RL270</a></li><li><a href="#l2.4">2.4 MACD Seasons: read the regime</a></li></ul></li><li class="nu">Unit 3 &middot; Risk geometry<ul><li><a href="#l3.1">3.1 The risk box: the Frog as 1R</a></li><li><a href="#l3.2">3.2 xR is not 1R: the minimum manageable risk box</a></li><li><a href="#l3.3">3.3 The trade frame, both directions</a></li><li><a href="#l3.4">3.4 No Lose plus Dinner for Two</a></li></ul></li><li class="nu">Unit 4 &middot; Critical states and the Owl setup<ul><li><a href="#l4.1">4.1 The Yellow Zone</a></li><li><a href="#l4.2">4.2 Compression: the Z3 width in Frogs</a></li><li><a href="#l4.3">4.3 The Owl setup: five points</a></li><li><a href="#l4.4">4.4 The D3A drill: decide before the reveal</a></li></ul></li><li class="nu">Unit 5 &middot; The operating cycle and the inner game<ul><li><a href="#l5.1">5.1 Plan, Prepare, Execute, Assess on one chart</a></li><li><a href="#l5.2">5.2 The TWPM gate</a></li><li><a href="#l5.3">5.3 After-action review with FFTC</a></li><li><a href="#l5.4">5.4 Zero State and Operation FIG</a></li></ul></li></ul></nav>
+<main>
+<div class="hero">
+  <h1>Owl Group Foundations</h1>
+  <div class="by">Owl Group Trading · Dr. Ken Long &middot; edition 2026.09 &middot; free with the pack</div>
+</div>
+<p>The basics of the Tortoise Method as the Owl Group teaches them, on the student&#x27;s own bars with the future hidden. Five units in the method&#x27;s own order. Everything the Swing and Intraday courses assume.</p>
+<div class="notice"><strong>Content preview.</strong> Every word below is rendered from the
+course bundle with no hand edits. It draws no charts and marks no answers: chart presets and
+checks are described here and computed by the app.</div>
+<div class="facts">
+  <div><b>Units</b>5</div><div><b>Lessons</b>19</div>
+  <div><b>Computable</b>15</div><div><b>Pinned</b>15</div>
+  <div><b>Readings</b>18</div><div><b>Assumes</b>nothing</div>
+  <div><b>Anchors</b>IWM, SPY</div>
+</div>
+<section class="unit"><h2><span>Unit 1</span>Market, System, Self</h2><article class="lesson" id="l1.1">
+<header><span class="lid">1.1</span><h3>Two totems, one habit</h3><span class="kind k-reflect">reflect</span></header>
+<p class="skill"><span>Skill</span> Name the Tortoise and the Owl, and say what each one asks of you at the screen</p>
+<p class="terms"><span>Terms</span> <span class="term" title="The long-perspective trader who takes shelter in bear markets and stays out of the crowd&#x27;s exuberance. Survive, then compound.">tortoise</span> <span class="term" title="The rational sniper: quiet observation, self-knowledge, patience without a deadline, awareness without judgement. The stance the method asks for at the screen.">owl</span></p>
+<div class="body"><h3>Two totems, one habit</h3>
+<p>The Tortoise Trading Community of Practice was founded in 1996 by Dr. Ken Long and Robert Gardner as a voluntary network of private and professional traders. The Owl Group is where its method is taught. Two animals carry the whole stance.</p>
+<p><strong>The Tortoise</strong> is the trader with a long perspective and a shell. It compounds slowly, takes shelter in bear markets, and does not follow the crowd into exuberance. When the Tortoise is on the screen, the question is &quot;am I still in the game next year?&quot;</p>
+<p><strong>The Owl</strong> is the rational sniper. Quiet observation, self-knowledge, patience without a deadline, awareness without judgement. When the Owl is on the screen, the question is &quot;what is actually in front of me, and is it one of the states I have rehearsed?&quot;</p>
+<p>The habit the two share is the same one this course drills: the method separates the read from the outcome. A read is right or wrong on the bars that were visible at the time. Whether the trade paid is a different fact, logged separately.</p>
+<p><strong>Before you continue.</strong> Open any symbol in the Viewer, drag the as-of slider back a year, and step forward one week at a time. Say aloud, at each step, which totem the chart is asking for. There is nothing to mark here; the point is to hear yourself say it.</p></div>
+</article>
+<article class="lesson" id="l1.2">
+<header><span class="lid">1.2</span><h3>Market first: the index carries half the move</h3><span class="kind k-read">read</span></header>
+<p class="skill"><span>Skill</span> Read the broad market before the symbol, every time</p>
+<div class="concept"><p>The method starts every read with the index, because the Owl Group attributes about half of an individual stock&#x27;s move to the broad market, a quarter to its sector and a quarter to the company. The River is the 30-session mean of closes with a one-sigma band; where the index sits against its River is the first fact of the day.</p></div>
+<p class="terms"><span>Terms</span> <span class="term" title="Four regression lines, four horizons on one chart. RL10 is the trader&#x27;s price, RL30 trend health, RL90 the institutional trend, RL270 long-term fair value. Their order against price is the stack.">rl</span> <span class="term" title="The River at one sigma, the Floodplain at two, the Z3 redline at three. About two closes in three live in the River; a close in the Floodplain is stretch or abnormal momentum.">zbands</span></p>
+<div class="meta"><div><span>Chart</span> candles, bb, rl &middot; 126 sessions &middot; selected symbol</div><div><span>As-of</span> starts -60 bars from the last stored bar, future hidden</div></div>
+<div class="tryit"><span>Try it</span><p>Select SPY. With the future hidden, is the close above the River, inside it, or below it?</p></div>
+<div class="check"><div class="ctop"><span class="clab">Check</span><span class="ckind">read</span></div><div class="crow"><span>Student</span>Picks one of two or more states</div><div class="crow"><span>Engine marks</span>Equality with the computed state at as-of</div><div class="crow"><span>Parameters</span><code>expects: inside_river  ·  states: above, inside, below</code></div></div>
+<div class="pin"><span>Pinned answer</span> SPY as of 2025-08-13 &rarr; <strong>above</strong></div>
+</article>
+<article class="lesson" id="l1.3">
+<header><span class="lid">1.3</span><h3>Noise, and critical states</h3><span class="kind k-count">count</span></header>
+<p class="skill"><span>Skill</span> Count how often price leaves the River, so a departure means something</p>
+<div class="concept"><p>The method treats price as mostly noise, punctuated by critical states: moments where an outsized move has room and the cost of finding out is small. Over any 60 sessions most closes sit inside the River; the ones outside it are where the method looks first.</p></div>
+<p class="terms"><span>Terms</span> <span class="term" title="A moment where an outsized directional move has room and the cost of finding out is small. Where the method looks first; not a call. Distinct from edge-vocab&#x27;s ccs, the Compound Critical State.">critical_state</span> <span class="term" title="The River at one sigma, the Floodplain at two, the Z3 redline at three. About two closes in three live in the River; a close in the Floodplain is stretch or abnormal momentum.">zbands</span></p>
+<div class="meta"><div><span>Chart</span> candles, bb &middot; 126 sessions &middot; selected symbol</div><div><span>As-of</span> starts -40 bars from the last stored bar, future hidden</div></div>
+<div class="tryit"><span>Try it</span><p>Over the last 60 sessions shown, how many closes sat outside the River?</p></div>
+<div class="check"><div class="ctop"><span class="clab">Check</span><span class="ckind">count</span></div><div class="crow"><span>Student</span>Types a number</div><div class="crow"><span>Engine marks</span>Within +/- tolerance of the computed count over the window</div><div class="crow"><span>Parameters</span><code>expects: closes_outside_river  ·  window: 60  ·  tolerance: 2</code></div></div>
+<div class="pin"><span>Pinned answer</span> IWM as of 2025-08-13 &rarr; <strong>36</strong></div>
+</article></section>
+<section class="unit"><h2><span>Unit 2</span>The chart architecture</h2><article class="lesson" id="l2.1">
+<header><span class="lid">2.1</span><h3>The River: SMA30 with bands at one, two and three sigma</h3><span class="kind k-read">read</span></header>
+<p class="skill"><span>Skill</span> Read the River, the Floodplain and the Z3 redline on any chart</p>
+<div class="concept"><p>The River is the 30-session simple moving average of closes with a band one standard deviation either side; about two closes in three live there. Two sigma is the Floodplain, where the method reads abnormal momentum or stretch. Three sigma is the Z3 redline. The bands are drawn from the same 30 sessions, so they widen and narrow with the symbol&#x27;s own behaviour.</p></div>
+<p class="terms"><span>Terms</span> <span class="term" title="The River at one sigma, the Floodplain at two, the Z3 redline at three. About two closes in three live in the River; a close in the Floodplain is stretch or abnormal momentum.">zbands</span></p>
+<div class="meta"><div><span>Chart</span> candles, bb, river &middot; 126 sessions &middot; selected symbol</div><div><span>As-of</span> starts -120 bars from the last stored bar, future hidden</div></div>
+<div class="tryit"><span>Try it</span><p>Is the close inside the River today, above it, or below it?</p></div>
+<div class="check"><div class="ctop"><span class="clab">Check</span><span class="ckind">read</span></div><div class="crow"><span>Student</span>Picks one of two or more states</div><div class="crow"><span>Engine marks</span>Equality with the computed state at as-of</div><div class="crow"><span>Parameters</span><code>expects: inside_river  ·  states: above, inside, below</code></div></div>
+<div class="pin"><span>Pinned answer</span> IWM as of 2025-04-08 &rarr; <strong>below</strong></div>
+</article>
+<article class="lesson" id="l2.2">
+<header><span class="lid">2.2</span><h3>The Dragon: the noise boundary</h3><span class="kind k-find">find</span></header>
+<p class="skill"><span>Skill</span> See the Dragon as the edge of noise over the prior 10 bars, and RL10 crossing it as the event</p>
+<div class="concept"><p>The Dragon is a 10-bar average of RL10 with a skin and a belly half a sigma either side. Inside the band, movement is noise. RL10 leaving the band is the crossing that the SSC and Kata-2 patterns are built on, and the second of the five points in the Owl setup.</p></div>
+<p class="terms"><span>Terms</span> <span class="term" title="The noise boundary. Inside the skin and belly, movement is noise; RL10 leaving the band is the event every crossing pattern is built on.">dragon</span> <span class="term" title="Four regression lines, four horizons on one chart. RL10 is the trader&#x27;s price, RL30 trend health, RL90 the institutional trend, RL270 long-term fair value. Their order against price is the stack.">rl</span></p>
+<div class="meta"><div><span>Chart</span> candles, rl, dragon &middot; 126 sessions &middot; selected symbol</div><div><span>As-of</span> starts -280 bars from the last stored bar, future hidden</div></div>
+<div class="tryit"><span>Try it</span><p>With the future hidden, find the most recent bar where RL10 crossed up through the Dragon. Click that bar.</p></div>
+<div class="check"><div class="ctop"><span class="clab">Check</span><span class="ckind">find</span></div><div class="crow"><span>Student</span>Clicks a bar</div><div class="crow"><span>Engine marks</span>Within N sessions of the computed event</div><div class="crow"><span>Parameters</span><code>expects: rl10_cross_dragon_up  ·  tolerance_sessions: 2</code></div></div>
+<div class="pin"><span>Pinned answer</span> IWM as of 2025-08-20 &rarr; <strong>2025-08-12</strong></div>
+</article>
+<article class="lesson" id="l2.3">
+<header><span class="lid">2.3</span><h3>Regression lines: RL10, RL30, RL90, RL270</h3><span class="kind k-read">read</span></header>
+<p class="skill"><span>Skill</span> Read four regression lines as four horizons, and say whether they stack</p>
+<div class="concept"><p>The method fits a least-squares line to the last 10, 30, 90 and 270 closes and plots each at its end point. RL10 is the trader&#x27;s price, RL30 trend health, RL90 the institutional trend, RL270 long-term fair value. When price and the four lines sit in one order the horizons agree; when they interleave they do not.</p></div>
+<p class="terms"><span>Terms</span> <span class="term" title="Four regression lines, four horizons on one chart. RL10 is the trader&#x27;s price, RL30 trend health, RL90 the institutional trend, RL270 long-term fair value. Their order against price is the stack.">rl</span></p>
+<div class="meta"><div><span>Chart</span> candles, rl, rlx &middot; 504 sessions &middot; selected symbol</div><div><span>As-of</span> starts -200 bars from the last stored bar, future hidden</div></div>
+<div class="tryit"><span>Try it</span><p>Are price, RL10, RL30, RL90 and RL270 stacked in one order today, up or down, or mixed?</p></div>
+<div class="check"><div class="ctop"><span class="clab">Check</span><span class="ckind">read</span></div><div class="crow"><span>Student</span>Picks one of two or more states</div><div class="crow"><span>Engine marks</span>Equality with the computed state at as-of</div><div class="crow"><span>Parameters</span><code>expects: rl_stack_order  ·  states: stacked_up, stacked_down, mixed</code></div></div>
+<div class="pin"><span>Pinned answer</span> IWM as of 2025-04-08 &rarr; <strong>stacked_down</strong></div>
+</article>
+<article class="lesson" id="l2.4">
+<header><span class="lid">2.4</span><h3>MACD Seasons: read the regime</h3><span class="kind k-read">read</span></header>
+<p class="skill"><span>Skill</span> Name the season from the MACDRL pane and the coloured RL10</p>
+<div class="concept"><p>MACDRL is the 10-bar average of RL10 minus its 30-bar average. Below zero and rising is Spring, above zero and rising Summer, above zero and falling Fall, below zero and falling Winter. The method reads the season before it reads the setup, because the same structure means different things in Spring and in Fall.</p></div>
+<p class="terms"><span>Terms</span> <span class="term" title="The regime read that comes before the setup read. Spring and Summer are rising, Fall and Winter falling; the same structure is read differently in each.">seasons</span> <span class="term" title="The oscillator the seasons are read from: the 10-bar mean of RL10 minus its 30-bar mean, with its sign and slope giving the four seasons.">macdrl</span></p>
+<div class="meta"><div><span>Chart</span> candles, rl, macd, season &middot; 252 sessions &middot; selected symbol</div><div><span>As-of</span> starts -150 bars from the last stored bar, future hidden</div></div>
+<div class="tryit"><span>Try it</span><p>Which season is the symbol in at the as-of bar?</p></div>
+<div class="check"><div class="ctop"><span class="clab">Check</span><span class="ckind">read</span></div><div class="crow"><span>Student</span>Picks one of two or more states</div><div class="crow"><span>Engine marks</span>Equality with the computed state at as-of</div><div class="crow"><span>Parameters</span><code>expects: season_at  ·  states: spring, summer, fall, winter</code></div></div>
+<div class="pin"><span>Pinned answer</span> IWM as of 2025-08-13 &rarr; <strong>spring</strong></div>
+</article></section>
+<section class="unit"><h2><span>Unit 3</span>Risk geometry</h2><article class="lesson" id="l3.1">
+<header><span class="lid">3.1</span><h3>The risk box: the Frog as 1R</h3><span class="kind k-measure">measure</span></header>
+<p class="skill"><span>Skill</span> Measure any move in a risk box built from the symbol&#x27;s own daily ranges</p>
+<div class="concept"><p>A risk box is a volatility unit sized from the symbol&#x27;s own daily ranges, and the method has more than one. The Frog is the standard deviation of the daily range over the 30 sessions strictly before today. RangeStat is the mean range plus one standard deviation over the same 30 sessions. Average True Range is a third. Foundations uses the Frog as 1R; the choice of box is the trader&#x27;s, the discipline of sizing in a box rather than in dollars is the method&#x27;s. The Frog lines on the chart sit one to four Frogs above and below today&#x27;s open.</p></div>
+<p class="terms"><span>Terms</span> <span class="term" title="One of the method&#x27;s risk boxes: the symbol&#x27;s own volatility unit from the 30 prior daily ranges. Foundations measures every distance in Frogs.">frog</span> <span class="term" title="RangeStat is a second risk box, mean range plus one standard deviation over the same 30 sessions; R10 is a tenth of it, the spacing of the platform&#x27;s levels and ladders.">r10</span> <span class="term" title="One risk box, the Frog in this course. The sizing unit, distinct from xR, the execution stop distance at a pivot. The method sizes in 1R and stops at xR.">1r</span></p>
+<div class="meta"><div><span>Chart</span> candles, frog, rl &middot; 63 sessions &middot; selected symbol</div><div><span>As-of</span> starts -30 bars from the last stored bar, future hidden</div></div>
+<div class="tryit"><span>Try it</span><p>How many Frogs is today&#x27;s range, high to low?</p></div>
+<div class="check"><div class="ctop"><span class="clab">Check</span><span class="ckind">measure</span></div><div class="crow"><span>Student</span>Types a value in Frogs</div><div class="crow"><span>Engine marks</span>Within +/- tolerance R</div><div class="crow"><span>Parameters</span><code>expects: range_in_frogs  ·  tolerance_r: 0.2</code></div></div>
+<div class="pin"><span>Pinned answer</span> IWM as of 2025-08-13 &rarr; <strong>2.8839</strong></div>
+</article>
+<article class="lesson" id="l3.2">
+<header><span class="lid">3.2</span><h3>xR is not 1R: the minimum manageable risk box</h3><span class="kind k-place">place</span></header>
+<p class="skill"><span>Skill</span> Place an execution stop at a pivot and read the distance in Frogs</p>
+<div class="concept"><p>Sizing risk and execution risk are two numbers. 1R, the risk box (the Frog in this course), sizes the position. xR is the distance from entry to the stop at a local pivot, and the method keeps it small: the minimum manageable risk box runs from about 0.2R to 0.33R. Sizing in 1R while stopping at xR is why a stopped trade costs a fraction of a unit and an ordinary move pays several.</p></div>
+<p class="terms"><span>Terms</span> <span class="term" title="One of the method&#x27;s risk boxes: the symbol&#x27;s own volatility unit from the 30 prior daily ranges. Foundations measures every distance in Frogs.">frog</span> <span class="term" title="One risk box, the Frog in this course. The sizing unit, distinct from xR, the execution stop distance at a pivot. The method sizes in 1R and stops at xR.">1r</span></p>
+<div class="meta"><div><span>Chart</span> candles, frog, yz, rl &middot; 63 sessions &middot; selected symbol</div><div><span>As-of</span> starts -30 bars from the last stored bar, future hidden</div></div>
+<div class="tryit"><span>Try it</span><p>Drag the stop to the nearest pivot below today&#x27;s bar. The app reads xR in Frogs; the method&#x27;s box is 0.20R to 0.33R.</p></div>
+<div class="check"><div class="ctop"><span class="clab">Check</span><span class="ckind">place</span></div><div class="crow"><span>Student</span>Drags a level onto the chart</div><div class="crow"><span>Engine marks</span>Reports xR in Frogs; passes inside the declared band</div><div class="crow"><span>Parameters</span><code>expects: xr_of_level  ·  band: 0.2, 0.33</code></div></div>
+<div class="pin"><span>Pinned answer</span> IWM as of 2025-08-13 &rarr; <strong>7.997</strong></div>
+</article>
+<article class="lesson" id="l3.3">
+<header><span class="lid">3.3</span><h3>The trade frame, both directions</h3><span class="kind k-frame">frame</span></header>
+<p class="skill"><span>Skill</span> Frame a trade both ways from the same bars and let the gate decide</p>
+<div class="concept"><p>A frame has no opinion. Entry a nickel past yesterday&#x27;s extreme, initial stop a nickel past the other extreme, and the 10-day extreme as the third level. Reward-to-risk is the distance to that level over the distance to the stop; the method rejects a frame below 2.0. The Prepare step answers the same six questions for the long and the short from one chart.</p></div>
+<p class="terms"><span>Terms</span> <span class="term" title="A falsifiable structure with no opinion: entry past yesterday&#x27;s extreme, stop past the other, the 10-day extreme as the third level, and a 2.0 reward-to-risk gate. Built both ways from the same bars.">frame_the_trade</span> <span class="term" title="One of the method&#x27;s risk boxes: the symbol&#x27;s own volatility unit from the 30 prior daily ranges. Foundations measures every distance in Frogs.">frog</span></p>
+<div class="meta"><div><span>Chart</span> candles, frame, frog, yz, rl &middot; 63 sessions &middot; selected symbol</div><div><span>As-of</span> starts -30 bars from the last stored bar, future hidden</div></div>
+<div class="tryit"><span>Try it</span><p>Read both frames. Which direction passes the method&#x27;s 2.0 gate today, and what is xR in Frogs?</p></div>
+<div class="check"><div class="ctop"><span class="clab">Check</span><span class="ckind">frame</span></div><div class="crow"><span>Student</span>Picks the direction that passes</div><div class="crow"><span>Engine marks</span>Gate result computed both directions</div><div class="crow"><span>Parameters</span><code>expects: frame  ·  gate_rr: 2.0</code></div></div>
+<div class="pin"><span>Pinned answer</span> IWM as of 2025-08-12 &rarr; <strong>both</strong></div>
+</article>
+<article class="lesson" id="l3.4">
+<header><span class="lid">3.4</span><h3>No Lose plus Dinner for Two</h3><span class="kind k-measure">measure</span></header>
+<p class="skill"><span>Skill</span> Ratchet the stop to a locked gain once the trade has paid 0.7R</p>
+<div class="concept"><p>The method&#x27;s first battle drill: when an open trade reaches 0.7R to 1.0R in its favour, the stop moves to 0.5R past entry, so the worst outcome is now a small gain. At 2R a second drill locks most of the open gain or trails the Dragon skin. The drills are rehearsed so that no thinking is needed at the moment they fire.</p></div>
+<p class="terms"><span>Terms</span> <span class="term" title="A rehearsed, zero-thinking response at a known R level. No Lose plus Dinner for Two ratchets the stop to +0.5R once the trade has paid 0.7R; the 2R drill locks or trails.">battle_drill</span> <span class="term" title="One of the method&#x27;s risk boxes: the symbol&#x27;s own volatility unit from the 30 prior daily ranges. Foundations measures every distance in Frogs.">frog</span></p>
+<div class="meta"><div><span>Chart</span> candles, frame, trail, frog &middot; 63 sessions &middot; selected symbol</div><div><span>As-of</span> starts -40 bars from the last stored bar, future hidden</div></div>
+<div class="tryit"><span>Try it</span><p>Step forward from the framed entry until the trade shows 0.7R. Where does the ratcheted stop sit, in price?</p></div>
+<div class="check"><div class="ctop"><span class="clab">Check</span><span class="ckind">measure</span></div><div class="crow"><span>Student</span>Types a value in Frogs</div><div class="crow"><span>Engine marks</span>Within +/- tolerance R</div><div class="crow"><span>Parameters</span><code>expects: nl_d42_stop  ·  tolerance_r: 0.1</code></div></div>
+<div class="pin"><span>Pinned answer</span> IWM as of 2025-08-13 &rarr; <strong>219.5013</strong></div>
+</article></section>
+<section class="unit"><h2><span>Unit 4</span>Critical states and the Owl setup</h2><article class="lesson" id="l4.1">
+<header><span class="lid">4.1</span><h3>The Yellow Zone</h3><span class="kind k-read">read</span></header>
+<p class="skill"><span>Skill</span> Treat yesterday&#x27;s range as the line between chop and conviction</p>
+<div class="concept"><p>Yesterday&#x27;s high, low and close make the Yellow Zone. Inside it the method reads non-directional chop; a close past yesterday&#x27;s high or low is new conviction. It is the smallest structural level the method uses and the one every frame is built from.</p></div>
+<p class="terms"><span>Terms</span> <span class="term" title="Yesterday&#x27;s high, low and close. Inside is chop; a close past either edge is new conviction. The smallest level the method uses.">yz</span> <span class="term" title="Yesterday&#x27;s high, the upper edge of the Yellow Zone and the level a long frame&#x27;s entry is placed a nickel above.">pdh</span></p>
+<div class="meta"><div><span>Chart</span> candles, yz, rl &middot; 63 sessions &middot; selected symbol</div><div><span>As-of</span> starts -20 bars from the last stored bar, future hidden</div></div>
+<div class="tryit"><span>Try it</span><p>Did today close inside the Yellow Zone, or break it, and which way?</p></div>
+<div class="check"><div class="ctop"><span class="clab">Check</span><span class="ckind">read</span></div><div class="crow"><span>Student</span>Picks one of two or more states</div><div class="crow"><span>Engine marks</span>Equality with the computed state at as-of</div><div class="crow"><span>Parameters</span><code>expects: yellow_zone_state  ·  states: inside, broke_pdh, broke_pdl</code></div></div>
+<div class="pin"><span>Pinned answer</span> IWM as of 2025-08-13 &rarr; <strong>broke_pdh</strong></div>
+</article>
+<article class="lesson" id="l4.2">
+<header><span class="lid">4.2</span><h3>Compression: the Z3 width in Frogs</h3><span class="kind k-measure">measure</span></header>
+<p class="skill"><span>Skill</span> Measure how tight the noise boundaries have become</p>
+<div class="concept"><p>When the +3 and -3 sigma bands squeeze together the symbol is in compression, a critical state the method calls a pinch. Measured in Frogs, the width tells you how many units of the symbol&#x27;s own volatility the whole envelope now spans. A narrow reading is a state to notice, never a call.</p></div>
+<p class="terms"><span>Terms</span> <span class="term" title="Compression: the Z3 envelope squeezed to a small number of Frogs. A critical state to notice, never a call.">pinch</span> <span class="term" title="The River at one sigma, the Floodplain at two, the Z3 redline at three. About two closes in three live in the River; a close in the Floodplain is stretch or abnormal momentum.">zbands</span> <span class="term" title="One of the method&#x27;s risk boxes: the symbol&#x27;s own volatility unit from the 30 prior daily ranges. Foundations measures every distance in Frogs.">frog</span></p>
+<div class="meta"><div><span>Chart</span> candles, z, pinch, frog &middot; 252 sessions &middot; selected symbol</div><div><span>As-of</span> starts -100 bars from the last stored bar, future hidden</div></div>
+<div class="tryit"><span>Try it</span><p>How many Frogs wide is the Z3 envelope at the as-of bar?</p></div>
+<div class="check"><div class="ctop"><span class="clab">Check</span><span class="ckind">measure</span></div><div class="crow"><span>Student</span>Types a value in Frogs</div><div class="crow"><span>Engine marks</span>Within +/- tolerance R</div><div class="crow"><span>Parameters</span><code>expects: z3_width_in_frogs  ·  tolerance_r: 0.2</code></div></div>
+<div class="pin"><span>Pinned answer</span> IWM as of 2025-08-13 &rarr; <strong>14.1268</strong></div>
+</article>
+<article class="lesson" id="l4.3">
+<header><span class="lid">4.3</span><h3>The Owl setup: five points</h3><span class="kind k-checklist">checklist</span></header>
+<p class="skill"><span>Skill</span> Recognise five-point alignment, and notice when it is four</p>
+<div class="concept"><p>The Owl setup is a second-generation RLCO recognition with five points that all describe past bars: price outside the River on the far side, RL10 crossing the Dragon toward the trade, the Dragon curling that way, RL30 curling that way, and the PSAR on RL10 flipping to confirm. Four of five is what the method calls not yet.</p></div>
+<p class="terms"><span>Terms</span> <span class="term" title="The noise boundary. Inside the skin and belly, movement is noise; RL10 leaving the band is the event every crossing pattern is built on.">dragon</span> <span class="term" title="Four regression lines, four horizons on one chart. RL10 is the trader&#x27;s price, RL30 trend health, RL90 the institutional trend, RL270 long-term fair value. Their order against price is the stack.">rl</span> <span class="term" title="A mechanical trailing stop on price or on RL10. The flip is the moment the stop is hit and re-seeded on the other side; on RL10 it is the fifth point of the Owl setup.">psar</span> <span class="term" title="The Supported Spring Crossing, the first-generation recognition the Owl setup grew from: a spring off support with RL10 crossing the Dragon and RL30 turning.">ssc</span></p>
+<div class="meta"><div><span>Chart</span> candles, z, rl, dragon, psarrl, season &middot; 126 sessions &middot; selected symbol</div><div><span>As-of</span> starts -280 bars from the last stored bar, future hidden</div></div>
+<div class="tryit"><span>Try it</span><p>Step the as-of bar back and forward through the window. Watch which points hold and in what order they come on.</p></div>
+<div class="check"><div class="ctop"><span class="clab">Check</span><span class="ckind">checklist</span></div><div class="crow"><span>Student</span>Steps as-of, watches the points</div><div class="crow"><span>Engine marks</span>Each point computed at as-of; the verdict is the count</div><div class="crow"><span>Parameters</span><code>direction: both  ·  points: p1_outside_river, rl10_x_dragon, dragon_curl, rl30_curl, psar_rl_flip  ·  windows: p1 15, cross 3, flip 5</code></div></div>
+<div class="pin"><span>Pinned answer</span> IWM as of 2025-08-13 &rarr; <strong>5</strong></div>
+</article>
+<article class="lesson" id="l4.4">
+<header><span class="lid">4.4</span><h3>The D3A drill: decide before the reveal</h3><span class="kind k-drill">drill</span></header>
+<p class="skill"><span>Skill</span> Detect, decide, deliver and assess one bar at a time without seeing the next</p>
+<div class="concept"><p>The method&#x27;s execution loop is Detect, Decide, Deliver, Assess. In the drill you commit to long, short or sit out on the as-of bar, then step forward. The log scores your call against the five-point checklist at that bar, never against what price did next. Twenty bars make a set.</p></div>
+<p class="terms"><span>Terms</span> <span class="term" title="The rational sniper: quiet observation, self-knowledge, patience without a deadline, awareness without judgement. The stance the method asks for at the screen.">owl</span></p>
+<div class="meta"><div><span>Chart</span> candles, z, rl, dragon, psarrl, season &middot; 126 sessions &middot; selected symbol</div><div><span>As-of</span> starts -300 bars from the last stored bar, future hidden</div></div>
+<div class="tryit"><span>Try it</span><p>Run one set of 20 bars. Commit before every step.</p></div>
+<div class="check"><div class="ctop"><span class="clab">Check</span><span class="ckind">drill</span></div><div class="crow"><span>Student</span>Commits a call, then steps forward</div><div class="crow"><span>Engine marks</span>Agreement per bar against the reference; a set is N bars</div><div class="crow"><span>Parameters</span><code>against: 4.3  ·  set: 20</code></div></div>
+<div class="pin"><span>Pinned answer</span> IWM as of 2025-08-13 &rarr; <strong>5</strong></div>
+</article></section>
+<section class="unit"><h2><span>Unit 5</span>The operating cycle and the inner game</h2><article class="lesson" id="l5.1">
+<header><span class="lid">5.1</span><h3>Plan, Prepare, Execute, Assess on one chart</h3><span class="kind k-reflect">walkthrough</span></header>
+<p class="skill"><span>Skill</span> Walk the master cycle end to end on a chart you have already read</p>
+<p class="terms"><span>Terms</span> <span class="term" title="The rational sniper: quiet observation, self-knowledge, patience without a deadline, awareness without judgement. The stance the method asks for at the screen.">owl</span> <span class="term" title="The long-perspective trader who takes shelter in bear markets and stays out of the crowd&#x27;s exuberance. Survive, then compound.">tortoise</span></p>
+<div class="body"><h3>Plan, Prepare, Execute, Assess on one chart</h3>
+<p>The method&#x27;s master cycle has four steps, and every lesson in this course belongs to one of them. Walk it once, end to end, on a chart you read in unit 4.</p>
+<p><strong>Plan.</strong> Top-down: index first (lesson 1.2), then the symbol&#x27;s season (2.4), then the scan for a critical state (1.3, 4.2). The output of Plan is a short list of symbols worth framing, not a trade.</p>
+<p><strong>Prepare.</strong> Frame the trade both ways (3.3). Six questions in each direction: where is entry, where is the initial stop, what is the third level, what is xR in Frogs (3.2), what does the 2.0 gate say, and what reverses the read. The output of Prepare is a frame that can be falsified by the next bar.</p>
+<p><strong>Execute.</strong> The D3A loop (4.4): Detect the state on the as-of bar, Decide, Deliver the order, Assess the fill. Battle drills (3.4) fire at known R levels with no thinking. The TWPM gate (5.2) is checked before Deliver, every time.</p>
+<p><strong>Assess.</strong> The after-action review with FFTC (5.3), the same day. Facts, Feelings, Thoughts, Conclusions. The conclusion feeds tomorrow&#x27;s Plan, which is what makes the cycle a loop and not a list.</p>
+<p><strong>Do it now.</strong> Open IWM, park the as-of slider in early August 2025, and say each step aloud as you move through the lessons named above. Mark this lesson done when you have spoken all four.</p></div>
+</article>
+<article class="lesson" id="l5.2">
+<header><span class="lid">5.2</span><h3>The TWPM gate</h3><span class="kind k-checklist">checklist</span></header>
+<p class="skill"><span>Skill</span> Hold four conditions at once before any trade: Time, Will, Pattern, Money</p>
+<div class="concept"><p>The method opens no trade unless four things are true together: there is Time left to manage it, the trader is in Zero State (Will), the Pattern holds, and there is risk capital available (Money). The app computes the Pattern from the five points; the other three are yours to report, and reporting them honestly is the lesson.</p></div>
+<p class="terms"><span>Terms</span> <span class="term" title="The rational sniper: quiet observation, self-knowledge, patience without a deadline, awareness without judgement. The stance the method asks for at the screen.">owl</span></p>
+<div class="meta"><div><span>Chart</span> candles, z, rl, dragon, psarrl &middot; 126 sessions &middot; selected symbol</div><div><span>As-of</span> starts -280 bars from the last stored bar, future hidden</div></div>
+<div class="tryit"><span>Try it</span><p>Report Time, Will and Money for the as-of bar. The app fills in Pattern.</p></div>
+<div class="check"><div class="ctop"><span class="clab">Check</span><span class="ckind">checklist</span></div><div class="crow"><span>Student</span>Steps as-of, watches the points</div><div class="crow"><span>Engine marks</span>Each point computed at as-of; the verdict is the count</div><div class="crow"><span>Parameters</span><code>direction: both  ·  points: p1_outside_river, rl10_x_dragon, dragon_curl, rl30_curl, psar_rl_flip  ·  windows: p1 15, cross 3, flip 5  ·  self_reported: time, will, money</code></div></div>
+<div class="pin"><span>Pinned answer</span> IWM as of 2025-08-13 &rarr; <strong>5</strong></div>
+</article>
+<article class="lesson" id="l5.3">
+<header><span class="lid">5.3</span><h3>After-action review with FFTC</h3><span class="kind k-journal">journal</span></header>
+<p class="skill"><span>Skill</span> Log Facts, Feelings, Thoughts and Conclusions after every session or drill set</p>
+<div class="concept"><p>The Assess step is a daily after-action review. Facts come first so that feelings and thoughts have something to stand on; conclusions close the loop into tomorrow&#x27;s plan. Entries stay on this PC.</p></div>
+<p class="terms"><span>Terms</span> <span class="term" title="The rational sniper: quiet observation, self-knowledge, patience without a deadline, awareness without judgement. The stance the method asks for at the screen.">owl</span></p>
+<div class="tryit"><span>Try it</span><p>Write one entry for the drill set you just ran.</p></div>
+<div class="check"><div class="ctop"><span class="clab">Check</span><span class="ckind">journal</span></div><div class="crow"><span>Student</span>Writes FFTC</div><div class="crow"><span>Engine marks</span>Nothing. Saved locally.</div><div class="crow"><span>Parameters</span><code>fields: facts, feelings, thoughts, conclusions</code></div></div>
+</article>
+<article class="lesson" id="l5.4">
+<header><span class="lid">5.4</span><h3>Zero State and Operation FIG</h3><span class="kind k-reflect">reflect</span></header>
+<p class="skill"><span>Skill</span> Arrive at the screen centred, and leave the last trade behind you</p>
+<p class="terms"><span>Terms</span> <span class="term" title="The rational sniper: quiet observation, self-knowledge, patience without a deadline, awareness without judgement. The stance the method asks for at the screen.">owl</span></p>
+<div class="body"><h3>Zero State and Operation FIG</h3>
+<p>Zero State is the baseline you trade from: unhurried, cleared of anxiety and of magical thinking. The Owl is the reminder. The method holds that execution is decoupled from personal profit and loss, and Zero State is what makes that possible in a body wired for fight or flight.</p>
+<p>Operation FIG is the daily boundary routine that gets you there. Three lines, spoken or written, before the first chart opens.</p>
+<p><strong>Forgiveness.</strong> Release yesterday&#x27;s losses and mistakes. They were data, and the data has been logged.</p>
+<p><strong>Intention.</strong> Set today&#x27;s execution identity in one sentence. &quot;I am the operator who follows the frame.&quot;</p>
+<p><strong>Gratitude.</strong> Frame market feedback as information you were given, not a verdict on you.</p>
+<h4>The Owl meditation</h4>
+<p>A structured visualisation the Owl Group uses to arrive at Zero State. Read it slowly, or record it in your own voice. Two to five minutes. The app plays no audio and keeps no timer.</p>
+<p>1. Sit where you trade. Feet flat, hands still. Breathe out longer than you breathe in, three times. 2. Picture the Owl on a branch above a clearing at dusk. It is not hunting yet. It is watching. 3. Notice what the Owl is not doing. It is not hurrying. It is not hoping. It is not replaying the last hunt. 4. Bring one thing from yesterday&#x27;s session to the clearing and set it down. A loss, a missed frame, a rule broken. Look at it as data. Leave it there. 5. Say today&#x27;s intention once, as the Owl would hear it: short, in the present tense, about execution and not about outcome. 6. Let the clearing go dark. Open your eyes to the screen with the Owl&#x27;s eyes: quiet, patient, non-judging.</p>
+<p>Return to step 1 at any point in the session when you notice the Monkey mind reacting to a bar.</p>
+<p>This lesson has no chart and no check, and the app does not invent one. Mark it done when you have run FIG once, today.</p></div>
+</article></section>
+<section class="unit"><h2><span>Reference</span>Owl readings</h2>
+<div class="notice">A method owns the reading, never the definition. The rule and formula for
+each term come from the platform vocabulary; the reading below is the Owl Group's.</div>
+<dl class="gloss"><div class="g"><dt>tortoise</dt><dd>The long-perspective trader who takes shelter in bear markets and stays out of the crowd&#x27;s exuberance. Survive, then compound.<span class="gstep">taught at 1.1</span></dd></div><div class="g"><dt>owl</dt><dd>The rational sniper: quiet observation, self-knowledge, patience without a deadline, awareness without judgement. The stance the method asks for at the screen.<span class="gstep">taught at 1.1</span></dd></div><div class="g"><dt>critical_state</dt><dd>A moment where an outsized directional move has room and the cost of finding out is small. Where the method looks first; not a call. Distinct from edge-vocab&#x27;s ccs, the Compound Critical State.<span class="gstep">taught at 1.3</span></dd></div><div class="g"><dt>rl</dt><dd>Four regression lines, four horizons on one chart. RL10 is the trader&#x27;s price, RL30 trend health, RL90 the institutional trend, RL270 long-term fair value. Their order against price is the stack.<span class="gstep">taught at 2.3</span></dd></div><div class="g"><dt>zbands</dt><dd>The River at one sigma, the Floodplain at two, the Z3 redline at three. About two closes in three live in the River; a close in the Floodplain is stretch or abnormal momentum.<span class="gstep">taught at 2.1</span></dd></div><div class="g"><dt>dragon</dt><dd>The noise boundary. Inside the skin and belly, movement is noise; RL10 leaving the band is the event every crossing pattern is built on.<span class="gstep">taught at 2.2</span></dd></div><div class="g"><dt>seasons</dt><dd>The regime read that comes before the setup read. Spring and Summer are rising, Fall and Winter falling; the same structure is read differently in each.<span class="gstep">taught at 2.4</span></dd></div><div class="g"><dt>macdrl</dt><dd>The oscillator the seasons are read from: the 10-bar mean of RL10 minus its 30-bar mean, with its sign and slope giving the four seasons.<span class="gstep">taught at 2.4</span></dd></div><div class="g"><dt>frog</dt><dd>One of the method&#x27;s risk boxes: the symbol&#x27;s own volatility unit from the 30 prior daily ranges. Foundations measures every distance in Frogs.<span class="gstep">taught at 3.1</span></dd></div><div class="g"><dt>r10</dt><dd>RangeStat is a second risk box, mean range plus one standard deviation over the same 30 sessions; R10 is a tenth of it, the spacing of the platform&#x27;s levels and ladders.<span class="gstep">taught at 3.1</span></dd></div><div class="g"><dt>1r</dt><dd>One risk box, the Frog in this course. The sizing unit, distinct from xR, the execution stop distance at a pivot. The method sizes in 1R and stops at xR.<span class="gstep">taught at 3.1</span></dd></div><div class="g"><dt>frame_the_trade</dt><dd>A falsifiable structure with no opinion: entry past yesterday&#x27;s extreme, stop past the other, the 10-day extreme as the third level, and a 2.0 reward-to-risk gate. Built both ways from the same bars.<span class="gstep">taught at 3.3</span></dd></div><div class="g"><dt>battle_drill</dt><dd>A rehearsed, zero-thinking response at a known R level. No Lose plus Dinner for Two ratchets the stop to +0.5R once the trade has paid 0.7R; the 2R drill locks or trails.<span class="gstep">taught at 3.4</span></dd></div><div class="g"><dt>yz</dt><dd>Yesterday&#x27;s high, low and close. Inside is chop; a close past either edge is new conviction. The smallest level the method uses.<span class="gstep">taught at 4.1</span></dd></div><div class="g"><dt>pdh</dt><dd>Yesterday&#x27;s high, the upper edge of the Yellow Zone and the level a long frame&#x27;s entry is placed a nickel above.<span class="gstep">taught at 4.1</span></dd></div><div class="g"><dt>pinch</dt><dd>Compression: the Z3 envelope squeezed to a small number of Frogs. A critical state to notice, never a call.<span class="gstep">taught at 4.2</span></dd></div><div class="g"><dt>psar</dt><dd>A mechanical trailing stop on price or on RL10. The flip is the moment the stop is hit and re-seeded on the other side; on RL10 it is the fifth point of the Owl setup.<span class="gstep">taught at 4.3</span></dd></div><div class="g"><dt>ssc</dt><dd>The Supported Spring Crossing, the first-generation recognition the Owl setup grew from: a spring off support with RL10 crossing the Dragon and RL30 turning.<span class="gstep">taught at 4.3</span></dd></div></dl></section>
+<footer>
+<table>
+<tr><td>Validator</td><td><span class="v ok">PASS</span> against <code>coursecraft-course-v1</code></td></tr>
+<tr><td>Warnings</td><td><ul style="margin:0;padding-left:16px"><li>readings: not in edge-vocab (propose them there first, SD-011): [&#x27;battle_drill&#x27;, &#x27;critical_state&#x27;, &#x27;pinch&#x27;, &#x27;psar&#x27;, &#x27;zbands&#x27;]</li></ul></td></tr>
+<tr><td>Bundle</td><td><code>C:\Edgenative\repos\ogt-coursecraft\courses\owl-foundations\bundle</code> at <code>a87d4bb</code></td></tr>
+<tr><td>Fixtures</td><td>computed with <code>indicators.js@05e841c53c411a376a0e130390290c49a448e6e3</code>, basis <code>adjusted</code></td></tr>
+<tr><td>Built</td><td>2026-09-23 17:18</td></tr>
+</table>
+<p>Edge S2 Desktop &middot; preview built by <code>tools/build_course_preview.py</code>.
+Nothing here is a forecast, a target or a recommendation.</p>
+</footer>
+</main></div></body></html>
