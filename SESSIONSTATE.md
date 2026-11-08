@@ -26,7 +26,7 @@
   `ogt-coursecraft/courses/owl-foundations/plan.md`. Not committed yet — push to publish on GitHub Pages.
 
 ## Recently shipped
-- _(nothing recorded yet)_
+- `[all]` 2026-11-07 PD-1082: `courses/owl-foundations-s2/build.py` drops a dead `io._open(...) if False` branch (F821, the one live finding in the workspace ruff sweep).
 
 ## Watch out
-- _(nothing recorded yet)_
+- `[all]` 2026-11-07 PD-1082: `courses/owl-foundations-s2/build.py` drops a dead `io._open(...) if False` branch (F821, the one live finding in the workspace ruff sweep).

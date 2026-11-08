@@ -33,7 +33,7 @@ def subtitle(l):
     return f"{k} · {human(c.get('expects'))}"
 
 def course_map(path):
-    c = yaml.safe_load(io._open(path)) if False else yaml.safe_load(open(path, encoding="utf-8"))
+    c = yaml.safe_load(open(path, encoding="utf-8"))
     units, lessons = c.get("units") or {}, c["lessons"]
     by_unit = {}
     for l in lessons:
