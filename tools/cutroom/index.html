@@ -122,6 +122,8 @@
   <button id="redoBtn" disabled title="Redo (Ctrl+Shift+Z)">↪ Redo</button>
   <button id="resetBtn" title="Discard local edits, reload the published plan">Reset to published</button>
   <button id="copyBtn">Copy plan JSON</button>
+  <select id="courseSel" style="display:none;background:var(--card2);color:var(--fg);border:1px solid var(--border);border-radius:5px;padding:.3rem .5rem;font:inherit;font-size:.82rem" title="Switch course (local app)"></select>
+  <button class="primary" id="saveBtn" style="display:none" title="Save edits to courses/&lt;course&gt;/plan.v2.edited.json (Ctrl+S)">Save to coursecraft</button>
   <button class="primary" id="exportBtn">Export plan JSON</button>
 </header>
 
@@ -148,8 +150,9 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const BUILD = 'cutroom-11f';
+const BUILD = 'cutroom-11g';
 console.log('[cutroom] build', BUILD);
+window.__edgeBuild = BUILD;
 
 // ---------- config / mode ----------
 const qs = new URLSearchParams(location.search);
@@ -645,6 +648,37 @@ function exportJson(download) {
   }
 }
 $('exportBtn').onclick = () => exportJson(true);
+
+// ---------- local app (scripts/cutroom_serve.py): save straight to the repo ----------
+let LOCAL_APP = false;
+async function saveToRepo() {
+  if (!LOCAL_APP) return;
+  plan.edited = new Date().toISOString();
+  plan.edited_with = BUILD;
+  try {
+    const r = await fetch(`/api/cutroom/${encodeURIComponent(COURSE)}/plan`, {
+      method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(plan, null, 2) });
+    const j = await r.json();
+    if (!r.ok) throw new Error(j.error || r.status);
+    persist();
+    toast(`Saved to ${j.saved}`);
+  } catch (e) { toast(`Save failed: ${e.message}`); }
+}
+$('saveBtn').onclick = saveToRepo;
+document.addEventListener('keydown', e => {
+  if ((e.metaKey||e.ctrlKey) && e.key.toLowerCase()==='s' && LOCAL_APP) { e.preventDefault(); saveToRepo(); }
+});
+fetch('/api/cutroom/ping', {cache:'no-store'}).then(r => r.ok ? r.json() : null).then(j => {
+  if (!j || !j.ok) return;
+  LOCAL_APP = true;
+  $('saveBtn').style.display = '';
+  const sel = $('courseSel');
+  sel.innerHTML = (j.cutrooms || []).map(c => `<option${c===COURSE?' selected':''}>${c}</option>`).join('');
+  sel.style.display = '';
+  sel.onchange = () => { const q = new URLSearchParams(location.search); q.set('course', sel.value); q.delete('media');
+    if ((j.local_media || []).includes(sel.value)) q.set('media', '/media/');
+    location.search = q.toString(); };
+}).catch(() => {});
 $('copyBtn').onclick = () => exportJson(false);
 $('resetBtn').onclick = () => {
   if (confirm('Discard ALL local edits and reload the published plan?')) {
