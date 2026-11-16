@@ -56,6 +56,28 @@
   .lanes .lv.a-sil { border-left:3px solid var(--faint); }
   .lanes .lv.o-lt { border-left:3px solid var(--overdub); } .lanes .lv.o-none { border-left:3px solid transparent; color:var(--faint); }
   .notebadge { margin-top:.4rem; font-size:.72rem; color:var(--amber); }
+  /* ---- storyboard (cutroom-18): one picture per included segment, in course order; the pictures come from
+     scripts/cutroom_board.py by convention (<course>/thumbs/<sid>.jpg, <course>/slides/<slide_id>.jpg) ---- */
+  #boardwrap { padding:.55rem 1.4rem .4rem; border-bottom:1px solid var(--border); background:var(--card); }
+  .boardhead { display:flex; align-items:center; gap:.6rem; font-size:.7rem; color:var(--faint); font-family:"SF Mono",Menlo,monospace; margin-bottom:.45rem; }
+  .boardhead .spacer { flex:1; }
+  #board { display:flex; gap:.45rem; overflow-x:auto; padding:0 0 .5rem; scrollbar-width:thin; }
+  #board.grid { flex-wrap:wrap; overflow:visible; }
+  .bt { flex:0 0 auto; width:148px; cursor:pointer; border-radius:5px; border:1px solid var(--border); background:var(--card); overflow:hidden; transition:border-color .15s; }
+  .bt:hover { border-color:var(--amber-dim); }
+  .bt.sel { border-color:var(--amber); box-shadow:0 0 0 1px var(--amber); }
+  .bt .bar { height:3px; }
+  .bt .pic { width:148px; height:83px; background:var(--card2); display:flex; align-items:center; justify-content:center; color:var(--faint); font-size:.62rem; font-family:"SF Mono",Menlo,monospace; text-align:center; padding:0 .4rem; }
+  .bt .pic img { width:100%; height:100%; object-fit:cover; display:block; }
+  .bt.type-slide { border-color:var(--slide); }
+  .bt.type-slide.sel { border-color:var(--amber); }
+  .bt .cap { display:flex; justify-content:space-between; gap:.3rem; padding:.18rem .35rem .22rem; font-size:.6rem; font-family:"SF Mono",Menlo,monospace; color:var(--faint); white-space:nowrap; overflow:hidden; }
+  .bt .cap b { color:var(--dim); font-weight:600; overflow:hidden; text-overflow:ellipsis; }
+  .bt.type-slide .cap b { color:var(--fg); }
+  .segcard.has-thumb { display:grid; grid-template-columns:1fr 128px; gap:.6rem; }
+  .segcard .thumb { grid-column:2; grid-row:1 / span 3; align-self:start; width:128px; height:72px; object-fit:cover; border-radius:4px; border:1px solid var(--border); background:var(--card2); margin-top:.1rem; }
+  .segcard.type-slide-card .thumb { border-color:var(--slide); }
+  .slideview { width:100%; aspect-ratio:16/9; display:block; border-radius:6px; background:#000; border:1px solid var(--border); }
 
   /* ---- inspector ---- */
   #inspector { border-left:1px solid var(--border); padding:1.1rem 1.2rem 3rem; position:sticky; top:56px; height:calc(100vh - 56px); overflow-y:auto; }
@@ -155,6 +177,12 @@
   <button class="primary" id="exportBtn">Export plan JSON</button>
 </header>
 
+<section id="boardwrap" style="display:none">
+  <div class="boardhead"><b>STORYBOARD</b> <span id="boardmeta"></span> <span class="spacer"></span>
+    <button class="small" id="boardGrid" title="Show every picture at once">Show all</button></div>
+  <div id="board" title="The course as it plays: one picture per included segment (slide card, animation, Ken's screen). Click to select."></div>
+</section>
+
 <main>
   <div id="timeline">
     <div class="lane-legend">
@@ -178,7 +206,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const BUILD = 'cutroom-17';
+const BUILD = 'cutroom-18';
 console.log('[cutroom] build', BUILD);
 window.__edgeBuild = BUILD;
 
@@ -338,17 +366,52 @@ function laneModel(s) {
   };
 }
 
+// cutroom-18: pictures by convention (scripts/cutroom_board.py); an <img> that is not there removes itself
+const THUMBS = {};   // sid -> true|false once known
+function thumbUrl(s) { return `${COURSE}/thumbs/${s.id}.jpg?r=${plan.revision || 0}`; }
+function slideUrl(s) { return `${COURSE}/slides/${s.slide_id}.jpg?r=${plan.revision || 0}`; }
+function hasThumb(s) { return THUMBS[s.id] !== false && (s.type === 'slide' || s.type === 'overdub' || s.type === 'explainer' || s.type === 'cut'); }
+function thumbImg(s, cls) {
+  if (!hasThumb(s)) return '';
+  return `<img class="${cls}" src="${thumbUrl(s)}" alt="" loading="lazy" onerror="THUMBS['${s.id}']=false; this.closest('.bt') ? (this.parentNode.textContent='${s.type === 'cut' ? "Ken's screen" : s.type}') : (this.parentNode.classList.remove('has-thumb'), this.remove())">`;
+}
+function renderBoard() {
+  const b = $('board'); b.innerHTML = '';
+  const inc = plan.segments.filter(s => s.include);
+  $('boardwrap').style.display = inc.length ? 'block' : 'none';
+  $('boardmeta').textContent = `· ${inc.length} segments · ${inc.filter(s=>s.type==='slide').length} slide cards · est ${fmt(inc.reduce((a,s)=>a+segDur(s),0))}`;
+  let t = 0;
+  plan.segments.forEach((s, i) => {
+    if (!s.include) return;
+    const el = document.createElement('div');
+    el.className = `bt type-${s.type}` + (i===selIdx?' sel':'');
+    const pic = thumbImg(s, '') || (s.type === 'cut' ? "Ken's screen" : s.type);
+    el.innerHTML = `<div class="bar" style="background:var(--${s.type === 'outcome' ? 'explainer' : s.type})"></div>
+      <div class="pic">${pic}</div>
+      <div class="cap"><b>${s.type === 'slide' ? 'SLIDE · ' + s.slide_id : s.id}</b><span>${fmt(t)}</span></div>`;
+    el.title = `${s.label} · ${segDur(s).toFixed(1)}s`;
+    el.onclick = () => { select(i); const c = document.querySelectorAll('#segs .seg')[i]; if (c) c.scrollIntoView({block:'center', behavior:'smooth'}); };
+    b.appendChild(el);
+    t += segDur(s);
+  });
+  const sel = b.querySelector('.bt.sel'); if (sel && !b.classList.contains('grid')) sel.scrollIntoView({inline:'center', block:'nearest'});
+}
+$('boardGrid').onclick = () => { const b = $('board'); b.classList.toggle('grid'); $('boardGrid').textContent = b.classList.contains('grid') ? 'Show as strip' : 'Show all'; };
+
 function render() {
   renderMeta();
+  renderBoard();
   const wrap = $('segs'); wrap.innerHTML = '';
   let t = 0;
   plan.segments.forEach((s, i) => {
     const el = document.createElement('div');
     el.className = `seg type-${s.type}` + (i===selIdx?' sel':'') + (s.include?'':' excluded');
     const lanes = laneModel(s);
+    const th = thumbImg(s, 'thumb');
     el.innerHTML = `
       <div class="tc">${s.include ? fmt(t) : '—'}</div>
-      <div class="segcard">
+      <div class="segcard${th ? ' has-thumb' : ''}${s.type === 'slide' ? ' type-slide-card' : ''}">
+        ${th}
         <div class="seghead">
           <span class="type-pill">${s.type.toUpperCase()}</span>
           <span class="seglabel">${s.label}</span>
@@ -485,6 +548,10 @@ function select(i) {
   box.innerHTML = `
     <h2><span class="type-pill" style="background:var(--${s.type})">${s.type.toUpperCase()}</span> &nbsp;${s.label}</h2>
     ${s.why ? `<div class="why">${s.why}</div>` : ''}
+    ${s.type === 'slide' ? `
+      <div class="viewer">
+        <img class="slideview" src="${slideUrl(s)}" alt="slide ${s.slide_id}" onerror="this.outerHTML='<div class=\'slideview\' style=\'display:flex;align-items:center;justify-content:center;color:var(--faint);font-size:.8rem\'>no card rendered yet for slide ${s.slide_id} (scripts/render_slides.py, then scripts/cutroom_board.py)</div>'">
+      </div>` : ''}
     ${hasMedia ? `
       <div class="viewer">
         <div class="vstack" id="vstack">
