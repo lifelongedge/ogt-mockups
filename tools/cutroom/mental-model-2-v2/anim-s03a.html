@@ -9,26 +9,31 @@
   html, body { margin:0; background:var(--bg); overflow:hidden; }
   #stage { position:relative; width:1280px; height:720px; background:var(--bg); color:var(--fg);
            font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; overflow:hidden; }
-  #cap { position:absolute; left:60px; right:60px; top:30px; font-size:32px; font-weight:600; letter-spacing:-.01em; line-height:1.2; }
+  #cap { position:absolute; left:60px; right:60px; top:30px; font-size:32px; font-weight:600; letter-spacing:-.01em; line-height:1.15; }
   #cap em { font-style:normal; color:var(--accent); }
   #sub { position:absolute; left:60px; width:1160px; top:648px; font-size:20px; color:var(--muted); line-height:1.4; }
-  #scene { position:absolute; left:60px; top:100px; width:1160px; height:530px; border:1px solid var(--border);
+  #scene { position:absolute; left:60px; top:112px; width:1160px; height:518px; border:1px solid var(--border);
            border-radius:10px; background:var(--card); overflow:hidden; }
   #svg { position:absolute; inset:0; }
   #fade { position:absolute; inset:0; background:var(--bg); pointer-events:none; opacity:0; }
+  /* the picture-in-picture corner: build_v2 composites Ken's camera tile here (PIP_W/X/Y); the cutroom shows this placeholder */
+  #pip { position:absolute; left:950px; top:22px; width:300px; height:169px; border:1px dashed rgba(56,225,255,0.35); border-radius:4px;
+         display:none; color:var(--muted); font-size:13px; text-align:center; line-height:169px; }
+  .pip #pip { display:block; } .pip #cap { right:360px; font-size:29px; }
   text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; fill:#E1EEF5; }
   .mono { font-family:ui-monospace,Menlo,Consolas,monospace; }
 </style>
 </head>
 <body>
-<div id="stage">
+<div id="stage" class="pip">
   <div id="cap"></div>
+  <div id="pip">Ken on camera, composited at render</div>
   <div id="scene"><svg id="svg" width="1160" height="530" viewBox="0 0 1160 530"></svg></div>
   <div id="sub"></div>
   <div id="fade"></div>
 </div>
 <script>
-const BUILD = 's03a-1';
+const BUILD = 's03a-2';
 console.log('[s03a] build', BUILD);
 // Overdub twin of s03: Ken's audio t4n 351.0→420.0; t is seconds after the in-point.
 // Beat times read from the VTT cues on 2026-11-16 (tools/cutroom/mental-model-2-v2/transcript-t4n.json).
@@ -73,14 +78,14 @@ function draw(t){
   // procedures: three rails appear at 10 s
   if (t>=10){ const items=['procedures','processes','rational mind']; s += list(t,10,1.6,items,420,160,{sz:22,c:FG}); for(let i=0;i<3;i++){ const o=op(t,10+i*1.6,.4); s += line(420,172+i*34,700,172+i*34,{s:BRD,sw:1,o}); } }
   // the brick line: raw material -> workspace -> procedure -> one brick -> pallet -> wall
-  if (t>=26.9){ s += list(t,26.9,3.5,['raw material','a safe workspace','follow the procedures'],120,440,{sz:18,c:MUT,lh:26}); }
+  if (t>=26.9 && t<53.7){ s += list(t,26.9,3.5,['raw material','a safe workspace','follow the procedures'],120,440,{sz:18,c:MUT,lh:26}); }
   if (t>=43.2){ const u=pr(t,43.2,.8); s += brick(560-44, 300-19, u); s += txt(560,350,'one brick',{a:'middle',c:ACC,sz:18,o:u}); }
   if (t>=49.6){ // the pallet with bricks stacking
     const n=Math.min(6,1+Math.floor((t-49.6)/0.7)); for(let i=0;i<n;i++) s += brick(760+(i%3)*92, 330-Math.floor(i/3)*42, 1); s += line(750,372,1040,372,{s:MUT,sw:4}); s += txt(895,398,'the pallet',{a:'middle',c:MUT,sz:14}); }
   if (t>=53.7){ // the wall rises on the right
-    const rows=Math.min(5,Math.floor((t-53.7)/1.1)+1); for(let r=0;r<rows;r++) for(let c=0;c<3;c++) s += brick(760+c*92+(r%2?46:0)-(r%2?0:0), 200-r*40, op(t,53.7+r*1.1,.4));
-    if (t>=59) { s += txt(1120,150,'weather',{a:'middle',c:MUT,sz:14,o:op(t,59,.5)}); s += txt(1120,172,'the wolf',{a:'middle',c:MUT,sz:14,o:op(t,60,.5)}); }
-    if (t>=63.8) s += txt(690,150,'grain, stored',{a:'middle',c:OK,sz:16,o:op(t,63.8,.5)}); }
+    const rows=Math.min(5,Math.floor((t-53.7)/1.1)+1); for(let r=0;r<rows;r++) for(let c=0;c<3;c++) s += brick(130+c*92+(r%2?46:0), 360-r*40, op(t,53.7+r*1.1,.4));
+    if (t>=59) { s += txt(490,300,'weather',{a:'middle',c:MUT,sz:14,o:op(t,59,.5)}); s += txt(490,322,'the wolf',{a:'middle',c:MUT,sz:14,o:op(t,60,.5)}); }
+    if (t>=63.8) s += txt(270,140,'grain, stored',{a:'middle',c:OK,sz:16,o:op(t,63.8,.5)}); }
   return s;
 }
 

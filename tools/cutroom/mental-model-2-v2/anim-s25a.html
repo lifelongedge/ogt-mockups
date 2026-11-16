@@ -9,26 +9,31 @@
   html, body { margin:0; background:var(--bg); overflow:hidden; }
   #stage { position:relative; width:1280px; height:720px; background:var(--bg); color:var(--fg);
            font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; overflow:hidden; }
-  #cap { position:absolute; left:60px; right:60px; top:30px; font-size:32px; font-weight:600; letter-spacing:-.01em; line-height:1.2; }
+  #cap { position:absolute; left:60px; right:60px; top:30px; font-size:32px; font-weight:600; letter-spacing:-.01em; line-height:1.15; }
   #cap em { font-style:normal; color:var(--accent); }
   #sub { position:absolute; left:60px; width:1160px; top:648px; font-size:20px; color:var(--muted); line-height:1.4; }
-  #scene { position:absolute; left:60px; top:100px; width:1160px; height:530px; border:1px solid var(--border);
+  #scene { position:absolute; left:60px; top:112px; width:1160px; height:518px; border:1px solid var(--border);
            border-radius:10px; background:var(--card); overflow:hidden; }
   #svg { position:absolute; inset:0; }
   #fade { position:absolute; inset:0; background:var(--bg); pointer-events:none; opacity:0; }
+  /* the picture-in-picture corner: build_v2 composites Ken's camera tile here (PIP_W/X/Y); the cutroom shows this placeholder */
+  #pip { position:absolute; left:950px; top:22px; width:300px; height:169px; border:1px dashed rgba(56,225,255,0.35); border-radius:4px;
+         display:none; color:var(--muted); font-size:13px; text-align:center; line-height:169px; }
+  .pip #pip { display:block; } .pip #cap { right:360px; font-size:29px; }
   text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; fill:#E1EEF5; }
   .mono { font-family:ui-monospace,Menlo,Consolas,monospace; }
 </style>
 </head>
 <body>
-<div id="stage">
+<div id="stage" class="">
   <div id="cap"></div>
+  <div id="pip">Ken on camera, composited at render</div>
   <div id="scene"><svg id="svg" width="1160" height="530" viewBox="0 0 1160 530"></svg></div>
   <div id="sub"></div>
   <div id="fade"></div>
 </div>
 <script>
-const BUILD = 's25a-1';
+const BUILD = 's25a-2';
 console.log('[s25a] build', BUILD);
 // Overdub twin of s25: Ken's audio muw 5640.0→5760.0; t is seconds after the in-point.
 // Beat times read from the VTT cues on 2026-11-16 (tools/cutroom/mental-model-2-v2/transcript-muw.json).
