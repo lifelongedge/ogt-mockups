@@ -1,7 +1,7 @@
 {
   "schema": "coursecraft-plan-v2",
   "course": "s2-intro",
-  "revision": 8,
+  "revision": 9,
   "revised": "2026-11-15",
   "status": "TEST — the owner's takes on s02, s04–s07; Ava on s01 (new opening, to be recorded) and s03 (take removed by the owner); 0.2.69 captures gone with the old opening.",
   "title": "Edge S2 Desktop: where to begin",
@@ -81,7 +81,7 @@
         "s6": "Market takes whatever prints",
         "s7": "Every entry is a bracket",
         "s8": "Drag the target anywhere",
-        "s9": "The stop moves a quarter R",
+        "s9": "once an order is placed",
         "s10": "It never loosens"
       }
     },
