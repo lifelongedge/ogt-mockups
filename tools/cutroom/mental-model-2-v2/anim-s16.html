@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>s16 · three timeframes, one meta-system</title>
+<style>
+  :root { --bg:#030507; --fg:#E1EEF5; --muted:#8fa3ad; --border:rgba(56,225,255,0.14); --accent:#F2D06B;
+          --ok:#4ade80; --dn:#f87171; --card:#0a1016; --blue:#7baad4; }
+  html, body { margin:0; background:var(--bg); overflow:hidden; }
+  #stage { position:relative; width:1280px; height:720px; background:var(--bg); color:var(--fg);
+           font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; overflow:hidden; }
+  #cap { position:absolute; left:60px; right:60px; top:30px; font-size:32px; font-weight:600; letter-spacing:-.01em; line-height:1.15; }
+  #cap em { font-style:normal; color:var(--accent); }
+  #sub { position:absolute; left:60px; width:1160px; top:648px; font-size:20px; color:var(--muted); line-height:1.4; }
+  #scene { position:absolute; left:60px; top:112px; width:1160px; height:518px; border:1px solid var(--border);
+           border-radius:10px; background:var(--card); overflow:hidden; }
+  #svg { position:absolute; inset:0; }
+  #fade { position:absolute; inset:0; background:var(--bg); pointer-events:none; opacity:0; }
+  /* the picture-in-picture corner: build_v2 composites Ken's camera tile here (PIP_W/X/Y); the cutroom shows this placeholder */
+  #pip { position:absolute; left:950px; top:22px; width:300px; height:169px; border:1px dashed rgba(56,225,255,0.35); border-radius:4px;
+         display:none; color:var(--muted); font-size:13px; text-align:center; line-height:169px; }
+  .pip #pip { display:block; } .pip #cap { right:360px; font-size:29px; }
+  text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; fill:#E1EEF5; }
+  .mono { font-family:ui-monospace,Menlo,Consolas,monospace; }
+</style>
+</head>
+<body>
+<div id="stage" class="">
+  <div id="cap"></div>
+  <div id="pip">Ken on camera, composited at render</div>
+  <div id="scene"><svg id="svg" width="1160" height="530" viewBox="0 0 1160 530"></svg></div>
+  <div id="sub"></div>
+  <div id="fade"></div>
+</div>
+<script>
+const BUILD = 's16-2';
+console.log('[s16] build', BUILD);
+// Overdub twin of s16: Ken's audio yrq 1040.0→1340.0; t is seconds after the in-point.
+// Beat times read from the VTT cues on 2026-11-16 (tools/cutroom/mental-model-2-v2/transcript-yrq.json).
+window.ANIM_DURATION = 300.0;
+
+const ACC='#F2D06B', FG='#E1EEF5', MUT='#8fa3ad', OK='#4ade80', DN='#f87171', BLUE='#7baad4', BRD='rgba(56,225,255,.22)', CARD='#0a1016';
+const W=1160, H=530;
+const $ = id => document.getElementById(id);
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const ease=u=>{u=clamp(u,0,1);return u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;};
+const lerp=(a,b,u)=>a+(b-a)*u;
+const pr=(t,t0,d)=>ease((t-t0)/(d||0.6));          // eased progress 0..1 from t0 over d seconds
+const on=(t,t0)=>t>=t0;
+const op=(t,t0,d)=>clamp((t-t0)/(d||0.5),0,1);      // linear opacity ramp
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const txt=(x,y,s,o={})=>`<text x="${x}" y="${y}" font-size="${o.sz||20}" fill="${o.c||FG}" opacity="${o.o==null?1:o.o}" text-anchor="${o.a||'start'}" font-weight="${o.w||400}" class="${o.cls||''}" ${o.extra||''}>${esc(s)}</text>`;
+const rect=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.r==null?6:o.r}" fill="${o.f||'none'}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}" ${o.extra||''}/>`;
+const circ=(x,y,r,o={})=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${o.f||FG}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}"/>`;
+const line=(x1,y1,x2,y2,o={})=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${o.s||MUT}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" ${o.dash?`stroke-dasharray="${o.dash}"`:''} stroke-linecap="round"/>`;
+const path=(d,o={})=>`<path d="${d}" fill="${o.f||'none'}" stroke="${o.s||FG}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" stroke-linecap="round" stroke-linejoin="round" ${o.dash?`stroke-dasharray="${o.dash}"`:''}/>`;
+const arrow=(x1,y1,x2,y2,o={})=>{const a=Math.atan2(y2-y1,x2-x1),h=10;return line(x1,y1,x2,y2,o)+path(`M${x2} ${y2} L${x2-h*Math.cos(a-0.5)} ${y2-h*Math.sin(a-0.5)} M${x2} ${y2} L${x2-h*Math.cos(a+0.5)} ${y2-h*Math.sin(a+0.5)}`,{s:o.s||MUT,sw:o.sw||2,o:o.o});};
+// a labelled box that grows in from t0
+const box=(t,t0,x,y,w,h,label,o={})=>{const u=pr(t,t0,0.5);if(u<=0)return '';const ww=w*u,hh=h;return rect(x+(w-ww)/2,y,ww,hh,{s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',sw:o.sw||1.5,o:u})+(u>.6?txt(x+w/2,y+h/2+(o.sz||20)/3,label,{a:'middle',sz:o.sz||20,c:o.c||FG,o:op(t,t0+.3,.3),w:o.w||500}):'');};
+// deterministic pseudo-random
+function rng(seed){let s=seed*9301+49297;return()=>{s=(s*9301+49297)%233280;return s/233280;};}
+// a herd of dots in a region; drift is a slow deterministic wander
+function herd(n,seed,x,y,w,h){const r=rng(seed);const pts=[];for(let i=0;i<n;i++)pts.push({x:x+r()*w,y:y+r()*h,p:r()*6.28,q:r()*6.28});return pts;}
+const wander=(p,t,amp)=>[p.x+Math.sin(t*0.9+p.p)*amp,p.y+Math.cos(t*0.7+p.q)*amp];
+// typewriter: the first k chars of s by time
+const type=(s,t,t0,cps)=>s.slice(0,Math.max(0,Math.floor((t-t0)*(cps||28))));
+// a list that reveals one row per step seconds from t0
+function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
+
+const BEATS = [[0.4, "The bowl maker: do it every day, slowly improve", "Through repetition, learning and craftsmanship, then other kinds of bowls."], [19.6, "Map craftsmanship and standard work to trading: <em>three time frames</em>", ""], [31.8, "Swing trading: positions held 2 to 10 days", "A short-term price anomaly, a momentary imbalance between buyers and sellers, then a new level."], [64.7, "Position trading: two weeks and longer, out to a year, three, five", ""], [74.6, "In each time dimension the kinds of systems I need are different", "Some chart patterns look the same, but the time frame is different."], [91.8, "Day trading: statistically based patterns, pure statistics and math", "It happens so fast I need the power and speed of math."], [108.7, "Position trading: long-term momentum and inertia", "Bodies in motion stay in motion. Leaders lead month after month, until they don't. A wide stop."], [128.9, "Swing trading: critical states and price anomalies that get vigorously adjusted", "Scenario-based trading."], [145.2, "Each time frame is its own system", "And each has information useful to the others."], [163.3, "A position target leading the market has swing patterns in it", "And that leads to intraday trades: the lowest-risk intraday trade you can find."], [197.8, "All those other time frames working in <em>mutual support</em>", ""], [202.9, "Core and turbo trading leverages the intersection between the frames", "Ideas from one, effective in the other. Hedge it, double up."], [224.2, "A <em>meta system</em>: standing back and looking at all three", "Asset allocation, trade size, correlation, overall risk."], [253.7, "Systems have systems. We call that a meta system.", ""], [259.6, "In the meta system I am also managing my own psychology", "The constant feature in all of those systems is me, the trader."], [275.4, "A system to develop new skills, manage emotions, use peer review", "A board of directors to help me run the business as a business."], [293.1, "All of these systems together, in a larger meta system", ""]];
+
+function row(i){ return 120+i*120; }
+function chart(x,y,w,h,seed,amp){ let d=''; const r=rng(seed); let v=h/2; for(let k=0;k<=36;k++){ v += (r()-0.5)*amp; v=clamp(v,8,h-8); d+=(k?'L':'M')+(x+k*(w/36)).toFixed(1)+' '+(y+v).toFixed(1)+' '; } return d; }
+function draw(t){
+  let s='';
+  if (t<19.6){ // the bowl, briefly
+    const o=1-op(t,17,2); let d=''; for(let k=0;k<=40;k++){ const a=Math.PI*k/40; d+=(k?'L':'M')+(580+Math.cos(Math.PI-a)*140).toFixed(1)+' '+(260+Math.sin(Math.PI-a)*80).toFixed(1)+' '; } s += path(d,{s:ACC,sw:3,o}); s += line(440,260,720,260,{s:ACC,sw:2,o}); s += txt(580,380,'every day · slowly improve · then other bowls',{a:'middle',c:MUT,sz:16,o:op(t,6.5,.5)*o}); }
+  // three rows: day / swing / position
+  const rows=[['day',25.0,'statistics and math',91.8,3,22],['swing',31.8,'critical states, price anomalies',128.9,7,14],['position',64.7,'momentum and inertia, a wide stop',108.7,11,8]];
+  const meta = t>=224.2 ? pr(t,224.2,1.5) : 0;
+  rows.forEach((r,i)=>{ const o=op(t,r[1],.6); if(o<=0) return; const y=row(i); const x=160+40*meta, w=560-80*meta;
+    s += rect(x,y,w,90,{s:BRD,f:'rgba(255,255,255,.02)',o}); s += path(chart(x+12,y+8,w-24,74,r[4],r[5]),{s:BLUE,sw:1.5,o});
+    s += txt(x-16,y+52,r[0],{a:'end',sz:20,c:FG,o,w:600});
+    const o2=op(t,r[3],.5); if (o2>0) s += txt(x+w+16,y+52,r[2],{sz:15,c:ACC,o:o2});
+    if (t>=145.2 && t<224.2) s += txt(x+w+16,y+30,'its own system',{sz:12,c:MUT,o:op(t,145.2,.5)}); });
+  if (t>=36.2 && t<64.7) s += txt(440,row(1)+112,'2 to 10 days',{a:'middle',c:MUT,sz:14,o:op(t,36.2,.5)});
+  if (t>=69.9 && t<91.8) s += txt(440,row(2)+112,'two weeks to five years',{a:'middle',c:MUT,sz:14,o:op(t,69.9,.5)});
+  // mutual support: arrows between rows
+  if (t>=151.9 && t<224.2){ const o=op(t,151.9,.6); s += arrow(760,row(2)+40,760,row(1)+100,{s:OK,sw:2,o:op(t,163.3,.5)}); s += arrow(790,row(1)+40,790,row(0)+100,{s:OK,sw:2,o:op(t,179,.5)}); s += txt(820,row(1)+70,'information flows between frames',{c:OK,sz:14,o:op(t,156.1,.5)});
+    if (t>=193.8) s += txt(820,row(0)+50,'lowest-risk intraday trade',{c:OK,sz:14,o:op(t,193.8,.5)});
+    if (t>=197.8) s += txt(820,row(1)+95,'mutual support',{c:OK,sz:18,w:600,o:op(t,197.8,.5)}); }
+  if (t>=202.9 && t<224.2){ const o=op(t,202.9,.6); s += rect(820,row(2)+10,260,60,{s:ACC,f:'rgba(242,208,107,.08)',o}); s += txt(950,row(2)+47,'core and turbo',{a:'middle',c:ACC,sz:16,o}); s += txt(950,row(2)+90,'hedge · double up',{a:'middle',c:MUT,sz:13,o:op(t,217.5,.5)}); }
+  // the meta system frame nests the rows
+  if (meta>0){ s += rect(130,90,780,400,{s:ACC,sw:2,o:meta,r:12,dash:'10 6'}); s += txt(150,80,'meta system',{c:ACC,sz:18,w:600,o:meta});
+    s += list(t,233.4,4,['asset allocation','size of each trade','correlation between positions','overall risk'],940,130,{sz:15,c:MUT,lh:24});
+    if (t>=253.7) s += txt(520,470,'systems have systems',{a:'middle',c:ACC,sz:20,w:600,o:op(t,253.7,.6)}); }
+  // the trader: the constant
+  if (t>=265.8){ const o=op(t,265.8,.8); s += circ(1000,330,22,{f:'none',s:FG,sw:2,o}); s += path('M970 400 C970 360 1030 360 1030 400',{s:FG,sw:2,o}); s += txt(1000,430,'the trader',{a:'middle',c:FG,sz:14,o}); s += txt(1000,448,'the constant',{a:'middle',c:MUT,sz:12,o:op(t,270.3,.5)}); }
+  if (t>=275.4){ s += list(t,275.4,3.5,['new skills','manage emotions','peer review'],940,250,{sz:15,c:OK,lh:22}); }
+  if (t>=289.1){ const o=op(t,289.1,.6); for(let i=0;i<6;i++){ const a=i/6*6.28; s += circ(1000+Math.cos(a)*60,330+Math.sin(a)*60,6,{f:ACC,o:o*0.8}); } s += txt(1000,500,'a board of directors',{a:'middle',c:ACC,sz:14,o}); }
+  return s;
+}
+
+window.renderFrame = function (t) {
+  t = clamp(t, 0, ANIM_DURATION);
+  let cap = '', sub = '';
+  for (const b of BEATS) if (t >= b[0]) { cap = b[1]; sub = b[2] || ''; }
+  $('cap').innerHTML = cap; $('sub').textContent = sub;
+  $('svg').innerHTML = draw(t);
+  const f = $('fade');
+  f.style.opacity = t < 0.5 ? 1 - t / 0.5 : (ANIM_DURATION - t < 0.6 ? 1 - (ANIM_DURATION - t) / 0.6 : 0);
+};
+renderFrame(0);
+</script>
+</body>
+</html>

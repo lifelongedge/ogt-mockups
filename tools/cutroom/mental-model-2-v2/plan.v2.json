@@ -1,14 +1,14 @@
 {
   "schema": "coursecraft-plan-v2",
   "course": "mental-model-2-v2",
-  "revision": 3,
+  "revision": 4,
   "revised": "2026-11-16",
-  "status": "DRAFT rev1 — mined 2026-11-16 from the full kenlong-transcripts corpus (all windows read in the VTTs; five sources, 2022-2024). Companion to Module 1 (mental-model-v2 rev2). Owner reviews in the cutroom; nothing built; sources not yet fetched on this box.",
+  "status": "BUILD rev4 (2026-11-16): the animated cut. Every twin on, its cut off (owner: 'make a complete cut with the animation and Ken in the upper right'); s11 and s16 animated; slide cards made. Sources fetched on stream; built with build_v2 under bounded-run.",
   "title": "The Mental Model II: The Brain, the System, the Loop (v2)",
   "topic_class": "psychology (cut-heavy; two overdubs on cohort-only screens; no outcome, never fake one)",
   "store_sku": "mental-model-2",
   "replaces": null,
-  "notes": "Why this course exists: the owner's Five Frames notebook produced a seven-cluster outline (2026-11-16); scanned against 352 sessions, five clusters are on tape and two (Munger's lattice, the Army acronyms) are not. This plan carries the on-tape ones in Ken's own windows: (1) the brain builds a model (t4NkztDo_tc, Ken alone, 16 min, 'it takes one slide'); (2) systems thinking (the YRQLU1w_77A interview: definition, feedback loop, structure+process, 80/20 science/art, the meta-system); (3) the chimp (Celia, rJg6jv24s20; Tom's line, B9HVuTtPVqM); (4) plan-prepare-execute-assess with the daily AAR (fbk3g-UCSkc) and the detect-decide-deliver-assess drill-down (muuwye8ozpQ). Not carried: Munger (0 hits in the corpus; the 'inversion' hits are yield curves), FFTC, D3A's 'battle drill with zero-thinking friction' wording, 'flow state' (7 passing mentions), law of large numbers (6 passing mentions). Off-tape clusters belong in the written companion under their own authors' names. Running time about 38 min with the three optional segments off (s07, s13, s30); the shortest honest cut is Ch1 + Ch4 at ~18 min. Speaker permission: Tom Hardison (s22) and Bill Scheidt's questions (s10, s12 lead-ins) are not Ken. Order can flip: Ch2 (systems) before Ch1 (brain) if the owner wants the market before the trader. Rev2 (2026-11-16): every cut sNN has an overdub twin sNNa with the same source window and an animation (anim-sNNa.html from anim_gen.py). Exactly one of each pair should be included; the twins ship include:false so the owner picks in the cutroom. The cut stays the default until a twin is chosen. Twins on the two on-camera sources (t4n, b9h) carry pip:true: Ken's tile is composited top-right at render (build_v2 PIP_*); the other four sources have no usable camera (yrq and fbk a 60 px thumbnail, rjg and muw none).",
+  "notes": "Why this course exists: the owner's Five Frames notebook produced a seven-cluster outline (2026-11-16); scanned against 352 sessions, five clusters are on tape and two (Munger's lattice, the Army acronyms) are not. This plan carries the on-tape ones in Ken's own windows: (1) the brain builds a model (t4NkztDo_tc, Ken alone, 16 min, 'it takes one slide'); (2) systems thinking (the YRQLU1w_77A interview: definition, feedback loop, structure+process, 80/20 science/art, the meta-system); (3) the chimp (Celia, rJg6jv24s20; Tom's line, B9HVuTtPVqM); (4) plan-prepare-execute-assess with the daily AAR (fbk3g-UCSkc) and the detect-decide-deliver-assess drill-down (muuwye8ozpQ). Not carried: Munger (0 hits in the corpus; the 'inversion' hits are yield curves), FFTC, D3A's 'battle drill with zero-thinking friction' wording, 'flow state' (7 passing mentions), law of large numbers (6 passing mentions). Off-tape clusters belong in the written companion under their own authors' names. Running time about 38 min with the three optional segments off (s07, s13, s30); the shortest honest cut is Ch1 + Ch4 at ~18 min. Speaker permission: Tom Hardison (s22) and Bill Scheidt's questions (s10, s12 lead-ins) are not Ken. Order can flip: Ch2 (systems) before Ch1 (brain) if the owner wants the market before the trader. Rev2 (2026-11-16): every cut sNN has an overdub twin sNNa with the same source window and an animation (anim-sNNa.html from anim_gen.py). Exactly one of each pair should be included; the twins ship include:false so the owner picks in the cutroom. The cut stays the default until a twin is chosen. Twins on the two on-camera sources (t4n, b9h) carry pip:true: Ken's tile is composited top-right at render (build_v2 PIP_*); the other four sources have no usable camera (yrq and fbk a 60 px thumbnail, rjg and muw none). Rev4: the owner chose the animated version for the whole module; the cuts stay in the plan, off, so the choice can be reversed per segment in the cutroom.",
   "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/mental-model-2-v2/",
   "sources": [
     {
@@ -73,7 +73,7 @@
     {
       "id": "s01",
       "type": "cut",
-      "include": true,
+      "include": false,
       "label": "Cold open: be of the herd, not in the herd",
       "source": "t4n",
       "in": 4.0,
@@ -87,7 +87,7 @@
       "source": "t4n",
       "in": 4.0,
       "out": 100.0,
-      "include": false,
+      "include": true,
       "label": "ALT animated: Cold open: be of the herd, not in the herd",
       "animation_brief": "Twin of s01: same Ken audio, drawn scene (be of the herd, not in the herd) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
       "status": "twin; pick this or s01 in the cutroom",
@@ -104,7 +104,7 @@
     {
       "id": "s03",
       "type": "cut",
-      "include": true,
+      "include": false,
       "label": "The persistent edge: procedures, and one brick",
       "source": "t4n",
       "in": 351.0,
@@ -118,7 +118,7 @@
       "source": "t4n",
       "in": 351.0,
       "out": 420.0,
-      "include": false,
+      "include": true,
       "label": "ALT animated: The persistent edge: procedures, and one brick",
       "animation_brief": "Twin of s03: same Ken audio, drawn scene (procedures, and one brick) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
       "status": "twin; pick this or s03 in the cutroom",
@@ -127,7 +127,7 @@
     {
       "id": "s04",
       "type": "cut",
-      "include": true,
+      "include": false,
       "label": "★ Your brain is a prediction machine; the mental model is the buffer",
       "source": "t4n",
       "in": 420.0,
@@ -141,7 +141,7 @@
       "source": "t4n",
       "in": 420.0,
       "out": 480.0,
-      "include": false,
+      "include": true,
       "label": "ALT animated: ★ Your brain is a prediction machine; the mental model is the buffer",
       "animation_brief": "Twin of s04: same Ken audio, drawn scene (your brain is a prediction machine) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
       "status": "twin; pick this or s04 in the cutroom",
@@ -150,7 +150,7 @@
     {
       "id": "s05",
       "type": "cut",
-      "include": true,
+      "include": false,
       "label": "Shadow, startle, the lion's roar: normal versus abnormal",
       "source": "t4n",
       "in": 480.0,
@@ -164,7 +164,7 @@
       "source": "t4n",
       "in": 480.0,
       "out": 600.0,
-      "include": false,
+      "include": true,
       "label": "ALT animated: Shadow, startle, the lion's roar: normal versus abnormal",
       "animation_brief": "Twin of s05: same Ken audio, drawn scene (normal versus abnormal) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
       "status": "twin; pick this or s05 in the cutroom",
@@ -173,7 +173,7 @@
     {
       "id": "s06",
       "type": "cut",
-      "include": true,
+      "include": false,
       "label": "Look broadly, stalk, localize: how a predator thinks",
       "source": "t4n",
       "in": 600.0,
@@ -187,7 +187,7 @@
       "source": "t4n",
       "in": 600.0,
       "out": 645.0,
-      "include": false,
+      "include": true,
       "label": "ALT animated: Look broadly, stalk, localize: how a predator thinks",
       "animation_brief": "Twin of s06: same Ken audio, drawn scene (how a predator thinks) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
       "status": "twin; pick this or s06 in the cutroom",
@@ -207,7 +207,7 @@
     {
       "id": "s08",
       "type": "cut",
-      "include": true,
+      "include": false,
       "label": "★ The wedge: a buffer between your decision and the herd brain",
       "source": "t4n",
       "in": 855.0,
@@ -221,7 +221,7 @@
       "source": "t4n",
       "in": 855.0,
       "out": 1005.0,
-      "include": false,
+      "include": true,
       "label": "ALT animated: ★ The wedge: a buffer between your decision and the herd brain",
       "animation_brief": "Twin of s08: same Ken audio, drawn scene (the wedge) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
       "status": "twin; pick this or s08 in the cutroom",
@@ -238,7 +238,7 @@
     {
       "id": "s10",
       "type": "cut",
-      "include": true,
+      "include": false,
       "label": "If you want a persistent edge in a dynamic market, be a systems thinker",
       "source": "yrq",
       "in": 95.0,
@@ -252,7 +252,7 @@
       "source": "yrq",
       "in": 95.0,
       "out": 160.0,
-      "include": false,
+      "include": true,
       "label": "ALT animated: If you want a persistent edge in a dynamic market, be a systems thinker",
       "animation_brief": "Twin of s10: same Ken audio, drawn scene (be a systems thinker) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
       "status": "twin; pick this or s10 in the cutroom"
@@ -272,7 +272,7 @@
     {
       "id": "s12",
       "type": "cut",
-      "include": true,
+      "include": false,
       "label": "Systems thinking: structure and process, in motion",
       "source": "yrq",
       "in": 400.0,
@@ -286,7 +286,7 @@
       "source": "yrq",
       "in": 400.0,
       "out": 562.0,
-      "include": false,
+      "include": true,
       "label": "ALT animated: Systems thinking: structure and process, in motion",
       "animation_brief": "Twin of s12: same Ken audio, drawn scene (structure and process, in motion) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
       "status": "twin; pick this or s12 in the cutroom"
@@ -305,7 +305,7 @@
     {
       "id": "s14",
       "type": "cut",
-      "include": true,
+      "include": false,
       "label": "★ Eighty percent science, twenty percent art: be strong where the herd is weak",
       "source": "yrq",
       "in": 718.0,
@@ -319,7 +319,7 @@
       "source": "yrq",
       "in": 718.0,
       "out": 845.0,
-      "include": false,
+      "include": true,
       "label": "ALT animated: ★ Eighty percent science, twenty percent art: be strong where the herd is weak",
       "animation_brief": "Twin of s14: same Ken audio, drawn scene (eighty percent science) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
       "status": "twin; pick this or s14 in the cutroom"
@@ -327,7 +327,7 @@
     {
       "id": "s15",
       "type": "cut",
-      "include": true,
+      "include": false,
       "label": "Strategy versus tactics; the bowl maker",
       "source": "yrq",
       "in": 961.0,
@@ -341,7 +341,7 @@
       "source": "yrq",
       "in": 961.0,
       "out": 1040.0,
-      "include": false,
+      "include": true,
       "label": "ALT animated: Strategy versus tactics; the bowl maker",
       "animation_brief": "Twin of s15: same Ken audio, drawn scene (the bowl maker) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
       "status": "twin; pick this or s15 in the cutroom"
@@ -361,7 +361,7 @@
     {
       "id": "s17",
       "type": "cut",
-      "include": true,
+      "include": false,
       "label": "Why it pays: one unified lens",
       "source": "yrq",
       "in": 1340.0,
@@ -375,7 +375,7 @@
       "source": "yrq",
       "in": 1340.0,
       "out": 1402.0,
-      "include": false,
+      "include": true,
       "label": "ALT animated: Why it pays: one unified lens",
       "animation_brief": "Twin of s17: same Ken audio, drawn scene (one unified lens) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
       "status": "twin; pick this or s17 in the cutroom"
@@ -391,7 +391,7 @@
     {
       "id": "s19",
       "type": "cut",
-      "include": true,
+      "include": false,
       "label": "Celia: inventory the feelings",
       "source": "rjg",
       "in": 643.0,
@@ -405,7 +405,7 @@
       "source": "rjg",
       "in": 643.0,
       "out": 702.0,
-      "include": false,
+      "include": true,
       "label": "ALT animated: Celia: inventory the feelings",
       "animation_brief": "Twin of s19: same Ken audio, drawn scene (Celia) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
       "status": "twin; pick this or s19 in the cutroom"
@@ -413,7 +413,7 @@
     {
       "id": "s20",
       "type": "cut",
-      "include": true,
+      "include": false,
       "label": "★ The inner trader as a calm chimpanzee; when she gives the warning, her job is done",
       "source": "rjg",
       "in": 702.0,
@@ -427,7 +427,7 @@
       "source": "rjg",
       "in": 702.0,
       "out": 782.0,
-      "include": false,
+      "include": true,
       "label": "ALT animated: ★ The inner trader as a calm chimpanzee; when she gives the warning, her job is done",
       "animation_brief": "Twin of s20: same Ken audio, drawn scene (the inner trader as a calm chimpanzee) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
       "status": "twin; pick this or s20 in the cutroom"
@@ -435,7 +435,7 @@
     {
       "id": "s21",
       "type": "cut",
-      "include": true,
+      "include": false,
       "label": "Map the process from impulse to action",
       "source": "rjg",
       "in": 782.0,
@@ -449,7 +449,7 @@
       "source": "rjg",
       "in": 782.0,
       "out": 880.0,
-      "include": false,
+      "include": true,
       "label": "ALT animated: Map the process from impulse to action",
       "animation_brief": "Twin of s21: same Ken audio, drawn scene (from impulse to action) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
       "status": "twin; pick this or s21 in the cutroom"
@@ -457,7 +457,7 @@
     {
       "id": "s22",
       "type": "cut",
-      "include": true,
+      "include": false,
       "label": "Tom: one idiot away from the chimp behind the wheel; trading is exactly like that",
       "source": "b9h",
       "in": 362.0,
@@ -471,7 +471,7 @@
       "source": "b9h",
       "in": 362.0,
       "out": 460.0,
-      "include": false,
+      "include": true,
       "label": "ALT animated: Tom: one idiot away from the chimp behind the wheel; trading is exactly like that",
       "animation_brief": "Twin of s22: same Ken audio, drawn scene (the chimp behind the wheel) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
       "status": "twin; pick this or s22 in the cutroom",
@@ -480,7 +480,7 @@
     {
       "id": "s23",
       "type": "cut",
-      "include": true,
+      "include": false,
       "label": "Turn it into a science project and the chimp is not agitated",
       "source": "rjg",
       "in": 2430.0,
@@ -494,7 +494,7 @@
       "source": "rjg",
       "in": 2430.0,
       "out": 2480.0,
-      "include": false,
+      "include": true,
       "label": "ALT animated: Turn it into a science project and the chimp is not agitated",
       "animation_brief": "Twin of s23: same Ken audio, drawn scene (the science project) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
       "status": "twin; pick this or s23 in the cutroom"
@@ -510,7 +510,7 @@
     {
       "id": "s25",
       "type": "cut",
-      "include": true,
+      "include": false,
       "label": "★ Detect, decide, deliver, assess: the drill-down of execute",
       "source": "muw",
       "in": 5640.0,
@@ -524,7 +524,7 @@
       "source": "muw",
       "in": 5640.0,
       "out": 5760.0,
-      "include": false,
+      "include": true,
       "label": "ALT animated: ★ Detect, decide, deliver, assess: the drill-down of execute",
       "animation_brief": "Twin of s25: same Ken audio, drawn scene (detect, decide, deliver, assess) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
       "status": "twin; pick this or s25 in the cutroom"
@@ -532,7 +532,7 @@
     {
       "id": "s26",
       "type": "cut",
-      "include": true,
+      "include": false,
       "label": "Sense and respond; a signal I wasn't prepared for, I don't take",
       "source": "muw",
       "in": 5760.0,
@@ -546,7 +546,7 @@
       "source": "muw",
       "in": 5760.0,
       "out": 5820.0,
-      "include": false,
+      "include": true,
       "label": "ALT animated: Sense and respond; a signal I wasn't prepared for, I don't take",
       "animation_brief": "Twin of s26: same Ken audio, drawn scene (sense and respond) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
       "status": "twin; pick this or s26 in the cutroom"
@@ -554,7 +554,7 @@
     {
       "id": "s27",
       "type": "cut",
-      "include": true,
+      "include": false,
       "label": "★ The daily after-action review: sustains, improves, actions",
       "source": "fbk",
       "in": 2433.0,
@@ -568,7 +568,7 @@
       "source": "fbk",
       "in": 2433.0,
       "out": 2551.0,
-      "include": false,
+      "include": true,
       "label": "ALT animated: ★ The daily after-action review: sustains, improves, actions",
       "animation_brief": "Twin of s27: same Ken audio, drawn scene (the daily after-action review) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
       "status": "twin; pick this or s27 in the cutroom"
@@ -576,7 +576,7 @@
     {
       "id": "s28",
       "type": "cut",
-      "include": true,
+      "include": false,
       "label": "Persistent problems to the top; tell your partner; put it in writing",
       "source": "fbk",
       "in": 2551.0,
@@ -590,7 +590,7 @@
       "source": "fbk",
       "in": 2551.0,
       "out": 2641.0,
-      "include": false,
+      "include": true,
       "label": "ALT animated: Persistent problems to the top; tell your partner; put it in writing",
       "animation_brief": "Twin of s28: same Ken audio, drawn scene (persistent problems to the top) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
       "status": "twin; pick this or s28 in the cutroom"
@@ -598,7 +598,7 @@
     {
       "id": "s29",
       "type": "cut",
-      "include": true,
+      "include": false,
       "label": "Then and only then: plan tomorrow, and sleep with a clear mind",
       "source": "fbk",
       "in": 2641.0,
@@ -612,7 +612,7 @@
       "source": "fbk",
       "in": 2641.0,
       "out": 2731.0,
-      "include": false,
+      "include": true,
       "label": "ALT animated: Then and only then: plan tomorrow, and sleep with a clear mind",
       "animation_brief": "Twin of s29: same Ken audio, drawn scene (then and only then) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
       "status": "twin; pick this or s29 in the cutroom"
