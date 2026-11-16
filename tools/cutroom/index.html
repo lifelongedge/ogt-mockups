@@ -77,6 +77,21 @@
   .segcard.has-thumb { display:grid; grid-template-columns:1fr 128px; gap:.6rem; }
   .segcard .thumb { grid-column:2; grid-row:1 / span 3; align-self:start; width:128px; height:72px; object-fit:cover; border-radius:4px; border:1px solid var(--border); background:var(--card2); margin-top:.1rem; }
   .segcard.type-slide-card .thumb { border-color:var(--slide); }
+  /* ---- the owner's text card (cutroom-19): a slide segment with `text` is drawn live from what is typed; the real
+     png comes from scripts/render_slides.py with the SAME values (TEXT_CARD_CSS there) ---- */
+  .cardwrap { width:100%; aspect-ratio:16/9; overflow:hidden; position:relative; background:#0e0e0c; border-radius:4px; }
+  .cardwrap.thumb { width:128px; height:72px; border:1px solid var(--slide); }
+  .card { position:absolute; left:0; top:0; width:1920px; height:1080px; transform-origin:0 0; background:#0e0e0c; color:#e8e6df;
+          display:flex; flex-direction:column; align-items:center; justify-content:center; padding:0 160px; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; }
+  .card .ck { font-size:34px; color:#d4a559; letter-spacing:.14em; text-transform:uppercase; margin-bottom:36px; text-align:center; }
+  .card .ct { font-family:Georgia,"Times New Roman",serif; font-weight:400; font-size:96px; line-height:1.15; max-width:1500px; text-align:center; }
+  .card .cb { font-size:44px; color:#9c978a; margin-top:40px; max-width:1400px; line-height:1.5; text-align:center; white-space:pre-wrap; }
+  .card .amber { color:#d4a559; }
+  .card .cbrand { position:absolute; bottom:44px; right:56px; font-size:26px; color:#5d594f; letter-spacing:.06em; }
+  .card .cbrand b { color:#8a6a35; font-weight:600; }
+  .card .ph { color:#5d594f; }
+  .cardedit { border:1px solid var(--amber-dim); border-radius:6px; padding:.6rem .7rem .2rem; margin:0 0 .85rem; background:var(--card); }
+  .cardedit .hint { font-size:.7rem; color:var(--faint); margin:-.3rem 0 .6rem; }
   .slideview { width:100%; aspect-ratio:16/9; display:block; border-radius:6px; background:#000; border:1px solid var(--border); }
 
   /* ---- inspector ---- */
@@ -206,7 +221,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const BUILD = 'cutroom-18';
+const BUILD = 'cutroom-19';
 console.log('[cutroom] build', BUILD);
 window.__edgeBuild = BUILD;
 
@@ -370,11 +385,39 @@ function laneModel(s) {
 const THUMBS = {};   // sid -> true|false once known
 function thumbUrl(s) { return `${COURSE}/thumbs/${s.id}.jpg?r=${plan.revision || 0}`; }
 function slideUrl(s) { return `${COURSE}/slides/${s.slide_id}.jpg?r=${plan.revision || 0}`; }
-function hasThumb(s) { return THUMBS[s.id] !== false && (s.type === 'slide' || s.type === 'overdub' || s.type === 'explainer' || s.type === 'cut'); }
+function hasThumb(s) { if (s.type === 'slide' && !s.include && !s.text) return false; return THUMBS[s.id] !== false && (s.type === 'slide' || s.type === 'overdub' || s.type === 'explainer' || s.type === 'cut'); }
 function thumbImg(s, cls) {
+  if (s.type === 'slide' && s.text) return `<div class="cardwrap ${cls}">${cardHtml(s.text)}</div>`;
   if (!hasThumb(s)) return '';
   return `<img class="${cls}" src="${thumbUrl(s)}" alt="" loading="lazy" onerror="THUMBS['${s.id}']=false; this.closest('.bt') ? (this.parentNode.textContent='${s.type === 'cut' ? "Ken's screen" : s.type}') : (this.parentNode.classList.remove('has-thumb'), this.remove())">`;
 }
+// cutroom-19: a slide the owner typed (segment.text = {kicker, title, body}); **word** turns amber
+function cardHtml(t) {
+  t = t || {};
+  const mark = x => escHtml(x || '').replace(/\*\*(.+?)\*\*/g, '<span class="amber">$1</span>');
+  return `<div class="card">${t.kicker ? `<p class="ck">${mark(t.kicker)}</p>` : ''}
+    <div class="ct">${t.title ? mark(t.title) : '<span class="ph">Your title</span>'}</div>
+    ${t.body ? `<p class="cb">${mark(t.body)}</p>` : '<p class="cb ph">The setup text for the next cut</p>'}
+    <div class="cbrand"><b>OWL</b> GROUP TRADING</div></div>`;
+}
+function fitCards() {
+  document.querySelectorAll('.cardwrap').forEach(w => { const c = w.querySelector('.card'); if (c) c.style.transform = `scale(${w.clientWidth / 1920})`; });
+}
+window.addEventListener('resize', fitCards);
+function nextCardIds() {
+  const n = plan.segments.filter(s => s.type === 'slide' && s.text).length + 1;
+  let k = n; while (plan.segments.some(s => s.id === `x${String(k).padStart(2,'0')}` || s.slide_id === `card-${String(k).padStart(2,'0')}`)) k++;
+  return { id: `x${String(k).padStart(2,'0')}`, slide_id: `card-${String(k).padStart(2,'0')}` };
+}
+function insertCardAfter(i) {
+  const ids = nextCardIds();
+  snapshot(`insert card ${ids.slide_id} after ${plan.segments[i].label}`);
+  plan.segments.splice(i + 1, 0, { id: ids.id, type: 'slide', include: true, label: 'Setup card', slide_id: ids.slide_id, duration: 8,
+    text: { kicker: '', title: '', body: '' }, status: 'owner card typed in the cutroom; the png is rendered by render_slides.py from this text' });
+  persist(); select(i + 1);
+  const f = $('cardTitle'); if (f) f.focus();
+}
+
 function renderBoard() {
   const b = $('board'); b.innerHTML = '';
   const inc = plan.segments.filter(s => s.include);
@@ -395,6 +438,7 @@ function renderBoard() {
     t += segDur(s);
   });
   const sel = b.querySelector('.bt.sel'); if (sel && !b.classList.contains('grid')) sel.scrollIntoView({inline:'center', block:'nearest'});
+  fitCards();
 }
 $('boardGrid').onclick = () => { const b = $('board'); b.classList.toggle('grid'); $('boardGrid').textContent = b.classList.contains('grid') ? 'Show as strip' : 'Show all'; };
 
@@ -428,6 +472,7 @@ function render() {
     wrap.appendChild(el);
     if (s.include) t += segDur(s);
   });
+  fitCards();
 }
 
 // ---------- animation overlay ----------
@@ -548,7 +593,16 @@ function select(i) {
   box.innerHTML = `
     <h2><span class="type-pill" style="background:var(--${s.type})">${s.type.toUpperCase()}</span> &nbsp;${s.label}</h2>
     ${s.why ? `<div class="why">${s.why}</div>` : ''}
-    ${s.type === 'slide' ? `
+    ${s.type === 'slide' && s.text ? `
+      <div class="viewer"><div class="cardwrap" id="cardPrev">${cardHtml(s.text)}</div></div>
+      <div class="cardedit">
+        <div class="field"><label>Kicker (small amber line above the title)</label><input type="text" id="cardKicker" value="${escHtml(s.text.kicker)}" placeholder="Setup · Chapter 2"></div>
+        <div class="field"><label>Title</label><input type="text" id="cardTitle" value="${escHtml(s.text.title)}" placeholder="What to listen for"></div>
+        <div class="field"><label>Body (new lines kept; **word** turns amber)</label><textarea id="cardBody" placeholder="Two or three lines that set up the next cut">${escHtml(s.text.body)}</textarea></div>
+        <div class="field"><label>Seconds on screen</label><input type="text" id="cardDur" value="${s.duration}" style="width:6rem"></div>
+        <div class="hint">Drawn live here, in the storyboard and on the card. The png the build uses is rendered from this text by coursecraft (render_slides.py) once the plan is saved or exported.</div>
+      </div>` : ''}
+    ${s.type === 'slide' && !s.text ? `
       <div class="viewer">
         <img class="slideview" src="${slideUrl(s)}" alt="slide ${s.slide_id}" onerror="this.outerHTML='<div class=\'slideview\' style=\'display:flex;align-items:center;justify-content:center;color:var(--faint);font-size:.8rem\'>no card rendered yet for slide ${s.slide_id} (scripts/render_slides.py, then scripts/cutroom_board.py)</div>'">
       </div>` : ''}
@@ -622,6 +676,7 @@ function select(i) {
       <textarea id="segNote">${s.note_to_coursecraft||''}</textarea></div>
     <div class="rowbtns">
       <button id="inclBtn">${s.include?'Exclude ✗':'Include ✓'}</button>
+      <button id="addCardBtn" title="Insert a slide after this segment and type its text">+ Card after</button>
       <button id="upBtn">↑ Move up</button>
       <button id="dnBtn">↓ Move down</button>
     </div>`;
@@ -684,6 +739,17 @@ function select(i) {
     if (s.type==='overdub' && !s.animation_brief) s.animation_brief = 'TODO: describe the animation that replaces his screen while his audio plays.';
     persist(); select(i);
   };
+  $('addCardBtn').onclick = () => insertCardAfter(i);
+  if (s.type === 'slide' && s.text) {
+    fitCards();
+    const live = () => { $('cardPrev').innerHTML = cardHtml(s.text); fitCards(); };
+    for (const [k, id] of [['kicker','cardKicker'], ['title','cardTitle'], ['body','cardBody']]) {
+      const f = $(id);
+      f.oninput = () => { s.text[k] = f.value; if (k === 'title') s.label = f.value ? `Card: ${f.value}` : 'Setup card'; live(); };
+      f.onchange = () => { snapshot(`card ${k}: ${s.slide_id}`); persist(); render(); };
+    }
+    $('cardDur').onchange = e => { snapshot(`card seconds: ${s.slide_id}`); s.duration = Math.max(1, parseFloat(e.target.value) || s.duration); e.target.value = s.duration; persist(); render(); };
+  }
   $('inclBtn').onclick = () => { snapshot(`${s.include?'exclude':'include'} ${s.label}`); s.include = !s.include; persist(); select(i); };
   $('upBtn').onclick = () => { if (i>0){ snapshot(`move up: ${s.label}`); [plan.segments[i-1],plan.segments[i]]=[plan.segments[i],plan.segments[i-1]]; selIdx=i-1; persist(); select(selIdx);} };
   $('dnBtn').onclick = () => { if (i<plan.segments.length-1){ snapshot(`move down: ${s.label}`); [plan.segments[i+1],plan.segments[i]]=[plan.segments[i],plan.segments[i+1]]; selIdx=i+1; persist(); select(selIdx);} };
