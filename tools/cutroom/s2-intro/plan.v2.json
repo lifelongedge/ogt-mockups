@@ -1,7 +1,7 @@
 {
   "schema": "coursecraft-plan-v2",
   "course": "s2-intro",
-  "revision": 6,
+  "revision": 7,
   "revised": "2026-11-15",
   "status": "TEST — stand-in voice (edge-tts Ava); the owner's takes (cutroom Voice panel → takes/) replace it. The opening (s01, a board over the 0.2.69 captures) was removed on 2026-11-15 on the owner's word; a new opening is to be built and inserted before s02 (board.yaml and inbox/s2-intro-standin.mp3 kept as material).",
   "title": "Edge S2 Desktop: where to begin",
@@ -78,9 +78,9 @@
         "s2": "When the entry fills",
         "s3": "The Stop panel on the right",
         "s4": "The stop moves a quarter R at a time",
-        "s5": "NL puts the stop at your fill",
-        "s6": "NLQR puts it a quarter R past the fill",
-        "s7": "A move is staged"
+        "s5": "NL means no lose",
+        "s6": "NLQR is a quarter R past the entry",
+        "s7": "plus dinner for two"
       }
     },
     {
@@ -103,7 +103,7 @@
         "s7": "Stop and reverse is one order",
         "s8": "It is a stop for twice the position",
         "s9": "Its fill closes the long",
-        "s10": "New orders rest at IB"
+        "s10": "new orders rested"
       }
     },
     {
