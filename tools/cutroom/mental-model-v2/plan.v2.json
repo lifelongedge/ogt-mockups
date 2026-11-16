@@ -1,446 +1,755 @@
 {
- "schema": "coursecraft-plan-v2",
- "course": "mental-model-v2",
- "revision": 2,
- "revised": "2026-11-16",
- "status": "DRAFT rev2 — coursecraft's proposed re-cut (owner 2026-11-16: 'rambles on for too long; the contents are not very good'). Every window re-read against the transcripts; four NEW windows, Ch1b and the outcome segment switched off (include:false, re-enable in the cutroom). Owner reviews in the cutroom; nothing built yet.",
- "title": "The Mental Model (v2)",
- "topic_class": "psychology (cut-heavy; ONE decidable claim; no other outcomes)",
- "store_sku": "mental-model",
- "replaces": "c-tosm1",
- "notes": "rev2 cut notes. What was removed and why: (1) Ch1 16:04-19:05 and 20:48-22:49, 5 min on NotebookLM personas, PEN 3.0 prompts and inspecting a lieutenant's prompt; replaced by 05:17-06:22 (maxims as fault-mode analysis, 'you are the commander, the AI is the staff') and Ken's own conclusion 23:36-24:44, which neither v1 nor rev1 reached. (2) Ch1b core-and-turbo: Module 2 material, switched off. (3) Ch2 35:56-38:44, 2:48 of podcast/book-review/creativity-202 tangent that rev1 carried inside 'Intuition'; Fletcher is credited in 24 s instead. (4) Ch3 George's 2:06 run-up replaced by Ken's 21 s question plus George's 21 s answer. (5) The aggregate outcome: psychology class, and the rule did not test the claim. Running time about 27 min from 34:40; a 22-min version drops s03, s05, s23/s24 and trims the overdub's agitation stretch 08:16-09:45. Companion materials (deck, quizzes, AI pack in edge-ogt-engine/drafts/video-products) were checked against the same footage: ten of the 24 cards state things Ken does not say in it (see SESSIONSTATE 2026-11-16). Sources: FOUR videos, unchanged. rev1 notes kept below. --- Cut track: docs/store-v2-cut-tracks.md §1. Mapping findings folded in: (1) Ch2 card/content drift ~2min — v2 boundaries follow CONTENT (intuition to 38:44, imagination 38:44-39:37, common sense 39:42-40:13, emotion from 40:16 EXTENDED past the old clip out-point to finish the sentence); (2) scene-24 star payoff ('as efficient as they need to be' 12:00-12:05) pulled INTO the star segment; (3) 100-maxims overdub widened to the full share span 16:04-19:05; (4) 'good parts don't look funny' overlay belongs to intuition (33:16), not imagination; (5) m1-04 close extended to ~14:05 to finish 'win rate only needs to be'. Sources: FOUR videos (cut-track prose said three — the table was right).",
- "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/mental-model-v2/",
- "sources": [
-  {
-   "id": "apk",
-   "label": "really-really-good (Ch1 + Ch1b)",
-   "file": "youtube-apk9GWC17Zw-really-really-good.mp4",
-   "proxy": "youtube-apk9GWC17Zw-really-really-good.proxy.mp4",
-   "url": "https://www.youtube.com/watch?v=apk9GWC17Zw"
-  },
-  {
-   "id": "hva",
-   "label": "cohort-3-significant (Ch2 primal intelligences)",
-   "file": "youtube-hvajbAcWx3Y-cohort-3-significant.mp4",
-   "proxy": "youtube-hvajbAcWx3Y-cohort-3-significant.proxy.mp4",
-   "url": "https://www.youtube.com/watch?v=hvajbAcWx3Y"
-  },
-  {
-   "id": "keu",
-   "label": "perf-review-market-relationship (Ch3 teeter-totter)",
-   "file": "youtube-keUjMJcneCM-perf-review-market-relationship.mp4",
-   "proxy": "youtube-keUjMJcneCM-perf-review-market-relationship.proxy.mp4",
-   "url": "https://www.youtube.com/watch?v=keUjMJcneCM"
-  },
-  {
-   "id": "kma",
-   "label": "intraday-tactics (Ch4 lions)",
-   "file": "youtube-KMa-sBc_3gg-intraday-tactics.mp4",
-   "proxy": "youtube-KMa-sBc_3gg-intraday-tactics.proxy.mp4",
-   "url": "https://www.youtube.com/watch?v=KMa-sBc_3gg"
-  }
- ],
- "voices": [
-  {
-   "id": "ava",
-   "label": "Ava (US, female, polished)",
-   "sample": "vo-ava.mp3"
-  },
-  {
-   "id": "andrew",
-   "label": "Andrew (US, male, conversational)",
-   "sample": "vo-andrew.mp3"
-  }
- ],
- "segments": [
-  {
-   "id": "s01",
-   "type": "cut",
-   "include": true,
-   "label": "Cold open: the coaching eye",
-   "source": "apk",
-   "in": 883.0,
-   "out": 948.0,
-   "status": "rev2 TRIMMED 14:43-15:48 (was 14:32-16:04). Ends on 'I wonder if there's some gold in that mine'. Drops the military-planning lead-in.",
-   "quote_anchor": "instead of waiting for me to tell you what right looks like... did I follow my own rules?"
-  },
-  {
-   "id": "s02",
-   "type": "slide",
-   "include": true,
-   "label": "Title card",
-   "slide_id": "title",
-   "duration": 4
-  },
-  {
-   "id": "s03",
-   "type": "cut",
-   "include": true,
-   "label": "Maxims are fault-mode analysis; you are the commander",
-   "source": "apk",
-   "in": 317.0,
-   "out": 382.0,
-   "status": "rev2 NEW 05:17-06:22, replaces the 3-min maxims overdub (16:04-19:05, NotebookLM personas). Out-point ESTIMATE: end on 'don't ever lose sight of that'. Check the screen: if the maxims doc is shared, this becomes an overdub on the typography practice card.",
-   "quote_anchor": "the hundred maxims won't guarantee that you come up with something great... you are the commander, the AI is the staff, you are always responsible for the process, the decisions, the consequences"
-  },
-  {
-   "id": "s04",
-   "type": "cut",
-   "include": true,
-   "label": "★ Tool user vs system architect",
-   "source": "apk",
-   "in": 1145.0,
-   "out": 1186.0,
-   "status": "rev2 widened to 19:05-19:46 so the question ('why go through the pain of creating the maxims if you have the tool?') sets up the ★ line at 19:24. Untouchable.",
-   "quote_anchor": "you'll just be a tool user. If you want to be a system architect, a tool maker, a process manager... understand the basics of arithmetic before I just give you a calculator"
-  },
-  {
-   "id": "s05",
-   "type": "cut",
-   "include": true,
-   "label": "Driving the machine",
-   "source": "apk",
-   "in": 1186.0,
-   "out": 1248.0,
-   "status": "rev2 TRIMMED 19:46-20:48 (was to 22:32). Drops the lieutenant/prompt-inspection stretch 20:48-22:49, which is about supervising AI output, not the trader's model. Optional cut if the course must go under 25 min.",
-   "quote_anchor": "nothing wrong with being a tool user. Like if I'm driving a car, I don't actually need to know how the engine's working"
-  },
-  {
-   "id": "s06",
-   "type": "cut",
-   "include": true,
-   "label": "★ Trade like an intelligent adaptive machine (the real closing frame)",
-   "source": "apk",
-   "in": 1369.0,
-   "out": 1484.0,
-   "status": "rev2 EXTENDED 22:49-24:44 (was 22:49-23:14). v1 and rev1 both cut before Ken's own conclusion at 23:36. Out-point ESTIMATE: end on 'a machine that'll kill you if you're not paying attention'.",
-   "quote_anchor": "trade like a machine, an intelligent, adaptive machine with rules... this model of thinking helps you become a system architect, a tool maker... who combines the best of rules-based trading and discretionary-based trading... always err in the direction of being safer"
-  },
-  {
-   "id": "s07",
-   "type": "slide",
-   "include": false,
-   "label": "Chapter 1b card (DROPPED rev2)",
-   "slide_id": "ch1b",
-   "duration": 2,
-   "status": "rev2 DROPPED: core-and-turbo is target selection and sizing, taught in Module 2 ch3 (Core = Swing, Turbo = Today). In a mental-model module it needs a 25 s explainer to define a term the module never uses again. Re-enable here if you want the teacher-learns-from-student beat; otherwise it moves to Module 2."
-  },
-  {
-   "id": "s08",
-   "type": "cut",
-   "include": false,
-   "label": "Alex's seed (DROPPED rev2)",
-   "source": "apk",
-   "in": 2875.0,
-   "out": 2904.0,
-   "status": "rev2 DROPPED: core-and-turbo is target selection and sizing, taught in Module 2 ch3 (Core = Swing, Turbo = Today). In a mental-model module it needs a 25 s explainer to define a term the module never uses again. Re-enable here if you want the teacher-learns-from-student beat; otherwise it moves to Module 2."
-  },
-  {
-   "id": "s09",
-   "type": "cut",
-   "include": false,
-   "label": "Ken's fractal reframe (DROPPED rev2)",
-   "source": "apk",
-   "in": 2904.0,
-   "out": 2988.0,
-   "status": "rev2 DROPPED: core-and-turbo is target selection and sizing, taught in Module 2 ch3 (Core = Swing, Turbo = Today). In a mental-model module it needs a 25 s explainer to define a term the module never uses again. Re-enable here if you want the teacher-learns-from-student beat; otherwise it moves to Module 2."
-  },
-  {
-   "id": "s10",
-   "type": "cut",
-   "include": false,
-   "label": "★ I've never said it that way (DROPPED rev2)",
-   "source": "apk",
-   "in": 2988.0,
-   "out": 3014.0,
-   "status": "rev2 DROPPED: core-and-turbo is target selection and sizing, taught in Module 2 ch3 (Core = Swing, Turbo = Today). In a mental-model module it needs a 25 s explainer to define a term the module never uses again. Re-enable here if you want the teacher-learns-from-student beat; otherwise it moves to Module 2."
-  },
-  {
-   "id": "s11",
-   "type": "slide",
-   "include": true,
-   "label": "Chapter 2 card",
-   "slide_id": "ch2",
-   "duration": 2
-  },
-  {
-   "id": "s12",
-   "type": "cut",
-   "include": true,
-   "label": "Where the four come from (Angus Fletcher)",
-   "source": "hva",
-   "in": 1864.0,
-   "out": 1888.0,
-   "status": "rev2 NEW 31:04-31:28. The chapter never credited the term; 'primal intelligence' is Fletcher's book and Ken says so here. In-point ESTIMATE: start on 'it talks about the four qualities'.",
-   "quote_anchor": "the four qualities of the primal mind that's already on board in your head"
-  },
-  {
-   "id": "s13",
-   "type": "cut",
-   "include": true,
-   "label": "Naming the four",
-   "source": "hva",
-   "in": 1901.0,
-   "out": 1929.0,
-   "status": "rev1 window; in-point was mid-sentence ('machine shop. what the special forces guys do...'). Start at 31:41 on 'what the special forces guys do is they bypass all that'.",
-   "quote_anchor": "primal intelligence and there are four of them. The first one is intuition... imagination, then common sense and then emotions"
-  },
-  {
-   "id": "s14",
-   "type": "cut",
-   "include": true,
-   "label": "Intuition: anomaly detection. Good parts don't look funny",
-   "source": "hva",
-   "in": 1929.0,
-   "out": 2031.0,
-   "status": "rev2 32:09-33:51. Overlay card 'Good parts don't look funny' at 33:16.",
-   "quote_anchor": "good parts don't look funny... we are wired to detect divergences"
-  },
-  {
-   "id": "s15",
-   "type": "cut",
-   "include": true,
-   "label": "Fear comes first, opportunity second",
-   "source": "hva",
-   "in": 2031.0,
-   "out": 2092.0,
-   "status": "rev2 33:51-34:52.",
-   "quote_anchor": "Everybody has the fear response. Not as many people have the opportunity seizing response"
-  },
-  {
-   "id": "s16",
-   "type": "cut",
-   "include": true,
-   "label": "Trained the way special forces train: see it, classify it, act. Bar by bar",
-   "source": "hva",
-   "in": 2092.0,
-   "out": 2156.0,
-   "status": "rev2 34:52-35:56. Out-point ESTIMATE: end on 'building that endurance'. DROPS 35:56-38:44 (the podcast, the futures traders, Luke, Angus's wing, the Amazon review, creativity 202): 2:48 of tangent that rev1 carried inside 'Intuition'.",
-   "quote_anchor": "you get a new bar and you got to make a decision... constant reframing with every new price... building that endurance"
-  },
-  {
-   "id": "s17",
-   "type": "cut",
-   "include": true,
-   "label": "Imagination: the seven questions of framing",
-   "source": "hva",
-   "in": 2324.0,
-   "out": 2386.0,
-   "status": "rev2 38:44-39:46.",
-   "quote_anchor": "imagination takes the creative insight that you just had and now frames it as a potential opportunity in terms of risk and reward"
-  },
-  {
-   "id": "s18",
-   "type": "cut",
-   "include": true,
-   "label": "Common sense: can you get there from here (reward to risk)",
-   "source": "hva",
-   "in": 2386.0,
-   "out": 2416.0,
-   "status": "rev2 39:46-40:16.",
-   "quote_anchor": "common sense is what connects the furthest excursion of your imagination back to the world that you actually live in"
-  },
-  {
-   "id": "s19",
-   "type": "cut",
-   "include": true,
-   "label": "Emotion: the fuel",
-   "source": "hva",
-   "in": 2416.0,
-   "out": 2450.0,
-   "status": "rev2 40:16-40:50. v1 cut this mid-sentence at 40:30.",
-   "quote_anchor": "emotion is the fuel that allows us to go through all of the ass pain and the headache of doing all that analyzing"
-  },
-  {
-   "id": "s20",
-   "type": "cut",
-   "include": true,
-   "label": "The four as a collection",
-   "source": "hva",
-   "in": 2450.0,
-   "out": 2515.0,
-   "status": "rev2 40:50-41:55. Out-point ESTIMATE: end on 'learned nervousness that comes from traditional schooling and socialization' or earlier on 'I'm executing to a standard' (41:38) if the tail drags.",
-   "quote_anchor": "intuition to the possibility. Imagination to frame it in both ways. Common sense to verify... emotional resilience to execute... I'm executing to a standard"
-  },
-  {
-   "id": "s21",
-   "type": "slide",
-   "include": true,
-   "label": "Chapter 3 card",
-   "slide_id": "ch3",
-   "duration": 2
-  },
-  {
-   "id": "s22",
-   "type": "cut",
-   "include": true,
-   "label": "Ken's question: how do you see the market?",
-   "source": "keu",
-   "in": 246.0,
-   "out": 267.0,
-   "status": "rev2 NEW 04:06-04:27: the question George is answering. Replaces 2:06 of George's run-up.",
-   "quote_anchor": "do you see the market as the market or are you thinking about the other participants in the market and your relationship with them"
-  },
-  {
-   "id": "s23",
-   "type": "cut",
-   "include": true,
-   "label": "George: a weather pattern, an ecosystem",
-   "source": "keu",
-   "in": 307.0,
-   "out": 328.0,
-   "status": "rev2 05:07-05:28 (student voice; permission as in v1).",
-   "quote_anchor": "sort of like a weather pattern or like an ecosystem"
-  },
-  {
-   "id": "s24",
-   "type": "cut",
-   "include": true,
-   "label": "Is it aware of you, or a giant tote board keeping score?",
-   "source": "keu",
-   "in": 328.0,
-   "out": 391.0,
-   "status": "rev2 05:28-06:31. Cutroom trim: George's 'I'm a logical person' 06:11-06:31 if it drags.",
-   "quote_anchor": "does it have an intelligence, is it aware of you, is it making value judgments or is it just simply a giant tote board keeping score... simple physics creates complex behavior"
-  },
-  {
-   "id": "s25",
-   "type": "cut",
-   "include": true,
-   "label": "★ The great big teeter-totter",
-   "source": "keu",
-   "in": 391.0,
-   "out": 424.0,
-   "status": "rev1 window widened to 06:31-07:04 so 'just try this on for size' opens the beat. ★ at 06:45.",
-   "quote_anchor": "I really see the market like this — it's that great big teeter totter"
-  },
-  {
-   "id": "s26",
-   "type": "overdub",
-   "include": true,
-   "label": "OVERDUB: bulls, bears and the demographics (teeter-totter component)",
-   "source": "keu",
-   "in": 424.0,
-   "out": 749.0,
-   "status": "rev1 window 07:04-12:29 kept; cutroom trims inside it: 09:23-09:45 ('come on Tommy', 22 s) and 10:30-10:52 (the volume sentence said twice). NOTE for the cards: 'demographics' here means the timeframe cohorts (the 3-minute, 30-minute, 3-day, n-day guys), not population demographics.",
-   "animation_brief": "NEW teeter-totter component: fulcrum + the timeframe cohorts as weights (3-min, 30-min, 3-day, n-day); heat-map tint on the agitated cohorts at 09:45; band chart syncs at 11:33 ('oscillating wildly... range stat kinds of moves').",
-   "quote_anchor": "on the bearish side there's these guys that are trying to make it go down"
-  },
-  {
-   "id": "s27",
-   "type": "cut",
-   "include": true,
-   "label": "★ The emotional maniacs; the market never breaks",
-   "source": "keu",
-   "in": 749.0,
-   "out": 782.0,
-   "status": "rev2 12:29-13:02. ★ at 12:30; 'fat kids jump on and off' at 12:52 stays in this beat.",
-   "quote_anchor": "the emotional maniacs that are making the teeter totter go up and down... the market never breaks, it's just accommodating all of these maniacs"
-  },
-  {
-   "id": "s28",
-   "type": "cut",
-   "include": true,
-   "label": "Compound critical state: all the demographics stacked up",
-   "source": "keu",
-   "in": 782.0,
-   "out": 830.0,
-   "status": "rev2 13:02-13:50. Ends before the RL10/RL270 fractal (14:01), which belongs to the indicators module.",
-   "quote_anchor": "a compound critical state is I'm looking for something that has all of these demographics stacked up ready to trade larger than normal"
-  },
-  {
-   "id": "s21b",
-   "type": "outcome",
-   "include": false,
-   "mode": "aggregate",
-   "label": "WHAT HAPPENED: aligned timeframes (DROPPED rev2)",
-   "voice": "ava",
-   "vo_script": "not written",
-   "est_duration": 50,
-   "data": {
-    "status": "STUDY NOT RUN; dropped"
-   },
-   "editorial_rules": "frame-vs-price only; synth voice only; publish whatever it says; split-adjusted bars",
-   "status": "rev2 DROPPED. Psychology class carries no outcome (topical-video-templates: never fake one). The proposed rule (daily and weekly RL10 slopes share sign) is not the claim Ken makes here (price location at the extremes of each cohort's lookback, plus volatility, across cohorts at once). Compound critical state gets its definition and its evidence in the Framing module."
-  },
-  {
-   "id": "s29",
-   "type": "slide",
-   "include": true,
-   "label": "Chapter 4 card",
-   "slide_id": "ch4",
-   "duration": 2
-  },
-  {
-   "id": "s30",
-   "type": "cut",
-   "include": true,
-   "label": "The question that earns the story: 30 names, trading whatever I see",
-   "source": "kma",
-   "in": 532.0,
-   "out": 562.0,
-   "status": "rev2 NEW 08:52-09:22 (student voice; CHECK speaker permission before use). Without it the safari story has no reason to be told; it is Ken's answer to 'how many things should I be looking at'. Drop if permission is not there.",
-   "quote_anchor": "you're just looking at all 30 of those names and if you see a setup you're just taking them... that just seems to be my kryptonite right now"
-  },
-  {
-   "id": "s31",
-   "type": "cut",
-   "include": true,
-   "label": "Watching the lions",
-   "source": "kma",
-   "in": 574.0,
-   "out": 692.0,
-   "status": "rev1 window 09:34-11:32 kept.",
-   "quote_anchor": "one of the really helpful natural models for trading that I find really useful was watching the way lions hunt"
-  },
-  {
-   "id": "s32",
-   "type": "cut",
-   "include": true,
-   "label": "★ Not efficient. Efficient enough. A zebra, not a rabbit",
-   "source": "kma",
-   "in": 692.0,
-   "out": 741.0,
-   "status": "rev2 11:32-12:21: the zebra-not-rabbit line (12:00-12:21) is the reward-to-risk payoff and stays with the ★.",
-   "quote_anchor": "they're successful maybe one out of five times... they are as efficient as they need to be... the cost benefit analysis of a rabbit doesn't make any sense for a lion"
-  },
-  {
-   "id": "s33",
-   "type": "cut",
-   "include": true,
-   "label": "No-go terrain; the wolf and the cliff",
-   "source": "kma",
-   "in": 741.0,
-   "out": 821.0,
-   "status": "rev2 12:21-13:41.",
-   "quote_anchor": "the natural support and resistance for the channel is the no-go terrain which means the price can only go that way or that way... it just takes away all his choices"
-  },
-  {
-   "id": "s34",
-   "type": "cut",
-   "include": true,
-   "label": "Knowing the territory; they have to come back to the watering hole; lock on",
-   "source": "kma",
-   "in": 821.0,
-   "out": 862.0,
-   "status": "rev2 13:41-14:22. Out-point ESTIMATE: end on 'they're so locked in on the thing that they're concentrating on' (14:22); rev1 stopped at ~14:05 mid-thought.",
-   "quote_anchor": "knowing the territory and knowing your setup and really understanding what your win rate only needs to be... they got to come back to the watering hole... they will run right past other animals that are closer"
-  },
-  {
-   "id": "s35",
-   "type": "slide",
-   "include": true,
-   "label": "Maxim card",
-   "slide_id": "maxim",
-   "duration": 6
-  },
-  {
-   "id": "s36",
-   "type": "slide",
-   "include": true,
-   "label": "End card",
-   "slide_id": "end",
-   "duration": 10
-  }
- ]
+  "schema": "coursecraft-plan-v2",
+  "course": "mental-model-v2",
+  "revision": 3,
+  "revised": "2026-11-16",
+  "status": "DRAFT rev3 (2026-11-16): the animated cut, NOT built (owner: 'give me a cut with the animations of module 1; don't build it yet'). Every spoken window has an animated twin ON and its cut OFF (the cut stays in the plan for a per-segment flip back in the cutroom); s26 animated; Ken in the corner (pip) on the five really-really-good windows only, the other three sources show him as a gallery thumbnail too small to composite. Six slide cards rendered. Nothing rendered or assembled; `build_v2 check` lists what a build needs.",
+  "title": "The Mental Model (v2)",
+  "topic_class": "psychology (cut-heavy; ONE decidable claim; no other outcomes)",
+  "store_sku": "mental-model",
+  "replaces": "c-tosm1",
+  "notes": "rev3 (2026-11-16): every cut sNN has an overdub twin sNNa with the same source window and an animation (anim-sNNa.html from anim_gen.py; the kit is scripts/anim_kit.py, skill anim-overdub). Exactly one of each pair is included; the twins ship ON because the owner chose the animated version for Module 2. Twins on apk carry pip:true: Ken's tile is composited top-right at render (build_v2 PIP_*); hva, keu and kma have no usable camera (a gallery strip, tiles under 100 px). s12's Fletcher credit is in the twin's caption, not in his voice inside the window (see its status). The cutroom shows each twin's animation over the source audio and draws the live cropped tile on pip twins (cutroom-17). --- rev2 cut notes. What was removed and why: (1) Ch1 16:04-19:05 and 20:48-22:49, 5 min on NotebookLM personas, PEN 3.0 prompts and inspecting a lieutenant's prompt; replaced by 05:17-06:22 (maxims as fault-mode analysis, 'you are the commander, the AI is the staff') and Ken's own conclusion 23:36-24:44, which neither v1 nor rev1 reached. (2) Ch1b core-and-turbo: Module 2 material, switched off. (3) Ch2 35:56-38:44, 2:48 of podcast/book-review/creativity-202 tangent that rev1 carried inside 'Intuition'; Fletcher is credited in 24 s instead. (4) Ch3 George's 2:06 run-up replaced by Ken's 21 s question plus George's 21 s answer. (5) The aggregate outcome: psychology class, and the rule did not test the claim. Running time about 27 min from 34:40; a 22-min version drops s03, s05, s23/s24 and trims the overdub's agitation stretch 08:16-09:45. Companion materials (deck, quizzes, AI pack in edge-ogt-engine/drafts/video-products) were checked against the same footage: ten of the 24 cards state things Ken does not say in it (see SESSIONSTATE 2026-11-16). Sources: FOUR videos, unchanged. rev1 notes kept below. --- Cut track: docs/store-v2-cut-tracks.md §1. Mapping findings folded in: (1) Ch2 card/content drift ~2min — v2 boundaries follow CONTENT (intuition to 38:44, imagination 38:44-39:37, common sense 39:42-40:13, emotion from 40:16 EXTENDED past the old clip out-point to finish the sentence); (2) scene-24 star payoff ('as efficient as they need to be' 12:00-12:05) pulled INTO the star segment; (3) 100-maxims overdub widened to the full share span 16:04-19:05; (4) 'good parts don't look funny' overlay belongs to intuition (33:16), not imagination; (5) m1-04 close extended to ~14:05 to finish 'win rate only needs to be'. Sources: FOUR videos (cut-track prose said three — the table was right).",
+  "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/mental-model-v2/",
+  "sources": [
+    {
+      "id": "apk",
+      "label": "really-really-good (Ch1 + Ch1b)",
+      "file": "youtube-apk9GWC17Zw-really-really-good.mp4",
+      "proxy": "youtube-apk9GWC17Zw-really-really-good.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=apk9GWC17Zw",
+      "pip": {
+        "crop": "iw*0.455:ih*0.454:iw*0.539:ih*0.28",
+        "note": "two-up Zoom gallery, Ken's tile on the right for the whole session; a 16:9 window on his tile (checked at 320, 350, 380, 900, 940, 1160, 1240, 1400, 1480 s)"
+      }
+    },
+    {
+      "id": "hva",
+      "label": "cohort-3-significant (Ch2 primal intelligences)",
+      "file": "youtube-hvajbAcWx3Y-cohort-3-significant.mp4",
+      "proxy": "youtube-hvajbAcWx3Y-cohort-3-significant.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=hvajbAcWx3Y"
+    },
+    {
+      "id": "keu",
+      "label": "perf-review-market-relationship (Ch3 teeter-totter)",
+      "file": "youtube-keUjMJcneCM-perf-review-market-relationship.mp4",
+      "proxy": "youtube-keUjMJcneCM-perf-review-market-relationship.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=keUjMJcneCM"
+    },
+    {
+      "id": "kma",
+      "label": "intraday-tactics (Ch4 lions)",
+      "file": "youtube-KMa-sBc_3gg-intraday-tactics.mp4",
+      "proxy": "youtube-KMa-sBc_3gg-intraday-tactics.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=KMa-sBc_3gg"
+    }
+  ],
+  "voices": [
+    {
+      "id": "ava",
+      "label": "Ava (US, female, polished)",
+      "sample": "vo-ava.mp3"
+    },
+    {
+      "id": "andrew",
+      "label": "Andrew (US, male, conversational)",
+      "sample": "vo-andrew.mp3"
+    }
+  ],
+  "segments": [
+    {
+      "id": "s01",
+      "type": "cut",
+      "include": false,
+      "label": "Cold open: the coaching eye",
+      "source": "apk",
+      "in": 883.0,
+      "out": 948.0,
+      "status": "rev3: OFF, the twin s01a carries this window. rev2 TRIMMED 14:43-15:48 (was 14:32-16:04). Ends on 'I wonder if there's some gold in that mine'. Drops the military-planning lead-in.",
+      "quote_anchor": "instead of waiting for me to tell you what right looks like... did I follow my own rules?"
+    },
+    {
+      "id": "s01a",
+      "type": "overdub",
+      "source": "apk",
+      "in": 883.0,
+      "out": 948.0,
+      "include": true,
+      "label": "ALT animated: Cold open: the coaching eye",
+      "animation_brief": "Twin of s01: same Ken audio, drawn scene (the coaching eye) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py (scripts/anim_kit.py).",
+      "status": "twin, ON in rev3 (the owner chose the animated cut for Module 2, same here); flip back to s01 in the cutroom per segment",
+      "quote_anchor": "instead of waiting for me to tell you what right looks like... did I follow my own rules?",
+      "pip": true
+    },
+    {
+      "id": "s02",
+      "type": "slide",
+      "include": true,
+      "label": "Title card",
+      "slide_id": "title",
+      "duration": 4
+    },
+    {
+      "id": "s03",
+      "type": "cut",
+      "include": false,
+      "label": "Maxims are fault-mode analysis; you are the commander",
+      "source": "apk",
+      "in": 317.0,
+      "out": 382.0,
+      "status": "rev3: OFF, the twin s03a carries this window. rev2 NEW 05:17-06:22, replaces the 3-min maxims overdub (16:04-19:05, NotebookLM personas). Out-point ESTIMATE: end on 'don't ever lose sight of that'. Check the screen: if the maxims doc is shared, this becomes an overdub on the typography practice card.",
+      "quote_anchor": "the hundred maxims won't guarantee that you come up with something great... you are the commander, the AI is the staff, you are always responsible for the process, the decisions, the consequences"
+    },
+    {
+      "id": "s03a",
+      "type": "overdub",
+      "source": "apk",
+      "in": 317.0,
+      "out": 382.0,
+      "include": true,
+      "label": "ALT animated: Maxims are fault-mode analysis; you are the commander",
+      "animation_brief": "Twin of s03: same Ken audio, drawn scene (maxims as fault-mode analysis) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py (scripts/anim_kit.py).",
+      "status": "twin, ON in rev3 (the owner chose the animated cut for Module 2, same here); flip back to s03 in the cutroom per segment",
+      "quote_anchor": "the hundred maxims won't guarantee that you come up with something great... you are the commander, the AI is the staff, you are always responsible for the process, the decisions, the consequences",
+      "pip": true
+    },
+    {
+      "id": "s04",
+      "type": "cut",
+      "include": false,
+      "label": "★ Tool user vs system architect",
+      "source": "apk",
+      "in": 1145.0,
+      "out": 1186.0,
+      "status": "rev3: OFF, the twin s04a carries this window. rev2 widened to 19:05-19:46 so the question ('why go through the pain of creating the maxims if you have the tool?') sets up the ★ line at 19:24. Untouchable.",
+      "quote_anchor": "you'll just be a tool user. If you want to be a system architect, a tool maker, a process manager... understand the basics of arithmetic before I just give you a calculator"
+    },
+    {
+      "id": "s04a",
+      "type": "overdub",
+      "source": "apk",
+      "in": 1145.0,
+      "out": 1186.0,
+      "include": true,
+      "label": "ALT animated: ★ Tool user vs system architect",
+      "animation_brief": "Twin of s04: same Ken audio, drawn scene (tool user vs system architect) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py (scripts/anim_kit.py).",
+      "status": "twin, ON in rev3 (the owner chose the animated cut for Module 2, same here); flip back to s04 in the cutroom per segment",
+      "quote_anchor": "you'll just be a tool user. If you want to be a system architect, a tool maker, a process manager... understand the basics of arithmetic before I just give you a calculator",
+      "pip": true
+    },
+    {
+      "id": "s05",
+      "type": "cut",
+      "include": false,
+      "label": "Driving the machine",
+      "source": "apk",
+      "in": 1186.0,
+      "out": 1248.0,
+      "status": "rev3: OFF, the twin s05a carries this window. rev2 TRIMMED 19:46-20:48 (was to 22:32). Drops the lieutenant/prompt-inspection stretch 20:48-22:49, which is about supervising AI output, not the trader's model. Optional cut if the course must go under 25 min.",
+      "quote_anchor": "nothing wrong with being a tool user. Like if I'm driving a car, I don't actually need to know how the engine's working"
+    },
+    {
+      "id": "s05a",
+      "type": "overdub",
+      "source": "apk",
+      "in": 1186.0,
+      "out": 1248.0,
+      "include": true,
+      "label": "ALT animated: Driving the machine",
+      "animation_brief": "Twin of s05: same Ken audio, drawn scene (driving the machine) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py (scripts/anim_kit.py).",
+      "status": "twin, ON in rev3 (the owner chose the animated cut for Module 2, same here); flip back to s05 in the cutroom per segment",
+      "quote_anchor": "nothing wrong with being a tool user. Like if I'm driving a car, I don't actually need to know how the engine's working",
+      "pip": true
+    },
+    {
+      "id": "s06",
+      "type": "cut",
+      "include": false,
+      "label": "★ Trade like an intelligent adaptive machine (the real closing frame)",
+      "source": "apk",
+      "in": 1369.0,
+      "out": 1484.0,
+      "status": "rev3: OFF, the twin s06a carries this window. rev2 EXTENDED 22:49-24:44 (was 22:49-23:14). v1 and rev1 both cut before Ken's own conclusion at 23:36. Out-point ESTIMATE: end on 'a machine that'll kill you if you're not paying attention'.",
+      "quote_anchor": "trade like a machine, an intelligent, adaptive machine with rules... this model of thinking helps you become a system architect, a tool maker... who combines the best of rules-based trading and discretionary-based trading... always err in the direction of being safer"
+    },
+    {
+      "id": "s06a",
+      "type": "overdub",
+      "source": "apk",
+      "in": 1369.0,
+      "out": 1484.0,
+      "include": true,
+      "label": "ALT animated: ★ Trade like an intelligent adaptive machine (the real closing frame)",
+      "animation_brief": "Twin of s06: same Ken audio, drawn scene (an intelligent adaptive machine) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py (scripts/anim_kit.py).",
+      "status": "twin, ON in rev3 (the owner chose the animated cut for Module 2, same here); flip back to s06 in the cutroom per segment",
+      "quote_anchor": "trade like a machine, an intelligent, adaptive machine with rules... this model of thinking helps you become a system architect, a tool maker... who combines the best of rules-based trading and discretionary-based trading... always err in the direction of being safer",
+      "pip": true
+    },
+    {
+      "id": "s07",
+      "type": "slide",
+      "include": false,
+      "label": "Chapter 1b card (DROPPED rev2)",
+      "slide_id": "ch1b",
+      "duration": 2,
+      "status": "rev2 DROPPED: core-and-turbo is target selection and sizing, taught in Module 2 ch3 (Core = Swing, Turbo = Today). In a mental-model module it needs a 25 s explainer to define a term the module never uses again. Re-enable here if you want the teacher-learns-from-student beat; otherwise it moves to Module 2."
+    },
+    {
+      "id": "s08",
+      "type": "cut",
+      "include": false,
+      "label": "Alex's seed (DROPPED rev2)",
+      "source": "apk",
+      "in": 2875.0,
+      "out": 2904.0,
+      "status": "rev2 DROPPED: core-and-turbo is target selection and sizing, taught in Module 2 ch3 (Core = Swing, Turbo = Today). In a mental-model module it needs a 25 s explainer to define a term the module never uses again. Re-enable here if you want the teacher-learns-from-student beat; otherwise it moves to Module 2."
+    },
+    {
+      "id": "s09",
+      "type": "cut",
+      "include": false,
+      "label": "Ken's fractal reframe (DROPPED rev2)",
+      "source": "apk",
+      "in": 2904.0,
+      "out": 2988.0,
+      "status": "rev2 DROPPED: core-and-turbo is target selection and sizing, taught in Module 2 ch3 (Core = Swing, Turbo = Today). In a mental-model module it needs a 25 s explainer to define a term the module never uses again. Re-enable here if you want the teacher-learns-from-student beat; otherwise it moves to Module 2."
+    },
+    {
+      "id": "s10",
+      "type": "cut",
+      "include": false,
+      "label": "★ I've never said it that way (DROPPED rev2)",
+      "source": "apk",
+      "in": 2988.0,
+      "out": 3014.0,
+      "status": "rev2 DROPPED: core-and-turbo is target selection and sizing, taught in Module 2 ch3 (Core = Swing, Turbo = Today). In a mental-model module it needs a 25 s explainer to define a term the module never uses again. Re-enable here if you want the teacher-learns-from-student beat; otherwise it moves to Module 2."
+    },
+    {
+      "id": "s11",
+      "type": "slide",
+      "include": true,
+      "label": "Chapter 2 card",
+      "slide_id": "ch2",
+      "duration": 2
+    },
+    {
+      "id": "s12",
+      "type": "cut",
+      "include": false,
+      "label": "Where the four come from (Angus Fletcher)",
+      "source": "hva",
+      "in": 1864.0,
+      "out": 1888.0,
+      "status": "CHECK: Fletcher is not named inside 31:04-31:28; Ken names him at 29:35 and 30:37-30:42 of this session (transcript_window). The twin s12a carries the credit in its caption and gloss. To have it in his voice, widen the in-point to 30:37 (adds 27 s on Tom Gaines and the Army). rev3: OFF, the twin s12a carries this window. rev2 NEW 31:04-31:28. The chapter never credited the term; 'primal intelligence' is Fletcher's book and Ken says so here. In-point ESTIMATE: start on 'it talks about the four qualities'.",
+      "quote_anchor": "the four qualities of the primal mind that's already on board in your head"
+    },
+    {
+      "id": "s12a",
+      "type": "overdub",
+      "source": "hva",
+      "in": 1864.0,
+      "out": 1888.0,
+      "include": true,
+      "label": "ALT animated: Where the four come from (Angus Fletcher)",
+      "animation_brief": "Twin of s12: same Ken audio, drawn scene (the primal mind) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py (scripts/anim_kit.py).",
+      "status": "twin, ON in rev3 (the owner chose the animated cut for Module 2, same here); flip back to s12 in the cutroom per segment",
+      "quote_anchor": "the four qualities of the primal mind that's already on board in your head"
+    },
+    {
+      "id": "s13",
+      "type": "cut",
+      "include": false,
+      "label": "Naming the four",
+      "source": "hva",
+      "in": 1901.0,
+      "out": 1929.0,
+      "status": "rev3: OFF, the twin s13a carries this window. rev1 window; in-point was mid-sentence ('machine shop. what the special forces guys do...'). Start at 31:41 on 'what the special forces guys do is they bypass all that'.",
+      "quote_anchor": "primal intelligence and there are four of them. The first one is intuition... imagination, then common sense and then emotions"
+    },
+    {
+      "id": "s13a",
+      "type": "overdub",
+      "source": "hva",
+      "in": 1901.0,
+      "out": 1929.0,
+      "include": true,
+      "label": "ALT animated: Naming the four",
+      "animation_brief": "Twin of s13: same Ken audio, drawn scene (naming the four) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py (scripts/anim_kit.py).",
+      "status": "twin, ON in rev3 (the owner chose the animated cut for Module 2, same here); flip back to s13 in the cutroom per segment",
+      "quote_anchor": "primal intelligence and there are four of them. The first one is intuition... imagination, then common sense and then emotions"
+    },
+    {
+      "id": "s14",
+      "type": "cut",
+      "include": false,
+      "label": "Intuition: anomaly detection. Good parts don't look funny",
+      "source": "hva",
+      "in": 1929.0,
+      "out": 2031.0,
+      "status": "rev3: OFF, the twin s14a carries this window. rev2 32:09-33:51. Overlay card 'Good parts don't look funny' at 33:16.",
+      "quote_anchor": "good parts don't look funny... we are wired to detect divergences"
+    },
+    {
+      "id": "s14a",
+      "type": "overdub",
+      "source": "hva",
+      "in": 1929.0,
+      "out": 2031.0,
+      "include": true,
+      "label": "ALT animated: Intuition: anomaly detection. Good parts don't look funny",
+      "animation_brief": "Twin of s14: same Ken audio, drawn scene (intuition: anomaly detection) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py (scripts/anim_kit.py).",
+      "status": "twin, ON in rev3 (the owner chose the animated cut for Module 2, same here); flip back to s14 in the cutroom per segment",
+      "quote_anchor": "good parts don't look funny... we are wired to detect divergences"
+    },
+    {
+      "id": "s15",
+      "type": "cut",
+      "include": false,
+      "label": "Fear comes first, opportunity second",
+      "source": "hva",
+      "in": 2031.0,
+      "out": 2092.0,
+      "status": "rev3: OFF, the twin s15a carries this window. rev2 33:51-34:52.",
+      "quote_anchor": "Everybody has the fear response. Not as many people have the opportunity seizing response"
+    },
+    {
+      "id": "s15a",
+      "type": "overdub",
+      "source": "hva",
+      "in": 2031.0,
+      "out": 2092.0,
+      "include": true,
+      "label": "ALT animated: Fear comes first, opportunity second",
+      "animation_brief": "Twin of s15: same Ken audio, drawn scene (fear first, opportunity second) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py (scripts/anim_kit.py).",
+      "status": "twin, ON in rev3 (the owner chose the animated cut for Module 2, same here); flip back to s15 in the cutroom per segment",
+      "quote_anchor": "Everybody has the fear response. Not as many people have the opportunity seizing response"
+    },
+    {
+      "id": "s16",
+      "type": "cut",
+      "include": false,
+      "label": "Trained the way special forces train: see it, classify it, act. Bar by bar",
+      "source": "hva",
+      "in": 2092.0,
+      "out": 2156.0,
+      "status": "rev3: OFF, the twin s16a carries this window. rev2 34:52-35:56. Out-point ESTIMATE: end on 'building that endurance'. DROPS 35:56-38:44 (the podcast, the futures traders, Luke, Angus's wing, the Amazon review, creativity 202): 2:48 of tangent that rev1 carried inside 'Intuition'.",
+      "quote_anchor": "you get a new bar and you got to make a decision... constant reframing with every new price... building that endurance"
+    },
+    {
+      "id": "s16a",
+      "type": "overdub",
+      "source": "hva",
+      "in": 2092.0,
+      "out": 2156.0,
+      "include": true,
+      "label": "ALT animated: Trained the way special forces train: see it, classify it, act. Bar by bar",
+      "animation_brief": "Twin of s16: same Ken audio, drawn scene (see it, classify it, act) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py (scripts/anim_kit.py).",
+      "status": "twin, ON in rev3 (the owner chose the animated cut for Module 2, same here); flip back to s16 in the cutroom per segment",
+      "quote_anchor": "you get a new bar and you got to make a decision... constant reframing with every new price... building that endurance"
+    },
+    {
+      "id": "s17",
+      "type": "cut",
+      "include": false,
+      "label": "Imagination: the seven questions of framing",
+      "source": "hva",
+      "in": 2324.0,
+      "out": 2386.0,
+      "status": "rev3: OFF, the twin s17a carries this window. rev2 38:44-39:46.",
+      "quote_anchor": "imagination takes the creative insight that you just had and now frames it as a potential opportunity in terms of risk and reward"
+    },
+    {
+      "id": "s17a",
+      "type": "overdub",
+      "source": "hva",
+      "in": 2324.0,
+      "out": 2386.0,
+      "include": true,
+      "label": "ALT animated: Imagination: the seven questions of framing",
+      "animation_brief": "Twin of s17: same Ken audio, drawn scene (imagination: the seven questions) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py (scripts/anim_kit.py).",
+      "status": "twin, ON in rev3 (the owner chose the animated cut for Module 2, same here); flip back to s17 in the cutroom per segment",
+      "quote_anchor": "imagination takes the creative insight that you just had and now frames it as a potential opportunity in terms of risk and reward"
+    },
+    {
+      "id": "s18",
+      "type": "cut",
+      "include": false,
+      "label": "Common sense: can you get there from here (reward to risk)",
+      "source": "hva",
+      "in": 2386.0,
+      "out": 2416.0,
+      "status": "rev3: OFF, the twin s18a carries this window. rev2 39:46-40:16.",
+      "quote_anchor": "common sense is what connects the furthest excursion of your imagination back to the world that you actually live in"
+    },
+    {
+      "id": "s18a",
+      "type": "overdub",
+      "source": "hva",
+      "in": 2386.0,
+      "out": 2416.0,
+      "include": true,
+      "label": "ALT animated: Common sense: can you get there from here (reward to risk)",
+      "animation_brief": "Twin of s18: same Ken audio, drawn scene (common sense: can you get there from here) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py (scripts/anim_kit.py).",
+      "status": "twin, ON in rev3 (the owner chose the animated cut for Module 2, same here); flip back to s18 in the cutroom per segment",
+      "quote_anchor": "common sense is what connects the furthest excursion of your imagination back to the world that you actually live in"
+    },
+    {
+      "id": "s19",
+      "type": "cut",
+      "include": false,
+      "label": "Emotion: the fuel",
+      "source": "hva",
+      "in": 2416.0,
+      "out": 2450.0,
+      "status": "rev3: OFF, the twin s19a carries this window. rev2 40:16-40:50. v1 cut this mid-sentence at 40:30.",
+      "quote_anchor": "emotion is the fuel that allows us to go through all of the ass pain and the headache of doing all that analyzing"
+    },
+    {
+      "id": "s19a",
+      "type": "overdub",
+      "source": "hva",
+      "in": 2416.0,
+      "out": 2450.0,
+      "include": true,
+      "label": "ALT animated: Emotion: the fuel",
+      "animation_brief": "Twin of s19: same Ken audio, drawn scene (emotion: the fuel) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py (scripts/anim_kit.py).",
+      "status": "twin, ON in rev3 (the owner chose the animated cut for Module 2, same here); flip back to s19 in the cutroom per segment",
+      "quote_anchor": "emotion is the fuel that allows us to go through all of the ass pain and the headache of doing all that analyzing"
+    },
+    {
+      "id": "s20",
+      "type": "cut",
+      "include": false,
+      "label": "The four as a collection",
+      "source": "hva",
+      "in": 2450.0,
+      "out": 2515.0,
+      "status": "rev3: OFF, the twin s20a carries this window. rev2 40:50-41:55. Out-point ESTIMATE: end on 'learned nervousness that comes from traditional schooling and socialization' or earlier on 'I'm executing to a standard' (41:38) if the tail drags.",
+      "quote_anchor": "intuition to the possibility. Imagination to frame it in both ways. Common sense to verify... emotional resilience to execute... I'm executing to a standard"
+    },
+    {
+      "id": "s20a",
+      "type": "overdub",
+      "source": "hva",
+      "in": 2450.0,
+      "out": 2515.0,
+      "include": true,
+      "label": "ALT animated: The four as a collection",
+      "animation_brief": "Twin of s20: same Ken audio, drawn scene (the four as a collection) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py (scripts/anim_kit.py).",
+      "status": "twin, ON in rev3 (the owner chose the animated cut for Module 2, same here); flip back to s20 in the cutroom per segment",
+      "quote_anchor": "intuition to the possibility. Imagination to frame it in both ways. Common sense to verify... emotional resilience to execute... I'm executing to a standard"
+    },
+    {
+      "id": "s21",
+      "type": "slide",
+      "include": true,
+      "label": "Chapter 3 card",
+      "slide_id": "ch3",
+      "duration": 2
+    },
+    {
+      "id": "s22",
+      "type": "cut",
+      "include": false,
+      "label": "Ken's question: how do you see the market?",
+      "source": "keu",
+      "in": 246.0,
+      "out": 267.0,
+      "status": "rev3: OFF, the twin s22a carries this window. rev2 NEW 04:06-04:27: the question George is answering. Replaces 2:06 of George's run-up.",
+      "quote_anchor": "do you see the market as the market or are you thinking about the other participants in the market and your relationship with them"
+    },
+    {
+      "id": "s22a",
+      "type": "overdub",
+      "source": "keu",
+      "in": 246.0,
+      "out": 267.0,
+      "include": true,
+      "label": "ALT animated: Ken's question: how do you see the market?",
+      "animation_brief": "Twin of s22: same Ken audio, drawn scene (how do you see the market?) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py (scripts/anim_kit.py).",
+      "status": "twin, ON in rev3 (the owner chose the animated cut for Module 2, same here); flip back to s22 in the cutroom per segment",
+      "quote_anchor": "do you see the market as the market or are you thinking about the other participants in the market and your relationship with them"
+    },
+    {
+      "id": "s23",
+      "type": "cut",
+      "include": false,
+      "label": "George: a weather pattern, an ecosystem",
+      "source": "keu",
+      "in": 307.0,
+      "out": 328.0,
+      "status": "rev3: OFF, the twin s23a carries this window. rev2 05:07-05:28 (student voice; permission as in v1).",
+      "quote_anchor": "sort of like a weather pattern or like an ecosystem"
+    },
+    {
+      "id": "s23a",
+      "type": "overdub",
+      "source": "keu",
+      "in": 307.0,
+      "out": 328.0,
+      "include": true,
+      "label": "ALT animated: George: a weather pattern, an ecosystem",
+      "animation_brief": "Twin of s23: same Ken audio, drawn scene (a weather pattern, an ecosystem) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py (scripts/anim_kit.py).",
+      "status": "twin, ON in rev3 (the owner chose the animated cut for Module 2, same here); flip back to s23 in the cutroom per segment",
+      "quote_anchor": "sort of like a weather pattern or like an ecosystem"
+    },
+    {
+      "id": "s24",
+      "type": "cut",
+      "include": false,
+      "label": "Is it aware of you, or a giant tote board keeping score?",
+      "source": "keu",
+      "in": 328.0,
+      "out": 391.0,
+      "status": "rev3: OFF, the twin s24a carries this window. rev2 05:28-06:31. Cutroom trim: George's 'I'm a logical person' 06:11-06:31 if it drags.",
+      "quote_anchor": "does it have an intelligence, is it aware of you, is it making value judgments or is it just simply a giant tote board keeping score... simple physics creates complex behavior"
+    },
+    {
+      "id": "s24a",
+      "type": "overdub",
+      "source": "keu",
+      "in": 328.0,
+      "out": 391.0,
+      "include": true,
+      "label": "ALT animated: Is it aware of you, or a giant tote board keeping score?",
+      "animation_brief": "Twin of s24: same Ken audio, drawn scene (a giant tote board keeping score?) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py (scripts/anim_kit.py).",
+      "status": "twin, ON in rev3 (the owner chose the animated cut for Module 2, same here); flip back to s24 in the cutroom per segment",
+      "quote_anchor": "does it have an intelligence, is it aware of you, is it making value judgments or is it just simply a giant tote board keeping score... simple physics creates complex behavior"
+    },
+    {
+      "id": "s25",
+      "type": "cut",
+      "include": false,
+      "label": "★ The great big teeter-totter",
+      "source": "keu",
+      "in": 391.0,
+      "out": 424.0,
+      "status": "rev3: OFF, the twin s25a carries this window. rev1 window widened to 06:31-07:04 so 'just try this on for size' opens the beat. ★ at 06:45.",
+      "quote_anchor": "I really see the market like this — it's that great big teeter totter"
+    },
+    {
+      "id": "s25a",
+      "type": "overdub",
+      "source": "keu",
+      "in": 391.0,
+      "out": 424.0,
+      "include": true,
+      "label": "ALT animated: ★ The great big teeter-totter",
+      "animation_brief": "Twin of s25: same Ken audio, drawn scene (the great big teeter-totter) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py (scripts/anim_kit.py).",
+      "status": "twin, ON in rev3 (the owner chose the animated cut for Module 2, same here); flip back to s25 in the cutroom per segment",
+      "quote_anchor": "I really see the market like this — it's that great big teeter totter"
+    },
+    {
+      "id": "s26",
+      "type": "overdub",
+      "include": true,
+      "label": "OVERDUB: bulls, bears and the demographics (teeter-totter component)",
+      "source": "keu",
+      "in": 424.0,
+      "out": 749.0,
+      "status": "rev3: animated (anim-s26.html from anim_gen.py, twin=False). The two cutroom trims inside it stay possible: nothing in the scene depends on 09:23-09:45 or 10:30-10:52. rev1 window 07:04-12:29 kept; cutroom trims inside it: 09:23-09:45 ('come on Tommy', 22 s) and 10:30-10:52 (the volume sentence said twice). NOTE for the cards: 'demographics' here means the timeframe cohorts (the 3-minute, 30-minute, 3-day, n-day guys), not population demographics.",
+      "animation_brief": "NEW teeter-totter component: fulcrum + the timeframe cohorts as weights (3-min, 30-min, 3-day, n-day); heat-map tint on the agitated cohorts at 09:45; band chart syncs at 11:33 ('oscillating wildly... range stat kinds of moves').",
+      "quote_anchor": "on the bearish side there's these guys that are trying to make it go down"
+    },
+    {
+      "id": "s27",
+      "type": "cut",
+      "include": false,
+      "label": "★ The emotional maniacs; the market never breaks",
+      "source": "keu",
+      "in": 749.0,
+      "out": 782.0,
+      "status": "rev3: OFF, the twin s27a carries this window. rev2 12:29-13:02. ★ at 12:30; 'fat kids jump on and off' at 12:52 stays in this beat.",
+      "quote_anchor": "the emotional maniacs that are making the teeter totter go up and down... the market never breaks, it's just accommodating all of these maniacs"
+    },
+    {
+      "id": "s27a",
+      "type": "overdub",
+      "source": "keu",
+      "in": 749.0,
+      "out": 782.0,
+      "include": true,
+      "label": "ALT animated: ★ The emotional maniacs; the market never breaks",
+      "animation_brief": "Twin of s27: same Ken audio, drawn scene (the emotional maniacs) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py (scripts/anim_kit.py).",
+      "status": "twin, ON in rev3 (the owner chose the animated cut for Module 2, same here); flip back to s27 in the cutroom per segment",
+      "quote_anchor": "the emotional maniacs that are making the teeter totter go up and down... the market never breaks, it's just accommodating all of these maniacs"
+    },
+    {
+      "id": "s28",
+      "type": "cut",
+      "include": false,
+      "label": "Compound critical state: all the demographics stacked up",
+      "source": "keu",
+      "in": 782.0,
+      "out": 830.0,
+      "status": "rev3: OFF, the twin s28a carries this window. rev2 13:02-13:50. Ends before the RL10/RL270 fractal (14:01), which belongs to the indicators module.",
+      "quote_anchor": "a compound critical state is I'm looking for something that has all of these demographics stacked up ready to trade larger than normal"
+    },
+    {
+      "id": "s28a",
+      "type": "overdub",
+      "source": "keu",
+      "in": 782.0,
+      "out": 830.0,
+      "include": true,
+      "label": "ALT animated: Compound critical state: all the demographics stacked up",
+      "animation_brief": "Twin of s28: same Ken audio, drawn scene (compound critical state) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py (scripts/anim_kit.py).",
+      "status": "twin, ON in rev3 (the owner chose the animated cut for Module 2, same here); flip back to s28 in the cutroom per segment",
+      "quote_anchor": "a compound critical state is I'm looking for something that has all of these demographics stacked up ready to trade larger than normal"
+    },
+    {
+      "id": "s21b",
+      "type": "outcome",
+      "include": false,
+      "mode": "aggregate",
+      "label": "WHAT HAPPENED: aligned timeframes (DROPPED rev2)",
+      "voice": "ava",
+      "vo_script": "not written",
+      "est_duration": 50,
+      "data": {
+        "status": "STUDY NOT RUN; dropped"
+      },
+      "editorial_rules": "frame-vs-price only; synth voice only; publish whatever it says; split-adjusted bars",
+      "status": "rev2 DROPPED. Psychology class carries no outcome (topical-video-templates: never fake one). The proposed rule (daily and weekly RL10 slopes share sign) is not the claim Ken makes here (price location at the extremes of each cohort's lookback, plus volatility, across cohorts at once). Compound critical state gets its definition and its evidence in the Framing module."
+    },
+    {
+      "id": "s29",
+      "type": "slide",
+      "include": true,
+      "label": "Chapter 4 card",
+      "slide_id": "ch4",
+      "duration": 2
+    },
+    {
+      "id": "s30",
+      "type": "cut",
+      "include": false,
+      "label": "The question that earns the story: 30 names, trading whatever I see",
+      "source": "kma",
+      "in": 532.0,
+      "out": 562.0,
+      "status": "rev3: OFF, the twin s30a carries this window. rev2 NEW 08:52-09:22 (student voice; CHECK speaker permission before use). Without it the safari story has no reason to be told; it is Ken's answer to 'how many things should I be looking at'. Drop if permission is not there.",
+      "quote_anchor": "you're just looking at all 30 of those names and if you see a setup you're just taking them... that just seems to be my kryptonite right now"
+    },
+    {
+      "id": "s30a",
+      "type": "overdub",
+      "source": "kma",
+      "in": 532.0,
+      "out": 562.0,
+      "include": true,
+      "label": "ALT animated: The question that earns the story: 30 names, trading whatever I see",
+      "animation_brief": "Twin of s30: same Ken audio, drawn scene (thirty names) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py (scripts/anim_kit.py).",
+      "status": "twin, ON in rev3 (the owner chose the animated cut for Module 2, same here); flip back to s30 in the cutroom per segment",
+      "quote_anchor": "you're just looking at all 30 of those names and if you see a setup you're just taking them... that just seems to be my kryptonite right now"
+    },
+    {
+      "id": "s31",
+      "type": "cut",
+      "include": false,
+      "label": "Watching the lions",
+      "source": "kma",
+      "in": 574.0,
+      "out": 692.0,
+      "status": "rev3: OFF, the twin s31a carries this window. rev1 window 09:34-11:32 kept.",
+      "quote_anchor": "one of the really helpful natural models for trading that I find really useful was watching the way lions hunt"
+    },
+    {
+      "id": "s31a",
+      "type": "overdub",
+      "source": "kma",
+      "in": 574.0,
+      "out": 692.0,
+      "include": true,
+      "label": "ALT animated: Watching the lions",
+      "animation_brief": "Twin of s31: same Ken audio, drawn scene (watching the lions) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py (scripts/anim_kit.py).",
+      "status": "twin, ON in rev3 (the owner chose the animated cut for Module 2, same here); flip back to s31 in the cutroom per segment",
+      "quote_anchor": "one of the really helpful natural models for trading that I find really useful was watching the way lions hunt"
+    },
+    {
+      "id": "s32",
+      "type": "cut",
+      "include": false,
+      "label": "★ Not efficient. Efficient enough. A zebra, not a rabbit",
+      "source": "kma",
+      "in": 692.0,
+      "out": 741.0,
+      "status": "rev3: OFF, the twin s32a carries this window. rev2 11:32-12:21: the zebra-not-rabbit line (12:00-12:21) is the reward-to-risk payoff and stays with the ★.",
+      "quote_anchor": "they're successful maybe one out of five times... they are as efficient as they need to be... the cost benefit analysis of a rabbit doesn't make any sense for a lion"
+    },
+    {
+      "id": "s32a",
+      "type": "overdub",
+      "source": "kma",
+      "in": 692.0,
+      "out": 741.0,
+      "include": true,
+      "label": "ALT animated: ★ Not efficient. Efficient enough. A zebra, not a rabbit",
+      "animation_brief": "Twin of s32: same Ken audio, drawn scene (efficient enough) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py (scripts/anim_kit.py).",
+      "status": "twin, ON in rev3 (the owner chose the animated cut for Module 2, same here); flip back to s32 in the cutroom per segment",
+      "quote_anchor": "they're successful maybe one out of five times... they are as efficient as they need to be... the cost benefit analysis of a rabbit doesn't make any sense for a lion"
+    },
+    {
+      "id": "s33",
+      "type": "cut",
+      "include": false,
+      "label": "No-go terrain; the wolf and the cliff",
+      "source": "kma",
+      "in": 741.0,
+      "out": 821.0,
+      "status": "rev3: OFF, the twin s33a carries this window. rev2 12:21-13:41.",
+      "quote_anchor": "the natural support and resistance for the channel is the no-go terrain which means the price can only go that way or that way... it just takes away all his choices"
+    },
+    {
+      "id": "s33a",
+      "type": "overdub",
+      "source": "kma",
+      "in": 741.0,
+      "out": 821.0,
+      "include": true,
+      "label": "ALT animated: No-go terrain; the wolf and the cliff",
+      "animation_brief": "Twin of s33: same Ken audio, drawn scene (no-go terrain; the wolf and the cliff) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py (scripts/anim_kit.py).",
+      "status": "twin, ON in rev3 (the owner chose the animated cut for Module 2, same here); flip back to s33 in the cutroom per segment",
+      "quote_anchor": "the natural support and resistance for the channel is the no-go terrain which means the price can only go that way or that way... it just takes away all his choices"
+    },
+    {
+      "id": "s34",
+      "type": "cut",
+      "include": false,
+      "label": "Knowing the territory; they have to come back to the watering hole; lock on",
+      "source": "kma",
+      "in": 821.0,
+      "out": 862.0,
+      "status": "rev3: OFF, the twin s34a carries this window. rev2 13:41-14:22. Out-point ESTIMATE: end on 'they're so locked in on the thing that they're concentrating on' (14:22); rev1 stopped at ~14:05 mid-thought.",
+      "quote_anchor": "knowing the territory and knowing your setup and really understanding what your win rate only needs to be... they got to come back to the watering hole... they will run right past other animals that are closer"
+    },
+    {
+      "id": "s34a",
+      "type": "overdub",
+      "source": "kma",
+      "in": 821.0,
+      "out": 862.0,
+      "include": true,
+      "label": "ALT animated: Knowing the territory; they have to come back to the watering hole; lock on",
+      "animation_brief": "Twin of s34: same Ken audio, drawn scene (knowing the territory; lock on) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py (scripts/anim_kit.py).",
+      "status": "twin, ON in rev3 (the owner chose the animated cut for Module 2, same here); flip back to s34 in the cutroom per segment",
+      "quote_anchor": "knowing the territory and knowing your setup and really understanding what your win rate only needs to be... they got to come back to the watering hole... they will run right past other animals that are closer"
+    },
+    {
+      "id": "s35",
+      "type": "slide",
+      "include": true,
+      "label": "Maxim card",
+      "slide_id": "maxim",
+      "duration": 6
+    },
+    {
+      "id": "s36",
+      "type": "slide",
+      "include": true,
+      "label": "End card",
+      "slide_id": "end",
+      "duration": 10
+    }
+  ]
 }

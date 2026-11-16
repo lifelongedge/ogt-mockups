@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>s18a · common sense: can you get there from here</title>
+<style>
+  :root { --bg:#030507; --fg:#E1EEF5; --muted:#8fa3ad; --border:rgba(56,225,255,0.14); --accent:#F2D06B;
+          --ok:#4ade80; --dn:#f87171; --card:#0a1016; --blue:#7baad4; }
+  html, body { margin:0; background:var(--bg); overflow:hidden; }
+  #stage { position:relative; width:1280px; height:720px; background:var(--bg); color:var(--fg);
+           font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; overflow:hidden; }
+  #cap { position:absolute; left:60px; right:60px; top:30px; font-size:32px; font-weight:600; letter-spacing:-.01em; line-height:1.15; }
+  #cap em { font-style:normal; color:var(--accent); }
+  #sub { position:absolute; left:60px; width:1160px; top:648px; font-size:20px; color:var(--muted); line-height:1.4; }
+  #scene { position:absolute; left:60px; top:112px; width:1160px; height:518px; border:1px solid var(--border);
+           border-radius:10px; background:var(--card); overflow:hidden; }
+  #svg { position:absolute; inset:0; }
+  #fade { position:absolute; inset:0; background:var(--bg); pointer-events:none; opacity:0; }
+  /* the picture-in-picture corner: build_v2 composites Ken's camera tile here (PIP_W/X/Y); the cutroom shows this placeholder */
+  #pip { position:absolute; left:950px; top:22px; width:300px; height:169px; border:1px dashed rgba(56,225,255,0.35); border-radius:4px;
+         display:none; color:var(--muted); font-size:13px; text-align:center; line-height:169px; }
+  .pip #pip { display:block; } .pip #cap { right:360px; font-size:29px; }
+  text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; fill:#E1EEF5; }
+  .mono { font-family:ui-monospace,Menlo,Consolas,monospace; }
+</style>
+</head>
+<body>
+<div id="stage" class="">
+  <div id="cap"></div>
+  <div id="pip">Ken on camera, composited at render</div>
+  <div id="scene"><svg id="svg" width="1160" height="530" viewBox="0 0 1160 530"></svg></div>
+  <div id="sub"></div>
+  <div id="fade"></div>
+</div>
+<script>
+const BUILD = 's18a-1';
+console.log('[s18a] build', BUILD);
+// Overdub twin of s18: Ken's audio hva 2386.0→2416.0; t is seconds after the in-point.
+// Beat times read from the VTT cues on 2026-11-16 (tools/cutroom/mental-model-v2/transcript-hva.json).
+window.ANIM_DURATION = 30.0;
+
+const ACC='#F2D06B', FG='#E1EEF5', MUT='#8fa3ad', OK='#4ade80', DN='#f87171', BLUE='#7baad4', BRD='rgba(56,225,255,.22)', CARD='#0a1016';
+const W=1160, H=530;
+const $ = id => document.getElementById(id);
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const ease=u=>{u=clamp(u,0,1);return u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;};
+const lerp=(a,b,u)=>a+(b-a)*u;
+const pr=(t,t0,d)=>ease((t-t0)/(d||0.6));          // eased progress 0..1 from t0 over d seconds
+const on=(t,t0)=>t>=t0;
+const op=(t,t0,d)=>clamp((t-t0)/(d||0.5),0,1);      // linear opacity ramp
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const txt=(x,y,s,o={})=>`<text x="${x}" y="${y}" font-size="${o.sz||20}" fill="${o.c||FG}" opacity="${o.o==null?1:o.o}" text-anchor="${o.a||'start'}" font-weight="${o.w||400}" class="${o.cls||''}" ${o.extra||''}>${esc(s)}</text>`;
+const rect=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.r==null?6:o.r}" fill="${o.f||'none'}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}" ${o.extra||''}/>`;
+const circ=(x,y,r,o={})=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${o.f||FG}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}"/>`;
+const line=(x1,y1,x2,y2,o={})=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${o.s||MUT}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" ${o.dash?`stroke-dasharray="${o.dash}"`:''} stroke-linecap="round"/>`;
+const path=(d,o={})=>`<path d="${d}" fill="${o.f||'none'}" stroke="${o.s||FG}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" stroke-linecap="round" stroke-linejoin="round" ${o.dash?`stroke-dasharray="${o.dash}"`:''}/>`;
+const arrow=(x1,y1,x2,y2,o={})=>{const a=Math.atan2(y2-y1,x2-x1),h=10;return line(x1,y1,x2,y2,o)+path(`M${x2} ${y2} L${x2-h*Math.cos(a-0.5)} ${y2-h*Math.sin(a-0.5)} M${x2} ${y2} L${x2-h*Math.cos(a+0.5)} ${y2-h*Math.sin(a+0.5)}`,{s:o.s||MUT,sw:o.sw||2,o:o.o});};
+// a labelled box that grows in from t0
+const box=(t,t0,x,y,w,h,label,o={})=>{const u=pr(t,t0,0.5);if(u<=0)return '';const ww=w*u,hh=h;return rect(x+(w-ww)/2,y,ww,hh,{s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',sw:o.sw||1.5,o:u})+(u>.6?txt(x+w/2,y+h/2+(o.sz||20)/3,label,{a:'middle',sz:o.sz||20,c:o.c||FG,o:op(t,t0+.3,.3),w:o.w||500}):'');};
+// deterministic pseudo-random
+function rng(seed){let s=seed*9301+49297;return()=>{s=(s*9301+49297)%233280;return s/233280;};}
+// a herd of dots in a region; drift is a slow deterministic wander
+function herd(n,seed,x,y,w,h){const r=rng(seed);const pts=[];for(let i=0;i<n;i++)pts.push({x:x+r()*w,y:y+r()*h,p:r()*6.28,q:r()*6.28});return pts;}
+const wander=(p,t,amp)=>[p.x+Math.sin(t*0.9+p.p)*amp,p.y+Math.cos(t*0.7+p.q)*amp];
+// typewriter: the first k chars of s by time
+const type=(s,t,t0,cps)=>s.slice(0,Math.max(0,Math.floor((t-t0)*(cps||28))));
+// a list that reveals one row per step seconds from t0
+function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
+
+const BEATS = [[0.0, "<em>Common sense</em> connects the furthest excursion of your imagination", ""], [5.2, "back to the world you actually live in", "Is it feasible to get from where you are to where imagination led you?"], [15.8, "Nothing more than strict reward-to-risk ratios on standard framing", ""], [23.4, "A trade we can take, in either direction", ""]];
+
+// a stick figure: head + shoulders, c = colour
+const person=(x,y,o={})=>circ(x,y-14,9,{f:'none',s:o.c||FG,sw:2,o:o.o==null?1:o.o})+path(`M${x-16} ${y+22} C${x-16} ${y} ${x+16} ${y} ${x+16} ${y+22}`,{s:o.c||FG,sw:2,o:o.o==null?1:o.o});
+// a pill label
+const pill=(x,y,s,o={})=>{const w=(o.w||s.length*10+22);return rect(x-w/2,y-15,w,30,{r:15,s:o.s||BRD,f:o.f||'rgba(255,255,255,.03)',o:o.o==null?1:o.o})+txt(x,y+6,s,{a:'middle',sz:o.sz||15,c:o.c||FG,o:o.o==null?1:o.o,w:o.wt||500});};
+// a candle chart from a seed; n bars, rising drift d
+function candles(x,y,w,h,n,seed,d){const r=rng(seed);let v=h*0.55,s='';const bw=w/n;for(let i=0;i<n;i++){const o1=v;v=clamp(v-(r()-0.5+ (d||0))*h*0.12,8,h-8);const hi=Math.min(o1,v)-r()*8,lo=Math.max(o1,v)+r()*8;const up=v<o1;s+=line(x+i*bw+bw/2,y+hi,x+i*bw+bw/2,y+lo,{s:up?OK:DN,sw:1.5});s+=rect(x+i*bw+2,y+Math.min(o1,v),bw-4,Math.max(2,Math.abs(v-o1)),{f:up?OK:DN,r:1});}return s;}
+// a teeter-totter plank on a fulcrum at (cx,cy), half-length L, tilt in degrees
+const plank=(cx,cy,L,deg,o={})=>{const a=deg*Math.PI/180,dx=Math.cos(a)*L,dy=Math.sin(a)*L;return path(`M${cx-22} ${cy+36} L${cx} ${cy} L${cx+22} ${cy+36} Z`,{s:MUT,sw:2,f:'rgba(255,255,255,.04)',o:o.o==null?1:o.o})+line(cx-dx,cy-dy,cx+dx,cy+dy,{s:o.s||FG,sw:o.sw||5,o:o.o==null?1:o.o});};
+// a point on that plank at fraction u (-1 left end .. +1 right end), lifted by r
+const onPlank=(cx,cy,L,deg,u,r)=>{const a=deg*Math.PI/180;return [cx+Math.cos(a)*L*u-Math.sin(a)*-r*0, cy+Math.sin(a)*L*u-(r||0)];};
+
+function draw(t){
+  let s='';
+  // here and the imagined point
+  const o=op(t,0,.6); s += circ(200,400,10,{f:FG,o}); s += txt(200,435,'where you are',{a:'middle',c:MUT,sz:14,o});
+  s += circ(940,140,10,{f:ACC,o}); s += txt(940,115,'where imagination led you',{a:'middle',c:ACC,sz:14,o});
+  const u=pr(t,5.2,2); s += path(`M200 400 C500 400 700 140 ${lerp(200,940,u)} ${lerp(400,140,u)}`,{s:ACC,sw:2,o,dash:'8 6'});
+  if (t>=5.2) s += txt(660,430,'can you get there from here?',{a:'middle',c:FG,sz:17,o:op(t,7.3,.5)});
+  // the ruler: reward : risk
+  if (t>=15.8){ const o2=op(t,15.8,.6); s += rect(300,466,560,22,{s:MUT,o:o2,r:4}); for(let i=0;i<=10;i++) s += line(300+i*56,466,300+i*56,i%5?472:478,{s:MUT,sw:1,o:o2});
+    s += rect(300,466,140,22,{f:DN,o:o2*0.8,r:4}); s += rect(440,466,420,22,{f:OK,o:o2*0.7,r:0}); s += txt(370,458,'risk',{a:'middle',c:DN,sz:12,o:o2}); s += txt(650,458,'reward',{a:'middle',c:OK,sz:12,o:o2}); s += txt(580,506,'standard framing',{a:'middle',c:MUT,sz:13,o:o2}); }
+  if (t>=23.4){ const o2=op(t,23.4,.5); s += txt(330,160,'✓ a trade we can take',{a:'middle',c:OK,sz:18,o:o2}); s += txt(330,184,'in either direction',{a:'middle',c:MUT,sz:13,o:op(t,25.4,.4)}); }
+  return s;
+}
+
+window.renderFrame = function (t) {
+  t = clamp(t, 0, ANIM_DURATION);
+  let cap = '', sub = '';
+  for (const b of BEATS) if (t >= b[0]) { cap = b[1]; sub = b[2] || ''; }
+  $('cap').innerHTML = cap; $('sub').textContent = sub;
+  $('svg').innerHTML = draw(t);
+  const f = $('fade');
+  f.style.opacity = t < 0.5 ? 1 - t / 0.5 : (ANIM_DURATION - t < 0.6 ? 1 - (ANIM_DURATION - t) / 0.6 : 0);
+};
+renderFrame(0);
+</script>
+</body>
+</html>
