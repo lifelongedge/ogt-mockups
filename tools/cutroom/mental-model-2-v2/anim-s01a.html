@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>s01a · be of the herd, not in the herd</title>
+<style>
+  :root { --bg:#030507; --fg:#E1EEF5; --muted:#8fa3ad; --border:rgba(56,225,255,0.14); --accent:#F2D06B;
+          --ok:#4ade80; --dn:#f87171; --card:#0a1016; --blue:#7baad4; }
+  html, body { margin:0; background:var(--bg); overflow:hidden; }
+  #stage { position:relative; width:1280px; height:720px; background:var(--bg); color:var(--fg);
+           font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; overflow:hidden; }
+  #cap { position:absolute; left:60px; right:60px; top:30px; font-size:32px; font-weight:600; letter-spacing:-.01em; line-height:1.2; }
+  #cap em { font-style:normal; color:var(--accent); }
+  #sub { position:absolute; left:60px; width:1160px; top:648px; font-size:20px; color:var(--muted); line-height:1.4; }
+  #scene { position:absolute; left:60px; top:100px; width:1160px; height:530px; border:1px solid var(--border);
+           border-radius:10px; background:var(--card); overflow:hidden; }
+  #svg { position:absolute; inset:0; }
+  #fade { position:absolute; inset:0; background:var(--bg); pointer-events:none; opacity:0; }
+  text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; fill:#E1EEF5; }
+  .mono { font-family:ui-monospace,Menlo,Consolas,monospace; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="cap"></div>
+  <div id="scene"><svg id="svg" width="1160" height="530" viewBox="0 0 1160 530"></svg></div>
+  <div id="sub"></div>
+  <div id="fade"></div>
+</div>
+<script>
+const BUILD = 's01a-1';
+console.log('[s01a] build', BUILD);
+// Overdub twin of s01: Ken's audio t4n 4.0→100.0; t is seconds after the in-point.
+// Beat times read from the VTT cues on 2026-11-16 (tools/cutroom/mental-model-2-v2/transcript-t4n.json).
+window.ANIM_DURATION = 96.0;
+
+const ACC='#F2D06B', FG='#E1EEF5', MUT='#8fa3ad', OK='#4ade80', DN='#f87171', BLUE='#7baad4', BRD='rgba(56,225,255,.22)', CARD='#0a1016';
+const W=1160, H=530;
+const $ = id => document.getElementById(id);
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const ease=u=>{u=clamp(u,0,1);return u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;};
+const lerp=(a,b,u)=>a+(b-a)*u;
+const pr=(t,t0,d)=>ease((t-t0)/(d||0.6));          // eased progress 0..1 from t0 over d seconds
+const on=(t,t0)=>t>=t0;
+const op=(t,t0,d)=>clamp((t-t0)/(d||0.5),0,1);      // linear opacity ramp
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const txt=(x,y,s,o={})=>`<text x="${x}" y="${y}" font-size="${o.sz||20}" fill="${o.c||FG}" opacity="${o.o==null?1:o.o}" text-anchor="${o.a||'start'}" font-weight="${o.w||400}" class="${o.cls||''}" ${o.extra||''}>${esc(s)}</text>`;
+const rect=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.r==null?6:o.r}" fill="${o.f||'none'}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}" ${o.extra||''}/>`;
+const circ=(x,y,r,o={})=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${o.f||FG}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}"/>`;
+const line=(x1,y1,x2,y2,o={})=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${o.s||MUT}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" ${o.dash?`stroke-dasharray="${o.dash}"`:''} stroke-linecap="round"/>`;
+const path=(d,o={})=>`<path d="${d}" fill="${o.f||'none'}" stroke="${o.s||FG}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" stroke-linecap="round" stroke-linejoin="round" ${o.dash?`stroke-dasharray="${o.dash}"`:''}/>`;
+const arrow=(x1,y1,x2,y2,o={})=>{const a=Math.atan2(y2-y1,x2-x1),h=10;return line(x1,y1,x2,y2,o)+path(`M${x2} ${y2} L${x2-h*Math.cos(a-0.5)} ${y2-h*Math.sin(a-0.5)} M${x2} ${y2} L${x2-h*Math.cos(a+0.5)} ${y2-h*Math.sin(a+0.5)}`,{s:o.s||MUT,sw:o.sw||2,o:o.o});};
+// a labelled box that grows in from t0
+const box=(t,t0,x,y,w,h,label,o={})=>{const u=pr(t,t0,0.5);if(u<=0)return '';const ww=w*u,hh=h;return rect(x+(w-ww)/2,y,ww,hh,{s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',sw:o.sw||1.5,o:u})+(u>.6?txt(x+w/2,y+h/2+(o.sz||20)/3,label,{a:'middle',sz:o.sz||20,c:o.c||FG,o:op(t,t0+.3,.3),w:o.w||500}):'');};
+// deterministic pseudo-random
+function rng(seed){let s=seed*9301+49297;return()=>{s=(s*9301+49297)%233280;return s/233280;};}
+// a herd of dots in a region; drift is a slow deterministic wander
+function herd(n,seed,x,y,w,h){const r=rng(seed);const pts=[];for(let i=0;i<n;i++)pts.push({x:x+r()*w,y:y+r()*h,p:r()*6.28,q:r()*6.28});return pts;}
+const wander=(p,t,amp)=>[p.x+Math.sin(t*0.9+p.p)*amp,p.y+Math.cos(t*0.7+p.q)*amp];
+// typewriter: the first k chars of s by time
+const type=(s,t,t0,cps)=>s.slice(0,Math.max(0,Math.floor((t-t0)*(cps||28))));
+// a list that reveals one row per step seconds from t0
+function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
+
+const BEATS = [[0.5, "The ego reward of being right", ""], [11.7, "The ego reward of being right is <em>the single most powerful biological force</em>", "Nothing else is even close."], [22.6, "<em>Be of the herd</em>, but not in the herd", ""], [30.8, "Know how the herd is wired", "When they are surprised, they run. Which way, nobody knows."], [51.5, "Pick your optimum place to perform your skill", "A large enough herd: something runs into the trap."], [69.5, "Adopt the <em>disinterested mindset</em>", "Separate yourself from the ego and from being right or not."], [81.8, "The science project: just collecting data", "The single biggest edge you could possibly have, until human nature changes."]];
+
+const HERD = herd(90, 7, 140, 120, 760, 300);
+function draw(t){
+  let s='';
+  // the herd: dots wandering; after 36 s they scatter in every direction once (the surprise)
+  const scatter = t>=36.2 && t<50 ? pr(t,36.2,3.5) : 0;
+  for (const p of HERD){
+    let [x,y]=wander(p,t,4);
+    if (scatter>0){ x += Math.cos(p.p*3)*160*scatter; y += Math.sin(p.q*3)*110*scatter; }
+    const inside = x>100 && x<940 && y>90 && y<460;
+    s += circ(clamp(x,100,940), clamp(y,90,460), 5, {f: MUT, o: 0.55 + 0.25*Math.sin(t+p.p)});
+  }
+  // the ego glow: a gold pulse on one dot while he names the reward
+  if (t>=11.7 && t<22.6){ const g=0.5+0.5*Math.sin(t*4); s += circ(520,270,26+10*g,{f:'none',s:ACC,sw:2,o:0.6*g}) + circ(520,270,7,{f:ACC}); s += txt(520,330,'being right',{a:'middle',c:ACC,sz:18}); }
+  // "of the herd, not in it": one dot steps out to the edge and watches
+  if (t>=22.6){ const u=pr(t,22.6,1.2); const x=lerp(520,1000,u), y=lerp(270,270,u); s += circ(x,y,8,{f:ACC}); s += circ(x,y,16,{f:'none',s:ACC,sw:1.5,o:0.5});
+    if (u>=1) s += txt(1000,310,'you',{a:'middle',c:ACC,sz:16}); }
+  // the trap: a box at the bottom right, from 51 s; a dot runs into it at 58 s
+  if (t>=51.5){ const o=op(t,51.5,.6); s += rect(820,380,120,80,{s:ACC,sw:1.5,o,r:4,dash:'6 4'}); s += txt(880,430,'trap',{a:'middle',c:ACC,sz:16,o}); }
+  if (t>=58 && t<69.5){ const u=pr(t,58,1.5); s += circ(lerp(600,880,u), lerp(240,420,u), 6, {f:FG}); if(u>=1) s += txt(880,470,'problem solved',{a:'middle',c:OK,sz:16,o:op(t,59.6,.4)}); }
+  // the disinterested mindset: a thin pane slides between the watcher and the herd
+  if (t>=69.5){ const u=pr(t,69.5,1); s += line(960,100+120*(1-u),960,460,{s:ACC,sw:3,o:0.8*u}); s += txt(1000,250,'disinterested',{a:'middle',c:MUT,sz:14,o:u}); s += txt(1000,270,'mindset',{a:'middle',c:MUT,sz:14,o:u}); }
+  // the science project: a clipboard of ticks grows from 81.8 s
+  if (t>=81.8){ const o=op(t,81.8,.5); s += rect(990,330,150,150,{s:BRD,f:'rgba(255,255,255,.03)',o}); s += txt(1065,355,'science project',{a:'middle',c:ACC,sz:14,o});
+    const n=Math.min(6,Math.floor((t-82.5)/1.6)); for(let i=0;i<n;i++) s += txt(1010,385+i*17,'✓ data',{sz:13,c:MUT}); }
+  return s;
+}
+
+window.renderFrame = function (t) {
+  t = clamp(t, 0, ANIM_DURATION);
+  let cap = '', sub = '';
+  for (const b of BEATS) if (t >= b[0]) { cap = b[1]; sub = b[2] || ''; }
+  $('cap').innerHTML = cap; $('sub').textContent = sub;
+  $('svg').innerHTML = draw(t);
+  const f = $('fade');
+  f.style.opacity = t < 0.5 ? 1 - t / 0.5 : (ANIM_DURATION - t < 0.6 ? 1 - (ANIM_DURATION - t) / 0.6 : 0);
+};
+renderFrame(0);
+</script>
+</body>
+</html>

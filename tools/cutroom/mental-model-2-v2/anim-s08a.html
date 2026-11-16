@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>s08a · the wedge</title>
+<style>
+  :root { --bg:#030507; --fg:#E1EEF5; --muted:#8fa3ad; --border:rgba(56,225,255,0.14); --accent:#F2D06B;
+          --ok:#4ade80; --dn:#f87171; --card:#0a1016; --blue:#7baad4; }
+  html, body { margin:0; background:var(--bg); overflow:hidden; }
+  #stage { position:relative; width:1280px; height:720px; background:var(--bg); color:var(--fg);
+           font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; overflow:hidden; }
+  #cap { position:absolute; left:60px; right:60px; top:30px; font-size:32px; font-weight:600; letter-spacing:-.01em; line-height:1.2; }
+  #cap em { font-style:normal; color:var(--accent); }
+  #sub { position:absolute; left:60px; width:1160px; top:648px; font-size:20px; color:var(--muted); line-height:1.4; }
+  #scene { position:absolute; left:60px; top:100px; width:1160px; height:530px; border:1px solid var(--border);
+           border-radius:10px; background:var(--card); overflow:hidden; }
+  #svg { position:absolute; inset:0; }
+  #fade { position:absolute; inset:0; background:var(--bg); pointer-events:none; opacity:0; }
+  text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; fill:#E1EEF5; }
+  .mono { font-family:ui-monospace,Menlo,Consolas,monospace; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="cap"></div>
+  <div id="scene"><svg id="svg" width="1160" height="530" viewBox="0 0 1160 530"></svg></div>
+  <div id="sub"></div>
+  <div id="fade"></div>
+</div>
+<script>
+const BUILD = 's08a-1';
+console.log('[s08a] build', BUILD);
+// Overdub twin of s08: Ken's audio t4n 855.0→1005.0; t is seconds after the in-point.
+// Beat times read from the VTT cues on 2026-11-16 (tools/cutroom/mental-model-2-v2/transcript-t4n.json).
+window.ANIM_DURATION = 150.0;
+
+const ACC='#F2D06B', FG='#E1EEF5', MUT='#8fa3ad', OK='#4ade80', DN='#f87171', BLUE='#7baad4', BRD='rgba(56,225,255,.22)', CARD='#0a1016';
+const W=1160, H=530;
+const $ = id => document.getElementById(id);
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const ease=u=>{u=clamp(u,0,1);return u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;};
+const lerp=(a,b,u)=>a+(b-a)*u;
+const pr=(t,t0,d)=>ease((t-t0)/(d||0.6));          // eased progress 0..1 from t0 over d seconds
+const on=(t,t0)=>t>=t0;
+const op=(t,t0,d)=>clamp((t-t0)/(d||0.5),0,1);      // linear opacity ramp
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const txt=(x,y,s,o={})=>`<text x="${x}" y="${y}" font-size="${o.sz||20}" fill="${o.c||FG}" opacity="${o.o==null?1:o.o}" text-anchor="${o.a||'start'}" font-weight="${o.w||400}" class="${o.cls||''}" ${o.extra||''}>${esc(s)}</text>`;
+const rect=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.r==null?6:o.r}" fill="${o.f||'none'}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}" ${o.extra||''}/>`;
+const circ=(x,y,r,o={})=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${o.f||FG}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}"/>`;
+const line=(x1,y1,x2,y2,o={})=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${o.s||MUT}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" ${o.dash?`stroke-dasharray="${o.dash}"`:''} stroke-linecap="round"/>`;
+const path=(d,o={})=>`<path d="${d}" fill="${o.f||'none'}" stroke="${o.s||FG}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" stroke-linecap="round" stroke-linejoin="round" ${o.dash?`stroke-dasharray="${o.dash}"`:''}/>`;
+const arrow=(x1,y1,x2,y2,o={})=>{const a=Math.atan2(y2-y1,x2-x1),h=10;return line(x1,y1,x2,y2,o)+path(`M${x2} ${y2} L${x2-h*Math.cos(a-0.5)} ${y2-h*Math.sin(a-0.5)} M${x2} ${y2} L${x2-h*Math.cos(a+0.5)} ${y2-h*Math.sin(a+0.5)}`,{s:o.s||MUT,sw:o.sw||2,o:o.o});};
+// a labelled box that grows in from t0
+const box=(t,t0,x,y,w,h,label,o={})=>{const u=pr(t,t0,0.5);if(u<=0)return '';const ww=w*u,hh=h;return rect(x+(w-ww)/2,y,ww,hh,{s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',sw:o.sw||1.5,o:u})+(u>.6?txt(x+w/2,y+h/2+(o.sz||20)/3,label,{a:'middle',sz:o.sz||20,c:o.c||FG,o:op(t,t0+.3,.3),w:o.w||500}):'');};
+// deterministic pseudo-random
+function rng(seed){let s=seed*9301+49297;return()=>{s=(s*9301+49297)%233280;return s/233280;};}
+// a herd of dots in a region; drift is a slow deterministic wander
+function herd(n,seed,x,y,w,h){const r=rng(seed);const pts=[];for(let i=0;i<n;i++)pts.push({x:x+r()*w,y:y+r()*h,p:r()*6.28,q:r()*6.28});return pts;}
+const wander=(p,t,amp)=>[p.x+Math.sin(t*0.9+p.p)*amp,p.y+Math.cos(t*0.7+p.q)*amp];
+// typewriter: the first k chars of s by time
+const type=(s,t,t0,cps)=>s.slice(0,Math.max(0,Math.floor((t-t0)*(cps||28))));
+// a list that reveals one row per step seconds from t0
+function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
+
+const BEATS = [[0.5, "Don't ever forget that lesson", "How is your brain constructed, and how do you preserve the edge?"], [13.1, "The ability to place a <em>buffer</em> between your decision making and your craftsmanship", "And all the embedded emotion of the herd in that compound critical state."], [30.1, "That is the power of <em>no lose plus dinner for two</em>", "The stop above your entry: the trade cannot lose."], [40.6, "Whoo. I'm not dead yet.", "Instantly shift into craftsman mode."], [52.5, "You took all the negative consequences off the table for that trade, forever", ""], [68.0, "From absolute elation that I didn't get killed, to existential relief", ""], [94.5, "Okay, so what now? <em>Frame it, and go be a pro.</em>", ""], [105.6, "Put the disinterested science project on. Hand it to the manager. Add the sniper.", "Done in one."], [124.7, "Listen to that message a hundred thousand times", "The emotional content of the two-hour battle drill."], [141.2, "The mindset of the craftsman, connected to your evolutionary brain", "Don't you ever forget that."]];
+
+function draw(t){
+  let s='';
+  // left: decision/craftsman; right: the herd's emotion; a wedge slides in between
+  const o0=op(t,0.5,.6);
+  s += rect(120,160,300,200,{s:BRD,f:'rgba(255,255,255,.02)',o:o0}); s += txt(270,250,'your decision',{a:'middle',sz:20,o:o0}); s += txt(270,280,'your craftsmanship',{a:'middle',sz:16,c:MUT,o:o0});
+  const H2=herd(40,5,760,180,280,160); for(const p of H2){ const [x,y]=wander(p,t,6); s += circ(x,y,5,{f:DN,o:0.5*o0}); } s += txt(900,370,'the herd\'s emotion',{a:'middle',sz:16,c:DN,o:o0});
+  if (t>=13.1){ const u=pr(t,13.1,1.2); const yTop=lerp(-40,120,u); s += path(`M560 ${yTop} L620 ${yTop} L600 400 L580 400 Z`,{f:'rgba(242,208,107,.25)',s:ACC,sw:2}); s += txt(590,430,'buffer',{a:'middle',c:ACC,sz:18,o:u}); }
+  // NL+D42: a tiny price panel with entry and a stop that moves above it
+  if (t>=30.1){ const o=op(t,30.1,.6); s += rect(120,380,300,120,{s:BRD,f:CARD,o}); s += line(140,460,400,460,{s:MUT,sw:1.5,o}); s += txt(405,464,'entry',{sz:12,c:MUT,o});
+    const u=pr(t,31.5,1.2); const sy=lerp(490,445,u); s += line(140,sy,400,sy,{s:OK,sw:2,o}); s += txt(405,sy+4,u>.9?'stop: no lose + dinner':'stop',{sz:12,c:OK,o});
+    s += txt(270,398,'NL + D42',{a:'middle',c:ACC,sz:14,cls:'mono',o}); }
+  if (t>=40.6 && t<68){ const o=op(t,40.6,.4); s += txt(590,90,'craftsman mode',{a:'middle',c:ACC,sz:22,w:600,o}); }
+  if (t>=52.5){ const o=op(t,52.5,.6); s += txt(900,440,'negative consequences',{a:'middle',c:MUT,sz:16,o}); s += line(790,436,1010,436,{s:DN,sw:2,o:op(t,56.7,.5)}); s += txt(900,470,'off the table, forever',{a:'middle',c:OK,sz:16,o:op(t,56.7,.5)}); }
+  if (t>=68 && t<94.5){ const o=op(t,68,.5); s += txt(590,90,'elation → relief',{a:'middle',c:FG,sz:22,o}); }
+  // the sequence: frame → science project → manager → sniper
+  if (t>=94.5){ const steps=[['frame it',94.5],['science project',105.6],['the manager',110.6],['the sniper',115.3]];
+    const xs=[470,640,810,980]; steps.forEach((st,i)=>{ const u=pr(t,st[1],.5); if(u>0){ s += rect(xs[i]-70,70,140,44,{s:ACC,f:'rgba(242,208,107,.1)',o:u}); s += txt(xs[i],98,st[0],{a:'middle',c:ACC,sz:15,o:u}); if(i) s += arrow(xs[i-1]+72,92,xs[i]-72,92,{s:ACC,o:u}); } });
+    if (t>=115.3) s += txt(725,135,'done in one',{a:'middle',c:OK,sz:16,o:op(t,115.3,.5)}); }
+  if (t>=124.7){ const n=Math.min(100000,Math.floor((t-124.7)*9000)); s += txt(590,500,`× ${n.toLocaleString()}`,{a:'middle',c:MUT,sz:18,cls:'mono'}); }
+  return s;
+}
+
+window.renderFrame = function (t) {
+  t = clamp(t, 0, ANIM_DURATION);
+  let cap = '', sub = '';
+  for (const b of BEATS) if (t >= b[0]) { cap = b[1]; sub = b[2] || ''; }
+  $('cap').innerHTML = cap; $('sub').textContent = sub;
+  $('svg').innerHTML = draw(t);
+  const f = $('fade');
+  f.style.opacity = t < 0.5 ? 1 - t / 0.5 : (ANIM_DURATION - t < 0.6 ? 1 - (ANIM_DURATION - t) / 0.6 : 0);
+};
+renderFrame(0);
+</script>
+</body>
+</html>

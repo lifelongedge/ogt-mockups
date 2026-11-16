@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>s26a · sense and respond</title>
+<style>
+  :root { --bg:#030507; --fg:#E1EEF5; --muted:#8fa3ad; --border:rgba(56,225,255,0.14); --accent:#F2D06B;
+          --ok:#4ade80; --dn:#f87171; --card:#0a1016; --blue:#7baad4; }
+  html, body { margin:0; background:var(--bg); overflow:hidden; }
+  #stage { position:relative; width:1280px; height:720px; background:var(--bg); color:var(--fg);
+           font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; overflow:hidden; }
+  #cap { position:absolute; left:60px; right:60px; top:30px; font-size:32px; font-weight:600; letter-spacing:-.01em; line-height:1.2; }
+  #cap em { font-style:normal; color:var(--accent); }
+  #sub { position:absolute; left:60px; width:1160px; top:648px; font-size:20px; color:var(--muted); line-height:1.4; }
+  #scene { position:absolute; left:60px; top:100px; width:1160px; height:530px; border:1px solid var(--border);
+           border-radius:10px; background:var(--card); overflow:hidden; }
+  #svg { position:absolute; inset:0; }
+  #fade { position:absolute; inset:0; background:var(--bg); pointer-events:none; opacity:0; }
+  text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; fill:#E1EEF5; }
+  .mono { font-family:ui-monospace,Menlo,Consolas,monospace; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="cap"></div>
+  <div id="scene"><svg id="svg" width="1160" height="530" viewBox="0 0 1160 530"></svg></div>
+  <div id="sub"></div>
+  <div id="fade"></div>
+</div>
+<script>
+const BUILD = 's26a-1';
+console.log('[s26a] build', BUILD);
+// Overdub twin of s26: Ken's audio muw 5760.0→5820.0; t is seconds after the in-point.
+// Beat times read from the VTT cues on 2026-11-16 (tools/cutroom/mental-model-2-v2/transcript-muw.json).
+window.ANIM_DURATION = 60.0;
+
+const ACC='#F2D06B', FG='#E1EEF5', MUT='#8fa3ad', OK='#4ade80', DN='#f87171', BLUE='#7baad4', BRD='rgba(56,225,255,.22)', CARD='#0a1016';
+const W=1160, H=530;
+const $ = id => document.getElementById(id);
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const ease=u=>{u=clamp(u,0,1);return u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;};
+const lerp=(a,b,u)=>a+(b-a)*u;
+const pr=(t,t0,d)=>ease((t-t0)/(d||0.6));          // eased progress 0..1 from t0 over d seconds
+const on=(t,t0)=>t>=t0;
+const op=(t,t0,d)=>clamp((t-t0)/(d||0.5),0,1);      // linear opacity ramp
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const txt=(x,y,s,o={})=>`<text x="${x}" y="${y}" font-size="${o.sz||20}" fill="${o.c||FG}" opacity="${o.o==null?1:o.o}" text-anchor="${o.a||'start'}" font-weight="${o.w||400}" class="${o.cls||''}" ${o.extra||''}>${esc(s)}</text>`;
+const rect=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.r==null?6:o.r}" fill="${o.f||'none'}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}" ${o.extra||''}/>`;
+const circ=(x,y,r,o={})=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${o.f||FG}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}"/>`;
+const line=(x1,y1,x2,y2,o={})=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${o.s||MUT}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" ${o.dash?`stroke-dasharray="${o.dash}"`:''} stroke-linecap="round"/>`;
+const path=(d,o={})=>`<path d="${d}" fill="${o.f||'none'}" stroke="${o.s||FG}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" stroke-linecap="round" stroke-linejoin="round" ${o.dash?`stroke-dasharray="${o.dash}"`:''}/>`;
+const arrow=(x1,y1,x2,y2,o={})=>{const a=Math.atan2(y2-y1,x2-x1),h=10;return line(x1,y1,x2,y2,o)+path(`M${x2} ${y2} L${x2-h*Math.cos(a-0.5)} ${y2-h*Math.sin(a-0.5)} M${x2} ${y2} L${x2-h*Math.cos(a+0.5)} ${y2-h*Math.sin(a+0.5)}`,{s:o.s||MUT,sw:o.sw||2,o:o.o});};
+// a labelled box that grows in from t0
+const box=(t,t0,x,y,w,h,label,o={})=>{const u=pr(t,t0,0.5);if(u<=0)return '';const ww=w*u,hh=h;return rect(x+(w-ww)/2,y,ww,hh,{s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',sw:o.sw||1.5,o:u})+(u>.6?txt(x+w/2,y+h/2+(o.sz||20)/3,label,{a:'middle',sz:o.sz||20,c:o.c||FG,o:op(t,t0+.3,.3),w:o.w||500}):'');};
+// deterministic pseudo-random
+function rng(seed){let s=seed*9301+49297;return()=>{s=(s*9301+49297)%233280;return s/233280;};}
+// a herd of dots in a region; drift is a slow deterministic wander
+function herd(n,seed,x,y,w,h){const r=rng(seed);const pts=[];for(let i=0;i<n;i++)pts.push({x:x+r()*w,y:y+r()*h,p:r()*6.28,q:r()*6.28});return pts;}
+const wander=(p,t,amp)=>[p.x+Math.sin(t*0.9+p.p)*amp,p.y+Math.cos(t*0.7+p.q)*amp];
+// typewriter: the first k chars of s by time
+const type=(s,t,t0,cps)=>s.slice(0,Math.max(0,Math.floor((t-t0)*(cps||28))));
+// a list that reveals one row per step seconds from t0
+function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
+
+const BEATS = [[0.0, "To do that, I have to eliminate everything else", "That is why the Zero State, the planning and the preparation matter."], [9.2, "All I have to be able to do is <em>sense and respond</em>", ""], [18.1, "I have already prepared my responses to the expected signals", ""], [23.1, "A signal I wasn't prepared for? <em>I don't do anything.</em>", ""], [29.3, "The sages: I'd rather be outside the trade wishing I was in than inside wishing I was out", ""], [38.6, "Not on my training plan? I don't take it. I study it, so I can be ready in the future.", ""], [42.6, "They all look the same leaving the station from a critical state", "Take the signals; see what shapes out later."], [52.8, "Don't confuse activity with results", "Be relentless about deciding which things you are going to do."]];
+
+function draw(t){
+  let s='';
+  // a prepared table: signal → response; an unknown signal gets 'no action'
+  const rows=[['breakout above the range','standard entry'],['failed signal','stop, reverse'],['critical state, range compression','frame both ways']];
+  if (t>=18.1){ const o=op(t,18.1,.6); s += txt(180,120,'expected signal',{c:MUT,sz:14,o}); s += txt(620,120,'prepared response',{c:MUT,sz:14,o}); s += line(160,130,1000,130,{s:BRD,sw:1,o});
+    rows.forEach((r,i)=>{ const u=op(t,18.5+i*1.2,.4); s += txt(180,165+i*44,r[0],{sz:18,o:u}); s += arrow(560,159+i*44,600,159+i*44,{s:OK,o:u}); s += txt(620,165+i*44,r[1],{sz:18,c:OK,o:u}); }); }
+  if (t>=23.1){ const u=op(t,23.1,.5); s += txt(180,165+3*44,'something I wasn\'t prepared for',{sz:18,c:DN,o:u}); s += arrow(560,159+3*44,600,159+3*44,{s:DN,o:u}); s += txt(620,165+3*44,'no action',{sz:18,c:DN,w:600,o:u}); }
+  if (t>=9.2 && t<18.1){ const o=op(t,9.2,.5); s += txt(580,250,'sense → respond',{a:'middle',c:ACC,sz:34,w:700,o}); }
+  if (t<9.2){ const o=op(t,0,.5); const H4=herd(30,13,200,150,760,220); for(const p of H4){ const [x,y]=wander(p,t,4); s += circ(x,y,5,{f:MUT,o:0.5*(1-op(t,2,4))*o}); } s += txt(580,420,'eliminate everything else',{a:'middle',c:MUT,sz:18,o}); }
+  if (t>=29.3 && t<52.8){ const o=op(t,29.3,.6); s += rect(160,360,400,110,{s:BRD,f:'rgba(255,255,255,.02)',o}); s += txt(360,400,'outside, wishing I was in',{a:'middle',c:OK,sz:16,o}); s += txt(360,430,'beats inside, wishing I was out',{a:'middle',c:MUT,sz:14,o});
+    if (t>=42.6){ const o2=op(t,42.6,.6); for(let i=0;i<5;i++){ const u=((t-42.6)*0.4+i*0.2)%1; s += circ(620+u*380,415-i*0+Math.sin(u*6)*(i-2)*18*u,5,{f:BLUE,o:o2*(1-u)}); } s += txt(810,470,'they all look the same leaving the station',{a:'middle',c:MUT,sz:13,o:o2}); } }
+  if (t>=52.8){ const o=op(t,52.8,.6); s += txt(580,440,'activity ≠ results',{a:'middle',c:ACC,sz:26,w:700,o}); }
+  return s;
+}
+
+window.renderFrame = function (t) {
+  t = clamp(t, 0, ANIM_DURATION);
+  let cap = '', sub = '';
+  for (const b of BEATS) if (t >= b[0]) { cap = b[1]; sub = b[2] || ''; }
+  $('cap').innerHTML = cap; $('sub').textContent = sub;
+  $('svg').innerHTML = draw(t);
+  const f = $('fade');
+  f.style.opacity = t < 0.5 ? 1 - t / 0.5 : (ANIM_DURATION - t < 0.6 ? 1 - (ANIM_DURATION - t) / 0.6 : 0);
+};
+renderFrame(0);
+</script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>s21a · from impulse to action</title>
+<style>
+  :root { --bg:#030507; --fg:#E1EEF5; --muted:#8fa3ad; --border:rgba(56,225,255,0.14); --accent:#F2D06B;
+          --ok:#4ade80; --dn:#f87171; --card:#0a1016; --blue:#7baad4; }
+  html, body { margin:0; background:var(--bg); overflow:hidden; }
+  #stage { position:relative; width:1280px; height:720px; background:var(--bg); color:var(--fg);
+           font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; overflow:hidden; }
+  #cap { position:absolute; left:60px; right:60px; top:30px; font-size:32px; font-weight:600; letter-spacing:-.01em; line-height:1.2; }
+  #cap em { font-style:normal; color:var(--accent); }
+  #sub { position:absolute; left:60px; width:1160px; top:648px; font-size:20px; color:var(--muted); line-height:1.4; }
+  #scene { position:absolute; left:60px; top:100px; width:1160px; height:530px; border:1px solid var(--border);
+           border-radius:10px; background:var(--card); overflow:hidden; }
+  #svg { position:absolute; inset:0; }
+  #fade { position:absolute; inset:0; background:var(--bg); pointer-events:none; opacity:0; }
+  text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; fill:#E1EEF5; }
+  .mono { font-family:ui-monospace,Menlo,Consolas,monospace; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="cap"></div>
+  <div id="scene"><svg id="svg" width="1160" height="530" viewBox="0 0 1160 530"></svg></div>
+  <div id="sub"></div>
+  <div id="fade"></div>
+</div>
+<script>
+const BUILD = 's21a-1';
+console.log('[s21a] build', BUILD);
+// Overdub twin of s21: Ken's audio rjg 782.0→880.0; t is seconds after the in-point.
+// Beat times read from the VTT cues on 2026-11-16 (tools/cutroom/mental-model-2-v2/transcript-rjg.json).
+window.ANIM_DURATION = 98.0;
+
+const ACC='#F2D06B', FG='#E1EEF5', MUT='#8fa3ad', OK='#4ade80', DN='#f87171', BLUE='#7baad4', BRD='rgba(56,225,255,.22)', CARD='#0a1016';
+const W=1160, H=530;
+const $ = id => document.getElementById(id);
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const ease=u=>{u=clamp(u,0,1);return u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;};
+const lerp=(a,b,u)=>a+(b-a)*u;
+const pr=(t,t0,d)=>ease((t-t0)/(d||0.6));          // eased progress 0..1 from t0 over d seconds
+const on=(t,t0)=>t>=t0;
+const op=(t,t0,d)=>clamp((t-t0)/(d||0.5),0,1);      // linear opacity ramp
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const txt=(x,y,s,o={})=>`<text x="${x}" y="${y}" font-size="${o.sz||20}" fill="${o.c||FG}" opacity="${o.o==null?1:o.o}" text-anchor="${o.a||'start'}" font-weight="${o.w||400}" class="${o.cls||''}" ${o.extra||''}>${esc(s)}</text>`;
+const rect=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.r==null?6:o.r}" fill="${o.f||'none'}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}" ${o.extra||''}/>`;
+const circ=(x,y,r,o={})=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${o.f||FG}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}"/>`;
+const line=(x1,y1,x2,y2,o={})=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${o.s||MUT}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" ${o.dash?`stroke-dasharray="${o.dash}"`:''} stroke-linecap="round"/>`;
+const path=(d,o={})=>`<path d="${d}" fill="${o.f||'none'}" stroke="${o.s||FG}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" stroke-linecap="round" stroke-linejoin="round" ${o.dash?`stroke-dasharray="${o.dash}"`:''}/>`;
+const arrow=(x1,y1,x2,y2,o={})=>{const a=Math.atan2(y2-y1,x2-x1),h=10;return line(x1,y1,x2,y2,o)+path(`M${x2} ${y2} L${x2-h*Math.cos(a-0.5)} ${y2-h*Math.sin(a-0.5)} M${x2} ${y2} L${x2-h*Math.cos(a+0.5)} ${y2-h*Math.sin(a+0.5)}`,{s:o.s||MUT,sw:o.sw||2,o:o.o});};
+// a labelled box that grows in from t0
+const box=(t,t0,x,y,w,h,label,o={})=>{const u=pr(t,t0,0.5);if(u<=0)return '';const ww=w*u,hh=h;return rect(x+(w-ww)/2,y,ww,hh,{s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',sw:o.sw||1.5,o:u})+(u>.6?txt(x+w/2,y+h/2+(o.sz||20)/3,label,{a:'middle',sz:o.sz||20,c:o.c||FG,o:op(t,t0+.3,.3),w:o.w||500}):'');};
+// deterministic pseudo-random
+function rng(seed){let s=seed*9301+49297;return()=>{s=(s*9301+49297)%233280;return s/233280;};}
+// a herd of dots in a region; drift is a slow deterministic wander
+function herd(n,seed,x,y,w,h){const r=rng(seed);const pts=[];for(let i=0;i<n;i++)pts.push({x:x+r()*w,y:y+r()*h,p:r()*6.28,q:r()*6.28});return pts;}
+const wander=(p,t,amp)=>[p.x+Math.sin(t*0.9+p.p)*amp,p.y+Math.cos(t*0.7+p.q)*amp];
+// typewriter: the first k chars of s by time
+const type=(s,t,t0,cps)=>s.slice(0,Math.max(0,Math.floor((t-t0)*(cps||28))));
+// a list that reveals one row per step seconds from t0
+function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
+
+const BEATS = [[0.5, "Protect the chimp with the way we use those signals", ""], [10.4, "Trace the feelings: where do they come from?", "The art, or the state of mind you brought to it?"], [31.4, "Can we manage our <em>internal state</em>?", "So that a stimulus leads to a preferred, professional act, not an impulsive one."], [47.1, "Map the process: impulses, sense-making, reactions, actions", ""], [58.2, "Build processes that leverage our discipline", "Structure the learning environment so we act in a sensible, planned way."], [73.7, "The environment gives you signals all the time", "Establish filters and triggers for action."], [89.1, "Become <em>intentional</em> in the way that we trade", ""]];
+
+function draw(t){
+  let s='';
+  const chain=[['stimulus',47.1],['state of mind',48.5],['feeling',50],['impulse',51.6],['sense-making',53],['reaction',54.5],['action',56]];
+  if (t>=47.1){ chain.forEach((c,i)=>{ const u=pr(t,c[1],.5); if(u>0){ const x=90+i*155; s += rect(x,240,140,56,{s:BRD,f:'rgba(255,255,255,.03)',o:u}); s += txt(x+70,274,c[0],{a:'middle',sz:14,o:u}); if(i) s += arrow(x-15,268,x,268,{s:MUT,o:u}); } }); }
+  if (t>=73.7){ const o=op(t,73.7,.6); s += rect(400,330,160,44,{s:ACC,f:'rgba(242,208,107,.08)',o}); s += txt(480,358,'filter',{a:'middle',c:ACC,sz:15,o}); s += rect(620,330,160,44,{s:ACC,f:'rgba(242,208,107,.08)',o:op(t,84.4,.5)}); s += txt(700,358,'trigger',{a:'middle',c:ACC,sz:15,o:op(t,84.4,.5)}); s += arrow(480,330,480,300,{s:ACC,o}); s += arrow(700,330,860,300,{s:ACC,o:op(t,84.4,.5)}); }
+  if (t>=31.4 && t<47.1){ const o=op(t,31.4,.6); s += circ(300,260,60,{f:'none',s:ACC,sw:2,o}); s += txt(300,266,'internal state',{a:'middle',c:ACC,sz:14,o}); s += arrow(120,260,235,260,{s:BLUE,o}); s += txt(170,240,'stimulus',{a:'middle',c:BLUE,sz:13,o});
+    s += arrow(365,240,520,170,{s:OK,o}); s += txt(620,165,'preferred, professional',{c:OK,sz:16,o}); s += arrow(365,280,520,350,{s:DN,o}); s += txt(620,355,'impulsive',{c:DN,sz:16,o}); }
+  if (t>=10.4 && t<31.4){ const o=op(t,10.4,.6); s += txt(580,200,'the feeling',{a:'middle',c:ACC,sz:24,w:600,o}); s += txt(380,300,'from the picture?',{a:'middle',c:MUT,sz:18,o:op(t,15.6,.5)}); s += txt(780,300,'from your state of mind?',{a:'middle',c:MUT,sz:18,o:op(t,21.9,.5)}); }
+  if (t>=58.2 && t<73.7){ s += list(t,58.2,5,['processes that leverage discipline','a structured learning environment','act in a sensible, planned way'],300,400,{sz:18,c:MUT,lh:30}); }
+  if (t>=89.1) s += txt(580,480,'intentional',{a:'middle',c:OK,sz:30,w:700,o:op(t,89.1,.6)});
+  return s;
+}
+
+window.renderFrame = function (t) {
+  t = clamp(t, 0, ANIM_DURATION);
+  let cap = '', sub = '';
+  for (const b of BEATS) if (t >= b[0]) { cap = b[1]; sub = b[2] || ''; }
+  $('cap').innerHTML = cap; $('sub').textContent = sub;
+  $('svg').innerHTML = draw(t);
+  const f = $('fade');
+  f.style.opacity = t < 0.5 ? 1 - t / 0.5 : (ANIM_DURATION - t < 0.6 ? 1 - (ANIM_DURATION - t) / 0.6 : 0);
+};
+renderFrame(0);
+</script>
+</body>
+</html>
