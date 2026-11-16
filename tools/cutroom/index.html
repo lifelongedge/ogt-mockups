@@ -9,7 +9,7 @@
     --bg:#0e0e0c; --card:#181815; --card2:#1f1f1c; --fg:#e8e6df; --dim:#9c978a;
     --faint:#5d594f; --amber:#d4a559; --amber-dim:#8a6a35; --border:#2a2925;
     --cut:#d4a559; --explainer:#7baad4; --overdub:#6aa84f; --slide:#9c978a;
-    --excl:#c45656;
+    --excl:#c45656; --board:#b48ead; --rec:#d9534f;
   }
   * { box-sizing:border-box; margin:0; padding:0; }
   html,body { background:var(--bg); color:var(--fg); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
@@ -43,6 +43,8 @@
   .type-pill { font-size:.62rem; font-family:"SF Mono",Menlo,monospace; font-weight:700; letter-spacing:.06em; padding:.08rem .45rem; border-radius:3px; color:#0e0e0c; }
   .type-cut .type-pill { background:var(--cut); } .type-explainer .type-pill { background:var(--explainer); }
   .type-overdub .type-pill { background:var(--overdub); } .type-slide .type-pill { background:var(--slide); }
+  .type-board .type-pill { background:var(--board); } .type-outcome .type-pill { background:var(--explainer); }
+  .lanes .lv.a-take { border-left:3px solid var(--rec); }
   .seglabel { font-size:.9rem; }
   .segdur { margin-left:auto; font-family:"SF Mono",Menlo,monospace; font-size:.72rem; color:var(--faint); }
   .lanes { display:grid; grid-template-columns: 64px 1fr; gap:.15rem .5rem; margin-top:.45rem; font-size:.7rem; }
@@ -81,6 +83,27 @@
                transform-origin:top left; border-radius:6px; background:#000;
                display:none; pointer-events:none; }
   .vstack.anim .animlayer { display:block; }
+  /* ---- the Voice panel: an animation-only viewer (no source video), the prompter, the recorder ---- */
+  .vstack.solo { width:100%; aspect-ratio:16/9; background:#000; border-radius:6px; overflow:hidden; }
+  .vstack.solo .animlayer { display:block; }
+  .prompter { font-size:1.08rem; line-height:1.65; max-height:34vh; overflow-y:auto; border:1px solid var(--border); border-radius:6px; padding:.75rem .95rem; background:var(--card); color:var(--fg); }
+  .prompter u { text-decoration:none; border-bottom:2px solid var(--amber-dim); }
+  .prompter.board li { margin:.2rem 0; }
+  .vaudio { width:100%; height:32px; margin:.4rem 0; }
+  button.rec { background:var(--rec); border-color:var(--rec); color:#fff; font-weight:600; }
+  button.rec.live { animation:pulse 1s infinite; } @keyframes pulse { 50% { opacity:.55; } }
+  .vstatus { font-family:"SF Mono",Menlo,monospace; font-size:.72rem; color:var(--dim); line-height:1.5; }
+  .vstatus b { color:var(--amber); font-weight:600; }
+  .fitrep { font-family:"SF Mono",Menlo,monospace; font-size:.7rem; line-height:1.55; color:var(--dim); border:1px solid var(--border); border-radius:6px; padding:.4rem .6rem; background:var(--card); max-height:22vh; overflow:auto; }
+  .fitrep .ok { color:#6aa84f; } .fitrep .fz { color:var(--amber); } .fitrep .no { color:var(--excl); }
+  .microw { display:flex; align-items:center; gap:.6rem; margin:.35rem 0; font-size:.75rem; color:var(--dim); flex-wrap:wrap; }
+  .microw select { background:var(--card); color:var(--fg); border:1px solid var(--border); border-radius:5px; padding:.25rem .4rem; font:inherit; font-size:.75rem; max-width:320px; }
+  .meter { flex:1; min-width:140px; height:10px; border:1px solid var(--border); border-radius:5px; background:var(--card); overflow:hidden; }
+  .meter i { display:block; height:100%; width:0; background:linear-gradient(90deg, #6aa84f, var(--amber) 70%, var(--rec)); transition:width .08s; }
+  .meter.flat i { background:var(--excl); }
+  .diag { font-family:"SF Mono",Menlo,monospace; font-size:.68rem; color:var(--dim); white-space:pre-wrap; border:1px solid var(--border); border-radius:6px; padding:.4rem .6rem; background:var(--card); max-height:26vh; overflow:auto; }
+  .diag b { color:var(--amber); font-weight:600; } .diag .bad { color:var(--excl); } .diag .good { color:#6aa84f; }
+  .rlog { font-family:"SF Mono",Menlo,monospace; font-size:.66rem; color:var(--faint); white-space:pre-wrap; max-height:16vh; overflow:auto; }
   .viewtabs { display:flex; gap:.35rem; align-items:center; margin:.55rem 0 0; flex-wrap:wrap; }
   .viewtabs button.on { background:var(--amber-dim); border-color:var(--amber-dim); color:#0e0e0c; font-weight:600; }
   .viewtabs .cov { margin-left:auto; font-size:.68rem; color:var(--faint); font-family:"SF Mono",Menlo,monospace; }
@@ -150,7 +173,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const BUILD = 'cutroom-11g';
+const BUILD = 'cutroom-16';
 console.log('[cutroom] build', BUILD);
 window.__edgeBuild = BUILD;
 
@@ -210,7 +233,7 @@ function doRedo() {
 }
 
 const $ = id => document.getElementById(id);
-const toast = msg => { const t=$('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'), 1800); };
+const toast = (msg, ms = 1800) => { const t=$('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'), ms); };
 const fmt = s => { s=Math.max(0,s); const m=Math.floor(s/60), ss=(s%60); return `${m}:${ss.toFixed(1).padStart(4,'0')}`; };
 
 function mediaUrl(file) {
@@ -222,29 +245,41 @@ const txCache = {};
 async function loadTranscript(srcId) {
   if (txCache[srcId]) return txCache[srcId];
   try {
-    const r = await fetch(`${COURSE}/transcript-${srcId}.json`, {cache:'no-cache'});
+    const r = await fetch(`${COURSE}/transcript-${srcId}.json?t=${Date.now()}`, {cache:'no-cache'});   // cutroom-16: the Pages CDN holds a URL for 10 min per edge; a fresh query string skips it
     txCache[srcId] = (await r.json()).cues || [];
   } catch { txCache[srcId] = []; }
   return txCache[srcId];
 }
 function segDur(s) {
+  const v = VOICE && VOICE.segments && VOICE.segments[s.id];
+  if (v) { const d = (v.take && v.take.duration) || v.synth_duration; if (d) return d; }
   if (s.type === 'slide') return s.duration || 0;
+  if (s.type === 'board') return s.est_duration || 0;
   if (s.type === 'explainer' || s.type === 'outcome') return s.est_duration || 0;
   return Math.max(0, (s.out || 0) - (s.in || 0));
 }
 
 // ---------- load ----------
 async function load() {
-  const res = await fetch(`${COURSE}/plan.v2.json`, {cache:'no-cache'});
+  const res = await fetch(`${COURSE}/plan.v2.json?t=${Date.now()}`, {cache:'no-cache'});   // cutroom-16: same, so a new revision shows on the first reload
   published = await res.json();
   const saved = localStorage.getItem(LS_KEY);
   if (saved) {
     try {
-      plan = JSON.parse(saved);
-      // voices + media_base always follow the published plan (voice slate can grow after local edits began)
-      plan.voices = published.voices;
-      plan.media_base = published.media_base;
-      toast('Loaded local edits (localStorage)');
+      const loc = JSON.parse(saved);
+      if ((published.revision || 0) > (loc.revision || 0)) {
+        // cutroom-15: a plan published since the local edits began wins (the owner's s01 and s08 were hidden behind a rev-9 copy);
+        // the local copy is set aside, not lost
+        localStorage.setItem(LS_KEY + '.stale', saved); localStorage.removeItem(LS_KEY);
+        plan = structuredClone(published);
+        toast(`Plan rev ${published.revision} published since your local edits (rev ${loc.revision || '?'}): loaded the published plan; the edits are set aside`, 7000);
+      } else {
+        plan = loc;
+        // voices + media_base always follow the published plan (voice slate can grow after local edits began)
+        plan.voices = published.voices;
+        plan.media_base = published.media_base;
+        toast('Loaded local edits (localStorage)');
+      }
     }
     catch { plan = structuredClone(published); }
   } else {
@@ -278,9 +313,17 @@ function laneModel(s) {
     audio: ['a-vo', `synth VO (${s.voice||'?'}) · ~${s.est_duration||'?'}s`],
     overlay: ['o-none','(none)'],
   };
+  const v = VOICE && VOICE.segments && VOICE.segments[s.id];
+  const voiceLane = v && v.take ? ['a-take', `YOUR TAKE · ${fmt(v.take.duration)}${v.take.fitted ? ' · fitted' : ' · NOT FITTED'}`]
+                                : ['a-vo', `synth VO (${s.voice||'?'}) · ~${Math.round(segDur(s))||'?'}s`];
   if (s.type === 'explainer') return {
     video: ['v-anim', 'CUSTOM ANIMATION'],
-    audio: ['a-vo', `synth VO (${s.voice||'?'}) · ~${s.est_duration||'?'}s`],
+    audio: voiceLane,
+    overlay: ['o-none','(none)'],
+  };
+  if (s.type === 'board') return {
+    video: ['v-anim', 'BOARD · stills from the asset library, pinned to words'],
+    audio: v && v.take ? voiceLane : ['a-vo', `recorded voice (${s.voice||'stand-in'}) · ~${Math.round(segDur(s))||'?'}s`],
     overlay: ['o-none','(none)'],
   };
   return { // slide
@@ -331,7 +374,7 @@ let animLayer = null, animMode = 'source', animDur = 40, animReady = false, anim
 // clamped by max-height on a short viewport, so fit to whichever axis binds and
 // centre on the other — otherwise the overlay drifts off his picture.
 function fitAnim() {
-  const f = animLayer, v = $('vid');
+  const f = animLayer, v = $('vid') || $('vstack');
   if (!f || !v) return;
   const w = v.clientWidth, h = v.clientHeight;
   if (!w || !h) return;
@@ -463,6 +506,7 @@ function select(i) {
         </div>
         <div class="tx" id="tx">loading transcript…</div>
       </div>` : ''}
+    ${voiceInfo(s) ? voicePanelHtml(s, voiceInfo(s)) : ''}
     ${(s.type==='explainer'||s.type==='outcome') ? `
       <div class="field"><label>Voice</label><div id="voices"></div></div>
       <div class="field"><label>VO script (the synth voice reads exactly this)</label>
@@ -476,7 +520,7 @@ function select(i) {
         <input type="text" value="${s.slide_id} · ${s.duration}s" disabled></div>` : ''}
     <div class="field"><label>Segment type</label>
       <select id="typeSel">
-        ${['cut','overdub','explainer','outcome','slide'].map(t=>`<option ${t===s.type?'selected':''}>${t}</option>`).join('')}
+        ${['cut','overdub','explainer','outcome','slide','board'].map(t=>`<option ${t===s.type?'selected':''}>${t}</option>`).join('')}
       </select>
       <div class="hint">cut ⇄ overdub is the common flip: same audio, keep or replace his screen.</div>
     </div>
@@ -522,6 +566,7 @@ function select(i) {
     // selecting a slide must not leave the previous segment's loop running
     if (animRaf) { cancelAnimationFrame(animRaf); animRaf = null; }
     animLayer = null; animReady = false; animMode = 'source';
+    if (voiceInfo(s)) wireVoice(s, voiceInfo(s));
   }
 
   if (s.type==='explainer') {
@@ -548,6 +593,370 @@ function select(i) {
   $('inclBtn').onclick = () => { snapshot(`${s.include?'exclude':'include'} ${s.label}`); s.include = !s.include; persist(); select(i); };
   $('upBtn').onclick = () => { if (i>0){ snapshot(`move up: ${s.label}`); [plan.segments[i-1],plan.segments[i]]=[plan.segments[i],plan.segments[i-1]]; selIdx=i-1; persist(); select(selIdx);} };
   $('dnBtn').onclick = () => { if (i<plan.segments.length-1){ snapshot(`move down: ${s.label}`); [plan.segments[i+1],plan.segments[i]]=[plan.segments[i],plan.segments[i+1]]; selIdx=i+1; persist(); select(selIdx);} };
+}
+
+// ---------- the Voice panel (local app): the script, your recording, the replay over the animation ----------
+// Flow: read the prompter → ● Record → ■ Stop → the take is SAVED AT ONCE (cutroom-13: a recording never waits on a
+// button; the owner recorded six segments in 12c and pressed Save on none, and the browser kept them nowhere) → the
+// server transcribes it, finds the underlined phrases, re-bakes the animation's anchors → ▶ replay 1:1 → Render with
+// this voice. A saved take beats the synth voice in every build until it is removed. "Save again" is only a retry.
+let VOICE = null;                 // GET /api/cutroom/<course>/voice
+const VS = { audio: null, mode: 'none', blob: null, rec: null, stream: null, chunks: [], tick: null, t0: 0, raf: null, poll: null };
+// an unsaved recording (a failed upload) must not be lost to a reload or a closed tab
+window.addEventListener('beforeunload', e => { if (VS.blob && VS.upload) { e.preventDefault(); e.returnValue = 'A recording is not saved yet.'; } });
+function voiceInfo(s) { return LOCAL_APP && VOICE && VOICE.segments ? VOICE.segments[s.id] : null; }
+function vUrl(rel) { return `/${VOICE.dir}/${rel}?v=${Date.now()}`; }
+function escHtml(t) { return (t||'').replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+function prompterHtml(s, v) {
+  if (s.type === 'board' && !s.vo_script) return `<div class="prompter board">The shots are pinned to these words, in this order:<ol>${v.phrases.map(p=>`<li><u>${escHtml(p)}</u></li>`).join('')}</ol></div>`;
+  let txt = escHtml(s.vo_script || '');
+  // underline each anchor phrase where it occurs (hyphen/case tolerant), so the owner knows which words the shots wait for
+  for (const ph of v.phrases) {
+    const re = new RegExp(escRe(escHtml(ph)).replace(/[\s-]+/g, '[\\s-]+'), 'i');
+    txt = txt.replace(re, m => `<u>${m}</u>`);
+  }
+  return `<div class="prompter">${txt}</div>`;
+}
+function voicePanelHtml(s, v) {
+  const take = v.take;
+  const src = take ? 'take' : v.synth ? 'synth' : 'none';
+  return `
+    <div class="viewer">
+      <div class="vstack solo" id="vstack"><iframe class="animlayer" id="animLayer" scrolling="no" title="animation"></iframe></div>
+      <audio class="vaudio" id="vAudio" controls preload="metadata"></audio>
+      <div class="vstatus" id="vStatus"></div>
+    </div>
+    <div class="field"><label>Say this ${v.phrases.length ? '· the animation waits for the <u style="text-decoration:none;border-bottom:2px solid var(--amber-dim)">underlined</u> words' : ''}</label>
+      ${prompterHtml(s, v)}
+      <div class="hint">Your words can differ; the underlined phrases are what the fit looks for (exact, then close enough). Keep them and the scenes land on them.</div>
+    </div>
+    <div class="field"><label>Devices · which microphone, which speaker</label>
+      <div class="microw"><span>microphone</span><select id="micSel"><option value="">default microphone</option></select><div class="meter" id="meter"><i></i></div><span id="meterTxt">level</span></div>
+      <div class="microw"><span>speaker</span><select id="outSel"><option value="">default output</option></select><div class="meter" id="outMeter"><i></i></div><span id="outMeterTxt">output level</span></div>
+      <div class="rowbtns" style="margin:.3rem 0">
+        <button class="primary" id="devBtn">Allow the microphone &amp; list devices</button>
+        <button id="micTestBtn">Test the microphone (3 s)</button>
+        <button id="toneBtn">Test the speaker (1 s tone)</button>
+      </div>
+      <div class="hint" id="devHint">The names appear after the microphone is allowed once. Both choices are remembered on this machine and used for every recording and every replay.</div>
+    </div>
+    <div class="field"><label>Your voice</label>
+      <div class="rowbtns" style="margin:.3rem 0">
+        <button class="rec" id="recBtn">● Record</button>
+        <button id="stopBtn" disabled>■ Stop</button>
+        <span class="vstatus" id="recTimer"></span>
+        <span class="spacer" style="flex:1"></span>
+        <button id="replayBtn">▶ Replay from start</button>
+      </div>
+      <div class="rowbtns" style="margin:.3rem 0">
+        <button class="primary" id="saveTakeBtn" disabled title="a recording is saved the moment you press Stop; this retries when that upload failed">Save again &amp; fit</button>
+        <button id="discardBtn" disabled>Discard unsaved recording</button>
+        <button id="removeTakeBtn" ${take ? '' : 'disabled'}>Remove saved take</button>
+        <button id="renderBtn" ${take ? '' : 'disabled'}>Render with this voice</button>
+      </div>
+      <div class="fitrep" id="fitRep" style="display:${take ? 'block' : 'none'}"></div>
+      <div class="rlog" id="rLog"></div>
+    </div>
+    <div class="field"><label>Sound check · if you still hear nothing</label>
+      <div class="rowbtns" style="margin:.3rem 0">
+        <button id="sampleBtn">Play the Ava sample</button>
+        <button id="loopbackBtn">Replay through the meter</button>
+        <button id="diagBtn">Copy diagnostics</button>
+      </div>
+      <div class="diag" id="diag">Pick a speaker in Devices, then test it. The output meter shows the level leaving the player; "playing" with a flat meter means the file is silent, a moving meter with no sound means the speaker or its volume (the Windows volume mixer has a row per browser).</div>
+    </div>`;
+}
+function fitRepHtml(fit, fails, duration) {
+  const rows = (fit||[]).map(f => { const cls = f.t == null ? 'no' : /^exact|^board/.test(f.how) ? 'ok' : 'fz';
+    return `<div class="${cls}">${f.t == null ? '  —  ' : f.t.toFixed(2).padStart(6)}  ${escHtml(f.how.split(':')[0]).padEnd(10)}  ${escHtml(f.phrase)}</div>`; });
+  const tail = (fails||[]).map(f => `<div class="no">FAIL ${escHtml(f)}</div>`);
+  return `<div>take ${fmt(duration||0)} · ${(fit||[]).filter(f=>f.t!=null).length}/${(fit||[]).length} anchors found</div>` + rows.join('') + tail.join('');
+}
+let VSTATUS = '';
+function voiceStatus(html) { VSTATUS = html; const e = $('vStatus'); if (e) e.innerHTML = html + (VS.audio && !VS.audio.paused ? ` · <span style="color:#6aa84f">▶ playing ${fmt(VS.audio.currentTime)}</span>` : ''); }
+// play() can be refused (a browser's autoplay rule when the call did not come from a click); say so instead of staying silent
+function playVoice(fromStart) {
+  const a = VS.audio; if (!a || !a.src) { toast('nothing to play yet'); return; }
+  const go = () => a.play().then(() => voiceStatus(VSTATUS)).catch(e => { voiceStatus(VSTATUS + ` · <span style="color:var(--excl)">the browser refused to start the sound (${escHtml(e.name)}) — press ▶ on the audio bar</span>`); });
+  if (fromStart) { a.currentTime = 0; }
+  go();
+}
+// a MediaRecorder blob has no duration and no seek index until it has played through; decoded to PCM it has both,
+// so Replay can jump to 0 on a long take and the stretched preview knows the take's true length
+async function toWav(blob) {
+  const ctx = new (window.AudioContext || window.webkitAudioContext)();
+  const buf = await ctx.decodeAudioData(await blob.arrayBuffer());
+  ctx.close();
+  const n = buf.length, ch = Math.min(2, buf.numberOfChannels), sr = buf.sampleRate;
+  const out = new DataView(new ArrayBuffer(44 + n * ch * 2));
+  const str = (o, t) => { for (let i = 0; i < t.length; i++) out.setUint8(o + i, t.charCodeAt(i)); };
+  str(0, 'RIFF'); out.setUint32(4, 36 + n * ch * 2, true); str(8, 'WAVE'); str(12, 'fmt '); out.setUint32(16, 16, true);
+  out.setUint16(20, 1, true); out.setUint16(22, ch, true); out.setUint32(24, sr, true); out.setUint32(28, sr * ch * 2, true); out.setUint16(32, ch * 2, true); out.setUint16(34, 16, true);
+  str(36, 'data'); out.setUint32(40, n * ch * 2, true);
+  let o = 44, peak = 0;
+  const chans = Array.from({ length: ch }, (_, c) => buf.getChannelData(c));
+  for (let i = 0; i < n; i++) for (let c = 0; c < ch; c++) { const v = Math.max(-1, Math.min(1, chans[c][i])); peak = Math.max(peak, Math.abs(v)); out.setInt16(o, v < 0 ? v * 32768 : v * 32767, true); o += 2; }
+  return { wav: new Blob([out], { type: 'audio/wav' }), duration: buf.duration, peak };
+}
+function stopVoiceLoop() { if (VS.raf) cancelAnimationFrame(VS.raf); VS.raf = null; if (VS.poll) clearInterval(VS.poll); VS.poll = null; }
+function voiceFrame() {
+  const a = VS.audio, w = animLayer && animLayer.contentWindow;
+  if (!a || !w || typeof w.renderFrame !== 'function' || !animReady) return;
+  const dur = w.ANIM_DURATION || animDur || 1;
+  // a fitted voice (the synth VO, or a saved take after its fit) maps 1:1; an unsaved recording is stretched so the whole animation plays over it
+  let t = a.currentTime;
+  const recDur = VS.recDuration || (isFinite(a.duration) ? a.duration : 0);
+  if (VS.mode === 'rec' && recDur) t = t * dur / recDur;
+  w.renderFrame(Math.max(0, Math.min(dur, t)));
+}
+function voiceLoop() { voiceFrame(); if (VS.audio && !VS.audio.paused) VS.raf = requestAnimationFrame(voiceLoop); else VS.raf = null; }
+function setVoiceSource(s, v, mode) {
+  const a = VS.audio; if (!a) return;
+  VS.mode = mode;
+  if (mode === 'rec' && VS.blob) a.src = URL.createObjectURL(VS.blob);
+  else if (mode === 'take' && v.take) a.src = `${v.take.url}?v=${Date.now()}`;
+  else if (mode === 'synth' && v.synth) a.src = `${v.synth}?v=${Date.now()}`;
+  else { a.removeAttribute('src'); VS.mode = 'none'; }
+  if (SC.sink && typeof a.setSinkId === 'function' && a.sinkId !== SC.sink) a.setSinkId(SC.sink).catch(() => {});
+  const what = mode === 'rec' ? '<b>unsaved recording</b> · the animation is stretched to it; Save to fit the scenes to your words'
+    : mode === 'take' ? `<b>your take</b> · saved ${v.take.saved} · ${fmt(v.take.duration)}${v.take.fitted ? ' · fitted: the scenes land on your words' : ' · <span style="color:var(--excl)">not fitted</span> (a phrase was not found; see below)'}`
+    : mode === 'synth' ? `<b>${s.type === 'board' ? 'stand-in voice' : 'synth voice'}</b> (${s.voice||'?'}) · ${fmt(v.synth_duration||0)} · record your own below`
+    : '<b>no voice yet</b> · record below';
+  voiceStatus(what);
+  $('replayBtn').disabled = VS.mode === 'none';
+}
+async function loadBoardInto(frameWin, v) {
+  if (!v.board_json) return;
+  const b = await (await fetch(vUrl(v.board_json), {cache:'no-store'})).json();
+  for (const k in b.pictures) b.pictures[k].src = b.pictures[k].src.replace(VOICE.file_prefix, '/');   // file:// → this server
+  await frameWin.setBoard(b);
+}
+function wireVoice(s, v) {
+  stopVoiceLoop();
+  animLayer = $('animLayer'); animReady = false; animMode = 'live';
+  VS.audio = $('vAudio'); VS.blob = null; VS.chunks = [];
+  animLayer.onload = async () => {
+    const w = animLayer.contentWindow;
+    if (!w || typeof w.renderFrame !== 'function') { voiceStatus('<span style="color:var(--excl)">the animation did not load</span>'); return; }
+    if (v.anim === 'board') await loadBoardInto(w, v);
+    animReady = true; animDur = w.ANIM_DURATION || 40;
+    fitAnim(); w.renderFrame(Math.min(animDur, 1.0));
+  };
+  animLayer.src = v.anim === 'board' ? `/tools/boards/anim-board.html?v=${Date.now()}` : vUrl(v.anim);
+  setVoiceSource(s, v, v.take ? 'take' : v.synth ? 'synth' : 'none');
+  if (v.take) $('fitRep').innerHTML = fitRepHtml(v.take.fit, v.take.fails, v.take.duration);
+  const a = VS.audio;
+  a.onplay = () => { voiceLoop(); voiceStatus(VSTATUS); }; a.onpause = () => { stopVoiceLoop(); voiceFrame(); voiceStatus(VSTATUS); }; a.onseeked = () => voiceFrame(); a.onended = () => { stopVoiceLoop(); voiceStatus(VSTATUS); };
+  a.ontimeupdate = () => { if (!a.paused) voiceStatus(VSTATUS); };
+  a.onerror = () => voiceStatus(VSTATUS + ` · <span style="color:var(--excl)">the audio did not load (${a.error ? a.error.code : '?'})</span>`);
+  $('replayBtn').onclick = () => playVoice(true);
+  wireSoundCheck();
+  // --- record
+  $('recBtn').onclick = async () => {
+    const dev = $('micSel').value;
+    try {
+      VS.stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false, ...(dev ? { deviceId: { exact: dev } } : {}) } });
+    } catch (e) { toast(`microphone: ${e.name} ${e.message}`); voiceStatus(`<span style="color:var(--excl)">microphone refused: ${escHtml(e.name)} — ${escHtml(e.message)} (Windows: Settings › Privacy › Microphone; the browser's site permission)</span>`); return; }
+    listDevices();
+    const track = VS.stream.getAudioTracks()[0]; $('meterTxt').textContent = track ? (track.label || 'mic') : 'no track';
+    // the level meter: what the microphone is actually delivering, so a silent take is seen before it is saved
+    VS.actx = new (window.AudioContext || window.webkitAudioContext)(); const an = VS.actx.createAnalyser(); an.fftSize = 1024;
+    VS.actx.createMediaStreamSource(VS.stream).connect(an); const td = new Uint8Array(an.fftSize); VS.peak = 0;
+    const meter = () => { if (!VS.actx) return; an.getByteTimeDomainData(td); let sum = 0; for (const x of td) { const v = (x - 128) / 128; sum += v * v; } const rms = Math.sqrt(sum / td.length); VS.peak = Math.max(VS.peak, rms);
+      const m = $('meter'); if (m) { m.querySelector('i').style.width = Math.min(100, rms * 300) + '%'; m.classList.toggle('flat', VS.peak < 0.01 && (Date.now() - VS.t0) > 1500); } VS.meterRaf = requestAnimationFrame(meter); };
+    VS.meterRaf = requestAnimationFrame(meter);
+    const mime = ['audio/webm;codecs=opus', 'audio/webm', 'audio/ogg;codecs=opus', 'audio/mp4'].find(m => MediaRecorder.isTypeSupported(m)) || '';
+    VS.rec = new MediaRecorder(VS.stream, mime ? { mimeType: mime, audioBitsPerSecond: 128000 } : undefined);
+    VS.chunks = [];
+    VS.rec.ondataavailable = e => { if (e.data.size) VS.chunks.push(e.data); };
+    VS.rec.onstop = async () => {
+      const raw = new Blob(VS.chunks, { type: VS.rec.mimeType || mime || 'audio/webm' });
+      VS.stream.getTracks().forEach(t => t.stop());
+      if (VS.meterRaf) cancelAnimationFrame(VS.meterRaf); VS.meterRaf = null; if (VS.actx) { VS.actx.close(); VS.actx = null; }
+      clearInterval(VS.tick); $('recTimer').textContent = `recorded ${fmt((Date.now() - VS.t0) / 1000)}`;
+      $('recBtn').classList.remove('live'); $('recBtn').disabled = false; $('stopBtn').disabled = true;
+      VS.blob = raw; VS.upload = raw;
+      try { const w = await toWav(raw); VS.blob = w.wav; VS.recDuration = w.duration; VS.recPeak = w.peak; } catch (e) { VS.recDuration = null; VS.recPeak = VS.peak; }
+      $('saveTakeBtn').disabled = false; $('discardBtn').disabled = false;
+      setVoiceSource(s, v, 'rec');
+      if ((VS.recPeak || 0) < 0.005) { voiceStatus(VSTATUS + ` · <span style="color:var(--excl)">the microphone delivered silence (peak ${(VS.recPeak||0).toFixed(3)}): not saved — pick another mic above, or check Windows Settings › Privacy › Microphone</span>`); return; }
+      voiceStatus(VSTATUS + ` · peak ${(VS.recPeak||0).toFixed(2)}`);
+      // saved at once: the recording leaves the browser before anything else can lose it
+      await saveTake(s, v);
+    };
+    a.pause();
+    VS.rec.start(250); VS.t0 = Date.now();
+    $('recBtn').classList.add('live'); $('recBtn').disabled = true; $('stopBtn').disabled = false;
+    VS.tick = setInterval(() => { $('recTimer').textContent = `● ${fmt((Date.now() - VS.t0) / 1000)}`; }, 200);
+    voiceStatus('<b>recording</b> · read the script; press Stop when you are done');
+  };
+  $('stopBtn').onclick = () => { if (VS.rec && VS.rec.state !== 'inactive') VS.rec.stop(); };
+  $('discardBtn').onclick = () => { VS.blob = null; VS.upload = null; $('saveTakeBtn').disabled = true; $('discardBtn').disabled = true; $('recTimer').textContent = ''; setVoiceSource(s, v, v.take ? 'take' : v.synth ? 'synth' : 'none'); };
+  // --- save + fit (runs on Stop; the button is the retry)
+  $('saveTakeBtn').onclick = () => saveTake(s, v);
+  async function saveTake(s, v) {
+    if (!VS.blob) return;
+    $('saveTakeBtn').disabled = true; voiceStatus('<b>saving your take</b> · uploading, encoding, transcribing, finding the phrases … (the first fit of a session loads the speech model: up to a minute)');
+    try {
+      const up = VS.upload || VS.blob;
+      const r = await fetch(`/api/cutroom/${encodeURIComponent(COURSE)}/take/${s.id}`, { method: 'POST', headers: { 'Content-Type': up.type || 'audio/webm' }, body: up });
+      const j = await r.json();
+      if (!r.ok) throw new Error(j.error || r.status);
+      await refreshVoice();
+      const nv = voiceInfo(s);
+      $('fitRep').style.display = 'block'; $('fitRep').innerHTML = fitRepHtml(j.fit, j.fails, j.duration);
+      VS.blob = null; VS.upload = null; $('discardBtn').disabled = true; $('removeTakeBtn').disabled = false; $('renderBtn').disabled = !!(j.fails && j.fails.length);
+      // the animation's anchors changed on disk: reload it, then replay 1:1 over the saved take
+      animReady = false; animLayer.src = nv.anim === 'board' ? `/tools/boards/anim-board.html?v=${Date.now()}` : vUrl(nv.anim);
+      setVoiceSource(s, nv, 'take');
+      toast(j.fails && j.fails.length ? `Take saved (takes/${s.id}.m4a); ${j.fails.length} phrase(s) not found — re-record or keep as is` : `Take saved (takes/${s.id}.m4a) and fitted (${j.fit.length} anchors)`);
+      render();
+      setTimeout(() => playVoice(true), 600);
+    } catch (e) { toast(`Save failed: ${e.message} — press "Save again"`); $('saveTakeBtn').disabled = false; voiceStatus(`<span style="color:var(--excl)">NOT SAVED: ${escHtml(e.message)} · press "Save again &amp; fit"; do not leave this segment</span>`); }
+  }
+  $('removeTakeBtn').onclick = async () => {
+    if (!confirm('Remove your saved take for this segment? The synth voice and its fit come back.')) return;
+    const r = await fetch(`/api/cutroom/${encodeURIComponent(COURSE)}/take/${s.id}`, { method: 'DELETE' });
+    const j = await r.json();
+    if (!r.ok) { toast('Remove failed'); return; }
+    await refreshVoice(); toast(j.note ? 'Take removed · the synth voice needs a vo run (see status)' : 'Take removed'); select(selIdx);
+    if (j.note) voiceStatus(`<b>take removed</b> · ${escHtml(j.note)}`);
+  };
+  // --- render
+  $('renderBtn').onclick = async () => {
+    $('renderBtn').disabled = true;
+    await fetch(`/api/cutroom/${encodeURIComponent(COURSE)}/render/${s.id}`, { method: 'POST' });
+    const tickRender = async () => {
+      const j = await (await fetch(`/api/cutroom/${encodeURIComponent(COURSE)}/render/${s.id}`, {cache:'no-store'})).json();
+      $('rLog').textContent = (j.log || []).slice(-8).join('\n');
+      if (j.state === 'running') return;
+      clearInterval(VS.poll); VS.poll = null; $('renderBtn').disabled = false;
+      if (j.state === 'done') { toast('Rendered'); voiceStatus(`<b>rendered with your voice</b> · <a href="${vUrl('build/' + s.id + '.mp4')}" target="_blank">build/${s.id}.mp4</a> · <a href="${vUrl('output/' + (plan.course||COURSE) + '.mp4')}" target="_blank">the whole course</a>`); }
+      else { toast('Render failed — see the log'); }
+    };
+    VS.poll = setInterval(tickRender, 2000); tickRender();
+  };
+}
+// ---------- sound check: which speaker, is anything leaving the player, a report to paste ----------
+const SC = { ctx: null, an: null, src: null, raf: null, peak: 0, sink: '', notes: [] };
+function scNote(html) { SC.notes.push(html); const d = $('diag'); if (d) { d.innerHTML = SC.notes.slice(-14).join('\n'); d.scrollTop = d.scrollHeight; } }
+async function scContext() {
+  if (!SC.ctx) { SC.ctx = new (window.AudioContext || window.webkitAudioContext)(); }
+  if (SC.ctx.state !== 'running') { try { await SC.ctx.resume(); } catch (e) { scNote(`<span class="bad">AudioContext would not resume: ${escHtml(e.message)}</span>`); } }
+  if (SC.sink && SC.ctx.setSinkId) { try { await SC.ctx.setSinkId(SC.sink); } catch (e) { scNote(`<span class="bad">AudioContext.setSinkId failed: ${escHtml(e.message)}</span>`); } }
+  return SC.ctx;
+}
+async function scApplySink(el) {
+  if (!el) return;
+  if (typeof el.setSinkId !== 'function') { scNote('<span class="bad">this browser cannot pick an output device per player (no setSinkId); use the Windows volume mixer</span>'); return; }
+  try { await el.setSinkId(SC.sink || ''); scNote(`player output → <b>${escHtml(scSinkLabel())}</b>`); }
+  catch (e) { scNote(`<span class="bad">setSinkId(${escHtml(SC.sink || 'default')}) failed: ${escHtml(e.name)} ${escHtml(e.message)}</span>`); }
+}
+// the owner's choices, kept on this machine: the microphone for every recording, the speaker for every replay and test
+const DEV = { get mic() { try { return localStorage.getItem('cutroom.mic') || ''; } catch { return ''; } }, set mic(v) { try { localStorage.setItem('cutroom.mic', v || ''); } catch {} },
+              get out() { try { return localStorage.getItem('cutroom.out') || ''; } catch { return ''; } }, set out(v) { try { localStorage.setItem('cutroom.out', v || ''); } catch {} } };
+async function listDevices() {
+  const mic = $('micSel'), out = $('outSel'); if (!mic || !out) return { ins: [], outs: [], named: false };
+  let devs = [];
+  try { devs = await navigator.mediaDevices.enumerateDevices(); } catch (e) { const h = $('devHint'); if (h) h.textContent = `enumerateDevices failed: ${e.message}`; return { ins: [], outs: [], named: false }; }
+  const ins = devs.filter(d => d.kind === 'audioinput'), outs = devs.filter(d => d.kind === 'audiooutput');
+  const named = [...ins, ...outs].some(d => d.label);
+  const opt = (d, kind) => `<option value="${d.deviceId}">${escHtml(d.label || (kind + ' ' + (d.deviceId || '?').slice(0, 6)))}</option>`;
+  mic.innerHTML = '<option value="">default microphone</option>' + ins.map(d => opt(d, 'microphone')).join('');
+  out.innerHTML = '<option value="">default output</option>' + outs.map(d => opt(d, 'output')).join('');
+  mic.value = ins.some(d => d.deviceId === DEV.mic) ? DEV.mic : ''; out.value = outs.some(d => d.deviceId === DEV.out) ? DEV.out : '';
+  SC.sink = out.value;
+  const h = $('devHint');
+  if (h) h.innerHTML = named ? `${ins.length} microphone(s), ${outs.length} speaker(s) · using <b>${escHtml(mic.selectedOptions[0].textContent)}</b> → <b>${escHtml(out.selectedOptions[0].textContent)}</b>`
+    : `<span style="color:var(--excl)">the names are hidden until the microphone is allowed: press <b>Allow the microphone &amp; list devices</b></span>`;
+  return { ins, outs, named };
+}
+async function devGrant() {
+  try { const st = await navigator.mediaDevices.getUserMedia({ audio: true }); st.getTracks().forEach(t => t.stop()); }
+  catch (e) { const h = $('devHint'); if (h) h.innerHTML = `<span style="color:var(--excl)">microphone refused: ${escHtml(e.name)} — ${escHtml(e.message)} (Windows: Settings › Privacy › Microphone; the browser's site permission on the address bar)</span>`; return; }
+  const r = await listDevices();
+  if (r.named) toast(`${r.ins.length} microphone(s), ${r.outs.length} speaker(s) listed`);
+  if (SC.sink) await scApplySink(VS.audio);
+}
+async function micTest() {
+  const dev = $('micSel').value; let st;
+  try { st = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false, ...(dev ? { deviceId: { exact: dev } } : {}) } }); }
+  catch (e) { toast(`microphone: ${e.name} ${e.message}`); return; }
+  const track = st.getAudioTracks()[0]; $('meterTxt').textContent = `testing ${track ? track.label : 'mic'} · speak`;
+  const ctx = new (window.AudioContext || window.webkitAudioContext)(); const an = ctx.createAnalyser(); an.fftSize = 1024; ctx.createMediaStreamSource(st).connect(an);
+  const td = new Uint8Array(an.fftSize); let peak = 0; const t0 = Date.now();
+  await new Promise(res => { const tick = () => { an.getByteTimeDomainData(td); let sum = 0; for (const x of td) { const v = (x - 128) / 128; sum += v * v; } const rms = Math.sqrt(sum / td.length); peak = Math.max(peak, rms);
+    const m = $('meter'); if (m) m.querySelector('i').style.width = Math.min(100, rms * 300) + '%'; if (Date.now() - t0 < 3000) requestAnimationFrame(tick); else res(); }; tick(); });
+  st.getTracks().forEach(t => t.stop()); ctx.close();
+  $('meterTxt').innerHTML = peak > 0.01 ? `<span style="color:#6aa84f">the microphone hears you · peak ${peak.toFixed(2)}</span>` : `<span style="color:var(--excl)">silent (peak ${peak.toFixed(3)}): pick another microphone, or check Windows Settings › Privacy › Microphone and the mic's own mute</span>`;
+}
+function scSinkLabel() { const sel = $('outSel'); return sel && sel.selectedOptions[0] ? sel.selectedOptions[0].textContent : 'default output'; }
+function scMeterOn(node, label) {
+  const ctx = SC.ctx; if (!SC.an) { SC.an = ctx.createAnalyser(); SC.an.fftSize = 1024; SC.an.connect(ctx.destination); }
+  node.connect(SC.an);
+  const td = new Uint8Array(SC.an.fftSize); SC.peak = 0; const t0 = Date.now();
+  const tick = () => { SC.an.getByteTimeDomainData(td); let sum = 0; for (const x of td) { const v = (x - 128) / 128; sum += v * v; } const rms = Math.sqrt(sum / td.length); SC.peak = Math.max(SC.peak, rms);
+    const m = $('outMeter'); if (m) { m.querySelector('i').style.width = Math.min(100, rms * 300) + '%'; } const t = $('outMeterTxt'); if (t) t.textContent = `${label} · ${rms.toFixed(3)} (peak ${SC.peak.toFixed(2)})`;
+    if (Date.now() - t0 < 60000) SC.raf = requestAnimationFrame(tick); };
+  if (SC.raf) cancelAnimationFrame(SC.raf); SC.raf = requestAnimationFrame(tick);
+}
+async function scTone() {
+  const ctx = await scContext();
+  const osc = ctx.createOscillator(); osc.frequency.value = 440; const g = ctx.createGain(); g.gain.value = 0.25; osc.connect(g);
+  scMeterOn(g, 'tone'); osc.start(); osc.stop(ctx.currentTime + 1.0);
+  scNote(`test tone → <b>${escHtml(scSinkLabel())}</b> · AudioContext ${ctx.state} @ ${ctx.sampleRate} Hz${ctx.sinkId !== undefined ? ' · ctx sink ' + escHtml(String(ctx.sinkId) || 'default') : ''}`);
+  setTimeout(() => scNote(SC.peak > 0.02 ? '<span class="good">the tone left the player (meter moved). No sound = the output device or its volume.</span>' : '<span class="bad">the tone did not reach the meter: the AudioContext is not running (autoplay policy) — press the button again</span>'), 1300);
+}
+async function scSample() {
+  const el = new Audio('/media/vo-ava.mp3?v=' + Date.now()); el.preload = 'auto';
+  await scApplySink(el);
+  el.onplaying = () => scNote(`Ava sample <span class="good">playing</span> · volume ${el.volume} · muted ${el.muted}`);
+  el.onerror = () => scNote(`<span class="bad">Ava sample did not load (${el.error ? el.error.code : '?'}): is inbox/vo-ava.mp3 there?</span>`);
+  try { await el.play(); } catch (e) { scNote(`<span class="bad">play() refused: ${escHtml(e.name)} ${escHtml(e.message)}</span>`); }
+}
+async function scLoopback() {
+  // the player itself through the meter: proves whether the current voice (synth, take or recording) produces samples
+  const a = VS.audio; if (!a || !a.src) { scNote('nothing loaded in the player'); return; }
+  const ctx = await scContext();
+  if (!SC.src || SC.src.mediaElement !== a) { try { SC.src = ctx.createMediaElementSource(a); } catch (e) { scNote(`<span class="bad">cannot tap the player: ${escHtml(e.message)}</span>`); return; } }
+  scMeterOn(SC.src, 'player'); a.currentTime = 0;
+  try { await a.play(); scNote(`player → meter → <b>${escHtml(scSinkLabel())}</b> (from now on this player's sound goes through the AudioContext)`); } catch (e) { scNote(`<span class="bad">play() refused: ${escHtml(e.name)}</span>`); }
+}
+async function scReport() {
+  const a = VS.audio || {}; const ctx = SC.ctx;
+  let outs = [], ins = [];
+  try { const d = await navigator.mediaDevices.enumerateDevices(); outs = d.filter(x => x.kind === 'audiooutput').map(x => x.label || x.deviceId.slice(0, 8)); ins = d.filter(x => x.kind === 'audioinput').map(x => x.label || x.deviceId.slice(0, 8)); } catch {}
+  const lines = [
+    `cutroom ${BUILD} · ${new Date().toISOString()}`,
+    `browser ${navigator.userAgent}`,
+    `page ${location.href} · secure ${window.isSecureContext} · visible ${document.visibilityState}`,
+    `player src ${(a.src || '').slice(0, 90)} · readyState ${a.readyState} · networkState ${a.networkState} · error ${a.error ? a.error.code : 'none'}`,
+    `player paused ${a.paused} · currentTime ${a.currentTime} · duration ${a.duration} · volume ${a.volume} · muted ${a.muted} · sinkId "${a.sinkId === undefined ? 'n/a' : a.sinkId}"`,
+    `setSinkId ${typeof HTMLMediaElement.prototype.setSinkId === 'function'} · AudioContext.setSinkId ${!!(window.AudioContext && AudioContext.prototype.setSinkId)}`,
+    `audio outputs (${outs.length}): ${outs.join(' | ') || 'none listed'}`,
+    `audio inputs (${ins.length}): ${ins.join(' | ') || 'none listed'}`,
+    `chosen output "${SC.sink || 'default'}" (${scSinkLabel()}) · AudioContext ${ctx ? ctx.state + ' @ ' + ctx.sampleRate + ' Hz' : 'not created'} · last meter peak ${SC.peak.toFixed(3)}`,
+    `recording: peak ${VS.recPeak == null ? 'n/a' : VS.recPeak.toFixed(3)} · ${VS.recDuration == null ? '' : VS.recDuration.toFixed(1) + ' s'} · mic "${$('meterTxt') ? $('meterTxt').textContent : ''}"`,
+    `notes:`, ...SC.notes.slice(-10).map(n => '  ' + n.replace(/<[^>]+>/g, '')),
+  ];
+  const txt = lines.join('\n');
+  try { await navigator.clipboard.writeText(txt); toast('diagnostics copied — paste them to coursecraft'); } catch { }
+  scNote('<b>report</b>\n' + escHtml(txt));
+}
+function wireSoundCheck() {
+  if (!$('outSel')) return;
+  SC.notes = []; SC.sink = DEV.out; listDevices();
+  $('devBtn').onclick = devGrant; $('micTestBtn').onclick = micTest;
+  $('micSel').onchange = () => { DEV.mic = $('micSel').value; listDevices(); };
+  $('outSel').onchange = async () => { SC.sink = $('outSel').value; DEV.out = SC.sink; await scApplySink(VS.audio); if (SC.ctx && SC.ctx.setSinkId) { try { await SC.ctx.setSinkId(SC.sink); } catch {} } listDevices(); };
+  $('toneBtn').onclick = scTone; $('sampleBtn').onclick = scSample; $('loopbackBtn').onclick = scLoopback; $('diagBtn').onclick = scReport;
+  if (SC.sink && VS.audio) scApplySink(VS.audio);
+}
+
+async function refreshVoice() {
+  if (!LOCAL_APP) return;
+  try { VOICE = await (await fetch(`/api/cutroom/${encodeURIComponent(COURSE)}/voice`, {cache:'no-store'})).json(); if (VOICE.error) VOICE = null; }
+  catch { VOICE = null; }
 }
 
 // ---------- transcript panel ----------
@@ -672,6 +1081,7 @@ fetch('/api/cutroom/ping', {cache:'no-store'}).then(r => r.ok ? r.json() : null)
   if (!j || !j.ok) return;
   LOCAL_APP = true;
   $('saveBtn').style.display = '';
+  refreshVoice().then(() => { if (VOICE) { render(); if (selIdx >= 0) select(selIdx); } });
   const sel = $('courseSel');
   sel.innerHTML = (j.cutrooms || []).map(c => `<option${c===COURSE?' selected':''}>${c}</option>`).join('');
   sel.style.display = '';
