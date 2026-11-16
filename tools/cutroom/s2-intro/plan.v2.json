@@ -1,9 +1,9 @@
 {
   "schema": "coursecraft-plan-v2",
   "course": "s2-intro",
-  "revision": 7,
+  "revision": 8,
   "revised": "2026-11-15",
-  "status": "TEST — stand-in voice (edge-tts Ava); the owner's takes (cutroom Voice panel → takes/) replace it. The opening (s01, a board over the 0.2.69 captures) was removed on 2026-11-15 on the owner's word; a new opening is to be built and inserted before s02 (board.yaml and inbox/s2-intro-standin.mp3 kept as material).",
+  "status": "TEST — the owner's takes on s02, s04–s07; Ava on s01 (new opening, to be recorded) and s03 (take removed by the owner); 0.2.69 captures gone with the old opening.",
   "title": "Edge S2 Desktop: where to begin",
   "topic_class": "product-intro",
   "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/s2-intro/",
@@ -21,6 +21,28 @@
     }
   ],
   "segments": [
+    {
+      "id": "s01",
+      "type": "explainer",
+      "include": true,
+      "label": "Opening: trading as a learned skill (Dr. Long, the Owl Group); the desktop takes the arithmetic off your hands: the risk box, the ladders, the bracket, split / merge / stop and reverse, one-click stop moves, the indicators on your time frames, Zero State",
+      "title": "Where to begin: a learned skill",
+      "voice": "ava",
+      "est_duration": 60,
+      "vo_script": "Edge S2 Desktop is built on one idea from Dr. Long and the Owl Group: trading is a learned skill, and a skill can be mastered. The desktop takes the arithmetic off your hands. It works out the risk box for the symbol you are on. It draws the ladders from that box, up and down from the open. Every order is a bracket, with the stop one R against you and the target two R with you. It manages the trade: split a leg, merge legs, stop and reverse. One click moves the stop a quarter R, to no lose, or a quarter R past it. It watches the method's indicators on the time frames you trade, from one minute to daily, for the day trade and the swing, and names a setup at its bar. And when the tape has you, Zero State takes you away from it for a few minutes: the Owl, three breaths, gratitude, forgiveness, intention. With the tedious work gone, what is left is what Dr. Long teaches: the principles of trading mastery.",
+      "anim_brief": "title card (the idea); the Trader window: the Risk box and the shares, the ladders from the open, the bracket at 1R and 2R, SPLIT / MERGE / STOP & REVERSE, the Stop panel's +¼R → NL → NLQR, the time-frame row and the Events lane with a setup named at its bar and an alert, Zero State with G·F·I lighting, the close",
+      "anchors": {
+        "s1": "The desktop takes the arithmetic",
+        "s2": "It works out the risk box",
+        "s3": "It draws the ladders",
+        "s4": "Every order is a bracket",
+        "s5": "It manages the trade",
+        "s6": "One click moves the stop",
+        "s7": "It watches the method's indicators",
+        "s8": "Zero State takes you away",
+        "s9": "With the tedious work gone"
+      }
+    },
     {
       "id": "s02",
       "type": "explainer",
