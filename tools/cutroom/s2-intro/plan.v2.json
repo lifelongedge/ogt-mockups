@@ -1,7 +1,7 @@
 {
   "schema": "coursecraft-plan-v2",
   "course": "s2-intro",
-  "revision": 9,
+  "revision": 10,
   "revised": "2026-11-15",
   "status": "TEST — the owner's takes on s02, s04–s07; Ava on s01 (new opening, to be recorded) and s03 (take removed by the owner); 0.2.69 captures gone with the old opening.",
   "title": "Edge S2 Desktop: where to begin",
@@ -166,6 +166,26 @@
         "s5": "Click a box to move it",
         "s6": "Right-click it to clip",
         "s7": "One R on the chart"
+      }
+    },
+    {
+      "id": "s08",
+      "type": "explainer",
+      "include": true,
+      "label": "Trade results: every closed trade recorded in $ and R; the Trades panel (Today: rows, the running curve in $ or R, the Histogram of R; History: NAV against its peak, a row per day); the trades on the chart as candles from the trade bar's On chart, each labelled with its R and Trade Pct",
+      "title": "Trade results: the list, the curve, the histogram, trades as candles",
+      "voice": "ava",
+      "est_duration": 56,
+      "vo_script": "Every trade is recorded as it closes, in dollars and in R. Open the Trades panel and today's brackets are a list: one row per bracket, the entry and the exit, the risk it was placed with, the dollars, and the R. Below the rows, the R curve: a step per closed trade, as a running total or the last ten. Switch the view to Histogram and the day's trades fall into bins of R: half an R wide from minus two to plus one, one R beyond. History shows every day: the account against its peak, and a row per day in dollars and R. And the trades can sit on the chart. On the trade bar, beside the Stop panel, set On chart to Candles. Each closed trade is drawn as a candle on the bars it spanned: the body from the entry to the exit, the wicks the best and the worst price along the way, green or red by the result. And its label: the R, and the percent of the best price the exit kept.",
+      "anim_brief": "a trade closes and a toast records it; the Trades panel floats in: Today rows filling one by one with totals; the running curve under them ($ → R, Running total → Last 10); the Histogram view with the ½R core bins and ΣR under each; the History tab (NAV vs peak, a row per day); the trade bar's On chart → Candles; the five trades drawn as candles over their bars; their labels (L +1.20R 64%)",
+      "anchors": {
+        "s1": "Open the Trades panel",
+        "s2": "Below the rows, the R curve",
+        "s3": "Switch the view to Histogram",
+        "s4": "History shows every day",
+        "s5": "And the trades can sit on the chart",
+        "s6": "Each closed trade is drawn as a candle",
+        "s7": "And its label"
       }
     }
   ]
