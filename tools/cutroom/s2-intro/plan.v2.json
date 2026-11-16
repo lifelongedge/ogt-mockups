@@ -1,9 +1,9 @@
 {
   "schema": "coursecraft-plan-v2",
   "course": "s2-intro",
-  "revision": 5,
+  "revision": 6,
   "revised": "2026-11-15",
-  "status": "TEST — stand-in voice (edge-tts Ava) and 0.2.69 captures; the owner's takes (cutroom Voice panel → takes/) and 0.4.0 captures replace both",
+  "status": "TEST — stand-in voice (edge-tts Ava); the owner's takes (cutroom Voice panel → takes/) replace it. The opening (s01, a board over the 0.2.69 captures) was removed on 2026-11-15 on the owner's word; a new opening is to be built and inserted before s02 (board.yaml and inbox/s2-intro-standin.mp3 kept as material).",
   "title": "Edge S2 Desktop: where to begin",
   "topic_class": "product-intro",
   "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/s2-intro/",
@@ -22,19 +22,11 @@
   ],
   "segments": [
     {
-      "id": "s01",
-      "type": "board",
-      "include": true,
-      "label": "Opening: the app, the chart, the symbol list, the Learn panel, a drill, where to begin",
-      "board": "board.yaml",
-      "voice": "standin",
-      "vo_script": "I wanted one place for my own data, my charts and my drills on my own PC. That became Edge S2 Desktop. This is the whole app as it opens. In the middle, the chart with the indicators I actually use. On the left, the symbol list, which starts small and grows with what you add. On the right, the Learn panel. The trainer replays a real session bar by bar and scores what you did in R. Here is a drill with the replay started. The reference is the session as it was traded beside your own attempt. Where to begin: open Learn, install the samples, start a replay. The rest follows from there."
-    },
-    {
       "id": "s02",
       "type": "explainer",
       "include": true,
       "label": "Three colours: practice in green, paper in red, live in blue; the desktop does not change",
+      "title": "Three colours: practice, paper, live",
       "voice": "ava",
       "est_duration": 45,
       "vo_script": "One desktop. One way to place an order. Where the order goes is a colour. Green is practice. The desktop replays a day that already happened, and your order fills against that day's bars. No account is touched. Red is paper. The same order goes to your Interactive Brokers paper account, on today's market, with no money behind it. Blue is live. The same order goes to your live account. Nothing else changes: the same chart, the same ticket, the same keys. Practice in green. Test in red. Execute in blue. The hands learn one motion.",
@@ -53,6 +45,7 @@
       "voice": "ava",
       "est_duration": 55,
       "label": "Order types: the right-click menu reads the click against the mark; limit, short limit, stop-limit, market; the bracket at 1R and 2R; the stop never loosens",
+      "title": "Placing an order: the menu and the bracket",
       "vo_script": "An order starts with a right-click on the chart. The menu reads where you clicked: the price at that level, and how far it sits from the mark. What it offers depends on which side you are on. Below the mark, a long limit: buy when price comes down to your level. Above the mark, a short limit: sell when price rises to it. A stop-limit enters the other way. A long stop-limit above the mark buys once price trades up through it. A short stop-limit below the mark sells on the way down. Market takes whatever prints. Every entry is a bracket. The stop sits one risk box against you. The target sits two risk boxes with you. Drag the target anywhere. The stop moves a quarter R at a time, and once it is placed it tightens or holds. It never loosens.",
       "anim_brief": "the chart with the mark; a right-click below the mark opens the Orders group only (Limit, Stop-limit, Market; LONG and SHORT), with the off-side choices dimmed; the same above; the bracket drawn at 1R stop and 2R target; the target dragged; the stop stepped tighter; a loosening attempt refused",
       "anchors": {
@@ -77,6 +70,7 @@
       "voice": "ava",
       "est_duration": 55,
       "label": "Resting orders on the resting row; the fill; the position on the strip and its leg on the chart; the Stop panel; NL and NLQR",
+      "title": "Resting orders, the fill, the Stop panel",
       "vo_script": "A placed bracket rests at IB. Its chip sits on the resting row above the chart: the stop, the target, the shares, and the dollars at risk. When the entry fills, the position appears on the book strip, and its leg draws on the chart: the entry, the risk, the open profit in R. The Stop panel on the right reads that leg. The stop moves a quarter R at a time, and two moves have names. NL puts the stop at your fill. No lose. NLQR puts it a quarter R past the fill. No lose, plus a quarter R: Dr. Long's dinner for two. A move is staged, then applied, and IB acknowledges it before the line moves.",
       "anim_brief": "the resting chip on the row above the chart; the entry fills (the chip becomes a position on the strip, the leg line E1 draws); the Stop panel opens on the right with the facts and the moves; NL pressed: the stop line jumps to the fill; NLQR pressed: a quarter R past it; staged then Apply",
       "anchors": {
@@ -96,6 +90,7 @@
       "voice": "ava",
       "est_duration": 55,
       "label": "Legs: split a bracket into slices, merge legs into one bracket, stop and reverse; the new orders rest at IB before the old pair is cancelled",
+      "title": "Legs: split, merge, stop and reverse",
       "vo_script": "A position is read as legs. One leg per bracket, with its own entry, its own risk, its own stop and target. E1, then E2 when you add. Split takes one leg and makes slices: a half, a third, or two thirds. Each slice gets its own stop and target, placed and acknowledged at IB before the old pair is cancelled. E1 becomes E1 a and E1 b. Merge works the other way. Tick the legs on the sheet, and every leg ticked becomes one bracket: one stop and one target for the shares together, at the blended entry, with the risks summed. Stop and reverse is one order from the right-click menu, on the losing side, like a stop. It is a stop for twice the position. Its fill closes the long and opens a short of the same size, with a stop one R past it and a target two R, good till cancelled. New orders rest at IB before the old ones leave, so the position is never uncovered.",
       "anim_brief": "the Positions tab with E1 and E2 under one summary row; SPLIT on E1 with the ½ ⅓ ⅔ presets, the slices E1·a and E1·b appear with their own stop and target lines, the old pair leaves after; MERGE sheet with a tick per leg, ONE BRACKET, one stop and one target replace the pairs; STOP & REVERSE from the menu below the mark: one stop for twice the shares, the long closes, a short leg opens with its own 1R stop and 2R target",
       "anchors": {
@@ -118,6 +113,7 @@
       "voice": "ava",
       "est_duration": 40,
       "label": "Risk management: the Risk box on the trade bar picks the basis, R10, R5, Frog or ATR14; the dollars a trade set what one R costs",
+      "title": "The Risk box: what one R is",
       "vo_script": "Every stop and target is measured in R, and one R is a risk box. The Risk box on the trade bar picks the basis: R10, R5, Frog, or ATR14. Each one shows its size in price for the symbol you are on. Beside it, the dollars a trade: one hundred, four hundred, or a number you type. Pick a basis, set the dollars, and the shares follow: the dollars divided by one R. Every new bracket reads that box: one R of stop, two R of target. Change the basis, and the next bracket changes with it. Nothing to compute by hand.",
       "anim_brief": "the trade bar's Risk box group: 1R, a select with R10 · R5 · Frog · ATR14 and each one's size, the dollars button with $100 · $400 · a number; the select changes and the 1R, the shares and the bracket on the chart follow",
       "anchors": {
@@ -137,6 +133,7 @@
       "voice": "ava",
       "est_duration": 40,
       "label": "Draw risk boxes: long, top-left at the click and one R down; short, lower-left at the click and one R up; move, clip, delete",
+      "title": "Draw risk boxes",
       "vo_script": "A risk box can also be drawn by hand. Right-click on the chart and the Draw group offers two. Place long risk box: its top-left corner at that price and bar, one R down from there, in green. Place short risk box: its lower-left corner at the click, one R up from there, in red. The box grows forward with the bars. Click a box to move it. Right-click it to clip it where it ends, or to delete it. One R on the chart, where you want to see it.",
       "anim_brief": "a right-click on the chart; the Draw group only (Place long risk box · 1R down from here; Place short risk box · 1R up from here); a green box placed top-left at the click, growing forward; a red box placed lower-left at a second click; a box dragged; its own menu: Clip here · Delete",
       "anchors": {
