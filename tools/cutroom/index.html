@@ -85,7 +85,20 @@
           display:flex; flex-direction:column; align-items:center; justify-content:center; padding:0 160px; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; }
   .card .ck { font-size:34px; color:#d4a559; letter-spacing:.14em; text-transform:uppercase; margin-bottom:36px; text-align:center; }
   .card .ct { font-family:Georgia,"Times New Roman",serif; font-weight:400; font-size:96px; line-height:1.15; max-width:1500px; text-align:center; }
+  .card .cs { font-size:52px; color:#e8e6df; margin-top:18px; max-width:1500px; text-align:center; white-space:pre-wrap; }
   .card .cb { font-size:44px; color:#9c978a; margin-top:40px; max-width:1400px; line-height:1.5; text-align:center; white-space:pre-wrap; }
+  /* layouts: the values of the designed cards in courses/<dir>/slides.html (cutroom-20) */
+  .card.L-title .ct { font-size:118px; line-height:1.1; letter-spacing:-.01em; max-width:1700px; }
+  .card.L-title .cb { margin-top:0; font-size:44px; max-width:1500px; line-height:1.45; }
+  .card.L-title .cb::before { content:""; display:block; width:220px; height:3px; background:#d4a559; margin:44px auto 28px; border-radius:2px; }
+  .card.L-chapter .ct { font-size:104px; }
+  .card.L-chapter .cs { font-size:44px; color:#9c978a; margin-top:28px; }
+  .card.L-maxim .ct { font-style:italic; font-size:92px; line-height:1.3; }
+  .card.L-maxim .cs { font-size:44px; color:#d4a559; margin-top:56px; }
+  .card.L-end { padding:0 60px; }
+  .card.L-end .ct { font-size:84px; max-width:none; }
+  .card.L-end .cs { font-family:"SF Mono",Menlo,monospace; font-size:60px; color:#d4a559; margin-top:32px; }
+  .card.L-end .cb { font-size:38px; margin-top:72px; max-width:1320px; }
   .card .amber { color:#d4a559; }
   .card .cbrand { position:absolute; bottom:44px; right:56px; font-size:26px; color:#5d594f; letter-spacing:.06em; }
   .card .cbrand b { color:#8a6a35; font-weight:600; }
@@ -221,7 +234,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const BUILD = 'cutroom-19';
+const BUILD = 'cutroom-20';
 console.log('[cutroom] build', BUILD);
 window.__edgeBuild = BUILD;
 
@@ -325,6 +338,8 @@ async function load() {
         plan = loc;
         // voices + media_base always follow the published plan (voice slate can grow after local edits began)
         plan.voices = published.voices;
+        const pub = Object.fromEntries((published.segments||[]).map(x => [x.id, x]));
+        for (const x of plan.segments) if (x.type === 'slide' && !x.text && pub[x.id] && pub[x.id].text) { x.text = structuredClone(pub[x.id].text); x.layout = pub[x.id].layout; }   // cutroom-20
         plan.media_base = published.media_base;
         toast('Loaded local edits (localStorage)');
       }
@@ -387,17 +402,25 @@ function thumbUrl(s) { return `${COURSE}/thumbs/${s.id}.jpg?r=${plan.revision ||
 function slideUrl(s) { return `${COURSE}/slides/${s.slide_id}.jpg?r=${plan.revision || 0}`; }
 function hasThumb(s) { if (s.type === 'slide' && !s.include && !s.text) return false; return THUMBS[s.id] !== false && (s.type === 'slide' || s.type === 'overdub' || s.type === 'explainer' || s.type === 'cut'); }
 function thumbImg(s, cls) {
-  if (s.type === 'slide' && s.text) return `<div class="cardwrap ${cls}">${cardHtml(s.text)}</div>`;
+  if (s.type === 'slide' && s.text) return `<div class="cardwrap ${cls}">${cardHtml(s.text, s.layout)}</div>`;
   if (!hasThumb(s)) return '';
   return `<img class="${cls}" src="${thumbUrl(s)}" alt="" loading="lazy" onerror="THUMBS['${s.id}']=false; this.closest('.bt') ? (this.parentNode.textContent='${s.type === 'cut' ? "Ken's screen" : s.type}') : (this.parentNode.classList.remove('has-thumb'), this.remove())">`;
 }
 // cutroom-19: a slide the owner typed (segment.text = {kicker, title, body}); **word** turns amber
-function cardHtml(t) {
-  t = t || {};
+const LAYOUTS = {   // field roles per layout; the CSS values mirror scripts/render_slides.py
+  setup:   { kicker: 'Kicker (small amber line above the title)', title: 'Title', subtitle: 'Subtitle (smaller, under the title)', body: 'Body (lines under the title)' },
+  title:   { kicker: 'Kicker (above the title; usually empty)', title: 'Title (big)', subtitle: 'Under the title, smaller print', body: 'Lines under the rule' },
+  chapter: { kicker: 'Chapter line (Chapter 2)', title: 'Chapter title', subtitle: 'Subtitle (dim, optional)', body: 'Extra lines (optional)' },
+  maxim:   { kicker: 'Kicker (usually empty)', title: 'The maxim (type the quote marks)', subtitle: 'Attribution', body: 'Extra lines (optional)' },
+  end:     { kicker: 'Kicker (usually empty)', title: 'Main line', subtitle: 'URL line', body: 'Small lines' },
+};
+function cardHtml(t, layout) {
+  t = t || {}; layout = LAYOUTS[layout] ? layout : 'setup';
   const mark = x => escHtml(x || '').replace(/\*\*(.+?)\*\*/g, '<span class="amber">$1</span>');
-  return `<div class="card">${t.kicker ? `<p class="ck">${mark(t.kicker)}</p>` : ''}
+  return `<div class="card L-${layout}">${t.kicker ? `<p class="ck">${mark(t.kicker)}</p>` : ''}
     <div class="ct">${t.title ? mark(t.title) : '<span class="ph">Your title</span>'}</div>
-    ${t.body ? `<p class="cb">${mark(t.body)}</p>` : '<p class="cb ph">The setup text for the next cut</p>'}
+    ${t.subtitle ? `<p class="cs">${mark(t.subtitle)}</p>` : ''}
+    ${t.body ? `<p class="cb">${mark(t.body)}</p>` : (layout === 'setup' ? '<p class="cb ph">The setup text for the next cut</p>' : '')}
     <div class="cbrand"><b>OWL</b> GROUP TRADING</div></div>`;
 }
 function fitCards() {
@@ -413,7 +436,7 @@ function insertCardAfter(i) {
   const ids = nextCardIds();
   snapshot(`insert card ${ids.slide_id} after ${plan.segments[i].label}`);
   plan.segments.splice(i + 1, 0, { id: ids.id, type: 'slide', include: true, label: 'Setup card', slide_id: ids.slide_id, duration: 8,
-    text: { kicker: '', title: '', body: '' }, status: 'owner card typed in the cutroom; the png is rendered by render_slides.py from this text' });
+    layout: 'setup', text: { kicker: '', title: '', subtitle: '', body: '' }, status: 'owner card typed in the cutroom; the png is rendered by render_slides.py from this text' });
   persist(); select(i + 1);
   const f = $('cardTitle'); if (f) f.focus();
 }
@@ -594,14 +617,17 @@ function select(i) {
     <h2><span class="type-pill" style="background:var(--${s.type})">${s.type.toUpperCase()}</span> &nbsp;${s.label}</h2>
     ${s.why ? `<div class="why">${s.why}</div>` : ''}
     ${s.type === 'slide' && s.text ? `
-      <div class="viewer"><div class="cardwrap" id="cardPrev">${cardHtml(s.text)}</div></div>
+      <div class="viewer"><div class="cardwrap" id="cardPrev">${cardHtml(s.text, s.layout)}</div></div>
       <div class="cardedit">
-        <div class="field"><label>Kicker (small amber line above the title)</label><input type="text" id="cardKicker" value="${escHtml(s.text.kicker)}" placeholder="Setup · Chapter 2"></div>
-        <div class="field"><label>Title</label><input type="text" id="cardTitle" value="${escHtml(s.text.title)}" placeholder="What to listen for"></div>
-        <div class="field"><label>Body (new lines kept; **word** turns amber)</label><textarea id="cardBody" placeholder="Two or three lines that set up the next cut">${escHtml(s.text.body)}</textarea></div>
+        <div class="field"><label>Layout</label><select id="cardLayout">${Object.keys(LAYOUTS).map(l=>`<option ${l===(s.layout||'setup')?'selected':''}>${l}</option>`).join('')}</select></div>
+        <div class="field"><label id="lblKicker">${LAYOUTS[s.layout||'setup'].kicker}</label><input type="text" id="cardKicker" value="${escHtml(s.text.kicker)}"></div>
+        <div class="field"><label id="lblTitle">${LAYOUTS[s.layout||'setup'].title} · **word** turns amber</label><input type="text" id="cardTitle" value="${escHtml(s.text.title)}"></div>
+        <div class="field"><label id="lblSubtitle">${LAYOUTS[s.layout||'setup'].subtitle}</label><input type="text" id="cardSubtitle" value="${escHtml(s.text.subtitle||'')}"></div>
+        <div class="field"><label id="lblBody">${LAYOUTS[s.layout||'setup'].body} · new lines kept</label><textarea id="cardBody">${escHtml(s.text.body)}</textarea></div>
         <div class="field"><label>Seconds on screen</label><input type="text" id="cardDur" value="${s.duration}" style="width:6rem"></div>
         <div class="hint">Drawn live here, in the storyboard and on the card. The png the build uses is rendered from this text by coursecraft (render_slides.py) once the plan is saved or exported.</div>
       </div>` : ''}
+    ${s.type === 'slide' && !s.text ? `<div class="rowbtns" style="margin:-.3rem 0 .85rem"><button id="editCardBtn" title="Type this card's text here; the designed png is replaced by the typed card">Edit this card as text</button></div>` : ''}
     ${s.type === 'slide' && !s.text ? `
       <div class="viewer">
         <img class="slideview" src="${slideUrl(s)}" alt="slide ${s.slide_id}" onerror="this.outerHTML='<div class=\'slideview\' style=\'display:flex;align-items:center;justify-content:center;color:var(--faint);font-size:.8rem\'>no card rendered yet for slide ${s.slide_id} (scripts/render_slides.py, then scripts/cutroom_board.py)</div>'">
@@ -740,12 +766,14 @@ function select(i) {
     persist(); select(i);
   };
   $('addCardBtn').onclick = () => insertCardAfter(i);
+  const ec = $('editCardBtn'); if (ec) ec.onclick = () => { snapshot(`edit card as text: ${s.slide_id}`); s.layout = /^ch\d/.test(s.slide_id) ? 'chapter' : LAYOUTS[s.slide_id] ? s.slide_id : 'setup'; s.text = { kicker: '', title: s.label || '', subtitle: '', body: '' }; persist(); select(i); };
   if (s.type === 'slide' && s.text) {
     fitCards();
-    const live = () => { $('cardPrev').innerHTML = cardHtml(s.text); fitCards(); };
-    for (const [k, id] of [['kicker','cardKicker'], ['title','cardTitle'], ['body','cardBody']]) {
+    const live = () => { $('cardPrev').innerHTML = cardHtml(s.text, s.layout); fitCards(); };
+    $('cardLayout').onchange = e => { snapshot(`card layout: ${s.slide_id}`); s.layout = e.target.value; for (const k of ['kicker','title','subtitle','body']) $('lbl' + k[0].toUpperCase() + k.slice(1)).textContent = LAYOUTS[s.layout][k] + (k==='title' ? ' · **word** turns amber' : k==='body' ? ' · new lines kept' : ''); persist(); live(); render(); };
+    for (const [k, id] of [['kicker','cardKicker'], ['title','cardTitle'], ['subtitle','cardSubtitle'], ['body','cardBody']]) {
       const f = $(id);
-      f.oninput = () => { s.text[k] = f.value; if (k === 'title') s.label = f.value ? `Card: ${f.value}` : 'Setup card'; live(); };
+      f.oninput = () => { s.text[k] = f.value; if (k === 'title' && (s.layout||'setup') === 'setup') s.label = f.value ? `Card: ${f.value}` : 'Setup card'; live(); };
       f.onchange = () => { snapshot(`card ${k}: ${s.slide_id}`); persist(); render(); };
     }
     $('cardDur').onchange = e => { snapshot(`card seconds: ${s.slide_id}`); s.duration = Math.max(1, parseFloat(e.target.value) || s.duration); e.target.value = s.duration; persist(); render(); };

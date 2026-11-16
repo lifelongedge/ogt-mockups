@@ -8,7 +8,7 @@
   "topic_class": "psychology (cut-heavy; two overdubs on cohort-only screens; no outcome, never fake one)",
   "store_sku": "mental-model-2",
   "replaces": null,
-  "notes": "Why this course exists: the owner's Five Frames notebook produced a seven-cluster outline (2026-11-16); scanned against 352 sessions, five clusters are on tape and two (Munger's lattice, the Army acronyms) are not. This plan carries the on-tape ones in Ken's own windows: (1) the brain builds a model (t4NkztDo_tc, Ken alone, 16 min, 'it takes one slide'); (2) systems thinking (the YRQLU1w_77A interview: definition, feedback loop, structure+process, 80/20 science/art, the meta-system); (3) the chimp (Celia, rJg6jv24s20; Tom's line, B9HVuTtPVqM); (4) plan-prepare-execute-assess with the daily AAR (fbk3g-UCSkc) and the detect-decide-deliver-assess drill-down (muuwye8ozpQ). Not carried: Munger (0 hits in the corpus; the 'inversion' hits are yield curves), FFTC, D3A's 'battle drill with zero-thinking friction' wording, 'flow state' (7 passing mentions), law of large numbers (6 passing mentions). Off-tape clusters belong in the written companion under their own authors' names. Running time about 38 min with the three optional segments off (s07, s13, s30); the shortest honest cut is Ch1 + Ch4 at ~18 min. Speaker permission: Tom Hardison (s22) and Bill Scheidt's questions (s10, s12 lead-ins) are not Ken. Order can flip: Ch2 (systems) before Ch1 (brain) if the owner wants the market before the trader. Rev2 (2026-11-16): every cut sNN has an overdub twin sNNa with the same source window and an animation (anim-sNNa.html from anim_gen.py). Exactly one of each pair should be included; the twins ship include:false so the owner picks in the cutroom. The cut stays the default until a twin is chosen. Twins on the two on-camera sources (t4n, b9h) carry pip:true: Ken's tile is composited top-right at render (build_v2 PIP_*); the other four sources have no usable camera (yrq and fbk a 60 px thumbnail, rjg and muw none). Rev4: the owner chose the animated version for the whole module; the cuts stay in the plan, off, so the choice can be reversed per segment in the cutroom.",
+  "notes": "2026-11-16 (cutroom-20): every slide card carries its text in the plan (`layout` + `text`), editable in the cutroom; render_slides.py renders the png from the plan (the plan wins over slides.html). The maxim attribution lost its dash (style guide). Revision not bumped (slide text merges into an open local pass).\n\nWhy this course exists: the owner's Five Frames notebook produced a seven-cluster outline (2026-11-16); scanned against 352 sessions, five clusters are on tape and two (Munger's lattice, the Army acronyms) are not. This plan carries the on-tape ones in Ken's own windows: (1) the brain builds a model (t4NkztDo_tc, Ken alone, 16 min, 'it takes one slide'); (2) systems thinking (the YRQLU1w_77A interview: definition, feedback loop, structure+process, 80/20 science/art, the meta-system); (3) the chimp (Celia, rJg6jv24s20; Tom's line, B9HVuTtPVqM); (4) plan-prepare-execute-assess with the daily AAR (fbk3g-UCSkc) and the detect-decide-deliver-assess drill-down (muuwye8ozpQ). Not carried: Munger (0 hits in the corpus; the 'inversion' hits are yield curves), FFTC, D3A's 'battle drill with zero-thinking friction' wording, 'flow state' (7 passing mentions), law of large numbers (6 passing mentions). Off-tape clusters belong in the written companion under their own authors' names. Running time about 38 min with the three optional segments off (s07, s13, s30); the shortest honest cut is Ch1 + Ch4 at ~18 min. Speaker permission: Tom Hardison (s22) and Bill Scheidt's questions (s10, s12 lead-ins) are not Ken. Order can flip: Ch2 (systems) before Ch1 (brain) if the owner wants the market before the trader. Rev2 (2026-11-16): every cut sNN has an overdub twin sNNa with the same source window and an animation (anim-sNNa.html from anim_gen.py). Exactly one of each pair should be included; the twins ship include:false so the owner picks in the cutroom. The cut stays the default until a twin is chosen. Twins on the two on-camera sources (t4n, b9h) carry pip:true: Ken's tile is composited top-right at render (build_v2 PIP_*); the other four sources have no usable camera (yrq and fbk a 60 px thumbnail, rjg and muw none). Rev4: the owner chose the animated version for the whole module; the cuts stay in the plan, off, so the choice can be reversed per segment in the cutroom.",
   "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/mental-model-2-v2/",
   "sources": [
     {
@@ -99,7 +99,14 @@
       "include": true,
       "label": "Title card",
       "slide_id": "title",
-      "duration": 4
+      "duration": 4,
+      "layout": "title",
+      "text": {
+        "kicker": "",
+        "title": "The **Mental Model** II",
+        "subtitle": "",
+        "body": "The Brain, the System, the Loop\nwith Dr. Ken Long"
+      }
     },
     {
       "id": "s03",
@@ -233,7 +240,14 @@
       "include": true,
       "label": "Chapter 2 card",
       "slide_id": "ch2",
-      "duration": 2
+      "duration": 2,
+      "layout": "chapter",
+      "text": {
+        "kicker": "Chapter 2",
+        "title": "Systems thinking",
+        "subtitle": "",
+        "body": ""
+      }
     },
     {
       "id": "s10",
@@ -386,7 +400,14 @@
       "include": true,
       "label": "Chapter 3 card",
       "slide_id": "ch3",
-      "duration": 2
+      "duration": 2,
+      "layout": "chapter",
+      "text": {
+        "kicker": "Chapter 3",
+        "title": "The chimp and the **Zero State**",
+        "subtitle": "",
+        "body": ""
+      }
     },
     {
       "id": "s19",
@@ -505,7 +526,14 @@
       "include": true,
       "label": "Chapter 4 card",
       "slide_id": "ch4",
-      "duration": 2
+      "duration": 2,
+      "layout": "chapter",
+      "text": {
+        "kicker": "Chapter 4",
+        "title": "Plan, prepare, execute, **assess**",
+        "subtitle": "",
+        "body": ""
+      }
     },
     {
       "id": "s25",
@@ -634,7 +662,14 @@
       "include": true,
       "label": "Maxim card",
       "slide_id": "maxim",
-      "duration": 6
+      "duration": 6,
+      "layout": "maxim",
+      "text": {
+        "kicker": "",
+        "title": "“Be of the herd, but not in the herd.”",
+        "subtitle": "Dr. Ken Long",
+        "body": ""
+      }
     },
     {
       "id": "s32",
@@ -642,7 +677,14 @@
       "include": true,
       "label": "End card",
       "slide_id": "end",
-      "duration": 10
+      "duration": 10,
+      "layout": "end",
+      "text": {
+        "kicker": "",
+        "title": "One idea on the craft most mornings, **free**",
+        "subtitle": "owlgrouptrading.com",
+        "body": "The Tue to Fri daily note from Owl Group Trading.\nModule 1, The Mental Model, is the companion to this one."
+      }
     }
   ]
 }

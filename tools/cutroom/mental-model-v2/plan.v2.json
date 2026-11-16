@@ -8,7 +8,7 @@
   "topic_class": "psychology (cut-heavy; ONE decidable claim; no other outcomes)",
   "store_sku": "mental-model",
   "replaces": "c-tosm1",
-  "notes": "rev3 (2026-11-16): every cut sNN has an overdub twin sNNa with the same source window and an animation (anim-sNNa.html from anim_gen.py; the kit is scripts/anim_kit.py, skill anim-overdub). Exactly one of each pair is included; the twins ship ON because the owner chose the animated version for Module 2. Twins on apk carry pip:true: Ken's tile is composited top-right at render (build_v2 PIP_*); hva, keu and kma have no usable camera (a gallery strip, tiles under 100 px). s12's Fletcher credit is in the twin's caption, not in his voice inside the window (see its status). The cutroom shows each twin's animation over the source audio and draws the live cropped tile on pip twins (cutroom-17). --- rev2 cut notes. What was removed and why: (1) Ch1 16:04-19:05 and 20:48-22:49, 5 min on NotebookLM personas, PEN 3.0 prompts and inspecting a lieutenant's prompt; replaced by 05:17-06:22 (maxims as fault-mode analysis, 'you are the commander, the AI is the staff') and Ken's own conclusion 23:36-24:44, which neither v1 nor rev1 reached. (2) Ch1b core-and-turbo: Module 2 material, switched off. (3) Ch2 35:56-38:44, 2:48 of podcast/book-review/creativity-202 tangent that rev1 carried inside 'Intuition'; Fletcher is credited in 24 s instead. (4) Ch3 George's 2:06 run-up replaced by Ken's 21 s question plus George's 21 s answer. (5) The aggregate outcome: psychology class, and the rule did not test the claim. Running time about 27 min from 34:40; a 22-min version drops s03, s05, s23/s24 and trims the overdub's agitation stretch 08:16-09:45. Companion materials (deck, quizzes, AI pack in edge-ogt-engine/drafts/video-products) were checked against the same footage: ten of the 24 cards state things Ken does not say in it (see SESSIONSTATE 2026-11-16). Sources: FOUR videos, unchanged. rev1 notes kept below. --- Cut track: docs/store-v2-cut-tracks.md §1. Mapping findings folded in: (1) Ch2 card/content drift ~2min — v2 boundaries follow CONTENT (intuition to 38:44, imagination 38:44-39:37, common sense 39:42-40:13, emotion from 40:16 EXTENDED past the old clip out-point to finish the sentence); (2) scene-24 star payoff ('as efficient as they need to be' 12:00-12:05) pulled INTO the star segment; (3) 100-maxims overdub widened to the full share span 16:04-19:05; (4) 'good parts don't look funny' overlay belongs to intuition (33:16), not imagination; (5) m1-04 close extended to ~14:05 to finish 'win rate only needs to be'. Sources: FOUR videos (cut-track prose said three — the table was right).",
+  "notes": "2026-11-16 (cutroom-20): every slide card carries its text in the plan (`layout` + `text`), editable in the cutroom; render_slides.py renders the png from the plan (the plan wins over slides.html). The owner's cutroom note on the title card applied: 'for traders' under the title in smaller print. The maxim attribution lost its dash (style guide). Revision not bumped: the cutroom pulls slide text into a local copy that has none, so an open pass is not set aside.\n\nrev3 (2026-11-16): every cut sNN has an overdub twin sNNa with the same source window and an animation (anim-sNNa.html from anim_gen.py; the kit is scripts/anim_kit.py, skill anim-overdub). Exactly one of each pair is included; the twins ship ON because the owner chose the animated version for Module 2. Twins on apk carry pip:true: Ken's tile is composited top-right at render (build_v2 PIP_*); hva, keu and kma have no usable camera (a gallery strip, tiles under 100 px). s12's Fletcher credit is in the twin's caption, not in his voice inside the window (see its status). The cutroom shows each twin's animation over the source audio and draws the live cropped tile on pip twins (cutroom-17). --- rev2 cut notes. What was removed and why: (1) Ch1 16:04-19:05 and 20:48-22:49, 5 min on NotebookLM personas, PEN 3.0 prompts and inspecting a lieutenant's prompt; replaced by 05:17-06:22 (maxims as fault-mode analysis, 'you are the commander, the AI is the staff') and Ken's own conclusion 23:36-24:44, which neither v1 nor rev1 reached. (2) Ch1b core-and-turbo: Module 2 material, switched off. (3) Ch2 35:56-38:44, 2:48 of podcast/book-review/creativity-202 tangent that rev1 carried inside 'Intuition'; Fletcher is credited in 24 s instead. (4) Ch3 George's 2:06 run-up replaced by Ken's 21 s question plus George's 21 s answer. (5) The aggregate outcome: psychology class, and the rule did not test the claim. Running time about 27 min from 34:40; a 22-min version drops s03, s05, s23/s24 and trims the overdub's agitation stretch 08:16-09:45. Companion materials (deck, quizzes, AI pack in edge-ogt-engine/drafts/video-products) were checked against the same footage: ten of the 24 cards state things Ken does not say in it (see SESSIONSTATE 2026-11-16). Sources: FOUR videos, unchanged. rev1 notes kept below. --- Cut track: docs/store-v2-cut-tracks.md §1. Mapping findings folded in: (1) Ch2 card/content drift ~2min — v2 boundaries follow CONTENT (intuition to 38:44, imagination 38:44-39:37, common sense 39:42-40:13, emotion from 40:16 EXTENDED past the old clip out-point to finish the sentence); (2) scene-24 star payoff ('as efficient as they need to be' 12:00-12:05) pulled INTO the star segment; (3) 100-maxims overdub widened to the full share span 16:04-19:05; (4) 'good parts don't look funny' overlay belongs to intuition (33:16), not imagination; (5) m1-04 close extended to ~14:05 to finish 'win rate only needs to be'. Sources: FOUR videos (cut-track prose said three — the table was right).",
   "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/mental-model-v2/",
   "sources": [
     {
@@ -87,7 +87,14 @@
       "include": true,
       "label": "Title card",
       "slide_id": "title",
-      "duration": 4
+      "duration": 4,
+      "layout": "title",
+      "text": {
+        "kicker": "",
+        "title": "The **Mental Model**",
+        "subtitle": "for traders",
+        "body": "The coaching eye, the four intelligences, the teeter-totter, the lions\nwith Dr. Ken Long"
+      }
     },
     {
       "id": "s03",
@@ -230,7 +237,14 @@
       "include": true,
       "label": "Chapter 2 card",
       "slide_id": "ch2",
-      "duration": 2
+      "duration": 2,
+      "layout": "chapter",
+      "text": {
+        "kicker": "Chapter 2",
+        "title": "The four primal intelligences",
+        "subtitle": "",
+        "body": ""
+      }
     },
     {
       "id": "s12",
@@ -445,7 +459,14 @@
       "include": true,
       "label": "Chapter 3 card",
       "slide_id": "ch3",
-      "duration": 2
+      "duration": 2,
+      "layout": "chapter",
+      "text": {
+        "kicker": "Chapter 3",
+        "title": "The great big **teeter-totter**",
+        "subtitle": "",
+        "body": ""
+      }
     },
     {
       "id": "s22",
@@ -618,7 +639,14 @@
       "include": true,
       "label": "Chapter 4 card",
       "slide_id": "ch4",
-      "duration": 2
+      "duration": 2,
+      "layout": "chapter",
+      "text": {
+        "kicker": "Chapter 4",
+        "title": "Watching the **lions**",
+        "subtitle": "",
+        "body": ""
+      }
     },
     {
       "id": "s30",
@@ -741,7 +769,14 @@
       "include": true,
       "label": "Maxim card",
       "slide_id": "maxim",
-      "duration": 6
+      "duration": 6,
+      "layout": "maxim",
+      "text": {
+        "kicker": "",
+        "title": "“An intelligent, adaptive machine with rules.”",
+        "subtitle": "Dr. Ken Long",
+        "body": ""
+      }
     },
     {
       "id": "s36",
@@ -749,7 +784,14 @@
       "include": true,
       "label": "End card",
       "slide_id": "end",
-      "duration": 10
+      "duration": 10,
+      "layout": "end",
+      "text": {
+        "kicker": "",
+        "title": "One idea on the craft most mornings, **free**",
+        "subtitle": "owlgrouptrading.com",
+        "body": "The Tue to Fri daily note from Owl Group Trading.\nModule 2, The Mental Model II, continues this one."
+      }
     }
   ]
 }
