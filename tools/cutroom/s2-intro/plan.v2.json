@@ -1,7 +1,7 @@
 {
   "schema": "coursecraft-plan-v2",
   "course": "s2-intro",
-  "revision": 12,
+  "revision": 13,
   "revised": "2026-11-15",
   "status": "TEST — the owner's takes on s02, s04–s07; Ava on s01 (new opening, to be recorded) and s03 (take removed by the owner); 0.2.69 captures gone with the old opening.",
   "title": "Edge S2 Desktop: where to begin",
@@ -182,8 +182,8 @@
         "s1": "Open the Trades panel",
         "s2": "Below the rows, the R curve",
         "s3": "Switch the view to Histogram",
-        "s4": "History shows every day",
-        "s5": "And the trades can sit on the chart",
+        "s4": "against its peak",
+        "s5": "the trades consider the chart",
         "s6": "Each closed trade is drawn as a candle",
         "s7": "And its label"
       }
