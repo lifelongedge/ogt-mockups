@@ -83,6 +83,11 @@
                transform-origin:top left; border-radius:6px; background:#000;
                display:none; pointer-events:none; }
   .vstack.anim .animlayer { display:block; }
+  /* cutroom-17: the picture-in-picture corner. A twin with pip:true on a source with pip.crop shows Ken's camera
+     tile live over the animation, cropped from the playing video, exactly where build_v2 composites it (950,22 300x169). */
+  .piplayer { position:absolute; top:0; left:0; width:300px; height:169px; transform-origin:top left; border:1px solid rgba(56,225,255,.35);
+              border-radius:4px; background:#000; display:none; pointer-events:none; }
+  .vstack.anim.pip .piplayer { display:block; }
   /* ---- the Voice panel: an animation-only viewer (no source video), the prompter, the recorder ---- */
   .vstack.solo { width:100%; aspect-ratio:16/9; background:#000; border-radius:6px; overflow:hidden; }
   .vstack.solo .animlayer { display:block; }
@@ -173,7 +178,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const BUILD = 'cutroom-16';
+const BUILD = 'cutroom-17';
 console.log('[cutroom] build', BUILD);
 window.__edgeBuild = BUILD;
 
@@ -379,7 +384,26 @@ function fitAnim() {
   const w = v.clientWidth, h = v.clientHeight;
   if (!w || !h) return;
   const k = Math.min(w / 1280, h / 720);
-  f.style.transform = `translate(${(w - 1280 * k) / 2}px, ${(h - 720 * k) / 2}px) scale(${k})`;
+  const dx = (w - 1280 * k) / 2, dy = (h - 720 * k) / 2;
+  f.style.transform = `translate(${dx}px, ${dy}px) scale(${k})`;
+  const pl = $('pipLayer');
+  if (pl) pl.style.transform = `translate(${dx + PIP.x * k}px, ${dy + PIP.y * k}px) scale(${k})`;
+}
+
+// ---------- picture-in-picture (cutroom-17) ----------
+// Mirrors build_v2 PIP_W/PIP_X/PIP_Y. The crop is the source's ffmpeg string (w:h:x:y in iw/ih terms).
+const PIP = { x: 950, y: 22, w: 300, h: 169 };
+function pipCrop(s) {
+  if (!s.pip) return null;
+  const src = srcById(s.source), c = src && src.pip && src.pip.crop;
+  if (!c || !/^[\d.iwh*/+\-:() ]+$/.test(c)) return null;
+  return (vw, vh) => c.split(':').map(e => Function('iw', 'ih', `return (${e});`)(vw, vh));
+}
+function paintPip(s) {
+  const pl = $('pipLayer'), crop = pipCrop(s);
+  if (!pl || !crop || !videoEl || !videoEl.videoWidth) return;
+  const [cw, ch, cx, cy] = crop(videoEl.videoWidth, videoEl.videoHeight);
+  pl.getContext('2d').drawImage(videoEl, cx, cy, cw, ch, 0, 0, PIP.w, PIP.h);
 }
 
 function animTime(s) {
@@ -403,6 +427,7 @@ function paintAnim(s) {
   const ct = videoEl ? videoEl.currentTime : 0;
   const inside = ct >= s.in && ct <= s.out;
   w.renderFrame(inside ? animTime(s) : animDur * ANIM_POSTER);
+  paintPip(s);
 }
 
 // rAF only while the video is actually rolling; timeupdate alone is ~4Hz and
@@ -422,6 +447,7 @@ function setupAnim(s) {
   const tabs = $('viewtabs'), stack = $('vstack');
   if (!animLayer || !tabs) return;
   stack.classList.remove('anim');
+  stack.classList.toggle('pip', !!pipCrop(s));
   tabs.style.display = 'none';
 
   animLayer.onload = () => {
@@ -464,6 +490,7 @@ function select(i) {
         <div class="vstack" id="vstack">
           <video id="vid" src="${mediaUrl(src.proxy)}" preload="metadata" controls></video>
           <iframe class="animlayer" id="animLayer" scrolling="no" title="animation"></iframe>
+          <canvas class="piplayer" id="pipLayer" width="300" height="169"></canvas>
         </div>
         <div class="viewtabs" id="viewtabs" style="display:none">
           <button data-view="source" class="on">Ken's screen</button>

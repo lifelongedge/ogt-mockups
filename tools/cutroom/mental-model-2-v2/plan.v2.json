@@ -1,14 +1,14 @@
 {
   "schema": "coursecraft-plan-v2",
   "course": "mental-model-2-v2",
-  "revision": 2,
+  "revision": 3,
   "revised": "2026-11-16",
   "status": "DRAFT rev1 — mined 2026-11-16 from the full kenlong-transcripts corpus (all windows read in the VTTs; five sources, 2022-2024). Companion to Module 1 (mental-model-v2 rev2). Owner reviews in the cutroom; nothing built; sources not yet fetched on this box.",
   "title": "The Mental Model II: The Brain, the System, the Loop (v2)",
   "topic_class": "psychology (cut-heavy; two overdubs on cohort-only screens; no outcome, never fake one)",
   "store_sku": "mental-model-2",
   "replaces": null,
-  "notes": "Why this course exists: the owner's Five Frames notebook produced a seven-cluster outline (2026-11-16); scanned against 352 sessions, five clusters are on tape and two (Munger's lattice, the Army acronyms) are not. This plan carries the on-tape ones in Ken's own windows: (1) the brain builds a model (t4NkztDo_tc, Ken alone, 16 min, 'it takes one slide'); (2) systems thinking (the YRQLU1w_77A interview: definition, feedback loop, structure+process, 80/20 science/art, the meta-system); (3) the chimp (Celia, rJg6jv24s20; Tom's line, B9HVuTtPVqM); (4) plan-prepare-execute-assess with the daily AAR (fbk3g-UCSkc) and the detect-decide-deliver-assess drill-down (muuwye8ozpQ). Not carried: Munger (0 hits in the corpus; the 'inversion' hits are yield curves), FFTC, D3A's 'battle drill with zero-thinking friction' wording, 'flow state' (7 passing mentions), law of large numbers (6 passing mentions). Off-tape clusters belong in the written companion under their own authors' names. Running time about 38 min with the three optional segments off (s07, s13, s30); the shortest honest cut is Ch1 + Ch4 at ~18 min. Speaker permission: Tom Hardison (s22) and Bill Scheidt's questions (s10, s12 lead-ins) are not Ken. Order can flip: Ch2 (systems) before Ch1 (brain) if the owner wants the market before the trader. Rev2 (2026-11-16): every cut sNN has an overdub twin sNNa with the same source window and an animation (anim-sNNa.html from anim_gen.py). Exactly one of each pair should be included; the twins ship include:false so the owner picks in the cutroom. The cut stays the default until a twin is chosen.",
+  "notes": "Why this course exists: the owner's Five Frames notebook produced a seven-cluster outline (2026-11-16); scanned against 352 sessions, five clusters are on tape and two (Munger's lattice, the Army acronyms) are not. This plan carries the on-tape ones in Ken's own windows: (1) the brain builds a model (t4NkztDo_tc, Ken alone, 16 min, 'it takes one slide'); (2) systems thinking (the YRQLU1w_77A interview: definition, feedback loop, structure+process, 80/20 science/art, the meta-system); (3) the chimp (Celia, rJg6jv24s20; Tom's line, B9HVuTtPVqM); (4) plan-prepare-execute-assess with the daily AAR (fbk3g-UCSkc) and the detect-decide-deliver-assess drill-down (muuwye8ozpQ). Not carried: Munger (0 hits in the corpus; the 'inversion' hits are yield curves), FFTC, D3A's 'battle drill with zero-thinking friction' wording, 'flow state' (7 passing mentions), law of large numbers (6 passing mentions). Off-tape clusters belong in the written companion under their own authors' names. Running time about 38 min with the three optional segments off (s07, s13, s30); the shortest honest cut is Ch1 + Ch4 at ~18 min. Speaker permission: Tom Hardison (s22) and Bill Scheidt's questions (s10, s12 lead-ins) are not Ken. Order can flip: Ch2 (systems) before Ch1 (brain) if the owner wants the market before the trader. Rev2 (2026-11-16): every cut sNN has an overdub twin sNNa with the same source window and an animation (anim-sNNa.html from anim_gen.py). Exactly one of each pair should be included; the twins ship include:false so the owner picks in the cutroom. The cut stays the default until a twin is chosen. Twins on the two on-camera sources (t4n, b9h) carry pip:true: Ken's tile is composited top-right at render (build_v2 PIP_*); the other four sources have no usable camera (yrq and fbk a 60 px thumbnail, rjg and muw none).",
   "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/mental-model-2-v2/",
   "sources": [
     {
@@ -16,7 +16,11 @@
       "label": "most-important-edge 2022-11-06 (Ch1 brain)",
       "file": "youtube-t4NkztDo_tc-most-important-edge.mp4",
       "url": "https://www.youtube.com/watch?v=t4NkztDo_tc",
-      "proxy": "youtube-t4NkztDo_tc-most-important-edge.proxy.mp4"
+      "proxy": "youtube-t4NkztDo_tc-most-important-edge.proxy.mp4",
+      "pip": {
+        "crop": "iw/3:ih/3:iw/3:0",
+        "note": "Zoom gallery, Ken's tile is top-middle for the whole session (checked at 10,60,380,440,500,620,870,990 s)"
+      }
     },
     {
       "id": "yrq",
@@ -37,7 +41,11 @@
       "label": "coaching-tom-hardison (Ch3 Tom's chimp)",
       "file": "youtube-B9HVuTtPVqM-coaching-tom-hardison.mp4",
       "proxy": "youtube-B9HVuTtPVqM-coaching-tom-hardison.proxy.mp4",
-      "url": "https://www.youtube.com/watch?v=B9HVuTtPVqM"
+      "url": "https://www.youtube.com/watch?v=B9HVuTtPVqM",
+      "pip": {
+        "crop": "iw*0.418:ih*0.418:iw*0.5406:ih*0.2917",
+        "note": "two tiles, Ken on the right; a 16:9 window on his tile (checked at 370,420,455 s)"
+      }
     },
     {
       "id": "fbk",
@@ -82,7 +90,8 @@
       "include": false,
       "label": "ALT animated: Cold open: be of the herd, not in the herd",
       "animation_brief": "Twin of s01: same Ken audio, drawn scene (be of the herd, not in the herd) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
-      "status": "twin; pick this or s01 in the cutroom"
+      "status": "twin; pick this or s01 in the cutroom",
+      "pip": true
     },
     {
       "id": "s02",
@@ -112,7 +121,8 @@
       "include": false,
       "label": "ALT animated: The persistent edge: procedures, and one brick",
       "animation_brief": "Twin of s03: same Ken audio, drawn scene (procedures, and one brick) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
-      "status": "twin; pick this or s03 in the cutroom"
+      "status": "twin; pick this or s03 in the cutroom",
+      "pip": true
     },
     {
       "id": "s04",
@@ -134,7 +144,8 @@
       "include": false,
       "label": "ALT animated: ★ Your brain is a prediction machine; the mental model is the buffer",
       "animation_brief": "Twin of s04: same Ken audio, drawn scene (your brain is a prediction machine) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
-      "status": "twin; pick this or s04 in the cutroom"
+      "status": "twin; pick this or s04 in the cutroom",
+      "pip": true
     },
     {
       "id": "s05",
@@ -156,7 +167,8 @@
       "include": false,
       "label": "ALT animated: Shadow, startle, the lion's roar: normal versus abnormal",
       "animation_brief": "Twin of s05: same Ken audio, drawn scene (normal versus abnormal) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
-      "status": "twin; pick this or s05 in the cutroom"
+      "status": "twin; pick this or s05 in the cutroom",
+      "pip": true
     },
     {
       "id": "s06",
@@ -178,7 +190,8 @@
       "include": false,
       "label": "ALT animated: Look broadly, stalk, localize: how a predator thinks",
       "animation_brief": "Twin of s06: same Ken audio, drawn scene (how a predator thinks) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
-      "status": "twin; pick this or s06 in the cutroom"
+      "status": "twin; pick this or s06 in the cutroom",
+      "pip": true
     },
     {
       "id": "s07",
@@ -211,7 +224,8 @@
       "include": false,
       "label": "ALT animated: ★ The wedge: a buffer between your decision and the herd brain",
       "animation_brief": "Twin of s08: same Ken audio, drawn scene (the wedge) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
-      "status": "twin; pick this or s08 in the cutroom"
+      "status": "twin; pick this or s08 in the cutroom",
+      "pip": true
     },
     {
       "id": "s09",
@@ -460,7 +474,8 @@
       "include": false,
       "label": "ALT animated: Tom: one idiot away from the chimp behind the wheel; trading is exactly like that",
       "animation_brief": "Twin of s22: same Ken audio, drawn scene (the chimp behind the wheel) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
-      "status": "twin; pick this or s22 in the cutroom"
+      "status": "twin; pick this or s22 in the cutroom",
+      "pip": true
     },
     {
       "id": "s23",
