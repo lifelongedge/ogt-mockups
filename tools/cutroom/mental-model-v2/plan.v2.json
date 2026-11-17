@@ -783,17 +783,18 @@
     {
       "id": "s36",
       "type": "slide",
-      "include": false,
+      "include": true,
       "label": "End card",
       "slide_id": "end",
       "duration": 10,
       "text": {
         "kicker": "",
-        "title": "Module 2, The Mental Model Part II",
-        "subtitle": "",
-        "body": "Go deeper"
+        "title": "One idea on the craft most mornings",
+        "subtitle": "owlgrouptrading.com",
+        "body": "The Tue to Fri daily note from Owl Group Trading.\nModule 2, The Mental Model II, goes deeper."
       },
-      "layout": "end"
+      "layout": "end",
+      "status": "rev4: back ON in Module 2's end-card style (owner: 'I like this end slide. resurrect the one in part 1 in this style'); ', free' dropped as on the owner's screen; the companion line keeps their 'go deeper'"
     }
   ]
 }
