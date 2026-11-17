@@ -1,0 +1,913 @@
+{
+ "schema": "coursecraft-plan-v2",
+ "course": "intraday-decision-tree-2-v2",
+ "revision": 1,
+ "revised": "2026-11-17",
+ "status": "rev 1 (2026-11-17): Part 2 After the Open of the two-part rebuild. Carries rev 1 of intraday-decision-tree-v2's chapters 1-4 (management, tomorrow's list) whole, plus the clock, entries, chop, timeframes and the close from the corpus scan. Style: Desk. Outcome slots OFF until their studies run (5DD on: computed). Walk dates from what is said in the session are checked against the bars before VERIFIED.",
+ "title": "The Intraday Decision Tree, Part 2: After the Open (v2)",
+ "topic_class": "mechanical",
+ "store_sku": "intraday-decision-tree-2",
+ "replaces": null,
+ "notes": "Corpus scan and outline in courses/intraday-decision-tree-v2/. The 2014 daily-structure video (vic) has no captions; its times are from a local faster-whisper transcript and are checked by ear. Transitions by the Module 1 rule.",
+ "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/intraday-decision-tree-2-v2/",
+ "sources": [
+  {
+   "id": "roz",
+   "label": "foundational lessons (RGTX day; 2025-10-13 from what is said, check against the bars)",
+   "file": "youtube-ROZMqGhOOPU-foundational-lessons.mp4",
+   "proxy": "youtube-ROZMqGhOOPU-foundational-lessons.proxy.mp4",
+   "url": "https://www.youtube.com/watch?v=ROZMqGhOOPU"
+  },
+  {
+   "id": "vic",
+   "label": "2014-02-03 daily structure execution (no captions; local transcript)",
+   "file": "youtube-VICogwFpKyc-2014-02-03-daily-structure-execution.mp4",
+   "proxy": "youtube-VICogwFpKyc-2014-02-03-daily-structure-execution.proxy.mp4",
+   "url": "https://www.youtube.com/watch?v=VICogwFpKyc"
+  },
+  {
+   "id": "wlq",
+   "label": "2024-05-23 cohort-2 OR3/gaps coaching",
+   "file": "youtube-WlqQChOychs-or3-gaps-symbols.mp4",
+   "proxy": "youtube-WlqQChOychs-or3-gaps-symbols.proxy.mp4",
+   "url": "https://www.youtube.com/watch?v=WlqQChOychs"
+  },
+  {
+   "id": "d1s",
+   "label": "2023-07-12 Foundations Q&A special",
+   "file": "youtube-d_S1TCk2qnE-2023-07-12-foundations-q-a-special.mp4",
+   "proxy": "youtube-d_S1TCk2qnE-2023-07-12-foundations-q-a-special.proxy.mp4",
+   "url": "https://www.youtube.com/watch?v=d_S1TCk2qnE"
+  },
+  {
+   "id": "c6k",
+   "label": "2023-04-30 Foundations Q&A, 3-min vs 30-min",
+   "file": "youtube-C6KOd3YjK7g-2023-04-30-special-foundations-q-a-on-3-min-vs-30-min.mp4",
+   "proxy": "youtube-C6KOd3YjK7g-2023-04-30-special-foundations-q-a-on-3-min-vs-30-min.proxy.mp4",
+   "url": "https://www.youtube.com/watch?v=C6KOd3YjK7g"
+  },
+  {
+   "id": "cjj",
+   "label": "2023-01-05 STOD, bar-by-bar opening lesson (CLF)",
+   "file": "youtube-cJj-EuSR2u4.mp4",
+   "proxy": "youtube-cJj-EuSR2u4.proxy.mp4",
+   "url": "https://www.youtube.com/watch?v=cJj-EuSR2u4"
+  },
+  {
+   "id": "erp",
+   "label": "exits and psychology (EWW day; 2025-12-11 from what is said, check)",
+   "file": "youtube-erpQRiX0V6E-exits-and-psychology.mp4",
+   "proxy": "youtube-erpQRiX0V6E-exits-and-psychology.proxy.mp4",
+   "url": "https://www.youtube.com/watch?v=erpQRiX0V6E"
+  },
+  {
+   "id": "xvc",
+   "label": "cohort-6 intro overview (weekend of the 2026-01-17 report)",
+   "file": "youtube-XvcsfWFFW20-cohort-6-intro-overview.mp4",
+   "proxy": "youtube-XvcsfWFFW20-cohort-6-intro-overview.proxy.mp4",
+   "url": "https://www.youtube.com/watch?v=XvcsfWFFW20"
+  },
+  {
+   "id": "ue6",
+   "label": "trade framing and exits (2024-05-07 from what is said)",
+   "file": "youtube-uE6xWTKgKIE-trade-framing-and-exits.mp4",
+   "proxy": "youtube-uE6xWTKgKIE-trade-framing-and-exits.proxy.mp4",
+   "url": "https://www.youtube.com/watch?v=uE6xWTKgKIE"
+  },
+  {
+   "id": "x0w",
+   "label": "2023-05-25 Foundations Q&A re Kata 2",
+   "file": "youtube-X0WDFsTTfIM-2023-05-25-foundations-q-a-podcast-re-kata-2.mp4",
+   "proxy": "youtube-X0WDFsTTfIM-2023-05-25-foundations-q-a-podcast-re-kata-2.proxy.mp4",
+   "url": "https://www.youtube.com/watch?v=X0WDFsTTfIM"
+  },
+  {
+   "id": "hva",
+   "label": "cohort-3 coaching call (Palantir day; 2025-08-20 from what is said, ticker to check)",
+   "file": "youtube-hvajbAcWx3Y-cohort-3-significant.mp4",
+   "proxy": "youtube-hvajbAcWx3Y-cohort-3-significant.proxy.mp4",
+   "url": "https://www.youtube.com/watch?v=hvajbAcWx3Y"
+  },
+  {
+   "id": "ish",
+   "label": "rule of 4 explained (undated)",
+   "file": "youtube-ishrX2_M38I-rule-of-4-explained.mp4",
+   "proxy": "youtube-ishrX2_M38I-rule-of-4-explained.proxy.mp4",
+   "url": "https://www.youtube.com/watch?v=ishrX2_M38I"
+  },
+  {
+   "id": "ydd",
+   "label": "2022-11-16 STOD (EWZ, gap down, 3-min)",
+   "file": "youtube-YDDwTf8tFrw-2022-11-16-stod.mp4",
+   "proxy": "youtube-YDDwTf8tFrw-2022-11-16-stod.proxy.mp4",
+   "url": "https://www.youtube.com/watch?v=YDDwTf8tFrw"
+  },
+  {
+   "id": "3wu",
+   "label": "2023-01-03 STOD lesson, turbo trading in AAPL",
+   "file": "youtube-3WUJTysI1LQ-2023-01-03-s-stod-lesson-on-turbo-trading-in-aapl.mp4",
+   "proxy": "youtube-3WUJTysI1LQ-2023-01-03-s-stod-lesson-on-turbo-trading-in-aapl.proxy.mp4",
+   "url": "https://www.youtube.com/watch?v=3WUJTysI1LQ"
+  },
+  {
+   "id": "vrw",
+   "label": "check-in, visual box trading (DIA; 2024-11-04 from what is said)",
+   "file": "youtube-vrwZeB7q04A-checkin-visual-box-trading.mp4",
+   "proxy": "youtube-vrwZeB7q04A-checkin-visual-box-trading.proxy.mp4",
+   "url": "https://www.youtube.com/watch?v=vrwZeB7q04A"
+  }
+ ],
+ "voices": [
+  {
+   "id": "ava",
+   "label": "Ava (US, female, polished)",
+   "sample": "vo-ava.mp3"
+  }
+ ],
+ "segments": [
+  {
+   "id": "s01",
+   "type": "cut",
+   "include": true,
+   "label": "Cold open: later in the day, 3 minutes is noise",
+   "source": "roz",
+   "in": 4339.0,
+   "out": 4399.0,
+   "status": "MAPPED (corpus scan 2026-11-17; VTT seconds, about 3 s slack; quotes are auto-captions, verified by ear in the cutroom; trim inside)",
+   "quote_anchor": "the 3 minutes is an interesting time frame... later in the day, 3 minutes is noise"
+  },
+  {
+   "id": "s02",
+   "type": "slide",
+   "include": true,
+   "label": "Title card",
+   "slide_id": "title",
+   "duration": 4,
+   "layout": "title",
+   "text": {
+    "kicker": "",
+    "title": "The **Intraday Decision Tree**",
+    "subtitle": "",
+    "body": "Part 2: After the Open\nwith Dr. Ken Long"
+   },
+   "transition": {
+    "type": "fade",
+    "dur": 1.0
+   }
+  },
+  {
+   "id": "s03",
+   "type": "slide",
+   "include": true,
+   "label": "Agenda card",
+   "slide_id": "agenda",
+   "duration": 12,
+   "layout": "agenda",
+   "text": {
+    "kicker": "In this course",
+    "title": "Seven chapters, about 50 minutes",
+    "subtitle": "",
+    "body": "The clock | thirteen 30-minute windows, and a star at each decision\nEntries after the open | the SSC rule, the entry stack, the wiggle\nManaging the trade | the PSAR as the leash, adds on the market's money\nChop | the Z3 lines inside one frog box\nThree minutes, thirty minutes | growing a trade, core and turbo\nVWAP and the close | the magnet, boxes to the VWAP\nTomorrow's list | continuations, the seven patterns, 5DD"
+   },
+   "transition": {
+    "type": "fade",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s04",
+   "type": "slide",
+   "include": true,
+   "label": "Chapter 1 card",
+   "slide_id": "ch1",
+   "duration": 2,
+   "layout": "chapter",
+   "text": {
+    "kicker": "Chapter 1",
+    "title": "The clock",
+    "subtitle": "",
+    "body": ""
+   },
+   "transition": {
+    "type": "fade",
+    "dur": 1.0
+   }
+  },
+  {
+   "id": "s05",
+   "type": "cut",
+   "include": true,
+   "label": "The 13 thirty-minute chunks: the opening 30, four of morning, lunch, four of afternoon, the last 30",
+   "source": "vic",
+   "in": 182.0,
+   "out": 330.0,
+   "status": "MAPPED (corpus scan 2026-11-17; VTT seconds, about 3 s slack; quotes are auto-captions, verified by ear in the cutroom; trim inside) | 2014 whiteboard; picture to check; no captions, times from the local transcript",
+   "quote_anchor": "I've broken the day up into 13 thirty-minute chunks",
+   "transition": {
+    "type": "fade",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s06",
+   "type": "cut",
+   "include": true,
+   "label": "The stars: a key decision keyed to a time of day",
+   "source": "vic",
+   "in": 330.0,
+   "out": 360.0,
+   "status": "MAPPED (corpus scan 2026-11-17; VTT seconds, about 3 s slack; quotes are auto-captions, verified by ear in the cutroom; trim inside)",
+   "quote_anchor": "each of these stars represents a key decision that has to be made that's keyed into a particular time of the day",
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s07",
+   "type": "cut",
+   "include": true,
+   "label": "The ladder: 3, 10, 30, 60 minutes; after 60 it's a normal day at the office",
+   "source": "wlq",
+   "in": 2600.0,
+   "out": 2760.0,
+   "status": "MAPPED (corpus scan 2026-11-17; VTT seconds, about 3 s slack; quotes are auto-captions, verified by ear in the cutroom; trim inside)",
+   "quote_anchor": "after 60 minutes it's just kind of a normal day at the office",
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s08",
+   "type": "cut",
+   "include": true,
+   "label": "The time-of-day map: the opening 3, the first 30, the 90-minute lunch, the afternoon at half size",
+   "source": "d1s",
+   "in": 4179.0,
+   "out": 4284.0,
+   "status": "MAPPED (corpus scan 2026-11-17; VTT seconds, about 3 s slack; quotes are auto-captions, verified by ear in the cutroom; trim inside)",
+   "quote_anchor": "the afternoon trades, which is usually one half the size of the morning trade",
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s09",
+   "type": "cut",
+   "include": true,
+   "label": "His own schedule: OR3s for the first 30, then 30-minute charts, the last hour strictly to the threes",
+   "source": "c6k",
+   "in": 2591.0,
+   "out": 2664.0,
+   "status": "MAPPED (corpus scan 2026-11-17; VTT seconds, about 3 s slack; quotes are auto-captions, verified by ear in the cutroom; trim inside)",
+   "quote_anchor": "I like to use the first 30 minutes to get well started... with the OR3s",
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s10",
+   "type": "explainer",
+   "include": true,
+   "label": "EXPLAINER: the clock",
+   "voice": "ava",
+   "vo_script": "TO WRITE from the chapter's windows; Desk style (anim-overdub style=desk): the Desk clock strip: 13 windows drawn in, the open and close marked, morning and afternoon bands, stars at +30 +60 +90, the frog exit at 15:30, the timeframe per window",
+   "est_duration": 60,
+   "animation_brief": "the Desk clock strip: 13 windows drawn in, the open and close marked, morning and afternoon bands, stars at +30 +60 +90, the frog exit at 15:30, the timeframe per window",
+   "quote_anchor": "13 thirty-minute chunks",
+   "transition": {
+    "type": "fade",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s11",
+   "type": "slide",
+   "include": true,
+   "label": "Chapter 2 card",
+   "slide_id": "ch2",
+   "duration": 2,
+   "layout": "chapter",
+   "text": {
+    "kicker": "Chapter 2",
+    "title": "Entries after the open",
+    "subtitle": "",
+    "body": ""
+   },
+   "transition": {
+    "type": "fade",
+    "dur": 1.0
+   }
+  },
+  {
+   "id": "s12",
+   "type": "cut",
+   "include": true,
+   "label": "The SSC entry rule: the RL10 crosses the dragon and price takes out the PSAR; conservative and aggressive collapsing dragon",
+   "source": "cjj",
+   "in": 718.0,
+   "out": 956.0,
+   "status": "MAPPED (corpus scan 2026-11-17; VTT seconds, about 3 s slack; quotes are auto-captions, verified by ear in the cutroom; trim inside) | trim",
+   "quote_anchor": "now I'm not ready to go with an SSC yet...",
+   "transition": {
+    "type": "fade",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s13",
+   "type": "cut",
+   "include": true,
+   "label": "The SSC through the previous bar's PSAR dot: 1, 2, 3 and I'm in",
+   "source": "erp",
+   "in": 1189.0,
+   "out": 1290.0,
+   "status": "MAPPED (corpus scan 2026-11-17; VTT seconds, about 3 s slack; quotes are auto-captions, verified by ear in the cutroom; trim inside)",
+   "quote_anchor": "if this bar that's open goes through the last bar's PSAR dot, I'm long",
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s14",
+   "type": "cut",
+   "include": true,
+   "label": "The entry stack: 1-2-3, half a frog box, a full frog box off the low; the stop is a break of yesterday's low",
+   "source": "xvc",
+   "in": 2043.0,
+   "out": 2232.0,
+   "status": "MAPPED (corpus scan 2026-11-17; VTT seconds, about 3 s slack; quotes are auto-captions, verified by ear in the cutroom; trim inside)",
+   "quote_anchor": "find out what your expectancy is using this standard geometry",
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s15",
+   "type": "cut",
+   "include": true,
+   "label": "The RL10 wiggle short: less confirmation is better",
+   "source": "ue6",
+   "in": 3260.0,
+   "out": 3441.0,
+   "status": "MAPPED (corpus scan 2026-11-17; VTT seconds, about 3 s slack; quotes are auto-captions, verified by ear in the cutroom; trim inside)",
+   "quote_anchor": "that's the best short signal there is",
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s16",
+   "type": "cut",
+   "include": true,
+   "label": "WALK on his chart: EWW 2025-12-11, the R5 above the close and the VWAP",
+   "source": "erp",
+   "in": 1444.0,
+   "out": 1514.0,
+   "status": "MAPPED (corpus scan 2026-11-17; VTT seconds, about 3 s slack; quotes are auto-captions, verified by ear in the cutroom; trim inside) | date from what is said, check against the bars",
+   "quote_anchor": "so I just said hold my nose and enter",
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s17",
+   "type": "cut",
+   "include": true,
+   "label": "WALK continued: three adds, exit at the spine, fewer adds after lunch",
+   "source": "erp",
+   "in": 1669.0,
+   "out": 1775.0,
+   "status": "MAPPED (corpus scan 2026-11-17; VTT seconds, about 3 s slack; quotes are auto-captions, verified by ear in the cutroom; trim inside)",
+   "quote_anchor": "I only put two on because I'm now after the lunch hour",
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s18",
+   "type": "slide",
+   "include": true,
+   "label": "Chapter 3 card",
+   "slide_id": "ch3",
+   "duration": 2,
+   "layout": "chapter",
+   "text": {
+    "kicker": "Chapter 3",
+    "title": "Managing the trade",
+    "subtitle": "",
+    "body": ""
+   },
+   "transition": {
+    "type": "fade",
+    "dur": 1.0
+   }
+  },
+  {
+   "id": "s19",
+   "type": "cut",
+   "include": true,
+   "label": "Give the reversal a chance: the PSAR is the exit I respect",
+   "source": "wlq",
+   "in": 380.0,
+   "out": 470.0,
+   "status": "MAPPED (corpus scan 2026-11-17; VTT seconds, about 3 s slack; quotes are auto-captions, verified by ear in the cutroom; trim inside) | rev 1 s03",
+   "quote_anchor": "the PSAR is the price exit that I really respect, that's the non-negotiable one",
+   "transition": {
+    "type": "fade",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s20",
+   "type": "cut",
+   "include": true,
+   "label": "Respect the P: the zero-defect exit",
+   "source": "wlq",
+   "in": 900.0,
+   "out": 990.0,
+   "status": "MAPPED (corpus scan 2026-11-17; VTT seconds, about 3 s slack; quotes are auto-captions, verified by ear in the cutroom; trim inside) | rev 1 s04+s06, one contiguous passage",
+   "quote_anchor": "make sure that you respect the P as the zero-defect exit... don't ever let price go below the PSAR",
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s21",
+   "type": "cut",
+   "include": true,
+   "label": "Trust the PSAR all the way up, then accelerate the stop to the skin of the dragon",
+   "source": "wlq",
+   "in": 2760.0,
+   "out": 2850.0,
+   "status": "MAPPED (corpus scan 2026-11-17; VTT seconds, about 3 s slack; quotes are auto-captions, verified by ear in the cutroom; trim inside) | rev 1 s07",
+   "quote_anchor": "then I accelerate my stop to the skin of the dragon... 80 % of the time",
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s22",
+   "type": "cut",
+   "include": true,
+   "label": "Cash the rational exuberance: adds at 3R and 6R on the market's money; never let irrational retrace inside rational",
+   "source": "wlq",
+   "in": 2020.0,
+   "out": 2170.0,
+   "status": "MAPPED (corpus scan 2026-11-17; VTT seconds, about 3 s slack; quotes are auto-captions, verified by ear in the cutroom; trim inside) | rev 1 s09+s10",
+   "quote_anchor": "once it goes past a range stat move into irrational exuberance I never let it come back inside rational exuberance",
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s23",
+   "type": "cut",
+   "include": true,
+   "label": "The standard exits: PSAR trail, the RL10 peak moves the stop to the skin of the dragon, keep 80 to 90 %",
+   "source": "ue6",
+   "in": 4396.0,
+   "out": 4643.0,
+   "status": "MAPPED (corpus scan 2026-11-17; VTT seconds, about 3 s slack; quotes are auto-captions, verified by ear in the cutroom; trim inside) | trim",
+   "quote_anchor": "accelerate your stop from the P to the northern skin of the dragon",
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s24",
+   "type": "cut",
+   "include": true,
+   "label": "At 1R no-lose-plus-dinner-for-two; past 2R keep 70 % of the maximum favorable excursion; Kata 2 re-entry",
+   "source": "xvc",
+   "in": 3600.0,
+   "out": 3821.0,
+   "status": "MAPPED (corpus scan 2026-11-17; VTT seconds, about 3 s slack; quotes are auto-captions, verified by ear in the cutroom; trim inside) | FLAG: a member interjects at about 3755 ('the 7 is exactly the size of the hybrid')",
+   "quote_anchor": "keep 70 % of your maximum favorable excursion",
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s25",
+   "type": "outcome",
+   "include": false,
+   "mode": "aggregate",
+   "label": "WHAT HAPPENED: pyramiding vs flat, measured",
+   "voice": "ava",
+   "vo_script": "TO WRITE after the study runs: pyramid-vs-flat R distribution on QQQ/IWM day-trend days, 2022-2026.",
+   "est_duration": 50,
+   "data": {
+    "status": "STUDY NOT YET RUN"
+   },
+   "editorial_rules": "publish whatever it says; split-adjusted bars; ambiguity disclosed; off until the numbers exist, never faked"
+  },
+  {
+   "id": "s26",
+   "type": "outcome",
+   "include": false,
+   "mode": "aggregate",
+   "label": "WHAT HAPPENED: the no-back-inside trail, measured",
+   "voice": "ava",
+   "vo_script": "TO WRITE after the study runs: once past the RangeStat boundary, exit on any close back inside, vs PSAR-only, on >2x RangeStat winner days, SPY/QQQ/IWM/DIA 2022-2026.",
+   "est_duration": 50,
+   "data": {
+    "status": "STUDY NOT YET RUN"
+   },
+   "editorial_rules": "publish whatever it says; split-adjusted bars; ambiguity disclosed; off until the numbers exist, never faked"
+  },
+  {
+   "id": "s27",
+   "type": "slide",
+   "include": true,
+   "label": "Chapter 4 card",
+   "slide_id": "ch4",
+   "duration": 2,
+   "layout": "chapter",
+   "text": {
+    "kicker": "Chapter 4",
+    "title": "Chop",
+    "subtitle": "",
+    "body": ""
+   },
+   "transition": {
+    "type": "fade",
+    "dur": 1.0
+   }
+  },
+  {
+   "id": "s28",
+   "type": "cut",
+   "include": true,
+   "label": "The chop rule: no trade until the Z3 lines sit inside one frog box; the Super Pinch",
+   "source": "x0w",
+   "in": 2280.0,
+   "out": 2414.0,
+   "status": "MAPPED (corpus scan 2026-11-17; VTT seconds, about 3 s slack; quotes are auto-captions, verified by ear in the cutroom; trim inside)",
+   "quote_anchor": "don't trade the sideways quiet channel until the Z3 lines sit inside one frog box",
+   "transition": {
+    "type": "fade",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s29",
+   "type": "cut",
+   "include": true,
+   "label": "When the chop is over: RL slope at zero, Z3 width one frog box or less, take the Z3 breakout",
+   "source": "hva",
+   "in": 4716.0,
+   "out": 4956.0,
+   "status": "MAPPED (corpus scan 2026-11-17; VTT seconds, about 3 s slack; quotes are auto-captions, verified by ear in the cutroom; trim inside) | trim",
+   "quote_anchor": "the Z3 lines had to pinch less than a frog box and it has to break out of Z3",
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s30",
+   "type": "cut",
+   "include": true,
+   "label": "A channel that cannot hold four R10s is not tradable",
+   "source": "ish",
+   "in": 1336.0,
+   "out": 1452.0,
+   "status": "MAPPED (corpus scan 2026-11-17; VTT seconds, about 3 s slack; quotes are auto-captions, verified by ear in the cutroom; trim inside)",
+   "quote_anchor": "keeps you out of crocodile river forever",
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s31",
+   "type": "cut",
+   "include": true,
+   "label": "WALK on his chart: EWZ 2022-11-16, one giant sideways pattern",
+   "source": "ydd",
+   "in": 1011.0,
+   "out": 1142.0,
+   "status": "MAPPED (corpus scan 2026-11-17; VTT seconds, about 3 s slack; quotes are auto-captions, verified by ear in the cutroom; trim inside)",
+   "quote_anchor": "this is really just one giant sideways pattern",
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s32",
+   "type": "slide",
+   "include": true,
+   "label": "Chapter 5 card",
+   "slide_id": "ch5",
+   "duration": 2,
+   "layout": "chapter",
+   "text": {
+    "kicker": "Chapter 5",
+    "title": "Three minutes, thirty minutes",
+    "subtitle": "",
+    "body": ""
+   },
+   "transition": {
+    "type": "fade",
+    "dur": 1.0
+   }
+  },
+  {
+   "id": "s33",
+   "type": "cut",
+   "include": true,
+   "label": "Three trader types: 3-minute is a day trader, 30-minute is a hybrid",
+   "source": "c6k",
+   "in": 337.0,
+   "out": 481.0,
+   "status": "MAPPED (corpus scan 2026-11-17; VTT seconds, about 3 s slack; quotes are auto-captions, verified by ear in the cutroom; trim inside)",
+   "quote_anchor": "if you're using three minutes you're really a day trader primarily, and if you're a 30-minute trader you are a hybrid trader",
+   "transition": {
+    "type": "fade",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s34",
+   "type": "cut",
+   "include": true,
+   "label": "The 3 and 30 toggle: a 3-minute Cat 2 ahead of a 30-minute 1-2-3, add on confirmation",
+   "source": "wlq",
+   "in": 2973.0,
+   "out": 3120.0,
+   "status": "MAPPED (corpus scan 2026-11-17; VTT seconds, about 3 s slack; quotes are auto-captions, verified by ear in the cutroom; trim inside)",
+   "quote_anchor": "toggling back and forth between the three and the 30",
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s35",
+   "type": "cut",
+   "include": true,
+   "label": "Growing a 3-minute trade into a 30-minute trade",
+   "source": "c6k",
+   "in": 1293.0,
+   "out": 1441.0,
+   "status": "MAPPED (corpus scan 2026-11-17; VTT seconds, about 3 s slack; quotes are auto-captions, verified by ear in the cutroom; trim inside)",
+   "quote_anchor": "because it performed abnormally well... I can now shift to a 30-minute chart",
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s36",
+   "type": "cut",
+   "include": true,
+   "label": "Core and turbo on AAPL 2023-01-03: OR3 long, adds, harvest 80 %, fund a 20 % swing",
+   "source": "3wu",
+   "in": 240.0,
+   "out": 480.0,
+   "status": "MAPPED (corpus scan 2026-11-17; VTT seconds, about 3 s slack; quotes are auto-captions, verified by ear in the cutroom; trim inside) | FLAG: Ken narrating a member's (Charles's) plan; carded as such, never as his own trade",
+   "quote_anchor": "harvest 80 %, fund a 20 % swing",
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s37",
+   "type": "slide",
+   "include": true,
+   "label": "Chapter 6 card",
+   "slide_id": "ch6",
+   "duration": 2,
+   "layout": "chapter",
+   "text": {
+    "kicker": "Chapter 6",
+    "title": "VWAP and the close",
+    "subtitle": "",
+    "body": ""
+   },
+   "transition": {
+    "type": "fade",
+    "dur": 1.0
+   }
+  },
+  {
+   "id": "s38",
+   "type": "cut",
+   "include": true,
+   "label": "Why the last 30 minutes trade differently: leverage unwinding",
+   "source": "c6k",
+   "in": 149.0,
+   "out": 241.0,
+   "status": "MAPPED (corpus scan 2026-11-17; VTT seconds, about 3 s slack; quotes are auto-captions, verified by ear in the cutroom; trim inside) | rev 1 s18",
+   "quote_anchor": "a considerable number of people are using leverage intraday that have to get out of positions",
+   "transition": {
+    "type": "fade",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s39",
+   "type": "cut",
+   "include": true,
+   "label": "The VWAP z-score excursion: that's the VWAP magnet",
+   "source": "roz",
+   "in": 4440.0,
+   "out": 4601.0,
+   "status": "MAPPED (corpus scan 2026-11-17; VTT seconds, about 3 s slack; quotes are auto-captions, verified by ear in the cutroom; trim inside)",
+   "quote_anchor": "I might get 3 to one on the move just back to the VWAP",
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s40",
+   "type": "cut",
+   "include": true,
+   "label": "The VWAP magnet and the FadeStat defined",
+   "source": "d1s",
+   "in": 1363.0,
+   "out": 1530.0,
+   "status": "MAPPED (corpus scan 2026-11-17; VTT seconds, about 3 s slack; quotes are auto-captions, verified by ear in the cutroom; trim inside) | rev 1 s19; whiteboard hypothetical, no symbol",
+   "quote_anchor": "price quickly collapse and come down to the VWAP, we call that the VWAP magnet... the indicator called the fade stat",
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s41",
+   "type": "cut",
+   "include": true,
+   "label": "Count the boxes to the VWAP; the collapsing dragon below it",
+   "source": "vrw",
+   "in": 2781.0,
+   "out": 2911.0,
+   "status": "MAPPED (corpus scan 2026-11-17; VTT seconds, about 3 s slack; quotes are auto-captions, verified by ear in the cutroom; trim inside)",
+   "quote_anchor": "give it one and hope to get three and settle for two",
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s42",
+   "type": "cut",
+   "include": true,
+   "label": "Close vs VWAP: back at the VWAP, tomorrow is normal; far from it, this thing could be amazing",
+   "source": "roz",
+   "in": 5946.0,
+   "out": 6160.0,
+   "status": "MAPPED (corpus scan 2026-11-17; VTT seconds, about 3 s slack; quotes are auto-captions, verified by ear in the cutroom; trim inside)",
+   "quote_anchor": "when I see price comes back to the VWAP, I think tomorrow is normal",
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s43",
+   "type": "outcome",
+   "include": false,
+   "mode": "aggregate",
+   "label": "WHAT HAPPENED: the magnet, measured",
+   "voice": "ava",
+   "vo_script": "TO WRITE after the study runs: |price - VWAP| at 15:30 >= 2x FadeStat, closes within 1x FadeStat of the VWAP; SPY + DIA 1-min, 2023-2026.",
+   "est_duration": 55,
+   "data": {
+    "status": "STUDY NOT YET RUN"
+   },
+   "editorial_rules": "publish whatever it says; split-adjusted bars; ambiguity disclosed; off until the numbers exist, never faked"
+  },
+  {
+   "id": "s44",
+   "type": "slide",
+   "include": true,
+   "label": "Chapter 7 card",
+   "slide_id": "ch7",
+   "duration": 2,
+   "layout": "chapter",
+   "text": {
+    "kicker": "Chapter 7",
+    "title": "Tomorrow's list",
+    "subtitle": "",
+    "body": ""
+   },
+   "transition": {
+    "type": "fade",
+    "dur": 1.0
+   }
+  },
+  {
+   "id": "s45",
+   "type": "cut",
+   "include": true,
+   "label": "Category 1: continuations from today",
+   "source": "wlq",
+   "in": 3840.0,
+   "out": 3920.0,
+   "status": "MAPPED (corpus scan 2026-11-17; VTT seconds, about 3 s slack; quotes are auto-captions, verified by ear in the cutroom; trim inside) | rev 1 s14; 'EWW' here is a whiteboard hypothetical",
+   "quote_anchor": "any continuation pattern from one of today's trades... that's category one",
+   "transition": {
+    "type": "fade",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s46",
+   "type": "cut",
+   "include": true,
+   "label": "Category 2: the seven proven patterns, and the 5DD mechanics",
+   "source": "wlq",
+   "in": 3920.0,
+   "out": 4030.0,
+   "status": "MAPPED (corpus scan 2026-11-17; VTT seconds, about 3 s slack; quotes are auto-captions, verified by ear in the cutroom; trim inside) | rev 1 s15",
+   "quote_anchor": "a 5-day down: five lower closes; my mechanical entry for that is 5 cents above the high",
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s47",
+   "type": "outcome",
+   "include": true,
+   "mode": "aggregate",
+   "label": "WHAT HAPPENED: 5DD, every instance since 2020",
+   "voice": "ava",
+   "vo_script": "TO WRITE from the computed study (rules match his verbatim mechanics): 85 signals, 40 filled, 41 voided, +0.76R average, half won, best +7.7R, worst -2.24R.",
+   "est_duration": 50,
+   "data_ref": "topical-5dd plan s06 data (verified 2026-07-12)",
+   "editorial_rules": "publish whatever it says",
+   "transition": {
+    "type": "fade",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s48",
+   "type": "cut",
+   "include": true,
+   "label": "The sniper patterns: any one of them is a compound critical state",
+   "source": "wlq",
+   "in": 4030.0,
+   "out": 4110.0,
+   "status": "MAPPED (corpus scan 2026-11-17; VTT seconds, about 3 s slack; quotes are auto-captions, verified by ear in the cutroom; trim inside) | rev 1 s16",
+   "quote_anchor": "there's five sniper patterns... any one of them is a compound critical state"
+  },
+  {
+   "id": "s49",
+   "type": "slide",
+   "include": true,
+   "label": "Maxim card",
+   "slide_id": "maxim",
+   "duration": 6,
+   "layout": "maxim",
+   "text": {
+    "kicker": "",
+    "title": "“After 60 minutes it's just a normal day at the office.”",
+    "subtitle": "Dr. Ken Long",
+    "body": ""
+   },
+   "transition": {
+    "type": "fade",
+    "dur": 1.0
+   }
+  },
+  {
+   "id": "s50",
+   "type": "slide",
+   "include": true,
+   "label": "End card",
+   "slide_id": "end",
+   "duration": 10,
+   "layout": "end",
+   "text": {
+    "kicker": "",
+    "title": "One idea on the craft most mornings",
+    "subtitle": "owlgrouptrading.com",
+    "body": "The Tue to Fri daily note from Owl Group Trading.\nPart 1, The Open, is the companion to this one."
+   },
+   "transition": {
+    "type": "fade",
+    "dur": 1.0
+   }
+  }
+ ]
+}
