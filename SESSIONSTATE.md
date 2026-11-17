@@ -6,7 +6,7 @@
 > A tagged item applies ONLY to those env(s). Untagged ⇒ `[all]`.
 > Standard: edge-envx/sessionstate-standard.md
 
-**Owner persona:** ogtcoursecraft (review pages) · **Last updated:** 2026-09-23, from `win-native` (Owl Foundations on S2 Desktop mockup)
+**Owner persona:** ogtcoursecraft (review pages) · **Last updated:** 2026-11-17, from `stream` (animation style comparison page)
 
 ## Environment scope for this repo
 - Runs on: <env tags + one line each>
