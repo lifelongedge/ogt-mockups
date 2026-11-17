@@ -3,7 +3,7 @@
   "course": "swing-logic-v2",
   "revision": 2,
   "revised": "2026-11-16",
-  "status": "DRAFT rev2 (2026-11-16): the Mental Model method. Ken's own audio in 37 windows, each a cut (off) with an animated twin (on); typed cards; transitions. NOT built. Replaces rev1's VO overdubs and outcome studies (rev1 plan and its VO animations kept in rev1/).",
+  "status": "DRAFT rev2 (2026-11-16): the Mental Model method. Ken's own audio in 38 windows, each a cut (off) with an animated twin (on); typed cards; transitions. NOT built. Replaces rev1's VO overdubs and outcome studies (rev1 plan and its VO animations kept in rev1/).",
   "title": "Swing Trading Logic and Time Frame Integration (v2)",
   "topic_class": "chartable_framework",
   "store_sku": "swing-logic",
@@ -1086,7 +1086,7 @@
     {
       "id": "s38a",
       "type": "overdub",
-      "include": true,
+      "include": false,
       "label": "ALT animated: Tesla: either direction out of key support",
       "source": "src",
       "in": 4744.1,
@@ -1095,11 +1095,54 @@
       "end_phrase": "Critical state because it's at key support",
       "window_key": "tsla",
       "animation_brief": "anim_gen.py SCENES['tsla']",
-      "status": "animated twin, on (the owner chose animation for the Mental Model modules)",
+      "status": "the whole window animated (rev 2 first cut); off while the intercut is tried"
+    },
+    {
+      "id": "s38b",
+      "type": "cut",
+      "include": true,
+      "label": "Tesla · his real chart: the reading (intercut, first half)",
+      "source": "src",
+      "in": 4744.1,
+      "out": 4812.6,
+      "window_key": "tsla_read",
+      "start_phrase": "So, here was a weekly consolidation level",
+      "end_phrase": "back down to 260 right here",
+      "status": "Ken's screen, on: the weekly, daily and 65-minute charts while he reads them",
       "transition": {
         "type": "dip",
         "dur": 0.6
       }
+    },
+    {
+      "id": "s38c",
+      "type": "overdub",
+      "include": true,
+      "label": "WAY A · Tesla · the trade frame, drawn (intercut, second half)",
+      "source": "src",
+      "in": 4812.6,
+      "out": 4959.3,
+      "window_key": "tsla_frameA",
+      "variant": true,
+      "start_phrase": "Now, if this region does not hold support",
+      "end_phrase": "Critical state because it's at key support",
+      "animation_brief": "anim_gen.py SCENES['tsla_frameA']",
+      "status": "on; swap with WAY B (the next segment) to compare"
+    },
+    {
+      "id": "s38d",
+      "type": "overdub",
+      "include": false,
+      "label": "WAY B · Tesla · the trade frame on his real daily chart (intercut, second half)",
+      "source": "src",
+      "in": 4812.6,
+      "out": 4959.3,
+      "window_key": "tsla_frameB",
+      "variant": true,
+      "start_phrase": "Now, if this region does not hold support",
+      "end_phrase": "Critical state because it's at key support",
+      "animation_brief": "anim_gen.py SCENES['tsla_frameB']; still: stills/tsla-daily-20220930.jpg (src 1:20:56)",
+      "status": "off; the same window as WAY A: turn this on and WAY A off to compare"
     },
     {
       "id": "s39",
@@ -1230,7 +1273,7 @@
       "id": "s43a",
       "type": "overdub",
       "include": true,
-      "label": "ALT animated: A week later: Tesla from 310 to 220",
+      "label": "WAY A · A week later: Tesla, the frame as the bridge (drawn)",
       "source": "oct8",
       "in": 1892.3,
       "out": 1899.4,
@@ -1245,9 +1288,24 @@
       }
     },
     {
+      "id": "s43b",
+      "type": "overdub",
+      "include": false,
+      "label": "WAY B · A week later: Tesla, the frame on his week-later daily chart",
+      "source": "oct8",
+      "in": 1892.3,
+      "out": 1899.4,
+      "window_key": "tsla8_frameB",
+      "variant": true,
+      "start_phrase": "Tesla has just been smashed",
+      "end_phrase": "that's minus 35",
+      "animation_brief": "anim_gen.py SCENES['tsla8_frameB']; still: stills/tsla-daily-20221007.jpg (oct8 31:33)",
+      "status": "off; the same 7 s as WAY A"
+    },
+    {
       "id": "s44",
       "type": "cut",
-      "include": false,
+      "include": true,
       "label": "A week later: Tesla at crucial support",
       "source": "oct8",
       "in": 1910.1,
@@ -1255,12 +1313,16 @@
       "start_phrase": "extraordinarily large five-day range",
       "end_phrase": "previous Goodwill is gone",
       "window_key": "tsla8b",
-      "status": "Ken's screen; off, its animated twin carries the window (flip back per segment)"
+      "status": "Ken's screen, on: the real chart a week later",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
     },
     {
       "id": "s44a",
       "type": "overdub",
-      "include": true,
+      "include": false,
       "label": "ALT animated: A week later: Tesla at crucial support",
       "source": "oct8",
       "in": 1910.1,
@@ -1269,11 +1331,7 @@
       "end_phrase": "previous Goodwill is gone",
       "window_key": "tsla8b",
       "animation_brief": "anim_gen.py SCENES['tsla8b']",
-      "status": "animated twin, on (the owner chose animation for the Mental Model modules)",
-      "transition": {
-        "type": "dip",
-        "dur": 0.6
-      }
+      "status": "animated twin, off while the intercut is tried (his real week-later chart plays instead)"
     },
     {
       "id": "s45",
