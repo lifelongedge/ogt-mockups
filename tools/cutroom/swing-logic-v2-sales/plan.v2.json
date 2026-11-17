@@ -1,0 +1,226 @@
+{
+  "schema": "coursecraft-plan-v2",
+  "course": "swing-logic-v2-sales",
+  "cutroom": "swing-logic-v2-sales",
+  "revision": 2,
+  "revised": "2026-11-17",
+  "status": "rev1 (2026-11-17): a sales clip of swing-logic-v2, ~125 s; built on the owner's go without a cutroom pass",
+  "title": "Swing Trading Logic: sales clip",
+  "topic_class": "sales clip",
+  "store_sku": "swing-logic",
+  "replaces": null,
+  "notes": "Transitions by the course rule: fade 0.6 out of the title card, dip 0.6 between bites (separate moments), fade 1.0 into the end card.\n\nBites resolved from Ken's word times (vtt_words, 2026-11-17); each starts and ends on a full sentence, the next word after each is 'And'. Each twin starts the parent's scene at the bite's offset, so the captions stay on his words. The owner's go without a cutroom pass: 'can you build a 2 min sales video as well. I don't need to approve it, just do it.'",
+  "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/swing-logic-v2/",
+  "sources": [
+    {
+      "id": "src",
+      "label": "2022-10-01 weekend swing patterns podcast (98 min)",
+      "file": "youtube-rmfIYAVNQOA-2022-10-01-weekend-swing-patterns.mp4",
+      "proxy": "youtube-rmfIYAVNQOA-2022-10-01-weekend-swing-patterns.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=rmfIYAVNQOA"
+    }
+  ],
+  "voices": [
+    {
+      "id": "ava",
+      "label": "Ava (US, female, polished)",
+      "sample": "vo-ava.mp3"
+    },
+    {
+      "id": "andrew",
+      "label": "Andrew (US, male, conversational)",
+      "sample": "vo-andrew.mp3"
+    }
+  ],
+  "segments": [
+    {
+      "id": "s00",
+      "type": "slide",
+      "include": true,
+      "label": "Title card",
+      "slide_id": "title",
+      "duration": 4,
+      "layout": "title",
+      "text": {
+        "kicker": "",
+        "title": "**Swing Trading** Logic",
+        "subtitle": "and time frame integration",
+        "body": "with Dr. Ken Long"
+      }
+    },
+    {
+      "id": "s01",
+      "type": "cut",
+      "include": false,
+      "label": "Cold open: when the dragon cracked (Adobe, October 2022)",
+      "source": "src",
+      "in": 4066.0,
+      "out": 4088.2,
+      "why": "the hook: when dragons collapse, fear and panic, large directional moves we can exploit",
+      "status": "bite of swing-logic-v2 s01 (+35.4..+57.6 s); the twin s01a carries it"
+    },
+    {
+      "id": "s01a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: Cold open: when the dragon cracked (Adobe, October 2022)",
+      "source": "src",
+      "in": 4066.0,
+      "out": 4088.2,
+      "why": "the hook: when dragons collapse, fear and panic, large directional moves we can exploit",
+      "anim_of": {
+        "course": "swing-logic-v2",
+        "scene": "s01"
+      },
+      "animation_brief": "the swing-logic-v2 s01 scene, started at its +35.4 s",
+      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
+      "transition": {
+        "type": "fade",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s02",
+      "type": "cut",
+      "include": false,
+      "label": "★ The five-day down: not allowed to be surprised at the 10-day high",
+      "source": "src",
+      "in": 851.0,
+      "out": 873.1,
+      "why": "the five-day down: back to the 10-day high, we're not allowed to be surprised",
+      "status": "bite of swing-logic-v2 s12 (+63.6..+85.7 s); the twin s02a carries it"
+    },
+    {
+      "id": "s02a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: ★ The five-day down: not allowed to be surprised at the 10-day high",
+      "source": "src",
+      "in": 851.0,
+      "out": 873.1,
+      "why": "the five-day down: back to the 10-day high, we're not allowed to be surprised",
+      "anim_of": {
+        "course": "swing-logic-v2",
+        "scene": "s12"
+      },
+      "animation_brief": "the swing-logic-v2 s12 scene, started at its +63.6 s",
+      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s03",
+      "type": "cut",
+      "include": false,
+      "label": "★ The day trade: normal, abnormal, critical state",
+      "source": "src",
+      "in": 432.6,
+      "out": 454.6,
+      "why": "the course's maxim: the price action itself is its own explanation",
+      "status": "bite of swing-logic-v2 s07 (+159.3..+181.3 s); the twin s03a carries it"
+    },
+    {
+      "id": "s03a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: ★ The day trade: normal, abnormal, critical state",
+      "source": "src",
+      "in": 432.6,
+      "out": 454.6,
+      "why": "the course's maxim: the price action itself is its own explanation",
+      "anim_of": {
+        "course": "swing-logic-v2",
+        "scene": "s07"
+      },
+      "animation_brief": "the swing-logic-v2 s07 scene, started at its +159.3 s",
+      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s04",
+      "type": "cut",
+      "include": false,
+      "label": "★ We are not the only people looking at our charts",
+      "source": "src",
+      "in": 1948.9,
+      "out": 1962.9,
+      "why": "we're not the only people looking at our charts",
+      "status": "bite of swing-logic-v2 s22 (+54.1..+68.1 s); the twin s04a carries it"
+    },
+    {
+      "id": "s04a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: ★ We are not the only people looking at our charts",
+      "source": "src",
+      "in": 1948.9,
+      "out": 1962.9,
+      "why": "we're not the only people looking at our charts",
+      "anim_of": {
+        "course": "swing-logic-v2",
+        "scene": "s22"
+      },
+      "animation_brief": "the swing-logic-v2 s22 scene, started at its +54.1 s",
+      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s05",
+      "type": "cut",
+      "include": false,
+      "label": "QQQ · the trade frame on his real chart",
+      "source": "src",
+      "in": 3462.3,
+      "out": 3495.4,
+      "why": "the close: Ken H's QQQ short drawn on his real chart, 305 to 275, a 6R swing",
+      "status": "bite of swing-logic-v2 s31d (+32.0..+65.1 s); the twin s05a carries it"
+    },
+    {
+      "id": "s05a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: QQQ · the trade frame on his real chart",
+      "source": "src",
+      "in": 3462.3,
+      "out": 3495.4,
+      "why": "the close: Ken H's QQQ short drawn on his real chart, 305 to 275, a 6R swing",
+      "anim_of": {
+        "course": "swing-logic-v2",
+        "scene": "s31d"
+      },
+      "animation_brief": "the swing-logic-v2 s31d scene, started at its +32.0 s",
+      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s06",
+      "type": "slide",
+      "include": true,
+      "label": "End card",
+      "slide_id": "end",
+      "duration": 8,
+      "layout": "end",
+      "text": {
+        "kicker": "",
+        "title": "Swing Trading Logic",
+        "subtitle": "owlgrouptrading.com",
+        "body": "Six parts, about an hour, with Dr. Ken Long."
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 1.0
+      }
+    }
+  ]
+}

@@ -1,9 +1,9 @@
 {
   "schema": "coursecraft-plan-v2",
   "course": "swing-logic-v2",
-  "revision": 4,
+  "revision": 5,
   "revised": "2026-11-17",
-  "status": "DRAFT rev4 (2026-11-17): the Mental Model method through chapter 5 (the owner's pass: slope, S&P baseline and sector spiders on Ken's screen); chapter 6 intercut, his real chart for the reading then the trade frame drawn on a frozen frame of his own chart (QQQ, Adobe, Twitter, Verizon, Tesla, Devon); a week later for QQQ, Tesla and Devon only, bridge then his real screen. Ken's own audio in 37 windows; typed cards; transitions. NOT built.",
+  "status": "BUILT rev5 (2026-11-17; the cut of rev 4, built as swing-logic-v2-rev4.mp4, 61:40; rev 5 adds only the player's row names): the Mental Model method through chapter 5 (the owner's pass: slope, S&P baseline and sector spiders on Ken's screen); chapter 6 intercut, his real chart for the reading then the trade frame drawn on a frozen frame of his own chart (QQQ, Adobe, Twitter, Verizon, Tesla, Devon); a week later for QQQ, Tesla and Devon only, bridge then his real screen. Ken's own audio in 37 windows; typed cards; transitions.",
   "title": "Swing Trading Logic and Time Frame Integration (v2)",
   "topic_class": "chartable_framework",
   "store_sku": "swing-logic",
@@ -892,6 +892,7 @@
       "start_phrase": "This is the NASDAQ 100",
       "end_phrase": "(to the frame)",
       "status": "Ken's screen, on: the weekly, daily and 65-minute charts while he reads them",
+      "toc_title": "QQQ: weekly, daily, 65-minute",
       "transition": {
         "type": "fade",
         "dur": 0.6
@@ -910,7 +911,8 @@
       "start_phrase": "now you notice that ken h trades this a lot",
       "end_phrase": "So that's a 6R swing",
       "animation_brief": "anim_gen.py SCENES['qqq_frameB']; still: stills/qqq-daily-20220930.jpg (src 55:48)",
-      "status": "on: the levels he speaks, drawn on a frozen frame of his own chart, on its own price axis"
+      "status": "on: the levels he speaks, drawn on a frozen frame of his own chart, on its own price axis",
+      "toc_title": "QQQ: a 6R short, framed on the daily chart"
     },
     {
       "id": "s32",
@@ -1044,6 +1046,7 @@
       "start_phrase": "And now, it also turns out",
       "end_phrase": "(to the frame)",
       "status": "Ken's screen, on: the weekly, daily and 65-minute charts while he reads them",
+      "toc_title": "Adobe: the collapsing dragon",
       "transition": {
         "type": "dip",
         "dur": 0.6
@@ -1062,7 +1065,8 @@
       "start_phrase": "and if it breaks below 275",
       "end_phrase": "Assuming that that's the size of his risk box",
       "animation_brief": "anim_gen.py SCENES['adbe_frameB']; still: stills/adbe-65m-20220930.jpg (src 1:09:17)",
-      "status": "on: the levels he speaks, drawn on a frozen frame of his own chart, on its own price axis"
+      "status": "on: the levels he speaks, drawn on a frozen frame of his own chart, on its own price axis",
+      "toc_title": "Adobe: free fall below 275, the stop above the hump"
     },
     {
       "id": "s36",
@@ -1103,6 +1107,7 @@
       "start_phrase": "what we've done here is we've constructed",
       "end_phrase": "(to the frame)",
       "status": "Ken's screen, on: the weekly, daily and 65-minute charts while he reads them",
+      "toc_title": "★ Twitter: a minimum manageable risk box",
       "transition": {
         "type": "dip",
         "dur": 0.6
@@ -1121,7 +1126,8 @@
       "start_phrase": "so what we call the space between those",
       "end_phrase": "that's why we consider this a important critical state",
       "animation_brief": "anim_gen.py SCENES['twtr_frameB']; still: stills/twtr-daily-20220930.jpg (src 1:10:01)",
-      "status": "on: the levels he speaks, drawn on a frozen frame of his own chart, on its own price axis"
+      "status": "on: the levels he speaks, drawn on a frozen frame of his own chart, on its own price axis",
+      "toc_title": "Twitter: the yellow zone, no bias"
     },
     {
       "id": "s37",
@@ -1162,6 +1168,7 @@
       "start_phrase": "This is Verizon",
       "end_phrase": "(to the frame)",
       "status": "Ken's screen, on: the weekly, daily and 65-minute charts while he reads them",
+      "toc_title": "Verizon: a Godzilla",
       "transition": {
         "type": "dip",
         "dur": 0.6
@@ -1180,7 +1187,8 @@
       "start_phrase": "so if it breaks down from here",
       "end_phrase": "off of the uh Godzilla setup report",
       "animation_brief": "anim_gen.py SCENES['vz_frameB']; still: stills/vz-65m-20220930.jpg (src 1:14:40)",
-      "status": "on: the levels he speaks, drawn on a frozen frame of his own chart, on its own price axis"
+      "status": "on: the levels he speaks, drawn on a frozen frame of his own chart, on its own price axis",
+      "toc_title": "Verizon: a compound critical state"
     },
     {
       "id": "s38",
@@ -1221,6 +1229,7 @@
       "start_phrase": "So, here was a weekly consolidation level",
       "end_phrase": "back down to 260 right here",
       "status": "Ken's screen, on: the weekly, daily and 65-minute charts while he reads them",
+      "toc_title": "Tesla: a weekly consolidation level",
       "transition": {
         "type": "dip",
         "dur": 0.6
@@ -1254,7 +1263,8 @@
       "start_phrase": "Now, if this region does not hold support",
       "end_phrase": "Critical state because it's at key support",
       "animation_brief": "anim_gen.py SCENES['tsla_frameB']; still: stills/tsla-daily-20220930.jpg (src 1:20:56)",
-      "status": "on: the owner's pick, WAY B (2026-11-17)"
+      "status": "on: the owner's pick, WAY B (2026-11-17)",
+      "toc_title": "Tesla: either direction out of key support"
     },
     {
       "id": "s39",
@@ -1326,6 +1336,7 @@
       "start_phrase": "Devon Energy, one of our standard patterns",
       "end_phrase": "(to the frame)",
       "status": "Ken's screen, on: the weekly, daily and 65-minute charts while he reads them",
+      "toc_title": "Devon: one of our standard patterns",
       "transition": {
         "type": "dip",
         "dur": 0.6
@@ -1344,7 +1355,8 @@
       "start_phrase": "if it goes below 56",
       "end_phrase": "and then respect your",
       "animation_brief": "anim_gen.py SCENES['dvn_frameB']; still: stills/dvn-daily-20220930.jpg (src 1:25:21)",
-      "status": "on: the levels he speaks, drawn on a frozen frame of his own chart, on its own price axis"
+      "status": "on: the levels he speaks, drawn on a frozen frame of his own chart, on its own price axis",
+      "toc_title": "Devon: don't let it get north of 62"
     },
     {
       "id": "s41",
@@ -1406,6 +1418,7 @@
       "end_phrase": "(to his screen)",
       "animation_brief": "anim_gen.py SCENES['qqq8_frameB']; still: stills/qqq-daily-20221007.jpg (oct8 15:28)",
       "status": "on: last week's levels on his chart of a week later",
+      "toc_title": "A week later: QQQ, last week's frame",
       "transition": {
         "type": "fade",
         "dur": 0.6
@@ -1422,7 +1435,8 @@
       "window_key": "qqq8_read",
       "start_phrase": "so heres where that swing",
       "end_phrase": "possibility for that cap",
-      "status": "Ken's screen, on: the real chart a week later"
+      "status": "Ken's screen, on: the real chart a week later",
+      "toc_title": "★ A week later: QQQ, and the gap a swing must allow for"
     },
     {
       "id": "s43",
@@ -1465,6 +1479,7 @@
       "end_phrase": "that's minus 35",
       "animation_brief": "anim_gen.py SCENES['tsla8_frameB']; still: stills/tsla-daily-20221007.jpg (oct8 31:33)",
       "status": "on: the owner's pick, WAY B (2026-11-17)",
+      "toc_title": "A week later: Tesla from 310 to 220",
       "transition": {
         "type": "dip",
         "dur": 0.6
@@ -1482,6 +1497,7 @@
       "end_phrase": "previous Goodwill is gone",
       "window_key": "tsla8b",
       "status": "Ken's screen, on: the real chart a week later",
+      "toc_title": "A week later: Tesla at crucial support",
       "transition": {
         "type": "dip",
         "dur": 0.6
@@ -1542,6 +1558,7 @@
       "end_phrase": "(to his screen)",
       "animation_brief": "anim_gen.py SCENES['dvn8_frameB']; still: stills/dvn-daily-20221007.jpg (oct8 19:10)",
       "status": "on: last week's levels on his chart of a week later",
+      "toc_title": "A week later: Devon, last week's frame",
       "transition": {
         "type": "dip",
         "dur": 0.6
@@ -1558,7 +1575,8 @@
       "window_key": "dvn8_read",
       "start_phrase": "lets see he gets a quick scratch",
       "end_phrase": "this thing's going higher",
-      "status": "Ken's screen, on: the real chart a week later"
+      "status": "Ken's screen, on: the real chart a week later",
+      "toc_title": "A week later: Devon, the stop and reverse"
     },
     {
       "id": "s46",
