@@ -58,7 +58,9 @@
   .notebadge { margin-top:.4rem; font-size:.72rem; color:var(--amber); }
   /* ---- storyboard (cutroom-18): one picture per included segment, in course order; the pictures come from
      scripts/cutroom_board.py by convention (<course>/thumbs/<sid>.jpg, <course>/slides/<slide_id>.jpg) ---- */
-  #boardwrap { padding:.55rem 1.4rem .4rem; border-bottom:1px solid var(--border); background:var(--card); }
+  /* cutroom-22: the strip stays under the header while the list scrolls; --hdr is the header's measured height (it wraps to two rows on a narrow window) */
+  #boardwrap { padding:.55rem 1.4rem .4rem; border-bottom:1px solid var(--border); background:var(--card); position:sticky; top:var(--hdr,56px); z-index:15; }
+  #boardwrap.grid { position:static; }
   .boardhead { display:flex; align-items:center; gap:.6rem; font-size:.7rem; color:var(--faint); font-family:"SF Mono",Menlo,monospace; margin-bottom:.45rem; }
   .boardhead .spacer { flex:1; }
   #board { display:flex; gap:.45rem; overflow-x:auto; padding:0 0 .5rem; scrollbar-width:thin; }
@@ -108,7 +110,7 @@
   .slideview { width:100%; aspect-ratio:16/9; display:block; border-radius:6px; background:#000; border:1px solid var(--border); }
 
   /* ---- inspector ---- */
-  #inspector { border-left:1px solid var(--border); padding:1.1rem 1.2rem 3rem; position:sticky; top:56px; height:calc(100vh - 56px); overflow-y:auto; }
+  #inspector { border-left:1px solid var(--border); padding:1.1rem 1.2rem 3rem; position:sticky; top:var(--hdr,56px); height:calc(100vh - var(--hdr,56px)); overflow-y:auto; }
   @media (max-width:1100px){ #inspector { position:static; height:auto; border-left:none; border-top:1px solid var(--border);} }
   #inspector h2 { font-family:Georgia,serif; font-size:1rem; font-weight:500; margin-bottom:.7rem; }
   .field { margin:0 0 .85rem; }
@@ -234,7 +236,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const BUILD = 'cutroom-21';
+const BUILD = 'cutroom-22';
 console.log('[cutroom] build', BUILD);
 window.__edgeBuild = BUILD;
 
@@ -349,7 +351,7 @@ async function load() {
     plan = structuredClone(published);
   }
   $('ctitle').textContent = plan.title;
-  render();
+  render(); measureHeader();
 }
 function persist() { localStorage.setItem(LS_KEY, JSON.stringify(plan)); renderMeta(); }
 function renderMeta() {
@@ -463,7 +465,9 @@ function renderBoard() {
   const sel = b.querySelector('.bt.sel'); if (sel && !b.classList.contains('grid')) b.scrollLeft = sel.offsetLeft - b.clientWidth / 2 + sel.offsetWidth / 2;
   fitCards();
 }
-$('boardGrid').onclick = () => { const b = $('board'); b.classList.toggle('grid'); $('boardGrid').textContent = b.classList.contains('grid') ? 'Show as strip' : 'Show all'; };
+$('boardGrid').onclick = () => { const b = $('board'); b.classList.toggle('grid'); $('boardwrap').classList.toggle('grid', b.classList.contains('grid')); $('boardGrid').textContent = b.classList.contains('grid') ? 'Show as strip' : 'Show all'; };
+function measureHeader() { document.documentElement.style.setProperty('--hdr', document.querySelector('header').offsetHeight + 'px'); }
+new ResizeObserver(measureHeader).observe(document.querySelector('header')); measureHeader();   // the header grows when the local app's buttons appear
 
 function render() {
   const y = window.scrollY;   // cutroom-21: the rebuild empties the list for a moment, which clamped the page scroll to 0
