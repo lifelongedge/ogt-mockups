@@ -268,7 +268,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const BUILD = 'cutroom-26';
+const BUILD = 'cutroom-27';
 console.log('[cutroom] build', BUILD);
 window.__edgeBuild = BUILD;
 
@@ -674,6 +674,8 @@ function setupAnim(s) {
       fitAnim();
       animLoop(s);
     });
+    // cutroom-27: open on the animation, so ▶ Play segment plays it with one click; Ken's screen is one click away
+    tabs.querySelector('button[data-view="live"]').click();
   };
   animLayer.src = `${COURSE}/anim-${s.id}.html`;
 }
