@@ -1,9 +1,9 @@
 {
   "schema": "coursecraft-plan-v2",
   "course": "swing-logic-v2",
-  "revision": 3,
-  "revised": "2026-11-16",
-  "status": "DRAFT rev3 (2026-11-16): the Mental Model method; Tesla intercut both ways (s38b/c/d, s43a/b, s44). Ken's own audio in 38 windows, each a cut (off) with an animated twin (on); typed cards; transitions. NOT built. Replaces rev1's VO overdubs and outcome studies (rev1 plan and its VO animations kept in rev1/).",
+  "revision": 4,
+  "revised": "2026-11-17",
+  "status": "DRAFT rev4 (2026-11-17): the Mental Model method through chapter 5 (the owner's pass: slope, S&P baseline and sector spiders on Ken's screen); chapter 6 intercut, his real chart for the reading then the trade frame drawn on a frozen frame of his own chart (QQQ, Adobe, Twitter, Verizon, Tesla, Devon); a week later for QQQ, Tesla and Devon only, bridge then his real screen. Ken's own audio in 37 windows; typed cards; transitions. NOT built.",
   "title": "Swing Trading Logic and Time Frame Integration (v2)",
   "topic_class": "chartable_framework",
   "store_sku": "swing-logic",
@@ -690,7 +690,7 @@
     {
       "id": "s25",
       "type": "cut",
-      "include": false,
+      "include": true,
       "label": "The 30-period regression line slope",
       "source": "src",
       "in": 2376.2,
@@ -698,12 +698,16 @@
       "start_phrase": "taking a look at the regression line",
       "end_phrase": "compared to the average",
       "window_key": "slope",
-      "status": "Ken's screen; off, its animated twin carries the window (flip back per segment)"
+      "status": "Ken's screen, on (the owner's cutroom pass, 2026-11-17)",
+      "transition": {
+        "type": "fade",
+        "dur": 0.6
+      }
     },
     {
       "id": "s25a",
       "type": "overdub",
-      "include": true,
+      "include": false,
       "label": "ALT animated: The 30-period regression line slope",
       "source": "src",
       "in": 2376.2,
@@ -712,11 +716,7 @@
       "end_phrase": "compared to the average",
       "window_key": "slope",
       "animation_brief": "anim_gen.py SCENES['slope']",
-      "status": "animated twin, on (the owner chose animation for the Mental Model modules)",
-      "transition": {
-        "type": "fade",
-        "dur": 0.6
-      }
+      "status": "animated twin, off (the owner's cutroom pass, 2026-11-17)"
     },
     {
       "id": "s26",
@@ -748,7 +748,7 @@
     {
       "id": "s27",
       "type": "cut",
-      "include": false,
+      "include": true,
       "label": "The S&P baseline and tech, the engine",
       "source": "src",
       "in": 2646.4,
@@ -756,12 +756,12 @@
       "start_phrase": "now what we do is we take that",
       "end_phrase": "pulling the market north",
       "window_key": "sectors",
-      "status": "Ken's screen; off, its animated twin carries the window (flip back per segment)"
+      "status": "Ken's screen, on (the owner's cutroom pass, 2026-11-17)"
     },
     {
       "id": "s27a",
       "type": "overdub",
-      "include": true,
+      "include": false,
       "label": "ALT animated: The S&P baseline and tech, the engine",
       "source": "src",
       "in": 2646.4,
@@ -770,12 +770,12 @@
       "end_phrase": "pulling the market north",
       "window_key": "sectors",
       "animation_brief": "anim_gen.py SCENES['sectors']",
-      "status": "animated twin, on (the owner chose animation for the Mental Model modules)"
+      "status": "animated twin, off (the owner's cutroom pass, 2026-11-17)"
     },
     {
       "id": "s28",
       "type": "cut",
-      "include": false,
+      "include": true,
       "label": "Ten sector spiders, compared by Z score",
       "source": "src",
       "in": 2742.9,
@@ -783,12 +783,16 @@
       "start_phrase": "But for purposes of this discussion",
       "end_phrase": "a broad market failure right here",
       "window_key": "spiders",
-      "status": "Ken's screen; off, its animated twin carries the window (flip back per segment)"
+      "status": "Ken's screen, on (the owner's cutroom pass, 2026-11-17)",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
     },
     {
       "id": "s28a",
       "type": "overdub",
-      "include": true,
+      "include": false,
       "label": "ALT animated: Ten sector spiders, compared by Z score",
       "source": "src",
       "in": 2742.9,
@@ -797,11 +801,7 @@
       "end_phrase": "a broad market failure right here",
       "window_key": "spiders",
       "animation_brief": "anim_gen.py SCENES['spiders']",
-      "status": "animated twin, on (the owner chose animation for the Mental Model modules)",
-      "transition": {
-        "type": "dip",
-        "dur": 0.6
-      }
+      "status": "animated twin, off (the owner's cutroom pass, 2026-11-17)"
     },
     {
       "id": "s29",
@@ -869,7 +869,7 @@
     {
       "id": "s31a",
       "type": "overdub",
-      "include": true,
+      "include": false,
       "label": "ALT animated: QQQ: weekly, daily, 65-minute; a 6R short",
       "source": "src",
       "in": 3342.6,
@@ -878,16 +878,44 @@
       "end_phrase": "So that's a 6R swing",
       "window_key": "qqq",
       "animation_brief": "anim_gen.py SCENES['qqq']",
-      "status": "animated twin, on (the owner chose animation for the Mental Model modules)",
+      "status": "the whole window animated; off, the case is intercut (his chart, then the frame on his chart)"
+    },
+    {
+      "id": "s31b",
+      "type": "cut",
+      "include": true,
+      "label": "QQQ · his real chart: the reading",
+      "source": "src",
+      "in": 3342.6,
+      "out": 3430.3,
+      "window_key": "qqq_read",
+      "start_phrase": "This is the NASDAQ 100",
+      "end_phrase": "(to the frame)",
+      "status": "Ken's screen, on: the weekly, daily and 65-minute charts while he reads them",
       "transition": {
         "type": "fade",
         "dur": 0.6
       }
     },
     {
+      "id": "s31d",
+      "type": "overdub",
+      "include": true,
+      "label": "QQQ · the trade frame on his real chart",
+      "source": "src",
+      "in": 3430.3,
+      "out": 3495.4,
+      "window_key": "qqq_frameB",
+      "variant": true,
+      "start_phrase": "now you notice that ken h trades this a lot",
+      "end_phrase": "So that's a 6R swing",
+      "animation_brief": "anim_gen.py SCENES['qqq_frameB']; still: stills/qqq-daily-20220930.jpg (src 55:48)",
+      "status": "on: the levels he speaks, drawn on a frozen frame of his own chart, on its own price axis"
+    },
+    {
       "id": "s32",
       "type": "cut",
-      "include": false,
+      "include": true,
       "label": "QQQ: a hybrid trade frame",
       "source": "src",
       "in": 3498.9,
@@ -895,12 +923,16 @@
       "start_phrase": "And the gains he has is marked off",
       "end_phrase": "into a pleasing fashion",
       "window_key": "qqqhyb",
-      "status": "Ken's screen; off, its animated twin carries the window (flip back per segment)"
+      "status": "Ken's screen, on (follows the QQQ frame on his real chart)",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
     },
     {
       "id": "s32a",
       "type": "overdub",
-      "include": true,
+      "include": false,
       "label": "ALT animated: QQQ: a hybrid trade frame",
       "source": "src",
       "in": 3498.9,
@@ -909,11 +941,7 @@
       "end_phrase": "into a pleasing fashion",
       "window_key": "qqqhyb",
       "animation_brief": "anim_gen.py SCENES['qqqhyb']",
-      "status": "animated twin, on (the owner chose animation for the Mental Model modules)",
-      "transition": {
-        "type": "dip",
-        "dur": 0.6
-      }
+      "status": "animated twin, off (follows the QQQ frame on his real chart)"
     },
     {
       "id": "s33",
@@ -993,7 +1021,7 @@
     {
       "id": "s35a",
       "type": "overdub",
-      "include": true,
+      "include": false,
       "label": "ALT animated: Adobe: free fall below 275, the stop above the hump",
       "source": "src",
       "in": 4088.6,
@@ -1002,11 +1030,39 @@
       "end_phrase": "Assuming that that's the size of his risk box",
       "window_key": "adbe",
       "animation_brief": "anim_gen.py SCENES['adbe']",
-      "status": "animated twin, on (the owner chose animation for the Mental Model modules)",
+      "status": "the whole window animated; off, the case is intercut (his chart, then the frame on his chart)"
+    },
+    {
+      "id": "s35b",
+      "type": "cut",
+      "include": true,
+      "label": "Adobe · his real chart: the reading",
+      "source": "src",
+      "in": 4088.6,
+      "out": 4121.8,
+      "window_key": "adbe_read",
+      "start_phrase": "And now, it also turns out",
+      "end_phrase": "(to the frame)",
+      "status": "Ken's screen, on: the weekly, daily and 65-minute charts while he reads them",
       "transition": {
         "type": "dip",
         "dur": 0.6
       }
+    },
+    {
+      "id": "s35d",
+      "type": "overdub",
+      "include": true,
+      "label": "Adobe · the trade frame on his real chart",
+      "source": "src",
+      "in": 4121.8,
+      "out": 4183.5,
+      "window_key": "adbe_frameB",
+      "variant": true,
+      "start_phrase": "and if it breaks below 275",
+      "end_phrase": "Assuming that that's the size of his risk box",
+      "animation_brief": "anim_gen.py SCENES['adbe_frameB']; still: stills/adbe-65m-20220930.jpg (src 1:09:17)",
+      "status": "on: the levels he speaks, drawn on a frozen frame of his own chart, on its own price axis"
     },
     {
       "id": "s36",
@@ -1024,7 +1080,7 @@
     {
       "id": "s36a",
       "type": "overdub",
-      "include": true,
+      "include": false,
       "label": "ALT animated: ★ Twitter: a minimum manageable risk box, no bias",
       "source": "src",
       "in": 4401.7,
@@ -1033,11 +1089,39 @@
       "end_phrase": "that's why we consider this a important critical state",
       "window_key": "twtr",
       "animation_brief": "anim_gen.py SCENES['twtr']",
-      "status": "animated twin, on (the owner chose animation for the Mental Model modules)",
+      "status": "the whole window animated; off, the case is intercut (his chart, then the frame on his chart)"
+    },
+    {
+      "id": "s36b",
+      "type": "cut",
+      "include": true,
+      "label": "Twitter · his real chart: the reading",
+      "source": "src",
+      "in": 4401.7,
+      "out": 4424.4,
+      "window_key": "twtr_read",
+      "start_phrase": "what we've done here is we've constructed",
+      "end_phrase": "(to the frame)",
+      "status": "Ken's screen, on: the weekly, daily and 65-minute charts while he reads them",
       "transition": {
         "type": "dip",
         "dur": 0.6
       }
+    },
+    {
+      "id": "s36d",
+      "type": "overdub",
+      "include": true,
+      "label": "Twitter · the trade frame on his real chart",
+      "source": "src",
+      "in": 4424.4,
+      "out": 4474.3,
+      "window_key": "twtr_frameB",
+      "variant": true,
+      "start_phrase": "so what we call the space between those",
+      "end_phrase": "that's why we consider this a important critical state",
+      "animation_brief": "anim_gen.py SCENES['twtr_frameB']; still: stills/twtr-daily-20220930.jpg (src 1:10:01)",
+      "status": "on: the levels he speaks, drawn on a frozen frame of his own chart, on its own price axis"
     },
     {
       "id": "s37",
@@ -1055,7 +1139,7 @@
     {
       "id": "s37a",
       "type": "overdub",
-      "include": true,
+      "include": false,
       "label": "ALT animated: Verizon: a Godzilla, a compound critical state",
       "source": "src",
       "in": 4479.1,
@@ -1064,11 +1148,39 @@
       "end_phrase": "off of the uh Godzilla setup report",
       "window_key": "vz",
       "animation_brief": "anim_gen.py SCENES['vz']",
-      "status": "animated twin, on (the owner chose animation for the Mental Model modules)",
+      "status": "the whole window animated; off, the case is intercut (his chart, then the frame on his chart)"
+    },
+    {
+      "id": "s37b",
+      "type": "cut",
+      "include": true,
+      "label": "Verizon · his real chart: the reading",
+      "source": "src",
+      "in": 4479.1,
+      "out": 4495.3,
+      "window_key": "vz_read",
+      "start_phrase": "This is Verizon",
+      "end_phrase": "(to the frame)",
+      "status": "Ken's screen, on: the weekly, daily and 65-minute charts while he reads them",
       "transition": {
         "type": "dip",
         "dur": 0.6
       }
+    },
+    {
+      "id": "s37d",
+      "type": "overdub",
+      "include": true,
+      "label": "Verizon · the trade frame on his real chart",
+      "source": "src",
+      "in": 4495.3,
+      "out": 4593.2,
+      "window_key": "vz_frameB",
+      "variant": true,
+      "start_phrase": "so if it breaks down from here",
+      "end_phrase": "off of the uh Godzilla setup report",
+      "animation_brief": "anim_gen.py SCENES['vz_frameB']; still: stills/vz-65m-20220930.jpg (src 1:14:40)",
+      "status": "on: the levels he speaks, drawn on a frozen frame of his own chart, on its own price axis"
     },
     {
       "id": "s38",
@@ -1117,7 +1229,7 @@
     {
       "id": "s38c",
       "type": "overdub",
-      "include": true,
+      "include": false,
       "label": "WAY A · Tesla · the trade frame, drawn (intercut, second half)",
       "source": "src",
       "in": 4812.6,
@@ -1127,12 +1239,12 @@
       "start_phrase": "Now, if this region does not hold support",
       "end_phrase": "Critical state because it's at key support",
       "animation_brief": "anim_gen.py SCENES['tsla_frameA']",
-      "status": "on; swap with WAY B (the next segment) to compare"
+      "status": "off: WAY A, kept for comparison"
     },
     {
       "id": "s38d",
       "type": "overdub",
-      "include": false,
+      "include": true,
       "label": "WAY B · Tesla · the trade frame on his real daily chart (intercut, second half)",
       "source": "src",
       "in": 4812.6,
@@ -1142,7 +1254,7 @@
       "start_phrase": "Now, if this region does not hold support",
       "end_phrase": "Critical state because it's at key support",
       "animation_brief": "anim_gen.py SCENES['tsla_frameB']; still: stills/tsla-daily-20220930.jpg (src 1:20:56)",
-      "status": "off; the same window as WAY A: turn this on and WAY A off to compare"
+      "status": "on: the owner's pick, WAY B (2026-11-17)"
     },
     {
       "id": "s39",
@@ -1191,7 +1303,7 @@
     {
       "id": "s40a",
       "type": "overdub",
-      "include": true,
+      "include": false,
       "label": "ALT animated: Devon: don't let it get north of 62",
       "source": "src",
       "in": 5117.1,
@@ -1200,11 +1312,39 @@
       "end_phrase": "and then respect your",
       "window_key": "dvn",
       "animation_brief": "anim_gen.py SCENES['dvn']",
-      "status": "animated twin, on (the owner chose animation for the Mental Model modules)",
+      "status": "the whole window animated; off, the case is intercut (his chart, then the frame on his chart)"
+    },
+    {
+      "id": "s40b",
+      "type": "cut",
+      "include": true,
+      "label": "Devon · his real chart: the reading",
+      "source": "src",
+      "in": 5117.1,
+      "out": 5147.9,
+      "window_key": "dvn_read",
+      "start_phrase": "Devon Energy, one of our standard patterns",
+      "end_phrase": "(to the frame)",
+      "status": "Ken's screen, on: the weekly, daily and 65-minute charts while he reads them",
       "transition": {
         "type": "dip",
         "dur": 0.6
       }
+    },
+    {
+      "id": "s40d",
+      "type": "overdub",
+      "include": true,
+      "label": "Devon · the trade frame on his real chart",
+      "source": "src",
+      "in": 5147.9,
+      "out": 5207.1,
+      "window_key": "dvn_frameB",
+      "variant": true,
+      "start_phrase": "if it goes below 56",
+      "end_phrase": "and then respect your",
+      "animation_brief": "anim_gen.py SCENES['dvn_frameB']; still: stills/dvn-daily-20220930.jpg (src 1:25:21)",
+      "status": "on: the levels he speaks, drawn on a frozen frame of his own chart, on its own price axis"
     },
     {
       "id": "s41",
@@ -1241,7 +1381,7 @@
     {
       "id": "s42a",
       "type": "overdub",
-      "include": true,
+      "include": false,
       "label": "ALT animated: ★ A week later: QQQ, and the gap a swing must allow for",
       "source": "oct8",
       "in": 930.2,
@@ -1250,11 +1390,39 @@
       "end_phrase": "possibility for that cap",
       "window_key": "qqq8",
       "animation_brief": "anim_gen.py SCENES['qqq8']",
-      "status": "animated twin, on (the owner chose animation for the Mental Model modules)",
+      "status": "the whole window animated; off, his real week-later screen plays instead"
+    },
+    {
+      "id": "s42b",
+      "type": "overdub",
+      "include": true,
+      "label": "A week later: QQQ, the frame on his week-later chart (bridge)",
+      "source": "oct8",
+      "in": 930.2,
+      "out": 948.0,
+      "window_key": "qqq8_frameB",
+      "variant": true,
+      "start_phrase": "we'll take a look at the cues now",
+      "end_phrase": "(to his screen)",
+      "animation_brief": "anim_gen.py SCENES['qqq8_frameB']; still: stills/qqq-daily-20221007.jpg (oct8 15:28)",
+      "status": "on: last week's levels on his chart of a week later",
       "transition": {
         "type": "fade",
         "dur": 0.6
       }
+    },
+    {
+      "id": "s42c",
+      "type": "cut",
+      "include": true,
+      "label": "★ A week later: QQQ · his real chart",
+      "source": "oct8",
+      "in": 948.0,
+      "out": 1036.4,
+      "window_key": "qqq8_read",
+      "start_phrase": "so heres where that swing",
+      "end_phrase": "possibility for that cap",
+      "status": "Ken's screen, on: the real chart a week later"
     },
     {
       "id": "s43",
@@ -1272,7 +1440,7 @@
     {
       "id": "s43a",
       "type": "overdub",
-      "include": true,
+      "include": false,
       "label": "WAY A · A week later: Tesla, the frame as the bridge (drawn)",
       "source": "oct8",
       "in": 1892.3,
@@ -1281,16 +1449,12 @@
       "end_phrase": "that's minus 35",
       "window_key": "tsla8a",
       "animation_brief": "anim_gen.py SCENES['tsla8a']",
-      "status": "animated twin, on (the owner chose animation for the Mental Model modules)",
-      "transition": {
-        "type": "dip",
-        "dur": 0.6
-      }
+      "status": "off: WAY A, kept for comparison"
     },
     {
       "id": "s43b",
       "type": "overdub",
-      "include": false,
+      "include": true,
       "label": "WAY B · A week later: Tesla, the frame on his week-later daily chart",
       "source": "oct8",
       "in": 1892.3,
@@ -1300,7 +1464,11 @@
       "start_phrase": "Tesla has just been smashed",
       "end_phrase": "that's minus 35",
       "animation_brief": "anim_gen.py SCENES['tsla8_frameB']; still: stills/tsla-daily-20221007.jpg (oct8 31:33)",
-      "status": "off; the same 7 s as WAY A"
+      "status": "on: the owner's pick, WAY B (2026-11-17)",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
     },
     {
       "id": "s44",
@@ -1349,7 +1517,7 @@
     {
       "id": "s45a",
       "type": "overdub",
-      "include": true,
+      "include": false,
       "label": "ALT animated: A week later: Devon, the stop and reverse",
       "source": "oct8",
       "in": 1146.5,
@@ -1358,11 +1526,39 @@
       "end_phrase": "this thing's going higher",
       "window_key": "dvn8",
       "animation_brief": "anim_gen.py SCENES['dvn8']",
-      "status": "animated twin, on (the owner chose animation for the Mental Model modules)",
+      "status": "the whole window animated; off, his real week-later screen plays instead"
+    },
+    {
+      "id": "s45b",
+      "type": "overdub",
+      "include": true,
+      "label": "A week later: Devon, the frame on his week-later chart (bridge)",
+      "source": "oct8",
+      "in": 1146.5,
+      "out": 1153.6,
+      "window_key": "dvn8_frameB",
+      "variant": true,
+      "start_phrase": "Devon energy is another one of",
+      "end_phrase": "(to his screen)",
+      "animation_brief": "anim_gen.py SCENES['dvn8_frameB']; still: stills/dvn-daily-20221007.jpg (oct8 19:10)",
+      "status": "on: last week's levels on his chart of a week later",
       "transition": {
         "type": "dip",
         "dur": 0.6
       }
+    },
+    {
+      "id": "s45c",
+      "type": "cut",
+      "include": true,
+      "label": "A week later: Devon · his real chart",
+      "source": "oct8",
+      "in": 1153.6,
+      "out": 1226.7,
+      "window_key": "dvn8_read",
+      "start_phrase": "lets see he gets a quick scratch",
+      "end_phrase": "this thing's going higher",
+      "status": "Ken's screen, on: the real chart a week later"
     },
     {
       "id": "s46",
