@@ -6,13 +6,14 @@
 > A tagged item applies ONLY to those env(s). Untagged ⇒ `[all]`.
 > Standard: edge-envx/sessionstate-standard.md
 
-**Owner persona:** ogtcoursecraft (review pages) · **Last updated:** 2026-11-17, from `stream` (animation style comparison page)
+**Owner persona:** ogtcoursecraft (review pages) · **Last updated:** 2026-11-17, from `stream` (Tortoise Capital redirect mockup)
 
 ## Environment scope for this repo
 - Runs on: <env tags + one line each>
 - Per-machine differences: <none material | describe>
 
 ## In flight
+- `[all]` **Tortoise Capital redirect mockup** (2026-11-17, stream). `tortoise-redirect/index.html`. tortoisecapital.net (Bluehost) returns WordPress "critical error" HTTP 500 on every PHP route; static files, cPanel and webmail are up; MX on Bluehost. Proposal: static archive on an owlgrouptrading.com subdomain (name TBD, owner decision) plus a same-path 301 in Bluehost `.htaccess`. URL list from the Wayback CDX index (222 paths, 2007-03-13 to 2025-02-26) is embedded in the page. Open: subdomain name, A vs B, and getting the WP content out for the archive.
 - `[all]` **Owl Group Foundations on S2 Desktop — mockup for owner review** (2026-09-23, win-native).
   `courses/owl-foundations-s2/index.html`, also published as a claude.ai artifact the same day.
   Shows the Foundations course (free course of the `owl` method pack, SD-011) as Learn-tab lessons on

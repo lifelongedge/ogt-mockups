@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tortoise Capital Redirect</title>
+<meta name="robots" content="noindex">
+<style>
+:root{
+  --bg:#0d1117;--card:#161b22;--card-2:#1c2330;--border:#21262d;--border-2:#30363d;
+  --text:#e6edf3;--muted:#8b949e;--accent:#58a6ff;--green:#3fb950;--yellow:#d29922;--red:#f85149;
+  --page-bg:#ffffff;--page-text:#1f2328;--page-muted:#656d76;--page-bar:#e7ebef;--banner:#0b3d2e;--banner-text:#e9f7ef;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --bg:#f6f8fa;--card:#ffffff;--card-2:#f3f5f8;--border:#d8dee4;--border-2:#c9d1d9;
+    --text:#1f2328;--muted:#59636e;--accent:#0969da;--green:#1a7f37;--yellow:#9a6700;--red:#cf222e;
+  }
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--text);font:15px/1.55 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+.wrap{max-width:1080px;margin:0 auto;padding:28px 16px 80px}
+h1{font-size:26px;line-height:1.25;margin:0 0 6px}
+h2{font-size:19px;margin:40px 0 10px}
+p{margin:8px 0}
+.muted{color:var(--muted)}
+.tag{display:inline-block;font-size:12px;padding:1px 8px;border:1px solid var(--border-2);border-radius:999px;color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px}
+code,.mono{font-family:var(--mono);font-size:13px}
+.lede{max-width:760px}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+@media (max-width:720px){.controls{grid-template-columns:1fr}}
+label{display:block;font-size:12px;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:.04em}
+select,input[type=text]{width:100%;background:var(--card-2);color:var(--text);border:1px solid var(--border-2);border-radius:6px;padding:8px 10px;font:14px var(--mono)}
+.seg{display:inline-flex;border:1px solid var(--border-2);border-radius:8px;overflow:hidden}
+.seg button{background:transparent;color:var(--muted);border:0;padding:8px 14px;font:inherit;cursor:pointer}
+.seg button[aria-pressed=true]{background:var(--accent);color:#fff}
+.go{background:var(--green);color:#fff;border:0;border-radius:6px;padding:9px 18px;font:600 14px system-ui;cursor:pointer}
+.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+/* request trace */
+.trace{margin:14px 0 0;display:grid;gap:6px}
+.hop{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start;opacity:.25;transition:opacity .35s}
+.hop.on{opacity:1}
+.hop .n{width:24px;height:24px;border-radius:50%;border:1px solid var(--border-2);display:grid;place-items:center;font-size:12px;color:var(--muted)}
+.hop.on .n{border-color:var(--accent);color:var(--accent)}
+.hop .t{font-family:var(--mono);font-size:13px;overflow-wrap:anywhere}
+.s301{color:var(--yellow)}.s200{color:var(--green)}.s404{color:var(--red)}
+/* mock browser */
+.browser{margin-top:16px;border:1px solid var(--border-2);border-radius:10px;overflow:hidden;background:var(--page-bg)}
+.chrome{background:var(--card-2);padding:8px 10px;display:flex;gap:8px;align-items:center;border-bottom:1px solid var(--border-2)}
+.dots{display:flex;gap:5px}.dots i{width:10px;height:10px;border-radius:50%;background:var(--border-2);display:block}
+.addr{flex:1;min-width:0;background:var(--card);border:1px solid var(--border-2);border-radius:999px;padding:5px 12px;font:13px var(--mono);color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.addr b{font-weight:600;color:var(--green)}
+.page{color:var(--page-text);min-height:340px;font-family:Georgia,'Times New Roman',serif}
+.banner{background:var(--banner);color:var(--banner-text);padding:10px 18px;font:14px system-ui;display:flex;gap:12px;justify-content:space-between;flex-wrap:wrap;align-items:center}
+.banner a{color:#fff;font-weight:600}
+.site-head{padding:16px 22px 8px;border-bottom:1px solid var(--page-bar);display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px}
+.site-head .brand{font-size:22px;font-weight:bold;letter-spacing:.01em}
+.site-head nav{font:13px system-ui;color:var(--page-muted);display:flex;gap:14px;flex-wrap:wrap}
+.site-body{padding:18px 22px 26px;max-width:760px}
+.crumb{font:12px system-ui;color:var(--page-muted)}
+.site-body h3{font-size:24px;margin:6px 0 4px}
+.meta{font:12px system-ui;color:var(--page-muted);margin-bottom:14px}
+.bar{height:10px;background:var(--page-bar);border-radius:4px;margin:9px 0}
+.note{font:13px system-ui;color:var(--page-muted);border-left:3px solid var(--page-bar);padding:6px 10px;margin-top:16px}
+.note a{color:#0969da}
+.landing{padding:40px 22px;text-align:center}
+.landing h3{font-size:26px;margin:0 0 8px}
+.landing .miss{display:inline-block;margin-top:14px;font:13px system-ui;background:#fff1f0;color:#a40e26;border-radius:6px;padding:8px 12px}
+/* compare */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:720px){.cmp{grid-template-columns:1fr}}
+.cmp h3{margin:0 0 6px;font-size:16px}
+.cmp ul{margin:6px 0 0;padding-left:18px}
+.rec{border-color:var(--green)}
+/* stats + table */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:10px 0 14px}
+@media (max-width:720px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat b{display:block;font-size:24px}
+.stat span{font-size:12px;color:var(--muted)}
+.tbl-wrap{max-height:460px;overflow:auto;border:1px solid var(--border);border-radius:8px}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{text-align:left;padding:6px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+th{position:sticky;top:0;background:var(--card-2);font-weight:600;font-size:12px;color:var(--muted)}
+td.mono{overflow-wrap:anywhere}
+tr:hover td{background:var(--card-2)}
+.pill{font-size:11px;border-radius:999px;padding:1px 7px;white-space:nowrap}
+.p-same{background:rgba(63,185,80,.15);color:var(--green)}
+.p-map{background:rgba(210,153,34,.18);color:var(--yellow)}
+.p-home{background:rgba(139,148,158,.18);color:var(--muted)}
+pre{background:var(--card-2);border:1px solid var(--border);border-radius:8px;padding:12px;overflow:auto;font:12.5px/1.5 var(--mono);margin:8px 0}
+ol.steps li{margin:6px 0}
+.foot{margin-top:40px;font-size:12px;color:var(--muted)}
+a{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <span class="tag">Mockup · not live · subdomain name is a placeholder</span>
+  <h1>Tortoise Capital → Owl Group Trading: keeping old bookmarks working</h1>
+  <p class="lede muted">tortoisecapital.net is still registered and still hosted at Bluehost, but its WordPress install crashes on every page (HTTP 500). The plan: freeze the old site as a static archive on an owlgrouptrading.com subdomain, then make tortoisecapital.net answer every request with a permanent redirect (301) to the <em>same path</em> on that subdomain. A bookmark to any old page lands on that page.</p>
+
+  <h2>Try a bookmark</h2>
+  <div class="card">
+    <div class="controls">
+      <div>
+        <label for="pick">An old tortoisecapital.net URL (from the Wayback Machine's list of 222)</label>
+        <select id="pick"></select>
+      </div>
+      <div>
+        <label for="sub">Archive subdomain (placeholder)</label>
+        <input id="sub" type="text" value="tortoise.owlgrouptrading.com" spellcheck="false">
+      </div>
+    </div>
+    <div class="row">
+      <div class="seg" role="group" aria-label="Redirect option">
+        <button id="optB" aria-pressed="true">B · Same page (recommended)</button>
+        <button id="optA" aria-pressed="false">A · One landing page</button>
+      </div>
+      <button class="go" id="go">Open bookmark</button>
+    </div>
+
+    <div class="trace" id="trace">
+      <div class="hop" id="h1"><div class="n">1</div><div class="t" id="t1"></div></div>
+      <div class="hop" id="h2"><div class="n">2</div><div class="t" id="t2"></div></div>
+      <div class="hop" id="h3"><div class="n">3</div><div class="t" id="t3"></div></div>
+    </div>
+
+    <div class="browser" aria-label="Simulated browser">
+      <div class="chrome"><div class="dots"><i></i><i></i><i></i></div><div class="addr" id="addr">&nbsp;</div></div>
+      <div class="page" id="page"></div>
+    </div>
+  </div>
+
+  <h2>The two options</h2>
+  <div class="cmp">
+    <div class="card rec">
+      <h3>B · Same page on the archive (recommended)</h3>
+      <ul>
+        <li><code>/ken-long/</code> goes to <code>&lt;sub&gt;/ken-long/</code> and shows the same content.</li>
+        <li>Search engines carry the old pages' rankings over to the archive pages.</li>
+        <li>Needs a one-time export of the old site into static pages, plus a host for them (for example Cloudflare Pages, where owlgrouptrading.com's DNS already lives).</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>A · Everything to one landing page</h3>
+      <ul>
+        <li>Every old URL lands on one welcome page.</li>
+        <li>It's live in minutes and needs no export.</li>
+        <li>The visitor never sees the page they bookmarked, and search engines treat the old pages as gone.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Redirect map: every known old URL</h2>
+  <p class="muted">Source: Wayback Machine capture index for tortoisecapital.net and www (HTML pages that returned 200), captures from <span id="span"></span>. The "Proposed target" column is a draft for you to review.</p>
+  <div class="stats" id="stats"></div>
+  <div class="row" style="margin-bottom:8px">
+    <input id="q" type="text" placeholder="Filter paths, e.g. workshop" style="max-width:320px">
+    <span class="muted" id="count"></span>
+  </div>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Old path</th><th>Kind</th><th>Last captured</th><th>Proposed target</th><th>Rule</th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table></div>
+
+  <h2>How it is built</h2>
+  <ol class="steps">
+    <li><b>Export.</b> Get the old site's files and database through Bluehost cPanel, which still works. Render every page to static HTML at its original path, with a banner pointing to Owl Group Trading. Shop, cart, register and login pages become read-only notices.</li>
+    <li><b>Host.</b> Publish the archive at the subdomain. Add one DNS record in the owlgrouptrading.com Cloudflare zone.</li>
+    <li><b>Redirect.</b> In tortoisecapital.net's <code>public_html/.htaccess</code> at Bluehost, put the rules below above WordPress's own block. Apache applies them before WordPress runs, so the crash doesn't affect them. Start with a 302, check it, then switch to 301, because browsers cache 301s.</li>
+    <li><b>Keep mail.</b> MX for tortoisecapital.net points at Bluehost (<code>mail.tortoisecapital.net</code>). This plan doesn't touch DNS, so email keeps working.</li>
+    <li><b>Verify.</b> Request every old URL in the table above and check that it ends on a 200 at the proposed target.</li>
+  </ol>
+<pre id="htaccess"></pre>
+
+  <p class="foot">Mockup for internal review. Page contents in the simulated browser are placeholders. The real archive would carry the original text. <span id="build"></span></p>
+</div>
+
+<script>
+const BUILD = 1;
+console.log('[tortoise-redirect] build ' + BUILD);
+window.__edgeBuild = BUILD;
+document.getElementById('build').textContent = 'Build ' + BUILD + '.';
+
+const DATA = [["/","page / post","20070313"],["/100-reflections-on-trading-reflections-on-tortoise-trading-kindle-edition/","page / post","20131119"],["/2013/01/","date archive","20131119"],["/2013/12/","date archive","20140710"],["/2014/01/","date archive","20140709"],["/2014/02/","date archive","20140709"],["/2015/01/","date archive","20150405"],["/2015/06/","date archive","20150702"],["/about/","page / post","20131119"],["/aboutus.html","legacy page","20070313"],["/advanced-swing/","page / post","20160604"],["/announcing-the-june-2015-kc-live-trading-workshop-and-research-weekend/","page / post","20150508"],["/basic-swing/","page / post","20190611"],["/blank.html","legacy page","20070313"],["/bootcamp-weekend/","page / post","20190612"],["/brain-mode-power/","page / post","20140708"],["/case-studies/","page / post","20140413"],["/category/blog/","category","20131209"],["/category/bmp/","category","20140927"],["/category/case-studies/","category","20131209"],["/category/education/","category","20150405"],["/category/military/","category","20140927"],["/category/obama/","category","20140927"],["/category/planning/","category","20140927"],["/category/planning/feed/","category","20150508"],["/category/publications/","category","20131119"],["/category/reports/","category","20131117"],["/category/slideshow/","category","20140708"],["/category/spirituality/","category","20140927"],["/category/trading/","category","20150405"],["/category/uncategorized/","category","20140708"],["/chatroom/","page / post","20150702"],["/coaching/","page / post","20150702"],["/coaching/coaching_sessions/","page / post","20160607"],["/comments/feed/","feed","20141127"],["/contact-us/","page / post","20131117"],["/contactus.html","legacy page","20070313"],["/daily-report-and-4-maxpain-trade-frames/","page / post","20131119"],["/daily-report-and-review-of-dow-report-and-dow-quality-report/","page / post","20131119"],["/daytrading-beliefs/","page / post","20140709"],["/discount-coins/","page / post","20150702"],["/example-of-using-excel-word-adobe-to-automate-your-ideas/","page / post","20140109"],["/feed/","feed","20140708"],["/feed/atom/","feed","20140709"],["/feed/rss/","feed","20140709"],["/forex-project/","page / post","20200407"],["/free-trial/","page / post","20131119"],["/frogrlco-research/","page / post","20140303"],["/go/aff7484163fbecfa714ffa6ac552c","affiliate link","20101128"],["/goal-setting-paradign-shift/","page / post","20131119"],["/homestudy/","page / post","20180501"],["/iitm/","page / post","20131119"],["/kc-workshop-may-31-june-6-2014/","page / post","20140927"],["/kc-workshop/","page / post","20150405"],["/ken-long/","page / post","20131117"],["/member-stories/","page / post","20191118"],["/more-lateral-thinking-establishing-your-relationship-with-the-equity-markets/","page / post","20131119"],["/more-reflections-on-trading-vol-2-kindle-edition/","page / post","20131119"],["/online-community/","page / post","20131119"],["/press/","page / post","20131209"],["/products-page/","page / post","20140109"],["/products-page/shop/","page / post","20131119"],["/products-page/your-account/","page / post","20131119"],["/profitable-etf-trading-strategies-refining-the-exit-efficiency-index/","page / post","20140709"],["/recommended-books/","page / post","20140309"],["/register/","page / post","20140925"],["/report-generation-and-distribution-plan/","page / post","20131119"],["/robots.txt","page / post","20141218"],["/services.html","legacy page","20070313"],["/strategic-thinking/","page / post","20160606"],["/swingtrading_workshop/","page / post","20140708"],["/tag/belief/","category","20140710"],["/tag/business/","category","20140709"],["/tag/day-trader/","category","20140709"],["/tag/day-trading/","category","20140709"],["/tag/investing/","category","20140709"],["/tag/mark-twain/","category","20140710"],["/tag/order-exchange/","category","20140709"],["/tag/trade/","category","20140709"],["/tc2000-bundle/","page / post","20200507"],["/testimonials/","page / post","20131119"],["/thoughts-on-discipline/","page / post","20131119"],["/tortoise-capital-management/","page / post","20131119"],["/tortoise-capital-management/page/2/","page / post","20140309"],["/tradestation/","page / post","20131117"],["/trading-with-relaxed-money/","page / post","20131119"],["/visual-kinesthtic-audio-vka-style-and-learning-efficiency/","page / post","20140709"],["/webinar/","page / post","20140309"],["/workshop-schedule/","page / post","20160106"],["/workshop_homestudy/","page / post","20160105"],["/workshop_prep/","page / post","20140413"],["/workshops-2/","page / post","20140309"],["/workshops-2/kc-workshop/","page / post","20160607"],["/workshops-2/swingtrading_workshop/","page / post","20160410"],["/workshops-2/workshop-schedule/","page / post","20160607"],["/workshops-2/workshop_homestudy/","page / post","20160607"],["/workshops-2/workshop_prep/","page / post","20160607"],["/workshops/","page / post","20131117"],["/wp-admin/admin-ajax.php","legacy page","20160312"],["/wp-content/","wordpress system","20190412"],["/wp-content/plugins/comprehensive-google-map-plugin/assets/css/images/markers/","wordpress system","20131119"],["/wp-content/plugins/wp-e-commerce/","wordpress system","20150405"],["/wp-content/plugins/wp-e-commerce/wpsc-core/images/","wordpress system","20150405"],["/wp-content/uploads/","wordpress system","20190413"],["/wp-content/uploads/2008/","wordpress system","20190413"],["/wp-content/uploads/2008/08/","wordpress system","20190413"],["/wp-content/uploads/2008/09/","wordpress system","20190413"],["/wp-content/uploads/2008/10/","wordpress system","20190413"],["/wp-content/uploads/2008/11/","wordpress system","20190414"],["/wp-content/uploads/2008/12/","wordpress system","20190413"],["/wp-content/uploads/2009/","wordpress system","20190413"],["/wp-content/uploads/2009/01/","wordpress system","20190413"],["/wp-content/uploads/2009/02/","wordpress system","20190413"],["/wp-content/uploads/2009/03/","wordpress system","20190413"],["/wp-content/uploads/2009/04/","wordpress system","20190413"],["/wp-content/uploads/2009/05/","wordpress system","20190413"],["/wp-content/uploads/2009/06/","wordpress system","20190413"],["/wp-content/uploads/2009/07/","wordpress system","20190413"],["/wp-content/uploads/2009/08/","wordpress system","20190413"],["/wp-content/uploads/2013/","wordpress system","20140707"],["/wp-content/uploads/2013/01/","wordpress system","20140707"],["/wp-content/uploads/2013/02/","wordpress system","20140707"],["/wp-content/uploads/2013/03/","wordpress system","20140707"],["/wp-content/uploads/2013/04/","wordpress system","20140707"],["/wp-content/uploads/2013/05/","wordpress system","20140707"],["/wp-content/uploads/2013/06/","wordpress system","20140707"],["/wp-content/uploads/2013/07/","wordpress system","20140707"],["/wp-content/uploads/2013/08/","wordpress system","20140707"],["/wp-content/uploads/2013/09/","wordpress system","20140707"],["/wp-content/uploads/2013/10/","wordpress system","20140707"],["/wp-content/uploads/2013/11/","wordpress system","20140707"],["/wp-content/uploads/2013/12/","wordpress system","20140707"],["/wp-content/uploads/2014/","wordpress system","20190413"],["/wp-content/uploads/2014/01/","wordpress system","20190414"],["/wp-content/uploads/2014/01/google8c23ef152ca4c805.html","legacy page","20190414"],["/wp-content/uploads/2014/02/","wordpress system","20140707"],["/wp-content/uploads/2014/03/","wordpress system","20140707"],["/wp-content/uploads/2014/04/","wordpress system","20140707"],["/wp-content/uploads/2014/05/","wordpress system","20140707"],["/wp-content/uploads/2014/06/","wordpress system","20140707"],["/wp-content/uploads/2014/07/","wordpress system","20140707"],["/wp-content/uploads/2014/08/","wordpress system","20190413"],["/wp-content/uploads/2014/09/","wordpress system","20190413"],["/wp-content/uploads/2014/10/","wordpress system","20190413"],["/wp-content/uploads/2014/11/","wordpress system","20190413"],["/wp-content/uploads/2014/12/","wordpress system","20190413"],["/wp-content/uploads/2015/","wordpress system","20190413"],["/wp-content/uploads/2015/01/","wordpress system","20190413"],["/wp-content/uploads/2015/02/","wordpress system","20190413"],["/wp-content/uploads/2015/03/","wordpress system","20190413"],["/wp-content/uploads/2015/04/","wordpress system","20190413"],["/wp-content/uploads/2015/05/","wordpress system","20190413"],["/wp-content/uploads/2015/06/","wordpress system","20190414"],["/wp-content/uploads/2015/07/","wordpress system","20190413"],["/wp-content/uploads/2015/08/","wordpress system","20190413"],["/wp-content/uploads/2015/09/","wordpress system","20190413"],["/wp-content/uploads/2015/10/","wordpress system","20190413"],["/wp-content/uploads/2015/11/","wordpress system","20190413"],["/wp-content/uploads/2015/12/","wordpress system","20190413"],["/wp-content/uploads/2016/","wordpress system","20190413"],["/wp-content/uploads/2016/01/","wordpress system","20190414"],["/wp-content/uploads/2016/02/","wordpress system","20190413"],["/wp-content/uploads/2016/03/","wordpress system","20190413"],["/wp-content/uploads/2016/04/","wordpress system","20190413"],["/wp-content/uploads/2016/05/","wordpress system","20190413"],["/wp-content/uploads/2016/06/","wordpress system","20190413"],["/wp-content/uploads/2016/07/","wordpress system","20190413"],["/wp-content/uploads/2016/08/","wordpress system","20190413"],["/wp-content/uploads/2016/09/","wordpress system","20190413"],["/wp-content/uploads/2016/10/","wordpress system","20190413"],["/wp-content/uploads/2016/11/","wordpress system","20190413"],["/wp-content/uploads/2016/12/","wordpress system","20190413"],["/wp-content/uploads/2017/","wordpress system","20191118"],["/wp-content/uploads/2017/01/","wordpress system","20190413"],["/wp-content/uploads/2017/02/","wordpress system","20190413"],["/wp-content/uploads/2017/03/","wordpress system","20190413"],["/wp-content/uploads/2017/04/","wordpress system","20190413"],["/wp-content/uploads/2017/05/","wordpress system","20190413"],["/wp-content/uploads/2017/06/","wordpress system","20190413"],["/wp-content/uploads/2017/07/","wordpress system","20190413"],["/wp-content/uploads/2017/08/","wordpress system","20190413"],["/wp-content/uploads/2017/09/","wordpress system","20190413"],["/wp-content/uploads/2017/10/","wordpress system","20190413"],["/wp-content/uploads/2017/11/","wordpress system","20190413"],["/wp-content/uploads/2017/12/","wordpress system","20190414"],["/wp-content/uploads/2018/","wordpress system","20191208"],["/wp-content/uploads/2018/01/","wordpress system","20190414"],["/wp-content/uploads/2018/02/","wordpress system","20190413"],["/wp-content/uploads/2018/03/","wordpress system","20190414"],["/wp-content/uploads/2018/04/","wordpress system","20190413"],["/wp-content/uploads/2018/05/","wordpress system","20190414"],["/wp-content/uploads/2018/06/","wordpress system","20190414"],["/wp-content/uploads/2018/07/","wordpress system","20190414"],["/wp-content/uploads/2018/08/","wordpress system","20190414"],["/wp-content/uploads/2018/09/","wordpress system","20190414"],["/wp-content/uploads/2018/10/","wordpress system","20190413"],["/wp-content/uploads/2018/11/","wordpress system","20190413"],["/wp-content/uploads/2018/12/","wordpress system","20190413"],["/wp-content/uploads/2019/","wordpress system","20191030"],["/wp-content/uploads/2019/01/","wordpress system","20190413"],["/wp-content/uploads/2019/02/","wordpress system","20190413"],["/wp-content/uploads/2019/03/","wordpress system","20190413"],["/wp-content/uploads/2019/04/","wordpress system","20190414"],["/wp-content/uploads/2019/05/","wordpress system","20191118"],["/wp-content/uploads/2019/06/","wordpress system","20191120"],["/wp-content/uploads/2019/07/","wordpress system","20191118"],["/wp-content/uploads/2019/08/","wordpress system","20191030"],["/wp-content/uploads/2019/09/","wordpress system","20191030"],["/wp-content/uploads/2019/10/","wordpress system","20191030"],["/wp-content/uploads/2019/11/","wordpress system","20191208"],["/wp-content/uploads/2019/12/","wordpress system","20200208"],["/wp-content/uploads/leaflet-maps-marker-icons/","wordpress system","20190415"],["/wp-content/uploads/wpsc/","wordpress system","20190415"],["/wp-content/uploads/wpsc/cache/","wordpress system","20190415"],["/wp-content/uploads/wpsc/category_images/","wordpress system","20190415"],["/wp-content/uploads/wpsc/previews/","wordpress system","20190415"],["/wp-content/uploads/wpsc/product_images/","wordpress system","20190415"],["/wp-content/uploads/wpsc/product_images/thumbnails/","wordpress system","20190415"],["/wp-content/uploads/wpsc/upgrades/","wordpress system","20190415"],["/wp-content/uploads/wpsc/user_uploads/","wordpress system","20190415"],["/wp-login.php","legacy page","20250226"],["/wp-sitemap.xml","wordpress system","20230611"]];
+
+const LEGACY = { '/aboutus.html':'/about/', '/contactus.html':'/contact-us/', '/services.html':'/coaching/', '/blank.html':'/' };
+const CLOSED = /^\/(products-page|register|free-trial|discount-coins|chatroom)\b/;
+const KIND_LABEL = {'page / post':'Page or post','legacy page':'2007 site page','category':'Category / tag','date archive':'Date archive','feed':'Feed','affiliate link':'Affiliate link','wordpress system':'WordPress system'};
+
+function rule(p, k){
+  if (LEGACY[p] !== undefined) return {to:LEGACY[p], r:'map', why:'2007-era page, mapped to its WordPress successor'};
+  if (k==='affiliate link' || /^\/wp-(admin|login)|^\/wp-content\/plugins|^\/wp-content\/?$|^\/wp-content\/uploads\/.*\.html$/.test(p))
+    return {to:'/', r:'home', why:'No content to keep: archive home'};
+  if (CLOSED.test(p)) return {to:p, r:'same', why:'Same path; shows a "this offer has closed" notice'};
+  if (/^\/wp-content\/uploads\//.test(p)) return {to:p, r:'same', why:'Same path; uploaded files kept'};
+  return {to:p, r:'same', why:'Same path on archive'};
+}
+const ROWS = DATA.map(([p,k,last]) => ({p,k,last,...rule(p,k)}));
+
+const $ = id => document.getElementById(id);
+const fmt = d => d.slice(0,4)+'-'+d.slice(4,6)+'-'+d.slice(6,8);
+const sub = () => ($('sub').value.trim().replace(/^https?:\/\//,'').replace(/\/+$/,'') || 'tortoise.owlgrouptrading.com');
+let mode = 'B';
+
+function titleOf(p){
+  if (p==='/') return 'Tortoise Capital';
+  const seg = p.replace(/\/page\/\d+\/$/,'/').split('/').filter(Boolean).pop() || '';
+  return seg.replace(/\.(html?|php)$/,'').replace(/[-_]+/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
+}
+function esc(s){ return s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+// picker: content-bearing pages first
+const pickable = ROWS.filter(r => r.k!=='wordpress system' || /^\/wp-content\/uploads\/\d{4}\/$/.test(r.p));
+const pick = $('pick');
+const groups = {};
+pickable.forEach(r => (groups[KIND_LABEL[r.k]] ||= []).push(r));
+['Page or post','2007 site page','Category / tag','Date archive','Feed','Affiliate link','WordPress system'].forEach(g => {
+  if (!groups[g]) return;
+  const og = document.createElement('optgroup'); og.label = g;
+  groups[g].forEach(r => { const o=document.createElement('option'); o.value=r.p; o.textContent='tortoisecapital.net'+r.p; og.appendChild(o); });
+  pick.appendChild(og);
+});
+pick.value = '/ken-long/';
+
+let timers = [];
+function run(){
+  timers.forEach(clearTimeout); timers = [];
+  const r = ROWS.find(x => x.p===pick.value);
+  const S = sub();
+  const target = mode==='B' ? r.to : '/';
+  const oldUrl = 'https://tortoisecapital.net' + r.p;
+  const newUrl = 'https://' + S + target;
+  ['h1','h2','h3'].forEach(h => $(h).classList.remove('on'));
+  $('t1').innerHTML = 'GET ' + esc(oldUrl) + '<br><span class="muted">Bluehost, Apache .htaccess rule, before WordPress runs</span>';
+  $('t2').innerHTML = '<span class="s301">301 Moved Permanently</span><br>Location: ' + esc(newUrl);
+  $('t3').innerHTML = 'GET ' + esc(newUrl) + ' → <span class="s200">200 OK</span>' + (mode==='A' && r.p!=='/' ? ' <span class="muted">(the landing page, not the bookmarked page)</span>' : '');
+  $('addr').textContent = oldUrl;
+  $('page').innerHTML = '<div class="landing"><p style="font:14px system-ui;color:#656d76">Connecting…</p></div>';
+  timers.push(setTimeout(()=>$('h1').classList.add('on'), 50));
+  timers.push(setTimeout(()=>$('h2').classList.add('on'), 650));
+  timers.push(setTimeout(()=>{ $('h3').classList.add('on'); $('addr').innerHTML = 'https://<b>'+esc(S)+'</b>'+esc(target); render(r, S, target); }, 1250));
+}
+
+function render(r, S, target){
+  const banner = '<div class="banner"><span>You are viewing the <b>Tortoise Capital archive</b>. Tortoise Capital is now part of Owl Group Trading.</span><a href="#" onclick="return false">Visit Owl Group Trading →</a></div>';
+  const head = '<div class="site-head"><span class="brand">Tortoise Capital</span><nav><span>Home</span><span>Ken Long</span><span>Workshops</span><span>Coaching</span><span>Case Studies</span><span>Contact</span></nav></div>';
+  if (mode==='A' && r.p!=='/'){
+    $('page').innerHTML = '<div class="banner"><span>Tortoise Capital is now part of <b>Owl Group Trading</b>.</span><a href="#" onclick="return false">Visit Owl Group Trading →</a></div>' + '<div class="landing"><h3>Welcome, Tortoise Capital readers</h3><p style="font:15px system-ui;color:#656d76">Tortoise Capital is now part of Owl Group Trading.</p><div class="miss">You bookmarked <b>'+esc(r.p)+'</b>. It isn\'t available here.</div></div>';
+    return;
+  }
+  const wb = 'https://web.archive.org/web/' + r.last + '/http://tortoisecapital.net' + r.p;
+  const closed = CLOSED.test(r.to);
+  const bars = Array.from({length:7}, (_,i)=>'<div class="bar" style="width:'+[96,92,98,70,94,88,55][i]+'%"></div>').join('');
+  const trail = target.split('/').filter(Boolean).map(s=>esc(titleOf('/'+s+'/'))).join(' › ');
+  $('page').innerHTML = banner + head + '<div class="site-body">'
+    + '<div class="crumb">Home' + (trail ? ' › ' + trail : '') + '</div>'
+    + '<h3>' + esc(titleOf(target)) + '</h3>'
+    + '<div class="meta">Archived page · as last published on tortoisecapital.net' + r.p + ' · last captured ' + fmt(r.last) + '</div>'
+    + (closed ? '<div class="note" style="border-color:#d29922">This offer has closed. Current courses and workshops are at Owl Group Trading.</div>' : '')
+    + bars
+    + '<div class="note">Mockup: grey bars stand in for the page\'s original text, which the real archive would carry. '
+    + (r.r==='map' ? 'This 2007 URL is mapped to <b>'+esc(target)+'</b>. ' : '')
+    + 'The original capture: <a href="'+wb+'" target="_blank" rel="noopener">Wayback Machine, '+fmt(r.last)+'</a>.</div>'
+    + '</div>';
+}
+
+$('go').onclick = run;
+pick.onchange = run;
+$('sub').oninput = () => { drawTable(); drawHtaccess(); };
+$('sub').onchange = run;
+$('optA').onclick = () => { mode='A'; $('optA').setAttribute('aria-pressed','true'); $('optB').setAttribute('aria-pressed','false'); run(); drawHtaccess(); };
+$('optB').onclick = () => { mode='B'; $('optB').setAttribute('aria-pressed','true'); $('optA').setAttribute('aria-pressed','false'); run(); drawHtaccess(); };
+
+// stats + table
+const n = r => ROWS.filter(x=>x.r===r).length;
+$('stats').innerHTML = [
+  [ROWS.length,'old URLs found'], [n('same'),'to the same path'], [n('map'),'mapped to a new path'], [n('home'),'to the archive home']
+].map(([v,l])=>'<div class="card stat"><b>'+v+'</b><span>'+l+'</span></div>').join('');
+const lasts = ROWS.map(r=>r.last).sort();
+$('span').textContent = fmt(lasts[0]) + ' to ' + fmt(lasts[lasts.length-1]);
+function drawTable(){
+  const q = $('q').value.trim().toLowerCase(); const S = sub();
+  const list = ROWS.filter(r => !q || r.p.toLowerCase().includes(q) || r.to.toLowerCase().includes(q));
+  $('count').textContent = list.length + ' of ' + ROWS.length;
+  const P = {same:'p-same',map:'p-map',home:'p-home'}, L = {same:'same path',map:'mapped',home:'archive home'};
+  $('rows').innerHTML = list.map(r => '<tr><td class="mono">'+esc(r.p)+'</td><td>'+KIND_LABEL[r.k]+'</td><td class="mono">'+fmt(r.last)+'</td><td class="mono">'+esc(S+r.to)+'</td><td><span class="pill '+P[r.r]+'">'+L[r.r]+'</span> <span class="muted">'+esc(r.why)+'</span></td></tr>').join('');
+}
+$('q').oninput = drawTable;
+
+function drawHtaccess(){
+  const S = sub();
+  const maps = Object.entries(LEGACY).map(([a,b]) => 'RewriteRule ^' + a.slice(1).replace(/\./g,'\\.') + '$ https://' + S + b + ' [R=302,L]').join('\n');
+  const body = mode==='B'
+    ? '# 2007-era pages -> their WordPress successors\n' + maps + '\n\n# Login, admin, plugins, affiliate links -> archive home\nRewriteRule ^(wp-admin|wp-login\\.php|wp-content/plugins|go/) https://' + S + '/ [R=302,L]\n\n# Everything else -> the same path on the archive (query string kept)\nRewriteRule ^(.*)$ https://' + S + '/$1 [R=302,L]'
+    : '# Option A: every URL -> the one landing page\nRewriteRule ^ https://' + S + '/ [R=302,L]';
+  $('htaccess').textContent = '# tortoisecapital.net  public_html/.htaccess  (place ABOVE "# BEGIN WordPress")\n# Test with 302 first; change R=302 to R=301 once every URL checks out.\nRewriteEngine On\n\n# Guard: leave any other host on this account alone (cPanel, webmail, addon domains)\nRewriteCond %{HTTP_HOST} !^(www\\.)?tortoisecapital\\.net$ [NC]\nRewriteRule ^ - [L]\n\n' + body;
+}
+
+drawTable(); drawHtaccess(); run();
+</script>
+</body>
+</html>
