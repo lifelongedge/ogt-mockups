@@ -101,6 +101,13 @@
   .card.L-end .ct { font-size:84px; max-width:none; }
   .card.L-end .cs { font-family:"SF Mono",Menlo,monospace; font-size:60px; color:#d4a559; margin-top:32px; }
   .card.L-end .cb { font-size:38px; margin-top:72px; max-width:1320px; }
+  .card.L-agenda .ct { font-size:80px; }
+  .card.L-agenda ol.ca { list-style:none; margin:64px 0 0; padding:0; width:1460px; counter-reset:n; }
+  .card.L-agenda ol.ca li { display:grid; grid-template-columns:72px 1fr; align-items:baseline; padding:24px 8px; border-top:2px solid #2a2925; counter-increment:n; text-align:left; }
+  .card.L-agenda ol.ca li:last-child { border-bottom:2px solid #2a2925; }
+  .card.L-agenda ol.ca li::before { content:counter(n); font-family:"SF Mono",Menlo,monospace; font-size:40px; color:#d4a559; grid-row:span 2; }
+  .card.L-agenda ol.ca .an { font-family:Georgia,"Times New Roman",serif; font-size:56px; line-height:1.15; color:#e8e6df; }
+  .card.L-agenda ol.ca .ag { grid-column:2; font-size:34px; color:#9c978a; margin-top:8px; line-height:1.3; }
   .card .amber { color:#d4a559; }
   .card .cbrand { position:absolute; bottom:44px; right:56px; font-size:26px; color:#5d594f; letter-spacing:.06em; }
   .card .cbrand b { color:#8a6a35; font-weight:600; }
@@ -255,7 +262,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const BUILD = 'cutroom-24';
+const BUILD = 'cutroom-25';
 console.log('[cutroom] build', BUILD);
 window.__edgeBuild = BUILD;
 
@@ -446,14 +453,22 @@ const LAYOUTS = {   // field roles per layout; the CSS values mirror scripts/ren
   chapter: { kicker: 'Chapter line (Chapter 2)', title: 'Chapter title', subtitle: 'Subtitle (dim, optional)', body: 'Extra lines (optional)' },
   maxim:   { kicker: 'Kicker (usually empty)', title: 'The maxim (type the quote marks)', subtitle: 'Attribution', body: 'Extra lines (optional)' },
   end:     { kicker: 'Kicker (usually empty)', title: 'Main line', subtitle: 'URL line', body: 'Small lines' },
+  agenda:  { kicker: 'Kicker (In this course)', title: 'Title (Four parts, about 28 minutes)', subtitle: 'Subtitle (optional)', body: 'One part per line; after a | its short gloss' },
 };
+function agendaList(body, mark) {   // cutroom-25: mirrors agenda_list() in scripts/render_slides.py
+  const rows = (body || '').split('\n').filter(l => l.trim()).map(l => {
+    const k = l.indexOf('|'); const name = k < 0 ? l : l.slice(0, k); const gloss = k < 0 ? '' : l.slice(k + 1);
+    return `<li><span class="an">${mark(name.trim())}</span>${gloss.trim() ? `<span class="ag">${mark(gloss.trim())}</span>` : ''}</li>`;
+  });
+  return `<ol class="ca">${rows.join('')}</ol>`;
+}
 function cardHtml(t, layout) {
   t = t || {}; layout = LAYOUTS[layout] ? layout : 'setup';
   const mark = x => escHtml(x || '').replace(/\*\*(.+?)\*\*/g, '<span class="amber">$1</span>');
   return `<div class="card L-${layout}">${t.kicker ? `<p class="ck">${mark(t.kicker)}</p>` : ''}
     <div class="ct">${t.title ? mark(t.title) : '<span class="ph">Your title</span>'}</div>
     ${t.subtitle ? `<p class="cs">${mark(t.subtitle)}</p>` : ''}
-    ${t.body ? `<p class="cb">${mark(t.body)}</p>` : (layout === 'setup' ? '<p class="cb ph">The setup text for the next cut</p>' : '')}
+    ${t.body ? (layout === 'agenda' ? agendaList(t.body, mark) : `<p class="cb">${mark(t.body)}</p>`) : (layout === 'setup' ? '<p class="cb ph">The setup text for the next cut</p>' : '')}
     <div class="cbrand"><b>OWL</b> GROUP TRADING</div></div>`;
 }
 function fitCards() {

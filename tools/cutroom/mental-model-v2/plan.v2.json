@@ -1,9 +1,9 @@
 {
   "schema": "coursecraft-plan-v2",
   "course": "mental-model-v2",
-  "revision": 5,
+  "revision": 6,
   "revised": "2026-11-16",
-  "status": "DRAFT rev3 (2026-11-16): the animated cut, NOT built (owner: 'give me a cut with the animations of module 1; don't build it yet'). Every spoken window has an animated twin ON and its cut OFF (the cut stays in the plan for a per-segment flip back in the cutroom); s26 animated; Ken in the corner (pip) on the five really-really-good windows only, the other three sources show him as a gallery thumbnail too small to composite. Six slide cards rendered. Nothing rendered or assembled; `build_v2 check` lists what a build needs.",
+  "status": "rev6: an agenda card after the title card (the parts, for the contents); DRAFT rev3 (2026-11-16): the animated cut, NOT built (owner: 'give me a cut with the animations of module 1; don't build it yet'). Every spoken window has an animated twin ON and its cut OFF (the cut stays in the plan for a per-segment flip back in the cutroom); s26 animated; Ken in the corner (pip) on the five really-really-good windows only, the other three sources show him as a gallery thumbnail too small to composite. Six slide cards rendered. Nothing rendered or assembled; `build_v2 check` lists what a build needs.",
   "title": "The Mental Model (v2)",
   "topic_class": "psychology (cut-heavy; ONE decidable claim; no other outcomes)",
   "store_sku": "mental-model",
@@ -99,6 +99,26 @@
       "transition": {
         "type": "fade",
         "dur": 1.0
+      }
+    },
+    {
+      "id": "s02b",
+      "type": "slide",
+      "include": true,
+      "label": "Agenda card",
+      "slide_id": "agenda",
+      "duration": 10,
+      "layout": "agenda",
+      "text": {
+        "kicker": "In this course",
+        "title": "Four parts, about 28 minutes",
+        "subtitle": "",
+        "body": "The intelligent adaptive machine | maxims, and tool user vs system architect\nThe four primal intelligences | intuition, imagination, common sense, emotion\nThe great big teeter-totter | how the market moves, and why it never breaks\nWatching the lions | efficient enough, and knowing the territory"
+      },
+      "status": "agenda card (2026-11-16, owner go on the contents plan): the parts in course order; edit freely in the cutroom",
+      "transition": {
+        "type": "fade",
+        "dur": 0.6
       }
     },
     {

@@ -1,9 +1,9 @@
 {
   "schema": "coursecraft-plan-v2",
   "course": "mental-model-2-v2",
-  "revision": 4,
+  "revision": 5,
   "revised": "2026-11-16",
-  "status": "BUILD rev4 (2026-11-16): the animated cut. Every twin on, its cut off (owner: 'make a complete cut with the animation and Ken in the upper right'); s11 and s16 animated; slide cards made. Sources fetched on stream; built with build_v2 under bounded-run.",
+  "status": "rev5: an agenda card after the title card (the parts, for the contents); BUILD rev4 (2026-11-16): the animated cut. Every twin on, its cut off (owner: 'make a complete cut with the animation and Ken in the upper right'); s11 and s16 animated; slide cards made. Sources fetched on stream; built with build_v2 under bounded-run.",
   "title": "The Mental Model II: The Brain, the System, the Loop (v2)",
   "topic_class": "psychology (cut-heavy; two overdubs on cohort-only screens; no outcome, never fake one)",
   "store_sku": "mental-model-2",
@@ -107,6 +107,22 @@
         "subtitle": "",
         "body": "The Brain, the System, the Loop\nwith Dr. Ken Long"
       }
+    },
+    {
+      "id": "s02b",
+      "type": "slide",
+      "include": true,
+      "label": "Agenda card",
+      "slide_id": "agenda",
+      "duration": 10,
+      "layout": "agenda",
+      "text": {
+        "kicker": "In this course",
+        "title": "Four parts, about 38 minutes",
+        "subtitle": "",
+        "body": "The brain builds a model | a prediction machine, and the wedge\nSystems thinking | input, process, output, feedback\nThe chimp and the Zero State | the inner trader as a calm chimpanzee\nPlan, prepare, execute, assess | detect, decide, deliver, and the daily review"
+      },
+      "status": "agenda card (2026-11-16, owner go on the contents plan): the parts in course order; edit freely in the cutroom"
     },
     {
       "id": "s03",
