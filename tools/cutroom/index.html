@@ -234,7 +234,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const BUILD = 'cutroom-20';
+const BUILD = 'cutroom-21';
 console.log('[cutroom] build', BUILD);
 window.__edgeBuild = BUILD;
 
@@ -456,16 +456,17 @@ function renderBoard() {
       <div class="pic">${pic}</div>
       <div class="cap"><b>${s.type === 'slide' ? 'SLIDE · ' + s.slide_id : s.id}</b><span>${fmt(t)}</span></div>`;
     el.title = `${s.label} · ${segDur(s).toFixed(1)}s`;
-    el.onclick = () => { select(i); const c = document.querySelectorAll('#segs .seg')[i]; if (c) c.scrollIntoView({block:'center', behavior:'smooth'}); };
+    el.onclick = () => { select(i); const c = document.querySelectorAll('#segs .seg')[i]; if (c) c.scrollIntoView({block:'center'}); };
     b.appendChild(el);
     t += segDur(s);
   });
-  const sel = b.querySelector('.bt.sel'); if (sel && !b.classList.contains('grid')) sel.scrollIntoView({inline:'center', block:'nearest'});
+  const sel = b.querySelector('.bt.sel'); if (sel && !b.classList.contains('grid')) b.scrollLeft = sel.offsetLeft - b.clientWidth / 2 + sel.offsetWidth / 2;
   fitCards();
 }
 $('boardGrid').onclick = () => { const b = $('board'); b.classList.toggle('grid'); $('boardGrid').textContent = b.classList.contains('grid') ? 'Show as strip' : 'Show all'; };
 
 function render() {
+  const y = window.scrollY;   // cutroom-21: the rebuild empties the list for a moment, which clamped the page scroll to 0
   renderMeta();
   renderBoard();
   const wrap = $('segs'); wrap.innerHTML = '';
@@ -496,6 +497,7 @@ function render() {
     if (s.include) t += segDur(s);
   });
   fitCards();
+  window.scrollTo(0, y);
 }
 
 // ---------- animation overlay ----------
@@ -607,6 +609,7 @@ window.addEventListener('resize', fitAnim);
 function select(i) {
   selIdx = i;
   render();
+  const card = document.querySelectorAll('#segs .seg')[i]; if (card) card.scrollIntoView({block:'nearest'});
   const s = plan.segments[i];
   $('noSel').style.display = 'none';
   const box = $('insp'); box.style.display = 'block';
