@@ -2,14 +2,14 @@
   "schema": "coursecraft-plan-v2",
   "course": "mental-model-v2-sales",
   "cutroom": "mental-model-v2-sales",
-  "revision": 1,
+  "revision": 2,
   "revised": "2026-11-16",
   "status": "DRAFT rev1: a sales clip of mental-model-v2, ~120 s; the owner edits it in the cutroom",
   "title": "The Mental Model, part 1: sales clip",
   "topic_class": "sales clip",
   "store_sku": "mental-model",
   "replaces": null,
-  "notes": "Bites end on a full sentence (cues read 2026-11-16). Each twin starts the parent's scene at the bite's offset, so the captions stay on his words.",
+  "notes": "2026-11-16 (cutroom-24): transitions on every join, defaults by rule: cut where his speech runs on from the same session, dip to black 0.6 s between separate moments, crossfade 1.0 s into a slide card and 0.6 s out of one; chosen and previewed per join in the cutroom, rendered by build_v2 (xfade, acrossfade).\n\nBites end on a full sentence (cues read 2026-11-16). Each twin starts the parent's scene at the bite's offset, so the captions stay on his words.",
   "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/mental-model-v2/",
   "sources": [
     {
@@ -92,7 +92,11 @@
       },
       "animation_brief": "the mental-model-v2 s01 scene, started at its +0.0 s",
       "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
-      "pip": true
+      "pip": true,
+      "transition": {
+        "type": "fade",
+        "dur": 0.6
+      }
     },
     {
       "id": "s02",
@@ -120,7 +124,11 @@
       },
       "animation_brief": "the mental-model-v2 s04 scene, started at its +14.3 s",
       "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
-      "pip": true
+      "pip": true,
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
     },
     {
       "id": "s03",
@@ -148,7 +156,11 @@
       },
       "animation_brief": "the mental-model-v2 s06 scene, started at its +0.6 s",
       "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
-      "pip": true
+      "pip": true,
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
     },
     {
       "id": "s04",
@@ -175,7 +187,11 @@
         "scene": "s27"
       },
       "animation_brief": "the mental-model-v2 s27 scene, started at its +20.4 s",
-      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py"
+      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
     },
     {
       "id": "s05",
@@ -202,7 +218,11 @@
         "scene": "s32"
       },
       "animation_brief": "the mental-model-v2 s32 scene, started at its +7.8 s",
-      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py"
+      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
     },
     {
       "id": "s06",
@@ -217,6 +237,10 @@
         "title": "The Mental Model, part 1",
         "subtitle": "owlgrouptrading.com",
         "body": "Four chapters, about 28 minutes, with Dr. Ken Long."
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 1.0
       }
     }
   ]

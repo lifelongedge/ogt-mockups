@@ -107,6 +107,25 @@
   .card .ph { color:#5d594f; }
   .cardedit { border:1px solid var(--amber-dim); border-radius:6px; padding:.6rem .7rem .2rem; margin:0 0 .85rem; background:var(--card); }
   .cardedit .hint { font-size:.7rem; color:var(--faint); margin:-.3rem 0 .6rem; }
+  /* ---- transitions (cutroom-24): a chip between pictures; the inspector previews A's last picture into B's first ---- */
+  .tr { flex:0 0 auto; align-self:center; width:44px; cursor:pointer; text-align:center; font-family:"SF Mono",Menlo,monospace; font-size:.56rem; color:var(--faint); padding:.2rem 0; border-radius:4px; border:1px dashed transparent; }
+  .tr:hover { border-color:var(--amber-dim); color:var(--dim); }
+  .tr.sel { border-color:var(--amber); color:var(--amber); }
+  .tr .ic { display:block; width:30px; height:16px; margin:0 auto .15rem; border-radius:2px; }
+  .tr.k-cut .ic { background:linear-gradient(90deg, var(--card2) 48%, var(--amber-dim) 48% 52%, var(--card2) 52%); }
+  .tr.k-fade .ic { background:linear-gradient(90deg, var(--card2), var(--amber)); }
+  .tr.k-dip .ic { background:linear-gradient(90deg, var(--card2), #000 45% 55%, var(--amber)); }
+  .tr.k-wipe .ic { background:linear-gradient(90deg, var(--card2) 60%, var(--amber) 60%); }
+  .tr.k-slide .ic { background:linear-gradient(90deg, var(--card2) 35%, var(--amber) 35%); box-shadow:inset -6px 0 0 var(--card2); }
+  .trrow { display:flex; align-items:center; gap:.5rem; margin:-.2rem 0 .35rem 62px; cursor:pointer; font-family:"SF Mono",Menlo,monospace; font-size:.66rem; color:var(--faint); }
+  .trrow .tr { width:auto; display:flex; align-items:center; gap:.4rem; padding:.1rem .4rem; font-size:.66rem; }
+  .trrow .tr .ic { margin:0; width:24px; height:10px; }
+  .trstage { position:relative; width:100%; aspect-ratio:16/9; background:#000; border-radius:6px; overflow:hidden; }
+  .trstage img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .trstage .blk { position:absolute; inset:0; background:#000; opacity:0; }
+  .trstage .lbl { position:absolute; left:.6rem; bottom:.5rem; font-family:"SF Mono",Menlo,monospace; font-size:.7rem; color:#fff; background:rgba(0,0,0,.55); padding:.1rem .4rem; border-radius:3px; }
+  .trchoices { display:flex; flex-wrap:wrap; gap:.35rem; margin:.7rem 0; }
+  .trchoices button.on { background:var(--amber-dim); color:#0e0e0c; border-color:var(--amber-dim); font-weight:600; }
   .slideview { width:100%; aspect-ratio:16/9; display:block; border-radius:6px; background:#000; border:1px solid var(--border); }
 
   /* ---- inspector ---- */
@@ -236,7 +255,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const BUILD = 'cutroom-23';
+const BUILD = 'cutroom-24';
 console.log('[cutroom] build', BUILD);
 window.__edgeBuild = BUILD;
 
@@ -354,8 +373,20 @@ async function load() {
   render(); measureHeader();
 }
 function persist() { localStorage.setItem(LS_KEY, JSON.stringify(plan)); renderMeta(); }
+// cutroom-24: the transition INTO an included segment from the included one before it (build_v2 XFADE uses the same names);
+// a non-cut transition overlaps the two by its duration, so the film is that much shorter
+const TRANS = { cut: 'Cut', fade: 'Crossfade', dip: 'Dip to black', wipe: 'Wipe', slide: 'Slide' };
+function prevIncluded(i) { for (let k = i - 1; k >= 0; k--) if (plan.segments[k].include) return k; return -1; }
+function trOf(s) { const t = s.transition || {}; return { type: TRANS[t.type] ? t.type : 'cut', dur: +(t.dur || 0.6) }; }
+function trOverlap(i) { const s = plan.segments[i]; if (!s.include || prevIncluded(i) < 0) return 0; const t = trOf(s); return t.type === 'cut' ? 0 : t.dur; }
+function filmTotal() { return plan.segments.reduce((a, s, i) => a + (s.include ? segDur(s) - trOverlap(i) : 0), 0); }
+function trChip(i, cls) {
+  const t = trOf(plan.segments[i]);
+  return `<div class="tr k-${t.type}${cls || ''}${TRSEL === i ? ' sel' : ''}" data-tr="${i}" title="Transition into ${escHtml(plan.segments[i].label)}: ${TRANS[t.type]}${t.type === 'cut' ? '' : ' ' + t.dur + ' s'} (click to change)"><span class="ic"></span>${t.type === 'cut' ? 'cut' : t.type + ' ' + t.dur}</div>`;
+}
+let TRSEL = -1;
 function renderMeta() {
-  const total = plan.segments.filter(s=>s.include).reduce((a,s)=>a+segDur(s),0);
+  const total = filmTotal();
   const inc = plan.segments.filter(s=>s.include).length;
   $('cmeta').textContent = `rev ${plan.revision} · ${inc}/${plan.segments.length} segments · est ${fmt(total)} · ${MEDIA_OVERRIDE?'LOCAL media':'GCS media'}`;
 }
@@ -447,10 +478,16 @@ function renderBoard() {
   const b = $('board'); b.innerHTML = '';
   const inc = plan.segments.filter(s => s.include);
   $('boardwrap').style.display = inc.length ? 'block' : 'none';
-  $('boardmeta').textContent = `· ${inc.length} segments · ${inc.filter(s=>s.type==='slide').length} slide cards · est ${fmt(inc.reduce((a,s)=>a+segDur(s),0))}`;
+  $('boardmeta').textContent = `· ${inc.length} segments · ${inc.filter(s=>s.type==='slide').length} slide cards · est ${fmt(filmTotal())}`;
   let t = 0;
   plan.segments.forEach((s, i) => {
     if (!s.include) return;
+    if (prevIncluded(i) >= 0) {
+      const tw = document.createElement('div'); tw.innerHTML = trChip(i); const chip = tw.firstChild;
+      chip.onclick = e => { e.stopPropagation(); selectTransition(i); };
+      b.appendChild(chip);
+      t -= trOverlap(i);
+    }
     const el = document.createElement('div');
     el.className = `bt type-${s.type}` + (i===selIdx?' sel':'');
     const pic = thumbImg(s, '') || (s.type === 'cut' ? "Ken's screen" : s.type);
@@ -481,6 +518,13 @@ function render() {
   const wrap = $('segs'); wrap.innerHTML = '';
   let t = 0;
   plan.segments.forEach((s, i) => {
+    if (s.include && prevIncluded(i) >= 0) {
+      const row = document.createElement('div'); row.className = 'trrow';
+      row.innerHTML = trChip(i);
+      row.onclick = () => selectTransition(i);
+      wrap.appendChild(row);
+      t -= trOverlap(i);
+    }
     const el = document.createElement('div');
     el.className = `seg type-${s.type}` + (i===selIdx?' sel':'') + (s.include?'':' excluded');
     const lanes = laneModel(s);
@@ -614,9 +658,70 @@ function setupAnim(s) {
 }
 window.addEventListener('resize', fitAnim);
 
+// ---------- transition inspector (cutroom-24) ----------
+function edgeUrl(s, edge) { return `${COURSE}/edges/${s.id}-${edge}.jpg?r=${plan.revision || 0}`; }
+let trRaf = null;
+function selectTransition(i) {
+  if (trRaf) { cancelAnimationFrame(trRaf); trRaf = null; }
+  if (animRaf) { cancelAnimationFrame(animRaf); animRaf = null; }
+  if (typeof stopVoiceLoop === 'function') stopVoiceLoop();
+  videoEl = null; animLayer = null; animReady = false;
+  TRSEL = i; selIdx = i;
+  render();
+  const b = plan.segments[i], a = plan.segments[prevIncluded(i)];
+  $('noSel').style.display = 'none';
+  const box = $('insp'); box.style.display = 'block';
+  const t = trOf(b);
+  box.innerHTML = `
+    <h2><span class="type-pill" style="background:var(--amber)">TRANSITION</span> &nbsp;into ${escHtml(b.label)}</h2>
+    <div class="why">from <b>${escHtml(a.label)}</b></div>
+    <div class="viewer">
+      <div class="trstage" id="trStage">
+        <img id="trA" src="${edgeUrl(a, 'out')}" alt="" onerror="this.src='${thumbUrl(a)}'">
+        <img id="trB" src="${edgeUrl(b, 'in')}" alt="" onerror="this.src='${thumbUrl(b)}'">
+        <div class="blk" id="trBlk"></div><span class="lbl" id="trLbl"></span>
+      </div>
+    </div>
+    <div class="field"><label>Transition</label>
+      <div class="trchoices" id="trType">${Object.entries(TRANS).map(([k, v]) => `<button class="${k === t.type ? 'on' : ''}" data-k="${k}">${v}</button>`).join('')}</div></div>
+    <div class="field" id="trDurRow" style="${t.type === 'cut' ? 'opacity:.35' : ''}"><label>Duration</label>
+      <div class="trchoices" id="trDur">${[0.3, 0.6, 1.0, 1.5].map(d => `<button class="${d === t.dur ? 'on' : ''}" data-d="${d}">${d} s</button>`).join('')}</div></div>
+    <div class="field"><label>Apply</label><div class="rowbtns" style="margin:0">
+      <button id="trAllSame" title="Every join of the same kind (into a slide, out of a slide, between two talking segments)">Same kind of join everywhere</button>
+      <button id="trAll" title="Every join in this course">Every join</button></div></div>
+    <div class="hint" style="font-size:.72rem;color:var(--faint)">The preview loops the last picture of the segment before into the first picture of this one. The build renders the same transition; a non-cut transition overlaps the two by its duration. Ken's corner tile is not in these stills.</div>`;
+  const set = (patch, label) => { snapshot(label); b.transition = Object.assign(trOf(b), patch); persist(); selectTransition(i); };
+  box.querySelectorAll('#trType button').forEach(x => x.onclick = () => set({ type: x.dataset.k }, `transition ${x.dataset.k} into ${b.label}`));
+  box.querySelectorAll('#trDur button').forEach(x => x.onclick = () => set({ dur: +x.dataset.d }, `transition ${x.dataset.d}s into ${b.label}`));
+  const kindOf = k => { const s = plan.segments[k], p = plan.segments[prevIncluded(k)]; return s.type === 'slide' ? 'into-slide' : p.type === 'slide' ? 'out-of-slide' : 'talk'; };
+  const applyTo = pred => { snapshot(`transition ${t.type} ${t.dur}s applied`); let n = 0;
+    plan.segments.forEach((s, k) => { if (s.include && prevIncluded(k) >= 0 && pred(k)) { s.transition = { type: t.type, dur: t.dur }; n++; } });
+    persist(); selectTransition(i); toast(`${TRANS[t.type]} on ${n} joins`); };
+  $('trAllSame').onclick = () => { const kind = kindOf(i); applyTo(k => kindOf(k) === kind); };
+  $('trAll').onclick = () => applyTo(() => true);
+  playTransition(t);
+}
+function playTransition(t) {
+  const A = $('trA'), B = $('trB'), K = $('trBlk'), L = $('trLbl');
+  const hold = 1.0, d = t.type === 'cut' ? 0 : t.dur, cyc = hold * 2 + d + 0.4, t0 = performance.now();
+  const frame = now => {
+    if (!document.body.contains(A)) { trRaf = null; return; }
+    const x = ((now - t0) / 1000) % cyc;
+    const u = d ? Math.min(1, Math.max(0, (x - hold) / d)) : (x >= hold ? 1 : 0);
+    A.style.opacity = 1; A.style.transform = ''; B.style.clipPath = ''; B.style.transform = ''; K.style.opacity = 0;
+    if (t.type === 'cut' || t.type === 'fade') { B.style.opacity = u; }
+    else if (t.type === 'dip') { B.style.opacity = u >= 0.5 ? 1 : 0; K.style.opacity = 1 - Math.abs(u * 2 - 1); }
+    else if (t.type === 'wipe') { B.style.opacity = 1; B.style.clipPath = `inset(0 0 0 ${(1 - u) * 100}%)`; }
+    else if (t.type === 'slide') { B.style.opacity = 1; A.style.transform = `translateX(${-u * 100}%)`; B.style.transform = `translateX(${(1 - u) * 100}%)`; }
+    L.textContent = x < hold ? 'end of the segment before' : (u < 1 ? `${TRANS[t.type]}${d ? ' ' + d + ' s' : ''}` : 'start of this segment');
+    trRaf = requestAnimationFrame(frame);
+  };
+  trRaf = requestAnimationFrame(frame);
+}
+
 // ---------- inspector ----------
 function select(i) {
-  selIdx = i;
+  selIdx = i; TRSEL = -1;
   render();
   const card = document.querySelectorAll('#segs .seg')[i]; if (card) card.scrollIntoView({block:'nearest'});
   const s = plan.segments[i];
