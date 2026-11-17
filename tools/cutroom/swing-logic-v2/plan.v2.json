@@ -1,14 +1,14 @@
 {
   "schema": "coursecraft-plan-v2",
   "course": "swing-logic-v2",
-  "revision": 1,
-  "revised": "2026-07-14",
-  "status": "DRAFT — full re-cut (chapter windows VTT-anchored from the cut track; source downloading). VERIFY FIRST: listed duration ~63 min vs source 98 min — check what buyers currently receive.",
+  "revision": 2,
+  "revised": "2026-11-16",
+  "status": "DRAFT rev2 (2026-11-16): the Mental Model method. Ken's own audio in 37 windows, each a cut (off) with an animated twin (on); typed cards; transitions. NOT built. Replaces rev1's VO overdubs and outcome studies (rev1 plan and its VO animations kept in rev1/).",
   "title": "Swing Trading Logic and Time Frame Integration (v2)",
   "topic_class": "chartable_framework",
   "store_sku": "swing-logic",
   "replaces": "swing-logic v1 (2022-10-01 podcast recording, unlisted embed + 67-card deck)",
-  "notes": "Cut track: docs/store-v2-cut-tracks.md §7. Full re-cut verdict: podcast wrapper (greeting, member housekeeping, promo close) is woven through the runtime — target ~55-65 min. The 67-card deck is concept-keyed and survives untouched. Outcome studies to compute BEFORE VO: Z3P compression aggregate, mechanical-systems WR verification (5DD already computed), Oct-2022 sector regime replay, and 3-4 singles from the dated symbol walk (TSLA either-direction, DVN, one Godzilla, QQQ weekly critical state).",
+  "notes": "Method (owner: 'the way we built the v2 of mental models', 'feel free to scan the corpus'): the 2022-10-01 podcast is the spine; its podcast wrapper (greeting, member housekeeping, the promo close), the dated election and war talk (48:57-50:35) and Ken H's dot-by-dot trade tally (59:10-1:02:55) are left out. The corpus scan (352 sessions) found no cleaner single telling of the swing framework than this one (the 'swing-trading-qa' session is Q&A on the 5DD entry, the 2023 swing-and-sniper sessions are chart walks); it did find the following Saturday (568YuBt-i2w, 2022-10-08), where Ken reviews QQQ, Tesla and Devon a week on: those three windows stand in for rev1's outcome studies, in his voice. Adobe, Twitter and Verizon are not revisited on tape that night. Windows are named by Ken's start and end phrases (start_phrase, end_phrase) and resolved from the VTT word times by make_plan.py. No pip: on both sources Ken's camera is a thumbnail under 60 px. rev1 notes: Cut track: docs/store-v2-cut-tracks.md §7. Full re-cut verdict: podcast wrapper (greeting, member housekeeping, promo close) is woven through the runtime — target ~55-65 min. The 67-card deck is concept-keyed and survives untouched. Outcome studies to compute BEFORE VO: Z3P compression aggregate, mechanical-systems WR verification (5DD already computed), Oct-2022 sector regime replay, and 3-4 singles from the dated symbol walk (TSLA either-direction, DVN, one Godzilla, QQQ weekly critical state).",
   "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/swing-logic-v2/",
   "sources": [
     {
@@ -17,33 +17,1332 @@
       "file": "youtube-rmfIYAVNQOA-2022-10-01-weekend-swing-patterns.mp4",
       "proxy": "youtube-rmfIYAVNQOA-2022-10-01-weekend-swing-patterns.proxy.mp4",
       "url": "https://www.youtube.com/watch?v=rmfIYAVNQOA"
+    },
+    {
+      "id": "oct8",
+      "label": "2022-10-08 weekend swing trade frames (the week after)",
+      "file": "youtube-568YuBt-i2w-2022-10-08-weekend-swing-trade-frames.mp4",
+      "proxy": "youtube-568YuBt-i2w-2022-10-08-weekend-swing-trade-frames.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=568YuBt-i2w"
     }
   ],
   "voices": [
-    { "id": "ava", "label": "Ava (US, female, polished)", "sample": "vo-ava.mp3" },
-    { "id": "andrew", "label": "Andrew (US, male, conversational)", "sample": "vo-andrew.mp3" }
+    {
+      "id": "ava",
+      "label": "Ava (US, female, polished)",
+      "sample": "vo-ava.mp3"
+    },
+    {
+      "id": "andrew",
+      "label": "Andrew (US, male, conversational)",
+      "sample": "vo-andrew.mp3"
+    }
   ],
   "segments": [
-    { "id": "s01", "type": "slide", "include": true, "label": "Title card (replaces podcast open 0-47s: greets a subscriber by name — cannot ship)", "slide_id": "title", "duration": 4 },
-    { "id": "s02", "type": "overdub", "include": true, "label": "OVERDUB: core / swing / intraday framework", "source": "src", "in": 47.0, "out": 305.0, "animation_brief": "Nested-gears metaphor (hero art exists: inbox/clips-course1/c-swing-logic.hero.nested_gears.png); three timeframes as meshing gears, holdings periods labeled (core: 2wk-forever w/ BMR + Permanent Portfolio; swing 2-10d; intraday).", "quote_anchor": "core... swing... intraday (hand-drawn framework, balky brush tool in source)" },
-    { "id": "s03", "type": "overdub", "include": true, "label": "OVERDUB: normal range -> abnormality -> critical state; Z3P bracket; battle drill", "source": "src", "in": 305.0, "out": 684.0, "animation_brief": "Band chart: normal range shading, compression pinch, Z3P bracket arms drawing both directions, boundary risk boxes, the 2-hour battle drill ticks. Reuses band chart + risk box.", "quote_anchor": "Z3P bracket on abnormal compression; boundary risk boxes; R math" },
-    { "id": "s03b", "type": "outcome", "include": true, "mode": "aggregate", "label": "WHAT HAPPENED: the Z3P compression rule, every instance", "voice": "ava", "vo_script": "TO WRITE after the study runs. Rule to formalize from footage: abnormal range compression -> bracket both directions; entries/void per his stated mechanics. Run over the quote store, stats table, ambiguity disclosed.", "est_duration": 50, "data": { "status": "STUDY NOT YET RUN — formalize the decidable rule from the s03 window before computing" }, "editorial_rules": "frame-vs-price only; synth voice only; publish whatever it says; split-adjusted bars; ambiguous bars counted + disclosed" },
-    { "id": "s04", "type": "overdub", "include": true, "label": "OVERDUB: six mechanical swing systems + the WR claims", "source": "src", "in": 684.0, "out": 1126.0, "animation_brief": "System menu animation (5DD, washout, triple screen, 551W, overreaction, channeling) + continuation add-on; 10-day-high target geometry.", "quote_anchor": "60-65% win rate claims stated on camera" },
-    { "id": "s04b", "type": "outcome", "include": true, "mode": "aggregate", "label": "WHAT HAPPENED: the win-rate claims, verified", "voice": "ava", "vo_script": "TO WRITE. 5DD aggregate ALREADY COMPUTED (topical-5dd: 85 signals / 40 fills / +0.76R / 50% win since 2020 — note: win rate below the 60-65% claim on this universe/period; publish exactly that). Channeling study to run if the footage's rule is decidable.", "est_duration": 50, "data_ref": "topical-5dd plan s06 data (verified 2026-07-12)", "editorial_rules": "publish whatever it says — the claim-vs-data tension IS the honesty segment" },
-    { "id": "s05", "type": "overdub", "include": true, "label": "OVERDUB: Auto Framer — reward-to-risk off the daily report", "source": "src", "in": 1126.0, "out": 1431.0, "animation_brief": "Ladder + risk box: daily range = risk, 10-day high = reward, R:R computed live.", "quote_anchor": "Auto Framer" },
-    { "id": "s06", "type": "cut", "include": true, "label": "Hybrid trading: growing a day trade (CUT/OVERDUB mix)", "source": "src", "in": 1431.0, "out": 1768.0, "status": "Keep his voice throughout; replace platform grids only where they carry the visual", "quote_anchor": "keep 20% overnight; turbo trading; cross-timeframe sizing" },
-    { "id": "s07", "type": "overdub", "include": true, "label": "OVERDUB: RLCO patterns + fractal timeframes", "source": "src", "in": 1768.0, "out": 2115.0, "animation_brief": "The course thesis: same pattern at every timeframe. Pattern gallery (Owl, SSC, Kata-2/Collapsing Dragon, super pinch, Z3 pinch) then the fractal zoom.", "quote_anchor": "RLCO gen-1/gen-2; 3-timeframe chart array" },
-    { "id": "s08", "type": "cut", "include": true, "label": "Check/hold mortar analogy (heavy trim of community block)", "source": "src", "in": 2115.0, "out": 2398.0, "status": "Keep the ~90s check/hold story only; drop scheduling + breakout-room logistics. Deck has 2 cards on it", "quote_anchor": "check... hold (mortar drill)" },
-    { "id": "s09", "type": "overdub", "include": true, "label": "OVERDUB: stats teach-in — RL30 slope, z-scores, sideways bell curve", "source": "src", "in": 2398.0, "out": 2687.0, "animation_brief": "Bell-curve scrawl becomes the band chart + animated stats visuals; ~6 deck cards ride on this segment.", "quote_anchor": "180-day distribution; z-scores" },
-    { "id": "s10", "type": "cut", "include": true, "label": "Sector dashboard read (trim the dated macro)", "source": "src", "in": 2687.0, "out": 3079.0, "status": "Keep the method (XLK vs QQQ, sector slope z-scores, broad-market-failure read); trim the election-window + escalation-risk commentary", "quote_anchor": "sector slope z-scores" },
-    { "id": "s10b", "type": "outcome", "include": true, "mode": "regime_replay", "label": "WHAT HAPPENED: the October 2022 board, replayed", "voice": "ava", "vo_script": "TO WRITE after the replay runs. Label Oct-2022 as-of by his stated read; show what the sector board did next across >=2 contrasting symbols. His read was days from the actual bear-market low (Oct 13 2022) — publish exactly what followed, whatever it implies.", "est_duration": 60, "data": { "status": "STUDY NOT YET RUN" }, "editorial_rules": "as-of labels, no hindsight; publish whatever it says" },
-    { "id": "s11", "type": "overdub", "include": true, "label": "OVERDUB: XLY vs XLP psychology gauge", "source": "src", "in": 3079.0, "out": 3278.0, "animation_brief": "Two-line ratio read; evergreen; deck has 3 cards.", "quote_anchor": "XLY versus XLP" },
-    { "id": "s12", "type": "overdub", "include": true, "label": "OVERDUB: chart reviews — QQQ MTFMLA + weekly critical state", "source": "src", "in": 3278.0, "out": 4076.0, "status": "Cohort markups replaced; Ken H's 13R narrative handled frame-vs-price only", "animation_brief": "Clean rebuild of the QQQ multi-timeframe read; the 65-min chart workaround beat.", "quote_anchor": "QQQ MTFMLA; weekly critical state" },
-    { "id": "s12b", "type": "outcome", "include": true, "mode": "single", "label": "WHAT HAPPENED: the QQQ weekly critical state", "voice": "ava", "vo_script": "TO WRITE after bar-by-bar run. Named frame with a date (Oct 2022, QQQ weekly). Resolve on real bars; the Oct 13 CPI-day reversal is inside the window — disclose the scheduled catalyst.", "est_duration": 55, "data": { "status": "STUDY NOT YET RUN — extract exact framed levels from footage during cutroom pass" }, "editorial_rules": "frame-vs-price only; catalysts disclosed; publish either way" },
-    { "id": "s13", "type": "cut", "include": true, "label": "Collapsing Dragon — his number one favorite pattern", "source": "src", "in": 4076.0, "out": 4255.0, "quote_anchor": "support breaks -> fear/panic directional move" },
-    { "id": "s13b", "type": "outcome", "include": true, "mode": "single", "label": "WHAT HAPPENED: the framed Collapsing Dragon example", "voice": "ava", "vo_script": "TO WRITE — resolve the specific example he frames in s13's window on real bars.", "est_duration": 45, "data": { "status": "STUDY NOT YET RUN — symbol/date extraction during cutroom pass" }, "editorial_rules": "frame-vs-price only; publish either way" },
-    { "id": "s14", "type": "cut", "include": true, "label": "The symbol walk — kept frames only (heavy trim of 22 min)", "source": "src", "in": 4255.0, "out": 5594.0, "status": "Keep 3-4 best framed instances: TSLA either-direction critical state (~1:18:53), DVN support test (~1:25:19), one Godzilla setup (~1:14:45). Drop TWTR (delisted, dead narrative) and the rest. Each kept frame gets a single outcome", "quote_anchor": "Tesla critical state; Devon Energy; Godzilla setup report" },
-    { "id": "s14b", "type": "outcome", "include": true, "mode": "single", "label": "WHAT HAPPENED: the October 2022 frames (x3)", "voice": "ava", "vo_script": "TO WRITE per kept frame — TSLA, DVN, Godzilla — resolved on split-adjusted bars, failures published alongside wins.", "est_duration": 120, "data": { "status": "STUDIES NOT YET RUN — levels extracted during cutroom pass" }, "editorial_rules": "no cherry-picking: every KEPT frame gets its outcome published" },
-    { "id": "s15", "type": "slide", "include": true, "label": "Maxim + end card (replaces promo close 1:33:14-1:38:32 — member pricing cannot ship)", "slide_id": "end", "duration": 10 }
+    {
+      "id": "s01",
+      "type": "cut",
+      "include": false,
+      "label": "Cold open: when the dragon cracked (Adobe, October 2022)",
+      "source": "src",
+      "in": 4030.6,
+      "out": 4088.2,
+      "start_phrase": "here's where the dragon cracked",
+      "end_phrase": "that we can exploit",
+      "window_key": "open",
+      "status": "Ken's screen; off, its animated twin carries the window (flip back per segment)"
+    },
+    {
+      "id": "s01a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: Cold open: when the dragon cracked (Adobe, October 2022)",
+      "source": "src",
+      "in": 4030.6,
+      "out": 4088.2,
+      "start_phrase": "here's where the dragon cracked",
+      "end_phrase": "that we can exploit",
+      "window_key": "open",
+      "animation_brief": "anim_gen.py SCENES['open']",
+      "status": "animated twin, on (the owner chose animation for the Mental Model modules)"
+    },
+    {
+      "id": "s02",
+      "type": "slide",
+      "include": true,
+      "label": "Title card",
+      "slide_id": "title",
+      "duration": 5,
+      "layout": "title",
+      "text": {
+        "kicker": "",
+        "title": "**Swing Trading** Logic",
+        "subtitle": "and time frame integration",
+        "body": "Three timeframes, the swing playbook, hybrid and turbo trading, the market's dashboard, framing the trade\nwith Dr. Ken Long"
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 1.0
+      }
+    },
+    {
+      "id": "s03",
+      "type": "slide",
+      "include": true,
+      "label": "Agenda card",
+      "slide_id": "agenda",
+      "duration": 10,
+      "layout": "agenda",
+      "text": {
+        "kicker": "In this course",
+        "title": "Six parts, about 62 minutes",
+        "subtitle": "",
+        "body": "Three timeframes, one trader | core, swing and day, and the frame of mind for each\nThe swing playbook | six mechanical systems, continuation, the auto framer\nCrossing timeframes | growing the day trade, hybrid and turbo\nOne language on every timeframe | fractal patterns, one chart array\nThe market's dashboard | slope, Z scores, the sectors\nFraming the trade | QQQ, Adobe, Twitter, Verizon, Tesla, Devon, and a week later"
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s04",
+      "type": "cut",
+      "include": false,
+      "label": "Swing sits between core and day trading",
+      "source": "src",
+      "in": 72.3,
+      "out": 102.6,
+      "start_phrase": "so in general when we're thinking swing",
+      "end_phrase": "in terms of time frames",
+      "window_key": "tf",
+      "status": "Ken's screen; off, its animated twin carries the window (flip back per segment)"
+    },
+    {
+      "id": "s04a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: Swing sits between core and day trading",
+      "source": "src",
+      "in": 72.3,
+      "out": 102.6,
+      "start_phrase": "so in general when we're thinking swing",
+      "end_phrase": "in terms of time frames",
+      "window_key": "tf",
+      "animation_brief": "anim_gen.py SCENES['tf']",
+      "status": "animated twin, on (the owner chose animation for the Mental Model modules)",
+      "transition": {
+        "type": "fade",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s05",
+      "type": "cut",
+      "include": false,
+      "label": "Three buckets: core, swing, day; separate bodies of knowledge",
+      "source": "src",
+      "in": 105.2,
+      "out": 161.1,
+      "start_phrase": "And we think about core trading as positions",
+      "end_phrase": "depending on which bucket that you're in",
+      "window_key": "buckets",
+      "status": "Ken's screen; off, its animated twin carries the window (flip back per segment)"
+    },
+    {
+      "id": "s05a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: Three buckets: core, swing, day; separate bodies of knowledge",
+      "source": "src",
+      "in": 105.2,
+      "out": 161.1,
+      "start_phrase": "And we think about core trading as positions",
+      "end_phrase": "depending on which bucket that you're in",
+      "window_key": "buckets",
+      "animation_brief": "anim_gen.py SCENES['buckets']",
+      "status": "animated twin, on (the owner chose animation for the Mental Model modules)",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s06",
+      "type": "cut",
+      "include": false,
+      "label": "The core: watching the corn grow",
+      "source": "src",
+      "in": 233.8,
+      "out": 265.9,
+      "start_phrase": "So in the core what you're really looking at",
+      "end_phrase": "an improvement on risk",
+      "window_key": "core",
+      "status": "Ken's screen; off, its animated twin carries the window (flip back per segment)"
+    },
+    {
+      "id": "s06a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: The core: watching the corn grow",
+      "source": "src",
+      "in": 233.8,
+      "out": 265.9,
+      "start_phrase": "So in the core what you're really looking at",
+      "end_phrase": "an improvement on risk",
+      "window_key": "core",
+      "animation_brief": "anim_gen.py SCENES['core']",
+      "status": "animated twin, on (the owner chose animation for the Mental Model modules)",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s07",
+      "type": "cut",
+      "include": false,
+      "label": "★ The day trade: normal, abnormal, critical state",
+      "source": "src",
+      "in": 273.3,
+      "out": 454.6,
+      "start_phrase": "At the other end of the spectrum",
+      "end_phrase": "price action itself is its own explanation",
+      "window_key": "intraday",
+      "status": "Ken's screen; off, its animated twin carries the window (flip back per segment)"
+    },
+    {
+      "id": "s07a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: ★ The day trade: normal, abnormal, critical state",
+      "source": "src",
+      "in": 273.3,
+      "out": 454.6,
+      "start_phrase": "At the other end of the spectrum",
+      "end_phrase": "price action itself is its own explanation",
+      "window_key": "intraday",
+      "animation_brief": "anim_gen.py SCENES['intraday']",
+      "status": "animated twin, on (the owner chose animation for the Mental Model modules)",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s08",
+      "type": "cut",
+      "include": false,
+      "label": "Inside normal: the boundary, the levels, the battle drill",
+      "source": "src",
+      "in": 454.6,
+      "out": 614.6,
+      "start_phrase": "And what we're going to do is recognize",
+      "end_phrase": "play that in both directions",
+      "window_key": "normal",
+      "status": "Ken's screen; off, its animated twin carries the window (flip back per segment)"
+    },
+    {
+      "id": "s08a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: Inside normal: the boundary, the levels, the battle drill",
+      "source": "src",
+      "in": 454.6,
+      "out": 614.6,
+      "start_phrase": "And what we're going to do is recognize",
+      "end_phrase": "play that in both directions",
+      "window_key": "normal",
+      "animation_brief": "anim_gen.py SCENES['normal']",
+      "status": "animated twin, on (the owner chose animation for the Mental Model modules)"
+    },
+    {
+      "id": "s09",
+      "type": "cut",
+      "include": false,
+      "label": "The core's relative strength, and the middle space",
+      "source": "src",
+      "in": 616.0,
+      "out": 665.5,
+      "start_phrase": "So that is a very different proposition",
+      "end_phrase": "to help us with the",
+      "window_key": "middle",
+      "status": "Ken's screen; off, its animated twin carries the window (flip back per segment)"
+    },
+    {
+      "id": "s09a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: The core's relative strength, and the middle space",
+      "source": "src",
+      "in": 616.0,
+      "out": 665.5,
+      "start_phrase": "So that is a very different proposition",
+      "end_phrase": "to help us with the",
+      "window_key": "middle",
+      "animation_brief": "anim_gen.py SCENES['middle']",
+      "status": "animated twin, on (the owner chose animation for the Mental Model modules)",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s10",
+      "type": "slide",
+      "include": true,
+      "label": "Chapter 2 card",
+      "slide_id": "ch2",
+      "duration": 2.5,
+      "layout": "chapter",
+      "text": {
+        "kicker": "Chapter 2",
+        "title": "The swing **playbook**",
+        "subtitle": "",
+        "body": ""
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 1.0
+      }
+    },
+    {
+      "id": "s11",
+      "type": "cut",
+      "include": false,
+      "label": "Six mechanical systems, 20 years, 3 to 5 days",
+      "source": "src",
+      "in": 665.5,
+      "out": 787.4,
+      "start_phrase": "So with the swing trade pattern",
+      "end_phrase": "in TC2000 as well",
+      "window_key": "six",
+      "status": "Ken's screen; off, its animated twin carries the window (flip back per segment)"
+    },
+    {
+      "id": "s11a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: Six mechanical systems, 20 years, 3 to 5 days",
+      "source": "src",
+      "in": 665.5,
+      "out": 787.4,
+      "start_phrase": "So with the swing trade pattern",
+      "end_phrase": "in TC2000 as well",
+      "window_key": "six",
+      "animation_brief": "anim_gen.py SCENES['six']",
+      "status": "animated twin, on (the owner chose animation for the Mental Model modules)",
+      "transition": {
+        "type": "fade",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s12",
+      "type": "cut",
+      "include": false,
+      "label": "★ The five-day down: not allowed to be surprised at the 10-day high",
+      "source": "src",
+      "in": 787.4,
+      "out": 894.3,
+      "start_phrase": "Now, the other thing that we have on those",
+      "end_phrase": "1 and 1/2 or 2 to 1",
+      "window_key": "fivedd",
+      "status": "Ken's screen; off, its animated twin carries the window (flip back per segment)"
+    },
+    {
+      "id": "s12a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: ★ The five-day down: not allowed to be surprised at the 10-day high",
+      "source": "src",
+      "in": 787.4,
+      "out": 894.3,
+      "start_phrase": "Now, the other thing that we have on those",
+      "end_phrase": "1 and 1/2 or 2 to 1",
+      "window_key": "fivedd",
+      "animation_brief": "anim_gen.py SCENES['fivedd']",
+      "status": "animated twin, on (the owner chose animation for the Mental Model modules)"
+    },
+    {
+      "id": "s13",
+      "type": "cut",
+      "include": false,
+      "label": "The continuation pattern: until the first stop is hit",
+      "source": "src",
+      "in": 953.1,
+      "out": 1069.8,
+      "start_phrase": "sometimes that thing will just keep going",
+      "end_phrase": "play the continuation patterns as an",
+      "window_key": "contin",
+      "status": "Ken's screen; off, its animated twin carries the window (flip back per segment)"
+    },
+    {
+      "id": "s13a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: The continuation pattern: until the first stop is hit",
+      "source": "src",
+      "in": 953.1,
+      "out": 1069.8,
+      "start_phrase": "sometimes that thing will just keep going",
+      "end_phrase": "play the continuation patterns as an",
+      "window_key": "contin",
+      "animation_brief": "anim_gen.py SCENES['contin']",
+      "status": "animated twin, on (the owner chose animation for the Mental Model modules)",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s14",
+      "type": "cut",
+      "include": false,
+      "label": "Three signals, one trade: rank by reward to risk",
+      "source": "src",
+      "in": 1115.7,
+      "out": 1201.7,
+      "start_phrase": "So, the thing that we learned next",
+      "end_phrase": "a way to distinguish it",
+      "window_key": "rank",
+      "status": "Ken's screen; off, its animated twin carries the window (flip back per segment)"
+    },
+    {
+      "id": "s14a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: Three signals, one trade: rank by reward to risk",
+      "source": "src",
+      "in": 1115.7,
+      "out": 1201.7,
+      "start_phrase": "So, the thing that we learned next",
+      "end_phrase": "a way to distinguish it",
+      "window_key": "rank",
+      "animation_brief": "anim_gen.py SCENES['rank']",
+      "status": "animated twin, on (the owner chose animation for the Mental Model modules)",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s15",
+      "type": "cut",
+      "include": false,
+      "label": "★ Location alone: the auto framer",
+      "source": "src",
+      "in": 1201.7,
+      "out": 1367.8,
+      "start_phrase": "Well, after doing that for about three or four years",
+      "end_phrase": "two separate reasons to really love that swing trade",
+      "window_key": "location",
+      "status": "Ken's screen; off, its animated twin carries the window (flip back per segment)"
+    },
+    {
+      "id": "s15a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: ★ Location alone: the auto framer",
+      "source": "src",
+      "in": 1201.7,
+      "out": 1367.8,
+      "start_phrase": "Well, after doing that for about three or four years",
+      "end_phrase": "two separate reasons to really love that swing trade",
+      "window_key": "location",
+      "animation_brief": "anim_gen.py SCENES['location']",
+      "status": "animated twin, on (the owner chose animation for the Mental Model modules)"
+    },
+    {
+      "id": "s16",
+      "type": "slide",
+      "include": true,
+      "label": "Chapter 3 card",
+      "slide_id": "ch3",
+      "duration": 2.5,
+      "layout": "chapter",
+      "text": {
+        "kicker": "Chapter 3",
+        "title": "Crossing **timeframes**",
+        "subtitle": "",
+        "body": ""
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 1.0
+      }
+    },
+    {
+      "id": "s17",
+      "type": "cut",
+      "include": false,
+      "label": "Growing the day trade: keep 20% on the market's money",
+      "source": "src",
+      "in": 1375.5,
+      "out": 1484.5,
+      "start_phrase": "Now, here's the third way",
+      "end_phrase": "what we mean by growing day trade",
+      "window_key": "grow",
+      "status": "Ken's screen; off, its animated twin carries the window (flip back per segment)"
+    },
+    {
+      "id": "s17a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: Growing the day trade: keep 20% on the market's money",
+      "source": "src",
+      "in": 1375.5,
+      "out": 1484.5,
+      "start_phrase": "Now, here's the third way",
+      "end_phrase": "what we mean by growing day trade",
+      "window_key": "grow",
+      "animation_brief": "anim_gen.py SCENES['grow']",
+      "status": "animated twin, on (the owner chose animation for the Mental Model modules)",
+      "transition": {
+        "type": "fade",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s18",
+      "type": "cut",
+      "include": false,
+      "label": "★ Hybrid and turbo: the swing's energy, traded intraday",
+      "source": "src",
+      "in": 1484.5,
+      "out": 1613.7,
+      "start_phrase": "So, you could find some of these day trades",
+      "end_phrase": "you're combining swing and day trading",
+      "window_key": "turbo",
+      "status": "Ken's screen; off, its animated twin carries the window (flip back per segment)"
+    },
+    {
+      "id": "s18a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: ★ Hybrid and turbo: the swing's energy, traded intraday",
+      "source": "src",
+      "in": 1484.5,
+      "out": 1613.7,
+      "start_phrase": "So, you could find some of these day trades",
+      "end_phrase": "you're combining swing and day trading",
+      "window_key": "turbo",
+      "animation_brief": "anim_gen.py SCENES['turbo']",
+      "status": "animated twin, on (the owner chose animation for the Mental Model modules)"
+    },
+    {
+      "id": "s19",
+      "type": "cut",
+      "include": false,
+      "label": "Swing and core: hybrid across every timeframe",
+      "source": "src",
+      "in": 1614.3,
+      "out": 1726.4,
+      "start_phrase": "Now, I want to just briefly say",
+      "end_phrase": "this becomes a very efficient use of your time",
+      "window_key": "coreswing",
+      "status": "Ken's screen; off, its animated twin carries the window (flip back per segment)"
+    },
+    {
+      "id": "s19a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: Swing and core: hybrid across every timeframe",
+      "source": "src",
+      "in": 1614.3,
+      "out": 1726.4,
+      "start_phrase": "Now, I want to just briefly say",
+      "end_phrase": "this becomes a very efficient use of your time",
+      "window_key": "coreswing",
+      "animation_brief": "anim_gen.py SCENES['coreswing']",
+      "status": "animated twin, on (the owner chose animation for the Mental Model modules)",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s20",
+      "type": "slide",
+      "include": true,
+      "label": "Chapter 4 card",
+      "slide_id": "ch4",
+      "duration": 2.5,
+      "layout": "chapter",
+      "text": {
+        "kicker": "Chapter 4",
+        "title": "One language on **every timeframe**",
+        "subtitle": "",
+        "body": ""
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 1.0
+      }
+    },
+    {
+      "id": "s21",
+      "type": "cut",
+      "include": false,
+      "label": "RLCO patterns, first and second generation: fractal",
+      "source": "src",
+      "in": 1744.1,
+      "out": 1894.8,
+      "start_phrase": "the final thing that I want to say",
+      "end_phrase": "for each of those different time frames",
+      "window_key": "rlco",
+      "status": "Ken's screen; off, its animated twin carries the window (flip back per segment)"
+    },
+    {
+      "id": "s21a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: RLCO patterns, first and second generation: fractal",
+      "source": "src",
+      "in": 1744.1,
+      "out": 1894.8,
+      "start_phrase": "the final thing that I want to say",
+      "end_phrase": "for each of those different time frames",
+      "window_key": "rlco",
+      "animation_brief": "anim_gen.py SCENES['rlco']",
+      "status": "animated twin, on (the owner chose animation for the Mental Model modules)",
+      "transition": {
+        "type": "fade",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s22",
+      "type": "cut",
+      "include": false,
+      "label": "★ We are not the only people looking at our charts",
+      "source": "src",
+      "in": 1894.8,
+      "out": 1966.8,
+      "start_phrase": "So, if you have core, swing, and day traders",
+      "end_phrase": "allow them permission to do that",
+      "window_key": "others",
+      "status": "Ken's screen; off, its animated twin carries the window (flip back per segment)"
+    },
+    {
+      "id": "s22a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: ★ We are not the only people looking at our charts",
+      "source": "src",
+      "in": 1894.8,
+      "out": 1966.8,
+      "start_phrase": "So, if you have core, swing, and day traders",
+      "end_phrase": "allow them permission to do that",
+      "window_key": "others",
+      "animation_brief": "anim_gen.py SCENES['others']",
+      "status": "animated twin, on (the owner chose animation for the Mental Model modules)"
+    },
+    {
+      "id": "s23",
+      "type": "cut",
+      "include": false,
+      "label": "One chart array: weekly, daily, hourly",
+      "source": "src",
+      "in": 1967.9,
+      "out": 2108.1,
+      "start_phrase": "So, what we found is that these second generation",
+      "end_phrase": "we start framing these trades",
+      "window_key": "array",
+      "status": "Ken's screen; off, its animated twin carries the window (flip back per segment)"
+    },
+    {
+      "id": "s23a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: One chart array: weekly, daily, hourly",
+      "source": "src",
+      "in": 1967.9,
+      "out": 2108.1,
+      "start_phrase": "So, what we found is that these second generation",
+      "end_phrase": "we start framing these trades",
+      "window_key": "array",
+      "animation_brief": "anim_gen.py SCENES['array']",
+      "status": "animated twin, on (the owner chose animation for the Mental Model modules)",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s24",
+      "type": "slide",
+      "include": true,
+      "label": "Chapter 5 card",
+      "slide_id": "ch5",
+      "duration": 2.5,
+      "layout": "chapter",
+      "text": {
+        "kicker": "Chapter 5",
+        "title": "The market's **dashboard**",
+        "subtitle": "",
+        "body": ""
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 1.0
+      }
+    },
+    {
+      "id": "s25",
+      "type": "cut",
+      "include": false,
+      "label": "The 30-period regression line slope",
+      "source": "src",
+      "in": 2376.2,
+      "out": 2514.7,
+      "start_phrase": "taking a look at the regression line",
+      "end_phrase": "compared to the average",
+      "window_key": "slope",
+      "status": "Ken's screen; off, its animated twin carries the window (flip back per segment)"
+    },
+    {
+      "id": "s25a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: The 30-period regression line slope",
+      "source": "src",
+      "in": 2376.2,
+      "out": 2514.7,
+      "start_phrase": "taking a look at the regression line",
+      "end_phrase": "compared to the average",
+      "window_key": "slope",
+      "animation_brief": "anim_gen.py SCENES['slope']",
+      "status": "animated twin, on (the owner chose animation for the Mental Model modules)",
+      "transition": {
+        "type": "fade",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s26",
+      "type": "cut",
+      "include": false,
+      "label": "★ The Z score: a bell curve on its side",
+      "source": "src",
+      "in": 2514.8,
+      "out": 2646.2,
+      "start_phrase": "What you could do is you could measure",
+      "end_phrase": "when we are at abnormal Z scores",
+      "window_key": "zscore",
+      "status": "Ken's screen; off, its animated twin carries the window (flip back per segment)"
+    },
+    {
+      "id": "s26a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: ★ The Z score: a bell curve on its side",
+      "source": "src",
+      "in": 2514.8,
+      "out": 2646.2,
+      "start_phrase": "What you could do is you could measure",
+      "end_phrase": "when we are at abnormal Z scores",
+      "window_key": "zscore",
+      "animation_brief": "anim_gen.py SCENES['zscore']",
+      "status": "animated twin, on (the owner chose animation for the Mental Model modules)"
+    },
+    {
+      "id": "s27",
+      "type": "cut",
+      "include": false,
+      "label": "The S&P baseline and tech, the engine",
+      "source": "src",
+      "in": 2646.4,
+      "out": 2690.4,
+      "start_phrase": "now what we do is we take that",
+      "end_phrase": "pulling the market north",
+      "window_key": "sectors",
+      "status": "Ken's screen; off, its animated twin carries the window (flip back per segment)"
+    },
+    {
+      "id": "s27a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: The S&P baseline and tech, the engine",
+      "source": "src",
+      "in": 2646.4,
+      "out": 2690.4,
+      "start_phrase": "now what we do is we take that",
+      "end_phrase": "pulling the market north",
+      "window_key": "sectors",
+      "animation_brief": "anim_gen.py SCENES['sectors']",
+      "status": "animated twin, on (the owner chose animation for the Mental Model modules)"
+    },
+    {
+      "id": "s28",
+      "type": "cut",
+      "include": false,
+      "label": "Ten sector spiders, compared by Z score",
+      "source": "src",
+      "in": 2742.9,
+      "out": 2872.3,
+      "start_phrase": "But for purposes of this discussion",
+      "end_phrase": "a broad market failure right here",
+      "window_key": "spiders",
+      "status": "Ken's screen; off, its animated twin carries the window (flip back per segment)"
+    },
+    {
+      "id": "s28a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: Ten sector spiders, compared by Z score",
+      "source": "src",
+      "in": 2742.9,
+      "out": 2872.3,
+      "start_phrase": "But for purposes of this discussion",
+      "end_phrase": "a broad market failure right here",
+      "window_key": "spiders",
+      "animation_brief": "anim_gen.py SCENES['spiders']",
+      "status": "animated twin, on (the owner chose animation for the Mental Model modules)",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s29",
+      "type": "cut",
+      "include": false,
+      "label": "XLY against XLP: a psychology gauge",
+      "source": "src",
+      "in": 3070.3,
+      "out": 3170.7,
+      "start_phrase": "now the next thing that we do",
+      "end_phrase": "the market is very fragile",
+      "window_key": "xlyxlp",
+      "status": "Ken's screen; off, its animated twin carries the window (flip back per segment)"
+    },
+    {
+      "id": "s29a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: XLY against XLP: a psychology gauge",
+      "source": "src",
+      "in": 3070.3,
+      "out": 3170.7,
+      "start_phrase": "now the next thing that we do",
+      "end_phrase": "the market is very fragile",
+      "window_key": "xlyxlp",
+      "animation_brief": "anim_gen.py SCENES['xlyxlp']",
+      "status": "animated twin, on (the owner chose animation for the Mental Model modules)",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s30",
+      "type": "slide",
+      "include": true,
+      "label": "Chapter 6 card",
+      "slide_id": "ch6",
+      "duration": 2.5,
+      "layout": "chapter",
+      "text": {
+        "kicker": "Chapter 6",
+        "title": "Framing the **trade**",
+        "subtitle": "",
+        "body": ""
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 1.0
+      }
+    },
+    {
+      "id": "s31",
+      "type": "cut",
+      "include": false,
+      "label": "QQQ: weekly, daily, 65-minute; a 6R short",
+      "source": "src",
+      "in": 3342.6,
+      "out": 3495.4,
+      "start_phrase": "This is the NASDAQ 100",
+      "end_phrase": "So that's a 6R swing",
+      "window_key": "qqq",
+      "status": "Ken's screen; off, its animated twin carries the window (flip back per segment)"
+    },
+    {
+      "id": "s31a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: QQQ: weekly, daily, 65-minute; a 6R short",
+      "source": "src",
+      "in": 3342.6,
+      "out": 3495.4,
+      "start_phrase": "This is the NASDAQ 100",
+      "end_phrase": "So that's a 6R swing",
+      "window_key": "qqq",
+      "animation_brief": "anim_gen.py SCENES['qqq']",
+      "status": "animated twin, on (the owner chose animation for the Mental Model modules)",
+      "transition": {
+        "type": "fade",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s32",
+      "type": "cut",
+      "include": false,
+      "label": "QQQ: a hybrid trade frame",
+      "source": "src",
+      "in": 3498.9,
+      "out": 3551.6,
+      "start_phrase": "And the gains he has is marked off",
+      "end_phrase": "into a pleasing fashion",
+      "window_key": "qqqhyb",
+      "status": "Ken's screen; off, its animated twin carries the window (flip back per segment)"
+    },
+    {
+      "id": "s32a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: QQQ: a hybrid trade frame",
+      "source": "src",
+      "in": 3498.9,
+      "out": 3551.6,
+      "start_phrase": "And the gains he has is marked off",
+      "end_phrase": "into a pleasing fashion",
+      "window_key": "qqqhyb",
+      "animation_brief": "anim_gen.py SCENES['qqqhyb']",
+      "status": "animated twin, on (the owner chose animation for the Mental Model modules)",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s33",
+      "type": "cut",
+      "include": false,
+      "label": "The same interpretation on every timeframe",
+      "source": "src",
+      "in": 3785.0,
+      "out": 3835.3,
+      "start_phrase": "So, what you can see is doing right here",
+      "end_phrase": "different time frames altogether",
+      "window_key": "fractal",
+      "status": "Ken's screen; off, its animated twin carries the window (flip back per segment)"
+    },
+    {
+      "id": "s33a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: The same interpretation on every timeframe",
+      "source": "src",
+      "in": 3785.0,
+      "out": 3835.3,
+      "start_phrase": "So, what you can see is doing right here",
+      "end_phrase": "different time frames altogether",
+      "window_key": "fractal",
+      "animation_brief": "anim_gen.py SCENES['fractal']",
+      "status": "animated twin, on (the owner chose animation for the Mental Model modules)",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s34",
+      "type": "cut",
+      "include": false,
+      "label": "Look-back boxes and the slope dashboard",
+      "source": "src",
+      "in": 3866.4,
+      "out": 4015.1,
+      "start_phrase": "Now, what he's done on the time frames here",
+      "end_phrase": "an important part of our risk",
+      "window_key": "lookback",
+      "status": "Ken's screen; off, its animated twin carries the window (flip back per segment)"
+    },
+    {
+      "id": "s34a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: Look-back boxes and the slope dashboard",
+      "source": "src",
+      "in": 3866.4,
+      "out": 4015.1,
+      "start_phrase": "Now, what he's done on the time frames here",
+      "end_phrase": "an important part of our risk",
+      "window_key": "lookback",
+      "animation_brief": "anim_gen.py SCENES['lookback']",
+      "status": "animated twin, on (the owner chose animation for the Mental Model modules)",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s35",
+      "type": "cut",
+      "include": false,
+      "label": "Adobe: free fall below 275, the stop above the hump",
+      "source": "src",
+      "in": 4088.6,
+      "out": 4183.5,
+      "start_phrase": "And now, it also turns out",
+      "end_phrase": "Assuming that that's the size of his risk box",
+      "window_key": "adbe",
+      "status": "Ken's screen; off, its animated twin carries the window (flip back per segment)"
+    },
+    {
+      "id": "s35a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: Adobe: free fall below 275, the stop above the hump",
+      "source": "src",
+      "in": 4088.6,
+      "out": 4183.5,
+      "start_phrase": "And now, it also turns out",
+      "end_phrase": "Assuming that that's the size of his risk box",
+      "window_key": "adbe",
+      "animation_brief": "anim_gen.py SCENES['adbe']",
+      "status": "animated twin, on (the owner chose animation for the Mental Model modules)",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s36",
+      "type": "cut",
+      "include": false,
+      "label": "★ Twitter: a minimum manageable risk box, no bias",
+      "source": "src",
+      "in": 4401.7,
+      "out": 4474.3,
+      "start_phrase": "what we've done here is we've constructed",
+      "end_phrase": "that's why we consider this a important critical state",
+      "window_key": "twtr",
+      "status": "Ken's screen; off, its animated twin carries the window (flip back per segment)"
+    },
+    {
+      "id": "s36a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: ★ Twitter: a minimum manageable risk box, no bias",
+      "source": "src",
+      "in": 4401.7,
+      "out": 4474.3,
+      "start_phrase": "what we've done here is we've constructed",
+      "end_phrase": "that's why we consider this a important critical state",
+      "window_key": "twtr",
+      "animation_brief": "anim_gen.py SCENES['twtr']",
+      "status": "animated twin, on (the owner chose animation for the Mental Model modules)",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s37",
+      "type": "cut",
+      "include": false,
+      "label": "Verizon: a Godzilla, a compound critical state",
+      "source": "src",
+      "in": 4479.1,
+      "out": 4593.2,
+      "start_phrase": "This is Verizon",
+      "end_phrase": "off of the uh Godzilla setup report",
+      "window_key": "vz",
+      "status": "Ken's screen; off, its animated twin carries the window (flip back per segment)"
+    },
+    {
+      "id": "s37a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: Verizon: a Godzilla, a compound critical state",
+      "source": "src",
+      "in": 4479.1,
+      "out": 4593.2,
+      "start_phrase": "This is Verizon",
+      "end_phrase": "off of the uh Godzilla setup report",
+      "window_key": "vz",
+      "animation_brief": "anim_gen.py SCENES['vz']",
+      "status": "animated twin, on (the owner chose animation for the Mental Model modules)",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s38",
+      "type": "cut",
+      "include": false,
+      "label": "Tesla: either direction out of key support",
+      "source": "src",
+      "in": 4744.1,
+      "out": 4959.3,
+      "start_phrase": "So, here was a weekly consolidation level",
+      "end_phrase": "Critical state because it's at key support",
+      "window_key": "tsla",
+      "status": "Ken's screen; off, its animated twin carries the window (flip back per segment)"
+    },
+    {
+      "id": "s38a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: Tesla: either direction out of key support",
+      "source": "src",
+      "in": 4744.1,
+      "out": 4959.3,
+      "start_phrase": "So, here was a weekly consolidation level",
+      "end_phrase": "Critical state because it's at key support",
+      "window_key": "tsla",
+      "animation_brief": "anim_gen.py SCENES['tsla']",
+      "status": "animated twin, on (the owner chose animation for the Mental Model modules)",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s39",
+      "type": "cut",
+      "include": false,
+      "label": "Location, volatility, patterns, reward to risk",
+      "source": "src",
+      "in": 4961.7,
+      "out": 5003.4,
+      "start_phrase": "So, I want you to notice what we're doing here",
+      "end_phrase": "trade lenses that we use, okay",
+      "window_key": "lenses",
+      "status": "Ken's screen; off, its animated twin carries the window (flip back per segment)"
+    },
+    {
+      "id": "s39a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: Location, volatility, patterns, reward to risk",
+      "source": "src",
+      "in": 4961.7,
+      "out": 5003.4,
+      "start_phrase": "So, I want you to notice what we're doing here",
+      "end_phrase": "trade lenses that we use, okay",
+      "window_key": "lenses",
+      "animation_brief": "anim_gen.py SCENES['lenses']",
+      "status": "animated twin, on (the owner chose animation for the Mental Model modules)",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s40",
+      "type": "cut",
+      "include": false,
+      "label": "Devon: don't let it get north of 62",
+      "source": "src",
+      "in": 5117.1,
+      "out": 5207.1,
+      "start_phrase": "Devon Energy, one of our standard patterns",
+      "end_phrase": "and then respect your",
+      "window_key": "dvn",
+      "status": "Ken's screen; off, its animated twin carries the window (flip back per segment)"
+    },
+    {
+      "id": "s40a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: Devon: don't let it get north of 62",
+      "source": "src",
+      "in": 5117.1,
+      "out": 5207.1,
+      "start_phrase": "Devon Energy, one of our standard patterns",
+      "end_phrase": "and then respect your",
+      "window_key": "dvn",
+      "animation_brief": "anim_gen.py SCENES['dvn']",
+      "status": "animated twin, on (the owner chose animation for the Mental Model modules)",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s41",
+      "type": "slide",
+      "include": true,
+      "label": "Setup card: one week later",
+      "slide_id": "week",
+      "duration": 5,
+      "layout": "setup",
+      "text": {
+        "kicker": "One week later",
+        "title": "What the **frames** did",
+        "subtitle": "",
+        "body": "Saturday, October 8, 2022"
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 1.0
+      }
+    },
+    {
+      "id": "s42",
+      "type": "cut",
+      "include": false,
+      "label": "★ A week later: QQQ, and the gap a swing must allow for",
+      "source": "oct8",
+      "in": 930.2,
+      "out": 1036.4,
+      "start_phrase": "we'll take a look at the cues now",
+      "end_phrase": "possibility for that cap",
+      "window_key": "qqq8",
+      "status": "Ken's screen; off, its animated twin carries the window (flip back per segment)"
+    },
+    {
+      "id": "s42a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: ★ A week later: QQQ, and the gap a swing must allow for",
+      "source": "oct8",
+      "in": 930.2,
+      "out": 1036.4,
+      "start_phrase": "we'll take a look at the cues now",
+      "end_phrase": "possibility for that cap",
+      "window_key": "qqq8",
+      "animation_brief": "anim_gen.py SCENES['qqq8']",
+      "status": "animated twin, on (the owner chose animation for the Mental Model modules)",
+      "transition": {
+        "type": "fade",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s43",
+      "type": "cut",
+      "include": false,
+      "label": "A week later: Tesla from 310 to 220",
+      "source": "oct8",
+      "in": 1892.3,
+      "out": 1899.4,
+      "start_phrase": "Tesla has just been smashed",
+      "end_phrase": "that's minus 35",
+      "window_key": "tsla8a",
+      "status": "Ken's screen; off, its animated twin carries the window (flip back per segment)"
+    },
+    {
+      "id": "s43a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: A week later: Tesla from 310 to 220",
+      "source": "oct8",
+      "in": 1892.3,
+      "out": 1899.4,
+      "start_phrase": "Tesla has just been smashed",
+      "end_phrase": "that's minus 35",
+      "window_key": "tsla8a",
+      "animation_brief": "anim_gen.py SCENES['tsla8a']",
+      "status": "animated twin, on (the owner chose animation for the Mental Model modules)",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s44",
+      "type": "cut",
+      "include": false,
+      "label": "A week later: Tesla at crucial support",
+      "source": "oct8",
+      "in": 1910.1,
+      "out": 1942.4,
+      "start_phrase": "extraordinarily large five-day range",
+      "end_phrase": "previous Goodwill is gone",
+      "window_key": "tsla8b",
+      "status": "Ken's screen; off, its animated twin carries the window (flip back per segment)"
+    },
+    {
+      "id": "s44a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: A week later: Tesla at crucial support",
+      "source": "oct8",
+      "in": 1910.1,
+      "out": 1942.4,
+      "start_phrase": "extraordinarily large five-day range",
+      "end_phrase": "previous Goodwill is gone",
+      "window_key": "tsla8b",
+      "animation_brief": "anim_gen.py SCENES['tsla8b']",
+      "status": "animated twin, on (the owner chose animation for the Mental Model modules)",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s45",
+      "type": "cut",
+      "include": false,
+      "label": "A week later: Devon, the stop and reverse",
+      "source": "oct8",
+      "in": 1146.5,
+      "out": 1226.7,
+      "start_phrase": "Devon energy is another one of",
+      "end_phrase": "this thing's going higher",
+      "window_key": "dvn8",
+      "status": "Ken's screen; off, its animated twin carries the window (flip back per segment)"
+    },
+    {
+      "id": "s45a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: A week later: Devon, the stop and reverse",
+      "source": "oct8",
+      "in": 1146.5,
+      "out": 1226.7,
+      "start_phrase": "Devon energy is another one of",
+      "end_phrase": "this thing's going higher",
+      "window_key": "dvn8",
+      "animation_brief": "anim_gen.py SCENES['dvn8']",
+      "status": "animated twin, on (the owner chose animation for the Mental Model modules)",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s46",
+      "type": "slide",
+      "include": true,
+      "label": "Maxim card",
+      "slide_id": "maxim",
+      "duration": 6,
+      "layout": "maxim",
+      "text": {
+        "kicker": "",
+        "title": "“The price action itself is its own explanation.”",
+        "subtitle": "Dr. Ken Long",
+        "body": ""
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 1.0
+      }
+    },
+    {
+      "id": "s47",
+      "type": "slide",
+      "include": true,
+      "label": "End card",
+      "slide_id": "end",
+      "duration": 10,
+      "layout": "end",
+      "text": {
+        "kicker": "",
+        "title": "One idea on the craft most mornings",
+        "subtitle": "owlgrouptrading.com",
+        "body": "The Tue to Fri daily note from Owl Group Trading."
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 1.0
+      }
+    }
   ]
 }

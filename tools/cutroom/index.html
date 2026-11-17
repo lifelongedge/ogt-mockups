@@ -108,6 +108,12 @@
   .card.L-agenda ol.ca li::before { content:counter(n); font-family:"SF Mono",Menlo,monospace; font-size:40px; color:#d4a559; grid-row:span 2; }
   .card.L-agenda ol.ca .an { font-family:Georgia,"Times New Roman",serif; font-size:56px; line-height:1.15; color:#e8e6df; }
   .card.L-agenda ol.ca .ag { grid-column:2; font-size:34px; color:#9c978a; margin-top:8px; line-height:1.3; }
+  /* six or more parts: tighter rows so the card holds them (swing-logic-v2 rev2, 2026-11-16) */
+  .card.L-agenda ol.ca.dense { margin-top:32px; }
+  .card.L-agenda ol.ca.dense li { padding:10px 8px; }
+  .card.L-agenda ol.ca.dense .an { font-size:48px; }
+  .card.L-agenda ol.ca.dense .ag { font-size:29px; margin-top:4px; }
+  .card.L-agenda ol.ca.dense li::before { font-size:34px; }
   .card .amber { color:#d4a559; }
   .card .cbrand { position:absolute; bottom:44px; right:56px; font-size:26px; color:#5d594f; letter-spacing:.06em; }
   .card .cbrand b { color:#8a6a35; font-weight:600; }
@@ -262,7 +268,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const BUILD = 'cutroom-25';
+const BUILD = 'cutroom-26';
 console.log('[cutroom] build', BUILD);
 window.__edgeBuild = BUILD;
 
@@ -460,7 +466,7 @@ function agendaList(body, mark) {   // cutroom-25: mirrors agenda_list() in scri
     const k = l.indexOf('|'); const name = k < 0 ? l : l.slice(0, k); const gloss = k < 0 ? '' : l.slice(k + 1);
     return `<li><span class="an">${mark(name.trim())}</span>${gloss.trim() ? `<span class="ag">${mark(gloss.trim())}</span>` : ''}</li>`;
   });
-  return `<ol class="ca">${rows.join('')}</ol>`;
+  return `<ol class="ca${rows.length >= 6 ? ' dense' : ''}">${rows.join('')}</ol>`;   // cutroom-26: six or more parts, tighter rows
 }
 function cardHtml(t, layout) {
   t = t || {}; layout = LAYOUTS[layout] ? layout : 'setup';
