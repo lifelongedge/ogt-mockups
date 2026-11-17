@@ -110,7 +110,7 @@
   .slideview { width:100%; aspect-ratio:16/9; display:block; border-radius:6px; background:#000; border:1px solid var(--border); }
 
   /* ---- inspector ---- */
-  #inspector { border-left:1px solid var(--border); padding:1.1rem 1.2rem 3rem; position:sticky; top:var(--hdr,56px); height:calc(100vh - var(--hdr,56px)); overflow-y:auto; }
+  #inspector { border-left:1px solid var(--border); padding:1.1rem 1.2rem 3rem; position:sticky; top:calc(var(--hdr,56px) + var(--strip,0px)); height:calc(100vh - var(--hdr,56px) - var(--strip,0px)); overflow-y:auto; }
   @media (max-width:1100px){ #inspector { position:static; height:auto; border-left:none; border-top:1px solid var(--border);} }
   #inspector h2 { font-family:Georgia,serif; font-size:1rem; font-weight:500; margin-bottom:.7rem; }
   .field { margin:0 0 .85rem; }
@@ -236,7 +236,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const BUILD = 'cutroom-22';
+const BUILD = 'cutroom-23';
 console.log('[cutroom] build', BUILD);
 window.__edgeBuild = BUILD;
 
@@ -465,9 +465,14 @@ function renderBoard() {
   const sel = b.querySelector('.bt.sel'); if (sel && !b.classList.contains('grid')) b.scrollLeft = sel.offsetLeft - b.clientWidth / 2 + sel.offsetWidth / 2;
   fitCards();
 }
-$('boardGrid').onclick = () => { const b = $('board'); b.classList.toggle('grid'); $('boardwrap').classList.toggle('grid', b.classList.contains('grid')); $('boardGrid').textContent = b.classList.contains('grid') ? 'Show as strip' : 'Show all'; };
-function measureHeader() { document.documentElement.style.setProperty('--hdr', document.querySelector('header').offsetHeight + 'px'); }
-new ResizeObserver(measureHeader).observe(document.querySelector('header')); measureHeader();   // the header grows when the local app's buttons appear
+$('boardGrid').onclick = () => { const b = $('board'); b.classList.toggle('grid'); $('boardwrap').classList.toggle('grid', b.classList.contains('grid')); measureHeader(); $('boardGrid').textContent = b.classList.contains('grid') ? 'Show as strip' : 'Show all'; };
+// cutroom-23: the inspector is pinned BELOW the pinned strip (it sat under it and lost the top of the video); in grid mode the strip scrolls away, so it counts as 0
+function measureHeader() {
+  const r = document.documentElement.style, bw = $('boardwrap');
+  r.setProperty('--hdr', document.querySelector('header').offsetHeight + 'px');
+  r.setProperty('--strip', (bw && bw.style.display !== 'none' && !bw.classList.contains('grid') ? bw.offsetHeight : 0) + 'px');
+}
+{ const ro = new ResizeObserver(measureHeader); ro.observe(document.querySelector('header')); ro.observe($('boardwrap')); } measureHeader();   // the header grows when the local app's buttons appear
 
 function render() {
   const y = window.scrollY;   // cutroom-21: the rebuild empties the list for a moment, which clamped the page scroll to 0
