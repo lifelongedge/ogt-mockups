@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>s48ba · category 3: the old reliables</title>
+<style>
+  @font-face { font-family:"Inter"; font-weight:400 700; src:local("Inter"), url(https://fonts.gstatic.com/l/font?kit=UcCB3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfU5NJeWUdIOjBeTGiXZdND2M&skey=c491285d6722e4fa&v=v20) format("woff2"); }
+  @font-face { font-family:"JetBrains Mono"; font-weight:400 700; src:local("JetBrains Mono"), url(https://fonts.gstatic.com/l/font?kit=tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYXHKPxDcwg&skey=48ad01c60053c2ae&v=v24) format("woff2"); }
+  :root { --bg:#05070b; --fg:#e6edf3; --muted:#8b98a5; --acc:#3a8f8a; --hi:#5fd3cc; }
+  html, body { margin:0; background:var(--bg); overflow:hidden; }
+  #stage { position:relative; width:1280px; height:720px; background:var(--bg); color:var(--fg); overflow:hidden;
+           font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; }
+  #stage:after { content:""; position:absolute; inset:0; background:radial-gradient(ellipse at 45% 40%, transparent 55%, rgba(0,0,0,.5)); pointer-events:none; }
+  #scene { position:absolute; left:60px; top:90px; width:1160px; height:530px; overflow:visible; }
+  #third { position:absolute; left:0; right:0; bottom:0; height:124px; z-index:2;
+           background:linear-gradient(90deg, rgba(5,7,11,.97) 0%, rgba(5,7,11,.93) 70%, rgba(5,7,11,.7)); border-top:1px solid rgba(58,143,138,.5); }
+  #third:before { content:""; position:absolute; left:0; top:0; bottom:0; width:6px; background:var(--acc); }
+  #cap { position:absolute; left:34px; right:360px; top:618px; font-size:30px; font-weight:600; line-height:1.15; letter-spacing:-.01em; z-index:3; }
+  #cap em { font-style:normal; color:var(--hi); }
+  #sub { position:absolute; left:34px; width:1000px; top:686px; font-family:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace; font-size:15px; font-weight:500;
+         color:var(--muted); letter-spacing:.04em; text-transform:uppercase; z-index:3; }
+  #fade { position:absolute; inset:0; background:var(--bg); pointer-events:none; opacity:0; z-index:4; }
+  #pip { position:absolute; left:950px; top:22px; width:300px; height:169px; border:1px solid rgba(95,211,204,.6); box-shadow:0 0 18px rgba(58,143,138,.35);
+         display:none; color:var(--muted); font-size:13px; text-align:center; line-height:169px; z-index:3; }
+  .pip #pip { display:block; }
+  text { font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; fill:#e6edf3; }
+  .mono { font-family:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace; }
+</style>
+</head>
+<body>
+<div id="stage" class="">
+  <div id="cap"></div>
+  <div id="pip">Ken on camera, composited at render</div>
+  <div id="scene"><svg id="svg" width="1160" height="530" viewBox="0 0 1160 530"></svg></div>
+  <div id="third"></div>
+  <div id="sub"></div>
+  <div id="fade"></div>
+</div>
+<script>
+const BUILD = 's48ba-1';
+console.log('[s48ba] build', BUILD);
+// Overdub twin of s48b: Ken's audio wlq 4110.0→4170.3; t is seconds after the in-point.
+// Beat times read from the VTT cues on 2026-11-17 (tools/cutroom/intraday-decision-tree-2-v2/transcript-wlq.json).
+window.ANIM_DURATION = 60.3;
+const ACC='#5fd3cc', FG='#e6edf3', MUT='#8b98a5', OK='#3ddc97', DN='#ef5a6f', BLUE='#7baad4', BRD='rgba(58,143,138,.45)', CARD='rgba(16,20,28,.85)', TXS=1, WRAP=['<defs><filter id="g" x="-20%" y="-200%" width="140%" height="500%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>',''];
+const W=1160, H=530;
+const $ = id => document.getElementById(id);
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const ease=u=>{u=clamp(u,0,1);return u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;};
+const lerp=(a,b,u)=>a+(b-a)*u;
+const pr=(t,t0,d)=>ease((t-t0)/(d||0.6));          // eased progress 0..1 from t0 over d seconds
+const on=(t,t0)=>t>=t0;
+const op=(t,t0,d)=>clamp((t-t0)/(d||0.5),0,1);      // linear opacity ramp
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const txt=(x,y,s,o={})=>`<text x="${x}" y="${y}" font-size="${(o.sz||20)*TXS}" fill="${o.c||FG}" opacity="${o.o==null?1:o.o}" text-anchor="${o.a||'start'}" font-weight="${o.w||400}" class="${o.cls||''}" ${o.extra||''}>${esc(s)}</text>`;
+const rect=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.r==null?6:o.r}" fill="${o.f||'none'}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}" ${o.extra||''}/>`;
+const circ=(x,y,r,o={})=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${o.f||FG}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}"/>`;
+const line=(x1,y1,x2,y2,o={})=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${o.s||MUT}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" ${o.dash?`stroke-dasharray="${o.dash}"`:''} stroke-linecap="round"/>`;
+const path=(d,o={})=>`<path d="${d}" fill="${o.f||'none'}" stroke="${o.s||FG}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" stroke-linecap="round" stroke-linejoin="round" ${o.dash?`stroke-dasharray="${o.dash}"`:''}/>`;
+const arrow=(x1,y1,x2,y2,o={})=>{const a=Math.atan2(y2-y1,x2-x1),h=10;return line(x1,y1,x2,y2,o)+path(`M${x2} ${y2} L${x2-h*Math.cos(a-0.5)} ${y2-h*Math.sin(a-0.5)} M${x2} ${y2} L${x2-h*Math.cos(a+0.5)} ${y2-h*Math.sin(a+0.5)}`,{s:o.s||MUT,sw:o.sw||2,o:o.o});};
+// a labelled box that grows in from t0
+const box=(t,t0,x,y,w,h,label,o={})=>{const u=pr(t,t0,0.5);if(u<=0)return '';const ww=w*u,hh=h;return rect(x+(w-ww)/2,y,ww,hh,{s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',sw:o.sw||1.5,o:u})+(u>.6?txt(x+w/2,y+h/2+(o.sz||20)/3,label,{a:'middle',sz:o.sz||20,c:o.c||FG,o:op(t,t0+.3,.3),w:o.w||500}):'');};
+// deterministic pseudo-random
+function rng(seed){let s=seed*9301+49297;return()=>{s=(s*9301+49297)%233280;return s/233280;};}
+// a herd of dots in a region; drift is a slow deterministic wander
+function herd(n,seed,x,y,w,h){const r=rng(seed);const pts=[];for(let i=0;i<n;i++)pts.push({x:x+r()*w,y:y+r()*h,p:r()*6.28,q:r()*6.28});return pts;}
+const wander=(p,t,amp)=>[p.x+Math.sin(t*0.9+p.p)*amp,p.y+Math.cos(t*0.7+p.q)*amp];
+// typewriter: the first k chars of s by time
+const type=(s,t,t0,cps)=>s.slice(0,Math.max(0,Math.floor((t-t0)*(cps||28))));
+// a list that reveals one row per step seconds from t0
+function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
+
+const BEATS = [[0.0, "Category 2: <em>new setups</em>, swing or sniper", "three ways to add symbols"], [8.3, "Category 1: a continuation <em>already in play</em>, alerts already set", ""], [20.7, "So it's <em>easy</em> prep", ""], [25.8, "Category 3: the <em>old reliables</em>", ""], [33.2, "Brazil, small caps, Devon Energy, Alcoa, Cliffs Natural Resources", ""], [48.2, "About a <em>dozen</em>, so habitually tradable", ""], [57.4, "Traded for <em>20 years</em>: they're on his list", "three ways to add symbols: continuations, new setups, the old reliables"]];
+
+const T=i=>BEATS[Math.min(i,BEATS.length-1)][0];
+const after=(t,i)=>t>=T(i);
+const between=(t,i,j)=>t>=T(i)&&t<T(j);
+const ph=(t,i,j)=>op(t,T(i),.5)*(j==null?1:1-op(t,T(j)-.4,.4));
+const glow=s=>`<g filter="url(#g)">${s}</g>`;
+const mono=(x,y,s,o={})=>txt(x,y,s,Object.assign({cls:'mono'},o));
+const kick=(s,o,x)=>mono(x||0,22,s.toUpperCase(),{sz:14,c:MUT,o:o==null?1:o,extra:'letter-spacing=".12em"'});
+// a dark mask over a region of a still (the Zoom gallery that rides along in a crop)
+const mask=(x0,y0,x1,y1)=>rect(x0,y0,x1-x0,y1-y0,{f:'#05070b',s:'none',r:0});
+const cnt=(t,t0,d,n)=>Math.round(n*pr(t,t0,d||1.2));
+function walk(keys,seed,amp){const r=rng(seed);const N=240;const nz=[];let a=0;for(let i=0;i<=N;i++){a=a*0.82+(r()-.5);nz.push(a);}
+  return u=>{u=clamp(u,0,1);let k=0;while(k<keys.length-2&&u>keys[k+1][0])k++;const [x0,v0]=keys[k],[x1,v1]=keys[k+1];const w=clamp((u-x0)/((x1-x0)||1),0,1);return lerp(v0,v1,w)+nz[Math.round(u*N)]*(amp||0);};}
+function fr(x,y,w,h,lo,hi){return {x,y,w,h,lo,hi,X:u=>x+u*w,Y:v=>y+h-(v-lo)/(hi-lo)*h};}
+function plot(F,f,u0,u1,o={}){if(u1<=u0)return '';let d='';const n=Math.max(2,Math.round((u1-u0)*180));for(let i=0;i<=n;i++){const u=u0+(u1-u0)*i/n;d+=(i?'L':'M')+F.X(u).toFixed(1)+' '+F.Y(f(u)).toFixed(1);}return path(d,{s:o.s||FG,sw:o.sw||2.5,o:o.o==null?1:o.o,dash:o.dash});}
+function lvl(F,v,label,o={}){const y=F.Y(v),x0=o.x0==null?F.x:F.X(o.x0),x1=o.x1==null?F.x+F.w:F.X(o.x1);
+  return line(x0,y,x1,y,{s:o.s||MUT,sw:o.sw||1.5,dash:o.dash===undefined?'6 5':o.dash,o:o.o})+(label?txt(o.left?x0-8:x1+8,y+6,label,{a:o.left?'end':'start',c:o.s||MUT,sz:o.sz||15,o:o.o,w:o.w||500}):'');}
+function zone(F,u0,u1,va,vb,o={}){const y1=F.Y(Math.max(va,vb)),y2=F.Y(Math.min(va,vb));return rect(F.X(u0),y1,F.X(u1)-F.X(u0),Math.max(1,y2-y1),{f:o.f||'rgba(239,90,111,.14)',s:o.s||DN,sw:o.sw||1.2,r:2,o:o.o==null?1:o.o,extra:o.dash?`stroke-dasharray="${o.dash}"`:''});}
+function dot(F,u,v,c,o){return circ(F.X(u),F.Y(v),6,{f:c,o:o==null?1:o})+circ(F.X(u),F.Y(v),11,{f:'none',s:c,sw:1.5,o:(o==null?1:o)*.5});}
+// bars from a series of [o,h,l,c]; reveal the first k
+function bars(F,B,k,o={}){let s='';const n=B.length,bw=F.w/n*(o.bw||.6);for(let i=0;i<Math.min(k,n);i++){const [a,h,l,b]=B[i];const up=b>=a;const c=o.c&&o.c[i]?o.c[i]:(up?OK:DN);
+  const x=F.x+(i+.5)*F.w/n;s+=line(x,F.Y(h),x,F.Y(l),{s:c,sw:1.5,o:o.o})+rect(x-bw/2,F.Y(Math.max(a,b)),bw,Math.max(2,Math.abs(F.Y(a)-F.Y(b))),{f:c,s:'none',r:1,o:o.o});}return s;}
+const cx=(F,i,n)=>F.x+(i+.5)*F.w/n;
+// a vertical bracket at x from y0 to y1 with a label beside it
+function vbr(x,y0,y1,label,o={}){const c=o.s||ACC,d=o.left?-8:8;return path(`M${x+d} ${y0} L${x} ${y0} L${x} ${y1} L${x+d} ${y1}`,{s:c,sw:o.sw||2,o:o.o})+(label?txt(x+(o.left?-14:14),(y0+y1)/2+6,label,{a:o.left?'end':'start',c,sz:o.sz||16,o:o.o,w:600}):'');}
+// a horizontal tick (a close, an open)
+const tick=(x,y,w,c,o)=>line(x-w/2,y,x+w/2,y,{s:c,sw:3,o});
+// a card: panel with a mono label
+function card(x,y,w,h,label,o){return rect(x,y,w,h,{s:BRD,f:CARD,o:o,r:8})+(label?mono(x+14,y+24,label.toUpperCase(),{c:MUT,sz:12,o:o,extra:'letter-spacing=".1em"'}):'');}
+function chip(x,y,s,o={}){const w=o.w||Math.max(60,s.length*(o.sz||17)*.58+26);return rect(x,y,w,o.h||34,{f:o.f||'rgba(95,211,204,.10)',s:o.s||ACC,sw:1.2,r:17,o:o.o})+txt(x+w/2,y+(o.h||34)/2+6,s,{a:'middle',c:o.c||FG,sz:o.sz||17,o:o.o,w:500});}
+function big(s,o,c,y,x){return txt(x==null?580:x,y||270,s,{a:'middle',sz:34,c:c||ACC,o:o,w:600});}
+// a readout: label (mono, muted) above a big number
+function readout(x,y,label,val,o={},c){return mono(x,y,label.toUpperCase(),{sz:12,c:MUT,o:o.o,extra:'letter-spacing=".1em"'})+mono(x,y+40,val,{sz:o.sz||36,c:c||ACC,o:o.o,w:600});}
+// a pen-ish scribble inside a box, deterministic
+function noise(x,y,w,h,seed,k,c,o){const r=rng(seed);let d='';for(let i=0;i<k;i++){d+=(i?'L':'M')+(x+r()*w).toFixed(1)+' '+(y+r()*h).toFixed(1);}return path(d,{s:c||DN,sw:1.4,o:o});}
+// a tag box on a chart still (dark pill, coloured border)
+function tag(x,y,s,c,o,a){const w=s.length*8.8+16;const x0=a==='end'?x-w:x;return rect(x0,y-13,w,24,{f:'rgba(5,7,11,.9)',s:c,sw:1,r:5,o})+txt(x0+w/2,y+5,s,{a:'middle',c:'#fff',sz:14,o,w:600});}
+
+const CX=[60,420,780], CY=60, CW=320, CH=330;
+const NAMES=['Brazil','small caps','Devon Energy','Alcoa','Cliffs Natural Resources'];
+function head(i,title,sub,o,c){ return card(CX[i],CY,CW,CH,'',o) + mono(CX[i]+20,CY+40,String(i+1),{sz:28,c:c,o,w:600}) + txt(CX[i]+60,CY+40,title,{sz:22,o,w:600}) + txt(CX[i]+20,CY+74,sub,{sz:15,c:MUT,o}); }
+function draw(t){
+  let s=kick('tomorrow\'s list');
+  // the three slots, dim until each is spoken
+  for(let i=0;i<3;i++) s += rect(CX[i],CY,CW,CH,{f:'none',s:BRD,sw:1,r:8,o:.5,extra:'stroke-dasharray="6 6"'});
+  { const o=op(t,0,.6); s += head(1,'new setups','swing pattern or sniper',o,ACC) + chip(CX[1]+20,CY+110,'7 swing patterns',{o}) + chip(CX[1]+20,CY+156,'5 sniper patterns',{o}); }
+  if (after(t,1)){ const o=op(t,T(1),.5); s += head(0,'continuations','already in play',o,ACC) + txt(CX[0]+20,CY+130,'timing and price action known',{sz:15,o}) + txt(CX[0]+20,CY+158,'alerts already set',{sz:15,o}); }
+  if (after(t,2)){ const o=op(t,T(2),.5); s += mono(CX[0]+20,CY+CH-30,'EASY PREP',{sz:14,c:OK,o,extra:'letter-spacing=".1em"'}); }
+  if (after(t,3)){ const o=op(t,T(3),.5); s += glow(rect(CX[2],CY,CW,CH,{f:'none',s:ACC,sw:2,r:8,o})) + head(2,'old reliables','on the list, always',o,ACC); }
+  if (after(t,4)){ NAMES.forEach((n,i)=>{ const oo=op(t,T(4)+i*.9,.4); s += chip(CX[2]+20,CY+104+i*42,n,{o:oo,sz:15,h:32}); }); }
+  if (after(t,5)){ const o=op(t,T(5),.5); s += readout(80,CY+CH+50,'about','a dozen',{o,sz:30}) + txt(300,CY+CH+90,'so habitually tradable',{sz:17,c:MUT,o}); }
+  if (after(t,6)){ const o=op(t,T(6),.5); s += readout(780,CY+CH+50,'traded for',cnt(t,T(6),1.2,20)+' years',{o,sz:30},OK); }
+  return s;
+}
+
+window.renderFrame = function (t) {
+  t = clamp(t, 0, ANIM_DURATION);
+  let cap = '', sub = '';
+  for (const b of BEATS) if (t >= b[0]) { cap = b[1]; sub = b[2] || ''; }
+  $('cap').innerHTML = cap; $('sub').textContent = sub;
+  $('svg').innerHTML = WRAP[0] + draw(t) + WRAP[1];
+  const f = $('fade');
+  f.style.opacity = t < 0.5 ? 1 - t / 0.5 : (ANIM_DURATION - t < 0.6 ? 1 - (ANIM_DURATION - t) / 0.6 : 0);
+};
+renderFrame(0);
+</script>
+</body>
+</html>
