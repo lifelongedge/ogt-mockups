@@ -6,13 +6,14 @@
 > A tagged item applies ONLY to those env(s). Untagged ⇒ `[all]`.
 > Standard: edge-envx/sessionstate-standard.md
 
-**Owner persona:** ogtcoursecraft (review pages) · **Last updated:** 2026-11-17, from `stream` (Tortoise Capital redirect mockup)
+**Owner persona:** ogtcoursecraft (review pages) · **Last updated:** 2026-11-18, from `stream` (coaching credit mockup)
 
 ## Environment scope for this repo
 - Runs on: <env tags + one line each>
 - Per-machine differences: <none material | describe>
 
 ## In flight
+- `[all]` **Coaching credit mockup** (2026-11-18, stream, growogtx; owner: *"give me a mockup page on github ogt mockups with the course page and how we might suggest discounts"*). `courses/coaching-credit/index.html`: course money back as credit toward Small Group Coaching: Active ($2,997/yr). Three variants switch every panel: A 10× stacking, $1,000 cap (recommended); B first course only, $500; C a $24.97 lesson 1 → $250. Panels: sales page credit callout + path, store cards, coaching checkout calculator (tick courses), library banner, purchase-email paragraph, numbers table, open decisions (variant, cap, past buyers, Observer tier). Mockup only; nothing on the live site.
 - `[all]` **Tortoise Capital redirect mockup** (2026-11-17, stream). `tortoise-redirect/index.html`. tortoisecapital.net (Bluehost) returns WordPress "critical error" HTTP 500 on every PHP route; static files, cPanel and webmail are up; MX on Bluehost. Proposal: static archive on an owlgrouptrading.com subdomain (name TBD, owner decision) plus a same-path 301 in Bluehost `.htaccess`. URL list from the Wayback CDX index (222 paths, 2007-03-13 to 2025-02-26) is embedded in the page. Open: subdomain name, A vs B, and getting the WP content out for the archive.
 - `[all]` **Owl Group Foundations on S2 Desktop — mockup for owner review** (2026-09-23, win-native).
   `courses/owl-foundations-s2/index.html`, also published as a claude.ai artifact the same day.

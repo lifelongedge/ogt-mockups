@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Coaching Credit Mockup</title>
+<style>
+:root {
+  --gold: #d29922; --gold-soft: #fbf3e2; --ink: #1a1a2e; --muted: #666; --line: #e0e0e0;
+  --bg: #f5f5f5; --card: #fff; --good: #2e7d4f; --good-soft: #e8f4ec; --frame: #e9e9ee; --note: #fff8e6;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --gold: #e0a93a; --gold-soft: #2e2615; --ink: #e8e8ee; --muted: #9a9aa8; --line: #2e2e3a;
+    --bg: #14141c; --card: #1d1d28; --good: #5cc488; --good-soft: #17281e; --frame: #0f0f15; --note: #2a2414;
+  }
+}
+:root[data-theme="dark"] {
+  --gold: #e0a93a; --gold-soft: #2e2615; --ink: #e8e8ee; --muted: #9a9aa8; --line: #2e2e3a;
+  --bg: #14141c; --card: #1d1d28; --good: #5cc488; --good-soft: #17281e; --frame: #0f0f15; --note: #2a2414;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--frame); color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.55; }
+a { color: var(--gold); }
+.wrap { max-width: 1120px; margin: 0 auto; padding: 24px 16px 80px; }
+
+/* review chrome */
+.review { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 20px 22px; margin-bottom: 22px; }
+.review h1 { margin: 0 0 4px; font-size: 22px; }
+.review p { margin: 6px 0; color: var(--muted); font-size: 14px; }
+.variants { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.variants button { font: inherit; font-size: 14px; padding: 9px 14px; border-radius: 8px; cursor: pointer;
+  border: 1px solid var(--line); background: var(--bg); color: var(--ink); text-align: left; }
+.variants button b { display: block; font-size: 14px; }
+.variants button span { font-size: 12px; color: var(--muted); }
+.variants button[aria-pressed="true"] { border-color: var(--gold); background: var(--gold-soft); }
+.theme { float: right; font: inherit; font-size: 12px; background: none; border: 1px solid var(--line);
+  color: var(--muted); border-radius: 6px; padding: 4px 9px; cursor: pointer; }
+.label { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--muted); margin: 26px 0 8px; }
+.label i { font-style: normal; font-weight: 400; letter-spacing: 0; text-transform: none; }
+
+/* the mocked site */
+.site { background: var(--bg); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.site-bar { display: flex; gap: 6px; align-items: center; padding: 9px 12px; border-bottom: 1px solid var(--line); background: var(--card); }
+.site-bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
+.site-bar code { margin-left: 10px; font-size: 12px; color: var(--muted); }
+.page { padding: 28px 24px; }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .12em; color: var(--gold); }
+.page h2 { font-size: 28px; margin: 6px 0 8px; line-height: 1.2; }
+.lede { font-size: 16px; color: var(--muted); max-width: 680px; margin: 0 0 6px; }
+.meta { font-size: 13px; color: var(--muted); }
+.hero { display: grid; grid-template-columns: 1.3fr 1fr; gap: 24px; align-items: start; margin-top: 18px; }
+.video { aspect-ratio: 16/9; border-radius: 10px; background: linear-gradient(135deg, #1a1a2e, #3a2e14);
+  display: grid; place-items: center; color: #fff; font-size: 14px; position: relative; }
+.video::after { content: ""; width: 0; height: 0; border-left: 22px solid #fff; border-top: 14px solid transparent;
+  border-bottom: 14px solid transparent; position: absolute; opacity: .85; }
+.video span { position: absolute; bottom: 10px; left: 12px; font-size: 12px; opacity: .8; }
+.buy { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 20px; }
+.price { font-size: 34px; font-weight: 800; }
+.btn { display: block; width: 100%; text-align: center; background: var(--gold); color: #fff; border: 0;
+  border-radius: 8px; padding: 13px; font-size: 16px; font-weight: 700; margin: 12px 0 6px; cursor: pointer; font-family: inherit; }
+.fine { font-size: 12px; color: var(--muted); text-align: center; }
+.credit { margin-top: 16px; border: 1px dashed var(--gold); background: var(--gold-soft); border-radius: 10px; padding: 12px 14px; font-size: 14px; }
+.credit b.big { font-size: 20px; color: var(--gold); display: block; }
+.credit small { color: var(--muted); display: block; margin-top: 4px; }
+
+.path { margin-top: 28px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 20px; }
+.path h3 { margin: 0 0 4px; font-size: 18px; }
+.path > p { margin: 0 0 14px; color: var(--muted); font-size: 14px; }
+.steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; }
+.step { border: 1px solid var(--line); border-radius: 10px; padding: 12px; background: var(--bg); }
+.step .n { font-size: 12px; color: var(--muted); }
+.step .v { font-size: 20px; font-weight: 800; }
+.step .c { font-size: 13px; color: var(--muted); }
+.step.max { border-color: var(--gold); }
+.step.max .v { color: var(--gold); }
+
+/* calculator */
+.calc { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.owned label { display: flex; gap: 10px; align-items: center; padding: 9px 10px; border: 1px solid var(--line);
+  border-radius: 8px; margin-bottom: 6px; font-size: 14px; background: var(--card); cursor: pointer; }
+.owned label span { margin-left: auto; color: var(--muted); font-size: 13px; }
+.receipt { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px; font-size: 14px; }
+.receipt h4 { margin: 0 0 10px; font-size: 15px; }
+.row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--line); }
+.row.credit-row { color: var(--good); }
+.row.total { border-bottom: 0; font-weight: 800; font-size: 18px; padding-top: 10px; }
+.bar { height: 8px; background: var(--line); border-radius: 4px; overflow: hidden; margin: 8px 0 4px; }
+.bar div { height: 100%; background: var(--gold); transition: width .25s; }
+.tiny { font-size: 12px; color: var(--muted); }
+
+/* library banner + email */
+.lib { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px;
+  display: grid; grid-template-columns: 1fr auto; gap: 14px; align-items: center; }
+.lib .btn { width: auto; display: inline-block; padding: 10px 16px; margin: 0; font-size: 14px; }
+.mail { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; font-size: 15px; max-width: 640px; }
+.mail .hdr { font-size: 12px; color: var(--muted); border-bottom: 1px solid var(--line); padding-bottom: 8px; margin-bottom: 12px; }
+.mail .ps { background: var(--gold-soft); border-left: 3px solid var(--gold); padding: 10px 12px; border-radius: 4px; }
+
+/* store card */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; font-size: 14px; position: relative; }
+.card .tier { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+.card h5 { margin: 4px 0 6px; font-size: 16px; }
+.card .p { font-weight: 800; font-size: 18px; margin-top: 8px; }
+.pill { display: inline-block; margin-top: 8px; font-size: 12px; font-weight: 700; color: var(--gold);
+  background: var(--gold-soft); border-radius: 999px; padding: 3px 10px; }
+
+/* decisions */
+table { width: 100%; border-collapse: collapse; font-size: 14px; background: var(--card); border-radius: 12px; overflow: hidden; }
+th, td { padding: 9px 12px; border-bottom: 1px solid var(--line); text-align: left; }
+th { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+td.num, th.num { text-align: right; }
+.scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; }
+.decide { background: var(--note); border: 1px solid var(--line); border-radius: 12px; padding: 16px 20px; font-size: 14px; }
+.decide ol { margin: 6px 0 0; padding-left: 20px; }
+.decide li { margin-bottom: 8px; }
+
+@media (max-width: 760px) {
+  .hero, .calc, .lib { grid-template-columns: 1fr; }
+  .page { padding: 20px 16px; }
+  .page h2 { font-size: 23px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="review">
+  <button class="theme" id="theme">Light / dark</button>
+  <h1>Coaching credit — what a course buyer would see</h1>
+  <p>Mockup for owner review, 2026-11-18. Every course is $49.97. Small Group Coaching: Active is $2,997 a year. The idea: what a student pays for courses comes back as credit toward coaching. Pick a variant; every panel below follows it.</p>
+  <div class="variants" id="variants">
+    <button data-v="A" aria-pressed="true"><b>A · 10× stacking, $1,000 cap</b><span>each course $500, two courses reach the cap</span></button>
+    <button data-v="B" aria-pressed="false"><b>B · One course, $500</b><span>first purchase only, no stacking</span></button>
+    <button data-v="C" aria-pressed="false"><b>C · $24.97 lesson 1 → $250</b><span>a cheaper first step, 10× on it too</span></button>
+  </div>
+</section>
+
+<!-- 1. Sales page -->
+<div class="label">1 · Course sales page <i>— /store/intraday-decision-tree</i></div>
+<div class="site">
+  <div class="site-bar"><i></i><i></i><i></i><code>owlgrouptrading.com/store/intraday-decision-tree</code></div>
+  <div class="page">
+    <div class="eyebrow">OWL GROUP TRADING</div>
+    <h2 id="sp-title">Intraday Decision Tree — Part 1: The Open</h2>
+    <p class="lede">The size of the gap predicts the size of the follow-through, but not the direction: a decision tree for the first minutes of the day.</p>
+    <div class="meta" id="sp-meta">~81 min · 65-card flashcard deck · recorded from Dr. Long's coaching sessions</div>
+    <div class="hero">
+      <div class="video"><span>Watch a two-minute preview</span></div>
+      <div class="buy">
+        <div class="price" id="sp-price">$49.97</div>
+        <button class="btn" id="sp-btn">Buy Now →</button>
+        <div class="fine">Instant access · Lifetime · Email confirmation</div>
+        <div class="credit">
+          <b class="big" id="sp-credit">+ $500 coaching credit</b>
+          <span id="sp-credit-line">Comes back as $500 off Small Group Coaching. Buy a second course and it grows to $1,000.</span>
+          <small id="sp-credit-fine">Use it within 12 months of your first course. Applied automatically at checkout.</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="path">
+      <h3>Your path to live coaching</h3>
+      <p id="path-lede">Every dollar you spend on courses comes back ten times toward Small Group Coaching, up to $1,000.</p>
+      <div class="steps" id="steps"></div>
+    </div>
+  </div>
+</div>
+
+<!-- 2. Store cards -->
+<div class="label">2 · Store cards <i>— /store, one line added under each price</i></div>
+<div class="cards" id="cards"></div>
+
+<!-- 3. Calculator / coaching checkout -->
+<div class="label">3 · Coaching checkout <i>— what the student pays, given what they own (tick courses to try it)</i></div>
+<div class="calc">
+  <div class="owned" id="owned"></div>
+  <div class="receipt">
+    <h4>Small Group Coaching: Active — checkout</h4>
+    <div class="row"><span>Small Group Coaching: Active, 1 year</span><span>$2,997.00</span></div>
+    <div class="row credit-row"><span id="rc-label">Course credit</span><span id="rc-credit">−$0.00</span></div>
+    <div class="row total"><span>Due today</span><span id="rc-total">$2,997.00</span></div>
+    <div class="bar"><div id="rc-bar" style="width:0"></div></div>
+    <div class="tiny" id="rc-note">No course credit yet.</div>
+    <div class="tiny" style="margin-top:10px" id="rc-all">Courses plus coaching: $2,997.00 in all.</div>
+  </div>
+</div>
+
+<!-- 4. Library -->
+<div class="label">4 · The student's library <i>— a banner on each course page they own</i></div>
+<div class="lib">
+  <div>
+    <b id="lib-head">Your coaching credit: $500</b>
+    <div class="bar" style="max-width:420px"><div id="lib-bar" style="width:50%"></div></div>
+    <div class="tiny" id="lib-sub">$500 of $1,000 · one more course adds $500 · use by Nov 18, 2027</div>
+  </div>
+  <button class="btn">Apply it to coaching →</button>
+</div>
+
+<!-- 5. Email -->
+<div class="label">5 · The purchase email <i>— one paragraph added under the access link</i></div>
+<div class="mail">
+  <div class="hdr">From: Dr. Ken Long &lt;hootdesk@owlgrouptrading.com&gt; · Subject: Your access to Intraday Decision Tree — Part 1</div>
+  <p>Hi there -</p>
+  <p>Thanks for picking up the course. Your link is below; it is yours for good, on any device.</p>
+  <p style="text-align:center"><span class="btn" style="display:inline-block;width:auto;padding:10px 18px">Open the course</span></p>
+  <p class="ps" id="mail-ps">One more thing: this purchase put <b>$500</b> toward Small Group Coaching. If you want to work through this live with me and a small group, it comes off the first year. It is on your account, good until Nov 18, 2027.</p>
+</div>
+
+<!-- 6. Numbers + decisions -->
+<div class="label">6 · The numbers for all three variants</div>
+<div class="scroll">
+<table>
+  <thead><tr><th>Courses bought</th><th class="num">A · credit</th><th class="num">A · coaching</th><th class="num">B · credit</th><th class="num">B · coaching</th><th class="num">C · credit</th><th class="num">C · coaching</th></tr></thead>
+  <tbody id="numbers"></tbody>
+</table>
+</div>
+<p class="tiny">Coaching is Small Group Coaching: Active at $2,997 a year. C assumes the first step is a $24.97 lesson and later steps are $49.97 courses, each earning 10× what was paid.</p>
+
+<div class="label">7 · Open decisions</div>
+<div class="decide">
+  <ol>
+    <li><b>Which variant.</b> A gives a reason to buy a second course (it doubles the credit) and stops at a floor of $1,997 for coaching. B is the simplest to explain. C adds a cheaper first step but needs a new $24.97 product.</li>
+    <li><b>The cap.</b> A shows $1,000. Without one, five courses would take coaching down to about $500.</li>
+    <li><b>Past buyers.</b> About 18 people bought courses, some at $19.97 or $29.97. Count their purchases (10× what they paid), or start the credit from launch day.</li>
+    <li><b>Observer tier ($997 a year).</b> Credit on Active only, or also on Observer with a lower cap (for example $300).</li>
+    <li><b>Rules that hold in every variant:</b> only money paid counts (gifts such as Part 2 for past buyers earn nothing), a refund removes its credit, one year to use it, applied automatically at the coaching checkout by the buyer's email.</li>
+  </ol>
+</div>
+
+</div>
+
+<script>
+const COURSES = [
+  { id: "mm1", t: "Mental Model for Traders — Part 1", p: 49.97 },
+  { id: "mm2", t: "Mental Model for Traders — Part 2", p: 49.97 },
+  { id: "sw",  t: "Owl Group Swing Trading Logic", p: 49.97 },
+  { id: "idt1", t: "Intraday Decision Tree — Part 1: The Open", p: 49.97 },
+  { id: "idt2", t: "Intraday Decision Tree — Part 2: After the Open", p: 49.97 },
+];
+const SGC = 2997;
+const V = {
+  A: { cap: 1000, stack: true,  per: p => 10 * p },
+  B: { cap: 500,  stack: false, per: p => 10 * p },
+  C: { cap: 1000, stack: true,  per: p => 10 * p },
+};
+let v = "A";
+const owned = new Set(["idt1"]);
+const $ = id => document.getElementById(id);
+const money = n => "$" + n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const round = n => "$" + Math.round(n).toLocaleString("en-US");
+
+function creditFor(paidList, key = v) {
+  const cfg = V[key];
+  if (!paidList.length) return 0;
+  const raw = cfg.stack ? paidList.reduce((s, p) => s + cfg.per(p), 0) : cfg.per(paidList[0]);
+  return Math.min(cfg.cap, Math.round(raw));
+}
+// Variant C: the first step is a $24.97 lesson, later steps full courses
+function paidSeq(n, key) {
+  return Array.from({ length: n }, (_, i) => (key === "C" && i === 0) ? 24.97 : 49.97);
+}
+
+function render() {
+  document.querySelectorAll("#variants button").forEach(b => b.setAttribute("aria-pressed", b.dataset.v === v));
+  const one = creditFor(paidSeq(1, v));
+  const cap = V[v].cap;
+
+  // sales page
+  if (v === "C") {
+    $("sp-title").textContent = "Intraday Decision Tree — Lesson 1: The Gap";
+    $("sp-meta").textContent = "~14 min · the first lesson of Part 1 · upgrade to the full course any time";
+    $("sp-price").textContent = "$24.97";
+  } else {
+    $("sp-title").textContent = "Intraday Decision Tree — Part 1: The Open";
+    $("sp-meta").textContent = "~81 min · 65-card flashcard deck · recorded from Dr. Long's coaching sessions";
+    $("sp-price").textContent = "$49.97";
+  }
+  $("sp-credit").textContent = "+ " + round(one) + " coaching credit";
+  $("sp-credit-line").textContent = {
+    A: "Comes back as $500 off Small Group Coaching. Buy a second course and it grows to $1,000.",
+    B: "Comes back as $500 off your first year of Small Group Coaching.",
+    C: "Comes back as $250 off Small Group Coaching. Each full course you add brings $500 more, up to $1,000.",
+  }[v];
+  $("path-lede").textContent = {
+    A: "Every dollar you spend on courses comes back ten times toward Small Group Coaching, up to $1,000.",
+    B: "Your first course comes back ten times as credit toward Small Group Coaching.",
+    C: "Start with one lesson. What you pay comes back ten times toward Small Group Coaching, up to $1,000.",
+  }[v];
+  const n = v === "B" ? 2 : 4;
+  $("steps").innerHTML = Array.from({ length: n }, (_, i) => {
+    const c = creditFor(paidSeq(i + 1, v));
+    const label = v === "C" && i === 0 ? "Lesson 1 ($24.97)" : (v === "C" ? `+ course ${i}` : `Course ${i + 1}`);
+    const max = c >= cap;
+    return `<div class="step${max ? " max" : ""}"><div class="n">${label}</div><div class="v">${round(c)}</div>
+      <div class="c">coaching ${round(SGC - c)}${max ? " · the cap" : ""}</div></div>`;
+  }).join("");
+
+  // store cards
+  $("cards").innerHTML = COURSES.slice(0, 3).map(c => `<div class="card"><div class="tier">Course · one-time, lifetime</div>
+    <h5>${c.t}</h5><div class="p">$49.97</div><span class="pill">+ ${round(creditFor([c.p]))} toward coaching</span></div>`).join("") +
+    `<div class="card" style="border-color:var(--gold)"><div class="tier">Live · yearly</div><h5>Small Group Coaching: Active</h5>
+    <div class="p">$2,997 / year</div><span class="pill">${v === "B" ? "$500 off with any course" : "up to $1,000 off with your courses"}</span></div>`;
+
+  // calculator
+  $("owned").innerHTML = COURSES.map(c => `<label><input type="checkbox" data-id="${c.id}" ${owned.has(c.id) ? "checked" : ""}>
+    ${c.t}<span>${v === "C" && c.id === "idt1" ? "$24.97 lesson 1" : "$49.97"}</span></label>`).join("");
+  $("owned").querySelectorAll("input").forEach(i => i.onchange = () => {
+    i.checked ? owned.add(i.dataset.id) : owned.delete(i.dataset.id); render();
+  });
+  const paid = COURSES.filter(c => owned.has(c.id)).map(c => (v === "C" && c.id === "idt1") ? 24.97 : c.p);
+  const cr = creditFor(paid);
+  $("rc-label").textContent = `Course credit (${paid.length} course${paid.length === 1 ? "" : "s"})`;
+  $("rc-credit").textContent = "−" + money(cr);
+  $("rc-total").textContent = money(SGC - cr);
+  $("rc-bar").style.width = (100 * cr / cap) + "%";
+  $("rc-note").textContent = !paid.length ? "No course credit yet." :
+    cr >= cap ? `At the ${round(cap)} cap: more courses add content, not credit.` :
+    `${round(cr)} of ${round(cap)}.` + (V[v].stack ? " One more course adds " + round(Math.min(500, cap - cr)) + "." : "");
+  const spent = paid.reduce((s, p) => s + p, 0);
+  $("rc-all").textContent = `Courses plus coaching: ${money(spent + SGC - cr)} in all (courses ${money(spent)}).`;
+
+  // library + email
+  const libCr = creditFor(paidSeq(1, v));
+  $("lib-head").textContent = "Your coaching credit: " + round(libCr);
+  $("lib-bar").style.width = (100 * libCr / cap) + "%";
+  $("lib-sub").textContent = v === "B" ? `${round(libCr)} off your first year · use by Nov 18, 2027` :
+    `${round(libCr)} of ${round(cap)} · one more course adds $500 · use by Nov 18, 2027`;
+  $("mail-ps").innerHTML = `One more thing: this purchase put <b>${round(libCr)}</b> toward Small Group Coaching. If you want to work through this live with me and a small group, it comes off the first year. It is on your account, good until Nov 18, 2027.`;
+
+  // numbers table
+  $("numbers").innerHTML = [1, 2, 3, 4, 5].map(k => {
+    const cells = ["A", "B", "C"].map(key => {
+      const c = creditFor(paidSeq(k, key), key);
+      return `<td class="num">${round(c)}</td><td class="num">${round(SGC - c)}</td>`;
+    }).join("");
+    return `<tr><td>${k}</td>${cells}</tr>`;
+  }).join("");
+}
+
+document.querySelectorAll("#variants button").forEach(b => b.onclick = () => { v = b.dataset.v; render(); });
+$("theme").onclick = () => {
+  const r = document.documentElement;
+  const dark = r.dataset.theme ? r.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+  r.dataset.theme = dark ? "light" : "dark";
+};
+render();
+</script>
+</body>
+</html>
