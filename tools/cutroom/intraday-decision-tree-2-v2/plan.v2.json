@@ -1,7 +1,7 @@
 {
  "schema": "coursecraft-plan-v2",
  "course": "intraday-decision-tree-2-v2",
- "revision": 3,
+ "revision": 4,
  "revised": "2026-11-17",
  "status": "rev 1 (2026-11-17): Part 2 After the Open of the two-part rebuild. Carries rev 1 of intraday-decision-tree-v2's chapters 1-4 (management, tomorrow's list) whole, plus the clock, entries, chop, timeframes and the close from the corpus scan. Style: Desk. Outcome slots OFF until their studies run (5DD on: computed). Walk dates from what is said in the session are checked against the bars before VERIFIED.",
  "title": "The Intraday Decision Tree, Part 2: After the Open (v2)",
@@ -357,7 +357,7 @@
   {
    "id": "s10",
    "type": "explainer",
-   "include": true,
+   "include": false,
    "label": "EXPLAINER: the clock",
    "voice": "ava",
    "vo_script": "TO WRITE from the chapter's windows; Desk style (anim-overdub style=desk): the Desk clock strip: 13 windows drawn in, the open and close marked, morning and afternoon bands, stars at +30 +60 +90, the frog exit at 15:30, the timeframe per window",
@@ -367,7 +367,8 @@
    "transition": {
     "type": "fade",
     "dur": 0.6
-   }
+   },
+   "status": "OFF from rev 4: the owner dropped the explainers for now (2026-11-17)"
   },
   {
    "id": "s11",

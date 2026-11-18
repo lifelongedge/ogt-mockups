@@ -1,7 +1,7 @@
 {
  "schema": "coursecraft-plan-v2",
  "course": "intraday-decision-tree-v2",
- "revision": 6,
+ "revision": 7,
  "revised": "2026-11-17",
  "status": "rev 2 (2026-11-17): the two-part rebuild from the corpus scan, Part 1 The Open. Owner: 'i'm good with the intraday course, build the cut room'. Every window from courses/intraday-decision-tree-v2/outline-2026-11-17.md; rev 1's chapters 1-4 (management, tomorrow's list) moved to Part 2 (intraday-decision-tree-2-v2). Style: Desk, every twin and explainer (anim-overdub, after the owner's cutroom pass). Outcome slots OFF until their studies run. Walk dates from what is said in the session are checked against the bars before VERIFIED.",
  "title": "The Intraday Decision Tree, Part 1: The Open (v2)",
@@ -300,7 +300,7 @@
   {
    "id": "s08",
    "type": "explainer",
-   "include": true,
+   "include": false,
    "label": "EXPLAINER: the gap stat on a chart",
    "voice": "ava",
    "vo_script": "TO WRITE from the chapter's windows; Desk style (anim-overdub style=desk): the four cells (gap up/down, follow-through with/against) drawn over real bars; the 1 SD threshold as a readout; size vs direction as the last beat",
@@ -310,7 +310,8 @@
    "transition": {
     "type": "fade",
     "dur": 0.6
-   }
+   },
+   "status": "OFF from rev 7: the owner dropped the explainers for now (2026-11-17)"
   },
   {
    "id": "s09",
@@ -418,7 +419,7 @@
   {
    "id": "s13",
    "type": "explainer",
-   "include": true,
+   "include": false,
    "label": "EXPLAINER: the decision tree",
    "voice": "ava",
    "vo_script": "TO WRITE from the chapter's windows; Desk style (anim-overdub style=desk): the tree drawn on the Desk clock strip at 9:30; branches in his words drawn solid (big gap: bracket; no gap: O3/O10; not trading the open: wait for the winter to turn; inside yesterday: yellow zone; gap fails/holds); any editorial branch drawn distinct and labelled",
@@ -428,7 +429,8 @@
    "transition": {
     "type": "fade",
     "dur": 0.6
-   }
+   },
+   "status": "OFF from rev 7: the owner dropped the explainers for now (2026-11-17)"
   },
   {
    "id": "s14",
