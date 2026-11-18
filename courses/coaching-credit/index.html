@@ -118,6 +118,21 @@ td.num, th.num { text-align: right; }
 .decide ol { margin: 6px 0 0; padding-left: 20px; }
 .decide li { margin-bottom: 8px; }
 
+.direction { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--gold); border-radius: 12px; padding: 18px 22px; margin-bottom: 22px; font-size: 15px; }
+.direction h2 { margin: 0 0 6px; font-size: 18px; }
+.direction p { margin: 8px 0; }
+.direction .who { font-size: 12px; color: var(--muted); }
+.paths { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 12px 0; }
+.paths div { border: 1px solid var(--line); border-radius: 10px; padding: 12px; background: var(--bg); }
+.paths div.pick { border-color: var(--gold); background: var(--gold-soft); }
+.paths b { display: block; font-size: 22px; }
+.paths span { font-size: 13px; color: var(--muted); }
+.trial-link { display: block; text-align: center; font-size: 14px; margin-top: 10px; }
+.trial { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.trial .box { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; font-size: 14px; }
+.trial .box h4 { margin: 0 0 8px; font-size: 15px; }
+.field { border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; color: var(--muted); margin: 6px 0; background: var(--bg); }
+@media (max-width: 760px) { .paths, .trial { grid-template-columns: 1fr; } }
 .controls { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
 .ctl { display: block; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
 .seg { display: inline-flex; flex-wrap: wrap; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
@@ -141,7 +156,7 @@ td.num, th.num { text-align: right; }
 
 <section class="review">
   <button class="theme" id="theme">Light / dark</button>
-  <h1>Coaching credit — what a course buyer would see</h1>
+  <h1>Course pricing — coaching credit, sales and free samples</h1>
   <p>Mockup for owner review, 2026-11-18. Every self-paced course is $49. Small Group Coaching: Active is $2,997 a year. The idea: what a student pays for courses comes back as credit toward coaching. Pick a variant, a seasonal sale and how the credit is counted during a sale; every panel below follows them.</p>
   <div class="variants" id="variants">
     <button data-v="A" aria-pressed="true"><b>A · 10× stacking, $1,000 cap</b><span>each course $500, two courses reach the cap</span></button>
@@ -154,6 +169,22 @@ td.num, th.num { text-align: right; }
     <div><span class="ctl">Coaching credit during a sale</span>
       <div class="seg" id="basis"><button data-b="list" aria-pressed="true">On list price · credit stays (recommended)</button><button data-b="paid" aria-pressed="false">On price paid · credit shrinks</button></div></div>
   </div>
+</section>
+
+<section class="direction">
+  <h2>Pricing direction</h2>
+  <div class="who">Owner, 2026-11-18</div>
+  <p><b>Maximize total revenue, choosing the options that maximize future sales.</b> The same $1,000 can come three ways:</p>
+  <div class="paths">
+    <div><b>1 × $1,000</b><span>a) one customer paying $1,000</span></div>
+    <div><b>10 × $100</b><span>b) ten customers paying $100</span></div>
+    <div class="pick"><b>100 × $10</b><span>c) a hundred customers paying $10</span></div>
+  </div>
+  <p>For the long term, <b>c is the better option because it touches far more people.</b> Each of the hundred is someone who has seen the work, can buy the next course, can move toward coaching, and can tell another trader about it.</p>
+  <p>The list (773 active subscribers) is too small for fine-grained price tests, so the price is set by this principle rather than by an A/B/C split.</p>
+  <h2 style="margin-top:16px">A first-time buyer judging quality</h2>
+  <p>Someone who has never bought from us cannot tell what a course is worth before paying for it. Rather than a first-buyer discount, which a second email address gets around, <b>parts of each course are free to try on request</b>: the person asks, and we send them a sample (for example the first chapter) to watch.</p>
+  <p>Asking twice from another address gets the same free sample again, so there is nothing to abuse. Each request also tells us who is interested in which course, which a discount code does not. Panel 1b shows the request and what gets sent.</p>
 </section>
 
 <!-- 1. Sales page -->
@@ -173,6 +204,7 @@ td.num, th.num { text-align: right; }
         <button class="btn" id="sp-btn">Buy Now →</button>
         <div class="save" id="sp-save"></div>
         <div class="fine">Instant access · Lifetime · Email confirmation</div>
+        <a class="trial-link" href="#trial">Not sure yet? Ask for a free chapter →</a>
         <div class="credit">
           <b class="big" id="sp-credit">+ $500 coaching credit</b>
           <span id="sp-credit-line">Comes back as $500 off Small Group Coaching. Buy a second course and it grows to $1,000.</span>
@@ -191,6 +223,27 @@ td.num, th.num { text-align: right; }
 </div>
 
 <!-- 2. Store cards -->
+<div class="label" id="trial">1b · Free trial on request <i>— the link under Buy Now opens this; the sample arrives by email</i></div>
+<div class="trial">
+  <div class="box">
+    <h4>Try a chapter of Intraday Decision Tree — Part 1, free</h4>
+    <p style="margin:0 0 8px;color:var(--muted)">Tell us where to send it. We'll email you a link to the first chapter, about 14 minutes, with its flashcards.</p>
+    <div class="field">Your name</div>
+    <div class="field">you@example.com</div>
+    <div class="field">What are you hoping to get out of it? (optional)</div>
+    <button class="btn" style="margin-top:10px">Send me the free chapter</button>
+    <div class="fine">One email, no card. You'll also get the daily note; unsubscribe any time.</div>
+  </div>
+  <div class="box">
+    <h4>What arrives</h4>
+    <div class="tiny" style="margin-bottom:8px">From: Dr. Ken Long · Subject: Your free chapter: Intraday Decision Tree</div>
+    <p style="margin:0 0 8px">Hi there - here is the first chapter, <i>Why the open is a critical state</i>. It plays in the same player as the full course, with the contents beside it.</p>
+    <p style="text-align:center;margin:10px 0"><span class="btn" style="display:inline-block;width:auto;padding:9px 16px;margin:0">Watch the chapter</span></p>
+    <p style="margin:0 0 8px">If it is useful, the full course is $49 and the rest of the chapters pick up where this one ends.</p>
+    <p class="tiny" style="margin:0">Behind it: the link opens chapter 1 only (a sample token, no purchase); each request is logged against the course, so the dashboard shows who asked for which sample and who went on to buy.</p>
+  </div>
+</div>
+
 <div class="label">2 · Store cards <i>— /store, one line added under each price</i></div>
 <div class="cards" id="cards"></div>
 
