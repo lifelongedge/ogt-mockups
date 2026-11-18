@@ -218,7 +218,7 @@ td.num, th.num { text-align: right; }
   <tbody id="numbers"></tbody>
 </table>
 </div>
-<p class="tiny">Coaching is Small Group Coaching: Active at $2,997 a year. C assumes the first step is a $24.97 lesson and later steps are $49.97 courses, each earning 10× what was paid.</p>
+<p class="tiny">Coaching is Small Group Coaching: Active at $2,997 a year. C assumes the first step is a $24.97 lesson and later steps are $49.97 courses, each earning 10× what was paid, rounded to the nearest $50 ($49.97 earns $500, $24.97 earns $250).</p>
 
 <div class="label">7 · Open decisions</div>
 <div class="decide">
@@ -243,9 +243,10 @@ const COURSES = [
 ];
 const SGC = 2997;
 const V = {
-  A: { cap: 1000, stack: true,  per: p => 10 * p },
-  B: { cap: 500,  stack: false, per: p => 10 * p },
-  C: { cap: 1000, stack: true,  per: p => 10 * p },
+  // 10x what was paid, rounded to the nearest $50: $49.97 -> $500, $24.97 -> $250
+  A: { cap: 1000, stack: true,  per: p => Math.round(10 * p / 50) * 50 },
+  B: { cap: 500,  stack: false, per: p => Math.round(10 * p / 50) * 50 },
+  C: { cap: 1000, stack: true,  per: p => Math.round(10 * p / 50) * 50 },
 };
 let v = "A";
 const owned = new Set(["idt1"]);
