@@ -142,11 +142,11 @@ td.num, th.num { text-align: right; }
 <section class="review">
   <button class="theme" id="theme">Light / dark</button>
   <h1>Coaching credit — what a course buyer would see</h1>
-  <p>Mockup for owner review, 2026-11-18. Every course is $49.97. Small Group Coaching: Active is $2,997 a year. The idea: what a student pays for courses comes back as credit toward coaching. Pick a variant, a seasonal sale and how the credit is counted during a sale; every panel below follows them.</p>
+  <p>Mockup for owner review, 2026-11-18. Every self-paced course is $49. Small Group Coaching: Active is $2,997 a year. The idea: what a student pays for courses comes back as credit toward coaching. Pick a variant, a seasonal sale and how the credit is counted during a sale; every panel below follows them.</p>
   <div class="variants" id="variants">
     <button data-v="A" aria-pressed="true"><b>A · 10× stacking, $1,000 cap</b><span>each course $500, two courses reach the cap</span></button>
     <button data-v="B" aria-pressed="false"><b>B · One course, $500</b><span>first purchase only, no stacking</span></button>
-    <button data-v="C" aria-pressed="false"><b>C · $24.97 lesson 1 → $250</b><span>a cheaper first step, 10× on it too</span></button>
+    <button data-v="C" aria-pressed="false"><b>C · $25 lesson 1 → $250</b><span>a cheaper first step, 10× on it too</span></button>
   </div>
   <div class="controls">
     <div><span class="ctl">Seasonal sale on courses</span>
@@ -169,7 +169,7 @@ td.num, th.num { text-align: right; }
     <div class="hero">
       <div class="video"><span>Watch a two-minute preview</span></div>
       <div class="buy">
-        <div class="price" id="sp-price">$49.97</div>
+        <div class="price" id="sp-price">$49</div>
         <button class="btn" id="sp-btn">Buy Now →</button>
         <div class="save" id="sp-save"></div>
         <div class="fine">Instant access · Lifetime · Email confirmation</div>
@@ -238,7 +238,7 @@ td.num, th.num { text-align: right; }
   <tbody id="numbers"></tbody>
 </table>
 </div>
-<p class="tiny">Coaching is Small Group Coaching: Active at $2,997 a year. C assumes the first step is a $24.97 lesson and later steps are $49.97 courses, each earning 10× what was paid, rounded to the nearest $50 ($49.97 earns $500, $24.97 earns $250).</p>
+<p class="tiny">Coaching is Small Group Coaching: Active at $2,997 a year. C assumes the first step is a $25 lesson and later steps are $49 courses, each earning 10× what was paid, rounded to the nearest $50 ($49 earns $500, $25 earns $250).</p>
 
 <div class="label">7 · What a sale does to the credit <i>— variant A, both ways of counting</i></div>
 <div class="scroll">
@@ -252,7 +252,7 @@ td.num, th.num { text-align: right; }
 <div class="label">8 · Open decisions</div>
 <div class="decide">
   <ol>
-    <li><b>Which variant.</b> A gives a reason to buy a second course (it doubles the credit) and stops at a floor of $1,997 for coaching. B is the simplest to explain. C adds a cheaper first step but needs a new $24.97 product.</li>
+    <li><b>Which variant.</b> A gives a reason to buy a second course (it doubles the credit) and stops at a floor of $1,997 for coaching. B is the simplest to explain. C adds a cheaper first step but needs a new $25 product.</li>
     <li><b>The cap.</b> A shows $1,000. Without one, five courses would take coaching down to about $500.</li>
     <li><b>Past buyers.</b> About 18 people bought courses, some at $19.97 or $29.97. Count their purchases (10× what they paid), or start the credit from launch day.</li>
     <li><b>Observer tier ($997 a year).</b> Credit on Active only, or also on Observer with a lower cap (for example $300).</li>
@@ -266,20 +266,20 @@ td.num, th.num { text-align: right; }
 
 <script>
 const COURSES = [
-  { id: "mm1", t: "Mental Model for Traders — Part 1", p: 49.97 },
-  { id: "mm2", t: "Mental Model for Traders — Part 2", p: 49.97 },
-  { id: "sw",  t: "Owl Group Swing Trading Logic", p: 49.97 },
-  { id: "idt1", t: "Intraday Decision Tree — Part 1: The Open", p: 49.97 },
-  { id: "idt2", t: "Intraday Decision Tree — Part 2: After the Open", p: 49.97 },
+  { id: "mm1", t: "Mental Model for Traders — Part 1", p: 49 },
+  { id: "mm2", t: "Mental Model for Traders — Part 2", p: 49 },
+  { id: "sw",  t: "Owl Group Swing Trading Logic", p: 49 },
+  { id: "idt1", t: "Intraday Decision Tree — Part 1: The Open", p: 49 },
+  { id: "idt2", t: "Intraday Decision Tree — Part 2: After the Open", p: 49 },
 ];
-const SGC = 2997, LESSON = 24.97, SALE_NAME = "Winter Sale", SALE_ENDS = "Dec 31";
-// 10x, rounded to the nearest $50: $49.97 -> $500, $24.97 -> $250
+const SGC = 2997, LESSON = 25, SALE_NAME = "Winter Sale", SALE_ENDS = "Dec 31";
+// 10x, rounded to the nearest $50: $49 -> $500, $25 -> $250
 const tenX = p => Math.round(10 * p / 50) * 50;
 const V = { A: { cap: 1000, stack: true }, B: { cap: 500, stack: false }, C: { cap: 1000, stack: true } };
 let v = "A", promo = 0, basis = "list";
 const owned = new Set(["idt1"]);
 const $ = id => document.getElementById(id);
-const money = n => "$" + n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const money = n => "$" + (Number.isInteger(Math.round(n * 100) / 100) ? Math.round(n).toLocaleString("en-US") : n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
 const round = n => "$" + Math.round(n).toLocaleString("en-US");
 const sale = (list, pct = promo) => Math.round(list * 100 * (1 - pct / 100)) / 100;   // what Stripe would charge
 const item = (list, pct = promo) => ({ list, paid: sale(list, pct) });
@@ -292,9 +292,9 @@ function creditFor(items, key = v, b = basis) {
   const raw = cfg.stack ? items.reduce((s, it) => s + per(it), 0) : per(items[0]);
   return Math.min(cfg.cap, raw);
 }
-// Variant C: the first step is the $24.97 lesson, later steps full courses
+// Variant C: the first step is the $25 lesson, later steps full courses
 function seq(n, key = v, pct = promo) {
-  return Array.from({ length: n }, (_, i) => item((key === "C" && i === 0) ? LESSON : 49.97, pct));
+  return Array.from({ length: n }, (_, i) => item((key === "C" && i === 0) ? LESSON : 49, pct));
 }
 const priceHTML = list => promo ? `<s>${money(list)}</s>${money(sale(list))}` : money(list);
 
@@ -306,7 +306,7 @@ function render() {
   press("#variants", "v", v); press("#promo", "p", promo); press("#basis", "b", basis);
   const one = creditFor(seq(1));
   const cap = V[v].cap;
-  const firstList = v === "C" ? LESSON : 49.97;
+  const firstList = v === "C" ? LESSON : 49;
 
   // sale banner
   $("salebar").style.display = promo ? "block" : "none";
@@ -323,7 +323,7 @@ function render() {
   $("sp-price").innerHTML = priceHTML(firstList);
   $("sp-save").textContent = promo ? `You save ${money(firstList - sale(firstList))} · ${SALE_NAME} ends ${SALE_ENDS}` : "";
   $("sp-credit").textContent = "+ " + round(one) + " coaching credit";
-  const nextAdd = round(tenX(basis === "list" ? 49.97 : sale(49.97)));
+  const nextAdd = round(tenX(basis === "list" ? 49 : sale(49)));
   $("sp-credit-line").textContent = {
     A: `Comes back as ${round(one)} off Small Group Coaching. Buy a second course and it grows to ${round(Math.min(cap, 2 * one))}.`,
     B: `Comes back as ${round(one)} off your first year of Small Group Coaching.`,
@@ -369,7 +369,7 @@ function render() {
   $("rc-bar").style.width = (100 * cr / cap) + "%";
   $("rc-note").textContent = !items.length ? "No course credit yet." :
     cr >= cap ? `At the ${round(cap)} cap: more courses add content, not credit.` :
-    `${round(cr)} of ${round(cap)}.` + (V[v].stack ? " One more course adds " + round(Math.min(tenX(basis === "list" ? 49.97 : sale(49.97)), cap - cr)) + "." : "");
+    `${round(cr)} of ${round(cap)}.` + (V[v].stack ? " One more course adds " + round(Math.min(tenX(basis === "list" ? 49 : sale(49)), cap - cr)) + "." : "");
   const spent = items.reduce((s, it) => s + it.paid, 0);
   $("rc-all").textContent = `Courses plus coaching: ${money(spent + SGC - cr)} in all (courses ${money(spent)}${promo ? ` at ${promo}% off` : ""}).`;
 
@@ -392,7 +392,7 @@ function render() {
 
   // sale table (variant A)
   $("sale-table").innerHTML = [0, 30, 40, 50].map(pct => {
-    const p1 = sale(49.97, pct);
+    const p1 = sale(49, pct);
     const l1 = creditFor(seq(1, "A", pct), "A", "list"), l2 = creditFor(seq(2, "A", pct), "A", "list");
     const d1 = creditFor(seq(1, "A", pct), "A", "paid"), d2 = creditFor(seq(2, "A", pct), "A", "paid");
     let k = 1; while (creditFor(seq(k, "A", pct), "A", "paid") < 1000) k++;
