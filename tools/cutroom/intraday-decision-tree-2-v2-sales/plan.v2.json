@@ -1,0 +1,245 @@
+{
+  "schema": "coursecraft-plan-v2",
+  "course": "intraday-decision-tree-2-v2-sales",
+  "cutroom": "intraday-decision-tree-2-v2-sales",
+  "revision": 1,
+  "revised": "2026-11-18",
+  "status": "DRAFT rev1: a sales clip of intraday-decision-tree-2-v2, ~120 s; the owner edits it in the cutroom",
+  "title": "Intraday Decision Tree, Part 2: sales clip",
+  "topic_class": "sales clip",
+  "store_sku": "intraday-decision-tree-2",
+  "replaces": null,
+  "notes": "Bites resolved from Ken's word times (vtt_words, 2026-11-18); each starts and ends on a full sentence. Each twin starts the parent's Desk scene at the bite's offset, so the captions stay on his words. The owner asked for the video ('give me 2 min sales clip video for each'); built and rendered without a cutroom pass.",
+  "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/intraday-decision-tree-2-v2/",
+  "sources": [
+    {
+      "id": "roz",
+      "label": "foundational lessons (RGTX day; 2025-10-13 from what is said, check against the bars)",
+      "file": "youtube-ROZMqGhOOPU-foundational-lessons.mp4",
+      "proxy": "youtube-ROZMqGhOOPU-foundational-lessons.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=ROZMqGhOOPU"
+    },
+    {
+      "id": "vic",
+      "label": "2014-02-03 daily structure execution (no captions; local transcript)",
+      "file": "youtube-VICogwFpKyc-2014-02-03-daily-structure-execution.mp4",
+      "proxy": "youtube-VICogwFpKyc-2014-02-03-daily-structure-execution.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=VICogwFpKyc"
+    },
+    {
+      "id": "wlq",
+      "label": "2024-05-23 cohort-2 OR3/gaps coaching",
+      "file": "youtube-WlqQChOychs-or3-gaps-symbols.mp4",
+      "proxy": "youtube-WlqQChOychs-or3-gaps-symbols.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=WlqQChOychs"
+    },
+    {
+      "id": "xvc",
+      "label": "cohort-6 intro overview (weekend of the 2026-01-17 report)",
+      "file": "youtube-XvcsfWFFW20-cohort-6-intro-overview.mp4",
+      "proxy": "youtube-XvcsfWFFW20-cohort-6-intro-overview.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=XvcsfWFFW20"
+    }
+  ],
+  "voices": [
+    {
+      "id": "ava",
+      "label": "Ava (US, female, polished)",
+      "sample": "vo-ava.mp3"
+    }
+  ],
+  "segments": [
+    {
+      "id": "s00",
+      "type": "slide",
+      "include": true,
+      "label": "Title card",
+      "slide_id": "title",
+      "duration": 4,
+      "layout": "title",
+      "text": {
+        "kicker": "",
+        "title": "**Intraday** Decision Tree",
+        "subtitle": "Part 2 · After the Open",
+        "body": "with Dr. Ken Long"
+      }
+    },
+    {
+      "id": "s01",
+      "type": "cut",
+      "include": false,
+      "label": "Cold open: later in the day, 3 minutes is noise",
+      "source": "roz",
+      "in": 4339.2,
+      "out": 4350.1,
+      "why": "the hook, on his chart: later in the day, 3 minutes is noise",
+      "status": "bite of intraday-decision-tree-2-v2 s01 (+0.2..+11.1 s); the twin s01a carries it"
+    },
+    {
+      "id": "s01a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT on his chart: Cold open: later in the day, 3 minutes is noise",
+      "source": "roz",
+      "in": 4339.2,
+      "out": 4350.1,
+      "why": "the hook, on his chart: later in the day, 3 minutes is noise",
+      "anim_of": {
+        "course": "intraday-decision-tree-2-v2",
+        "scene": "s01"
+      },
+      "animation_brief": "the intraday-decision-tree-2-v2 s01 scene, started at its +0.2 s",
+      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py"
+    },
+    {
+      "id": "s02",
+      "type": "cut",
+      "include": false,
+      "label": "The stars: a key decision keyed to a time of day",
+      "source": "vic",
+      "in": 336.4,
+      "out": 345.7,
+      "why": "the clock: each star is a key decision keyed to a time of day",
+      "status": "bite of intraday-decision-tree-2-v2 s06 (+6.4..+15.7 s); the twin s02a carries it"
+    },
+    {
+      "id": "s02a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: The stars: a key decision keyed to a time of day",
+      "source": "vic",
+      "in": 336.4,
+      "out": 345.7,
+      "why": "the clock: each star is a key decision keyed to a time of day",
+      "anim_of": {
+        "course": "intraday-decision-tree-2-v2",
+        "scene": "s06"
+      },
+      "animation_brief": "the intraday-decision-tree-2-v2 s06 scene, started at its +6.4 s",
+      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py"
+    },
+    {
+      "id": "s03",
+      "type": "cut",
+      "include": false,
+      "label": "Trust the PSAR all the way up, then accelerate the stop to the skin of the dragon",
+      "source": "wlq",
+      "in": 2791.3,
+      "out": 2805.2,
+      "why": "follow the PSAR, then the skin of the dragon",
+      "status": "bite of intraday-decision-tree-2-v2 s21 (+31.3..+45.2 s); the twin s03a carries it"
+    },
+    {
+      "id": "s03a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: Trust the PSAR all the way up, then accelerate the stop to the skin of the dragon",
+      "source": "wlq",
+      "in": 2791.3,
+      "out": 2805.2,
+      "why": "follow the PSAR, then the skin of the dragon",
+      "anim_of": {
+        "course": "intraday-decision-tree-2-v2",
+        "scene": "s21"
+      },
+      "animation_brief": "the intraday-decision-tree-2-v2 s21 scene, started at its +31.3 s",
+      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py"
+    },
+    {
+      "id": "s04",
+      "type": "cut",
+      "include": false,
+      "label": "At 1R no-lose-plus-dinner-for-two; past 2R keep 70 % of the maximum favorable excursion; Kata 2 re-entry",
+      "source": "xvc",
+      "in": 3719.8,
+      "out": 3739.4,
+      "why": "the most important thing I'll say all morning: keep 70 % of the MFE past 2R",
+      "status": "bite of intraday-decision-tree-2-v2 s24 (+119.8..+139.4 s); the twin s04a carries it"
+    },
+    {
+      "id": "s04a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: At 1R no-lose-plus-dinner-for-two; past 2R keep 70 % of the maximum favorable excursion; Kata 2 re-entry",
+      "source": "xvc",
+      "in": 3719.8,
+      "out": 3739.4,
+      "why": "the most important thing I'll say all morning: keep 70 % of the MFE past 2R",
+      "anim_of": {
+        "course": "intraday-decision-tree-2-v2",
+        "scene": "s24"
+      },
+      "animation_brief": "the intraday-decision-tree-2-v2 s24 scene, started at its +119.8 s",
+      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py"
+    },
+    {
+      "id": "s05",
+      "type": "cut",
+      "include": false,
+      "label": "Cash the rational exuberance: adds at 3R and 6R on the market's money; never let irrational retrace inside rational",
+      "source": "wlq",
+      "in": 2096.1,
+      "out": 2108.3,
+      "why": "capture the rational exuberance, ready to pile on",
+      "status": "bite of intraday-decision-tree-2-v2 s22 (+76.1..+88.3 s); the twin s05a carries it"
+    },
+    {
+      "id": "s05a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: Cash the rational exuberance: adds at 3R and 6R on the market's money; never let irrational retrace inside rational",
+      "source": "wlq",
+      "in": 2096.1,
+      "out": 2108.3,
+      "why": "capture the rational exuberance, ready to pile on",
+      "anim_of": {
+        "course": "intraday-decision-tree-2-v2",
+        "scene": "s22"
+      },
+      "animation_brief": "the intraday-decision-tree-2-v2 s22 scene, started at its +76.1 s",
+      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py"
+    },
+    {
+      "id": "s06",
+      "type": "cut",
+      "include": false,
+      "label": "Close vs VWAP: back at the VWAP, tomorrow is normal; far from it, this thing could be amazing",
+      "source": "roz",
+      "in": 6122.0,
+      "out": 6162.1,
+      "why": "the close: the VWAP magnet; far from it, this thing could be amazing",
+      "status": "bite of intraday-decision-tree-2-v2 s42 (+176.0..+216.1 s); the twin s06a carries it"
+    },
+    {
+      "id": "s06a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: Close vs VWAP: back at the VWAP, tomorrow is normal; far from it, this thing could be amazing",
+      "source": "roz",
+      "in": 6122.0,
+      "out": 6162.1,
+      "why": "the close: the VWAP magnet; far from it, this thing could be amazing",
+      "anim_of": {
+        "course": "intraday-decision-tree-2-v2",
+        "scene": "s42"
+      },
+      "animation_brief": "the intraday-decision-tree-2-v2 s42 scene, started at its +176.0 s",
+      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py"
+    },
+    {
+      "id": "s07",
+      "type": "slide",
+      "include": true,
+      "label": "End card",
+      "slide_id": "end",
+      "duration": 8,
+      "layout": "end",
+      "text": {
+        "kicker": "",
+        "title": "Intraday Decision Tree, Part 2",
+        "subtitle": "owlgrouptrading.com",
+        "body": "Seven chapters, about 70 minutes, with Dr. Ken Long."
+      }
+    }
+  ]
+}

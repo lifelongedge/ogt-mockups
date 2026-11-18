@@ -1,0 +1,218 @@
+{
+  "schema": "coursecraft-plan-v2",
+  "course": "intraday-decision-tree-v2-sales",
+  "cutroom": "intraday-decision-tree-v2-sales",
+  "revision": 1,
+  "revised": "2026-11-18",
+  "status": "DRAFT rev1: a sales clip of intraday-decision-tree-v2, ~120 s; the owner edits it in the cutroom",
+  "title": "Intraday Decision Tree, Part 1: sales clip",
+  "topic_class": "sales clip",
+  "store_sku": "intraday-decision-tree",
+  "replaces": null,
+  "notes": "Bites resolved from Ken's word times (vtt_words, 2026-11-18); each starts and ends on a full sentence. Each twin starts the parent's Desk scene at the bite's offset, so the captions stay on his words. The owner asked for the video ('give me 2 min sales clip video for each'); built and rendered without a cutroom pass.",
+  "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/intraday-decision-tree-v2/",
+  "sources": [
+    {
+      "id": "fom",
+      "label": "cohort-2, patterns, symbols, OR3, gap stat (year not spoken; 2024 by hypothesis)",
+      "file": "youtube-fOmhSUFWQ80-patterns-symbols-or3-gapstat.mp4",
+      "proxy": "youtube-fOmhSUFWQ80-patterns-symbols-or3-gapstat.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=fOmhSUFWQ80"
+    },
+    {
+      "id": "d1s",
+      "label": "2023-07-12 Foundations Q&A special",
+      "file": "youtube-d_S1TCk2qnE-2023-07-12-foundations-q-a-special.mp4",
+      "proxy": "youtube-d_S1TCk2qnE-2023-07-12-foundations-q-a-special.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=d_S1TCk2qnE"
+    },
+    {
+      "id": "roz",
+      "label": "foundational lessons (RGTX day; 2025-10-13 from what is said, check against the bars)",
+      "file": "youtube-ROZMqGhOOPU-foundational-lessons.mp4",
+      "proxy": "youtube-ROZMqGhOOPU-foundational-lessons.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=ROZMqGhOOPU"
+    },
+    {
+      "id": "vrb",
+      "label": "2022-11-27 special session on reading the daily report",
+      "file": "youtube-vrbNrsRDijE-2022-11-27-special-session-on-reading-the-daily-report.mp4",
+      "proxy": "youtube-vrbNrsRDijE-2022-11-27-special-session-on-reading-the-daily-report.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=vrbNrsRDijE"
+    }
+  ],
+  "voices": [
+    {
+      "id": "ava",
+      "label": "Ava (US, female, polished)",
+      "sample": "vo-ava.mp3"
+    }
+  ],
+  "segments": [
+    {
+      "id": "s00",
+      "type": "slide",
+      "include": true,
+      "label": "Title card",
+      "slide_id": "title",
+      "duration": 4,
+      "layout": "title",
+      "text": {
+        "kicker": "",
+        "title": "**Intraday** Decision Tree",
+        "subtitle": "Part 1 · The Open",
+        "body": "with Dr. Ken Long"
+      }
+    },
+    {
+      "id": "s01",
+      "type": "cut",
+      "include": false,
+      "label": "Cold open: no gap is yesterday continued; a big gap is maximum chaos",
+      "source": "fom",
+      "in": 5921.0,
+      "out": 5942.1,
+      "why": "the hook: the size of the gap tells you how much payoff there's going to be today",
+      "status": "bite of intraday-decision-tree-v2 s01 (+9.0..+30.1 s); the twin s01a carries it"
+    },
+    {
+      "id": "s01a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: Cold open: no gap is yesterday continued; a big gap is maximum chaos",
+      "source": "fom",
+      "in": 5921.0,
+      "out": 5942.1,
+      "why": "the hook: the size of the gap tells you how much payoff there's going to be today",
+      "anim_of": {
+        "course": "intraday-decision-tree-v2",
+        "scene": "s01"
+      },
+      "animation_brief": "the intraday-decision-tree-v2 s01 scene, started at its +9.0 s",
+      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py"
+    },
+    {
+      "id": "s02",
+      "type": "cut",
+      "include": false,
+      "label": "The big-gap procedure: futures ten minutes before, bracket with an R10 or R5, stop at the open",
+      "source": "fom",
+      "in": 4908.5,
+      "out": 4921.0,
+      "why": "big gap equals big follow through, but we don't know direction",
+      "status": "bite of intraday-decision-tree-v2 s20 (+1.5..+14.0 s); the twin s02a carries it"
+    },
+    {
+      "id": "s02a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: The big-gap procedure: futures ten minutes before, bracket with an R10 or R5, stop at the open",
+      "source": "fom",
+      "in": 4908.5,
+      "out": 4921.0,
+      "why": "big gap equals big follow through, but we don't know direction",
+      "anim_of": {
+        "course": "intraday-decision-tree-v2",
+        "scene": "s20"
+      },
+      "animation_brief": "the intraday-decision-tree-v2 s20 scene, started at its +1.5 s",
+      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py"
+    },
+    {
+      "id": "s03",
+      "type": "cut",
+      "include": false,
+      "label": "No gap is a still pond: a tight bracket from the bell",
+      "source": "d1s",
+      "in": 1154.9,
+      "out": 1184.4,
+      "why": "the still pond at night: a pebble in the quiet",
+      "status": "bite of intraday-decision-tree-v2 s11 (+101.9..+131.4 s); the twin s03a carries it"
+    },
+    {
+      "id": "s03a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: No gap is a still pond: a tight bracket from the bell",
+      "source": "d1s",
+      "in": 1154.9,
+      "out": 1184.4,
+      "why": "the still pond at night: a pebble in the quiet",
+      "anim_of": {
+        "course": "intraday-decision-tree-v2",
+        "scene": "s11"
+      },
+      "animation_brief": "the intraday-decision-tree-v2 s11 scene, started at its +101.9 s",
+      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py"
+    },
+    {
+      "id": "s04",
+      "type": "cut",
+      "include": false,
+      "label": "My favorite pattern: gap down, FailStat, reversal; the GainStat take-profit",
+      "source": "vrb",
+      "in": 1244.0,
+      "out": 1252.1,
+      "why": "gap down, sell-off to the fail stat, reverse: my bread and butter",
+      "status": "bite of intraday-decision-tree-v2 s30 (+54.0..+62.1 s); the twin s04a carries it"
+    },
+    {
+      "id": "s04a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT on his chart: My favorite pattern: gap down, FailStat, reversal; the GainStat take-profit",
+      "source": "vrb",
+      "in": 1244.0,
+      "out": 1252.1,
+      "why": "gap down, sell-off to the fail stat, reverse: my bread and butter",
+      "anim_of": {
+        "course": "intraday-decision-tree-v2",
+        "scene": "s30"
+      },
+      "animation_brief": "the intraday-decision-tree-v2 s30 scene, started at its +54.0 s",
+      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py"
+    },
+    {
+      "id": "s05",
+      "type": "cut",
+      "include": false,
+      "label": "WALK on his chart: RGTX 2025-10-13, a 10 % gap, the R5 bracket, buying yesterday's fair value",
+      "source": "roz",
+      "in": 3922.4,
+      "out": 3963.4,
+      "why": "the close, on his RGTX chart: long at 347, buying yesterday's fair value, a $12 risk box, straight up",
+      "status": "bite of intraday-decision-tree-v2 s24 (+257.4..+298.4 s); the twin s05a carries it"
+    },
+    {
+      "id": "s05a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT on his chart: WALK on his chart: RGTX 2025-10-13, a 10 % gap, the R5 bracket, buying yesterday's fair value",
+      "source": "roz",
+      "in": 3922.4,
+      "out": 3963.4,
+      "why": "the close, on his RGTX chart: long at 347, buying yesterday's fair value, a $12 risk box, straight up",
+      "anim_of": {
+        "course": "intraday-decision-tree-v2",
+        "scene": "s24"
+      },
+      "animation_brief": "the intraday-decision-tree-v2 s24 scene, started at its +257.4 s",
+      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py"
+    },
+    {
+      "id": "s06",
+      "type": "slide",
+      "include": true,
+      "label": "End card",
+      "slide_id": "end",
+      "duration": 8,
+      "layout": "end",
+      "text": {
+        "kicker": "",
+        "title": "Intraday Decision Tree, Part 1",
+        "subtitle": "owlgrouptrading.com",
+        "body": "Seven chapters, about 80 minutes, with Dr. Ken Long."
+      }
+    }
+  ]
+}

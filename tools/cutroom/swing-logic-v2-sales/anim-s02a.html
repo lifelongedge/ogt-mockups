@@ -22,6 +22,7 @@
   .pip #pip { display:block; } .pip #cap { right:360px; font-size:29px; }
   text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; fill:#E1EEF5; }
   .mono { font-family:ui-monospace,Menlo,Consolas,monospace; }
+  #third { display:none; }
 </style>
 </head>
 <body>
@@ -29,17 +30,17 @@
   <div id="cap"></div>
   <div id="pip">Ken on camera, composited at render</div>
   <div id="scene"><svg id="svg" width="1160" height="530" viewBox="0 0 1160 530"></svg></div>
+  <div id="third"></div>
   <div id="sub"></div>
   <div id="fade"></div>
 </div>
 <script>
-const BUILD = 's02a-2';
+const BUILD = 's02a-3';
 console.log('[s02a] build', BUILD);
 // Overdub twin of s02: Ken's audio src 851.0→873.1; t is seconds after the in-point.
-// Beat times read from the VTT cues on 2026-11-17 (tools/cutroom/swing-logic-v2-sales/transcript-src.json).
+// Beat times read from the VTT cues on 2026-11-18 (tools/cutroom/swing-logic-v2-sales/transcript-src.json).
 window.ANIM_DURATION = 22.1;
-
-const ACC='#F2D06B', FG='#E1EEF5', MUT='#8fa3ad', OK='#4ade80', DN='#f87171', BLUE='#7baad4', BRD='rgba(56,225,255,.22)', CARD='#0a1016';
+const ACC='#F2D06B', FG='#E1EEF5', MUT='#8fa3ad', OK='#4ade80', DN='#f87171', BLUE='#7baad4', BRD='rgba(56,225,255,.22)', CARD='#0a1016', TXS=1, WRAP=['',''];
 const W=1160, H=530;
 const $ = id => document.getElementById(id);
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
@@ -49,7 +50,7 @@ const pr=(t,t0,d)=>ease((t-t0)/(d||0.6));          // eased progress 0..1 from t
 const on=(t,t0)=>t>=t0;
 const op=(t,t0,d)=>clamp((t-t0)/(d||0.5),0,1);      // linear opacity ramp
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
-const txt=(x,y,s,o={})=>`<text x="${x}" y="${y}" font-size="${o.sz||20}" fill="${o.c||FG}" opacity="${o.o==null?1:o.o}" text-anchor="${o.a||'start'}" font-weight="${o.w||400}" class="${o.cls||''}" ${o.extra||''}>${esc(s)}</text>`;
+const txt=(x,y,s,o={})=>`<text x="${x}" y="${y}" font-size="${(o.sz||20)*TXS}" fill="${o.c||FG}" opacity="${o.o==null?1:o.o}" text-anchor="${o.a||'start'}" font-weight="${o.w||400}" class="${o.cls||''}" ${o.extra||''}>${esc(s)}</text>`;
 const rect=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.r==null?6:o.r}" fill="${o.f||'none'}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}" ${o.extra||''}/>`;
 const circ=(x,y,r,o={})=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${o.f||FG}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}"/>`;
 const line=(x1,y1,x2,y2,o={})=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${o.s||MUT}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" ${o.dash?`stroke-dasharray="${o.dash}"`:''} stroke-linecap="round"/>`;
@@ -69,6 +70,7 @@ function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o
 
 const BEATS = [[0.3, "10 days: the longest swing trade we normally experience", ""], [14.2, "A great symbol, sold off five days in a row: <em>an overreaction</em>", "So they start coming in and buying it."], [20.3, "If it gets back to the 10-day high, <em>we're not allowed to be surprised</em>", ""]];
 const __D = (function () {
+const BEATS = [[0.1, "An add-on module: the continuation pattern", ""], [12.3, "The 5-day down: a bullish market, then <em>five days down</em>", ""], [25.4, "We put a little trade box around this thing", ""], [34.1, "Long if it breaks out above the setup day's highest high", ""], [42.2, "Our first target: the swing high, <em>the 10-day high</em>", ""], [60.7, "10 days: the longest swing trade we normally experience", ""], [77.8, "A great symbol, sold off five days in a row: <em>an overreaction</em>", "So they start coming in and buying it."], [83.9, "If it gets back to the 10-day high, <em>we're not allowed to be surprised</em>", ""], [99.7, "A 60 to 65% win rate, a payoff of 1 and 1/2 or 2 to 1", "On any given year or three-month period."]];
 
 const PURP='#b48cff';
 const T=i=>BEATS[Math.min(i,BEATS.length-1)][0];
@@ -136,7 +138,7 @@ window.renderFrame = function (t) {
   let cap = '', sub = '';
   for (const b of BEATS) if (t >= b[0]) { cap = b[1]; sub = b[2] || ''; }
   $('cap').innerHTML = cap; $('sub').textContent = sub;
-  $('svg').innerHTML = draw(t);
+  $('svg').innerHTML = WRAP[0] + draw(t) + WRAP[1];
   const f = $('fade');
   f.style.opacity = t < 0.5 ? 1 - t / 0.5 : (ANIM_DURATION - t < 0.6 ? 1 - (ANIM_DURATION - t) / 0.6 : 0);
 };
