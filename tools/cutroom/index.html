@@ -268,7 +268,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const BUILD = 'cutroom-27';
+const BUILD = 'cutroom-28';
 console.log('[cutroom] build', BUILD);
 window.__edgeBuild = BUILD;
 
@@ -751,6 +751,8 @@ function select(i) {
   $('noSel').style.display = 'none';
   const box = $('insp'); box.style.display = 'block';
   const hasMedia = (s.type==='cut'||s.type==='overdub');
+  // the segment buttons sit in the viewer, above the trims and the transcript, so include/exclude is above the fold (owner, 2026-11-17; cutroom-28)
+  const segBtns = `<button id="inclBtn">${s.include?'Exclude ✗':'Include ✓'}</button><button id="addCardBtn" title="Insert a slide after this segment and type its text">+ Card after</button><button id="upBtn">↑ Move up</button><button id="dnBtn">↓ Move down</button>`;
   const src = hasMedia ? srcById(s.source) : null;
 
   box.innerHTML = `
@@ -788,6 +790,7 @@ function select(i) {
         <div class="rowbtns">
           <button id="playSeg" class="primary">▶ Play segment</button>
           <button id="playCtx">▶ ±5s context</button>
+          ${segBtns}
         </div>
       </div>
       <div class="field"><label>IN point</label>
@@ -840,12 +843,7 @@ function select(i) {
     </div>
     <div class="field"><label>Note to coursecraft (free text, travels with export)</label>
       <textarea id="segNote">${s.note_to_coursecraft||''}</textarea></div>
-    <div class="rowbtns">
-      <button id="inclBtn">${s.include?'Exclude ✗':'Include ✓'}</button>
-      <button id="addCardBtn" title="Insert a slide after this segment and type its text">+ Card after</button>
-      <button id="upBtn">↑ Move up</button>
-      <button id="dnBtn">↓ Move down</button>
-    </div>`;
+    ${hasMedia ? '' : `<div class="rowbtns">${segBtns}</div>`}`;
 
   // wire
   if (hasMedia) {
