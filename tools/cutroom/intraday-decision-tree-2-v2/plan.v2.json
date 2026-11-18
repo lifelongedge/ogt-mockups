@@ -1,7 +1,7 @@
 {
  "schema": "coursecraft-plan-v2",
  "course": "intraday-decision-tree-2-v2",
- "revision": 4,
+ "revision": 5,
  "revised": "2026-11-17",
  "status": "rev 1 (2026-11-17): Part 2 After the Open of the two-part rebuild. Carries rev 1 of intraday-decision-tree-v2's chapters 1-4 (management, tomorrow's list) whole, plus the clock, entries, chop, timeframes and the close from the corpus scan. Style: Desk. Outcome slots OFF until their studies run (5DD on: computed). Walk dates from what is said in the session are checked against the bars before VERIFIED.",
  "title": "The Intraday Decision Tree, Part 2: After the Open (v2)",
@@ -1287,7 +1287,7 @@
   {
    "id": "s47",
    "type": "outcome",
-   "include": true,
+   "include": false,
    "mode": "aggregate",
    "label": "WHAT HAPPENED: 5DD, every instance since 2020",
    "voice": "ava",
@@ -1298,7 +1298,8 @@
    "transition": {
     "type": "fade",
     "dur": 0.6
-   }
+   },
+   "status": "OFF from rev 5: the owner switched it off with the explainers (2026-11-17)"
   },
   {
    "id": "s48",
