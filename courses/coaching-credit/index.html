@@ -133,6 +133,21 @@ td.num, th.num { text-align: right; }
 .trial .box h4 { margin: 0 0 8px; font-size: 15px; }
 .field { border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; color: var(--muted); margin: 6px 0; background: var(--bg); }
 @media (max-width: 760px) { .paths, .trial { grid-template-columns: 1fr; } }
+.opts { display: grid; gap: 10px; margin: 10px 0; }
+.opt { border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; background: var(--bg); }
+.opt .tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; border-radius: 999px; padding: 2px 9px; margin-bottom: 4px; }
+.opt .tag.no { background: var(--line); color: var(--muted); }
+.opt .tag.yes { background: var(--gold); color: #fff; }
+.opt .tag.alt { background: var(--gold-soft); color: var(--gold); }
+.opt p { margin: 4px 0 0; font-size: 14px; }
+.opt.pick { border-color: var(--gold); }
+.timeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.tl { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px; font-size: 14px; position: relative; }
+.tl .d { font-size: 12px; font-weight: 700; color: var(--gold); letter-spacing: .06em; text-transform: uppercase; }
+.tl h5 { margin: 4px 0 6px; font-size: 15px; }
+.tl p { margin: 0; color: var(--muted); font-size: 13px; }
+.example { font-size: 11px; font-weight: 700; color: var(--muted); border: 1px dashed var(--line); border-radius: 4px; padding: 1px 6px; margin-left: 6px; text-transform: none; letter-spacing: 0; }
+@media (max-width: 760px) { .timeline { grid-template-columns: 1fr 1fr; } }
 .controls { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
 .ctl { display: block; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
 .seg { display: inline-flex; flex-wrap: wrap; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
@@ -181,10 +196,23 @@ td.num, th.num { text-align: right; }
     <div class="pick"><b>100 × $10</b><span>c) a hundred customers paying $10</span></div>
   </div>
   <p>For the long term, <b>c is the better option because it touches far more people.</b> Each of the hundred is someone who has seen the work, can buy the next course, can move toward coaching, and can tell another trader about it.</p>
-  <p>The list (773 active subscribers) is too small for fine-grained price tests, so the price is set by this principle rather than by an A/B/C split.</p>
+  <h2 style="margin-top:16px">How we find the right price</h2>
+  <div class="opts">
+    <div class="opt"><span class="tag no">Not now</span>
+      <b>1 · A/B/C price split on the list.</b>
+      <p>About 700 on the list. Even at 3% that is 21 buyers, about 7 per price across three prices: too few to tell the prices apart. The measured rate is lower: 12 people have bought anything since May. And members forward emails to each other, so different people seeing different prices would need explaining.</p></div>
+    <div class="opt"><span class="tag yes">Do</span>
+      <b>2 · A four-question price survey.</b>
+      <p>At what price is a course too cheap to trust, a bargain, getting expensive, too expensive? Expect perhaps 30 to 70 replies. It is what people say rather than what they do, so it sets the range, not the price.</p></div>
+    <div class="opt"><span class="tag alt">Fallback</span>
+      <b>3 · A $9 first course.</b>
+      <p>It works, but it lowers what every new customer pays for their first course, and a second email address gets it again. Kept in reserve.</p></div>
+    <div class="opt pick"><span class="tag yes">Do</span>
+      <b>4 · "Send me a free chapter" on every course, then a follow-up.</b>
+      <p>Delivered automatically. If they have not bought after a while: a reminder at $49, then one time-limited lower offer, with the offer price varied between requesters. Everyone in the data is already interested, so this is a targeted test of price sensitivity: buying at $49 is the win, answering the offer tells us which price works. The offer stays occasional, so people do not learn to wait for it. Panels 1b and 1c show it.</p></div>
+  </div>
   <h2 style="margin-top:16px">A first-time buyer judging quality</h2>
-  <p>Someone who has never bought from us cannot tell what a course is worth before paying for it. Rather than a first-buyer discount, which a second email address gets around, <b>parts of each course are free to try on request</b>: the person asks, and we send them a sample (for example the first chapter) to watch.</p>
-  <p>Asking twice from another address gets the same free sample again, so there is nothing to abuse. Each request also tells us who is interested in which course, which a discount code does not. Panel 1b shows the request and what gets sent.</p>
+  <p>Someone who has never bought from us cannot tell what a course is worth before paying for it. The free chapter answers that: they watch part of the real course before deciding. Asking twice from another address gets the same chapter again, so there is nothing to abuse, and every request tells us who is interested in which course.</p>
 </section>
 
 <!-- 1. Sales page -->
@@ -243,6 +271,25 @@ td.num, th.num { text-align: right; }
     <p class="tiny" style="margin:0">Behind it: the link opens chapter 1 only (a sample token, no purchase); each request is logged against the course, so the dashboard shows who asked for which sample and who went on to buy.</p>
   </div>
 </div>
+
+<div class="label">1c · After the free chapter <i>— the follow-up, and what the dashboard counts</i></div>
+<div class="timeline">
+  <div class="tl"><div class="d">Day 0</div><h5>Chapter 1 sent</h5><p>Automatically, on request. Nothing else that day.</p></div>
+  <div class="tl"><div class="d">Day 7</div><h5>Reminder at $49</h5><p>"Here is what the rest of the course covers." Only if they have not bought.</p></div>
+  <div class="tl"><div class="d">Day 14</div><h5>One lower offer, 72 hours</h5><p>Price alternates between requesters: one gets $29, the next $19. Only if they have not bought.</p></div>
+  <div class="tl"><div class="d">Day 30</div><h5>Done</h5><p>No more offers for that course. The daily note continues as usual.</p></div>
+</div>
+<div class="scroll" style="margin-top:12px">
+<table>
+  <thead><tr><th>Course <span class="example">example numbers</span></th><th class="num">Free chapters sent</th><th class="num">Bought at $49</th><th class="num">Took $29 offer</th><th class="num">Took $19 offer</th><th class="num">Revenue per request</th></tr></thead>
+  <tbody>
+    <tr><td>Intraday Decision Tree — Part 1</td><td class="num">40</td><td class="num">4 of 40</td><td class="num">3 of 18</td><td class="num">4 of 18</td><td class="num">$8.98</td></tr>
+    <tr><td>Swing Trading Logic</td><td class="num">25</td><td class="num">2 of 25</td><td class="num">1 of 11</td><td class="num">3 of 12</td><td class="num">$7.36</td></tr>
+    <tr><td>Mental Model for Traders — Part 1</td><td class="num">31</td><td class="num">5 of 31</td><td class="num">2 of 13</td><td class="num">1 of 13</td><td class="num">$10.39</td></tr>
+  </tbody>
+</table>
+</div>
+<p class="tiny">The offer columns count only people who had not bought by day 14 and received that price. Revenue per request is the number to compare: it says which mix of $49 and the follow-up price brings in the most per person who asked. Example numbers only; nothing is live.</p>
 
 <div class="label">2 · Store cards <i>— /store, one line added under each price</i></div>
 <div class="cards" id="cards"></div>
