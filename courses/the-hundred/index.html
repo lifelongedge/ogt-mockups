@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Hundred — a trading business that writes itself</title>
+<style>
+/* Tokens mirror edge-s2desktop/app/edges2.css (Owl accent, Ink base, cream light). Dark-first, as the app is. */
+:root {
+  --font: "Segoe UI", system-ui, sans-serif; --mono: Consolas, "JetBrains Mono", monospace;
+  --accent: #3a8f8a; --accent-grad: linear-gradient(180deg, #4a9e99 0%, #3a8f8a 100%);
+  --page: #1b2029; --bg: #070a10; --surface: #10141c; --raised: #171c26; --inset: #05070b;
+  --fg: #e9e4da; --fg2: #c4bdb2; --muted: #8B9AB5;
+  --border: rgba(255,255,255,0.14); --border-strong: rgba(255,255,255,0.22);
+  --input: rgba(255,255,255,0.05); --hover: rgba(255,255,255,0.04);
+  --ok: #4ade80; --danger: #f87171; --warn: #fbbf24; --info: #60a5fa; --gold: #f5b944;
+  --chrome: #0c1017; --grid: rgba(255,255,255,0.06);
+  --r-snug: 4px; --r-ctl: 6px; --r-box: 12px; --r-pill: 999px;
+}
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) {
+  --page: #e4e0d7; --bg: #f0ede6; --surface: #faf8f3; --raised: #ffffff; --inset: #e8e5dd;
+  --fg: #1a1a1a; --fg2: #4a4540; --muted: #7a6e62;
+  --border: rgba(168,155,138,0.30); --border-strong: rgba(168,155,138,0.45);
+  --input: rgba(0,0,0,0.03); --hover: rgba(0,0,0,0.03); --chrome: #e6e2da; --gold: #b8860b;
+  --ok: #15803d; --danger: #b91c1c; --warn: #b45309; --info: #1d4ed8; --grid: rgba(0,0,0,0.06);
+} }
+:root[data-theme="light"] {
+  --page: #e4e0d7; --bg: #f0ede6; --surface: #faf8f3; --raised: #ffffff; --inset: #e8e5dd;
+  --fg: #1a1a1a; --fg2: #4a4540; --muted: #7a6e62;
+  --border: rgba(168,155,138,0.30); --border-strong: rgba(168,155,138,0.45);
+  --input: rgba(0,0,0,0.03); --hover: rgba(0,0,0,0.03); --chrome: #e6e2da; --gold: #b8860b;
+  --ok: #15803d; --danger: #b91c1c; --warn: #b45309; --info: #1d4ed8; --grid: rgba(0,0,0,0.06);
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--fg); font: 13px/1.45 var(--font); padding-block: 28px 60px; padding-inline: 16px; }
+.wrap { max-width: 1180px; margin: 0 auto; }
+h1 { font-size: 26px; margin: 0 0 4px; letter-spacing: -.01em; text-wrap: balance; }
+.lede { color: var(--fg2); max-width: 82ch; margin: 0 0 8px; font-size: 14px; }
+.facts { display: flex; flex-wrap: wrap; gap: 8px 22px; color: var(--muted); font-size: 12px; margin: 10px 0 26px; }
+.facts b { color: var(--fg2); font-weight: 600; }
+h2 { font-size: 13px; color: var(--muted); font-weight: 600; margin: 0 0 6px; letter-spacing: .05em; text-transform: uppercase; }
+h2 .n { color: var(--gold); font-family: var(--mono); margin-right: 8px; }
+.sheet { margin: 0 0 44px; }
+.sheet > .cap { color: var(--fg2); font-size: 12.5px; margin: 0 0 12px; max-width: 100ch; }
+.frame { background: var(--bg); border: 1px solid var(--border-strong); border-radius: var(--r-box); overflow: hidden; }
+.topbar { height: 36px; background: var(--chrome); display: flex; align-items: center; padding: 0 12px; border-bottom: 1px solid var(--border); font-size: 12.5px; color: var(--fg2); gap: 8px; }
+.logo { width: 22px; height: 22px; border-radius: 5px; background: var(--inset); border: 1px solid var(--border); display: inline-flex; align-items: center; justify-content: center; font: 700 11px var(--mono); }
+.logo i { font-style: normal; color: var(--fg); } .logo b { color: var(--gold); }
+.menu { display: flex; gap: 16px; margin-left: 16px; } .menu span { padding: 2px 0; border-bottom: 2px solid transparent; }
+.menu span.on { color: var(--fg); border-bottom-color: var(--accent); }
+.tright { margin-left: auto; display: flex; gap: 10px; align-items: center; }
+.pill { font-size: 10.5px; font-family: var(--mono); padding: 2px 8px; border-radius: var(--r-pill); border: 1px solid var(--border); color: var(--muted); white-space: nowrap; }
+.pill.ok { color: var(--ok); border-color: var(--ok); } .pill.gold { color: var(--gold); border-color: var(--gold); } .pill.warn { color: var(--warn); border-color: var(--warn); }
+button { font: inherit; color: var(--fg); background: var(--input); border: 1px solid var(--border); border-radius: var(--r-ctl); padding: 4px 10px; cursor: pointer; }
+button:hover { background: var(--hover); border-color: var(--border-strong); }
+button.primary, button.on { background: var(--accent-grad); border-color: transparent; color: #fff; }
+button.mini { padding: 2px 8px; font-size: 11px; }
+button:disabled { opacity: .45; cursor: not-allowed; }
+button:focus-visible { outline: 2px solid var(--info); outline-offset: 1px; }
+code { font-family: var(--mono); font-size: 11px; background: var(--inset); padding: 1px 5px; border-radius: var(--r-snug); }
+.fine { font-size: 11.5px; color: var(--muted); }
+.tag { font-size: 9.5px; font-weight: 700; letter-spacing: .04em; padding: 1px 6px; border-radius: var(--r-snug); border: 1px solid currentColor; font-family: var(--mono); white-space: nowrap; }
+.tag.ok { color: var(--ok); } .tag.muted { color: var(--muted); } .tag.gold { color: var(--gold); } .tag.info { color: var(--info); } .tag.warn { color: var(--warn); } .tag.danger { color: var(--danger); } .tag.accent { color: var(--accent); }
+.app { display: grid; grid-template-columns: 190px 1fr 320px; min-height: 560px; }
+.app.two { grid-template-columns: 1fr 340px; }
+.app > * { min-height: 0; }
+.rail { background: var(--surface); border-right: 1px solid var(--border); padding: 8px 0; font-size: 12px; }
+.rail .grp { font-size: 10.5px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); padding: 8px 12px 4px; }
+.rail .it { padding: 4px 12px; color: var(--fg2); display: flex; justify-content: space-between; gap: 6px; }
+.rail .it.on { color: var(--fg); background: var(--hover); border-left: 2px solid var(--accent); padding-left: 10px; }
+.rail .it .k { color: var(--muted); font-family: var(--mono); font-size: 10.5px; }
+.center { padding: 14px 16px; overflow: auto; }
+.side { background: var(--surface); border-left: 1px solid var(--border); padding: 12px 14px; font-size: 12px; overflow: auto; }
+.side h3, .center h3 { font-size: 11px; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); margin: 0 0 8px; font-weight: 600; }
+.card { background: var(--raised); border: 1px solid var(--border); border-radius: var(--r-ctl); padding: 10px 12px; margin-bottom: 10px; }
+.card.inset { background: var(--inset); }
+.row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.sp { justify-content: space-between; }
+.kv { display: grid; grid-template-columns: auto 1fr; gap: 3px 12px; font-size: 12px; } .kv b { color: var(--muted); font-weight: 500; }
+.theme { position: fixed; top: 10px; right: 12px; z-index: 5; }
+/* the book grid */
+.book { display: grid; grid-template-columns: 120px repeat(5, 1fr); gap: 6px 8px; align-items: start; }
+.book .hd { font-size: 10.5px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); padding: 0 2px 4px; border-bottom: 1px solid var(--border); }
+.book .cat { font-size: 11.5px; color: var(--fg2); padding-top: 6px; line-height: 1.3; } .book .cat b { display: block; color: var(--fg); } .book .cat .k { color: var(--muted); font-family: var(--mono); font-size: 10px; }
+.cell { display: grid; gap: 4px; padding-top: 4px; }
+.cell.span { grid-column: 2 / -1; grid-template-columns: repeat(6, 1fr); }
+.tile { border: 1px solid var(--border); border-radius: var(--r-snug); padding: 4px 6px; font-size: 11px; line-height: 1.25; cursor: pointer; background: var(--surface); display: grid; grid-template-columns: 22px 1fr auto; gap: 4px; align-items: center; min-height: 30px; }
+.tile .n { font-family: var(--mono); font-size: 10px; color: var(--muted); } .tile .t { color: var(--fg2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tile .s { width: 8px; height: 8px; border-radius: 50%; border: 1px solid var(--muted); }
+.tile.kept { border-color: color-mix(in srgb, var(--ok) 50%, transparent); } .tile.kept .s { background: var(--ok); border-color: var(--ok); } .tile.kept .t { color: var(--fg); }
+.tile.open { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 14%, var(--surface)); } .tile.open .s { background: var(--accent); border-color: var(--accent); } .tile.open .t { color: var(--fg); font-weight: 600; }
+.tile.due { border-color: var(--warn); } .tile.due .s { background: var(--warn); border-color: var(--warn); } .tile.due .t { color: var(--fg); }
+.tile.self { border-style: dashed; } .tile.self .s { border-color: var(--info); border-style: dashed; }
+.tile.locked { opacity: .55; } .tile.locked .s { background: transparent; }
+.tile.sel { outline: 2px solid var(--info); outline-offset: 1px; }
+.legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 11px; color: var(--muted); margin: 10px 0 0; align-items: center; }
+.legend i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; border: 1px solid var(--muted); margin-right: 5px; vertical-align: middle; }
+.legend i.kept { background: var(--ok); border-color: var(--ok); } .legend i.open { background: var(--accent); border-color: var(--accent); } .legend i.due { background: var(--warn); border-color: var(--warn); } .legend i.self { border-color: var(--info); border-style: dashed; }
+/* stage meter */
+.meter { display: grid; grid-template-columns: 150px 1fr; gap: 12px; align-items: center; }
+.bars { display: grid; gap: 4px; }
+.bar { display: grid; grid-template-columns: 110px 1fr 60px; gap: 8px; align-items: center; font-size: 11px; color: var(--fg2); }
+.bar .tr { height: 7px; background: var(--inset); border-radius: var(--r-pill); overflow: hidden; border: 1px solid var(--border); position: relative; }
+.bar .tr i { position: absolute; left: 0; top: 0; bottom: 0; background: var(--accent); } .bar .tr b { position: absolute; left: 0; top: 0; bottom: 0; background: color-mix(in srgb, var(--info) 45%, transparent); }
+.bar .v { font-family: var(--mono); font-size: 10.5px; color: var(--muted); text-align: right; }
+/* page beats */
+.beat { border-left: 3px solid var(--border); padding: 2px 0 2px 14px; margin: 0 0 18px; }
+.beat h4 { margin: 0 0 6px; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); display: flex; gap: 10px; align-items: baseline; }
+.beat h4 b { color: var(--fg); font-size: 13px; letter-spacing: 0; text-transform: none; }
+.beat.read { border-color: var(--info); } .beat.do { border-color: var(--accent); } .beat.keep { border-color: var(--gold); } .beat.guard { border-color: var(--warn); }
+.essay p { margin: 0 0 8px; color: var(--fg2); max-width: 78ch; } .essay p.sub { color: var(--fg); font-style: italic; }
+.media { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 8px; }
+.media .m { background: var(--inset); border: 1px solid var(--border); border-radius: var(--r-ctl); padding: 8px 10px; font-size: 11.5px; }
+.media .m .vid { aspect-ratio: 16/9; background: var(--chrome); border-radius: var(--r-snug); display: flex; align-items: center; justify-content: center; color: var(--muted); font-family: var(--mono); font-size: 11px; margin-bottom: 6px; border: 1px solid var(--border); }
+.media .m .ttl { color: var(--fg); } .media .m .src { color: var(--muted); font-size: 10.5px; }
+table { border-collapse: collapse; width: 100%; font-size: 11.5px; }
+th { text-align: left; color: var(--muted); font-weight: 600; font-size: 10.5px; letter-spacing: .05em; text-transform: uppercase; padding: 4px 6px; border-bottom: 1px solid var(--border); }
+td { padding: 4px 6px; border-bottom: 1px solid var(--grid); vertical-align: middle; }
+td.mono, .mono { font-family: var(--mono); font-size: 11px; } td.neg { color: var(--danger); } td.pos { color: var(--ok); }
+select, input[type=text], textarea { font: inherit; color: var(--fg); background: var(--input); border: 1px solid var(--border); border-radius: var(--r-ctl); padding: 3px 6px; }
+select { font-size: 11px; } textarea { width: 100%; min-height: 70px; resize: vertical; }
+.dist { display: grid; gap: 4px; margin-top: 8px; } .dist .d { display: grid; grid-template-columns: 150px 1fr 30px; gap: 8px; align-items: center; font-size: 11.5px; }
+.dist .tr { height: 8px; background: var(--inset); border: 1px solid var(--border); border-radius: var(--r-pill); overflow: hidden; } .dist .tr i { display: block; height: 100%; background: var(--warn); width: 0; transition: width .25s; }
+.dist .d.top .tr i { background: var(--danger); }
+.gate { background: var(--inset); border: 1px dashed var(--border-strong); border-radius: var(--r-ctl); padding: 10px 12px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.gate .req { display: flex; gap: 6px; align-items: center; font-size: 12px; } .gate .req i { width: 14px; height: 14px; border-radius: 50%; border: 1px solid var(--muted); display: inline-block; }
+.gate .req.met i { background: var(--ok); border-color: var(--ok); }
+.switch { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; } .switch i { width: 30px; height: 16px; border-radius: var(--r-pill); background: var(--inset); border: 1px solid var(--border-strong); position: relative; }
+.switch i::after { content: ""; position: absolute; top: 2px; left: 2px; width: 10px; height: 10px; border-radius: 50%; background: var(--muted); transition: left .15s; }
+.switch.on i { background: var(--accent); border-color: var(--accent); } .switch.on i::after { left: 16px; background: #fff; }
+/* calendar */
+.cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+.cal .dh { font-size: 10px; color: var(--muted); text-align: center; text-transform: uppercase; letter-spacing: .06em; }
+.cal .dy { min-height: 54px; background: var(--surface); border: 1px solid var(--grid); border-radius: var(--r-snug); padding: 3px 4px; font-size: 10.5px; }
+.cal .dy .d { color: var(--muted); font-family: var(--mono); } .cal .dy.today { border-color: var(--accent); } .cal .dy.wk { background: var(--inset); }
+.cal .ev { display: block; margin-top: 2px; padding: 1px 4px; border-radius: 3px; background: color-mix(in srgb, var(--accent) 22%, transparent); color: var(--fg); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cal .ev.due { background: color-mix(in srgb, var(--warn) 28%, transparent); } .cal .ev.late { background: color-mix(in srgb, var(--danger) 28%, transparent); } .cal .ev.daily { background: var(--hover); color: var(--fg2); }
+.q { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--grid); font-size: 12px; }
+.q .opts { display: flex; gap: 4px; } .q .opts button { padding: 2px 8px; font-size: 11px; }
+.q .opts button.on { background: var(--accent-grad); color: #fff; border-color: transparent; }
+.q .stg { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-left: 6px; }
+.binder { background: var(--raised); border: 1px solid var(--border-strong); border-radius: var(--r-ctl); padding: 16px 18px; font-family: Georgia, "Times New Roman", serif; color: var(--fg); max-width: 520px; }
+.binder .cv { border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-bottom: 10px; } .binder .cv .t { font-size: 20px; } .binder .cv .s { color: var(--muted); font: 11px var(--mono); }
+.binder ol { margin: 0; padding-left: 18px; font-size: 12.5px; line-height: 1.6; } .binder ol .st { color: var(--muted); font: 10.5px var(--mono); margin-left: 6px; }
+.binder .pg { margin-top: 12px; padding: 10px 12px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-snug); font-size: 12px; line-height: 1.5; }
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; } .cols3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+@media (max-width: 900px) { .app, .app.two { grid-template-columns: 1fr; } .rail { display: none; } .cols, .cols3, .media { grid-template-columns: 1fr; } .book { grid-template-columns: 90px repeat(5, 1fr); } }
+.note { font-size: 12px; color: var(--fg2); background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-ctl); padding: 8px 12px; margin: 10px 0 0; }
+.opt { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-ctl); padding: 10px 12px; } .opt h4 { margin: 0 0 6px; font-size: 13px; } .opt p { margin: 0 0 6px; color: var(--fg2); font-size: 12px; }
+</style>
+</head>
+<body>
+<button class="theme mini" id="themeBtn">Light / dark</button>
+<div class="wrap">
+<h1>The Hundred — a trading business that writes itself</h1>
+<p class="lede">The 100 essays become 100 <b>pages</b> of a book the trader fills in, inside Edge S2 Desktop. A page is read, then <b>done</b>, and what is done is <b>kept</b>: a written artifact in the trader's own Binder. Pages open when they are earned — by an artifact, by a date, or by evidence in the trader's own Journal — and some pages open themselves on the day the Journal shows the trader needs them. The free edition is the placement and the tips at a glance; the paid edition is the book with its automation.</p>
+<div class="facts">
+  <span><b>Source</b> 100 essays, 123,871 words, the same four parts in every one: thesis · the practice · the test · two structural guards</span>
+  <span><b>Shell</b> S2 Desktop Learn dock (SD-011), the Journal record (SD-042), the Drill (SD-041), calendar, alerts</span>
+  <span><b>Stages</b> 7 disciplines × Novice · Apprentice · Journeyman · Expert · Master; 12 universal pages</span>
+  <span><b>Data on this page</b> a stand-in Journal of 31 drills; every number is invented for the mockup</span>
+</div>
+
+<!-- ===================== SHEET 1: THE BOOK ===================== -->
+<section class="sheet" id="s1">
+  <h2><span class="n">1</span>The Book: 100 pages, four ways to open one</h2>
+  <p class="cap">The home of the module in the Learn dock. Each tile is a page. A page is <b>kept</b> when its artifact is in the Binder, <b>open</b> when it is the trader's current work, <b>due</b> when its date has come, and <b>locked</b> with its unlock rule shown on click. Dashed tiles are the pages that open themselves on an event in the Journal. Click any tile; press <i>Keep this page</i> on the open one to watch the book advance.</p>
+  <div class="frame">
+    <div class="topbar"><span class="logo"><i>S</i><b>2</b></span><div class="menu"><span>Viewer</span><span>Drills</span><span class="on">Learn</span><span>Journal</span><span>Market</span><span>Help</span></div><div class="tright"><span class="pill gold">Owl Methods · Best</span><span class="pill">The Hundred · edition 1</span></div></div>
+    <div class="app">
+      <div class="rail">
+        <div class="grp">Learn</div>
+        <div class="it">Foundations <span class="k">19/19</span></div>
+        <div class="it">Swing <span class="k">—</span></div>
+        <div class="it on">The Hundred <span class="k" id="railCount">—</span></div>
+        <div class="it">Journal <span class="k">31</span></div>
+        <div class="grp">Today</div>
+        <div class="it">Stand-to <span class="k">07:55</span></div>
+        <div class="it">Score the day <span class="k">16:05</span></div>
+        <div class="grp">Binder</div>
+        <div class="it">Artifacts <span class="k" id="railArt">—</span></div>
+        <div class="it">Export</div>
+      </div>
+      <div class="center">
+        <div class="card">
+          <div class="meter">
+            <div><h3>Stage by discipline</h3><div class="fine">solid = earned (artifacts kept) · pale = claimed at placement</div></div>
+            <div class="bars" id="bars"></div>
+          </div>
+        </div>
+        <div class="book" id="book"></div>
+        <div class="legend"><span><i class="kept"></i>kept</span><span><i class="open"></i>open</span><span><i class="due"></i>due</span><span><i></i>locked</span><span><i class="self"></i>opens itself on a Journal event</span></div>
+        <div class="card inset" id="tileInfo" style="margin-top:12px">Click a page.</div>
+      </div>
+      <div class="side">
+        <h3>Next</h3>
+        <div class="card" id="nextCard"></div>
+        <h3>Due</h3>
+        <div class="card">
+          <div class="kv"><b>Sat 21 Nov</b><span>#76 Weekly review <span class="tag warn">due</span></span><b>Sun 22 Nov</b><span>#9 Plan the week</span><b>Tue 1 Dec</b><span>#14 Monthly board review</span><b>Day 22 / 30</b><span>#74 the 30-day error audit, running</span><b>31 / 100</b><span>#64 the scaling gate, counting</span></div>
+        </div>
+        <h3>Binder</h3>
+        <div class="card" id="binderList"></div>
+        <div class="row"><button class="primary mini" id="keepBtn">Keep this page</button><button class="mini" id="resetBtn">Reset</button></div>
+        <div class="fine" style="margin-top:8px">The Binder is the product: a written trading business, one page at a time, exportable at any time (sheet 5).</div>
+      </div>
+    </div>
+  </div>
+  <div class="note"><b>The four unlock kinds.</b> <span class="tag gold">keep</span> the page before it has its artifact in the Binder (62 pages). <span class="tag warn">days</span> the page's date has come: the weekly, the monthly board, the quarterly, the annual (14). <span class="tag info">evidence</span> the Journal shows the condition — 100 trades, 20 scored days, a tagged month of mistakes (17). <span class="tag accent">stage</span> the discipline's earlier pages are kept and placement agrees (7). Six pages also open <b>on an event</b>: #63 the first five-loss cluster, #54 a loss followed by a re-entry inside five minutes, #52 a +5R day, #79 a 10% drawdown, #91 three stop-moves in a week, #81 any drift signal.</div>
+</section>
+
+<!-- ===================== SHEET 2: A JOURNAL-FED PAGE ===================== -->
+<section class="sheet" id="s2">
+  <h2><span class="n">2</span>A page: #69 Name the Broken Rule — the book picks the trader's mistakes for them</h2>
+  <p class="cap">Every page has the same four beats, lifted from the essay's own structure. <b>Read</b> is the essay with its reinforcement. <b>Do</b> is the essay's "practice", here fed by the Journal: the trader's last 30 drills with the deviations the engine can see, and the five names the essay gives them. <b>Keep</b> writes the artifact. <b>Guard</b> turns the essay's two structural guards into standing watches. Tag the rows and watch the distribution and the gate change.</p>
+  <div class="frame">
+    <div class="topbar"><span class="logo"><i>S</i><b>2</b></span><div class="menu"><span>Viewer</span><span>Drills</span><span class="on">Learn</span><span>Journal</span><span>Market</span><span>Help</span></div><div class="tright"><span class="pill">Assessment · Novice · page 69 of 100</span><span class="pill ok">Journal: 31 drills read</span></div></div>
+    <div class="app two">
+      <div class="center">
+        <div class="row sp" style="margin-bottom:10px"><div><span class="tag info">evidence</span> <b style="font-size:16px;margin-left:6px">Name the Broken Rule</b></div><div class="fine">opened by: your 30th drill in the Journal (2026-11-17)</div></div>
+        <div class="essay" style="margin-bottom:14px"><p class="sub">Vague mistakes become identity damage. Named mistakes become bounded errors. Name your bias to tame your bias.</p></div>
+
+        <div class="beat read"><h4>Read <b>the essay, 1,519 words, 6 min</b> <span class="tag muted">read 2026-11-18</span></h4>
+          <div class="essay"><p>You cannot let go of a problem until you know exactly what it is. And you do not know what an error is until you put it into words, combine it into a little package, and name it. Five names you can use today: <b>The Victory Lap</b> (confirmation bias) · <b>The Favorite Son</b> (anchoring) · <b>The Illusion of Certainty</b> · <b>The Sloppy Mistake</b> (capacity failure) · <b>Revenge Trading</b> (loss aversion).</p></div>
+          <div class="media">
+            <div class="m"><div class="vid">animated · 1:10</div><div class="ttl">Five names for a broken rule</div><div class="src">Ink Board explainer, built with anim-overdub from the essay's own words</div></div>
+            <div class="m"><div class="vid">Ken · 04:06 → 05:14</div><div class="ttl">Ken on fault modes</div><div class="src">corpus apk9GWC17Zw, mapped to #74; the #69 clip was rejected at verification, so none is shown as his</div></div>
+            <div class="m"><div class="vid">Ask</div><div class="ttl">Oracle prompt for this page</div><div class="src">Connect AI answers over this page and the trader's own Binder (SD-010)</div></div>
+          </div>
+        </div>
+
+        <div class="beat do"><h4>Do <b>tag your last 30 drills with the name of what broke</b> <span class="fine" id="tagCount">0 of 8 flagged rows tagged</span></h4>
+          <div class="fine" style="margin-bottom:6px">Rows come from the Journal (SD-042). The engine flags what it can see in the Drill's legs against the coach orders: a stop moved, size above the plan, an entry before the signal bar, no stop at entry, a re-entry inside five minutes. The trader supplies the name; the book never grades (SD-009).</div>
+          <table id="drills"><thead><tr><th>Date</th><th>Drill</th><th>R</th><th>Engine saw</th><th>Name it</th></tr></thead><tbody></tbody></table>
+          <div class="dist" id="dist"></div>
+        </div>
+
+        <div class="beat keep"><h4>Keep <b>My mistake taxonomy, v1</b> <span class="tag gold">artifact</span></h4>
+          <div class="fine" style="margin-bottom:6px">Written by the trader, prefilled from the tags above. Saved to the Binder with the date; v2 is written at the 30-day audit (#74), which this page schedules.</div>
+          <textarea id="artifact">My two dominant mistakes this month are …
+When I see the Victory Lap forming I will …
+The rule that is too vague to break: "manage risk appropriately" → rewrite as …</textarea>
+          <div class="row" style="margin-top:6px"><button class="primary" id="saveArt">Save to Binder</button><span class="fine" id="saveMsg"></span></div>
+        </div>
+
+        <div class="beat guard"><h4>Guard <b>two standing rules this page installs</b></h4>
+          <div class="card"><label class="switch on" data-sw><i></i><span><b>Victory-lap check.</b> After any drill or paper trade that pays more than 3R, the bell asks one question before the Journal takes the entry: <i>was every rule followed?</i> A "no" is tagged, not hidden.</span></label></div>
+          <div class="card"><label class="switch on" data-sw><i></i><span><b>Sloppy-mistake brake.</b> Three Sloppy Mistakes in one week sizes the paper trader down by half until the weekly review (#76) clears it. Ties to #63.</span></label></div>
+          <div class="fine">Re-test: the essay's "test" paragraph returns as a two-line check on 18 Dec, and again at the quarterly.</div>
+        </div>
+
+        <div class="gate"><span class="fine">Page 70 opens when</span><span class="req" id="reqA"><i></i>the taxonomy is in the Binder</span><span class="req" id="reqB"><i></i>every flagged row has a name</span><span class="req met"><i></i>the essay is read</span><span class="fine" style="margin-left:auto">then seven trading days of tagged entries before #74</span></div>
+      </div>
+      <div class="side">
+        <h3>Where this page gets its data</h3>
+        <div class="card"><div class="kv"><b>Journal</b><span>31 entries since 21 Oct, bundled bars, coach reference</span><b>Drill legs</b><span>entry · stop · exits vs coach orders (SD-041 <code>watch_orders</code>)</span><b>Unit</b><span>R, Coach box, named per row</span><b>Reads</b><span>nothing else; a watched run writes no entry (SD-080)</span></div></div>
+        <h3>Your month</h3>
+        <div class="card"><div class="kv"><b>Drills</b><span>31</span><b>Sum</b><span class="mono">+6.4R</span><b>Mean</b><span class="mono">+0.21R</span><b>Win</b><span class="mono">52%</span><b>Worst</b><span class="mono">−1.3R (stop moved)</span><b>Keep</b><span class="mono">61%</span></div></div>
+        <h3>What the five names do next</h3>
+        <div class="card"><div class="fine">#74 Classify the Errors (opens in 8 days) runs the 30-day audit on these tags. #81 Catch Drift Early watches the weekly count of each name. #72 Score the Day asks for the name whenever a day scores under 5. The names are the trader's; the book only carries them forward.</div></div>
+        <h3>Honesty</h3>
+        <div class="card"><div class="fine">The engine reports what it saw in the legs. It never says a trade was a mistake, never calls a direction, never grades (SD-009). The trader names; the book remembers.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SHEET 3: THE CADENCE ===================== -->
+<section class="sheet" id="s3">
+  <h2><span class="n">3</span>The dated pages: the book installs a calendar, then keeps it</h2>
+  <p class="cap">Fourteen pages are rhythms, not one-offs: the daily stand-to and score, the Sunday plan and Friday transition (#9), the weekly review (#76), the monthly board (#14), the quarterly audit (#80), the annual postmortem (#86), plus the counters (#74 thirty days, #64 one hundred trades, #68 six months). The module puts them on the S2 calendar, prefills each template from the Journal, and an overdue one shows as drift (#81), which is the first drift signal the essay names.</p>
+  <div class="frame">
+    <div class="topbar"><span class="logo"><i>S</i><b>2</b></span><div class="menu"><span>Viewer</span><span>Drills</span><span class="on">Learn</span><span>Journal</span><span>Market</span><span>Help</span></div><div class="tright"><span class="pill warn">#76 weekly review due Sat</span><span class="pill">Nov 2026</span></div></div>
+    <div class="app two">
+      <div class="center">
+        <h3>November, as the book keeps it</h3>
+        <div class="cal" id="cal"></div>
+        <div class="legend" style="margin-top:8px"><span><i style="background:color-mix(in srgb,var(--accent) 22%,transparent);border:0"></i>scheduled by a page</span><span><i style="background:color-mix(in srgb,var(--warn) 28%,transparent);border:0"></i>due</span><span><i style="background:color-mix(in srgb,var(--danger) 28%,transparent);border:0"></i>missed → drift signal</span><span><i style="background:var(--hover);border:0"></i>daily ritual</span></div>
+        <h3 style="margin-top:16px">#76 Weekly review — the 15-minute template, prefilled</h3>
+        <div class="cols">
+          <div class="card"><div class="kv"><b>Week</b><span>16–20 Nov · 4 sessions traded, 1 skipped (Wed, stand-to not run)</span><b>Drills</b><span class="mono">9 · +2.1R · keep 58%</span><b>Scores</b><span class="mono">7 · 8 · 4 · 7 (mean 6.5, Thu under 5: "Favorite Son")</span><b>Names</b><span>Favorite Son ×2 · Sloppy ×1 · Victory Lap ×1</span><b>Drift</b><span><span class="tag danger">1 signal</span> stop moved on Thu (#81 rule 3)</span></div></div>
+          <div class="card"><div class="fine" style="margin-bottom:4px">Step 1 · Sustain (what worked, in one line)</div><textarea style="min-height:40px">Took the three K2 drills at the signal bar, no early entries.</textarea><div class="fine" style="margin:6px 0 4px">Step 2 · Improve (one behaviour, one week)</div><textarea style="min-height:40px"></textarea><div class="fine" style="margin:6px 0 4px">Step 3 · Action (goes to Monday's stand-to)</div><textarea style="min-height:40px"></textarea><div class="row" style="margin-top:6px"><button class="primary mini">Keep week 47</button><span class="fine">becomes a Binder page; the sustain line carries to #9 Sunday plan</span></div></div>
+        </div>
+      </div>
+      <div class="side">
+        <h3>Stand-to · the daily card</h3>
+        <div class="card"><div class="fine" style="margin-bottom:6px">Composed from pages 26–31 and 36 once they are kept. Runs at 07:55 on trading days; a skipped stand-to is a drift signal, not a grade.</div>
+          <div class="kv"><b>07:55</b><span>Five minutes of stillness (#27) <button class="mini">start 5:00</button></span><b>08:00</b><span>Pre-session entry (#28): state, bias, intention</span><b>08:05</b><span>Mark the levels (#30) on the Viewer: a <code>place</code> check, the same kind Foundations uses</span><b>08:15</b><span>Pre-flight (#36): feed · connector · alerts · sizes</span><b>16:05</b><span>Score the day 1–10 (#72), the 10-minute review (#67)</span></div></div>
+        <h3>Counters</h3>
+        <div class="card"><div class="kv"><b>#74</b><span>30-day error audit · day 22 of 30</span><b>#64</b><span>scaling gate · 31 of 100 trades, worst −1.3R <span class="tag danger">fails rule 2</span></span><b>#68</b><span>visual library · 41 captures, month 2 of 6</span><b>#82</b><span>30-trade envelope · from trade 30, now live</span></div></div>
+        <h3>What is automatic</h3>
+        <div class="card"><div class="fine">Dates, counters, prefills, drift signals and the guards. Nothing is written for the trader: every Binder page is typed by them, which is the point of the book.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SHEET 4: PLACEMENT ===================== -->
+<section class="sheet" id="s4">
+  <h2><span class="n">4</span>Placement: 35 statements, a stage per discipline, and the free edition</h2>
+  <p class="cap">A trader five years in should not start at page 1. Placement asks one statement per cell of the matrix (seven disciplines × five stages); the answer sets a <i>claimed</i> stage per discipline and opens the book there. The claim is provisional: the stage is <i>earned</i> only when the artifacts below it exist, so an Expert in Planning who has no written maximum-loss number is sent to page 8 first. Answer the statements and watch the meter.</p>
+  <div class="frame">
+    <div class="topbar"><span class="logo"><i>S</i><b>2</b></span><div class="menu"><span>Viewer</span><span>Drills</span><span class="on">Learn</span><span>Journal</span><span>Market</span><span>Help</span></div><div class="tright"><span class="pill">The Hundred · placement</span></div></div>
+    <div class="app two">
+      <div class="center">
+        <h3>Planning · Preparation · Execution (the first three of seven)</h3>
+        <div id="quiz"></div>
+        <div class="fine" style="margin-top:8px">The other four disciplines follow the same shape. A statement is the essay's own "test" paragraph rewritten as something the trader either has or does not have, so placement and the book use one vocabulary.</div>
+      </div>
+      <div class="side">
+        <h3>Your placement</h3>
+        <div class="card"><div class="bars" id="qbars"></div><div class="fine" style="margin-top:8px">solid = earned · pale = claimed</div></div>
+        <h3>What opens</h3>
+        <div class="card" id="qopen"><div class="fine">Answer the statements.</div></div>
+        <h3>The free edition</h3>
+        <div class="card"><div class="fine">The tips at a glance, this placement, and page 1 (<i>Define your why</i>) with its Binder cover: a trader leaves with a stage radar and one written page. The result goes by email with the glance PDF. The book, the Journal wiring, the guards, the calendar and the 100 videos are the paid edition inside S2 Desktop.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SHEET 5: THE BINDER AND THE EDITIONS ===================== -->
+<section class="sheet" id="s5">
+  <h2><span class="n">5</span>The Binder: what the trader owns at the end, and the editions</h2>
+  <p class="cap">Every kept page is a dated entry in one document, the trader's operating manual. It is theirs: Markdown and PDF on their disk, versioned every time a page is re-kept (the weekly adds a page a week). The Binder is what people pay for and what they keep if they leave.</p>
+  <div class="cols">
+    <div class="binder">
+      <div class="cv"><div class="t">Operating Manual · sgdemo</div><div class="s">edition 7 · 2026-11-18 · 23 pages kept · stage: Apprentice (Planning, Execution), Novice (Assessment)</div></div>
+      <ol>
+        <li>Why I trade <span class="st">#1 · 2026-10-19</span></li>
+        <li>My one market: IWM, 30-minute <span class="st">#2 · 2026-10-19</span></li>
+        <li>Trading plan v3, one page <span class="st">#3 · 2026-11-02 (v1 10-20)</span></li>
+        <li>Maximum loss: $12,000, the sacred number <span class="st">#8 · 2026-10-24</span></li>
+        <li>The week: Sun plan · Mon–Thu execute · Fri transition · Sat review <span class="st">#9 · 2026-10-26</span></li>
+        <li>Pre-session entries, 19 of them <span class="st">#28 · daily</span></li>
+        <li>Hard-stop rule and the three stops <span class="st">#45, #61 · 2026-11-05</span></li>
+        <li>My standard risk: $120 (1%) and the 4R daily limit <span class="st">#50, #98 · 2026-11-05</span></li>
+        <li>Weekly reviews, weeks 44–46 <span class="st">#76 · weekly</span></li>
+        <li>My mistake taxonomy, v1 <span class="st">#69 · today, pending</span></li>
+      </ol>
+      <div class="pg"><b>Page 8 · Maximum loss.</b> The largest sum I am willing to lose entirely is $12,000. It is 8% of liquid savings and nine months of the trading budget. If the account reaches $18,000 from $30,000 I stop, move to simulation, and run the drawdown postmortem (#79) before any live trade. Signed 24 Oct 2026. — <i>re-read at the monthly board; unchanged at edition 7.</i></div>
+    </div>
+    <div>
+      <h3 style="font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin:0 0 8px">Editions</h3>
+      <table><thead><tr><th>Piece</th><th>Glance (free)</th><th>The Hundred in S2 (paid)</th></tr></thead><tbody>
+        <tr><td>Tips at a glance, 7×5</td><td>web + PDF</td><td>the book grid</td></tr>
+        <tr><td>Placement, 35 statements</td><td>yes, result by email</td><td>yes, re-taken at the quarterly</td></tr>
+        <tr><td>Essays</td><td>page 1 only</td><td>all 100, in the page's Read beat</td></tr>
+        <tr><td>Videos</td><td>—</td><td>100 animated explainers (60–90 s, Ink Board, anim-overdub); Ken clips where verified; public domain where it fits (Livermore "Patience" for #41, Seykota "Whipsaw" for #53)</td></tr>
+        <tr><td>Do beats fed by the Journal</td><td>—</td><td>#10 #62 #64 #69 #72 #73 #74 #77 #78 #81 #82 #83 #85 #88 and the six event pages</td></tr>
+        <tr><td>Guards as watches</td><td>—</td><td>~40 toggles: hard stop at entry (#45/#97), daily limit (#98), size-down (#63), walk-away (#52), news mute (#51), victory-lap check (#69)…</td></tr>
+        <tr><td>Calendar + counters</td><td>—</td><td>14 rhythm pages on the S2 calendar</td></tr>
+        <tr><td>The Binder</td><td>cover + page 1</td><td>Markdown + PDF, versioned, theirs</td></tr>
+      </tbody></table>
+      <h3 style="font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin:14px 0 8px">Two other framings, for the record</h3>
+      <div class="cols">
+        <div class="opt"><h4>The Dojo</h4><p>Ritual-first: the daily stand-to and the score are the product, the 100 pages are kata earned by practising. Stronger daily habit, weaker for the Planning and Assessment pages that are written work.</p></div>
+        <div class="opt"><h4>The Ladder</h4><p>Stage-first: placement prescribes the next five pages across disciplines, nothing else is visible. Simplest screen, but hides the shape of the whole and the event pages have nowhere to appear.</p></div>
+      </div>
+      <div class="note"><b>Why the Book.</b> The essays already carry a practice, a test and two guards each; the Book keeps the essays' own structure and adds only three things the desktop can do that a web page cannot: read the Journal, keep a date, and hold an artifact.</div>
+    </div>
+  </div>
+</section>
+
+<section class="sheet">
+  <h2><span class="n">6</span>Decisions this mockup needs</h2>
+  <div class="cols3">
+    <div class="opt"><h4>1 · The name and the ladder</h4><p><i>The Hundred</i> with Novice→Master (the tips' own ladder), or Ken's ladder from the 2023-10-29 Foundations Q&amp;A: herd · hobbyist · gambler · novice · journeyman · meister · artist. The tips were written on the first; the second is on tape.</p></div>
+    <div class="opt"><h4>2 · How hard the locks are</h4><p>Locks as shown (earned), locks as suggestions (everything readable, Do and Keep gated), or no locks and the Binder alone shows progress. The mockup argues for earned locks on Do/Keep with every essay readable.</p></div>
+    <div class="opt"><h4>3 · Edition and price</h4><p>Part of the Owl Methods pack, a product of its own in the store, or the Foundations course's sequel. The videos decide the build cost: 100 animated explainers at the s2-intro rate is the long pole.</p></div>
+    <div class="opt"><h4>4 · The six event pages</h4><p>Pages that open themselves on a Journal event (cold streak, revenge re-entry, +5R day, 10% drawdown, three stop-moves, drift). Owner's call whether the book may interrupt a trading day, or only surface them at the next stand-to.</p></div>
+    <div class="opt"><h4>5 · Ken's voice</h4><p>Whose tips these are is not recorded in the source file. If they are Ken's, the Read beat can say so; if not, the videos are OGT's voice with "Ken on…" clips kept apart, as the Chapter 3 pilot did.</p></div>
+    <div class="opt"><h4>6 · The store rework</h4><p>Topicals are parked behind store v2 (2026-07-13). This is a product, not a topical, but the same hands build it. Sequence call.</p></div>
+  </div>
+</section>
+</div>
+
+<script src="tips.js"></script>
+<script>
+(function(){
+  const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+  // theme
+  const root=document.documentElement; $('#themeBtn').onclick=()=>{const cur=root.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'); root.setAttribute('data-theme',cur==='dark'?'light':'dark');};
+  const T=window.TIPS; const byN=Object.fromEntries(T.map(t=>[t.n,t]));
+  const CATS=[[1,'Planning','building the map'],[2,'Preparation','body, mind, systems'],[3,'Execution','acting under pressure'],[4,'Assessment','learning from every step'],[5,'Emotional regulation','universal'],[6,'Risk management','universal'],[7,'Continuous improvement','universal']];
+  const STAGES=['Novice','Apprentice','Journeyman','Expert','Master'];
+  const SELF={63:'the first five-loss cluster in the Journal',54:'a loss followed by a re-entry inside five minutes',52:'a +5R day',79:'a 10% drawdown from the Journal high',91:'three stop-moves in one week',81:'any drift signal (#81’s four)'};
+  const EVID={10:'20 scored days (14 so far)',64:'100 trades, no loss worse than −1R, expectancy > 0.2R, SQN > 2 (31 trades; worst −1.3R)',77:'100 trades in the Journal (31)',82:'30 trades (met — opens with #77)',83:'60 trades',74:'30 days of tagged mistakes (day 22)',88:'300 trades',69:'30 drills (met 2026-11-17)',62:'10 scored trades',72:'7 trading days with the stand-to run',73:'the first win above 3R with a tag',78:'100 trades across 3+ setups',85:'20 scored days and the plan in the Binder',6:'the plan (#3) and 30 trades',20:'300 trades',47:'the sim tier: 50 drills at 1 share',50:'the standard risk written (#8)'};
+  const DAYS={9:'Sunday',76:'Saturday, weekly',14:'the 1st, monthly',80:'quarter end',86:'year end',29:'daily, after the first kept page',67:'daily at 16:05',40:'daily, after the close',36:'daily at 08:15',99:'daily, one behaviour',41:'after #27 is kept for 10 days',44:'the annual, second year',43:'the quarterly, second year',37:'after #9 is kept'};
+  let done=new Set([1,2,3,4,5,6,7,8,9,23,24,25,26,27,28,29,30,31,45,46,47,48,49,50,61,67,68,89,95,96,97,98]);
+  let open=69; let due=new Set([76,14]); let sel=null;
+  const order=[]; CATS.forEach(([c])=>T.filter(t=>t.cat===c).forEach(t=>order.push(t.n)));
+  function state(n){ if(done.has(n)) return 'kept'; if(n===open) return 'open'; if(due.has(n)) return 'due'; if(SELF[n]) return 'self'; return 'locked'; }
+  function reason(t){ const n=t.n; if(SELF[n]) return 'Opens itself on '+SELF[n]+'. Until then it is readable, not keepable.';
+    if(EVID[n]) return 'Opens when the Journal shows '+EVID[n]+'.'; if(DAYS[n]) return 'Opens on its date: '+DAYS[n]+'. The template is prefilled from the Journal.';
+    if(t.kind==='stage') return 'Opens at the '+t.stage+' stage of '+t.catName+': the earlier pages kept and placement agreeing.';
+    const prev=order[order.indexOf(n)-1]; return prev?'Opens when page '+prev+' ('+byN[prev].title+') has its artifact in the Binder.':'Open from the start.'; }
+  function artifactOf(t){ const m={1:'Why I trade',2:'My one market',3:'Trading plan, one page',8:'Maximum loss, the number',9:'The week, structured',11:'Playbook, one entry per setup',13:'Worst-week script',28:'Pre-session entry (daily)',30:'Marked levels (on the Viewer)',34:'Five shock scripts',45:'Hard-stop rule',50:'Standard risk',61:'Three stops per trade',69:'Mistake taxonomy',72:'Day scores',76:'Weekly review',77:'Expectancy on 100 trades',85:'Identity declaration',94:'Identity statement',98:'Daily loss limit'}; return m[t.n]||(t.kind==='days'?'the review page':t.kind==='evidence'?'the computed page, signed':'a written page'); }
+  function render(){
+    const b=$('#book'); b.innerHTML='<div class="hd"></div>'+STAGES.map(s=>'<div class="hd">'+s+'</div>').join('');
+    CATS.forEach(([c,name,sub])=>{ b.insertAdjacentHTML('beforeend','<div class="cat"><b>'+name+'</b><span class="k">'+T.filter(t=>t.cat===c).length+' pages</span></div>');
+      if(c<=4){ STAGES.forEach(s=>{ b.insertAdjacentHTML('beforeend','<div class="cell">'+T.filter(t=>t.cat===c&&t.stage===s).map(tile).join('')+'</div>'); }); }
+      else b.insertAdjacentHTML('beforeend','<div class="cell span">'+T.filter(t=>t.cat===c).map(tile).join('')+'</div>'); });
+    $$('.tile').forEach(el=>el.onclick=()=>{ sel=+el.dataset.n; render(); info(); });
+    const kept=done.size; $('#railCount').textContent=kept+'/100'; $('#railArt').textContent=kept;
+    bars($('#bars'),CATS.map(([c,name])=>{ const ps=T.filter(t=>t.cat===c); const k=ps.filter(t=>done.has(t.n)).length/ps.length; const claim=Math.min(1,k+({1:.25,2:.1,3:.3,4:.35,5:.2,6:.0,7:.1}[c])); return [name,k,claim]; }));
+    const o=byN[open]; $('#nextCard').innerHTML='<b>#'+o.n+' '+o.title+'</b><div class="fine" style="margin:4px 0">'+o.catName+' · '+o.stage+' · <span class="tag '+({keep:'gold',days:'warn',evidence:'info',stage:'accent'}[o.kind])+'">'+o.kind+'</span></div><div class="fine">'+(o.kind==='evidence'&&EVID[o.n]?'opened by '+EVID[o.n]:reason(o))+'</div>';
+    $('#binderList').innerHTML=[...done].slice(-6).reverse().map(n=>'<div class="row sp"><span>'+artifactOf(byN[n])+'</span><span class="fine mono">#'+n+'</span></div>').join('')+'<div class="fine" style="margin-top:4px">+'+Math.max(0,done.size-6)+' earlier · export at any time</div>';
+  }
+  function tile(t){ const s=state(t.n); return '<div class="tile '+s+(sel===t.n?' sel':'')+'" data-n="'+t.n+'" title="'+t.title+'"><span class="n">'+t.n+'</span><span class="t">'+t.title+'</span><span class="s"></span></div>'; }
+  function bars(el,rows){ el.innerHTML=rows.map(([name,k,c])=>'<div class="bar"><span>'+name+'</span><span class="tr"><b style="width:'+Math.round(c*100)+'%"></b><i style="width:'+Math.round(k*100)+'%"></i></span><span class="v">'+stageName(k)+'</span></div>').join(''); }
+  function stageName(k){ return k>=.95?'Master':k>=.7?'Expert':k>=.45?'Journeyman':k>=.2?'Apprentice':'Novice'; }
+  function info(){ const t=byN[sel]; const s=state(sel); const lab={kept:'<span class="tag ok">kept</span>',open:'<span class="tag accent">open</span>',due:'<span class="tag warn">due</span>',self:'<span class="tag info">opens itself</span>',locked:'<span class="tag muted">locked</span>'}[s];
+    $('#tileInfo').innerHTML='<div class="row sp"><div><b>#'+t.n+' '+t.title+'</b> &nbsp;'+lab+' <span class="tag '+({keep:'gold',days:'warn',evidence:'info',stage:'accent'}[t.kind])+'">'+t.kind+'</span></div><span class="fine">'+t.catName+' · '+t.stage+' · '+t.words+' words</span></div><div style="margin:6px 0;color:var(--fg2)"><i>'+t.sub+'</i></div><div class="kv"><b>Unlock</b><span>'+reason(t)+'</span><b>Artifact</b><span>'+artifactOf(t)+'</span>'+(t.guards&&t.guards.length?'<b>Guards</b><span>'+t.guards.map(g=>g.split('.')[0]).join(' · ')+'</span>':'')+'</div>'; }
+  $('#keepBtn').onclick=()=>{ done.add(open); const i=order.indexOf(open); let j=i+1; while(j<order.length&&(done.has(order[j])||SELF[order[j]])) j++; open=order[j]||open; sel=open; render(); info(); };
+  $('#resetBtn').onclick=()=>{ done=new Set([1,2,3,4,5,6,7,8,9,23,24,25,26,27,28,29,30,31,45,46,47,48,49,50,61,67,68,89,95,96,97,98]); open=69; sel=null; render(); $('#tileInfo').textContent='Click a page.'; };
+  render();
+
+  // sheet 2: drills
+  const NAMES=['—','The Victory Lap','The Favorite Son','The Illusion of Certainty','The Sloppy Mistake','Revenge Trading'];
+  const D=[['11-17','IWM 2026-10-28 · K2','+1.8','clean'],['11-17','SPY 2026-09-12 · CD','−1.3','stop moved (0.4R past the coach stop)'],['11-16','IWM 2026-10-14 · SSC','+0.6','entry 1 bar before the signal'],['11-16','QQQ 2026-07-22 · K2','+2.4','clean'],['11-13','IWM 2026-10-02 · CD','−1.0','clean'],['11-13','SPY 2026-08-05 · 5DD','−0.9','re-entry 3 min after the stop'],['11-12','IWM 2026-09-30 · K2','+0.3','size 2× the plan'],['11-12','SPY 2026-11-03 · SSC','+3.6','size 2× the plan · exit past the keep line'],['11-11','IWM 2026-09-18 · CD','−1.0','clean'],['11-10','QQQ 2026-06-11 · K2','+0.9','no stop at entry (placed bar 2)'],['11-10','IWM 2026-08-27 · SSC','−0.5','entry 2 bars before the signal'],['11-09','SPY 2026-10-21 · 5DD','+1.1','clean']];
+  const tb=$('#drills tbody'); tb.innerHTML=D.map((r,i)=>'<tr><td class="mono">'+r[0]+'</td><td>'+r[1]+'</td><td class="mono '+(r[2][0]==='−'?'neg':'pos')+'">'+r[2]+'</td><td>'+(r[3]==='clean'?'<span class="fine">clean</span>':'<span class="tag warn">'+r[3]+'</span>')+'</td><td>'+(r[3]==='clean'?'':'<select data-i="'+i+'">'+NAMES.map(n=>'<option>'+n+'</option>').join('')+'</select>')+'</td></tr>').join('')+'<tr><td colspan="5" class="fine">… 18 more rows, 31 in the Journal since 21 Oct</td></tr>';
+  const flagged=D.filter(r=>r[3]!=='clean').length; let saved=false;
+  function dist(){ const cnt={}; $$('#drills select').forEach(s=>{ if(s.value!=='—') cnt[s.value]=(cnt[s.value]||0)+1; }); const tagged=Object.values(cnt).reduce((a,b)=>a+b,0); $('#tagCount').textContent=tagged+' of '+flagged+' flagged rows tagged';
+    const max=Math.max(1,...Object.values(cnt)); $('#dist').innerHTML=NAMES.slice(1).map(n=>'<div class="d'+(cnt[n]===max&&cnt[n]?' top':'')+'"><span>'+n+'</span><span class="tr"><i style="width:'+Math.round((cnt[n]||0)/flagged*100)+'%"></i></span><span class="mono">'+(cnt[n]||0)+'</span></div>').join('');
+    $('#reqB').classList.toggle('met',tagged===flagged); $('#reqA').classList.toggle('met',saved); }
+  $$('#drills select').forEach(s=>s.onchange=dist); dist();
+  $('#saveArt').onclick=()=>{ saved=true; $('#saveMsg').textContent='Kept: Binder page 24, "My mistake taxonomy, v1", 2026-11-18. v2 is due at the 30-day audit.'; dist(); };
+  $$('[data-sw]').forEach(l=>l.onclick=e=>{ e.preventDefault(); l.classList.toggle('on'); });
+
+  // sheet 3: calendar (Nov 2026 starts on a Sunday)
+  const cal=$('#cal'); const dh=['Sun','Mon','Tue','Wed','Thu','Fri','Sat']; cal.innerHTML=dh.map(d=>'<div class="dh">'+d+'</div>').join('');
+  const ev={1:['#9 plan the week'],6:['#9 transition'],7:['#76 weekly ✓'],8:['#9 plan the week ✓'],13:['#9 transition ✓'],14:['#76 weekly ✓'],15:['#9 plan the week ✓'],18:['#69 opened'],20:['#9 transition'],21:['#76 weekly|due'],22:['#9 plan the week|due'],26:['#74 30-day audit'],30:['#14 board review'],4:['stand-to missed|late']};
+  for(let d=1; d<=30; d++){ const dow=(d-1)%7; const wk=dow===0||dow===6; const items=(ev[d]||[]).map(s=>{const [t,c]=s.split('|'); return '<span class="ev '+(c||'')+'">'+t+'</span>';}).join(''); const daily=(!wk&&d<=18&&d!==4)?'<span class="ev daily">stand-to · score</span>':''; cal.insertAdjacentHTML('beforeend','<div class="dy'+(d===18?' today':'')+(wk?' wk':'')+'"><span class="d">'+d+'</span>'+daily+items+'</div>'); }
+
+  // sheet 4: placement
+  const Q=[[1,'Novice','I have written down why I trade, and it is not "to make money".'],[1,'Apprentice','I have a written maximum-loss number, and I can say what happens when I reach it.'],[1,'Journeyman','Every setup I trade has a written entry, stop, target and invalidation.'],[1,'Expert','My capital is split across strategies that do not share a timeframe.'],[1,'Master','My method is written so that someone else could run it without me.'],
+    [2,'Novice','I sit still for five minutes before the open, most days.'],[2,'Apprentice','I write a pre-session entry before I look at a chart.'],[2,'Journeyman','I have a written response for a halt, a gap and a broker outage.'],[2,'Expert','I can name the information sources I cut this year.'],[2,'Master','I have a maintenance plan for my attention over the next decade.'],
+    [3,'Novice','Every trade has a hard stop in the book at entry.'],[3,'Apprentice','I have a daily loss limit, and I have walked away on it.'],[3,'Journeyman','I add to winners and never to losers, and my Journal shows it.'],[3,'Expert','I have cleared a written scaling gate before sizing up.'],[3,'Master','I can trade a losing streak at full attention and half size.']];
+  const ans={}; const qz=$('#quiz'); qz.innerHTML=Q.map((q,i)=>'<div class="q"><span>'+q[2]+'<span class="stg">'+['','Planning','Preparation','Execution'][q[0]]+' · '+q[1]+'</span></span><span class="opts">'+['Yes','Partly','No'].map(o=>'<button data-q="'+i+'" data-v="'+o+'">'+o+'</button>').join('')+'</span></div>').join('');
+  $$('#quiz button').forEach(b=>b.onclick=()=>{ ans[b.dataset.q]=b.dataset.v; $$('#quiz button[data-q="'+b.dataset.q+'"]').forEach(x=>x.classList.toggle('on',x===b)); qres(); });
+  function qres(){ const rows=[1,2,3].map(c=>{ const qs=Q.map((q,i)=>[q,i]).filter(([q])=>q[0]===c); let claim=0; for(const [q,i] of qs){ const v=ans[i]; if(v==='Yes') claim++; else break; } const earned={1:.4,2:.35,3:.3}[c]; return [['','Planning','Preparation','Execution'][c],earned,Math.max(earned,claim/5)]; });
+    bars($('#qbars'),rows); const o=rows.map(r=>r[0]+': opens at '+stageName(r[2])+(r[2]>r[1]?' (claimed; the '+stageName(r[1])+' artifacts come first)':'')).join('<br>'); $('#qopen').innerHTML='<div class="fine">'+o+'</div>'; }
+  qres();
+})();
+</script>
+</body>
+</html>
