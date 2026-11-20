@@ -15,6 +15,7 @@ Internal review pages where the user (Sundeep) approves video clips proposed for
 
 | Review | Description |
 |--------|-------------|
+| [Course card heroes: six options](https://lifelongedge.github.io/ogt-mockups/courses/hero-options/) | The /courses and store card loop today is four AI stock stills per course. Seven alternatives built only from the course (his charts framed, the decision tree, the syllabus, a flashcard, "after this course you can", on tape, framed + chapter strip), each rendered live for Intraday Part 1, Swing Logic and Mental Model Part 1 on one scrubbable clock, with the current GIFs beside them and a verdict |
 | [Bar-by-Bar Drill Pack](https://lifelongedge.github.io/ogt-mockups/courses/bbb-clips/) | 60 candidate clips across 3 SKUs (Vocabulary / Drill Mechanic / IWM Case Study) + cold opens. Source: Dr. Ken Long Tortoise strategy podcast Sessions 1-10 (2020-10-20 → 2021-01-04). Review pass v1 |
 | [Intraday Decision Tree — Chapter 5 candidates](https://lifelongedge.github.io/ogt-mockups/courses/idt-ch5-candidates/) | 4 candidate scenes for a new Chapter 5 (The Closing Read) after the previous chapter's topic mismatch was removed. Source: kenlong-transcripts corpus, 4 different 2023 coaching sessions. Review pass v1 |
 | [The Frog Box — v1 cut](https://lifelongedge.github.io/ogt-mockups/courses/frog-box-v1/) | Finished 7:09 topical-video pilot (Format A Concept Card) for owner review. Video streams from GCS _preview. Source: courses/topical-frog-box/plan.md in ogt-coursecraft |

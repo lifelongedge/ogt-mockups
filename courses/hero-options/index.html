@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Course card heroes: six options</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0d1117; --card:#161b22; --card-border:#21262d; --text:#e6edf3; --text-muted:#8b949e; --text-dim:#6e7681;
+    --gold:#d4a559; --teal:#3a8f8a; --teal-hi:#5fd3cc; --red:#f85149; --green:#3fb950;
+  }
+  [data-theme="light"] { --bg:#f6f8fa; --card:#ffffff; --card-border:#d0d7de; --text:#1f2328; --text-muted:#656d76; --text-dim:#8b949e; --gold:#9a6a1f; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; line-height:1.5; }
+  .wrap { max-width:1320px; margin:0 auto; padding:24px 16px 80px; }
+  h1 { font-family:Georgia,serif; font-weight:400; font-size:30px; margin:0 0 6px; }
+  h2 { font-family:Georgia,serif; font-weight:400; font-size:22px; margin:0; }
+  .lede { color:var(--text-muted); max-width:860px; margin:0 0 18px; }
+  .bar { position:sticky; top:0; z-index:5; background:var(--bg); border-bottom:1px solid var(--card-border); padding:10px 0; margin-bottom:26px; display:flex; gap:14px; align-items:center; flex-wrap:wrap; }
+  .bar button, .bar .tg { background:var(--card); color:var(--text); border:1px solid var(--card-border); border-radius:6px; padding:6px 12px; font-size:13px; cursor:pointer; }
+  .bar button:hover { border-color:var(--gold); }
+  .bar input[type=range] { width:260px; accent-color:var(--gold); }
+  .bar .t { font-family:"JetBrains Mono",monospace; font-size:13px; color:var(--text-muted); min-width:54px; }
+  .bar .nav { margin-left:auto; display:flex; gap:8px; flex-wrap:wrap; }
+  .bar .nav a { color:var(--text-muted); font-size:12px; text-decoration:none; padding:4px 8px; border:1px solid var(--card-border); border-radius:12px; }
+  .bar .nav a:hover { color:var(--gold); border-color:var(--gold); }
+  section.opt { margin:0 0 46px; padding-top:8px; }
+  .opthead { display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; margin-bottom:4px; }
+  .num { font-family:"JetBrains Mono",monospace; color:var(--gold); font-size:13px; letter-spacing:.1em; }
+  .claim { color:var(--gold); font-style:italic; font-family:Georgia,serif; font-size:16px; margin:0 0 14px; }
+  .row { display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:18px; max-width:1320px; }
+  .ccard { display:block; background:var(--card); border:1px solid var(--card-border); border-radius:6px; overflow:hidden; color:var(--text); transition:all 180ms ease; }
+  .ccard:hover { border-color:var(--gold); transform:translateY(-2px); box-shadow:0 6px 20px rgba(212,165,89,.12); }
+  .hero { background:#000; aspect-ratio:16/9; overflow:hidden; position:relative; }
+  .hero svg { display:block; width:100%; height:100%; }
+  .hero img.gif { display:block; width:100%; height:100%; object-fit:cover; }
+  .body { padding:16px 18px 18px; }
+  .ttl { font-family:Georgia,serif; font-size:1.2rem; margin:0 0 .2rem; }
+  .sub { color:var(--gold); font-size:.9rem; font-style:italic; margin:0 0 .6rem; }
+  .sum { color:var(--text-muted); font-size:.88rem; line-height:1.5; margin:0 0 .8rem; }
+  .meta { font-family:"JetBrains Mono",monospace; font-size:.72rem; color:var(--gold); text-transform:uppercase; letter-spacing:.08em; display:flex; justify-content:space-between; }
+  .meta b { font-size:1rem; letter-spacing:0; }
+  .cta { margin-top:.6rem; padding-top:.6rem; border-top:1px solid var(--card-border); color:var(--gold); font-size:.9rem; }
+  .notes { display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:14px; margin-top:16px; }
+  .note { background:var(--card); border:1px solid var(--card-border); border-radius:6px; padding:12px 14px; font-size:13.5px; color:var(--text-muted); }
+  .note b { color:var(--text); display:block; font-size:11px; letter-spacing:.1em; text-transform:uppercase; margin-bottom:4px; font-family:"JetBrains Mono",monospace; }
+  .now .hero img { filter:none; }
+  .pill { display:inline-block; font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase; border:1px solid var(--gold); color:var(--gold); border-radius:12px; padding:1px 9px; }
+  .verdict { background:var(--card); border:1px solid var(--gold); border-radius:6px; padding:18px 22px; max-width:980px; }
+  .verdict ol { margin:8px 0 0 18px; padding:0; }
+  .verdict li { margin:4px 0; }
+  code { font-family:"JetBrains Mono",monospace; font-size:12.5px; background:rgba(128,128,128,.12); padding:1px 5px; border-radius:4px; }
+  /* in-hero element states */
+  .hero .e { opacity:0; transition:opacity .28s ease; }
+  .hero .e.on { opacity:1; }
+  .hero .e.snap { transition:none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Course card heroes: six options</h1>
+  <p class="lede">The cards on <a href="https://owlgrouptrading.com/courses#modules" style="color:var(--gold)">/courses</a> and the store open with a 7-second loop. Today that loop is four AI stock stills (a ship's bell, an hourglass, brass gears, a chimp) with a caption. Nothing in it comes from the course, and nothing in it tells a trader why the course is worth $49. Every option below is built only from what is inside the course: its chapter list, its flashcards, Dr. Long's own charts and his own words. All eighteen heroes run on one clock; scrub it to see any beat.</p>
+
+  <div class="bar">
+    <button id="play">Pause</button>
+    <input type="range" id="scrub" min="0" max="8" step="0.02" value="0">
+    <span class="t" id="tt">0.00 s</span>
+    <button id="restart">Restart</button>
+    <button class="tg" id="theme">☾ / ☼</button>
+    <div class="nav">
+      <a href="#now">Now</a><a href="#o1">1 His chart, framed</a><a href="#o2">2 The tree</a><a href="#o3">3 The syllabus</a><a href="#o4">4 The flashcard</a><a href="#o5">5 After this course</a><a href="#o6">6 On tape</a><a href="#o7">7 Framed + syllabus</a><a href="#verdict">Verdict</a>
+    </div>
+  </div>
+
+  <section class="opt now" id="now">
+    <div class="opthead"><span class="num">NOW</span><h2>What the cards show today</h2></div>
+    <p class="claim">Four generated stills per course with a caption; the course title repeated in the corner.</p>
+    <div class="row" id="row-now"></div>
+    <div class="notes">
+      <div class="note"><b>What a trader reads</b>A stock-photo mood board. Bell, meadow, hourglass: "critical state" is a caption on a picture that could sell a watch. The title is already printed under the card, so the hero spends its top-right corner repeating it.</div>
+      <div class="note"><b>What it costs</b>Four image-model calls per course (the Imagen endpoint died 2026-11-17 and the script fell back to Gemini), a Ken Burns pass, a 3–7 MB GIF fallback. None of it is reusable for the course itself.</div>
+    </div>
+  </section>
+
+  <div id="options"></div>
+
+  <section class="opt" id="verdict">
+    <div class="opthead"><span class="num">VERDICT</span><h2>What I would build</h2></div>
+    <div class="verdict">
+      <p style="margin:0 0 8px">Option 7, which is option 1 carrying option 3's chapter strip, for the three chart courses; option 1's drawn picture (the teeter-totter, the four intelligences) for the two Mental Model courses. Reasons:</p>
+      <ol>
+        <li>It is the one thing the current heroes cannot be accused of: it shows the course. The chart is a frame from the course's own walk-through; the words are his; the chapters are the real ones.</li>
+        <li>The pieces already exist. The stills are in <code>courses/&lt;course&gt;/stills/</code>, the chapter times are in each <code>scenes.json</code>, the overlay is the Desk style the animation kit already draws, so the hero is a 7-second render of the same kit, with no image-model call.</li>
+        <li>It positions the buyer as a trader, not a reader: a chart with a frame on it says "you will learn to see this", a hourglass says "please feel something about time".</li>
+      </ol>
+      <p style="margin:10px 0 0">Options 4 and 5 are the strongest for the sales page itself, where there is room and the visitor is already interested: the flashcard proves there is substance to drill, the competency list answers "what will I be able to do". They are weaker as a card hero because a card has three seconds of attention and both need reading.</p>
+      <p style="margin:10px 0 0; color:var(--text-muted); font-size:13px">Facts only: every claim in every hero is a chapter title, a flashcard, or a scene from the published cut; option 5's lines are the skills the chapters teach, never an outcome. Frame positions on the charts in this mockup are illustrative; the production render places them from the walk-through's own scene.</p>
+    </div>
+  </section>
+</div>
+
+<script>
+const BUILD = 3; console.log('[hero-options] build ' + BUILD); window.__edgeBuild = BUILD;
+const G = 'https://storage.googleapis.com/courses.owlgrouptrading.com/';
+const LOOP = 8;
+
+// ---- the three courses, from the published cuts (scenes.json), the decks (flashcards.csv) and /courses ----
+const COURSES = [
+  { id:'idt1', title:'Intraday Decision Tree · Part 1: The Open', sub:'Gap size, the O3, the first hour', mins:'~81 min', runtime:'81:16', cards:65,
+    sum:'The gap stat and the four cases. The O3 against the R10. The big-gap bracket and the runaway freight train. The morning hook, the yellow zone and the first hour. 65-card flashcard deck + study guide + quizzes + AI assistant pack.',
+    gif:'c-idt1.hero.gif', chart:'img/rgtx-10m.jpg', chart2:'img/spy-30m-sniper.jpg',
+    chapters:[['Why the open is a critical state','1:41'],['The root of the tree','9:16'],['Small or no gap: the O3','14:58'],['Big gap: the bracket','25:34'],['Gap fails, gap holds, the morning hook','42:46'],['Opening inside yesterday','57:40'],['The first hour','68:11']],
+    walks:'3 walks on his charts · SPY · RGTX · PLTR',
+    quote:['Big gap equals big follow-through.','Direction unknown.'], kicker:'CHAPTER 4 · BIG GAP: THE BRACKET', tag:'WALK · RGTX · 2025-10-13 · A 10 % GAP',
+    flash:[ ['What does a massive O3 against the R10 mean?', ['If the O3 is much taller than the R10 after a large gap','up and the next move comes, hang on to your hats.']],
+            ['What are the FailStat and the GainStat?', ['The average move from the open to the low of the day,','and from the open to the high, over 200 days.']] ],
+    can:['Size the gap against 200 days before the bell','Bracket a big gap with an R10 and a stop at the open','Read the O3 against the R10: massive, equal, smaller','Stand down inside a narrow yesterday'] },
+  { id:'swing', title:'Owl Group Swing Trading Logic', sub:'How short, mid, and long timeframes lock together', mins:'~62 min', runtime:'61:42', cards:69,
+    sum:'Core, swing and day: three bodies of knowledge. The six mechanical swing systems, the auto framer, hybrid and turbo trading, the slope dashboard, and six real trades framed on Dr. Long\'s charts. 69-card flashcard deck + study guide + quizzes + AI assistant pack.',
+    gif:'c-swing-logic.hero.gif', chart:'img/qqq-daily.jpg', chart2:'img/adbe-65m.jpg',
+    chapters:[['Three timeframes, one trader','0:00'],['The swing playbook','9:35'],['Crossing timeframes','19:33'],['One language on every timeframe','25:23'],['The market\'s dashboard','31:26'],['Framing the trade','40:29']],
+    walks:'6 trades framed · QQQ · ADBE · TWTR · VZ · DVN · TSLA',
+    quote:['The same interpretation','on every timeframe.'], kicker:'CHAPTER 6 · FRAMING THE TRADE', tag:'ADBE · OCTOBER 2022 · THE DRAGON CRACKED',
+    flash:[ ['Name the six mechanical swing systems.', ['The five-day down, the washout, the triple screen,','the 551W, overreaction, and channeling.']],
+            ['Where does swing trading sit among the timeframes?', ['Between core trading and day trading.']] ],
+    can:['Place a trade in core, swing or day before you size it','Run the five-day down and not be surprised at the 10-day high','Read one chart array: weekly, daily, hourly','Frame a 6R short on the daily chart'] },
+  { id:'mm1', title:'Mental Model for Traders · Part 1', sub:'The conceptual ground floor every method rests on', mins:'~28 min', runtime:'28:18', cards:36,
+    sum:'The intelligent adaptive machine. The four primal intelligences. The great big teeter-totter. Watching the lions. 36-card flashcard deck + study guide + quizzes + AI assistant pack.',
+    gif:'c-tosm1.hero.gif?v=2', chart:null, chart2:null,
+    chapters:[['Coaching\'s eye',''],['Primal intelligence',''],['The teeter-totter',''],['Lions and wolves','']],
+    walks:'4 pictures he draws · the machine · the four · the teeter · the lions',
+    quote:['Not efficient.','Efficient enough.'], kicker:'CHAPTER 4 · LIONS AND WOLVES', tag:'CHAPTER 4 · LIONS AND WOLVES',
+    flash:[ ['How efficient are lions?', ['Maybe one success in five.','Not efficient, efficient enough.']],
+            ['What is the coaching eye?', ['Looking at your own trading against a standard:','did I follow my own rules, yes or no?']] ],
+    can:['Grade your own trade: rules followed, yes or no','Name which of the four intelligences found the trade','Read the teeter-totter: which side is agitated','Pick the weakest of the herd, not the fastest'] },
+];
+
+// ---- svg helpers --------------------------------------------------------------------
+const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+const E = (tin, tout, inner, cls='') => `<g class="e ${cls}" data-in="${tin}" data-out="${tout==null?LOOP:tout}">${inner}</g>`;
+const TXT = (x,y,s,o={}) => `<text x="${x}" y="${y}" font-family="${o.f||'Georgia, serif'}" font-size="${o.s||18}" fill="${o.c||'#e6edf3'}" font-weight="${o.w||400}" text-anchor="${o.a||'start'}" letter-spacing="${o.ls||0}" font-style="${o.i?'italic':'normal'}" opacity="${o.o==null?1:o.o}">${esc(s)}</text>`;
+const MONO = (x,y,s,o={}) => TXT(x,y,s,Object.assign({f:'"JetBrains Mono", monospace', s:12, c:'#8b98a5', ls:1},o));
+const TYPE = (x,y,s,tin,o={}) => `<text class="e on" data-type="${esc(s)}" data-in="${tin}" data-cps="${o.cps||28}" x="${x}" y="${y}" font-family="${o.f||'Georgia, serif'}" font-size="${o.s||18}" fill="${o.c||'#e6edf3'}" text-anchor="${o.a||'start'}" font-style="${o.i?'italic':'normal'}" font-weight="${o.w||400}"></text>`;
+const DRAW = (d, tin, dur, o={}) => `<path class="e on" data-draw="1" data-in="${tin}" data-dur="${dur}" d="${d}" fill="none" stroke="${o.c||'#5fd3cc'}" stroke-width="${o.w||2}" stroke-dasharray="${o.dash||''}" stroke-linecap="round" stroke-linejoin="round"/>`;
+const IMG = (href, kb=true) => `<image href="${href}" x="0" y="0" width="720" height="405" preserveAspectRatio="xMidYMid slice" ${kb?'data-kb="1"':''}/>`;
+const VIGNETTE = `<rect width="720" height="405" fill="#070a10" opacity=".38"/><rect width="720" height="405" fill="url(#vig)"/>`;
+const DEFS = `<defs><radialGradient id="vig" cx="50%" cy="45%" r="75%"><stop offset="55%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#000" stop-opacity=".72"/></radialGradient>
+<linearGradient id="band" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".85"/></linearGradient>
+<linearGradient id="top" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity=".6"/><stop offset="1" stop-color="#000" stop-opacity="0"/></linearGradient></defs>`;
+const BRAND = `<g opacity=".92"><image href="img/owl.jpg" x="16" y="14" width="30" height="30"/>${MONO(54,34,'OWL GROUP TRADING',{c:'#d4a559',s:11,ls:2})}</g>`;
+const SVG = inner => `<svg viewBox="0 0 720 405" xmlns="http://www.w3.org/2000/svg">${DEFS}${inner}</svg>`;
+const BG = `<rect width="720" height="405" fill="#070a10"/>`;
+const lower3 = (kicker, lines, tin) => E(tin, null,
+  `<rect x="0" y="285" width="720" height="120" fill="url(#band)"/>
+   <rect x="28" y="318" width="5" height="${lines.length>1?66:40}" fill="#3a8f8a"/>
+   ${MONO(44,330,kicker,{c:'#5fd3cc',s:11,ls:2})}
+   ${lines.map((l,i)=>TXT(44,358+i*27,l,{s:23})).join('')}`);
+
+// ---- option 1: his chart, framed (Desk style over a real still) ----------------------
+function opt1(c){
+  if (c.id==='idt1') return SVG(`${IMG(c.chart)}${VIGNETTE}${BRAND}
+    ${MONO(560,34,'RGTX · 10 min',{a:'end'})}
+    ${DRAW('M 60 262 L 660 262', .4, .9, {c:'#5fd3cc',w:2})}
+    ${E(.9,null, MONO(64,254,'THE OPEN',{c:'#5fd3cc'}))}
+    ${DRAW('M 150 262 L 150 198 L 330 198 L 330 262 Z', 1.6, 1.0, {c:'#f0b35a',w:2.5})}
+    ${E(2.5,null, MONO(156,190,'R10 BOX · FIRST BREAKOUT',{c:'#f0b35a'}))}
+    ${DRAW('M 150 326 L 330 326', 3.2, .6, {c:'#ef5a6f',w:2,dash:'6 6'})}
+    ${E(3.6,null, MONO(156,344,'STOP AT THE OPEN',{c:'#ef5a6f'}))}
+    ${DRAW('M 330 198 L 470 120', 4.2, .9, {c:'#3ddc97',w:2.5})}
+    ${E(4.9,null, `<g><rect x="476" y="100" width="206" height="26" rx="13" fill="#070a10" stroke="#3ddc97"/>${MONO(579,118,'A FULL R5 · DOUBLE THE SIZE',{c:'#3ddc97',a:'middle',s:11})}</g>`)}
+    ${lower3(c.kicker, c.quote, 5.4)}`);
+  if (c.id==='swing') return SVG(`${IMG(c.chart)}${VIGNETTE}${BRAND}
+    ${MONO(560,34,'QQQ · daily',{a:'end'})}
+    ${DRAW('M 40 70 L 680 70 L 680 300 L 40 300 Z', .4, 1.0, {c:'#5fd3cc',w:1.5,dash:'4 6'})}
+    ${E(1.2,null, MONO(48,88,'WEEKLY',{c:'#5fd3cc'}))}
+    ${DRAW('M 300 100 L 660 100 L 660 290 L 300 290 Z', 1.8, .9, {c:'#5fd3cc',w:2})}
+    ${E(2.5,null, MONO(308,118,'DAILY',{c:'#5fd3cc'}))}
+    ${DRAW('M 520 150 L 650 150 L 650 285 L 520 285 Z', 3.0, .7, {c:'#f0b35a',w:2.5})}
+    ${E(3.6,null, MONO(528,168,'65-MINUTE',{c:'#f0b35a'}))}
+    ${E(4.2,null, `<rect x="560" y="196" width="80" height="2" fill="#ef5a6f"/>${MONO(556,192,'STOP ABOVE THE HUMP',{c:'#ef5a6f',a:'end',s:11})}`)}
+    ${E(4.6,null, `<text data-count="6" data-in="4.6" data-dur="1.2" data-suffix="R" x="640" y="275" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="34" font-weight="600" fill="#f0b35a">0R</text>${MONO(640,292,'SHORT · FRAMED ON THE DAILY',{c:'#f0b35a',a:'end',s:10})}`)}
+    ${lower3(c.kicker, c.quote, 5.6)}`);
+  // Mental Model: no chart in the course, so his drawn picture: the teeter-totter
+  return SVG(`${BG}${BRAND}
+    ${MONO(690,34,'HIS PICTURE · INK BOARD',{a:'end'})}
+    <g transform="translate(360,215)">
+      ${DRAW('M -40 70 L 0 10 L 40 70 Z', .4, .6, {c:'#8b98a5',w:2})}
+      ${DRAW('M -250 -30 L 250 50', 1.0, .9, {c:'#e6edf3',w:4})}
+      ${E(1.7,null, `${TXT(-250,-52,'BULLS',{f:'"JetBrains Mono", monospace',s:14,c:'#3ddc97',a:'middle'})}${TXT(250,28,'BEARS',{f:'"JetBrains Mono", monospace',s:14,c:'#ef5a6f',a:'middle'})}`)}
+      ${E(2.4,null, `${TXT(0,118,'demographics',{f:'Caveat, cursive',s:30,c:'#d4a559',a:'middle'})}`)}
+      ${DRAW('M -230 -80 C -200 -120 -160 -120 -140 -90', 3.2, .6, {c:'#f0b35a',w:2.5})}
+      ${E(3.7,null, `<circle cx="-140" cy="-88" r="4" fill="#f0b35a"/>${TXT(-120,-96,'the emotional maniacs',{f:'Caveat, cursive',s:28,c:'#f0b35a'})}${TXT(-120,-68,'move the teeter',{f:'Caveat, cursive',s:28,c:'#f0b35a'})}`)}
+      ${DRAW('M 90 -30 L 230 -30', 4.4, .5, {c:'#5fd3cc',w:2,dash:'5 5'})}
+      ${E(4.8,null, MONO(160,-40,'WHEN TIMEFRAMES ALIGN',{c:'#5fd3cc',a:'middle',s:11}))}
+    </g>
+    ${lower3('CHAPTER 3 · THE TEETER-TOTTER', ['The market is a great big teeter-totter.'], 5.4)}`);
+}
+
+// ---- option 2: the tree (the course's own framework builds itself) --------------------
+function node(x,y,w,h,lines,tin,o={}){
+  const col=o.c||'#e6edf3', st=o.st||'#2b3340', fill=o.fill||'#10141c';
+  return E(tin,null,`<rect x="${x-w/2}" y="${y-h/2}" width="${w}" height="${h}" rx="6" fill="${fill}" stroke="${st}" stroke-width="1.5"/>${lines.map((l,i)=>TXT(x, y + (i-(lines.length-1)/2)*15 + 5, l, {f:o.mono?'"JetBrains Mono", monospace':'Georgia, serif', s:o.s||13, c:col, a:'middle'})).join('')}`);
+}
+function opt2(c){
+  if (c.id==='idt1') return SVG(`${BG}${BRAND}${MONO(690,34,'THE DECISION TREE',{a:'end'})}
+    ${node(360,80,150,34,['THE OPEN · 3 MIN'],.3,{mono:true,st:'#5fd3cc',c:'#5fd3cc',s:12})}
+    ${DRAW('M 360 97 L 360 120 M 360 120 L 150 120 L 150 140 M 360 120 L 360 140 M 360 120 L 570 120 L 570 140', .8, .8, {c:'#3a8f8a',w:1.5})}
+    ${node(150,160,170,36,['Big gap'],1.5,{s:16})}
+    ${node(360,160,170,36,['No gap'],1.7,{s:16})}
+    ${node(570,160,170,36,['Not trading the open'],1.9,{s:14,c:'#8b98a5'})}
+    ${DRAW('M 150 178 L 150 205 M 360 178 L 360 205', 2.3, .5, {c:'#3a8f8a',w:1.5})}
+    ${node(150,232,200,46,['R10 bracket both sides','stop at the open'],2.8,{s:13})}
+    ${node(360,232,200,46,['The O3 against the R10','massive · equal · smaller'],3.2,{s:13})}
+    ${DRAW('M 150 255 L 150 280 M 100 280 L 200 280 M 100 280 L 100 296 M 200 280 L 200 296', 3.7, .5, {c:'#3a8f8a',w:1.5})}
+    ${node(100,318,110,40,['gap fails:','the morning hook'],4.2,{s:12,c:'#ef5a6f'})}
+    ${node(200,318,110,40,['gap holds:','fill, Kata 2'],4.4,{s:12,c:'#3ddc97'})}
+    ${node(570,232,170,46,['Inside yesterday:','the yellow zone'],4.9,{s:13,c:'#f0b35a'})}
+    ${E(5.6,null,`<rect x="40" y="366" width="640" height="26" rx="13" fill="#10141c" stroke="#d4a559"/>${MONO(360,383,'THE FIRST HOUR · 90 % OF DAYS SET THEIR HIGH OR LOW HERE',{c:'#d4a559',a:'middle',s:11})}`)}`);
+  if (c.id==='swing') return SVG(`${BG}${BRAND}${MONO(690,34,'THREE TIMEFRAMES, ONE LANGUAGE',{a:'end'})}
+    ${E(.3,null,`<rect x="60" y="60" width="600" height="300" rx="10" fill="none" stroke="#2b3340" stroke-width="1.5" stroke-dasharray="4 6"/>${MONO(76,82,'CORE · MONTHS · WATCHING THE CORN GROW',{c:'#8b98a5'})}`)}
+    ${E(1.2,null,`<rect x="130" y="110" width="460" height="220" rx="10" fill="#0c1016" stroke="#5fd3cc" stroke-width="2"/>${MONO(146,132,'SWING · 3 TO 5 DAYS · SIX MECHANICAL SYSTEMS',{c:'#5fd3cc'})}`)}
+    ${['five-day down','washout','triple screen','551W','overreaction','channeling'].map((s,i)=>node(182+i*72,170,68,28,[s],2.0+i*.25,{s:9.5,st:'#3a8f8a'})).join('')}
+    ${E(3.8,null,`<rect x="210" y="210" width="300" height="100" rx="8" fill="#10141c" stroke="#f0b35a" stroke-width="2"/>${MONO(226,232,'DAY · NORMAL · ABNORMAL · CRITICAL STATE',{c:'#f0b35a',s:10})}`)}
+    ${E(4.5,null,`${TXT(360,268,'hybrid and turbo: the swing\'s energy,',{s:15,a:'middle'})}${TXT(360,290,'traded intraday',{s:15,a:'middle'})}`)}
+    ${E(5.6,null,`<rect x="40" y="366" width="640" height="26" rx="13" fill="#10141c" stroke="#d4a559"/>${MONO(360,383,'RLCO PATTERNS ARE FRACTAL · ONE CHART ARRAY: WEEKLY, DAILY, HOURLY',{c:'#d4a559',a:'middle',s:11})}`)}`);
+  return SVG(`${BG}${BRAND}${MONO(690,34,'THE FOUR PRIMAL INTELLIGENCES',{a:'end'})}
+    ${node(360,205,120,44,['THE TRADE'],.3,{mono:true,st:'#d4a559',c:'#d4a559',s:13})}
+    ${DRAW('M 300 205 L 200 205 M 420 205 L 520 205 M 360 183 L 360 120 M 360 227 L 360 290', .9, .8, {c:'#3a8f8a',w:1.5})}
+    ${node(360,100,220,40,['Intuition','finds the possibility'],1.6,{s:13})}
+    ${node(130,205,140,54,['Imagination','frames it','both ways'],2.1,{s:13})}
+    ${node(590,205,150,54,['Common sense','validates it as','reward to risk'],2.6,{s:13})}
+    ${node(360,310,230,40,['Emotional resilience','holds you to the plan'],3.1,{s:13})}
+    ${E(4.2,null,`${TXT(360,370,'See the anomaly. Classify it. See the opportunity. Exploit it at once.',{s:14,a:'middle',c:'#8b98a5',i:true})}`)}
+    ${E(5.4,null,`<rect x="150" y="380" width="420" height="20" rx="10" fill="#10141c" stroke="#d4a559"/>${MONO(360,394,'CHAPTER 2 · PRIMAL INTELLIGENCE',{c:'#d4a559',a:'middle',s:10})}`)}`);
+}
+
+// ---- option 3: the syllabus ------------------------------------------------------------
+function opt3(c){
+  const n=c.chapters.length, step=Math.min(.75, 4.6/n);
+  const rows=c.chapters.map(([t,ts],i)=>E(.3+i*step,null,
+    `${MONO(44,92+i*34,String(i+1).padStart(2,'0'),{c:'#d4a559',s:13})}${TXT(78,92+i*34,t,{s:n>6?17:19})}${ts?MONO(480,92+i*34,ts,{a:'end',c:'#8b98a5',s:12}):''}`)).join('');
+  return SVG(`${BG}${BRAND}${MONO(690,34,'WHAT IS IN IT',{a:'end'})}
+    ${rows}
+    <g transform="translate(540,70)">
+      ${E(.3,null,`<rect x="0" y="0" width="150" height="130" rx="8" fill="#10141c" stroke="#2b3340"/>${MONO(75,26,'ONE VIDEO',{a:'middle',s:10})}`)}
+      ${E(.6,null,`<text data-count-time="${c.runtime}" data-in=".6" data-dur="2.2" x="75" y="76" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="34" font-weight="600" fill="#e6edf3">0:00</text>`)}
+      ${E(.6,null,`<rect x="18" y="98" width="114" height="4" rx="2" fill="#1f2733"/><rect data-grow="114" data-in=".6" data-dur="2.2" x="18" y="98" width="0" height="4" rx="2" fill="#d4a559"/>`)}
+      ${E(3.2,null,`<rect x="0" y="146" width="150" height="56" rx="8" fill="#10141c" stroke="#2b3340"/><text x="75" y="178" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="24" font-weight="600" fill="#d4a559">${c.cards}</text>${MONO(75,194,'FLASHCARDS',{a:'middle',s:9})}`)}
+      ${E(4.0,null,`<rect x="0" y="218" width="150" height="56" rx="8" fill="#10141c" stroke="#2b3340"/>${MONO(75,242,'STUDY GUIDE',{a:'middle',s:10,c:'#e6edf3'})}${MONO(75,260,'2 QUIZZES · AI PACK',{a:'middle',s:9})}`)}
+    </g>
+    ${E(5.0,null,`<rect x="40" y="366" width="640" height="26" rx="13" fill="#10141c" stroke="#5fd3cc"/>${MONO(360,383,c.walks.toUpperCase(),{c:'#5fd3cc',a:'middle',s:11})}`)}`);
+}
+
+// ---- option 4: the flashcard -----------------------------------------------------------
+function opt4(c){
+  const card=(q,a,tin,idx)=>{
+    const tout=tin+4;
+    return E(tin,tout,`<rect x="80" y="70" width="560" height="265" rx="12" fill="#10141c" stroke="#2b3340" stroke-width="1.5"/>
+      ${MONO(104,100,`CARD ${idx} OF ${c.cards}`,{c:'#d4a559'})}${MONO(616,100,'FROM THE DECK',{a:'end'})}
+      ${TXT(360,160,q,{s:q.length>44?19:22,a:'middle'})}
+      ${E(tin+1.8,tout,`<line x1="130" y1="200" x2="590" y2="200" stroke="#2b3340"/>${a.map((l,i)=>TXT(360,240+i*27,l,{s:18,a:'middle',c:'#5fd3cc',i:true})).join('')}`,'snap')}
+      ${E(tin+.2,tin+1.8,`${MONO(360,250,'· · ·',{a:'middle',s:20})}`,'snap')}`,'snap');
+  };
+  return SVG(`${BG}${BRAND}${MONO(690,34,'CAN YOU ANSWER IT?',{a:'end'})}
+    ${card(c.flash[0][0],c.flash[0][1],0,12)}${card(c.flash[1][0],c.flash[1][1],4,31)}
+    ${E(.0,null,`<rect x="80" y="352" width="560" height="4" rx="2" fill="#1f2733"/><rect data-grow="560" data-in="0" data-dur="8" x="80" y="352" width="0" height="4" rx="2" fill="#d4a559"/>${MONO(80,384,`${c.cards} CARDS · SHIPS WITH THE COURSE · ANKI + PDF`,{s:10})}${MONO(640,384,'$49',{a:'end',c:'#d4a559',s:12})}`)}`);
+}
+
+// ---- option 5: after this course you can ---------------------------------------------------
+function opt5(c){
+  return SVG(`${BG}${BRAND}${MONO(690,34,c.mins.replace('~','').toUpperCase()+' · ONE VIDEO',{a:'end'})}
+    ${TXT(48,96,'After this course you can',{s:26,c:'#d4a559'})}
+    ${c.can.map((s,i)=>{const t=.9+i*1.3; return `
+      ${E(t,null,`<rect x="48" y="${122+i*52}" width="20" height="20" rx="4" fill="none" stroke="#3a8f8a" stroke-width="1.5"/>`)}
+      ${TYPE(84,138+i*52,s,t,{s:19,cps:34})}
+      ${DRAW(`M 52 ${132+i*52} L 57 ${138+i*52} L 66 ${126+i*52}`, t+1.0, .3, {c:'#3ddc97',w:2.5})}`;}).join('')}
+    ${E(6.4,null,`${MONO(48,384,'EVERY LINE IS A CHAPTER OF THE COURSE',{s:10})}${MONO(672,384,'$49 · LIFETIME ACCESS',{a:'end',c:'#d4a559',s:11})}`)}`);
+}
+
+// ---- option 6: on tape (Ken, his chart, his words) --------------------------------------
+function opt6(c){
+  const bg = c.chart2 ? `${IMG(c.chart2)}${VIGNETTE}` : `${BG}<image href="img/ken.jpg" x="0" y="0" width="720" height="405" preserveAspectRatio="xMidYMid slice" data-kb="1" opacity=".55"/>${VIGNETTE}`;
+  const pip = c.chart2 ? `<g><rect x="26" y="214" width="190" height="110" rx="6" fill="#000"/><image href="img/ken.jpg" x="28" y="216" width="186" height="106" preserveAspectRatio="xMidYMid slice"/><rect x="28" y="216" width="186" height="106" rx="4" fill="none" stroke="#d4a559" stroke-width="1.5"/>${MONO(32,340,'DR. KEN LONG',{c:'#d4a559',s:10})}</g>` : '';
+  const words = c.id==='idt1' ? ['"The gap puts it in play. The equivalent','of a harsh winter."'] : c.id==='swing' ? ['"Discount all the previous price action.','It\'s now all about the pain and suffering."'] : ['"Not efficient. Efficient enough. And they hunt','a wildebeest that feeds several lions, not a rabbit."'];
+  return SVG(`${bg}<rect width="720" height="90" fill="url(#top)"/>${BRAND}
+    ${E(.4,null,`<rect x="404" y="18" width="300" height="24" rx="12" fill="#070a10" stroke="#2b3340"/>${MONO(554,34,c.tag,{a:'middle',s:9,c:'#8b98a5'})}`)}
+    ${E(1.0,null,pip)}
+    <rect x="0" y="300" width="720" height="105" fill="url(#band)"/>
+    ${TYPE(360,348,words[0],1.4,{s:21,a:'middle',i:true,cps:30})}
+    ${TYPE(360,376,words[1],1.4+words[0].length/30,{s:21,a:'middle',i:true,cps:30})}
+    ${E(6.2,null,MONO(360,398,'TAUGHT FROM HIS OWN SESSIONS · '+c.mins.replace('~','').toUpperCase(),{a:'middle',s:10,c:'#d4a559'}))}`);
+}
+
+// ---- option 7: framed + the chapter strip (the recommended build) -----------------------------
+function opt7(c){
+  const n=c.chapters.length;
+  const strip = `<g>${c.chapters.map((ch,i)=>{const x=44+i*(632/n); return `<rect x="${x}" y="384" width="${632/n-6}" height="4" rx="2" fill="#1f2733"/><rect class="e" data-in="${i*(LOOP/n)}" data-out="${LOOP}" x="${x}" y="384" width="${632/n-6}" height="4" rx="2" fill="#d4a559"/>`;}).join('')}</g>`;
+  const chapName = c.chapters.map((ch,i)=>E(i*(LOOP/n),(i+1)*(LOOP/n),MONO(44,372,`CHAPTER ${i+1} OF ${n} · ${ch[0].toUpperCase()}`,{c:'#d4a559',s:10}),'snap')).join('');
+  let draw='';
+  if (c.id==='idt1') draw=`${IMG(c.chart)}${VIGNETTE}${MONO(560,34,'RGTX · 10 min',{a:'end'})}
+    ${DRAW('M 60 262 L 660 262', .4, .9, {c:'#5fd3cc',w:2})}${E(.9,null, MONO(64,254,'THE OPEN',{c:'#5fd3cc'}))}
+    ${DRAW('M 150 262 L 150 198 L 330 198 L 330 262 Z', 1.6, 1.0, {c:'#f0b35a',w:2.5})}${E(2.5,null, MONO(156,190,'R10 BOX · FIRST BREAKOUT',{c:'#f0b35a'}))}
+    ${DRAW('M 330 198 L 470 120', 3.4, .9, {c:'#3ddc97',w:2.5})}${E(4.2,null, MONO(478,116,'A FULL R5 · DOUBLE THE SIZE',{c:'#3ddc97',s:11}))}
+    ${E(4.9,6.9, `${TXT(360,340,'Big gap equals big follow-through. Direction unknown.',{s:20,a:'middle'})}`,'snap')}
+    ${E(6.9,null, `${TXT(360,340,'90 % of days set their high or low in the first hour.',{s:20,a:'middle'})}`,'snap')}`;
+  else if (c.id==='swing') draw=`${IMG(c.chart)}${VIGNETTE}${MONO(560,34,'QQQ · daily',{a:'end'})}
+    ${DRAW('M 40 70 L 680 70 L 680 300 L 40 300 Z', .4, 1.0, {c:'#5fd3cc',w:1.5,dash:'4 6'})}${E(1.2,null, MONO(48,88,'WEEKLY',{c:'#5fd3cc'}))}
+    ${DRAW('M 300 100 L 660 100 L 660 290 L 300 290 Z', 1.8, .9, {c:'#5fd3cc',w:2})}${E(2.5,null, MONO(308,118,'DAILY',{c:'#5fd3cc'}))}
+    ${DRAW('M 520 150 L 650 150 L 650 285 L 520 285 Z', 3.0, .7, {c:'#f0b35a',w:2.5})}${E(3.6,null, MONO(528,168,'65-MINUTE',{c:'#f0b35a'}))}
+    ${E(4.6,null, `<text data-count="6" data-in="4.6" data-dur="1.2" data-suffix="R" x="640" y="275" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="34" font-weight="600" fill="#f0b35a">0R</text>`)}
+    ${E(4.9,null, `${TXT(360,340,'The same interpretation on every timeframe.',{s:20,a:'middle'})}`)}`;
+  else draw=`${BG}<g transform="translate(360,185)">
+      ${DRAW('M -40 70 L 0 10 L 40 70 Z', .4, .6, {c:'#8b98a5',w:2})}${DRAW('M -250 -30 L 250 50', 1.0, .9, {c:'#e6edf3',w:4})}
+      ${E(1.7,null, `${TXT(-250,-52,'BULLS',{f:'"JetBrains Mono", monospace',s:14,c:'#3ddc97',a:'middle'})}${TXT(250,28,'BEARS',{f:'"JetBrains Mono", monospace',s:14,c:'#ef5a6f',a:'middle'})}`)}
+      ${E(2.4,null, `${TXT(0,112,'demographics',{f:'Caveat, cursive',s:30,c:'#d4a559',a:'middle'})}`)}
+      ${E(3.7,null, `${TXT(-120,-96,'the emotional maniacs',{f:'Caveat, cursive',s:28,c:'#f0b35a'})}${TXT(-120,-68,'move the teeter',{f:'Caveat, cursive',s:28,c:'#f0b35a'})}`)}</g>
+      ${E(4.9,null, `${TXT(360,340,'The market is a great big teeter-totter.',{s:20,a:'middle'})}`)}`;
+  return SVG(`${draw}<rect x="0" y="300" width="720" height="105" fill="url(#band)"/>${BRAND}${chapName}${strip}`);
+}
+
+// ---- the options ------------------------------------------------------------------------------
+const OPTIONS = [
+  { id:'o1', n:'OPTION 1', name:'His chart, framed', claim:'"You will learn to see this on your own chart." A frame from the course\'s own walk-through, the levels tagging themselves in his vocabulary, one line he says.', fn:opt1,
+    notes:[['What it says','The product is a way of seeing a chart. The hero shows the chart and the seeing. The Mental Model courses have no chart, so they get the picture he draws instead (the teeter-totter here, the four intelligences in option 2).'],
+           ['Built from','`courses/<course>/stills/` (the walk-through frames already cut for the v2 build), the Desk style of `anim_kit.py` (teal sweeps, mono readouts, lower-third). A 7-second scene rendered by `render-anim.py`, no image model.'],
+           ['Effort / risk','One scene file per course, about the work of one overdub scene. Risk: a chart at card size is busy; the vignette and the single frame carry it, and the owner already approved Desk for the intraday course.']]},
+  { id:'o2', n:'OPTION 2', name:'The tree', claim:'"You walk away with a system." The course\'s own framework drawn as a schematic that builds itself in beats: the decision tree, the three nested timeframes, the four intelligences.', fn:opt2,
+    notes:[['What it says','Structure. A tree says the course is a procedure with branches, not an hour of opinions. It is also the only option that works the same for a chart course and a psychology course.'],
+           ['Built from','The chapter list and the flashcards are the nodes; the kit draws boxes and connectors already (Ink Board). Deterministic draw(t), one SVG per course.'],
+           ['Effort / risk','Cheapest to make. Risk: text-heavy at card size; seven boxes is the ceiling, and it looks like a slide if the beats are not staggered.']]},
+  { id:'o3', n:'OPTION 3', name:'The syllabus', claim:'"Exactly what you get for $49." The real chapter titles with their times, the runtime counting up, the deck size, and the charts he walks.', fn:opt3,
+    notes:[['What it says','Transparency. The buyer sees the table of contents before paying, which is what a bookshop lets them do. The walk line (SPY · RGTX · PLTR) is the proof of real charts.'],
+           ['Built from','`scenes.json` chapter cards and their times, the deck count from the catalog. Fully generated; a recut changes the hero with no hand work.'],
+           ['Effort / risk','A template, not a design per course. Risk: it is a list, and a list in motion is still a list. Reads better on the store page than on the card.']]},
+  { id:'o4', n:'OPTION 4', name:'The flashcard', claim:'"Can you answer this?" Two real cards from the deck: question, a beat, his answer.', fn:opt4,
+    notes:[['What it says','There is substance here you cannot already recite. A trader who cannot name the six systems has just been shown the gap in their own knowledge.'],
+           ['Built from','`flashcards.csv` (the 35 to 69 cards per course already shipped as Anki and PDF). Pick the two with the shortest answers.'],
+           ['Effort / risk','Trivial to generate. Risk: the card needs reading, and a card in a grid gets about three seconds; strongest on the sales page where the visitor already stopped.']]},
+  { id:'o5', n:'OPTION 5', name:'After this course you can', claim:'"Here is the skill you buy." Four competencies typed out and ticked, each one a chapter of the course, never an outcome.', fn:opt5,
+    notes:[['What it says','A course is a transfer of ability. Four verbs tell the trader what they will be able to do on Monday. Facts only: these are the chapters, not claims about P&L.'],
+           ['Built from','One line per chapter, written once per course; the kit\'s typed-text primitive and a drawn tick.'],
+           ['Effort / risk','Four lines of copy per course, owner-approved. Risk: the lines must stay skill statements; any drift toward results breaks the facts-only rule and the FTC\'s.']]},
+  { id:'o6', n:'OPTION 6', name:'On tape', claim:'"Taught by the man, on his own sessions." Dr. Long in the corner, his chart behind him, a sentence he actually says, the walk it comes from.', fn:opt6,
+    notes:[['What it says','Authority and provenance. The buyer sees the teacher, the real chart and a dated walk-through, which is the thing no competitor course has.'],
+           ['Built from','A face frame from the course\'s own video, the still, one flashcard quote. The current script already cuts a Ken frame; this keeps it and drops the stock stills.'],
+           ['Effort / risk','Cheap. Risk: three of the five store courses have no clean face shot in the v2 cut (the reason Part 2 went stills-only on 11-17), so the Mental Model cards fall back to his words over a dim frame, as shown.']]},
+  { id:'o7', n:'OPTION 7 · RECOMMENDED', name:'Framed, with the chapter strip', claim:'Option 1 with option 3 folded into the bottom edge: the chapter name and a progress strip tick through all seven chapters over the loop.', fn:opt7,
+    notes:[['What it says','Both answers at once: this is what you will see (the frame on his chart) and this is what you get (seven chapters, named). The strip also tells the eye the hero is a course, not a clip.'],
+           ['Built from','Everything option 1 uses plus the chapter cards from `scenes.json`. One kit scene with a `style=desk` switch and a `chapters=` strip; the two Mental Model courses use his drawn picture in place of the chart.'],
+           ['Effort / risk','About one scene per course plus a strip primitive in the kit, then a 7-second render and the same `?v=N` bump on /courses. Risk: the loop is dense; the strip must stay under the lower third and off the owl.']]},
+];
+
+// ---- render -----------------------------------------------------------------------------------------
+function cardHTML(c, heroInner){
+  return `<div class="ccard"><div class="hero">${heroInner}</div><div class="body">
+    <div class="ttl">${esc(c.title)}</div><div class="sub">${esc(c.sub)}</div><div class="sum">${esc(c.sum)}</div>
+    <div class="meta"><span>▶ ${c.mins}</span><b>$49</b></div><div class="cta">View in store →</div></div></div>`;
+}
+document.getElementById('row-now').innerHTML = COURSES.map(c=>cardHTML(c, `<img class="gif" src="${G}${c.gif}" alt="">`)).join('');
+document.getElementById('options').innerHTML = OPTIONS.map(o=>`<section class="opt" id="${o.id}">
+  <div class="opthead"><span class="num">${o.n}</span><h2>${o.name}</h2></div><p class="claim">${o.claim}</p>
+  <div class="row">${COURSES.map(c=>cardHTML(c, o.fn(c))).join('')}</div>
+  <div class="notes">${o.notes.map(([h,b])=>`<div class="note"><b>${h}</b>${b.replace(/`([^`]+)`/g,'<code>$1</code>')}</div>`).join('')}</div>
+</section>`).join('');
+
+// ---- the clock: every hero is a deterministic draw(t) over an 8 s loop ---------------------------------------
+const els = {
+  e: [...document.querySelectorAll('.hero .e[data-in]')].map(el=>({el, tin:+el.dataset.in, tout:el.dataset.out?+el.dataset.out:LOOP})),
+  type: [...document.querySelectorAll('.hero [data-type]')].map(el=>({el, s:el.dataset.type, tin:+el.dataset.in, cps:+el.dataset.cps})),
+  draw: [...document.querySelectorAll('.hero [data-draw]')].map(el=>{const L=el.getTotalLength(); el.style.strokeDasharray = el.getAttribute('stroke-dasharray') || L; const dashed=!!el.getAttribute('stroke-dasharray'); return {el, L, dashed, tin:+el.dataset.in, dur:+el.dataset.dur};}),
+  grow: [...document.querySelectorAll('.hero [data-grow]')].map(el=>({el, w:+el.dataset.grow, tin:+el.dataset.in, dur:+el.dataset.dur})),
+  count: [...document.querySelectorAll('.hero [data-count]')].map(el=>({el, n:+el.dataset.count, suf:el.dataset.suffix||'', tin:+el.dataset.in, dur:+el.dataset.dur})),
+  ctime: [...document.querySelectorAll('.hero [data-count-time]')].map(el=>{const [m,s]=el.dataset.countTime.split(':').map(Number); return {el, total:m*60+s, tin:+el.dataset.in, dur:+el.dataset.dur};}),
+  kb: [...document.querySelectorAll('.hero [data-kb]')],
+};
+const ease = p => p<0?0:p>1?1:(1-Math.cos(Math.PI*p))/2;
+function draw(t){
+  for (const o of els.e) o.el.classList.toggle('on', t>=o.tin && t<o.tout);
+  for (const o of els.type){ const n=Math.max(0, Math.floor((t-o.tin)*o.cps)); o.el.textContent = o.s.slice(0,n); }
+  for (const o of els.draw){ const p=ease((t-o.tin)/o.dur); if (o.dashed){ o.el.style.opacity = p>0?1:0; } else { o.el.style.strokeDashoffset = o.L*(1-p); o.el.style.opacity = p>0?1:0; } }
+  for (const o of els.grow){ o.el.setAttribute('width', o.w*ease((t-o.tin)/o.dur)); }
+  for (const o of els.count){ const p=ease((t-o.tin)/o.dur); o.el.textContent = Math.round(o.n*p)+o.suf; }
+  for (const o of els.ctime){ const p=ease((t-o.tin)/o.dur); const s=Math.round(o.total*p); o.el.textContent = Math.floor(s/60)+':'+String(s%60).padStart(2,'0'); }
+  const z = 1+0.06*(t/LOOP);
+  for (const el of els.kb) el.setAttribute('transform', `translate(${360-360*z} ${202-202*z}) scale(${z})`);
+  document.getElementById('scrub').value = t; document.getElementById('tt').textContent = t.toFixed(2)+' s';
+}
+let playing=true, t0=performance.now(), offset=0;
+function tick(now){ if (playing){ const t=((now-t0)/1000+offset)%LOOP; draw(t); } requestAnimationFrame(tick); }
+requestAnimationFrame(tick);
+document.getElementById('play').onclick = e => { playing=!playing; e.target.textContent = playing?'Pause':'Play'; if (playing){ t0=performance.now(); offset=+document.getElementById('scrub').value; } };
+document.getElementById('restart').onclick = () => { t0=performance.now(); offset=0; if(!playing) draw(0); };
+document.getElementById('scrub').oninput = e => { playing=false; document.getElementById('play').textContent='Play'; draw(+e.target.value); };
+document.getElementById('theme').onclick = () => { const h=document.documentElement; h.dataset.theme = h.dataset.theme==='dark'?'light':'dark'; try{localStorage.setItem('hero-options-theme',h.dataset.theme);}catch(e){} };
+try{ const th=localStorage.getItem('hero-options-theme'); if(th) document.documentElement.dataset.theme=th; }catch(e){}
+</script>
+</body>
+</html>
