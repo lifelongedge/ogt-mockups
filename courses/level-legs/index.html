@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Between Two Levels</title>
+<style>
+:root{
+  --bg:#f9f9f7;--card:#fcfcfb;--fg:#0b0b0b;--dim:#52514e;--faint:#8a8880;--border:#e4e2dc;--grid:#eeece6;
+  --accent:#b07a1c;--up:#1d8a4e;--dn:#c23b3b;--band:rgba(27,175,122,.13);--spine:#199e70;--rl:#0b0b0b;
+  --s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--s4:#eda100;--s5:#e87ba4;--s6:#008300;--s7:#6250d6;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0d0d0d;--card:#1a1a19;--fg:#f0efec;--dim:#c3c2b7;--faint:#8b8a82;--border:#2e2d2a;--grid:#262624;
+  --accent:#d4a559;--up:#4cbf7f;--dn:#e66767;--band:rgba(25,158,112,.18);--spine:#3fbf8f;--rl:#f0efec;
+  --s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--s5:#d55181;--s6:#008300;--s7:#9085e9;}}
+:root[data-theme="dark"]{
+  --bg:#0d0d0d;--card:#1a1a19;--fg:#f0efec;--dim:#c3c2b7;--faint:#8b8a82;--border:#2e2d2a;--grid:#262624;
+  --accent:#d4a559;--up:#4cbf7f;--dn:#e66767;--band:rgba(25,158,112,.18);--spine:#3fbf8f;--rl:#f0efec;
+  --s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--s5:#d55181;--s6:#008300;--s7:#9085e9;}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}
+.mono{font-family:"SF Mono",Menlo,Consolas,monospace}
+header,main{max-width:1180px;margin:0 auto;padding:0 16px}
+header{padding-top:28px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+h1{font-family:Georgia,serif;font-weight:400;font-size:2rem;margin:0 0 4px}
+h2{font-family:Georgia,serif;font-weight:500;font-size:1.25rem;margin:30px 0 8px}
+.sub{color:var(--dim);max-width:820px;margin:0}
+.asof{color:var(--faint);font-size:.82rem;margin-top:8px}
+.topbar{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+button{font:inherit;color:inherit}
+.btn{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:5px 11px;cursor:pointer;font-size:.85rem}
+.btn:hover{border-color:var(--faint)}
+.btn.on{border-color:var(--accent);color:var(--accent)}
+.controls{display:flex;flex-wrap:wrap;gap:16px;align-items:center;padding:14px 0;border-bottom:1px solid var(--border)}
+.grp{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+.grp>span{color:var(--faint);font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;margin-right:4px}
+select{font:inherit;font-size:.85rem;background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:6px;padding:4px 6px}
+.shapes{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:14px}
+.shape{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:8px 10px;cursor:pointer;text-align:left;position:relative}
+.shape.on{outline:2px solid var(--accent);outline-offset:-1px}
+.shape .sw{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.shape b{font-weight:600;font-size:.88rem}
+.shape .n{color:var(--dim);font-size:.78rem}
+.shape .rule{color:var(--faint);font-size:.74rem;line-height:1.35;margin-top:3px}
+.shape svg{display:block;width:100%;height:46px;margin-top:4px}
+.stage{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:14px;margin-top:14px}
+@media (max-width:860px){.stage{grid-template-columns:1fr}}
+.panel{min-width:0;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px}
+.charthead{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:baseline}
+.charthead .t{font-weight:600}
+.charthead .m{color:var(--dim);font-size:.85rem}
+#chart{width:100%;height:440px;display:block;touch-action:none}
+@media (max-width:600px){#chart{height:320px}}
+.layers{display:flex;gap:4px;flex-wrap:wrap;margin-top:8px}
+.layers .btn{font-size:.78rem;padding:3px 8px}
+.stats{width:100%;border-collapse:collapse;font-size:.86rem}
+.stats td{padding:5px 2px;border-bottom:1px solid var(--grid);vertical-align:top}
+.stats td:last-child{text-align:right;font-family:"SF Mono",Menlo,Consolas,monospace}
+.stats .k{color:var(--dim)}
+.stats .h{color:var(--faint);font-size:.72rem;display:block;line-height:1.3}
+.pill{display:inline-block;padding:1px 8px;border-radius:10px;font-size:.78rem;color:#fff}
+.nav{display:flex;gap:6px;align-items:center;margin-top:10px;flex-wrap:wrap}
+.nav .c{color:var(--dim);font-size:.82rem}
+.legs{display:flex;gap:6px;overflow-x:auto;padding:8px 0 4px}
+.legs button{flex:0 0 auto;background:var(--card);border:1px solid var(--border);border-radius:6px;padding:4px 8px;cursor:pointer;font-size:.76rem;text-align:left}
+.legs button.on{border-color:var(--accent)}
+.legs button .d{color:var(--faint);display:block}
+#map{width:100%;height:340px;display:block}
+.tip{position:fixed;pointer-events:none;background:var(--card);border:1px solid var(--border);border-radius:6px;padding:6px 9px;font-size:.78rem;box-shadow:0 4px 14px rgba(0,0,0,.18);z-index:20;display:none;max-width:280px}
+table.tbl{width:100%;border-collapse:collapse;font-size:.84rem;margin-top:6px}
+.tbl th,.tbl td{padding:6px 8px;border-bottom:1px solid var(--border);text-align:right}
+.tbl th:first-child,.tbl td:first-child{text-align:left}
+.tbl th{color:var(--faint);font-weight:500;font-size:.72rem;text-transform:uppercase;letter-spacing:.05em}
+.tbl td{font-family:"SF Mono",Menlo,Consolas,monospace}
+.tbl td:first-child{font-family:inherit}
+.wrap{overflow-x:auto}
+.note{background:var(--card);border-left:3px solid var(--accent);padding:10px 14px;border-radius:0 6px 6px 0;color:var(--dim);font-size:.88rem;margin:14px 0}
+.note b{color:var(--fg)}
+ol.outline{color:var(--dim);padding-left:20px}
+ol.outline li{margin:4px 0}
+ol.outline b{color:var(--fg)}
+footer{max-width:1180px;margin:30px auto 40px;padding:0 16px;color:var(--faint);font-size:.78rem}
+</style>
+</head>
+<body>
+<header>
+  <div class="topbar">
+    <div>
+      <h1>Between Two Levels</h1>
+      <p class="sub">Course concept, mockup with live data. The same two levels, say the open to +1 Frog, or −7 R10 to −8 R10, are joined by very different paths. The measures we already draw (RL10, the dragon, the mean, z1, z2) name each path. Every leg below is a real one, from our own 1-minute bars.</p>
+      <div class="asof mono" id="asof"></div>
+    </div>
+    <button class="btn" id="theme" title="Light or dark">Theme</button>
+  </div>
+</header>
+
+<main>
+  <div class="controls">
+    <div class="grp" id="ladGrp"><span>Levels</span></div>
+    <div class="grp" id="tfGrp"><span>Bars</span></div>
+    <div class="grp"><span>Symbol</span><select id="sym"></select></div>
+    <div class="grp"><span>Day</span><select id="day"></select></div>
+    <div class="grp"><span>Side</span><select id="side"><option value="all">Both</option><option value="up">Up legs</option><option value="dn">Down legs</option></select></div>
+  </div>
+
+  <h2>Seven shapes of the same move</h2>
+  <p class="sub" id="shapeIntro"></p>
+  <div class="shapes" id="shapes"></div>
+
+  <div class="stage">
+    <div class="panel">
+      <div class="charthead"><span class="t" id="cTitle"></span><span class="m" id="cMeta"></span></div>
+      <svg id="chart" role="img" aria-label="Price bars of the selected leg with its two levels and the indicators"></svg>
+      <div class="layers" id="layers"></div>
+      <div class="nav"><button class="btn" id="prev">← Prev</button><button class="btn" id="next">Next →</button><span class="c" id="navc"></span></div>
+      <div class="legs" id="legs"></div>
+    </div>
+    <div class="panel">
+      <div style="margin-bottom:8px"><span class="pill" id="sPill"></span></div>
+      <table class="stats" id="stats"></table>
+    </div>
+  </div>
+
+  <h2>Shape map</h2>
+  <p class="sub">Every leg in the filter, by how long it took and how straight it went. Straightness is the net move over the distance travelled, close to close (1 is a straight line). Hover a dot; press one with a ring to open its chart.</p>
+  <div class="panel" style="margin-top:10px"><svg id="map" role="img" aria-label="Scatter of every leg: bars taken against straightness, colored by shape"></svg></div>
+
+  <h2>The shapes in numbers</h2>
+  <p class="sub">Medians over the legs in the filter. Descriptive of what these legs did; nothing here says what the next leg will do.</p>
+  <div class="panel wrap" style="margin-top:10px"><table class="tbl" id="tbl"></table></div>
+
+  <h2>What the course would teach</h2>
+  <ol class="outline">
+    <li><b>The rulers.</b> R10, R5 and Frog from the last 30 sessions, laid off from the open. Why each ruler gets its own bar size: R10 on 1 and 3 minutes, R5 on 3 and 10, Frog on 10 and 30.</li>
+    <li><b>A leg.</b> The last touch of one level to the first touch of the next. Inside a leg price never goes back to where it started, so the whole picture lives between two lines.</li>
+    <li><b>Reading the path.</b> Where the closes sit against the dragon spine and skin, which way RL10 points, how often the mean is crossed, how far the z bands are stretched.</li>
+    <li><b>The seven shapes.</b> One chapter each, with today's legs beside the old ones.</li>
+    <li><b>Your own tape.</b> The same measures on the trader's own symbols in Edge S2, so a shape is named while it forms.</li>
+  </ol>
+  <div class="note"><b>Open for the owner.</b> The shape names and the cut-offs that sort a leg into one (shown on each card) are a first draft written to make the spread visible. Whether any shape is followed by anything in particular has not been measured; this page only describes the legs.</div>
+</main>
+<footer id="src"></footer>
+<div class="tip" id="tip"></div>
+
+<script>
+const BUILD = 2;
+console.log('[level-legs] build ' + BUILD);
+window.__edgeBuild = BUILD;
+
+const SHAPE_INFO = {
+  "Z2 thrust":            {c:'--s1', rule:'Reaches the far z2 band, pulls back under 0.3 of the gap, straightness 0.5+.'},
+  "Skin ride":            {c:'--s2', rule:'65%+ of closes past the dragon skin (belly when falling), straightness 0.5+.'},
+  "Stair-step":           {c:'--s3', rule:'70%+ of closes on the move side of the spine, with pauses.'},
+  "Base then break":      {c:'--s4', rule:'Under 0.4 of the way after 60% of its bars, then finishes.'},
+  "Deep retrace":         {c:'--s5', rule:'Gives back 0.6 of the gap or more from its best before arriving.'},
+  "Chop through the mean":{c:'--s6', rule:'Closes cross the 30-bar mean 3 times or more.'},
+  "Drift":                {c:'--s7', rule:'None of the above: gets there without a strong trait.'},
+};
+const cssv = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const col = s => cssv(SHAPE_INFO[s].c);
+const st = {lad:'Frog', tf:'10m', sym:'all', day:'all', side:'all', shape:null, leg:null,
+  layers:{rl:true, dragon:true, mean:true, z1:true, z2:true}};
+let D, F = [];
+
+const lvlName = (k, lad) => k === 0 ? 'ood' : (k > 0 ? '+' : '−') + Math.abs(k) + ' ' + lad;
+const fmt = (v, d=2) => v == null || !isFinite(v) ? '–' : (+v).toFixed(d);
+const med = a => { a = a.filter(x => x != null && isFinite(x)).sort((x,y)=>x-y); if(!a.length) return null; const m = a.length>>1; return a.length%2 ? a[m] : (a[m-1]+a[m])/2; };
+
+fetch('legs.json?v=' + BUILD, {cache:'no-store'}).then(r => r.json()).then(d => { D = d; init(); });
+
+function init(){
+  document.getElementById('asof').textContent = 'Bars through ' + D.asof + ' · ' + D.legs.length.toLocaleString() + ' legs · ' + D.symbols.length + ' symbols · last ' + new Set(D.legs.map(l=>l.day)).size + ' sessions';
+  document.getElementById('src').textContent = 'Source: ' + D.source + '. Built by ogt-coursecraft devtimeartifacts/level-legs-2026-11-20/build_legs.py. Mockup build ' + BUILD + '.';
+  const lg = document.getElementById('ladGrp');
+  Object.keys(D.ladders).forEach(l => { const b = mk('button','btn',l); b.dataset.l = l; b.onclick = () => { st.lad = l; st.tf = D.ladders[l][1] || D.ladders[l][0]; st.shape = null; render(); }; lg.appendChild(b); });
+  const sy = document.getElementById('sym'); sy.innerHTML = '<option value="all">All</option>' + D.symbols.map(s=>`<option>${s}</option>`).join('');
+  const days = [...new Set(D.legs.map(l=>l.day))].sort().reverse();
+  const dy = document.getElementById('day'); dy.innerHTML = '<option value="all">All sessions</option>' + days.map((d,i)=>`<option value="${d}">${d}${i===0?' (today)':''}</option>`).join('');
+  sy.onchange = e => { st.sym = e.target.value; st.shape = null; render(); };
+  dy.onchange = e => { st.day = e.target.value; st.shape = null; render(); };
+  document.getElementById('side').onchange = e => { st.side = e.target.value; st.shape = null; render(); };
+  const L = document.getElementById('layers');
+  [['rl','RL10'],['dragon','Dragon'],['mean','Mean 30'],['z1','z1'],['z2','z2']].forEach(([k,t]) => {
+    const b = mk('button','btn on',t); b.onclick = () => { st.layers[k] = !st.layers[k]; b.classList.toggle('on'); drawChart(); }; L.appendChild(b); });
+  document.getElementById('prev').onclick = () => step(-1);
+  document.getElementById('next').onclick = () => step(1);
+  document.addEventListener('keydown', e => { if(e.target.tagName==='SELECT') return; if(e.key==='ArrowLeft') step(-1); if(e.key==='ArrowRight') step(1); });
+  const th = document.getElementById('theme');
+  try { const t = localStorage.getItem('ll-theme'); if (t) document.documentElement.dataset.theme = t; } catch(e){}
+  th.onclick = () => { const dark = document.documentElement.dataset.theme ? document.documentElement.dataset.theme==='dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.dataset.theme = dark ? 'light' : 'dark'; try{localStorage.setItem('ll-theme', document.documentElement.dataset.theme);}catch(e){} render(); };
+  window.addEventListener('resize', () => { drawChart(); drawMap(); });
+  render();
+}
+function mk(t, c, txt){ const e = document.createElement(t); if(c) e.className = c; if(txt!=null) e.textContent = txt; return e; }
+
+function filtered(){
+  return D.legs.filter(l => l.lad===st.lad && l.tf===st.tf && (st.sym==='all'||l.sym===st.sym) && (st.day==='all'||l.day===st.day)
+    && (st.side==='all' || (st.side==='up') === (l.kB > l.kA)));
+}
+function charted(){ return F.filter(l => l.chart && (!st.shape || l.shape===st.shape)); }
+
+function render(){
+  document.querySelectorAll('#ladGrp .btn').forEach(b => b.classList.toggle('on', b.dataset.l===st.lad));
+  const tg = document.getElementById('tfGrp'); tg.querySelectorAll('.btn').forEach(b=>b.remove());
+  D.ladders[st.lad].forEach(tf => { const b = mk('button','btn'+(tf===st.tf?' on':''),tf); b.onclick = () => { st.tf = tf; st.shape = null; render(); }; tg.appendChild(b); });
+  F = filtered();
+  const ex = {R10:'−7 R10 to −8 R10', R5:'−2 R5 to −1 R5', Frog:'the open to +1 Frog'}[st.lad];
+  document.getElementById('shapeIntro').textContent = `${F.length.toLocaleString()} ${st.lad} legs on ${st.tf} bars in this filter, every one a move from one ${st.lad} level to the next (for example ${ex}). Pick a shape to see its legs.`;
+  if (!st.shape || !F.some(l=>l.shape===st.shape)) {
+    const cnt = {}; F.forEach(l => cnt[l.shape]=(cnt[l.shape]||0)+1);
+    st.shape = D.shapes.filter(s=>cnt[s]).sort((a,b)=>cnt[b]-cnt[a])[0] || null;
+  }
+  drawShapes(); pickLeg(); drawMap(); drawTable();
+}
+
+function drawShapes(){
+  const box = document.getElementById('shapes'); box.innerHTML = '';
+  D.shapes.forEach(s => {
+    const g = F.filter(l=>l.shape===s);
+    const b = mk('button','shape'+(s===st.shape?' on':''));
+    b.innerHTML = `<b><span class="sw" style="background:${col(s)}"></span>${s}</b><div class="n">${g.length} legs · ${F.length?Math.round(g.length/F.length*100):0}%</div>`;
+    const ex = g.find(l=>l.chart);
+    if (ex) b.appendChild(spark(D.charts[ex.id], ex, col(s)));
+    b.appendChild(Object.assign(mk('div','rule'), {textContent: SHAPE_INFO[s].rule}));
+    if (!g.length) b.style.opacity = .45;
+    b.onclick = () => { if(!g.length) return; st.shape = s; st.leg = null; drawShapes(); pickLeg(); drawMap(); };
+    box.appendChild(b);
+  });
+}
+function spark(c, leg, color){
+  const ns = 'http://www.w3.org/2000/svg', svg = document.createElementNS(ns,'svg');
+  svg.setAttribute('viewBox','0 0 100 46'); svg.setAttribute('preserveAspectRatio','none');
+  const lo = Math.min(leg.A, leg.B), hi = Math.max(leg.A, leg.B), pad = (hi-lo)*.25;
+  const y = v => 44 - (v-(lo-pad))/((hi+pad)-(lo-pad))*42, n = c.close.length, x = i => i/(n-1)*100;
+  let p = ''; c.close.forEach((v,i)=>{ if(v!=null) p += (p?'L':'M')+x(i).toFixed(1)+','+y(v).toFixed(1); });
+  svg.innerHTML = `<rect x="${x(c.i)}" width="${x(c.j)-x(c.i)}" y="0" height="46" fill="${color}" opacity=".14"/>
+    <line x1="0" x2="100" y1="${y(leg.A)}" y2="${y(leg.A)}" stroke="${cssv('--faint')}" stroke-dasharray="2 2" stroke-width=".8" vector-effect="non-scaling-stroke"/>
+    <line x1="0" x2="100" y1="${y(leg.B)}" y2="${y(leg.B)}" stroke="${cssv('--accent')}" stroke-width="1" vector-effect="non-scaling-stroke"/>
+    <path d="${p}" fill="none" stroke="${color}" stroke-width="1.6" vector-effect="non-scaling-stroke"/>`;
+  return svg;
+}
+
+function pickLeg(){
+  const C = charted();
+  if (!st.leg || !C.includes(st.leg)) {
+    const today = D.legs.reduce((m,l)=>l.day>m?l.day:m,'');
+    st.leg = C.find(l=>l.day===today) || C[0] || null;
+  }
+  const L = document.getElementById('legs'); L.innerHTML = '';
+  C.forEach(l => { const b = mk('button', l===st.leg?'on':''); b.innerHTML = `${l.sym} ${lvlName(l.kA,l.lad)} → ${lvlName(l.kB,l.lad)}<span class="d">${l.day.slice(5)} ${l.t0}–${l.t1}</span>`;
+    b.onclick = () => { st.leg = l; pickLeg(); drawMap(); }; L.appendChild(b); if(l===st.leg) setTimeout(()=>b.scrollIntoView({block:'nearest',inline:'nearest'}),0); });
+  document.getElementById('navc').textContent = C.length ? `${C.indexOf(st.leg)+1} of ${C.length} charted ${st.shape} legs (← → keys)` : 'No charted legs in this filter';
+  drawChart(); drawStats();
+}
+function step(d){ const C = charted(); if(!C.length) return; const i = C.indexOf(st.leg); st.leg = C[(i+d+C.length)%C.length]; pickLeg(); drawMap(); }
+
+function drawStats(){
+  const l = st.leg, T = document.getElementById('stats'), P = document.getElementById('sPill');
+  if (!l) { T.innerHTML = ''; P.textContent=''; return; }
+  P.textContent = l.shape; P.style.background = col(l.shape);
+  const up = l.kB > l.kA, side = up ? 'above' : 'below';
+  const rows = [
+    ['Bars', l.bars, `${l.mins} minutes, ${l.t0} to ${l.t1}`],
+    ['Straightness', fmt(l.eff), 'net close move over distance travelled'],
+    ['Deepest give-back', fmt(l.retrace) + ' gap', 'from its best, in units of the gap A→B'],
+    ['Closes past spine', fmt(l.spine_pct,0)+'%', `closes ${side} the dragon spine`],
+    ['Closes past ' + (up?'skin':'belly'), fmt(l.skin_pct,0)+'%', `closes ${side} the dragon ${up?'skin':'belly'}`],
+    ['RL10 pointing the way', fmt(l.rl_pct,0)+'%', 'bars where RL10 moved with the leg'],
+    ['Mean 30 crosses', l.mean_x, 'times the close crossed the 30-bar mean'],
+    ['z at arrival', fmt(l.z_end), 'close vs the mean, in the leg\'s direction'],
+    ['Furthest z', fmt(l.z_max), 'stretch reached during the leg'],
+    ['Touched far z2', l.hit_z2 ? 'yes' : 'no', 'a bar reached the z2 band ahead'],
+    ['Gap A→B', '$' + fmt(Math.abs(l.B-l.A)), `1 ${l.lad} = $${fmt(l.unit,3)}; open $${fmt(l.ood)}`],
+  ];
+  T.innerHTML = rows.map(r=>`<tr><td><span class="k">${r[0]}</span><span class="h">${r[2]}</span></td><td>${r[1]}</td></tr>`).join('');
+}
+
+function drawChart(){
+  const svg = document.getElementById('chart'), l = st.leg;
+  const W = svg.clientWidth || 800, H = svg.clientHeight || 440; svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  if (!l) { svg.innerHTML = ''; document.getElementById('cTitle').textContent='No leg'; document.getElementById('cMeta').textContent=''; return; }
+  const c = D.charts[l.id];
+  document.getElementById('cTitle').textContent = `${l.sym} · ${lvlName(l.kA,l.lad)} → ${lvlName(l.kB,l.lad)}`;
+  document.getElementById('cMeta').textContent = `${l.day} · ${l.tf} bars · ${l.t0}–${l.t1} ET`;
+  const n = c.close.length, m = {l:8, r:78, t:12, b:24}, pw = W-m.l-m.r, ph = H-m.t-m.b;
+  const vals = [...c.high, ...c.low, l.A, l.B]; const lay = st.layers;
+  if (lay.z1) vals.push(...c.z1u, ...c.z1d); if (lay.dragon) vals.push(...c.skin, ...c.belly);
+  const fin = vals.filter(v=>v!=null);
+  let lo = Math.min(...fin), hi = Math.max(...fin);
+  const g0 = Math.abs(l.B-l.A); lo = Math.max(lo, Math.min(l.A,l.B)-2.2*g0); hi = Math.min(hi, Math.max(l.A,l.B)+2.2*g0);
+  const pad = (hi-lo)*.04; lo -= pad; hi += pad;
+  const X = i => m.l + (i+.5)*pw/n, Y = v => m.t + (hi-v)/(hi-lo)*ph, bw = Math.max(1, pw/n*.62);
+  const ink = cssv('--fg'), dim = cssv('--dim'), faint = cssv('--faint'), grid = cssv('--grid'), acc = cssv('--accent');
+  const line = (arr, stroke, w, dash='') => { let p=''; arr.forEach((v,i)=>{ if(v==null){ p+=' '; return;} p += (p && !p.endsWith(' ') ? 'L':'M') + X(i).toFixed(1)+','+Y(v).toFixed(1); });
+    return `<path d="${p.replace(/ M/g,'M').trim()}" fill="none" stroke="${stroke}" stroke-width="${w}" stroke-dasharray="${dash}" stroke-linejoin="round" clip-path="url(#pc)"/>`; };
+  let s = `<defs><clipPath id="pc"><rect x="${m.l}" y="${m.t}" width="${pw}" height="${ph}"/></clipPath></defs>`;
+  // grid + price axis
+  const ticks = niceTicks(lo, hi, 6);
+  ticks.forEach(t => s += `<line x1="${m.l}" x2="${m.l+pw}" y1="${Y(t)}" y2="${Y(t)}" stroke="${grid}"/><text x="${m.l+pw+6}" y="${Y(t)+4}" font-size="11" fill="${faint}" class="mono">${t.toFixed(2)}</text>`);
+  // leg span
+  s += `<rect x="${X(c.i)-pw/n/2}" y="${m.t}" width="${X(c.j)-X(c.i)+pw/n}" height="${ph}" fill="${col(l.shape)}" opacity=".10"/>`;
+  // time labels
+  const every = Math.ceil(n/8); c.t.forEach((t,i)=>{ if(i%every===0) s += `<text x="${X(i)}" y="${H-6}" font-size="11" fill="${faint}" text-anchor="middle" class="mono">${t}</text>`; });
+  // indicators
+  if (lay.dragon) { let up='', dn=''; for(let i=0;i<n;i++){ if(c.skin[i]==null||c.belly[i]==null) continue; up += (up?'L':'M')+X(i).toFixed(1)+','+Y(c.skin[i]).toFixed(1); }
+    for(let i=n-1;i>=0;i--){ if(c.skin[i]==null||c.belly[i]==null) continue; dn += 'L'+X(i).toFixed(1)+','+Y(c.belly[i]).toFixed(1); }
+    if (up) s += `<path d="${up}${dn}Z" fill="${cssv('--band')}" clip-path="url(#pc)"/>` + line(c.spine, cssv('--spine'), 1.4); }
+  if (lay.z2) s += line(c.z2u, faint, 1, '1 3') + line(c.z2d, faint, 1, '1 3');
+  if (lay.z1) s += line(c.z1u, faint, 1, '4 3') + line(c.z1d, faint, 1, '4 3');
+  if (lay.mean) s += line(c.mean, dim, 1.4, '6 3');
+  // levels
+  [[l.A, lvlName(l.kA,l.lad)+' (A)', faint, '5 4'], [l.B, lvlName(l.kB,l.lad)+' (B)', acc, '']].forEach(([v,t,cl,da]) => {
+    if (v<lo||v>hi) return; s += `<line x1="${m.l}" x2="${m.l+pw}" y1="${Y(v)}" y2="${Y(v)}" stroke="${cl}" stroke-width="1.6" stroke-dasharray="${da}"/>
+      <rect x="${m.l+pw+2}" y="${Y(v)-9}" width="${m.r-4}" height="18" rx="3" fill="${cssv('--card')}" stroke="${cl}"/>
+      <text x="${m.l+pw+6}" y="${Y(v)+4}" font-size="11" fill="${ink}" class="mono">${t.replace(' (A)','').replace(' (B)','')}</text>`; });
+  // candles
+  const upc = cssv('--up'), dnc = cssv('--dn');
+  for (let i=0;i<n;i++){ const o=c.open[i], h=c.high[i], lw=c.low[i], cl=c.close[i]; if(cl==null) continue;
+    const k = cl>=o ? upc : dnc, inLeg = i>=c.i && i<=c.j, op = inLeg ? 1 : .45;
+    s += `<g opacity="${op}"><line x1="${X(i)}" x2="${X(i)}" y1="${Y(h)}" y2="${Y(lw)}" stroke="${k}" stroke-width="1"/>
+      <rect x="${X(i)-bw/2}" y="${Y(Math.max(o,cl))}" width="${bw}" height="${Math.max(1,Math.abs(Y(o)-Y(cl)))}" fill="${k}"/></g>`; }
+  if (lay.rl) s += line(c.rl, cssv('--rl'), 1.6);
+  // start/end markers
+  s += `<circle cx="${X(c.i)}" cy="${Y(l.A)}" r="4.5" fill="${cssv('--card')}" stroke="${faint}" stroke-width="2"/>
+    <circle cx="${X(c.j)}" cy="${Y(l.B)}" r="5" fill="${acc}" stroke="${cssv('--card')}" stroke-width="2"/>`;
+  // legend
+  const leg = [['Leg', col(l.shape), 'rect'], lay.rl&&['RL10', cssv('--rl'), 'line'], lay.dragon&&['Dragon spine + skin/belly', cssv('--spine'), 'line'],
+    lay.mean&&['Mean 30', dim, 'dash'], lay.z1&&['z±1', faint, 'dash'], lay.z2&&['z±2', faint, 'dot']].filter(Boolean);
+  let lx = m.l+6; leg.forEach(([t,cl,k]) => { s += k==='rect' ? `<rect x="${lx}" y="${m.t+4}" width="12" height="10" rx="2" fill="${cl}" opacity=".35"/>` :
+      `<line x1="${lx}" x2="${lx+14}" y1="${m.t+9}" y2="${m.t+9}" stroke="${cl}" stroke-width="2" stroke-dasharray="${k==='dash'?'4 3':k==='dot'?'1 3':''}"/>`;
+    s += `<text x="${lx+18}" y="${m.t+13}" font-size="11" fill="${dim}">${t}</text>`; lx += 26 + t.length*6.2; });
+  s += `<line id="xh" y1="${m.t}" y2="${m.t+ph}" stroke="${faint}" stroke-width="1" visibility="hidden"/><rect id="hit" x="${m.l}" y="${m.t}" width="${pw}" height="${ph}" fill="transparent"/>`;
+  svg.innerHTML = s;
+  const tip = document.getElementById('tip'), xh = svg.querySelector('#xh');
+  svg.querySelector('#hit').onpointermove = e => { const r = svg.getBoundingClientRect(); const px = (e.clientX-r.left)*W/r.width;
+    const i = Math.max(0, Math.min(n-1, Math.floor((px-m.l)/pw*n))); xh.setAttribute('x1',X(i)); xh.setAttribute('x2',X(i)); xh.setAttribute('visibility','visible');
+    const z = c.mean[i]!=null && c.z1u[i]!=null && c.z1u[i]>c.mean[i] ? (c.close[i]-c.mean[i])/(c.z1u[i]-c.mean[i]) : null;
+    tip.innerHTML = `<b class="mono">${c.t[i]}</b>${i>=c.i&&i<=c.j?' · in leg':''}<br>O ${fmt(c.open[i])} H ${fmt(c.high[i])} L ${fmt(c.low[i])} C <b>${fmt(c.close[i])}</b><br>RL10 ${fmt(c.rl[i])} · spine ${fmt(c.spine[i])}<br>skin ${fmt(c.skin[i])} · belly ${fmt(c.belly[i])}<br>mean ${fmt(c.mean[i])} · z ${fmt(z)}`;
+    showTip(e); };
+  svg.querySelector('#hit').onpointerleave = () => { tip.style.display='none'; xh.setAttribute('visibility','hidden'); };
+}
+function niceTicks(lo, hi, k){ const span = hi-lo, raw = span/k, mag = Math.pow(10, Math.floor(Math.log10(raw))); const st = [1,2,2.5,5,10].map(x=>x*mag).find(x=>x>=raw);
+  const out=[]; for(let v=Math.ceil(lo/st)*st; v<=hi; v+=st) out.push(+v.toFixed(6)); return out; }
+function showTip(e){ const tip = document.getElementById('tip'); tip.style.display='block'; const w = tip.offsetWidth, h = tip.offsetHeight;
+  let x = e.clientX+14, y = e.clientY+14; if (x+w > innerWidth-8) x = e.clientX-w-14; if (y+h > innerHeight-8) y = e.clientY-h-14; tip.style.left = x+'px'; tip.style.top = y+'px'; }
+
+function drawMap(){
+  const svg = document.getElementById('map'), W = svg.clientWidth||800, H = svg.clientHeight||340; svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  const m = {l:44, r:14, t:14, b:36}, pw = W-m.l-m.r, ph = H-m.t-m.b;
+  const maxB = Math.max(8, ...F.map(l=>l.bars)), lx = v => Math.log(v), X = v => m.l + (lx(v)-lx(3.5))/(lx(maxB*1.1)-lx(3.5))*pw, Y = v => m.t + (1-v)*ph;
+  const faint = cssv('--faint'), grid = cssv('--grid'), card = cssv('--card');
+  let s = '';
+  [0,.25,.5,.75,1].forEach(v => s += `<line x1="${m.l}" x2="${m.l+pw}" y1="${Y(v)}" y2="${Y(v)}" stroke="${grid}"/><text x="${m.l-6}" y="${Y(v)+4}" font-size="11" fill="${faint}" text-anchor="end" class="mono">${v}</text>`);
+  [4,6,10,20,40,80,160,320].filter(v=>v<=maxB*1.1).forEach(v => s += `<line x1="${X(v)}" x2="${X(v)}" y1="${m.t}" y2="${m.t+ph}" stroke="${grid}"/><text x="${X(v)}" y="${H-18}" font-size="11" fill="${faint}" text-anchor="middle" class="mono">${v}</text>`);
+  s += `<text x="${m.l+pw/2}" y="${H-3}" font-size="11" fill="${faint}" text-anchor="middle">bars in the leg (log scale)</text><text x="12" y="${m.t+ph/2}" font-size="11" fill="${faint}" text-anchor="middle" transform="rotate(-90 12 ${m.t+ph/2})">straightness</text>`;
+  const order = [...F].sort((a,b)=>(a.shape===st.shape)-(b.shape===st.shape));
+  // deterministic horizontal jitter so integer bar counts do not stack
+  order.forEach(l => { const jit = ((l.id*9301+49297)%233280)/233280-.5; const cx = X(l.bars*(1+jit*.12)), cy = Y(l.eff);
+    const on = l.shape===st.shape, sel = l===st.leg;
+    s += `<circle data-id="${l.id}" cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${sel?7:l.chart?4.5:3.2}" fill="${col(l.shape)}" opacity="${on?.9:.22}" stroke="${sel?cssv('--fg'):l.chart&&on?card:'none'}" stroke-width="${sel?2.5:1.5}" style="cursor:${l.chart?'pointer':'default'}"/>`; });
+  svg.innerHTML = s;
+  const tip = document.getElementById('tip');
+  svg.querySelectorAll('circle').forEach(cn => { const l = D.legs[+cn.dataset.id];
+    cn.onpointerenter = e => { tip.innerHTML = `<span class="sw" style="display:inline-block;width:9px;height:9px;border-radius:2px;background:${col(l.shape)}"></span> <b>${l.shape}</b><br>${l.sym} ${l.day} ${l.t0}–${l.t1}<br>${lvlName(l.kA,l.lad)} → ${lvlName(l.kB,l.lad)} · ${l.bars} bars · straightness ${fmt(l.eff)}${l.chart?'':'<br><span style="color:'+faint+'">no chart kept for this leg</span>'}`; showTip(e); };
+    cn.onpointermove = showTip; cn.onpointerleave = () => tip.style.display='none';
+    cn.onclick = () => { if(!l.chart) return; st.shape = l.shape; st.leg = l; drawShapes(); pickLeg(); drawMap(); document.querySelector('.stage').scrollIntoView({behavior:'smooth'}); }; });
+}
+
+function drawTable(){
+  const T = document.getElementById('tbl');
+  const cols = [['Legs',g=>g.length,0],['Share',g=>F.length?g.length/F.length*100:null,0,'%'],['Bars',g=>med(g.map(l=>l.bars)),0],['Minutes',g=>med(g.map(l=>l.mins)),0],
+    ['Straight',g=>med(g.map(l=>l.eff)),2],['Give-back',g=>med(g.map(l=>l.retrace)),2],['Past spine',g=>med(g.map(l=>l.spine_pct)),0,'%'],
+    ['Past skin',g=>med(g.map(l=>l.skin_pct)),0,'%'],['RL10 with',g=>med(g.map(l=>l.rl_pct)),0,'%'],['Mean x',g=>med(g.map(l=>l.mean_x)),1],
+    ['z arrive',g=>med(g.map(l=>l.z_end)),2],['Hit z2',g=>g.length?g.filter(l=>l.hit_z2).length/g.length*100:null,0,'%']];
+  T.innerHTML = `<thead><tr><th>Shape</th>${cols.map(c=>`<th>${c[0]}</th>`).join('')}</tr></thead><tbody>` +
+    D.shapes.map(s => { const g = F.filter(l=>l.shape===s);
+      return `<tr><td><span class="sw" style="display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;background:${col(s)}"></span>${s}</td>${cols.map(c=>{const v=c[1](g); return `<td>${v==null?'–':(+v).toFixed(c[2])+(c[3]||'')}</td>`;}).join('')}</tr>`; }).join('') + '</tbody>';
+}
+</script>
+</body>
+</html>
