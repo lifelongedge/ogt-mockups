@@ -80,6 +80,14 @@ table.tbl{width:100%;border-collapse:collapse;font-size:.84rem;margin-top:6px}
 ol.outline{color:var(--dim);padding-left:20px}
 ol.outline li{margin:4px 0}
 ol.outline b{color:var(--fg)}
+.h3{font-size:1rem;font-weight:600;margin:22px 0 4px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px;margin-top:12px}
+.tile{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 12px}
+.tile .l{color:var(--faint);font-size:.74rem;text-transform:uppercase;letter-spacing:.05em}
+.tile .v{font-size:1.6rem;font-family:Georgia,serif}
+.tile .s{color:var(--dim);font-size:.78rem}
+#fair{width:100%;height:380px;display:block}
+#clock{width:100%;height:260px;display:block}
 footer{max-width:1180px;margin:30px auto 40px;padding:0 16px;color:var(--faint);font-size:.78rem}
 </style>
 </head>
@@ -130,21 +138,38 @@ footer{max-width:1180px;margin:30px auto 40px;padding:0 16px;color:var(--faint);
   <p class="sub">Medians over the legs in the filter. Descriptive of what these legs did; nothing here says what the next leg will do.</p>
   <div class="panel wrap" style="margin-top:10px"><table class="tbl" id="tbl"></table></div>
 
+  <h2>At the fork: x+1 or x−1?</h2>
+  <p class="sub">Price has just touched level <i>x</i>. Which does it reach first, the next level on (continue) or the one it came from (revert)? Measured on 20 liquid names, every touch since 2022: the first half of the years to look, the second half (from July 2024) opened once to check. Decide at the close of the touch bar, fill at the next bar's open, stop at one rung, target the other.</p>
+  <div class="tiles" id="forkTiles"></div>
+
+  <h3 class="h3">The readings move the odds, and the price with them</h3>
+  <p class="sub">Each dot is one reading at the touch, e.g. "arrived as a Skin ride", "z of 3 or more", "RL10 already pointing back". Up is how often price continued; across is where the fill sat between the two rungs. On the line, the odds are exactly what the distances to the two rungs pay for: betting either side earns nothing. Dots off the line would be an edge.</p>
+  <div class="grp" id="forkHalf" style="margin:10px 0 0"><span>Years</span></div>
+  <div class="panel" style="margin-top:8px"><svg id="fair" role="img" aria-label="Odds of continuing against where the fill sat, one dot per reading, with the break-even line"></svg></div>
+  <div class="grp" id="forkReading" style="margin:14px 0 0"><span>Reading</span></div>
+  <div class="panel wrap" style="margin-top:8px"><table class="tbl" id="forkTbl"></table></div>
+
+  <h3 class="h3">Waiting does not help</h3>
+  <p class="sub">Read again 1, 2, 3, 5 and 10 bars after the touch. The odds get easier to call as time passes (the separation score rises), but only because price has already moved toward one rung, so the payoff shrinks to match. Adding the shape, the dragon, RL10 and z to "where is price now" adds nothing. Second-half years, model fitted on the first half.</p>
+  <div class="panel" style="margin-top:10px"><svg id="clock" role="img" aria-label="Separation score by bars after the touch, position only and all readings"></svg></div>
+  <div class="panel wrap" style="margin-top:8px"><table class="tbl" id="clockTbl"></table></div>
+
   <h2>What the course would teach</h2>
   <ol class="outline">
     <li><b>The rulers.</b> R10, R5 and Frog from the last 30 sessions, laid off from the open. Why each ruler gets its own bar size: R10 on 1 and 3 minutes, R5 on 3 and 10, Frog on 10 and 30.</li>
     <li><b>A leg.</b> The last touch of one level to the first touch of the next. Inside a leg price never goes back to where it started, so the whole picture lives between two lines.</li>
     <li><b>Reading the path.</b> Where the closes sit against the dragon spine and skin, which way RL10 points, how often the mean is crossed, how far the z bands are stretched.</li>
-    <li><b>The seven shapes.</b> One chapter each, with today's legs beside the old ones.</li>
-    <li><b>Your own tape.</b> The same measures on the trader's own symbols in Edge S2, so a shape is named while it forms.</li>
+    <li><b>The seven shapes.</b> One chapter each, with today's legs beside the old ones. A shape names the path that was taken.</li>
+    <li><b>The fork.</b> At a level, continue or revert is close to even (49 to 51 % on every ruler). What the shape and the indicators change is where price sits between the two rungs, and the distances change the payoff by the same amount. The break-even line, drawn on the trader's own chart.</li>
+    <li><b>Your own tape.</b> The same measures on the trader's own symbols in Edge S2, so a shape is named while it forms and the two rungs either side are on the chart before the touch.</li>
   </ol>
-  <div class="note"><b>Open for the owner.</b> The shape names and the cut-offs that sort a leg into one (shown on each card) are a first draft written to make the spread visible. Whether any shape is followed by anything in particular has not been measured; this page only describes the legs.</div>
+  <div class="note"><b>Open for the owner.</b> The shape names and cut-offs are a first draft. The fork was measured as research study level_fork (edge-syspoc): verdict negative, results in <code>edge-syspoc/systems/level_fork/results.md</code>. One rule frozen after the first look (RL10 pointing back at the touch → bet continue) did not hold its bar in the second half. Nothing on this page says what the next leg will do.</div>
 </main>
 <footer id="src"></footer>
 <div class="tip" id="tip"></div>
 
 <script>
-const BUILD = 2;
+const BUILD = 3;
 console.log('[level-legs] build ' + BUILD);
 window.__edgeBuild = BUILD;
 
@@ -167,7 +192,10 @@ const lvlName = (k, lad) => k === 0 ? 'ood' : (k > 0 ? '+' : '−') + Math.abs(k
 const fmt = (v, d=2) => v == null || !isFinite(v) ? '–' : (+v).toFixed(d);
 const med = a => { a = a.filter(x => x != null && isFinite(x)).sort((x,y)=>x-y); if(!a.length) return null; const m = a.length>>1; return a.length%2 ? a[m] : (a[m-1]+a[m])/2; };
 
-fetch('legs.json?v=' + BUILD, {cache:'no-store'}).then(r => r.json()).then(d => { D = d; init(); });
+let FK = null;
+Promise.all([fetch('legs.json?v=' + BUILD, {cache:'no-store'}).then(r => r.json()),
+             fetch('fork.json?v=' + BUILD, {cache:'no-store'}).then(r => r.json()).catch(() => null)])
+  .then(([d, f]) => { D = d; FK = f; init(); });
 
 function init(){
   document.getElementById('asof').textContent = 'Bars through ' + D.asof + ' · ' + D.legs.length.toLocaleString() + ' legs · ' + D.symbols.length + ' symbols · last ' + new Set(D.legs.map(l=>l.day)).size + ' sessions';
@@ -190,7 +218,7 @@ function init(){
   try { const t = localStorage.getItem('ll-theme'); if (t) document.documentElement.dataset.theme = t; } catch(e){}
   th.onclick = () => { const dark = document.documentElement.dataset.theme ? document.documentElement.dataset.theme==='dark' : matchMedia('(prefers-color-scheme: dark)').matches;
     document.documentElement.dataset.theme = dark ? 'light' : 'dark'; try{localStorage.setItem('ll-theme', document.documentElement.dataset.theme);}catch(e){} render(); };
-  window.addEventListener('resize', () => { drawChart(); drawMap(); });
+  window.addEventListener('resize', () => { drawChart(); drawMap(); drawFork(); });
   render();
 }
 function mk(t, c, txt){ const e = document.createElement(t); if(c) e.className = c; if(txt!=null) e.textContent = txt; return e; }
@@ -212,7 +240,7 @@ function render(){
     const cnt = {}; F.forEach(l => cnt[l.shape]=(cnt[l.shape]||0)+1);
     st.shape = D.shapes.filter(s=>cnt[s]).sort((a,b)=>cnt[b]-cnt[a])[0] || null;
   }
-  drawShapes(); pickLeg(); drawMap(); drawTable();
+  drawShapes(); pickLeg(); drawMap(); drawTable(); drawFork();
 }
 
 function drawShapes(){
@@ -377,6 +405,95 @@ function drawTable(){
   T.innerHTML = `<thead><tr><th>Shape</th>${cols.map(c=>`<th>${c[0]}</th>`).join('')}</tr></thead><tbody>` +
     D.shapes.map(s => { const g = F.filter(l=>l.shape===s);
       return `<tr><td><span class="sw" style="display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;background:${col(s)}"></span>${s}</td>${cols.map(c=>{const v=c[1](g); return `<td>${v==null?'–':(+v).toFixed(c[2])+(c[3]||'')}</td>`;}).join('')}</tr>`; }).join('') + '</tbody>';
+}
+// ---- At the fork (edge-syspoc level_fork, course_summary.json copied as fork.json) ----
+const fst = {half:'oos', reading:'shape'};
+const READ = {shape:'Arriving shape', zb:'z at the touch', spine:'Dragon spine', rl_slope:'RL10 slope'};
+function rlabel(f, v){
+  if (f==='shape') return v;
+  if (f==='zb') return v<=-3 ? 'z ≤ −3 (against)' : v>=3 ? 'z ≥ +3 (with)' : 'z ' + (v>0?'+':v<0?'−':'') + Math.abs(v);
+  if (f==='spine') return v>0 ? 'close past the spine' : 'close back across the spine';
+  if (f==='rl_slope') return v>0 ? 'RL10 pointing on' : 'RL10 pointing back';
+  return String(v);
+}
+function drawFork(){
+  if (!FK) return;
+  const pair = FK.pairs[st.lad + '|' + st.tf]; if (!pair) return;
+  const T = document.getElementById('forkTiles');
+  const b = pair.base;
+  T.innerHTML = [
+    ['Continued, first half', (b.is.p_cont*100).toFixed(1)+'%', b.is.n.toLocaleString()+' touches · '+FK.is.slice(0,7)+' to '+FK.is.slice(12,19)],
+    ['Continued, second half', (b.oos.p_cont*100).toFixed(1)+'%', b.oos.n.toLocaleString()+' touches · '+FK.oos.slice(0,7)+' to '+FK.oos.slice(12,19)],
+    ['Neither by the close', (b.oos.none*100).toFixed(0)+'%', 'second half, of all touches'],
+    ['Ruler', st.lad+' on '+st.tf, FK.symbols+' symbols'],
+  ].map(t=>`<div class="tile"><div class="l">${t[0]}</div><div class="v">${t[1]}</div><div class="s">${t[2]}</div></div>`).join('');
+  const hg = document.getElementById('forkHalf'); hg.querySelectorAll('.btn').forEach(x=>x.remove());
+  [['is','First half'],['oos','Second half']].forEach(([k,t]) => { const bt = mk('button','btn'+(fst.half===k?' on':''),t); bt.onclick=()=>{fst.half=k; drawFork();}; hg.appendChild(bt); });
+  const rg = document.getElementById('forkReading'); rg.querySelectorAll('.btn').forEach(x=>x.remove());
+  Object.entries(READ).forEach(([k,t]) => { const bt = mk('button','btn'+(fst.reading===k?' on':''),t); bt.onclick=()=>{fst.reading=k; drawFork();}; rg.appendChild(bt); });
+  // table
+  const rows = pair.readings[fst.reading] || [];
+  const vals = [...new Set(rows.map(r=>r.v))];
+  const tb = document.getElementById('forkTbl');
+  const get = (v,h) => rows.find(r=>r.v===v && r.half===h);
+  tb.innerHTML = `<thead><tr><th>${READ[fst.reading]}</th><th>Touches</th><th>Continued 1st</th><th>Continued 2nd</th><th>Fill in band</th><th>Break-even</th><th>R bet on</th><th>R bet back</th></tr></thead><tbody>` +
+    vals.map(v => { const a = get(v,'is'), o = get(v,'oos'); const h = o || a; const sw = fst.reading==='shape' && SHAPE_INFO[v] ? `<span class="sw" style="display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;background:${col(v)}"></span>` : '';
+      return `<tr><td>${sw}${rlabel(fst.reading, v)}</td><td>${((a?a.n:0)+(o?o.n:0)).toLocaleString()}</td><td>${a?(a.p*100).toFixed(1)+'%':'–'}</td><td>${o?(o.p*100).toFixed(1)+'%':'–'}</td><td>${fmt(h.pf)}</td><td>${((1+h.pf)/2*100).toFixed(1)}%</td><td>${o?(o.rc>=0?'+':'')+o.rc.toFixed(3):'–'}</td><td>${o?(o.rr>=0?'+':'')+o.rr.toFixed(3):'–'}</td></tr>`; }).join('') +
+    `</tbody>`;
+  tb.insertAdjacentHTML('beforeend', `<caption style="caption-side:bottom;text-align:left;color:var(--faint);font-size:.76rem;padding-top:8px">Fill in band: where the next bar opened, −1 at the rung it came from, +1 at the next rung. Break-even: the continue rate at which both bets earn nothing, given that fill. R columns: second half, gross, mean per bet, stop at one rung and target at the other.</caption>`);
+  drawFair(pair); drawClock(pair);
+}
+function drawFair(pair){
+  const svg = document.getElementById('fair'), W = svg.clientWidth||800, H = svg.clientHeight||380; svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  const m = {l:48, r:16, t:16, b:40}, pw = W-m.l-m.r, ph = H-m.t-m.b;
+  const pts = []; Object.keys(READ).forEach(f => (pair.readings[f]||[]).filter(r=>r.half===fst.half).forEach(r => pts.push({...r, f})));
+  const xlo = -0.4, xhi = 0.4, ylo = 0.25, yhi = 0.75;
+  const X = v => m.l + (Math.max(xlo,Math.min(xhi,v))-xlo)/(xhi-xlo)*pw, Y = v => m.t + (yhi-Math.max(ylo,Math.min(yhi,v)))/(yhi-ylo)*ph;
+  const faint = cssv('--faint'), grid = cssv('--grid'), ink = cssv('--fg'), dim = cssv('--dim'), card = cssv('--card'), acc = cssv('--accent');
+  let s = ''; const narrow = W < 600;
+  [0.3,0.4,0.5,0.6,0.7].forEach(v => s += `<line x1="${m.l}" x2="${m.l+pw}" y1="${Y(v)}" y2="${Y(v)}" stroke="${grid}"/><text x="${m.l-6}" y="${Y(v)+4}" font-size="11" fill="${faint}" text-anchor="end" class="mono">${(v*100).toFixed(0)}%</text>`);
+  [-0.4,-0.2,0,0.2,0.4].forEach(v => s += `<line x1="${X(v)}" x2="${X(v)}" y1="${m.t}" y2="${m.t+ph}" stroke="${grid}"/><text x="${X(v)}" y="${H-22}" font-size="11" fill="${faint}" text-anchor="middle" class="mono">${v>0?'+':''}${v}</text>`);
+  s += `<text x="${m.l}" y="${H-5}" font-size="11" fill="${faint}">${narrow?'← came from':'← fill nearer the rung it came from'}</text><text x="${m.l+pw}" y="${H-5}" font-size="11" fill="${faint}" text-anchor="end">${narrow?'next rung →':'fill nearer the next rung →'}</text>`;
+  s += `<text x="13" y="${m.t+ph/2}" font-size="11" fill="${faint}" text-anchor="middle" transform="rotate(-90 13 ${m.t+ph/2})">continued</text>`;
+  s += `<line x1="${X(xlo)}" y1="${Y((1+xlo)/2)}" x2="${X(xhi)}" y2="${Y((1+xhi)/2)}" stroke="${acc}" stroke-width="2"/><text x="${narrow ? m.l+6 : X(0.22)}" y="${narrow ? Y(0.27) : Y(0.61)-8}" font-size="12" fill="${ink}">break-even${narrow?'':': neither bet pays'}</text>`;
+  pts.forEach((p,i) => { const cx = X(p.pf), cy = Y(p.p), r = Math.max(5, Math.min(11, Math.sqrt(p.n)/14));
+    const fill = p.f==='shape' && SHAPE_INFO[p.v] ? col(p.v) : 'none', stroke = p.f==='shape' ? card : (p.f==='zb' ? ink : dim);
+    let shp;
+    if (p.f==='spine') shp = `<rect x="${cx-r}" y="${cy-r}" width="${2*r}" height="${2*r}" rx="2" fill="none" stroke="${dim}" stroke-width="2"/>`;
+    else if (p.f==='rl_slope') shp = `<path d="M${cx},${cy-r*1.3}L${cx+r*1.3},${cy}L${cx},${cy+r*1.3}L${cx-r*1.3},${cy}Z" fill="none" stroke="${dim}" stroke-width="2"/>`;
+    else shp = `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${fill}" stroke="${stroke}" stroke-width="${p.f==='zb'?1.6:1.5}"/>`;
+    s += `<g class="fp" data-i="${i}" style="cursor:default">${shp}<circle cx="${cx}" cy="${cy}" r="${r+6}" fill="transparent"/></g>`; });
+  // legend
+  const lg = [['Arriving shape (shape colour)','c'],['z at the touch','o'],['Dragon spine side','sq'],['RL10 slope','di']];
+  let lx = m.l + 8, ly = m.t + 10; lg.forEach(([t,k]) => { if (lx + 30 + t.length*6.1 > W - 8 && lx > m.l + 8) { lx = m.l + 8; ly += 18; } const cy = ly;
+    s += k==='c' ? `<circle cx="${lx+5}" cy="${cy}" r="5" fill="${cssv('--s2')}"/>` : k==='o' ? `<circle cx="${lx+5}" cy="${cy}" r="5" fill="none" stroke="${ink}" stroke-width="1.6"/>` :
+      k==='sq' ? `<rect x="${lx}" y="${cy-5}" width="10" height="10" rx="2" fill="none" stroke="${dim}" stroke-width="2"/>` : `<path d="M${lx+5},${cy-6}L${lx+11},${cy}L${lx+5},${cy+6}L${lx-1},${cy}Z" fill="none" stroke="${dim}" stroke-width="2"/>`;
+    s += `<text x="${lx+16}" y="${cy+4}" font-size="11" fill="${dim}">${t}</text>`; lx += 30 + t.length*6.1; });
+  svg.innerHTML = s;
+  const tip = document.getElementById('tip');
+  svg.querySelectorAll('.fp').forEach(g => { const p = pts[+g.dataset.i];
+    g.onpointerenter = e => { const be = (1+p.pf)/2; tip.innerHTML = `<b>${rlabel(p.f, p.v)}</b> <span style="color:${faint}">${READ[p.f]}</span><br>${p.n.toLocaleString()} touches · continued ${(p.p*100).toFixed(1)}%<br>fill ${fmt(p.pf)} in band → break-even ${(be*100).toFixed(1)}%<br>R bet on ${p.rc>=0?'+':''}${p.rc.toFixed(3)} · R bet back ${p.rr>=0?'+':''}${p.rr.toFixed(3)}`; showTip(e); };
+    g.onpointermove = showTip; g.onpointerleave = () => tip.style.display='none'; });
+}
+function drawClock(pair){
+  const svg = document.getElementById('clock'), W = svg.clientWidth||800, H = svg.clientHeight||260; svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  const c = pair.clock; if (!c.length) { svg.innerHTML=''; return; }
+  const m = {l:48, r:110, t:16, b:34}, pw = W-m.l-m.r, ph = H-m.t-m.b;
+  const ks = c.map(r=>r.k), X = k => m.l + ks.indexOf(k)/(ks.length-1)*pw, Y = v => m.t + (1-(v-0.5)/0.5)*ph;
+  const faint = cssv('--faint'), grid = cssv('--grid'), ink = cssv('--fg'), acc = cssv('--accent'), dim = cssv('--dim');
+  let s = '';
+  [0.5,0.6,0.7,0.8,0.9,1].forEach(v => s += `<line x1="${m.l}" x2="${m.l+pw}" y1="${Y(v)}" y2="${Y(v)}" stroke="${grid}"/><text x="${m.l-6}" y="${Y(v)+4}" font-size="11" fill="${faint}" text-anchor="end" class="mono">${v.toFixed(1)}</text>`);
+  ks.forEach(k => s += `<text x="${X(k)}" y="${H-14}" font-size="11" fill="${faint}" text-anchor="middle" class="mono">${k}</text>`);
+  s += `<text x="${m.l+pw/2}" y="${H-1}" font-size="11" fill="${faint}" text-anchor="middle">bars after the touch</text>`;
+  s += `<text x="13" y="${m.t+ph/2}" font-size="11" fill="${faint}" text-anchor="middle" transform="rotate(-90 13 ${m.t+ph/2})">separation (0.5 = none)</text>`;
+  const line = (key, stroke, dash, w) => `<path d="${c.map((r,i)=>(i?'L':'M')+X(r.k)+','+Y(r[key])).join('')}" fill="none" stroke="${stroke}" stroke-width="${w}" stroke-dasharray="${dash}"/>` + c.map(r=>`<circle cx="${X(r.k)}" cy="${Y(r[key])}" r="4" fill="${stroke}" stroke="${cssv('--card')}" stroke-width="2"/>`).join('');
+  s += line('auc_pos', ink, '', 2.5) + line('auc_full', acc, '6 4', 2);
+  const last = c[c.length-1];
+  s += `<text x="${X(last.k)+10}" y="${Y(last.auc_pos)-6}" font-size="11" fill="${ink}">where price is</text><text x="${X(last.k)+10}" y="${Y(last.auc_pos)+12}" font-size="11" fill="${acc}">+ all readings</text>`;
+  svg.innerHTML = s;
+  document.getElementById('clockTbl').innerHTML = `<thead><tr><th>Bars after touch</th><th>Touches</th><th>Separation: where price is</th><th>+ all readings</th><th>R per bet, all readings</th><th>after cost</th><th>R always continue</th></tr></thead><tbody>` +
+    c.map(r=>`<tr><td>${r.k}</td><td>${r.n_oos.toLocaleString()}</td><td>${r.auc_pos.toFixed(3)}</td><td>${r.auc_full.toFixed(3)}</td><td>${r.r_full>=0?'+':''}${r.r_full.toFixed(3)}</td><td>${r.r_full_net.toFixed(3)}</td><td>${r.r_cont>=0?'+':''}${r.r_cont.toFixed(3)}</td></tr>`).join('') + '</tbody>' +
+    `<caption style="caption-side:bottom;text-align:left;color:var(--faint);font-size:.76rem;padding-top:8px">Second half only. Separation is the area under the ROC curve for continue vs revert. Cost: 0.02 of a rung each side.</caption>`;
 }
 </script>
 </body>
