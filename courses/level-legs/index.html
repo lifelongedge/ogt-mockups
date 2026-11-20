@@ -150,12 +150,12 @@ footer{max-width:1180px;margin:30px auto 40px;padding:0 16px;color:var(--faint);
   <div class="panel wrap" style="margin-top:8px"><table class="tbl" id="forkTbl"></table></div>
 
   <h3 class="h3">Waiting does not help</h3>
-  <p class="sub">Read again 1, 2, 3, 5 and 10 bars after the touch. The odds get easier to call as time passes (the separation score rises), but only because price has already moved toward one rung, so the payoff shrinks to match. Adding the shape, the dragon, RL10 and z to "where is price now" adds nothing. Second-half years, model fitted on the first half.</p>
+  <p class="sub">Read again 1, 2, 3, 5 and 10 bars after the touch. The odds get easier to call as time passes (the separation score rises), but only because price has already moved toward one rung, so the payoff shrinks to match. Adding the shape, the dragon, RL10 and z to "where is price now" adds nothing, and neither does combining them: a model that can weigh every combination of readings (shape with spine with RL10 with z …) scores within 0.005 R of position alone. Second-half years, model fitted on the first half.</p>
   <div class="panel" style="margin-top:10px"><svg id="clock" role="img" aria-label="Separation score by bars after the touch, position only and all readings"></svg></div>
   <div class="panel wrap" style="margin-top:8px"><table class="tbl" id="clockTbl"></table></div>
 
   <h2>A plan with a falsifier</h2>
-  <p class="sub">The paths do not call the side, but they can test it. At the touch, state the side, the two rungs, and the paths that must not happen if you are right. When one appears, the call is wrong: close at the next bar's open instead of waiting for the stop. Measured on the same touches, every rule on its own, first half and second half.</p>
+  <p class="sub">The paths do not call the side, but they can test it. At the touch, state the side, the two rungs, and the paths that must not happen if you are right. When one appears, the call is wrong: close at the next bar's open instead of waiting for the stop. Measured on the same touches, every rule on its own, first half and second half. Combining paths (close at the first of two, or only once both have appeared) lands on the same trade-offs as the single rules: the spine and RL10 rules fire on mostly the same trades.</p>
   <div class="grp" id="fsHyp" style="margin:12px 0 0"><span>The call</span></div>
   <div class="tiles" id="fsTiles"></div>
   <div class="panel wrap" style="margin-top:10px"><table class="tbl" id="fsTbl"></table></div>
@@ -177,7 +177,7 @@ footer{max-width:1180px;margin:30px auto 40px;padding:0 16px;color:var(--faint);
 <div class="tip" id="tip"></div>
 
 <script>
-const BUILD = 4;
+const BUILD = 5;
 console.log('[level-legs] build ' + BUILD);
 window.__edgeBuild = BUILD;
 
