@@ -154,6 +154,13 @@ footer{max-width:1180px;margin:30px auto 40px;padding:0 16px;color:var(--faint);
   <div class="panel" style="margin-top:10px"><svg id="clock" role="img" aria-label="Separation score by bars after the touch, position only and all readings"></svg></div>
   <div class="panel wrap" style="margin-top:8px"><table class="tbl" id="clockTbl"></table></div>
 
+  <h2>A plan with a falsifier</h2>
+  <p class="sub">The paths do not call the side, but they can test it. At the touch, state the side, the two rungs, and the paths that must not happen if you are right. When one appears, the call is wrong: close at the next bar's open instead of waiting for the stop. Measured on the same touches, every rule on its own, first half and second half.</p>
+  <div class="grp" id="fsHyp" style="margin:12px 0 0"><span>The call</span></div>
+  <div class="tiles" id="fsTiles"></div>
+  <div class="panel wrap" style="margin-top:10px"><table class="tbl" id="fsTbl"></table></div>
+  <div class="note" id="fsNote"></div>
+
   <h2>What the course would teach</h2>
   <ol class="outline">
     <li><b>The rulers.</b> R10, R5 and Frog from the last 30 sessions, laid off from the open. Why each ruler gets its own bar size: R10 on 1 and 3 minutes, R5 on 3 and 10, Frog on 10 and 30.</li>
@@ -161,15 +168,16 @@ footer{max-width:1180px;margin:30px auto 40px;padding:0 16px;color:var(--faint);
     <li><b>Reading the path.</b> Where the closes sit against the dragon spine and skin, which way RL10 points, how often the mean is crossed, how far the z bands are stretched.</li>
     <li><b>The seven shapes.</b> One chapter each, with today's legs beside the old ones. A shape names the path that was taken.</li>
     <li><b>The fork.</b> At a level, continue or revert is close to even (49 to 51 % on every ruler). What the shape and the indicators change is where price sits between the two rungs, and the distances change the payoff by the same amount. The break-even line, drawn on the trader's own chart.</li>
+    <li><b>A plan with a falsifier.</b> State the side, the two rungs and the paths that must not happen. Closing on a forbidden path leaves the average result where it was; it halves what a wrong call costs and how long it is held, and gives up a fifth to two fifths of the calls that would have reached the next level (Frog 10m to R10 1m). The trade-off against a tighter stop, on the trader's own symbols.</li>
     <li><b>Your own tape.</b> The same measures on the trader's own symbols in Edge S2, so a shape is named while it forms and the two rungs either side are on the chart before the touch.</li>
   </ol>
-  <div class="note"><b>Open for the owner.</b> The shape names and cut-offs are a first draft. The fork was measured as research study level_fork (edge-syspoc): verdict negative, results in <code>edge-syspoc/systems/level_fork/results.md</code>. One rule frozen after the first look (RL10 pointing back at the touch → bet continue) did not hold its bar in the second half. Nothing on this page says what the next leg will do.</div>
+  <div class="note"><b>Open for the owner.</b> The shape names and cut-offs are a first draft. The fork was measured as research study level_fork (edge-syspoc): verdict negative, results in <code>edge-syspoc/systems/level_fork/results.md</code>. One rule frozen after the first look (RL10 pointing back at the touch → bet continue) did not hold its bar in the second half. The falsifier chapter is study level_falsifier (same repo): the paths reshape the losses, not the average. Nothing on this page says what the next leg will do.</div>
 </main>
 <footer id="src"></footer>
 <div class="tip" id="tip"></div>
 
 <script>
-const BUILD = 3;
+const BUILD = 4;
 console.log('[level-legs] build ' + BUILD);
 window.__edgeBuild = BUILD;
 
@@ -192,10 +200,11 @@ const lvlName = (k, lad) => k === 0 ? 'ood' : (k > 0 ? '+' : '−') + Math.abs(k
 const fmt = (v, d=2) => v == null || !isFinite(v) ? '–' : (+v).toFixed(d);
 const med = a => { a = a.filter(x => x != null && isFinite(x)).sort((x,y)=>x-y); if(!a.length) return null; const m = a.length>>1; return a.length%2 ? a[m] : (a[m-1]+a[m])/2; };
 
-let FK = null;
+let FK = null, FS = null;
 Promise.all([fetch('legs.json?v=' + BUILD, {cache:'no-store'}).then(r => r.json()),
-             fetch('fork.json?v=' + BUILD, {cache:'no-store'}).then(r => r.json()).catch(() => null)])
-  .then(([d, f]) => { D = d; FK = f; init(); });
+             fetch('fork.json?v=' + BUILD, {cache:'no-store'}).then(r => r.json()).catch(() => null),
+             fetch('falsifier.json?v=' + BUILD, {cache:'no-store'}).then(r => r.json()).catch(() => null)])
+  .then(([d, f, g]) => { D = d; FK = f; FS = g; init(); });
 
 function init(){
   document.getElementById('asof').textContent = 'Bars through ' + D.asof + ' · ' + D.legs.length.toLocaleString() + ' legs · ' + D.symbols.length + ' symbols · last ' + new Set(D.legs.map(l=>l.day)).size + ' sessions';
@@ -240,7 +249,7 @@ function render(){
     const cnt = {}; F.forEach(l => cnt[l.shape]=(cnt[l.shape]||0)+1);
     st.shape = D.shapes.filter(s=>cnt[s]).sort((a,b)=>cnt[b]-cnt[a])[0] || null;
   }
-  drawShapes(); pickLeg(); drawMap(); drawTable(); drawFork();
+  drawShapes(); pickLeg(); drawMap(); drawTable(); drawFork(); drawFalsifier();
 }
 
 function drawShapes(){
@@ -494,6 +503,39 @@ function drawClock(pair){
   document.getElementById('clockTbl').innerHTML = `<thead><tr><th>Bars after touch</th><th>Touches</th><th>Separation: where price is</th><th>+ all readings</th><th>R per bet, all readings</th><th>after cost</th><th>R always continue</th></tr></thead><tbody>` +
     c.map(r=>`<tr><td>${r.k}</td><td>${r.n_oos.toLocaleString()}</td><td>${r.auc_pos.toFixed(3)}</td><td>${r.auc_full.toFixed(3)}</td><td>${r.r_full>=0?'+':''}${r.r_full.toFixed(3)}</td><td>${r.r_full_net.toFixed(3)}</td><td>${r.r_cont>=0?'+':''}${r.r_cont.toFixed(3)}</td></tr>`).join('') + '</tbody>' +
     `<caption style="caption-side:bottom;text-align:left;color:var(--faint);font-size:.76rem;padding-top:8px">Second half only. Separation is the area under the ROC curve for continue vs revert. Cost: 0.02 of a rung each side.</caption>`;
+}
+// ---- A plan with a falsifier (edge-syspoc level_falsifier course_summary.json copied as falsifier.json) ----
+const fsst = {hyp:'continue'};
+const FS_RULES = [['base','Plain stop and target','—'],['spine','Close across the dragon spine','path'],['rl','RL10 turns against','path'],
+  ['z','Close at z −1 against','path'],['chop','Two crosses of the mean 30','path'],['time','10 bars without a result','time'],
+  ['gb20','Tight stop: back 0.2 of the risk','stop'],['gb30','Tight stop: back 0.3 of the risk','stop'],['giveback','Half stop: back 0.5 of the risk','stop']];
+function drawFalsifier(){
+  if (!FS) return;
+  const p = FS.pairs[st.lad + '|' + st.tf]; if (!p) return;
+  const hg = document.getElementById('fsHyp'); hg.querySelectorAll('.btn').forEach(x=>x.remove());
+  [['continue','On to the next rung'],['revert','Back to the last rung']].forEach(([k,t]) => { const b = mk('button','btn'+(fsst.hyp===k?' on':''),t); b.onclick=()=>{fsst.hyp=k; drawFalsifier();}; hg.appendChild(b); });
+  const d = p[fsst.hyp], b = d.base, sp = d.spine;
+  document.getElementById('fsTiles').innerHTML = [
+    ['Calls tested', b.n.toLocaleString(), 'second half, '+st.lad+' on '+st.tf],
+    ['Right (closed above entry)', (b.win*100).toFixed(0)+'%', 'plain stop and target'],
+    ['Average losing call', b.mean_loss.toFixed(2)+' R', 'plain → '+sp.mean_loss.toFixed(2)+' R with the spine rule'],
+    ['Bars holding a loser', b.bars_losing.toFixed(1), 'plain → '+sp.bars_losing.toFixed(1)+' with the spine rule'],
+  ].map(t=>`<div class="tile"><div class="l">${t[0]}</div><div class="v">${t[1]}</div><div class="s">${t[2]}</div></div>`).join('');
+  const maxLoss = Math.max(...FS_RULES.map(([k])=>Math.abs(d[k].mean_loss))), maxBars = Math.max(...FS_RULES.map(([k])=>d[k].bars_losing));
+  const bar = (v, max, c) => `<span style="display:inline-block;vertical-align:middle;height:8px;border-radius:0 4px 4px 0;background:${c};width:${Math.round(Math.abs(v)/max*60)}px;margin-right:6px"></span>`;
+  const ink = cssv('--dim'), acc = cssv('--accent');
+  document.getElementById('fsTbl').innerHTML = `<thead><tr><th>Forbidden path</th><th>Kind</th><th>Fires</th><th>Cuts a winner</th><th>Average losing call</th><th>Bars holding a loser</th><th>Closed above entry</th><th>Change in mean R (1st / 2nd)</th></tr></thead><tbody>` +
+    FS_RULES.map(([k,label,kind]) => { const r = d[k]; const isB = k==='base'; const c = kind==='path' ? acc : ink;
+      return `<tr${isB?' style="font-weight:600"':''}><td>${label}</td><td style="font-family:inherit;color:var(--faint)">${kind}</td><td>${isB?'—':(r.fire*100).toFixed(0)+'%'}</td><td>${isB?'—':(r.fire*r.false_alarm*100).toFixed(0)+'% of calls'}</td>
+        <td>${bar(r.mean_loss,maxLoss,c)}${r.mean_loss.toFixed(2)}</td><td>${bar(r.bars_losing,maxBars,c)}${r.bars_losing.toFixed(1)}</td><td>${(r.win*100).toFixed(0)}%</td>
+        <td>${isB?(r.mean>=0?'+':'')+r.mean.toFixed(3)+' (level)':(r.d_mean_is>=0?'+':'')+r.d_mean_is.toFixed(3)+' / '+(r.d_mean>=0?'+':'')+r.d_mean.toFixed(3)}</td></tr>`; }).join('') + '</tbody>' +
+    `<caption style="caption-side:bottom;text-align:left;color:var(--faint);font-size:.76rem;padding-top:8px">Second half (from July 2024) unless marked; the first half reads the same to within 0.02. Cuts a winner: share of all calls the rule closed that the plain trade would have taken to the next rung. R is in units of the distance from entry to the stop. No costs.</caption>`;
+  const g20 = d.gb20, g30 = d.gb30;
+  const cmp = (a, b, more, fewer) => a > b ? more : fewer;
+  const cutW = sp.fire*sp.false_alarm, cut20 = g20.fire*g20.false_alarm, cut30 = g30.fire*g30.false_alarm;
+  const loserBars = (g20.bars_losing + g30.bars_losing)/2, stopWin = (g20.win + g30.win)/2, stopCut = (cut20 + cut30)/2, stopLoss = (g20.mean_loss + g30.mean_loss)/2;
+  const diffLoss = Math.abs(stopLoss - sp.mean_loss) < 0.05 ? 'about the same per losing call' : (stopLoss > sp.mean_loss ? 'less per losing call' : 'more per losing call');
+  document.getElementById('fsNote').innerHTML = `<b>What it does and does not do.</b> No rule moves the average result (every change is within ±0.012 R in the second half). Closing on the spine takes the average losing call from ${b.mean_loss.toFixed(2)} to ${sp.mean_loss.toFixed(2)} R and the bars spent holding a loser from ${b.bars_losing.toFixed(1)} to ${sp.bars_losing.toFixed(1)}; it also closes ${(cutW*100).toFixed(0)}% of all calls that the plain trade would have taken to the rung, about ${(cutW/(b.win||1)*100).toFixed(0)}% of its winners. Tight stops firing about as often (0.2 / 0.3 of the risk: ${(g20.fire*100).toFixed(0)}% / ${(g30.fire*100).toFixed(0)}%) cost ${diffLoss}, hold losers ${(g20.bars_losing > sp.bars_losing + 0.3 && g30.bars_losing > sp.bars_losing + 0.3) ? 'longer' : (g20.bars_losing < sp.bars_losing - 0.3 && g30.bars_losing < sp.bars_losing - 0.3) ? 'for less time' : 'about as long or longer'} (${g20.bars_losing.toFixed(1)} / ${g30.bars_losing.toFixed(1)} bars), cut ${cmp(stopCut, cutW, 'more', 'fewer')} winners (${(cut20*100).toFixed(0)}% / ${(cut30*100).toFixed(0)}% of calls) and close ${cmp(stopWin, sp.win, 'more', 'fewer')} calls above entry (${(g20.win*100).toFixed(0)}% / ${(g30.win*100).toFixed(0)}% vs ${(sp.win*100).toFixed(0)}%). The paths are a choice of risk shape, not an edge. Study: level_falsifier, edge-syspoc.`;
 }
 </script>
 </body>
