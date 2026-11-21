@@ -6,7 +6,7 @@
 > A tagged item applies ONLY to those env(s). Untagged ⇒ `[all]`.
 > Standard: edge-envx/sessionstate-standard.md
 
-**Owner persona:** ogtcoursecraft (review pages) · **Last updated:** 2026-11-20, from `stream` (Between Two Levels mockup)
+**Owner persona:** ogtcoursecraft (review pages) · **Last updated:** 2026-11-21, from `stream` (index delisted)
 
 ## Environment scope for this repo
 - Runs on: <env tags + one line each>
@@ -31,6 +31,7 @@
   `ogt-coursecraft/courses/owl-foundations/plan.md`. Not committed yet — push to publish on GitHub Pages.
 
 ## Recently shipped
+- `[all]` 2026-11-21 **Index delisted (owner: "remove all items that can be publicly discovered from this URL").** `index.html` lists nothing now (it linked the Tech Lab proposal, the Simulator Lab sales page and the 147-sim sequence); those three pages and the index carry `noindex, nofollow`. The repo is public, so every page still answers at its direct URL and is listed on github.com; making them unreachable needs the files deleted or the repo private (which ends GitHub Pages for the cutroom on the current plan). The Simulator Lab rework is drawn in ogt-coursecraft `devtimeartifacts/simulator-lab-v2-2026-11-21/`, not here.
 - `[all]` 2026-11-07 PD-1082: `courses/owl-foundations-s2/build.py` drops a dead `io._open(...) if False` branch (F821, the one live finding in the workspace ruff sweep).
 
 ## Watch out
