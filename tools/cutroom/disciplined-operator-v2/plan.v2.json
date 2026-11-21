@@ -1,14 +1,14 @@
 {
   "schema": "coursecraft-plan-v2",
   "course": "disciplined-operator-v2",
-  "revision": 2,
+  "revision": 3,
   "revised": "2026-11-21",
   "status": "DRAFT rev2 (2026-11-21): rev 1's source-mapped, duration-verified cut (title quotes restored, windows follow the speech) carried forward; animation briefs in the current style added on the three framework overdubs and the explainer; corpus re-check done (below). The owner compares it with disciplined-operator-v1 (as published) and edits here.",
   "title": "The Disciplined Operator (v2)",
   "topic_class": "psychology-heavy + three chartable frameworks; ZERO outcomes (nothing decidable in footage)",
   "store_sku": "disciplined-operator",
   "replaces": "c-tosm3",
-  "notes": "Cut track: docs/store-v2-cut-tracks.md §3. Mapping findings folded in: (1) the four soccer beats all live in ONE continuous 65s source passage (18:06-19:03 of coaching-tom-hardison) — v1's scene windows 9-11 sat over unrelated footage and the sting fired ~90s late; the 4-beat overdub is timed to 18:06/18:19/18:41/18:54 with the compact all-four-rules line (15:37-15:43) for the summary frame; (2) systematic scene-title drift — titles anchored to speech earlier than their windows throughout; v2 windows follow the SPEECH; (3) sting prompt fields are stale M1 copy-paste (the _note fields were correct); (4) ATTRIBUTION CHECK for cutroom: the 27-years gate story — card credits Tom, build doc credits Ken; VTT has no speaker tags; LISTEN and card accordingly.\n\n2026-11-21 corpus re-check (kenlong-transcripts, 566 sessions): the four sessions this plan cuts from remain the strongest on every theme. revenge/rigidity 168 mentions in 40 files, 70 of them in coaching-tom-hardison (b9h), the next best 6; monkey-drive / take the wheel: only b9h and apk carry it; soccer protect-the-goal 347 mentions in 75 files, b9h first with 38 (the creativity-202 sessions use the soccer model for coaching, not for the trade lifecycle); Aristotle / pride / timidity: apk carries the trading spectrum, the other hits are Aristotle on coaching in Athens and on formal logic; A/B/C Z-bands: apk 19 of 60; three machine guns: cohort-1-burnout-resilience (c1) 16 of 19; Frankenstein / minimum mission-essential: c1 plus a 2022-08-28 creativity session (courage) and swing-trading-qa-2; portfolio heat: 4321-position-sizing (p4321) 13 of 26, next 2023-06-30 session (uGb4ksTazhk 1:12:02, 'if every single open trade I have is wrong, the accumulated risk of every open trade') as a spoken alternate, not yet a source. So the improvement is structural and visual, not a swap of footage: the restored lines, the speech-aligned windows, the four-beat soccer overdub, the Z-band overdub, the heat gauge, and the Ava explainer for the threshold. The ★ stings of v1 are kept as the twin's caption beats. Style: ink, Ken's tile top-right where b9h and apk have him on camera (crops from mental-model-2-v2 / mental-model-v2).",
+  "notes": "Cut track: docs/store-v2-cut-tracks.md §3. Mapping findings folded in: (1) the four soccer beats all live in ONE continuous 65s source passage (18:06-19:03 of coaching-tom-hardison) — v1's scene windows 9-11 sat over unrelated footage and the sting fired ~90s late; the 4-beat overdub is timed to 18:06/18:19/18:41/18:54 with the compact all-four-rules line (15:37-15:43) for the summary frame; (2) systematic scene-title drift — titles anchored to speech earlier than their windows throughout; v2 windows follow the SPEECH; (3) sting prompt fields are stale M1 copy-paste (the _note fields were correct); (4) ATTRIBUTION CHECK for cutroom: the 27-years gate story — card credits Tom, build doc credits Ken; VTT has no speaker tags; LISTEN and card accordingly.\n\n2026-11-21 corpus re-check (kenlong-transcripts, 566 sessions): the four sessions this plan cuts from remain the strongest on every theme. revenge/rigidity 168 mentions in 40 files, 70 of them in coaching-tom-hardison (b9h), the next best 6; monkey-drive / take the wheel: only b9h and apk carry it; soccer protect-the-goal 347 mentions in 75 files, b9h first with 38 (the creativity-202 sessions use the soccer model for coaching, not for the trade lifecycle); Aristotle / pride / timidity: apk carries the trading spectrum, the other hits are Aristotle on coaching in Athens and on formal logic; A/B/C Z-bands: apk 19 of 60; three machine guns: cohort-1-burnout-resilience (c1) 16 of 19; Frankenstein / minimum mission-essential: c1 plus a 2022-08-28 creativity session (courage) and swing-trading-qa-2; portfolio heat: 4321-position-sizing (p4321) 13 of 26, next 2023-06-30 session (uGb4ksTazhk 1:12:02, 'if every single open trade I have is wrong, the accumulated risk of every open trade') as a spoken alternate, not yet a source. So the improvement is structural and visual, not a swap of footage: the restored lines, the speech-aligned windows, the four-beat soccer overdub, the Z-band overdub, the heat gauge, and the Ava explainer for the threshold. The ★ stings of v1 are kept as the twin's caption beats. Style: ink, Ken's tile top-right where b9h and apk have him on camera (crops from mental-model-2-v2 / mental-model-v2).\n\nrev3 (2026-11-21, owner: twins for all the clips with Ken's tile): every cut has an animated twin (anim_gen.py), the cut off and the twin on; b9h and c1 crop to Ken's tile (the student is gone), apk and p4321 show his still (their tiles are thumbnails); s08 and s15 drawn; s27 explainer scripted.",
   "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/disciplined-operator-v2/",
   "sources": [
     {
@@ -16,28 +16,44 @@
       "label": "coaching-tom-hardison (Ch1-2: pathologies, monkey, soccer)",
       "file": "youtube-B9HVuTtPVqM-coaching-tom-hardison.mp4",
       "proxy": "youtube-B9HVuTtPVqM-coaching-tom-hardison.proxy.mp4",
-      "url": "https://www.youtube.com/watch?v=B9HVuTtPVqM"
+      "url": "https://www.youtube.com/watch?v=B9HVuTtPVqM",
+      "pip": {
+        "crop": "iw*0.418:ih*0.418:iw*0.5406:ih*0.2917",
+        "note": "two tiles, Ken on the right; a 16:9 window on his tile (mental-model-2-v2's crop; rechecked 2026-11-21 at 300, 1200 s)"
+      }
     },
     {
       "id": "apk",
       "label": "really-really-good (Ch3: Aristotle + Z-bands)",
       "file": "youtube-apk9GWC17Zw-really-really-good.mp4",
       "proxy": "youtube-apk9GWC17Zw-really-really-good.proxy.mp4",
-      "url": "https://www.youtube.com/watch?v=apk9GWC17Zw"
+      "url": "https://www.youtube.com/watch?v=apk9GWC17Zw",
+      "pip": {
+        "still": "_shared/ken-still.jpg",
+        "note": "his tile is too small to crop; the owner's still stands in (2026-11-21): screen share with a column of four small tiles, Ken second from top, about 76 px tall at 720p (3900, 4800 s): too small to crop"
+      }
     },
     {
       "id": "c1",
       "label": "cohort-1-burnout-resilience (Ch4: machine guns + Frankenstein)",
       "file": "youtube-3jnbqQEniyQ-cohort-1-burnout-resilience.mp4",
       "proxy": "youtube-3jnbqQEniyQ-cohort-1-burnout-resilience.proxy.mp4",
-      "url": "https://www.youtube.com/watch?v=3jnbqQEniyQ"
+      "url": "https://www.youtube.com/watch?v=3jnbqQEniyQ",
+      "pip": {
+        "crop": "iw*0.5:ih*0.5:iw*0.5:ih*0.25",
+        "note": "standard Zoom two-up, Ken on the right with the headset; rows 179-540 measured, the column split taken from the layout (checked at 1300, 1500, 1650, 1800 s)"
+      }
     },
     {
       "id": "p4321",
       "label": "4321-position-sizing (Ch5: portfolio heat, Ken + Tom)",
       "file": "youtube-1FMcKTYaHMo-4321-position-sizing.mp4",
       "proxy": "youtube-1FMcKTYaHMo-4321-position-sizing.proxy.mp4",
-      "url": "https://www.youtube.com/watch?v=1FMcKTYaHMo"
+      "url": "https://www.youtube.com/watch?v=1FMcKTYaHMo",
+      "pip": {
+        "still": "_shared/ken-still.jpg",
+        "note": "his tile is too small to crop; the owner's still stands in (2026-11-21): document share with small tiles right (3150, 3400 s)"
+      }
     }
   ],
   "voices": [
@@ -56,13 +72,29 @@
     {
       "id": "s01",
       "type": "cut",
-      "include": true,
+      "include": false,
       "label": "Pathologies + the stupid gate story (one run — v1 split the story across two mislabeled scenes)",
       "source": "b9h",
       "in": 208.0,
       "out": 408.0,
-      "status": "MAPPED-VERIFIED: revenge/rigidity naming 212-216, gate story 244-400 ('route I take every day for 27 years' 259), 'one idiot away from becoming a monkey murderous chimpanzee' 383, transfer 'trading is exactly like that. It's the same chimp' 401. ATTRIBUTION CHECK: listen for who tells the gate story (Tom per card, Ken per build doc); ATTRIBUTION: the 27-years gate story is Tom's (Ken says 'Tom's microcosm'); the card credits Tom",
+      "status": "MAPPED-VERIFIED: revenge/rigidity naming 212-216, gate story 244-400 ('route I take every day for 27 years' 259), 'one idiot away from becoming a monkey murderous chimpanzee' 383, transfer 'trading is exactly like that. It's the same chimp' 401. ATTRIBUTION CHECK: listen for who tells the gate story (Tom per card, Ken per build doc); ATTRIBUTION: the 27-years gate story is Tom's (Ken says 'Tom's microcosm'); the card credits Tom; the twin s01a carries it",
       "quote_anchor": "the imbalances of revenge and rigidity... route I take every day for 27 years... trading is exactly like that. It's the same chimp"
+    },
+    {
+      "id": "s01a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: Pathologies + the stupid gate story (one run — v1 split the story across two mislabeled scenes)",
+      "source": "b9h",
+      "in": 208.0,
+      "out": 408.0,
+      "animation_brief": "drawn from his words in this window; see anim_gen.py",
+      "status": "twin of s01: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
+      "pip": true,
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
     },
     {
       "id": "s02",
@@ -82,13 +114,29 @@
     {
       "id": "s03",
       "type": "cut",
-      "include": true,
+      "include": false,
       "label": "Revenge manifestation (trimmed; 'tonight we get to explore' line lands in s01's take)",
       "source": "b9h",
       "in": 408.0,
       "out": 520.0,
-      "status": "MAPPED; trim in cutroom — cut track marked the logistics TRIM/DROP",
+      "status": "MAPPED; trim in cutroom — cut track marked the logistics TRIM/DROP; the twin s03a carries it",
       "quote_anchor": "how do I get even instead of getting to the zero state"
+    },
+    {
+      "id": "s03a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: Revenge manifestation (trimmed; 'tonight we get to explore' line lands in s01's take)",
+      "source": "b9h",
+      "in": 408.0,
+      "out": 520.0,
+      "animation_brief": "drawn from his words in this window; see anim_gen.py",
+      "status": "twin of s03: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
+      "pip": true,
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
     },
     {
       "id": "s04",
@@ -108,24 +156,56 @@
     {
       "id": "s05",
       "type": "cut",
-      "include": true,
+      "include": false,
       "label": "★ How long will you watch the monkey drive? (title quote RESTORED)",
       "source": "b9h",
       "in": 777.0,
       "out": 959.0,
-      "status": "MAPPED-VERIFIED — v1 in-point (13:31) excluded the title line (13:00-13:05) and 'okay, stop, flip' (13:19-13:27); v2 starts 12:57 recovering both + kids line 13:36 + protect-goal reminder 15:49",
+      "status": "MAPPED-VERIFIED — v1 in-point (13:31) excluded the title line (13:00-13:05) and 'okay, stop, flip' (13:19-13:27); v2 starts 12:57 recovering both + kids line 13:36 + protect-goal reminder 15:49; the twin s05a carries it",
       "quote_anchor": "how long are you going to watch the monkey drive? You know that's wrong... okay, stop, flip... if it was my kids driving the car in a poor state of mind, I wouldn't hesitate to just take the wheel"
+    },
+    {
+      "id": "s05a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: ★ How long will you watch the monkey drive? (title quote RESTORED)",
+      "source": "b9h",
+      "in": 777.0,
+      "out": 959.0,
+      "animation_brief": "drawn from his words in this window; see anim_gen.py",
+      "status": "twin of s05: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
+      "pip": true,
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
     },
     {
       "id": "s06",
       "type": "cut",
-      "include": true,
+      "include": false,
       "label": "The team takes the wheel (internal roles)",
       "source": "b9h",
       "in": 959.0,
       "out": 1080.0,
-      "status": "MAPPED-VERIFIED ('designer of the trade, the keeper of the rules, the architect' 1016; 'if we let the monkey...' 1046). 'Stop. Flip. Drive.' typography card closes the chapter",
+      "status": "MAPPED-VERIFIED ('designer of the trade, the keeper of the rules, the architect' 1016; 'if we let the monkey...' 1046). 'Stop. Flip. Drive.' typography card closes the chapter; the twin s06a carries it",
       "quote_anchor": "not can you protect our goal, can our team"
+    },
+    {
+      "id": "s06a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: The team takes the wheel (internal roles)",
+      "source": "b9h",
+      "in": 959.0,
+      "out": 1080.0,
+      "animation_brief": "drawn from his words in this window; see anim_gen.py",
+      "status": "twin of s06: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
+      "pip": true,
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
     },
     {
       "id": "s07",
@@ -152,18 +232,35 @@
       "out": 1143.0,
       "status": "MAPPED-VERIFIED — the beats are 18:06 protect the goal / 18:19 ★ get the ball / 18:41 find space / 18:54 shoot and score, all inside 18:00-19:03. v1 spread the animation targets across 4 scene windows whose later footage was actually the emotional-state-manager passage; sting goes ON 18:19; rev2: brief for anim-overdub in the current style",
       "animation_brief": "animate (four beats on his words, 18:06 protect the goal / 18:19 get the ball / 18:41 find space / 18:54 shoot and score): a soccer pitch that morphs into a chart; beat 1 a risk box drawn under the entry (the goal protected); beat 2 the entry marker snaps in; beat 3 the trade in flight with congestion shaded; beat 4 the exit and a four-phase summary frame with the compact all-four-rules line (15:37-15:43) as the closing caption",
-      "quote_anchor": "now that we've protected our goal... can we get the ball? So, that's stalking... find space and stay away from congestion... can I shoot and score"
+      "quote_anchor": "now that we've protected our goal... can we get the ball? So, that's stalking... find space and stay away from congestion... can I shoot and score",
+      "pip": true
     },
     {
       "id": "s09",
       "type": "cut",
-      "include": true,
+      "include": false,
       "label": "The coach manages emotional states (the footage v1 buried under the soccer cards)",
       "source": "b9h",
       "in": 1189.0,
       "out": 1318.0,
-      "status": "MAPPED ('excessive joy and jubilation' 1186; battle-drill 1240); trim in cutroom",
+      "status": "MAPPED ('excessive joy and jubilation' 1186; battle-drill 1240); trim in cutroom; the twin s09a carries it",
       "quote_anchor": "executing their battle drill"
+    },
+    {
+      "id": "s09a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: The coach manages emotional states (the footage v1 buried under the soccer cards)",
+      "source": "b9h",
+      "in": 1189.0,
+      "out": 1318.0,
+      "animation_brief": "drawn from his words in this window; see anim_gen.py",
+      "status": "twin of s09: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
+      "pip": true,
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
     },
     {
       "id": "s10",
@@ -183,36 +280,84 @@
     {
       "id": "s11",
       "type": "cut",
-      "include": true,
+      "include": false,
       "label": "Pride, timidity, and Aristotle's middle (content-true window)",
       "source": "apk",
       "in": 3849.0,
       "out": 4008.0,
-      "status": "MAPPED-VERIFIED — pride 'first most dangerous' 3864, Aristotle judgment-in-the-middle 3879-3885, timidity 3904 (v1 carded Aristotle a scene late)",
+      "status": "MAPPED-VERIFIED — pride 'first most dangerous' 3864, Aristotle judgment-in-the-middle 3879-3885, timidity 3904 (v1 carded Aristotle a scene late); the twin s11a carries it",
       "quote_anchor": "[pride] is the first most dangerous one... what Aristotle would say is judgment is in the middle"
+    },
+    {
+      "id": "s11a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: Pride, timidity, and Aristotle's middle (content-true window)",
+      "source": "apk",
+      "in": 3849.0,
+      "out": 4008.0,
+      "animation_brief": "drawn from his words in this window; see anim_gen.py",
+      "status": "twin of s11: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
+      "pip": true,
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
     },
     {
       "id": "s12",
       "type": "cut",
-      "include": true,
+      "include": false,
       "label": "Cynicism + the parable of the talents",
       "source": "apk",
       "in": 4008.0,
       "out": 4168.0,
-      "status": "MAPPED (parable 4073-4164 per build doc + adjacent VTT)",
+      "status": "MAPPED (parable 4073-4164 per build doc + adjacent VTT); the twin s12a carries it",
       "micro_explainer": "Ava typography spectrum strip (timidity <- judgment -> pride) as the chapter's connective tissue",
       "quote_anchor": "parable of the talents"
     },
     {
+      "id": "s12a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: Cynicism + the parable of the talents",
+      "source": "apk",
+      "in": 4008.0,
+      "out": 4168.0,
+      "animation_brief": "drawn from his words in this window; see anim_gen.py",
+      "status": "twin of s12: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
+      "pip": true,
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
       "id": "s13",
       "type": "cut",
-      "include": true,
+      "include": false,
       "label": "Both failure modes cost the same (talents = capability)",
       "source": "apk",
       "in": 4168.0,
       "out": 4258.0,
-      "status": "MAPPED (title is a curator paraphrase; content = talent/capability + self-assessment)",
+      "status": "MAPPED (title is a curator paraphrase; content = talent/capability + self-assessment); the twin s13a carries it",
       "quote_anchor": "talent = capability/potential"
+    },
+    {
+      "id": "s13a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: Both failure modes cost the same (talents = capability)",
+      "source": "apk",
+      "in": 4168.0,
+      "out": 4258.0,
+      "animation_brief": "drawn from his words in this window; see anim_gen.py",
+      "status": "twin of s13: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
+      "pip": true,
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
     },
     {
       "id": "s14",
@@ -239,29 +384,62 @@
       "out": 4707.0,
       "status": "MAPPED-VERIFIED — v1 in-point (1:17:09) clipped 'the normal game, the B game is 0 plus or minus one' (1:16:51-1:17:05); v2 starts 1:16:50. C/B boundary at -1 sigma 4635-4641; Z-1/Z+1 exchange 4652-4677; ★ 'that's where the A game begins — at Z plus one' 4674-4678 — band-chart boundary draw syncs there. NOTE: 'center of mass rock solid' (4681) is about A and C at +/-2 sigma, not the B game — card the maxim accurately; rev2: brief for anim-overdub in the current style",
       "animation_brief": "animate: the band chart of a trader's own session scores, mean in the middle, Z±1 shaded as the B game ('the normal game, the B game, is zero plus or minus one'); on the ★ line the Z+1 boundary draws and the A game lights to the right, the C tail to the left at -2; captions on his exact grading words",
-      "quote_anchor": "the normal game, the B game is 0 plus or minus one... that's the boundary. That's where the A game begins — at Z plus one"
+      "quote_anchor": "the normal game, the B game is 0 plus or minus one... that's the boundary. That's where the A game begins — at Z plus one",
+      "pip": true
     },
     {
       "id": "s16",
       "type": "cut",
-      "include": true,
+      "include": false,
       "label": "The daily gauge + the art critic",
       "source": "apk",
       "in": 4707.0,
       "out": 4787.0,
-      "status": "MAPPED (color-code gauge 4702-4714; aesthetic judgment 4726-4755; 'How does it feel?' 4759)",
+      "status": "MAPPED (color-code gauge 4702-4714; aesthetic judgment 4726-4755; 'How does it feel?' 4759); the twin s16a carries it",
       "quote_anchor": "use that as your daily gauge... How does it feel?"
+    },
+    {
+      "id": "s16a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: The daily gauge + the art critic",
+      "source": "apk",
+      "in": 4707.0,
+      "out": 4787.0,
+      "animation_brief": "drawn from his words in this window; see anim_gen.py",
+      "status": "twin of s16: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
+      "pip": true,
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
     },
     {
       "id": "s17",
       "type": "cut",
-      "include": true,
+      "include": false,
       "label": "Rate the session, not the P&L",
       "source": "apk",
       "in": 4787.0,
       "out": 4888.0,
-      "status": "MAPPED-VERIFIED ('your heart is connected to your values and identity and purpose' 4826; 'make that mark. How did I do today?' 4877). 'Grade the session A/B/C tonight' card at close",
+      "status": "MAPPED-VERIFIED ('your heart is connected to your values and identity and purpose' 4826; 'make that mark. How did I do today?' 4877). 'Grade the session A/B/C tonight' card at close; the twin s17a carries it",
       "quote_anchor": "check in with that at the end of the day and make that mark. How did I do today?"
+    },
+    {
+      "id": "s17a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: Rate the session, not the P&L",
+      "source": "apk",
+      "in": 4787.0,
+      "out": 4888.0,
+      "animation_brief": "drawn from his words in this window; see anim_gen.py",
+      "status": "twin of s17: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
+      "pip": true,
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
     },
     {
       "id": "s18",
@@ -281,24 +459,56 @@
     {
       "id": "s19",
       "type": "cut",
-      "include": true,
+      "include": false,
       "label": "Three machine guns (rotation image RESTORED)",
       "source": "c1",
       "in": 1260.0,
       "out": 1437.0,
-      "status": "MAPPED-VERIFIED — v1 in-point (21:30) cut the core image ('three machine guns and only one of them is firing at once. So he shoots a burst, pause...' 21:04-21:33); v2 starts 21:00. Rate ladder 1369-1387; 'tell if the unit is well trained by listening' 1387; sprint-payback transfer 1408-1418",
+      "status": "MAPPED-VERIFIED — v1 in-point (21:30) cut the core image ('three machine guns and only one of them is firing at once. So he shoots a burst, pause...' 21:04-21:33); v2 starts 21:00. Rate ladder 1369-1387; 'tell if the unit is well trained by listening' 1387; sprint-payback transfer 1408-1418; the twin s19a carries it",
       "quote_anchor": "I get like three machine guns and only one of them is firing at once... he shoots a burst, pause"
+    },
+    {
+      "id": "s19a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: Three machine guns (rotation image RESTORED)",
+      "source": "c1",
+      "in": 1260.0,
+      "out": 1437.0,
+      "animation_brief": "drawn from his words in this window; see anim_gen.py",
+      "status": "twin of s19: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
+      "pip": true,
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
     },
     {
       "id": "s20",
       "type": "cut",
-      "include": true,
+      "include": false,
       "label": "Disciplined fire: parsimonious, good enough, few rules",
       "source": "c1",
       "in": 1437.0,
       "out": 1557.0,
-      "status": "MAPPED-VERIFIED ('the word is parsimonious' 1460; 'good enough really is good enough' 1484; 'as few a rules as necessary to maintain your persistent advantage' 1531; 'where is the edge coming from?' 1543)",
+      "status": "MAPPED-VERIFIED ('the word is parsimonious' 1460; 'good enough really is good enough' 1484; 'as few a rules as necessary to maintain your persistent advantage' 1531; 'where is the edge coming from?' 1543); the twin s20a carries it",
       "quote_anchor": "as few a rules as necessary to maintain your persistent advantage"
+    },
+    {
+      "id": "s20a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: Disciplined fire: parsimonious, good enough, few rules",
+      "source": "c1",
+      "in": 1437.0,
+      "out": 1557.0,
+      "animation_brief": "drawn from his words in this window; see anim_gen.py",
+      "status": "twin of s20: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
+      "pip": true,
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
     },
     {
       "id": "s21",
@@ -318,24 +528,56 @@
     {
       "id": "s22",
       "type": "cut",
-      "include": true,
+      "include": false,
       "label": "★ The Frankenstein creature (+ the minimum-mission-essential question)",
       "source": "c1",
       "in": 1560.0,
       "out": 1707.0,
-      "status": "MAPPED-VERIFIED — ★ 1589-1598; 'one more test and add one more rule' 1586; the MME title question 'what's the minimum mission essential set...' is at 1623-1630 INSIDE this window (v1 carded it a scene late); 40-years minimal set + PLTR/NVDA/UMAC/BBAI talk 1630-1706",
+      "status": "MAPPED-VERIFIED — ★ 1589-1598; 'one more test and add one more rule' 1586; the MME title question 'what's the minimum mission essential set...' is at 1623-1630 INSIDE this window (v1 carded it a scene late); 40-years minimal set + PLTR/NVDA/UMAC/BBAI talk 1630-1706; the twin s22a carries it",
       "quote_anchor": "you're persuading yourself that the software and the robot are doing it, but you're always watching your little Frankenstein creature... what's the minimum mission essential set of things that I need to do to maintain my advantage?"
+    },
+    {
+      "id": "s22a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: ★ The Frankenstein creature (+ the minimum-mission-essential question)",
+      "source": "c1",
+      "in": 1560.0,
+      "out": 1707.0,
+      "animation_brief": "drawn from his words in this window; see anim_gen.py",
+      "status": "twin of s22: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
+      "pip": true,
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
     },
     {
       "id": "s23",
       "type": "cut",
-      "include": true,
+      "include": false,
       "label": "Respect the few: indicators, exits, the marathon",
       "source": "c1",
       "in": 1707.0,
       "out": 1827.0,
-      "status": "MAPPED ('really respect those few indicators... the kata too' 1706; 'stricter on the exit rules' 1724; '85 or 80 percent... exit in cash' 1745-1762; 'it's a marathon... emotional bank account' 1766-1779)",
+      "status": "MAPPED ('really respect those few indicators... the kata too' 1706; 'stricter on the exit rules' 1724; '85 or 80 percent... exit in cash' 1745-1762; 'it's a marathon... emotional bank account' 1766-1779); the twin s23a carries it",
       "quote_anchor": "stricter on the exit rules... it's a marathon"
+    },
+    {
+      "id": "s23a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: Respect the few: indicators, exits, the marathon",
+      "source": "c1",
+      "in": 1707.0,
+      "out": 1827.0,
+      "animation_brief": "drawn from his words in this window; see anim_gen.py",
+      "status": "twin of s23: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
+      "pip": true,
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
     },
     {
       "id": "s24",
@@ -355,25 +597,57 @@
     {
       "id": "s25",
       "type": "cut",
-      "include": true,
+      "include": false,
       "label": "Portfolio heat: the question + the definition (framing RESTORED) -> heat-gauge overdub at the summation",
       "source": "p4321",
       "in": 3060.0,
       "out": 3249.0,
-      "status": "MAPPED-VERIFIED — v1 in-point (51:32) cut Ken's framing question ('What's your total portfolio heat? ... describe that in terms of a number' 51:04-51:15); v2 starts 51:00. Tom's summation 3092-3110; Ken 'That's portfolio heat.' 3113; the 1%-x-10 math 3142-3154; gut-quarter 3195-3205. ★ sting goes ON the summation (3110), not 2 minutes later; rev2: brief for anim-overdub in the current style",
+      "status": "MAPPED-VERIFIED — v1 in-point (51:32) cut Ken's framing question ('What's your total portfolio heat? ... describe that in terms of a number' 51:04-51:15); v2 starts 51:00. Tom's summation 3092-3110; Ken 'That's portfolio heat.' 3113; the 1%-x-10 math 3142-3154; gut-quarter 3195-3205. ★ sting goes ON the summation (3110), not 2 minutes later; rev2: brief for anim-overdub in the current style; the twin s25a carries it",
       "animation_brief": "animate at the definition (open on the Ken/Tom exchange as cut, then the twin): positions stacking as rungs of a ladder, each rung a trade's open risk; the rungs collapse to one number on the ★ line ('I summed all of the open risk'); 'worst trade is not worst day' as a caption card",
       "quote_anchor": "What's your total portfolio heat?... if all of those trades failed at the same time — That's portfolio heat."
     },
     {
+      "id": "s25a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: Portfolio heat: the question + the definition (framing RESTORED) -> heat-gauge overdub at the summation",
+      "source": "p4321",
+      "in": 3060.0,
+      "out": 3249.0,
+      "animation_brief": "animate at the definition (open on the Ken/Tom exchange as cut, then the twin): positions stacking as rungs of a ladder, each rung a trade's open risk; the rungs collapse to one number on the ★ line ('I summed all of the open risk'); 'worst trade is not worst day' as a caption card",
+      "status": "twin of s25: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
+      "pip": true,
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
       "id": "s26",
       "type": "cut",
-      "include": true,
+      "include": false,
       "label": "Sizing against the goal (15% math, 'worst trade is not worst day')",
       "source": "p4321",
       "in": 3249.0,
       "out": 3359.0,
-      "status": "MAPPED ('trade that at the appropriate level of risk with the whole portfolio or lower your goals' 3332-3341)",
+      "status": "MAPPED ('trade that at the appropriate level of risk with the whole portfolio or lower your goals' 3332-3341); the twin s26a carries it",
       "quote_anchor": "trade that at the appropriate level of risk with the whole portfolio or lower your goals"
+    },
+    {
+      "id": "s26a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: Sizing against the goal (15% math, 'worst trade is not worst day')",
+      "source": "p4321",
+      "in": 3249.0,
+      "out": 3359.0,
+      "animation_brief": "drawn from his words in this window; see anim_gen.py",
+      "status": "twin of s26: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
+      "pip": true,
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
     },
     {
       "id": "s27",
@@ -381,17 +655,17 @@
       "include": true,
       "label": "EXPLAINER + cut tail: the dynamic threshold ('Let's go. Buckle up.' RESTORED)",
       "voice": "ava",
-      "vo_script": "TO WRITE — heat-gauge mode 2: the threshold moving against an equity path (tighten in drawdown, loosen after wins). Then Ken's close runs as the cut tail.",
-      "est_duration": 40,
+      "vo_script": "Portfolio heat is the sum of the open risk across every position you hold, as a share of your risk capital. A dynamic risk threshold moves that ceiling with results. After a run of losses it tightens; after wins it loosens back toward the plan. The gut sets the size of each rung. The threshold caps the stack. When the stack reaches the line, no new position goes on until one comes off. Here is Ken on laying the numbers out to your gut.",
+      "est_duration": 34,
       "cut_tail": {
         "source": "p4321",
         "in": 3359.0,
         "out": 3432.0,
         "note": "v1 out-point (57:00) clipped 'Let's go. Buckle up.' at 57:02 — v2 extends to ~57:10. 'lay out the numbers to your gut while still respecting the gut's authority' 3394-3403; 'petulant child trying to drive the car' 3405-3410"
       },
-      "animation_brief": "explainer (Ava, typography + the heat gauge, mode 2): the threshold line moving against an equity path, heat as a percentage of risk capital, never dollars; ends on his own 'Let's go. Buckle up.' from the cut tail",
+      "animation_brief": "explainer (Ava, typography + the heat gauge, mode 2): the threshold line moving against an equity path, heat as a percentage of risk capital, never dollars; ends on his own 'Let's go. Buckle up.' from the cut tail | scene anim-s27.html (twin=False), no tile: synth voice",
       "quote_anchor": "I hear your concerns. We've taken it into account. Safety measures are in place. Let's go. Buckle up.",
-      "status": "rev2: brief for anim-overdub in the current style"
+      "status": "rev3: VO script written (Ava, 34 s est.), scene drawn; the cut tail follows as planned"
     },
     {
       "id": "s28",

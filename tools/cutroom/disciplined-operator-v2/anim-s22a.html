@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>s22a · the Frankenstein creature</title>
+<style>
+  :root { --bg:#030507; --fg:#E1EEF5; --muted:#8fa3ad; --border:rgba(56,225,255,0.14); --accent:#F2D06B;
+          --ok:#4ade80; --dn:#f87171; --card:#0a1016; --blue:#7baad4; }
+  html, body { margin:0; background:var(--bg); overflow:hidden; }
+  #stage { position:relative; width:1280px; height:720px; background:var(--bg); color:var(--fg);
+           font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; overflow:hidden; }
+  #cap { position:absolute; left:60px; right:60px; top:30px; font-size:32px; font-weight:600; letter-spacing:-.01em; line-height:1.15; }
+  #cap em { font-style:normal; color:var(--accent); }
+  #sub { position:absolute; left:60px; width:1160px; top:648px; font-size:20px; color:var(--muted); line-height:1.4; }
+  #scene { position:absolute; left:60px; top:112px; width:1160px; height:518px; border:1px solid var(--border);
+           border-radius:10px; background:var(--card); overflow:hidden; }
+  #svg { position:absolute; inset:0; }
+  #fade { position:absolute; inset:0; background:var(--bg); pointer-events:none; opacity:0; }
+  /* the picture-in-picture corner: build_v2 composites Ken's camera tile here (PIP_W/X/Y); the cutroom shows this placeholder */
+  #pip { position:absolute; left:950px; top:22px; width:300px; height:169px; border:1px dashed rgba(56,225,255,0.35); border-radius:4px;
+         display:none; color:var(--muted); font-size:13px; text-align:center; line-height:169px; }
+  .pip #pip { display:block; } .pip #cap { right:360px; font-size:29px; }
+  text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; fill:#E1EEF5; }
+  .mono { font-family:ui-monospace,Menlo,Consolas,monospace; }
+  #third { display:none; }
+</style>
+</head>
+<body>
+<div id="stage" class="pip">
+  <div id="cap"></div>
+  <div id="pip">Ken on camera, composited at render</div>
+  <div id="scene"><svg id="svg" width="1160" height="530" viewBox="0 0 1160 530"></svg></div>
+  <div id="third"></div>
+  <div id="sub"></div>
+  <div id="fade"></div>
+</div>
+<script>
+const BUILD = 's22a-3';
+console.log('[s22a] build', BUILD);
+// Overdub twin of s22: Ken's audio c1 1560.0→1707.0; t is seconds after the in-point.
+// Beat times read from the VTT cues on 2026-11-21 (tools/cutroom/disciplined-operator-v2/transcript-c1.json).
+window.ANIM_DURATION = 147.0;
+const ACC='#F2D06B', FG='#E1EEF5', MUT='#8fa3ad', OK='#4ade80', DN='#f87171', BLUE='#7baad4', BRD='rgba(56,225,255,.22)', CARD='#0a1016', TXS=1, WRAP=['',''];
+const W=1160, H=530;
+const $ = id => document.getElementById(id);
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const ease=u=>{u=clamp(u,0,1);return u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;};
+const lerp=(a,b,u)=>a+(b-a)*u;
+const pr=(t,t0,d)=>ease((t-t0)/(d||0.6));          // eased progress 0..1 from t0 over d seconds
+const on=(t,t0)=>t>=t0;
+const op=(t,t0,d)=>clamp((t-t0)/(d||0.5),0,1);      // linear opacity ramp
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const txt=(x,y,s,o={})=>`<text x="${x}" y="${y}" font-size="${(o.sz||20)*TXS}" fill="${o.c||FG}" opacity="${o.o==null?1:o.o}" text-anchor="${o.a||'start'}" font-weight="${o.w||400}" class="${o.cls||''}" ${o.extra||''}>${esc(s)}</text>`;
+const rect=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.r==null?6:o.r}" fill="${o.f||'none'}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}" ${o.extra||''}/>`;
+const circ=(x,y,r,o={})=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${o.f||FG}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}"/>`;
+const line=(x1,y1,x2,y2,o={})=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${o.s||MUT}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" ${o.dash?`stroke-dasharray="${o.dash}"`:''} stroke-linecap="round"/>`;
+const path=(d,o={})=>`<path d="${d}" fill="${o.f||'none'}" stroke="${o.s||FG}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" stroke-linecap="round" stroke-linejoin="round" ${o.dash?`stroke-dasharray="${o.dash}"`:''}/>`;
+const arrow=(x1,y1,x2,y2,o={})=>{const a=Math.atan2(y2-y1,x2-x1),h=10;return line(x1,y1,x2,y2,o)+path(`M${x2} ${y2} L${x2-h*Math.cos(a-0.5)} ${y2-h*Math.sin(a-0.5)} M${x2} ${y2} L${x2-h*Math.cos(a+0.5)} ${y2-h*Math.sin(a+0.5)}`,{s:o.s||MUT,sw:o.sw||2,o:o.o});};
+// a labelled box that grows in from t0
+const box=(t,t0,x,y,w,h,label,o={})=>{const u=pr(t,t0,0.5);if(u<=0)return '';const ww=w*u,hh=h;return rect(x+(w-ww)/2,y,ww,hh,{s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',sw:o.sw||1.5,o:u})+(u>.6?txt(x+w/2,y+h/2+(o.sz||20)/3,label,{a:'middle',sz:o.sz||20,c:o.c||FG,o:op(t,t0+.3,.3),w:o.w||500}):'');};
+// deterministic pseudo-random
+function rng(seed){let s=seed*9301+49297;return()=>{s=(s*9301+49297)%233280;return s/233280;};}
+// a herd of dots in a region; drift is a slow deterministic wander
+function herd(n,seed,x,y,w,h){const r=rng(seed);const pts=[];for(let i=0;i<n;i++)pts.push({x:x+r()*w,y:y+r()*h,p:r()*6.28,q:r()*6.28});return pts;}
+const wander=(p,t,amp)=>[p.x+Math.sin(t*0.9+p.p)*amp,p.y+Math.cos(t*0.7+p.q)*amp];
+// typewriter: the first k chars of s by time
+const type=(s,t,t0,cps)=>s.slice(0,Math.max(0,Math.floor((t-t0)*(cps||28))));
+// a list that reveals one row per step seconds from t0
+function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
+
+const BEATS = [[1.0, "how do I reduce the number of indicators? How do I eliminate <em>non-value-added steps</em>?", ""], [10.6, "I see this as a problem for guys that are very good with technical analysis and good programmers", ""], [21.9, "because it's always easy to run <em>one more test</em> and add <em>one more rule</em>", ""], [29.6, "you're persuading yourself that the software and the robot are doing it", ""], [31.6, "but you're always watching your little <em>Frankenstein creature</em>", ""], [38.2, "so it's not really saving you time and energy; you're still there watching the damn thing run", ""], [48.2, "to be able to just relax a little bit, refresh", ""], [54.4, "how do I <em>cut away the least value-added things</em>?", ""], [60.6, "what's the <em>minimum mission-essential set</em> of things I need to do to maintain my advantage?", ""], [70.4, "for me, and I've been trading this way for 40 years: <em>find the movers</em>", ""], [76.1, "find the <em>turning point</em> early in the day, and then SFC and Kata 2", ""], [84.2, "monitor three or four things at a time, and pick the one or two making the big move", ""], [92.6, "make my little biscuit, and then decide how much to hold overnight, if anything", ""], [99.1, "that's my intraday trading strategy", ""], [102.1, "I'm probably looking at only <em>10 symbols out of my stack of 60</em>", ""], [118.9, "Palantir, Nvidia: I don't even trade both of those now. I pick one", ""], [127.6, "it's UMAC and BBA; uranium; Mexico or Canada. Just a handful of things", ""], [141.6, "and then really <em>respect those few indicators</em> that I have", ""]];
+
+const person=(x,y,o={})=>circ(x,y-14,9,{f:'none',s:o.c||FG,sw:2,o:o.o==null?1:o.o})+path(`M${x-16} ${y+22} C${x-16} ${y} ${x+16} ${y} ${x+16} ${y+22}`,{s:o.c||FG,sw:2,o:o.o==null?1:o.o});
+const pill=(x,y,s,o={})=>{const w=(o.w||s.length*10+22);return rect(x-w/2,y-15,w,30,{r:15,s:o.s||BRD,f:o.f||'rgba(255,255,255,.03)',o:o.o==null?1:o.o})+txt(x,y+6,s,{a:'middle',sz:o.sz||15,c:o.c||FG,o:o.o==null?1:o.o,w:o.wt||500});};
+const card=(x,y,w,h,o={})=>rect(x,y,w,h,{r:10,s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',o:o.o==null?1:o.o});
+const lab=(t,t0,x,y,s,o={})=>{const a=op(t,t0,o.d||.5);return a<=0?'':txt(x,y,s,{...o,o:a*(o.o==null?1:o.o)});};
+const monkey=(x,y,o={})=>circ(x,y,16,{f:'none',s:o.c||ACC,sw:2,o:o.o==null?1:o.o})+circ(x-16,y-4,6,{f:'none',s:o.c||ACC,sw:2,o:o.o==null?1:o.o})+circ(x+16,y-4,6,{f:'none',s:o.c||ACC,sw:2,o:o.o==null?1:o.o})+path(`M${x-7} ${y+5} Q${x} ${y+12} ${x+7} ${y+5}`,{s:o.c||ACC,sw:2,o:o.o==null?1:o.o})+circ(x-5,y-3,2,{f:o.c||ACC,o:o.o==null?1:o.o})+circ(x+5,y-3,2,{f:o.c||ACC,o:o.o==null?1:o.o});
+// a car seen from the side, nose to the right; (x,y) is the ground under its centre
+const car=(x,y,o={})=>path(`M${x-44} ${y-10} L${x-40} ${y-26} L${x-14} ${y-30} L${x-2} ${y-44} L${x+26} ${y-44} L${x+40} ${y-28} L${x+46} ${y-10} Z`,{s:o.c||FG,sw:2,f:o.f||'rgba(255,255,255,.04)',o:o.o==null?1:o.o})+circ(x-26,y-8,8,{f:'none',s:o.c||FG,sw:2,o:o.o==null?1:o.o})+circ(x+26,y-8,8,{f:'none',s:o.c||FG,sw:2,o:o.o==null?1:o.o});
+// a wall of bricks
+function wall(x,y,w,h,o={}){let s=rect(x,y,w,h,{f:'rgba(255,255,255,.03)',s:MUT,sw:1.5,o:o.o==null?1:o.o});for(let r=1;r<h/18;r++){s+=line(x,y+r*18,x+w,y+r*18,{s:MUT,sw:1,o:(o.o==null?1:o.o)*0.5});}return s;}
+// a goal (soccer) at the left: posts and net
+const goal=(x,y,o={})=>path(`M${x} ${y+40} L${x} ${y} L${x+16} ${y} L${x+16} ${y+40}`,{s:o.c||FG,sw:3,o:o.o==null?1:o.o})+line(x+4,y+6,x+12,y+34,{s:BRD,sw:1,o:o.o==null?1:o.o})+line(x+12,y+6,x+4,y+34,{s:BRD,sw:1,o:o.o==null?1:o.o});
+// the z spectrum: a horizontal axis from -3 to +3 over [x, x+w]
+function zaxis(x,y,w,o={}){const a=o.o==null?1:o.o;let s=line(x,y,x+w,y,{s:MUT,sw:2,o:a});for(let z=-3;z<=3;z++){const px=x+(z+3)/6*w;s+=line(px,y-6,px,y+6,{s:MUT,sw:1.5,o:a});s+=txt(px,y+26,(z>0?'+':'')+z+(z?'σ':''),{a:'middle',sz:13,c:MUT,o:a});}return s;}
+// a gauge arc from the left (0) to the right (1)
+function gauge(cx,cy,r,u,o={}){const a=o.o==null?1:o.o;const arc=(u0,u1,st,sw)=>{const p0=Math.PI+Math.PI*u0,p1=Math.PI+Math.PI*u1;return path(`M${cx+r*Math.cos(p0)} ${cy+r*Math.sin(p0)} A${r} ${r} 0 ${(u1-u0)>.5?1:0} 1 ${cx+r*Math.cos(p1)} ${cy+r*Math.sin(p1)}`,{s:st,sw:sw||10,o:a});};let s=arc(0,1,'rgba(255,255,255,.08)',10)+arc(0,clamp(u,0.001,1),o.c||ACC,10);const p=Math.PI+Math.PI*clamp(u,0,1);s+=line(cx,cy,cx+(r-16)*Math.cos(p),cy+(r-16)*Math.sin(p),{s:FG,sw:3,o:a})+circ(cx,cy,5,{f:FG,o:a});return s;}
+
+function draw(t){
+  let s='';
+  // the creature: a body of boxes that grows a rule or an indicator every few seconds; the trader watching it
+  if (t>=10.6){ const a=op(t,10.6,.6); const n=Math.min(14,Math.floor((t-10.6)/2.2)+2); const r=rng(21); s += rect(200,160,120,160,{r:8,s:FG,sw:2,f:'rgba(255,255,255,.03)',o:a}); s += circ(260,130,24,{f:'none',s:FG,sw:2,o:a}); s += line(236,120,252,120,{s:FG,sw:2,o:a}); s += line(268,120,284,120,{s:FG,sw:2,o:a});
+    for(let i=0;i<n;i++){ const side=i%2?1:-1; const y=170+(Math.floor(i/2))*22; const x= side>0 ? 330 : 120; s += rect(x,y,60,16,{r:3,f:'rgba(242,208,107,.1)',s:ACC,sw:1,o:a}); s += line(side>0?320:200,y+8,side>0?330:180,y+8,{s:BRD,sw:1,o:a}); s += txt(x+30,y+12,i%3?'rule':'indicator',{a:'middle',sz:9,c:MUT,o:a}); }
+    s += person(470,280,{o:a}); s += lab(t,31.6,470,322,'watching the creature',{sz:12,c:MUT,a:'middle'}); if (t>=21.9 && t<54.4) s += lab(t,21.9,260,360,'one more test, one more rule',{sz:12,c:ACC,a:'middle'}); }
+  if (t>=38.2 && t<54.4) s += lab(t,38.2,260,384,'not saving you time',{sz:12,c:DN,a:'middle'});
+  // the cut: the minimum mission-essential set, as a short list
+  if (t>=54.4){ const a=op(t,54.4,.6); s += line(560,120,560,480,{s:BRD,sw:1,dash:'4 4',o:a}); s += txt(600,130,'the minimum mission-essential set',{sz:14,c:ACC,o:a*op(t,60.6,.5)}); }
+  const steps=[[70.4,'find the movers'],[76.1,'the turning point, early'],[79.9,'SFC · Kata 2'],[84.2,'monitor 3 or 4, pick 1 or 2'],[92.6,'the little biscuit'],[95.8,'how much overnight, if any']];
+  steps.forEach((st,i)=>{ const a=op(t,st[0],.5); if (a<=0) return; s += circ(610,170+i*30,5,{f:OK,o:a}); s += txt(626,175+i*30,st[1],{sz:14,c:FG,o:a}); });
+  if (t>=102.1){ const a=op(t,102.1,.6); const r=rng(8); for(let i=0;i<60;i++){ const on=i<10; s += circ(610+(i%20)*20,380+Math.floor(i/20)*18,on?5:3,{f:on?ACC:'rgba(255,255,255,.12)',o:a}); } s += txt(1010,398,'10 of 60',{a:'end',sz:13,c:ACC,o:a}); }
+  if (t>=118.9) s += list(t,118.9,4.3,['Palantir or Nvidia: pick one','UMAC and BBA','uranium · Mexico or Canada'],610,460,{sz:12,lh:16,c:MUT});
+  if (t>=141.6) s += lab(t,141.6,300,470,'respect those few indicators',{sz:14,c:OK,a:'middle'});
+  return s;
+}
+
+window.renderFrame = function (t) {
+  t = clamp(t, 0, ANIM_DURATION);
+  let cap = '', sub = '';
+  for (const b of BEATS) if (t >= b[0]) { cap = b[1]; sub = b[2] || ''; }
+  $('cap').innerHTML = cap; $('sub').textContent = sub;
+  $('svg').innerHTML = WRAP[0] + draw(t) + WRAP[1];
+  const f = $('fade');
+  f.style.opacity = t < 0.5 ? 1 - t / 0.5 : (ANIM_DURATION - t < 0.6 ? 1 - (ANIM_DURATION - t) / 0.6 : 0);
+};
+renderFrame(0);
+</script>
+</body>
+</html>

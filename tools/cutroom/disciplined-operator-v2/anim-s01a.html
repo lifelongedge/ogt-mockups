@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>s01a · revenge and rigidity: the stupid gate</title>
+<style>
+  :root { --bg:#030507; --fg:#E1EEF5; --muted:#8fa3ad; --border:rgba(56,225,255,0.14); --accent:#F2D06B;
+          --ok:#4ade80; --dn:#f87171; --card:#0a1016; --blue:#7baad4; }
+  html, body { margin:0; background:var(--bg); overflow:hidden; }
+  #stage { position:relative; width:1280px; height:720px; background:var(--bg); color:var(--fg);
+           font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; overflow:hidden; }
+  #cap { position:absolute; left:60px; right:60px; top:30px; font-size:32px; font-weight:600; letter-spacing:-.01em; line-height:1.15; }
+  #cap em { font-style:normal; color:var(--accent); }
+  #sub { position:absolute; left:60px; width:1160px; top:648px; font-size:20px; color:var(--muted); line-height:1.4; }
+  #scene { position:absolute; left:60px; top:112px; width:1160px; height:518px; border:1px solid var(--border);
+           border-radius:10px; background:var(--card); overflow:hidden; }
+  #svg { position:absolute; inset:0; }
+  #fade { position:absolute; inset:0; background:var(--bg); pointer-events:none; opacity:0; }
+  /* the picture-in-picture corner: build_v2 composites Ken's camera tile here (PIP_W/X/Y); the cutroom shows this placeholder */
+  #pip { position:absolute; left:950px; top:22px; width:300px; height:169px; border:1px dashed rgba(56,225,255,0.35); border-radius:4px;
+         display:none; color:var(--muted); font-size:13px; text-align:center; line-height:169px; }
+  .pip #pip { display:block; } .pip #cap { right:360px; font-size:29px; }
+  text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; fill:#E1EEF5; }
+  .mono { font-family:ui-monospace,Menlo,Consolas,monospace; }
+  #third { display:none; }
+</style>
+</head>
+<body>
+<div id="stage" class="pip">
+  <div id="cap"></div>
+  <div id="pip">Ken on camera, composited at render</div>
+  <div id="scene"><svg id="svg" width="1160" height="530" viewBox="0 0 1160 530"></svg></div>
+  <div id="third"></div>
+  <div id="sub"></div>
+  <div id="fade"></div>
+</div>
+<script>
+const BUILD = 's01a-3';
+console.log('[s01a] build', BUILD);
+// Overdub twin of s01: Ken's audio b9h 208.0→408.0; t is seconds after the in-point.
+// Beat times read from the VTT cues on 2026-11-21 (tools/cutroom/disciplined-operator-v2/transcript-b9h.json).
+window.ANIM_DURATION = 200.0;
+const ACC='#F2D06B', FG='#E1EEF5', MUT='#8fa3ad', OK='#4ade80', DN='#f87171', BLUE='#7baad4', BRD='rgba(56,225,255,.22)', CARD='#0a1016', TXS=1, WRAP=['',''];
+const W=1160, H=530;
+const $ = id => document.getElementById(id);
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const ease=u=>{u=clamp(u,0,1);return u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;};
+const lerp=(a,b,u)=>a+(b-a)*u;
+const pr=(t,t0,d)=>ease((t-t0)/(d||0.6));          // eased progress 0..1 from t0 over d seconds
+const on=(t,t0)=>t>=t0;
+const op=(t,t0,d)=>clamp((t-t0)/(d||0.5),0,1);      // linear opacity ramp
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const txt=(x,y,s,o={})=>`<text x="${x}" y="${y}" font-size="${(o.sz||20)*TXS}" fill="${o.c||FG}" opacity="${o.o==null?1:o.o}" text-anchor="${o.a||'start'}" font-weight="${o.w||400}" class="${o.cls||''}" ${o.extra||''}>${esc(s)}</text>`;
+const rect=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.r==null?6:o.r}" fill="${o.f||'none'}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}" ${o.extra||''}/>`;
+const circ=(x,y,r,o={})=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${o.f||FG}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}"/>`;
+const line=(x1,y1,x2,y2,o={})=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${o.s||MUT}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" ${o.dash?`stroke-dasharray="${o.dash}"`:''} stroke-linecap="round"/>`;
+const path=(d,o={})=>`<path d="${d}" fill="${o.f||'none'}" stroke="${o.s||FG}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" stroke-linecap="round" stroke-linejoin="round" ${o.dash?`stroke-dasharray="${o.dash}"`:''}/>`;
+const arrow=(x1,y1,x2,y2,o={})=>{const a=Math.atan2(y2-y1,x2-x1),h=10;return line(x1,y1,x2,y2,o)+path(`M${x2} ${y2} L${x2-h*Math.cos(a-0.5)} ${y2-h*Math.sin(a-0.5)} M${x2} ${y2} L${x2-h*Math.cos(a+0.5)} ${y2-h*Math.sin(a+0.5)}`,{s:o.s||MUT,sw:o.sw||2,o:o.o});};
+// a labelled box that grows in from t0
+const box=(t,t0,x,y,w,h,label,o={})=>{const u=pr(t,t0,0.5);if(u<=0)return '';const ww=w*u,hh=h;return rect(x+(w-ww)/2,y,ww,hh,{s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',sw:o.sw||1.5,o:u})+(u>.6?txt(x+w/2,y+h/2+(o.sz||20)/3,label,{a:'middle',sz:o.sz||20,c:o.c||FG,o:op(t,t0+.3,.3),w:o.w||500}):'');};
+// deterministic pseudo-random
+function rng(seed){let s=seed*9301+49297;return()=>{s=(s*9301+49297)%233280;return s/233280;};}
+// a herd of dots in a region; drift is a slow deterministic wander
+function herd(n,seed,x,y,w,h){const r=rng(seed);const pts=[];for(let i=0;i<n;i++)pts.push({x:x+r()*w,y:y+r()*h,p:r()*6.28,q:r()*6.28});return pts;}
+const wander=(p,t,amp)=>[p.x+Math.sin(t*0.9+p.p)*amp,p.y+Math.cos(t*0.7+p.q)*amp];
+// typewriter: the first k chars of s by time
+const type=(s,t,t0,cps)=>s.slice(0,Math.max(0,Math.floor((t-t0)*(cps||28))));
+// a list that reveals one row per step seconds from t0
+function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
+
+const BEATS = [[0.5, "the imbalances of <em>revenge</em> and <em>rigidity</em>", ""], [18.2, "Rigidity and revenge. Two things that I live with <em>every day</em>", ""], [36.6, "I had a moment of both of those driving through <em>the stupid gate</em>", "The gate at the post, on the way to work."], [47.6, "Same route I take every day for <em>27 years</em>", ""], [55.8, "about <em>seven gates</em> of traffic; seven got to merge to two", ""], [62.8, "the two leftmost gates lead directly to the two lanes", ""], [72.9, "the five gates to the right all have to come in at an angle and <em>merge</em>", ""], [82.0, "I only go through the leftmost gates because I <em>don't like to merge</em>", ""], [88.4, "pick a lane, stay in it, and just go", ""], [91.6, "my rule: in front of me, I let them in; behind me, I have the right of way", ""], [104.6, "I hear this <em>truck engine</em> from right rear behind me", ""], [110.2, "flashing his lights, trying to merge through me, hitting his horn", ""], [117.4, "I'm just moving along at <em>20 miles an hour</em> like I'm supposed to", ""], [130.6, "he jams on his brakes, squeals, mobs around me to the left, <em>cuts me off</em>", ""], [138.7, "what's he going to do? Get out and what? Fight?", ""], [146.4, "I kept reviewing: was I being unreasonable? No, I didn't cut him off", ""], [155.8, "plenty of times I'd do things that irritate them within the letter of the law", ""], [162.2, "I <em>don't do that anymore</em>", ""], [167.8, "how can I get even? I let that go. But <em>the urge is always there</em>", ""], [172.5, "I'm always <em>one idiot away</em> from a murderous chimpanzee behind the wheel", ""], [185.1, "that's going to trigger me. Here it comes. Be ready for it. <em>Let it go</em>", ""], [189.0, "and <em>trading is exactly like that</em>. It's the same chimp, only now I'm trading", ""]];
+
+const person=(x,y,o={})=>circ(x,y-14,9,{f:'none',s:o.c||FG,sw:2,o:o.o==null?1:o.o})+path(`M${x-16} ${y+22} C${x-16} ${y} ${x+16} ${y} ${x+16} ${y+22}`,{s:o.c||FG,sw:2,o:o.o==null?1:o.o});
+const pill=(x,y,s,o={})=>{const w=(o.w||s.length*10+22);return rect(x-w/2,y-15,w,30,{r:15,s:o.s||BRD,f:o.f||'rgba(255,255,255,.03)',o:o.o==null?1:o.o})+txt(x,y+6,s,{a:'middle',sz:o.sz||15,c:o.c||FG,o:o.o==null?1:o.o,w:o.wt||500});};
+const card=(x,y,w,h,o={})=>rect(x,y,w,h,{r:10,s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',o:o.o==null?1:o.o});
+const lab=(t,t0,x,y,s,o={})=>{const a=op(t,t0,o.d||.5);return a<=0?'':txt(x,y,s,{...o,o:a*(o.o==null?1:o.o)});};
+const monkey=(x,y,o={})=>circ(x,y,16,{f:'none',s:o.c||ACC,sw:2,o:o.o==null?1:o.o})+circ(x-16,y-4,6,{f:'none',s:o.c||ACC,sw:2,o:o.o==null?1:o.o})+circ(x+16,y-4,6,{f:'none',s:o.c||ACC,sw:2,o:o.o==null?1:o.o})+path(`M${x-7} ${y+5} Q${x} ${y+12} ${x+7} ${y+5}`,{s:o.c||ACC,sw:2,o:o.o==null?1:o.o})+circ(x-5,y-3,2,{f:o.c||ACC,o:o.o==null?1:o.o})+circ(x+5,y-3,2,{f:o.c||ACC,o:o.o==null?1:o.o});
+// a car seen from the side, nose to the right; (x,y) is the ground under its centre
+const car=(x,y,o={})=>path(`M${x-44} ${y-10} L${x-40} ${y-26} L${x-14} ${y-30} L${x-2} ${y-44} L${x+26} ${y-44} L${x+40} ${y-28} L${x+46} ${y-10} Z`,{s:o.c||FG,sw:2,f:o.f||'rgba(255,255,255,.04)',o:o.o==null?1:o.o})+circ(x-26,y-8,8,{f:'none',s:o.c||FG,sw:2,o:o.o==null?1:o.o})+circ(x+26,y-8,8,{f:'none',s:o.c||FG,sw:2,o:o.o==null?1:o.o});
+// a wall of bricks
+function wall(x,y,w,h,o={}){let s=rect(x,y,w,h,{f:'rgba(255,255,255,.03)',s:MUT,sw:1.5,o:o.o==null?1:o.o});for(let r=1;r<h/18;r++){s+=line(x,y+r*18,x+w,y+r*18,{s:MUT,sw:1,o:(o.o==null?1:o.o)*0.5});}return s;}
+// a goal (soccer) at the left: posts and net
+const goal=(x,y,o={})=>path(`M${x} ${y+40} L${x} ${y} L${x+16} ${y} L${x+16} ${y+40}`,{s:o.c||FG,sw:3,o:o.o==null?1:o.o})+line(x+4,y+6,x+12,y+34,{s:BRD,sw:1,o:o.o==null?1:o.o})+line(x+12,y+6,x+4,y+34,{s:BRD,sw:1,o:o.o==null?1:o.o});
+// the z spectrum: a horizontal axis from -3 to +3 over [x, x+w]
+function zaxis(x,y,w,o={}){const a=o.o==null?1:o.o;let s=line(x,y,x+w,y,{s:MUT,sw:2,o:a});for(let z=-3;z<=3;z++){const px=x+(z+3)/6*w;s+=line(px,y-6,px,y+6,{s:MUT,sw:1.5,o:a});s+=txt(px,y+26,(z>0?'+':'')+z+(z?'σ':''),{a:'middle',sz:13,c:MUT,o:a});}return s;}
+// a gauge arc from the left (0) to the right (1)
+function gauge(cx,cy,r,u,o={}){const a=o.o==null?1:o.o;const arc=(u0,u1,st,sw)=>{const p0=Math.PI+Math.PI*u0,p1=Math.PI+Math.PI*u1;return path(`M${cx+r*Math.cos(p0)} ${cy+r*Math.sin(p0)} A${r} ${r} 0 ${(u1-u0)>.5?1:0} 1 ${cx+r*Math.cos(p1)} ${cy+r*Math.sin(p1)}`,{s:st,sw:sw||10,o:a});};let s=arc(0,1,'rgba(255,255,255,.08)',10)+arc(0,clamp(u,0.001,1),o.c||ACC,10);const p=Math.PI+Math.PI*clamp(u,0,1);s+=line(cx,cy,cx+(r-16)*Math.cos(p),cy+(r-16)*Math.sin(p),{s:FG,sw:3,o:a})+circ(cx,cy,5,{f:FG,o:a});return s;}
+
+function draw(t){
+  let s='';
+  // the two words, top-left, from the start
+  s += pill(200,100,'rigidity',{o:op(t,0.5,.5),w:120,c:ACC,s:ACC}); s += pill(340,100,'revenge',{o:op(t,0.5,.5),w:120,c:ACC,s:ACC});
+  // the gate: seven lanes at the bottom narrowing to two at the top (a plan view, traffic flows upward)
+  if (t>=36.6){ const a=op(t,36.6,.8); const gy=470, ty=160;
+    for (let i=0;i<7;i++){ const x0=380+i*64; const x1 = i<2 ? 380+i*64 : 444+ (i-2)*0; const tx = i<2 ? 380+i*64 : 444;
+      const vis = (i<2) ? a : op(t,72.9,.8)*a;
+      s += path(`M${x0} ${gy} L${x0} ${gy-70} L${tx} ${ty+120} L${tx} ${ty}`,{s: i<2?FG:MUT, sw: i<2?2:1.2, o: vis, dash: i<2?'':'4 4'});
+      if (t>=55.8) s += rect(x0-8,gy-6,16,12,{r:2,f:'rgba(255,255,255,.06)',s:MUT,o:a*op(t,55.8,.5)});
+    }
+    s += line(380+2*64-32, ty, 380+2*64-32, gy-70, {s:FG,sw:2,o:a});  // the right edge of lane two
+    s += lab(t,55.8,380,gy+28,'seven gates',{sz:13,c:MUT}); s += lab(t,59.6,380,ty-14,'two lanes',{sz:13,c:MUT});
+    s += lab(t,72.9,700,gy-40,'the five on the right merge in',{sz:13,c:MUT});
+  }
+  // Ken's car in the leftmost lane, moving up slowly; the truck behind, flashing, then around to the left
+  if (t>=82.0){ const a=op(t,82,.5); const ky = 440 - clamp((t-82)/110,0,1)*220; s += rect(370,ky-22,20,36,{r:5,f:'rgba(242,208,107,.25)',s:ACC,sw:2,o:a}); s += lab(t,88.4,300,ky,'me, 20 mph',{sz:13,c:ACC,a:'end'});
+    if (t>=104.6 && t<130.6){ const b=op(t,104.6,.5); const ty2 = ky+60 - clamp((t-104.6)/26,0,1)*20; s += rect(368,ty2,24,44,{r:4,f:'rgba(248,113,113,.2)',s:DN,sw:2,o:b}); if (t>=110.2 && Math.sin(t*9)>0) s += circ(380,ty2-4,5,{f:ACC,o:b}); s += lab(t,110.2,300,ty2+30,'truck: lights, horn',{sz:13,c:DN,a:'end'}); }
+    if (t>=130.6){ const u=pr(t,130.6,1.5); const px=lerp(380,330,Math.sin(u*Math.PI)) , py=lerp(ky+40,ky-70,u); s += rect(px-12,py,24,44,{r:4,f:'rgba(248,113,113,.2)',s:DN,sw:2,o:1}); s += lab(t,132.1,300,ky-80,'cuts me off',{sz:13,c:DN,a:'end'}); }
+  }
+  // the review, then the chimp and the release
+  if (t>=146.4){ const a=op(t,146.4,.6); s += card(760,300,290,74,{o:a}); s += txt(780,330,'was I unreasonable?',{sz:15,c:FG,o:a}); s += lab(t,151.9,780,356,'no. I let that go.',{sz:14,c:OK}); }
+  if (t>=172.5){ const a=op(t,172.5,.6); s += monkey(960,330,{o:a}); s += lab(t,172.5,960,372,'one idiot away',{sz:14,c:ACC,a:'middle'}); s += lab(t,185.1,960,394,'here it comes · let it go',{sz:13,c:MUT,a:'middle'}); }
+  if (t>=189.0) s += pill(600,500,'trading is exactly like that',{sz:15,c:ACC,s:ACC,o:op(t,189,.5),w:280});
+  return s;
+}
+
+window.renderFrame = function (t) {
+  t = clamp(t, 0, ANIM_DURATION);
+  let cap = '', sub = '';
+  for (const b of BEATS) if (t >= b[0]) { cap = b[1]; sub = b[2] || ''; }
+  $('cap').innerHTML = cap; $('sub').textContent = sub;
+  $('svg').innerHTML = WRAP[0] + draw(t) + WRAP[1];
+  const f = $('fade');
+  f.style.opacity = t < 0.5 ? 1 - t / 0.5 : (ANIM_DURATION - t < 0.6 ? 1 - (ANIM_DURATION - t) / 0.6 : 0);
+};
+renderFrame(0);
+</script>
+</body>
+</html>

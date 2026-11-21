@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>s16a · the daily gauge and the art critic</title>
+<style>
+  :root { --bg:#030507; --fg:#E1EEF5; --muted:#8fa3ad; --border:rgba(56,225,255,0.14); --accent:#F2D06B;
+          --ok:#4ade80; --dn:#f87171; --card:#0a1016; --blue:#7baad4; }
+  html, body { margin:0; background:var(--bg); overflow:hidden; }
+  #stage { position:relative; width:1280px; height:720px; background:var(--bg); color:var(--fg);
+           font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; overflow:hidden; }
+  #cap { position:absolute; left:60px; right:60px; top:30px; font-size:32px; font-weight:600; letter-spacing:-.01em; line-height:1.15; }
+  #cap em { font-style:normal; color:var(--accent); }
+  #sub { position:absolute; left:60px; width:1160px; top:648px; font-size:20px; color:var(--muted); line-height:1.4; }
+  #scene { position:absolute; left:60px; top:112px; width:1160px; height:518px; border:1px solid var(--border);
+           border-radius:10px; background:var(--card); overflow:hidden; }
+  #svg { position:absolute; inset:0; }
+  #fade { position:absolute; inset:0; background:var(--bg); pointer-events:none; opacity:0; }
+  /* the picture-in-picture corner: build_v2 composites Ken's camera tile here (PIP_W/X/Y); the cutroom shows this placeholder */
+  #pip { position:absolute; left:950px; top:22px; width:300px; height:169px; border:1px dashed rgba(56,225,255,0.35); border-radius:4px;
+         display:none; color:var(--muted); font-size:13px; text-align:center; line-height:169px; }
+  .pip #pip { display:block; } .pip #cap { right:360px; font-size:29px; }
+  text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; fill:#E1EEF5; }
+  .mono { font-family:ui-monospace,Menlo,Consolas,monospace; }
+  #third { display:none; }
+</style>
+</head>
+<body>
+<div id="stage" class="pip">
+  <div id="cap"></div>
+  <div id="pip">Ken on camera, composited at render</div>
+  <div id="scene"><svg id="svg" width="1160" height="530" viewBox="0 0 1160 530"></svg></div>
+  <div id="third"></div>
+  <div id="sub"></div>
+  <div id="fade"></div>
+</div>
+<script>
+const BUILD = 's16a-3';
+console.log('[s16a] build', BUILD);
+// Overdub twin of s16: Ken's audio apk 4707.0→4787.0; t is seconds after the in-point.
+// Beat times read from the VTT cues on 2026-11-21 (tools/cutroom/disciplined-operator-v2/transcript-apk.json).
+window.ANIM_DURATION = 80.0;
+const ACC='#F2D06B', FG='#E1EEF5', MUT='#8fa3ad', OK='#4ade80', DN='#f87171', BLUE='#7baad4', BRD='rgba(56,225,255,.22)', CARD='#0a1016', TXS=1, WRAP=['',''];
+const W=1160, H=530;
+const $ = id => document.getElementById(id);
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const ease=u=>{u=clamp(u,0,1);return u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;};
+const lerp=(a,b,u)=>a+(b-a)*u;
+const pr=(t,t0,d)=>ease((t-t0)/(d||0.6));          // eased progress 0..1 from t0 over d seconds
+const on=(t,t0)=>t>=t0;
+const op=(t,t0,d)=>clamp((t-t0)/(d||0.5),0,1);      // linear opacity ramp
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const txt=(x,y,s,o={})=>`<text x="${x}" y="${y}" font-size="${(o.sz||20)*TXS}" fill="${o.c||FG}" opacity="${o.o==null?1:o.o}" text-anchor="${o.a||'start'}" font-weight="${o.w||400}" class="${o.cls||''}" ${o.extra||''}>${esc(s)}</text>`;
+const rect=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.r==null?6:o.r}" fill="${o.f||'none'}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}" ${o.extra||''}/>`;
+const circ=(x,y,r,o={})=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${o.f||FG}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}"/>`;
+const line=(x1,y1,x2,y2,o={})=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${o.s||MUT}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" ${o.dash?`stroke-dasharray="${o.dash}"`:''} stroke-linecap="round"/>`;
+const path=(d,o={})=>`<path d="${d}" fill="${o.f||'none'}" stroke="${o.s||FG}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" stroke-linecap="round" stroke-linejoin="round" ${o.dash?`stroke-dasharray="${o.dash}"`:''}/>`;
+const arrow=(x1,y1,x2,y2,o={})=>{const a=Math.atan2(y2-y1,x2-x1),h=10;return line(x1,y1,x2,y2,o)+path(`M${x2} ${y2} L${x2-h*Math.cos(a-0.5)} ${y2-h*Math.sin(a-0.5)} M${x2} ${y2} L${x2-h*Math.cos(a+0.5)} ${y2-h*Math.sin(a+0.5)}`,{s:o.s||MUT,sw:o.sw||2,o:o.o});};
+// a labelled box that grows in from t0
+const box=(t,t0,x,y,w,h,label,o={})=>{const u=pr(t,t0,0.5);if(u<=0)return '';const ww=w*u,hh=h;return rect(x+(w-ww)/2,y,ww,hh,{s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',sw:o.sw||1.5,o:u})+(u>.6?txt(x+w/2,y+h/2+(o.sz||20)/3,label,{a:'middle',sz:o.sz||20,c:o.c||FG,o:op(t,t0+.3,.3),w:o.w||500}):'');};
+// deterministic pseudo-random
+function rng(seed){let s=seed*9301+49297;return()=>{s=(s*9301+49297)%233280;return s/233280;};}
+// a herd of dots in a region; drift is a slow deterministic wander
+function herd(n,seed,x,y,w,h){const r=rng(seed);const pts=[];for(let i=0;i<n;i++)pts.push({x:x+r()*w,y:y+r()*h,p:r()*6.28,q:r()*6.28});return pts;}
+const wander=(p,t,amp)=>[p.x+Math.sin(t*0.9+p.p)*amp,p.y+Math.cos(t*0.7+p.q)*amp];
+// typewriter: the first k chars of s by time
+const type=(s,t,t0,cps)=>s.slice(0,Math.max(0,Math.floor((t-t0)*(cps||28))));
+// a list that reveals one row per step seconds from t0
+function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
+
+const BEATS = [[0.8, "Use that as your <em>daily gauge</em>", ""], [4.5, "and then calibrate your feeling", ""], [7.8, "make that your <em>closure statement</em> for each day: make a mark how you feel you did", ""], [17.8, "now you're acting as an <em>art critic</em>", ""], [19.8, "your own master craftsman, judging the <em>artistic quality</em> of your work that day", ""], [32.0, "as an artist: how satisfied am I? <em>That's a feeling</em>", ""], [40.4, "a word that begins with ae: it's the <em>aesthetic judgment</em>", ""], [48.4, "How does it feel? Because how you feel about it", ""], [54.8, "is the central question for <em>long-term stability</em>", ""], [60.3, "your long-term commitment to your marriage, to your life, to your children, to your profession", ""], [69.4, "to your <em>trading practice</em>", ""], [72.1, "how you feel about yourself is your own measure of <em>self-satisfaction</em>", ""]];
+
+const person=(x,y,o={})=>circ(x,y-14,9,{f:'none',s:o.c||FG,sw:2,o:o.o==null?1:o.o})+path(`M${x-16} ${y+22} C${x-16} ${y} ${x+16} ${y} ${x+16} ${y+22}`,{s:o.c||FG,sw:2,o:o.o==null?1:o.o});
+const pill=(x,y,s,o={})=>{const w=(o.w||s.length*10+22);return rect(x-w/2,y-15,w,30,{r:15,s:o.s||BRD,f:o.f||'rgba(255,255,255,.03)',o:o.o==null?1:o.o})+txt(x,y+6,s,{a:'middle',sz:o.sz||15,c:o.c||FG,o:o.o==null?1:o.o,w:o.wt||500});};
+const card=(x,y,w,h,o={})=>rect(x,y,w,h,{r:10,s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',o:o.o==null?1:o.o});
+const lab=(t,t0,x,y,s,o={})=>{const a=op(t,t0,o.d||.5);return a<=0?'':txt(x,y,s,{...o,o:a*(o.o==null?1:o.o)});};
+const monkey=(x,y,o={})=>circ(x,y,16,{f:'none',s:o.c||ACC,sw:2,o:o.o==null?1:o.o})+circ(x-16,y-4,6,{f:'none',s:o.c||ACC,sw:2,o:o.o==null?1:o.o})+circ(x+16,y-4,6,{f:'none',s:o.c||ACC,sw:2,o:o.o==null?1:o.o})+path(`M${x-7} ${y+5} Q${x} ${y+12} ${x+7} ${y+5}`,{s:o.c||ACC,sw:2,o:o.o==null?1:o.o})+circ(x-5,y-3,2,{f:o.c||ACC,o:o.o==null?1:o.o})+circ(x+5,y-3,2,{f:o.c||ACC,o:o.o==null?1:o.o});
+// a car seen from the side, nose to the right; (x,y) is the ground under its centre
+const car=(x,y,o={})=>path(`M${x-44} ${y-10} L${x-40} ${y-26} L${x-14} ${y-30} L${x-2} ${y-44} L${x+26} ${y-44} L${x+40} ${y-28} L${x+46} ${y-10} Z`,{s:o.c||FG,sw:2,f:o.f||'rgba(255,255,255,.04)',o:o.o==null?1:o.o})+circ(x-26,y-8,8,{f:'none',s:o.c||FG,sw:2,o:o.o==null?1:o.o})+circ(x+26,y-8,8,{f:'none',s:o.c||FG,sw:2,o:o.o==null?1:o.o});
+// a wall of bricks
+function wall(x,y,w,h,o={}){let s=rect(x,y,w,h,{f:'rgba(255,255,255,.03)',s:MUT,sw:1.5,o:o.o==null?1:o.o});for(let r=1;r<h/18;r++){s+=line(x,y+r*18,x+w,y+r*18,{s:MUT,sw:1,o:(o.o==null?1:o.o)*0.5});}return s;}
+// a goal (soccer) at the left: posts and net
+const goal=(x,y,o={})=>path(`M${x} ${y+40} L${x} ${y} L${x+16} ${y} L${x+16} ${y+40}`,{s:o.c||FG,sw:3,o:o.o==null?1:o.o})+line(x+4,y+6,x+12,y+34,{s:BRD,sw:1,o:o.o==null?1:o.o})+line(x+12,y+6,x+4,y+34,{s:BRD,sw:1,o:o.o==null?1:o.o});
+// the z spectrum: a horizontal axis from -3 to +3 over [x, x+w]
+function zaxis(x,y,w,o={}){const a=o.o==null?1:o.o;let s=line(x,y,x+w,y,{s:MUT,sw:2,o:a});for(let z=-3;z<=3;z++){const px=x+(z+3)/6*w;s+=line(px,y-6,px,y+6,{s:MUT,sw:1.5,o:a});s+=txt(px,y+26,(z>0?'+':'')+z+(z?'σ':''),{a:'middle',sz:13,c:MUT,o:a});}return s;}
+// a gauge arc from the left (0) to the right (1)
+function gauge(cx,cy,r,u,o={}){const a=o.o==null?1:o.o;const arc=(u0,u1,st,sw)=>{const p0=Math.PI+Math.PI*u0,p1=Math.PI+Math.PI*u1;return path(`M${cx+r*Math.cos(p0)} ${cy+r*Math.sin(p0)} A${r} ${r} 0 ${(u1-u0)>.5?1:0} 1 ${cx+r*Math.cos(p1)} ${cy+r*Math.sin(p1)}`,{s:st,sw:sw||10,o:a});};let s=arc(0,1,'rgba(255,255,255,.08)',10)+arc(0,clamp(u,0.001,1),o.c||ACC,10);const p=Math.PI+Math.PI*clamp(u,0,1);s+=line(cx,cy,cx+(r-16)*Math.cos(p),cy+(r-16)*Math.sin(p),{s:FG,sw:3,o:a})+circ(cx,cy,5,{f:FG,o:a});return s;}
+
+function draw(t){
+  let s='';
+  // the Z scale as a daily gauge, a mark landing on it each day
+  const X=(z)=>140+(z+3)/6*520; const y=200;
+  s += zaxis(140,y,520,{o:op(t,0.8,.5)});
+  const marks=[-0.4,0.8,1.3,-1.2,0.5,1.6,0.2];
+  marks.forEach((z,i)=>{ const a=op(t,7.8+i*1.2,.4); if (a<=0) return; s += line(X(z),y-30-i*4,X(z),y-10,{s:ACC,sw:3,o:a}); });
+  s += lab(t,7.8,140,120,'a mark a day: how did I do?',{sz:14,c:ACC});
+  // the easel: the critic in front of his own work
+  if (t>=17.8){ const a=op(t,17.8,.6); s += rect(760,110,220,160,{r:4,f:'rgba(255,255,255,.03)',s:FG,sw:2,o:a}); s += line(770,280,760,330,{s:MUT,sw:2,o:a}); s += line(970,280,980,330,{s:MUT,sw:2,o:a}); s += person(700,320,{o:a}); s += txt(700,360,'the art critic',{a:'middle',sz:13,c:FG,o:a});
+    const r=rng(12); let d='M780 240 '; for(let i=1;i<10;i++) d+='L'+(780+i*20)+' '+(240-r()*90)+' '; s += path(d,{s:ACC,sw:2,o:a}); s += txt(870,296,'today\'s work',{a:'middle',sz:12,c:MUT,o:a}); }
+  if (t>=32.0) s += lab(t,32.0,870,330+22,'how satisfied am I?',{sz:14,c:ACC,a:'middle'});
+  if (t>=40.4) s += pill(870,392,'the aesthetic judgment',{sz:14,c:FG,s:FG,o:op(t,40.4,.5),w:210});
+  // the long-term commitments
+  if (t>=54.8){ const a=op(t,54.8,.6); s += txt(140,300,'the central question for long-term stability',{sz:15,c:FG,o:a}); }
+  if (t>=60.3) s += list(t,60.3,2.2,['marriage','life','children','profession','trading practice'],160,336,{sz:15,lh:26,c:MUT});
+  if (t>=69.4){ const a=op(t,69.4,.5); s += txt(300,336+4*26,'◀',{sz:14,c:ACC,o:a}); }
+  if (t>=72.1) s += lab(t,72.1,560,470,'your own measure of self-satisfaction',{sz:14,c:ACC,a:'middle'});
+  return s;
+}
+
+window.renderFrame = function (t) {
+  t = clamp(t, 0, ANIM_DURATION);
+  let cap = '', sub = '';
+  for (const b of BEATS) if (t >= b[0]) { cap = b[1]; sub = b[2] || ''; }
+  $('cap').innerHTML = cap; $('sub').textContent = sub;
+  $('svg').innerHTML = WRAP[0] + draw(t) + WRAP[1];
+  const f = $('fade');
+  f.style.opacity = t < 0.5 ? 1 - t / 0.5 : (ANIM_DURATION - t < 0.6 ? 1 - (ANIM_DURATION - t) / 0.6 : 0);
+};
+renderFrame(0);
+</script>
+</body>
+</html>

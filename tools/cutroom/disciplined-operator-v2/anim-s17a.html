@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>s17a · the heart does not vary</title>
+<style>
+  :root { --bg:#030507; --fg:#E1EEF5; --muted:#8fa3ad; --border:rgba(56,225,255,0.14); --accent:#F2D06B;
+          --ok:#4ade80; --dn:#f87171; --card:#0a1016; --blue:#7baad4; }
+  html, body { margin:0; background:var(--bg); overflow:hidden; }
+  #stage { position:relative; width:1280px; height:720px; background:var(--bg); color:var(--fg);
+           font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; overflow:hidden; }
+  #cap { position:absolute; left:60px; right:60px; top:30px; font-size:32px; font-weight:600; letter-spacing:-.01em; line-height:1.15; }
+  #cap em { font-style:normal; color:var(--accent); }
+  #sub { position:absolute; left:60px; width:1160px; top:648px; font-size:20px; color:var(--muted); line-height:1.4; }
+  #scene { position:absolute; left:60px; top:112px; width:1160px; height:518px; border:1px solid var(--border);
+           border-radius:10px; background:var(--card); overflow:hidden; }
+  #svg { position:absolute; inset:0; }
+  #fade { position:absolute; inset:0; background:var(--bg); pointer-events:none; opacity:0; }
+  /* the picture-in-picture corner: build_v2 composites Ken's camera tile here (PIP_W/X/Y); the cutroom shows this placeholder */
+  #pip { position:absolute; left:950px; top:22px; width:300px; height:169px; border:1px dashed rgba(56,225,255,0.35); border-radius:4px;
+         display:none; color:var(--muted); font-size:13px; text-align:center; line-height:169px; }
+  .pip #pip { display:block; } .pip #cap { right:360px; font-size:29px; }
+  text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; fill:#E1EEF5; }
+  .mono { font-family:ui-monospace,Menlo,Consolas,monospace; }
+  #third { display:none; }
+</style>
+</head>
+<body>
+<div id="stage" class="pip">
+  <div id="cap"></div>
+  <div id="pip">Ken on camera, composited at render</div>
+  <div id="scene"><svg id="svg" width="1160" height="530" viewBox="0 0 1160 530"></svg></div>
+  <div id="third"></div>
+  <div id="sub"></div>
+  <div id="fade"></div>
+</div>
+<script>
+const BUILD = 's17a-3';
+console.log('[s17a] build', BUILD);
+// Overdub twin of s17: Ken's audio apk 4787.0→4888.0; t is seconds after the in-point.
+// Beat times read from the VTT cues on 2026-11-21 (tools/cutroom/disciplined-operator-v2/transcript-apk.json).
+window.ANIM_DURATION = 101.0;
+const ACC='#F2D06B', FG='#E1EEF5', MUT='#8fa3ad', OK='#4ade80', DN='#f87171', BLUE='#7baad4', BRD='rgba(56,225,255,.22)', CARD='#0a1016', TXS=1, WRAP=['',''];
+const W=1160, H=530;
+const $ = id => document.getElementById(id);
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const ease=u=>{u=clamp(u,0,1);return u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;};
+const lerp=(a,b,u)=>a+(b-a)*u;
+const pr=(t,t0,d)=>ease((t-t0)/(d||0.6));          // eased progress 0..1 from t0 over d seconds
+const on=(t,t0)=>t>=t0;
+const op=(t,t0,d)=>clamp((t-t0)/(d||0.5),0,1);      // linear opacity ramp
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const txt=(x,y,s,o={})=>`<text x="${x}" y="${y}" font-size="${(o.sz||20)*TXS}" fill="${o.c||FG}" opacity="${o.o==null?1:o.o}" text-anchor="${o.a||'start'}" font-weight="${o.w||400}" class="${o.cls||''}" ${o.extra||''}>${esc(s)}</text>`;
+const rect=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.r==null?6:o.r}" fill="${o.f||'none'}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}" ${o.extra||''}/>`;
+const circ=(x,y,r,o={})=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${o.f||FG}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}"/>`;
+const line=(x1,y1,x2,y2,o={})=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${o.s||MUT}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" ${o.dash?`stroke-dasharray="${o.dash}"`:''} stroke-linecap="round"/>`;
+const path=(d,o={})=>`<path d="${d}" fill="${o.f||'none'}" stroke="${o.s||FG}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" stroke-linecap="round" stroke-linejoin="round" ${o.dash?`stroke-dasharray="${o.dash}"`:''}/>`;
+const arrow=(x1,y1,x2,y2,o={})=>{const a=Math.atan2(y2-y1,x2-x1),h=10;return line(x1,y1,x2,y2,o)+path(`M${x2} ${y2} L${x2-h*Math.cos(a-0.5)} ${y2-h*Math.sin(a-0.5)} M${x2} ${y2} L${x2-h*Math.cos(a+0.5)} ${y2-h*Math.sin(a+0.5)}`,{s:o.s||MUT,sw:o.sw||2,o:o.o});};
+// a labelled box that grows in from t0
+const box=(t,t0,x,y,w,h,label,o={})=>{const u=pr(t,t0,0.5);if(u<=0)return '';const ww=w*u,hh=h;return rect(x+(w-ww)/2,y,ww,hh,{s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',sw:o.sw||1.5,o:u})+(u>.6?txt(x+w/2,y+h/2+(o.sz||20)/3,label,{a:'middle',sz:o.sz||20,c:o.c||FG,o:op(t,t0+.3,.3),w:o.w||500}):'');};
+// deterministic pseudo-random
+function rng(seed){let s=seed*9301+49297;return()=>{s=(s*9301+49297)%233280;return s/233280;};}
+// a herd of dots in a region; drift is a slow deterministic wander
+function herd(n,seed,x,y,w,h){const r=rng(seed);const pts=[];for(let i=0;i<n;i++)pts.push({x:x+r()*w,y:y+r()*h,p:r()*6.28,q:r()*6.28});return pts;}
+const wander=(p,t,amp)=>[p.x+Math.sin(t*0.9+p.p)*amp,p.y+Math.cos(t*0.7+p.q)*amp];
+// typewriter: the first k chars of s by time
+const type=(s,t,t0,cps)=>s.slice(0,Math.max(0,Math.floor((t-t0)*(cps||28))));
+// a list that reveals one row per step seconds from t0
+function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
+
+const BEATS = [[2.4, "that's an <em>aesthetic judgment</em>", ""], [10.0, "in my heart, I <em>think with my feelings</em>", ""], [13.8, "my heart looks at all the thinking that my head did, and how do I feel about the quality of that", ""], [22.0, "that's what you carry with you, because your <em>thoughts come and go</em>", ""], [30.4, "your thoughts get affected by the weather", ""], [35.6, "your <em>heart does not vary</em>", ""], [39.1, "because your heart is connected to your <em>values and identity and purpose</em>", ""], [44.3, "and to all the work your <em>ancestors</em> did to put you in the current position", ""], [53.8, "how you feel about what you've been doing professionally", ""], [59.7, "is a measure of your <em>emotional bank account</em>", ""], [64.0, "your emotional resilience, your sense of confidence and correctness and persistence", ""], [73.7, "the difference between <em>blind stubbornness</em> and a <em>justified feeling</em> about your progress", ""], [90.3, "check in with that at the end of the day and <em>make that mark</em>", ""], [94.9, "and then over time, compare how you're actually doing", ""]];
+
+const person=(x,y,o={})=>circ(x,y-14,9,{f:'none',s:o.c||FG,sw:2,o:o.o==null?1:o.o})+path(`M${x-16} ${y+22} C${x-16} ${y} ${x+16} ${y} ${x+16} ${y+22}`,{s:o.c||FG,sw:2,o:o.o==null?1:o.o});
+const pill=(x,y,s,o={})=>{const w=(o.w||s.length*10+22);return rect(x-w/2,y-15,w,30,{r:15,s:o.s||BRD,f:o.f||'rgba(255,255,255,.03)',o:o.o==null?1:o.o})+txt(x,y+6,s,{a:'middle',sz:o.sz||15,c:o.c||FG,o:o.o==null?1:o.o,w:o.wt||500});};
+const card=(x,y,w,h,o={})=>rect(x,y,w,h,{r:10,s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',o:o.o==null?1:o.o});
+const lab=(t,t0,x,y,s,o={})=>{const a=op(t,t0,o.d||.5);return a<=0?'':txt(x,y,s,{...o,o:a*(o.o==null?1:o.o)});};
+const monkey=(x,y,o={})=>circ(x,y,16,{f:'none',s:o.c||ACC,sw:2,o:o.o==null?1:o.o})+circ(x-16,y-4,6,{f:'none',s:o.c||ACC,sw:2,o:o.o==null?1:o.o})+circ(x+16,y-4,6,{f:'none',s:o.c||ACC,sw:2,o:o.o==null?1:o.o})+path(`M${x-7} ${y+5} Q${x} ${y+12} ${x+7} ${y+5}`,{s:o.c||ACC,sw:2,o:o.o==null?1:o.o})+circ(x-5,y-3,2,{f:o.c||ACC,o:o.o==null?1:o.o})+circ(x+5,y-3,2,{f:o.c||ACC,o:o.o==null?1:o.o});
+// a car seen from the side, nose to the right; (x,y) is the ground under its centre
+const car=(x,y,o={})=>path(`M${x-44} ${y-10} L${x-40} ${y-26} L${x-14} ${y-30} L${x-2} ${y-44} L${x+26} ${y-44} L${x+40} ${y-28} L${x+46} ${y-10} Z`,{s:o.c||FG,sw:2,f:o.f||'rgba(255,255,255,.04)',o:o.o==null?1:o.o})+circ(x-26,y-8,8,{f:'none',s:o.c||FG,sw:2,o:o.o==null?1:o.o})+circ(x+26,y-8,8,{f:'none',s:o.c||FG,sw:2,o:o.o==null?1:o.o});
+// a wall of bricks
+function wall(x,y,w,h,o={}){let s=rect(x,y,w,h,{f:'rgba(255,255,255,.03)',s:MUT,sw:1.5,o:o.o==null?1:o.o});for(let r=1;r<h/18;r++){s+=line(x,y+r*18,x+w,y+r*18,{s:MUT,sw:1,o:(o.o==null?1:o.o)*0.5});}return s;}
+// a goal (soccer) at the left: posts and net
+const goal=(x,y,o={})=>path(`M${x} ${y+40} L${x} ${y} L${x+16} ${y} L${x+16} ${y+40}`,{s:o.c||FG,sw:3,o:o.o==null?1:o.o})+line(x+4,y+6,x+12,y+34,{s:BRD,sw:1,o:o.o==null?1:o.o})+line(x+12,y+6,x+4,y+34,{s:BRD,sw:1,o:o.o==null?1:o.o});
+// the z spectrum: a horizontal axis from -3 to +3 over [x, x+w]
+function zaxis(x,y,w,o={}){const a=o.o==null?1:o.o;let s=line(x,y,x+w,y,{s:MUT,sw:2,o:a});for(let z=-3;z<=3;z++){const px=x+(z+3)/6*w;s+=line(px,y-6,px,y+6,{s:MUT,sw:1.5,o:a});s+=txt(px,y+26,(z>0?'+':'')+z+(z?'σ':''),{a:'middle',sz:13,c:MUT,o:a});}return s;}
+// a gauge arc from the left (0) to the right (1)
+function gauge(cx,cy,r,u,o={}){const a=o.o==null?1:o.o;const arc=(u0,u1,st,sw)=>{const p0=Math.PI+Math.PI*u0,p1=Math.PI+Math.PI*u1;return path(`M${cx+r*Math.cos(p0)} ${cy+r*Math.sin(p0)} A${r} ${r} 0 ${(u1-u0)>.5?1:0} 1 ${cx+r*Math.cos(p1)} ${cy+r*Math.sin(p1)}`,{s:st,sw:sw||10,o:a});};let s=arc(0,1,'rgba(255,255,255,.08)',10)+arc(0,clamp(u,0.001,1),o.c||ACC,10);const p=Math.PI+Math.PI*clamp(u,0,1);s+=line(cx,cy,cx+(r-16)*Math.cos(p),cy+(r-16)*Math.sin(p),{s:FG,sw:3,o:a})+circ(cx,cy,5,{f:FG,o:a});return s;}
+
+function draw(t){
+  let s='';
+  // the head: a line that wanders with the weather; the heart: a line that holds
+  const x0=120, w=600;
+  s += lab(t,13.8,x0,120,'the head: the thinking',{sz:14,c:MUT});
+  if (t>=13.8){ const a=op(t,13.8,.5); let d=''; const n=Math.floor(clamp((t-13.8)/20,0,1)*60); for(let i=0;i<=n;i++){ const x=x0+i*10; d+=(i?'L':'M')+x+' '+(170+Math.sin(i*0.5)*22+Math.sin(i*1.7)*10)+' '; } if (n>0) s += path(d,{s:MUT,sw:2,o:a}); }
+  if (t>=22.0) s += lab(t,22.0,x0+300,120,'come and go',{sz:13,c:MUT});
+  if (t>=30.4){ const a=op(t,30.4,.5); s += txt(x0+470,120,'the weather',{sz:13,c:MUT,o:a}); for(let i=0;i<5;i++) s += line(x0+480+i*12,130,x0+474+i*12,144,{s:BLUE,sw:1.5,o:a}); }
+  s += lab(t,10.0,x0,270,'the heart: the feeling',{sz:14,c:ACC});
+  if (t>=10.0){ const a=op(t,10,.5); const n=clamp((t-10)/20,0,1); s += line(x0,310,x0+w*n,310,{s:ACC,sw:3,o:a}); }
+  if (t>=35.6) s += lab(t,35.6,x0+300,270,'does not vary',{sz:13,c:ACC});
+  if (t>=39.1){ const a=op(t,39.1,.6); ['values','identity','purpose'].forEach((wd,i)=>{ const b=op(t,39.1+i*1.0,.4); s += line(x0+120+i*120,316,x0+120+i*120,350,{s:BRD,sw:1,o:b}); s += txt(x0+120+i*120,368,wd,{a:'middle',sz:13,c:FG,o:b}); }); }
+  if (t>=44.3){ const a=op(t,44.3,.6); s += line(x0+480,316,x0+480,350,{s:BRD,sw:1,o:a}); s += txt(x0+480,368,'the ancestors',{a:'middle',sz:13,c:FG,o:a}); }
+  // the emotional bank account: a meter filled by daily marks
+  if (t>=59.7){ const a=op(t,59.7,.6); s += rect(800,140,200,220,{r:8,s:FG,sw:2,f:'none',o:a}); const lvl=lerp(0.2,0.7,pr(t,59.7,30)); s += rect(804,144+216*(1-lvl),192,216*lvl,{r:5,f:'rgba(242,208,107,.25)',o:a}); s += txt(900,385,'emotional bank account',{a:'middle',sz:13,c:ACC,o:a}); }
+  if (t>=64.0) s += list(t,64.0,2.5,['resilience','confidence','correctness','persistence'],700,305,{sz:13,lh:20,c:MUT});
+  if (t>=73.7){ const a=op(t,73.7,.6); s += pill(300,440,'blind stubbornness',{sz:14,c:DN,s:DN,o:a,w:180}); s += txt(430,445,'vs',{a:'middle',sz:13,c:MUT,o:a}); s += pill(580,440,'a justified feeling',{sz:14,c:OK,s:OK,o:a,w:190}); }
+  if (t>=90.3) s += lab(t,90.3,900,440,'make that mark · compare over time',{sz:13,c:ACC,a:'middle'});
+  return s;
+}
+
+window.renderFrame = function (t) {
+  t = clamp(t, 0, ANIM_DURATION);
+  let cap = '', sub = '';
+  for (const b of BEATS) if (t >= b[0]) { cap = b[1]; sub = b[2] || ''; }
+  $('cap').innerHTML = cap; $('sub').textContent = sub;
+  $('svg').innerHTML = WRAP[0] + draw(t) + WRAP[1];
+  const f = $('fade');
+  f.style.opacity = t < 0.5 ? 1 - t / 0.5 : (ANIM_DURATION - t < 0.6 ? 1 - (ANIM_DURATION - t) / 0.6 : 0);
+};
+renderFrame(0);
+</script>
+</body>
+</html>
