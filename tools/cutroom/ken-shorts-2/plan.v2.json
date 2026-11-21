@@ -1,0 +1,580 @@
+{
+  "schema": "coursecraft-plan-v2",
+  "course": "ken-shorts-2",
+  "cutroom": "ken-shorts-2",
+  "revision": 1,
+  "revised": "2026-11-21",
+  "status": "DRAFT rev1: a showcase of the learning videos, twelve moments; eight with the store courses' animated twins, four raw coaching cuts with an animation brief; the owner edits in the cutroom",
+  "title": "Ken Long, from the learning videos",
+  "topic_class": "shorts",
+  "store_sku": null,
+  "replaces": null,
+  "notes": "2026-11-21 (owner: 'a second cutroom with his clips you think are worthwhile, some we could animate with his picture in picture or just audio overdub; showcase the learning videos'). Eight bites from the three ink-style store courses (Mental Model 1 and 2, Swing Trading Logic), each a cut (off) with the parent's animated twin (on) started at the bite's offset, so the drawings and captions are the ones already approved; Ken's tile rides on the twins whose source has a crop (t4n, apk, b9h). Four raw coaching moments (a student's RL10 breakthrough, the kettlebells, calculating R, the harsh winter) play as cuts with an animation brief on a twin that is off until anim-overdub draws it. The desk-style Intraday Decision Tree courses are left out of this build because one clip renders in one style; a desk showcase (the STOD lessons) is its own clip. Two more sessions join at rev 2: bar-by-bar ('where would you get long, 1, 2 or 3'; captions refused with HTTP 429, retry queued) and the Hougaard press gut check (still downloading). Transitions by rule (cutroom-24).",
+  "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/ken-shorts-2/",
+  "sources": [
+    {
+      "id": "t4n",
+      "label": "most-important-edge 2022-11-06 (Ch1 brain)",
+      "file": "youtube-t4NkztDo_tc-most-important-edge.mp4",
+      "url": "https://www.youtube.com/watch?v=t4NkztDo_tc",
+      "proxy": "youtube-t4NkztDo_tc-most-important-edge.proxy.mp4",
+      "pip": {
+        "crop": "iw/3:ih/3:iw/3:0",
+        "note": "Zoom gallery, Ken's tile is top-middle for the whole session (checked at 10,60,380,440,500,620,870,990 s)"
+      }
+    },
+    {
+      "id": "apk",
+      "label": "really-really-good (Ch1 + Ch1b)",
+      "file": "youtube-apk9GWC17Zw-really-really-good.mp4",
+      "proxy": "youtube-apk9GWC17Zw-really-really-good.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=apk9GWC17Zw",
+      "pip": {
+        "crop": "iw*0.455:ih*0.454:iw*0.539:ih*0.28",
+        "note": "two-up Zoom gallery, Ken's tile on the right for the whole session; a 16:9 window on his tile (checked at 320, 350, 380, 900, 940, 1160, 1240, 1400, 1480 s)"
+      }
+    },
+    {
+      "id": "keu",
+      "label": "perf-review-market-relationship (Ch3 teeter-totter)",
+      "file": "youtube-keUjMJcneCM-perf-review-market-relationship.mp4",
+      "proxy": "youtube-keUjMJcneCM-perf-review-market-relationship.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=keUjMJcneCM"
+    },
+    {
+      "id": "src",
+      "label": "2022-10-01 weekend swing patterns podcast (98 min)",
+      "file": "youtube-rmfIYAVNQOA-2022-10-01-weekend-swing-patterns.mp4",
+      "proxy": "youtube-rmfIYAVNQOA-2022-10-01-weekend-swing-patterns.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=rmfIYAVNQOA"
+    },
+    {
+      "id": "kma",
+      "label": "intraday-tactics (Ch4 lions)",
+      "file": "youtube-KMa-sBc_3gg-intraday-tactics.mp4",
+      "proxy": "youtube-KMa-sBc_3gg-intraday-tactics.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=KMa-sBc_3gg"
+    },
+    {
+      "id": "rjg",
+      "label": "creativity-202 review, Celia (Ch3)",
+      "file": "youtube-rJg6jv24s20-creativity-202-review.mp4",
+      "url": "https://www.youtube.com/watch?v=rJg6jv24s20",
+      "proxy": "youtube-rJg6jv24s20-creativity-202-review.proxy.mp4"
+    },
+    {
+      "id": "xvc",
+      "label": "SGC intro to trading, \"3 hours of gold\" (cohort 6 intro overview)",
+      "file": "youtube-XvcsfWFFW20-cohort-6-intro-overview.mp4",
+      "proxy": "youtube-XvcsfWFFW20-cohort-6-intro-overview.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=XvcsfWFFW20"
+    },
+    {
+      "id": "b9h",
+      "label": "coaching-tom-hardison (Ch3 Tom's chimp)",
+      "file": "youtube-B9HVuTtPVqM-coaching-tom-hardison.mp4",
+      "proxy": "youtube-B9HVuTtPVqM-coaching-tom-hardison.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=B9HVuTtPVqM",
+      "pip": {
+        "crop": "iw*0.418:ih*0.418:iw*0.5406:ih*0.2917",
+        "note": "two tiles, Ken on the right; a 16:9 window on his tile (checked at 370,420,455 s)"
+      }
+    },
+    {
+      "id": "rdg",
+      "label": "Calculating R with the Hougaard press (V6)",
+      "file": "youtube--RDgHX2DovE-calculating-r-hougaard.mp4",
+      "proxy": "youtube--RDgHX2DovE-calculating-r-hougaard.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=-RDgHX2DovE"
+    },
+    {
+      "id": "qvo",
+      "label": "Collapsing dragon deep dive (V3, SGC May 2024)",
+      "file": "youtube-qVoBZizGQR0-collapsing-dragon-deep-dive.mp4",
+      "proxy": "youtube-qVoBZizGQR0-collapsing-dragon-deep-dive.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=qVoBZizGQR0"
+    }
+  ],
+  "voices": [
+    {
+      "id": "ava",
+      "label": "Ava (US, female, polished)",
+      "sample": "vo-ava.mp3"
+    }
+  ],
+  "segments": [
+    {
+      "id": "s00",
+      "type": "slide",
+      "include": true,
+      "label": "Title card (review only)",
+      "slide_id": "title",
+      "duration": 4,
+      "layout": "title",
+      "text": {
+        "kicker": "For review",
+        "title": "**Ken Long**, from the learning videos",
+        "subtitle": "ten moments, with their animated twins",
+        "body": "Mental Model for Traders 1 and 2 · Swing Trading Logic · two coaching sessions"
+      }
+    },
+    {
+      "id": "s01",
+      "type": "cut",
+      "include": false,
+      "label": "Your brain is a prediction machine",
+      "source": "t4n",
+      "in": 429.8,
+      "out": 474.5,
+      "why": "the open: his own frame for react-not-predict, and the course the line comes from",
+      "status": "bite of mental-model-2-v2 s04 (+9.8..+54.5 s); the twin s01a carries it",
+      "alternates": [
+        {
+          "label": "from the top: 'that is what you have bricks for' (60 s)",
+          "source": "t4n",
+          "in": 420.0,
+          "out": 480.0
+        }
+      ]
+    },
+    {
+      "id": "s01a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: Your brain is a prediction machine",
+      "source": "t4n",
+      "in": 429.8,
+      "out": 474.5,
+      "why": "the open: his own frame for react-not-predict, and the course the line comes from",
+      "anim_of": {
+        "course": "mental-model-2-v2",
+        "scene": "s04"
+      },
+      "animation_brief": "the mental-model-2-v2 s04 scene, started at its +9.8 s",
+      "status": "showcase bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
+      "pip": true,
+      "alternates": [
+        {
+          "label": "from the top: 'that is what you have bricks for' (60 s)",
+          "source": "t4n",
+          "in": 420.0,
+          "out": 480.0
+        }
+      ],
+      "transition": {
+        "type": "fade",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s02",
+      "type": "cut",
+      "include": false,
+      "label": "Tool user or system architect",
+      "source": "apk",
+      "in": 1159.5,
+      "out": 1186.0,
+      "why": "the line Mental Model 1 is remembered for",
+      "status": "bite of mental-model-v2 s04 (+14.5..+41.0 s); the twin s02a carries it"
+    },
+    {
+      "id": "s02a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: Tool user or system architect",
+      "source": "apk",
+      "in": 1159.5,
+      "out": 1186.0,
+      "why": "the line Mental Model 1 is remembered for",
+      "anim_of": {
+        "course": "mental-model-v2",
+        "scene": "s04"
+      },
+      "animation_brief": "the mental-model-v2 s04 scene, started at its +14.5 s",
+      "status": "showcase bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
+      "pip": true,
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s03",
+      "type": "cut",
+      "include": false,
+      "label": "The great big teeter-totter",
+      "source": "keu",
+      "in": 397.5,
+      "out": 424.0,
+      "why": "his market model in one picture; the teeter-totter component is reusable everywhere",
+      "status": "bite of mental-model-v2 s25 (+6.5..+33.0 s); the twin s03a carries it"
+    },
+    {
+      "id": "s03a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: The great big teeter-totter",
+      "source": "keu",
+      "in": 397.5,
+      "out": 424.0,
+      "why": "his market model in one picture; the teeter-totter component is reusable everywhere",
+      "anim_of": {
+        "course": "mental-model-v2",
+        "scene": "s25"
+      },
+      "animation_brief": "the mental-model-v2 s25 scene, started at its +6.5 s",
+      "status": "showcase bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s04",
+      "type": "cut",
+      "include": false,
+      "label": "The five-day down: not allowed to be surprised at the 10-day high",
+      "source": "src",
+      "in": 865.2,
+      "out": 894.3,
+      "why": "a decidable rule, in his words, with the overreaction framing",
+      "status": "bite of swing-logic-v2 s12 (+77.8..+106.9 s); the twin s04a carries it",
+      "alternates": [
+        {
+          "label": "the rule itself: setup day, trade box, first target (+12.3..+60 s)",
+          "source": "src",
+          "in": 799.7,
+          "out": 847.4
+        }
+      ]
+    },
+    {
+      "id": "s04a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: The five-day down: not allowed to be surprised at the 10-day high",
+      "source": "src",
+      "in": 865.2,
+      "out": 894.3,
+      "why": "a decidable rule, in his words, with the overreaction framing",
+      "anim_of": {
+        "course": "swing-logic-v2",
+        "scene": "s12"
+      },
+      "animation_brief": "the swing-logic-v2 s12 scene, started at its +77.8 s",
+      "status": "showcase bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
+      "alternates": [
+        {
+          "label": "the rule itself: setup day, trade box, first target (+12.3..+60 s)",
+          "source": "src",
+          "in": 799.7,
+          "out": 847.4
+        }
+      ],
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s05",
+      "type": "cut",
+      "include": false,
+      "label": "Abnormal Z scores: fall off the edge of the world, or revert",
+      "source": "src",
+      "in": 2610.7,
+      "out": 2646.2,
+      "why": "the statistical lens, with the vivid ending",
+      "status": "bite of swing-logic-v2 s26 (+95.9..+131.4 s); the twin s05a carries it",
+      "alternates": [
+        {
+          "label": "the bell curve on its side (+39..+82 s)",
+          "source": "src",
+          "in": 2553.8,
+          "out": 2596.9
+        }
+      ]
+    },
+    {
+      "id": "s05a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: Abnormal Z scores: fall off the edge of the world, or revert",
+      "source": "src",
+      "in": 2610.7,
+      "out": 2646.2,
+      "why": "the statistical lens, with the vivid ending",
+      "anim_of": {
+        "course": "swing-logic-v2",
+        "scene": "s26"
+      },
+      "animation_brief": "the swing-logic-v2 s26 scene, started at its +95.9 s",
+      "status": "showcase bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
+      "alternates": [
+        {
+          "label": "the bell curve on its side (+39..+82 s)",
+          "source": "src",
+          "in": 2553.8,
+          "out": 2596.9
+        }
+      ],
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s06",
+      "type": "cut",
+      "include": false,
+      "label": "We are not the only people looking at our charts",
+      "source": "src",
+      "in": 1935.5,
+      "out": 1966.8,
+      "why": "humility about other traders, the multi-timeframe idea",
+      "status": "bite of swing-logic-v2 s22 (+40.7..+72.0 s); the twin s06a carries it"
+    },
+    {
+      "id": "s06a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: We are not the only people looking at our charts",
+      "source": "src",
+      "in": 1935.5,
+      "out": 1966.8,
+      "why": "humility about other traders, the multi-timeframe idea",
+      "anim_of": {
+        "course": "swing-logic-v2",
+        "scene": "s22"
+      },
+      "animation_brief": "the swing-logic-v2 s22 scene, started at its +40.7 s",
+      "status": "showcase bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s07",
+      "type": "cut",
+      "include": false,
+      "label": "Efficient enough: a zebra, not a rabbit",
+      "source": "kma",
+      "in": 720.3,
+      "out": 741.0,
+      "why": "the lions, the image a buyer remembers",
+      "status": "bite of mental-model-v2 s32 (+28.3..+49.0 s); the twin s07a carries it",
+      "alternates": [
+        {
+          "label": "the whole lions passage (49 s)",
+          "source": "kma",
+          "in": 692.0,
+          "out": 741.0
+        }
+      ]
+    },
+    {
+      "id": "s07a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: Efficient enough: a zebra, not a rabbit",
+      "source": "kma",
+      "in": 720.3,
+      "out": 741.0,
+      "why": "the lions, the image a buyer remembers",
+      "anim_of": {
+        "course": "mental-model-v2",
+        "scene": "s32"
+      },
+      "animation_brief": "the mental-model-v2 s32 scene, started at its +28.3 s",
+      "status": "showcase bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
+      "alternates": [
+        {
+          "label": "the whole lions passage (49 s)",
+          "source": "kma",
+          "in": 692.0,
+          "out": 741.0
+        }
+      ],
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s08",
+      "type": "cut",
+      "include": false,
+      "label": "Leverage the chimp; use her for what she is best at",
+      "source": "rjg",
+      "in": 765.2,
+      "out": 782.0,
+      "why": "the inner trader, his gentlest framing of psychology",
+      "status": "bite of mental-model-2-v2 s20 (+63.2..+80.0 s); the twin s08a carries it",
+      "alternates": [
+        {
+          "label": "the chimpanzee as a model of our inner trader (+0.6..+30 s)",
+          "source": "rjg",
+          "in": 702.6,
+          "out": 732.0
+        }
+      ]
+    },
+    {
+      "id": "s08a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: Leverage the chimp; use her for what she is best at",
+      "source": "rjg",
+      "in": 765.2,
+      "out": 782.0,
+      "why": "the inner trader, his gentlest framing of psychology",
+      "anim_of": {
+        "course": "mental-model-2-v2",
+        "scene": "s20"
+      },
+      "animation_brief": "the mental-model-2-v2 s20 scene, started at its +63.2 s",
+      "status": "showcase bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
+      "alternates": [
+        {
+          "label": "the chimpanzee as a model of our inner trader (+0.6..+30 s)",
+          "source": "rjg",
+          "in": 702.6,
+          "out": 732.0
+        }
+      ],
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s09",
+      "type": "cut",
+      "include": true,
+      "label": "A student tuned his position size to the slope of his own R multiples",
+      "source": "xvc",
+      "in": 8078.0,
+      "out": 8134.5,
+      "why": "the room gets better: a real student breakthrough, in Ken's words; the cohort grid wants the animated twin, not faces",
+      "status": "MINED 2026-11-21 (VTT 02:14:38 to 02:15:34; cohort Zoom grid on screen, faces not released)",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s09a",
+      "type": "overdub",
+      "include": false,
+      "label": "ALT animated (to draw): A student tuned his position size to the slope of his own R multiples",
+      "source": "xvc",
+      "in": 8078.0,
+      "out": 8134.5,
+      "why": "the room gets better: a real student breakthrough, in Ken's words; the cohort grid wants the animated twin, not faces",
+      "animation_brief": "animate: an equity ladder of R multiples, an RL10 drawn through them, its slope steepening; the position-size dial turns with the slope; captions on 'masterful job', 'slope of the RL10 of his R multiple', 'the difference that makes is enormous'",
+      "status": "no scene yet: anim-overdub draws it on the owner's word; until then the cut plays"
+    },
+    {
+      "id": "s10",
+      "type": "cut",
+      "include": true,
+      "label": "Drop both kettlebells: snap back to the zero state instantly",
+      "source": "b9h",
+      "in": 2300.0,
+      "out": 2338.5,
+      "why": "coaching, not lecturing: rigidity in one hand, revenge in the other, let go and go",
+      "status": "MINED 2026-11-21 (VTT 00:38:20 to 00:38:58); b9h carries pip.crop from mental-model-2-v2",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s10a",
+      "type": "overdub",
+      "include": false,
+      "label": "ALT animated (to draw): Drop both kettlebells: snap back to the zero state instantly",
+      "source": "b9h",
+      "in": 2300.0,
+      "out": 2338.5,
+      "why": "coaching, not lecturing: rigidity in one hand, revenge in the other, let go and go",
+      "animation_brief": "animate: two hands each holding a kettlebell labelled rigidity and revenge; both drop; a flat line snaps back to zero; captions on 'empty both hands', 'hey dummy, drop the weights and go', 'snap back to the zero state instantly'",
+      "status": "no scene yet: anim-overdub draws it on the owner's word; until then the cut plays",
+      "pip": true
+    },
+    {
+      "id": "s11",
+      "type": "cut",
+      "include": true,
+      "label": "The rule doesn't care how much money you have on it",
+      "source": "rdg",
+      "in": 656.0,
+      "out": 702.5,
+      "why": "the systematic and statistical way in one breath: each entry a separate trade, a hypothesis measured in R",
+      "status": "MINED 2026-11-21 (VTT 00:10:56 to 00:11:42)",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s11a",
+      "type": "overdub",
+      "include": false,
+      "label": "ALT animated (to draw): The rule doesn't care how much money you have on it",
+      "source": "rdg",
+      "in": 656.0,
+      "out": 702.5,
+      "why": "the systematic and statistical way in one breath: each entry a separate trade, a hypothesis measured in R",
+      "animation_brief": "animate: two entries 1A and 1B on a bare price line, each with its own stop and exit, each scored in R with no dollar sign anywhere; captions on 'the rule doesn't care how much money you have on it', 'measuring the result of that hypothesis', 'positive expectancy', 'each entry is a separate trade'",
+      "status": "no scene yet: anim-overdub draws it on the owner's word; until then the cut plays"
+    },
+    {
+      "id": "s12",
+      "type": "cut",
+      "include": true,
+      "label": "What the harsh winter says: this symbol is in play",
+      "source": "qvo",
+      "in": 2743.0,
+      "out": 2765.5,
+      "why": "his world model: the MACD season as regime, larger-than-normal moves until someone wins",
+      "status": "MINED 2026-11-21 (VTT 00:45:43 to 00:46:05)",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s12a",
+      "type": "overdub",
+      "include": false,
+      "label": "ALT animated (to draw): What the harsh winter says: this symbol is in play",
+      "source": "qvo",
+      "in": 2743.0,
+      "out": 2765.5,
+      "why": "his world model: the MACD season as regime, larger-than-normal moves until someone wins",
+      "animation_brief": "animate: the MACD Four Seasons quadrant in the canonical colours, a symbol's path dropping into harsh winter, then its bars widening (larger than normal) until the emotion subsides; captions on 'abnormally large directional move', 'in play', 'all subsequent moves are going to be larger than normal', 'until we figure out who's going to win'",
+      "status": "no scene yet: anim-overdub draws it on the owner's word; until then the cut plays"
+    },
+    {
+      "id": "s13",
+      "type": "slide",
+      "include": true,
+      "label": "End card",
+      "slide_id": "end",
+      "duration": 6,
+      "layout": "end",
+      "text": {
+        "kicker": "",
+        "title": "Dr. Ken Long",
+        "subtitle": "owlgrouptrading.com",
+        "body": "Courses and a free daily note."
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 1.0
+      }
+    }
+  ]
+}

@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>s05a · the Z score</title>
+<style>
+  :root { --bg:#030507; --fg:#E1EEF5; --muted:#8fa3ad; --border:rgba(56,225,255,0.14); --accent:#F2D06B;
+          --ok:#4ade80; --dn:#f87171; --card:#0a1016; --blue:#7baad4; }
+  html, body { margin:0; background:var(--bg); overflow:hidden; }
+  #stage { position:relative; width:1280px; height:720px; background:var(--bg); color:var(--fg);
+           font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; overflow:hidden; }
+  #cap { position:absolute; left:60px; right:60px; top:30px; font-size:32px; font-weight:600; letter-spacing:-.01em; line-height:1.15; }
+  #cap em { font-style:normal; color:var(--accent); }
+  #sub { position:absolute; left:60px; width:1160px; top:648px; font-size:20px; color:var(--muted); line-height:1.4; }
+  #scene { position:absolute; left:60px; top:112px; width:1160px; height:518px; border:1px solid var(--border);
+           border-radius:10px; background:var(--card); overflow:hidden; }
+  #svg { position:absolute; inset:0; }
+  #fade { position:absolute; inset:0; background:var(--bg); pointer-events:none; opacity:0; }
+  /* the picture-in-picture corner: build_v2 composites Ken's camera tile here (PIP_W/X/Y); the cutroom shows this placeholder */
+  #pip { position:absolute; left:950px; top:22px; width:300px; height:169px; border:1px dashed rgba(56,225,255,0.35); border-radius:4px;
+         display:none; color:var(--muted); font-size:13px; text-align:center; line-height:169px; }
+  .pip #pip { display:block; } .pip #cap { right:360px; font-size:29px; }
+  text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; fill:#E1EEF5; }
+  .mono { font-family:ui-monospace,Menlo,Consolas,monospace; }
+  #third { display:none; }
+</style>
+</head>
+<body>
+<div id="stage" class="">
+  <div id="cap"></div>
+  <div id="pip">Ken on camera, composited at render</div>
+  <div id="scene"><svg id="svg" width="1160" height="530" viewBox="0 0 1160 530"></svg></div>
+  <div id="third"></div>
+  <div id="sub"></div>
+  <div id="fade"></div>
+</div>
+<script>
+const BUILD = 's05a-1';
+console.log('[s05a] build', BUILD);
+// Overdub twin of s05: Ken's audio src 2610.7→2646.2; t is seconds after the in-point.
+// Beat times read from the VTT cues on 2026-11-21 (tools/cutroom/ken-shorts-2/transcript-src.json).
+window.ANIM_DURATION = 35.5;
+const ACC='#F2D06B', FG='#E1EEF5', MUT='#8fa3ad', OK='#4ade80', DN='#f87171', BLUE='#7baad4', BRD='rgba(56,225,255,.22)', CARD='#0a1016', TXS=1, WRAP=['',''];
+const W=1160, H=530;
+const $ = id => document.getElementById(id);
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const ease=u=>{u=clamp(u,0,1);return u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;};
+const lerp=(a,b,u)=>a+(b-a)*u;
+const pr=(t,t0,d)=>ease((t-t0)/(d||0.6));          // eased progress 0..1 from t0 over d seconds
+const on=(t,t0)=>t>=t0;
+const op=(t,t0,d)=>clamp((t-t0)/(d||0.5),0,1);      // linear opacity ramp
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const txt=(x,y,s,o={})=>`<text x="${x}" y="${y}" font-size="${(o.sz||20)*TXS}" fill="${o.c||FG}" opacity="${o.o==null?1:o.o}" text-anchor="${o.a||'start'}" font-weight="${o.w||400}" class="${o.cls||''}" ${o.extra||''}>${esc(s)}</text>`;
+const rect=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.r==null?6:o.r}" fill="${o.f||'none'}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}" ${o.extra||''}/>`;
+const circ=(x,y,r,o={})=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${o.f||FG}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}"/>`;
+const line=(x1,y1,x2,y2,o={})=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${o.s||MUT}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" ${o.dash?`stroke-dasharray="${o.dash}"`:''} stroke-linecap="round"/>`;
+const path=(d,o={})=>`<path d="${d}" fill="${o.f||'none'}" stroke="${o.s||FG}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" stroke-linecap="round" stroke-linejoin="round" ${o.dash?`stroke-dasharray="${o.dash}"`:''}/>`;
+const arrow=(x1,y1,x2,y2,o={})=>{const a=Math.atan2(y2-y1,x2-x1),h=10;return line(x1,y1,x2,y2,o)+path(`M${x2} ${y2} L${x2-h*Math.cos(a-0.5)} ${y2-h*Math.sin(a-0.5)} M${x2} ${y2} L${x2-h*Math.cos(a+0.5)} ${y2-h*Math.sin(a+0.5)}`,{s:o.s||MUT,sw:o.sw||2,o:o.o});};
+// a labelled box that grows in from t0
+const box=(t,t0,x,y,w,h,label,o={})=>{const u=pr(t,t0,0.5);if(u<=0)return '';const ww=w*u,hh=h;return rect(x+(w-ww)/2,y,ww,hh,{s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',sw:o.sw||1.5,o:u})+(u>.6?txt(x+w/2,y+h/2+(o.sz||20)/3,label,{a:'middle',sz:o.sz||20,c:o.c||FG,o:op(t,t0+.3,.3),w:o.w||500}):'');};
+// deterministic pseudo-random
+function rng(seed){let s=seed*9301+49297;return()=>{s=(s*9301+49297)%233280;return s/233280;};}
+// a herd of dots in a region; drift is a slow deterministic wander
+function herd(n,seed,x,y,w,h){const r=rng(seed);const pts=[];for(let i=0;i<n;i++)pts.push({x:x+r()*w,y:y+r()*h,p:r()*6.28,q:r()*6.28});return pts;}
+const wander=(p,t,amp)=>[p.x+Math.sin(t*0.9+p.p)*amp,p.y+Math.cos(t*0.7+p.q)*amp];
+// typewriter: the first k chars of s by time
+const type=(s,t,t0,cps)=>s.slice(0,Math.max(0,Math.floor((t-t0)*(cps||28))));
+// a list that reveals one row per step seconds from t0
+function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
+
+const BEATS = [[0.3, "This would tell us what abnormally strong slope up is", ""], [3.7, "And what abnormally weak slope would be", ""], [7.1, "We're very interested in <em>the abnormals</em>: something special is going on", ""], [17.0, "Down: revert to the mean, or fall off the edge of the world", ""], [21.8, "Up strong: asymptotically great, or revert to the mean", ""], [27.6, "Prepared for large movements <em>in either direction</em> at abnormal Z scores", ""]];
+const __D = (function () {
+const BEATS = [[0.0, "How many <em>standard deviations</em> away from the average", ""], [18.2, "Plus one: exactly one standard deviation above average", ""], [24.6, "Minus one: one standard deviation below average", ""], [29.6, "Two or three: how many standard deviations away", ""], [39.0, "A histogram: a little <em>bell curve, only on its side</em>", ""], [50.7, "Two thirds of the last 180 slope values: within plus or minus one", ""], [69.6, "That two thirds represents <em>normal slope</em>", ""], [82.1, "Put it on a tachometer, some kind of gauge", ""], [95.9, "This would tell us what abnormally strong slope up is", ""], [99.6, "And what abnormally weak slope would be", ""], [103.0, "We're very interested in <em>the abnormals</em>: something special is going on", ""], [112.9, "Down: revert to the mean, or fall off the edge of the world", ""], [117.7, "Up strong: asymptotically great, or revert to the mean", ""], [123.5, "Prepared for large movements <em>in either direction</em> at abnormal Z scores", ""]];
+
+const PURP='#b48cff';
+const T=i=>BEATS[Math.min(i,BEATS.length-1)][0];
+const after=(t,i)=>t>=T(i);
+const between=(t,i,j)=>t>=T(i)&&t<T(j);
+// a phase's opacity: in at beat i, out at beat j (j omitted: stays)
+const ph=(t,i,j)=>op(t,T(i),.5)*(j==null?1:1-op(t,T(j)-.4,.4));
+// a price path through key points [[u,v],...] (u 0..1) with a small deterministic wobble
+function walk(keys,seed,amp){const r=rng(seed);const N=240;const nz=[];let a=0;for(let i=0;i<=N;i++){a=a*0.82+(r()-.5);nz.push(a);}
+  return u=>{u=clamp(u,0,1);let k=0;while(k<keys.length-2&&u>keys[k+1][0])k++;const [x0,v0]=keys[k],[x1,v1]=keys[k+1];const w=clamp((u-x0)/((x1-x0)||1),0,1);return lerp(v0,v1,w)+nz[Math.round(u*N)]*(amp||0);};}
+// a chart frame: x,y,w,h in the scene; lo..hi the price scale
+function fr(x,y,w,h,lo,hi){return {x,y,w,h,lo,hi,X:u=>x+u*w,Y:v=>y+h-(v-lo)/(hi-lo)*h};}
+function plot(F,f,u0,u1,o={}){if(u1<=u0)return '';let d='';const n=Math.max(2,Math.round((u1-u0)*180));for(let i=0;i<=n;i++){const u=u0+(u1-u0)*i/n;d+=(i?'L':'M')+F.X(u).toFixed(1)+' '+F.Y(f(u)).toFixed(1);}return path(d,{s:o.s||FG,sw:o.sw||2.5,o:o.o==null?1:o.o,dash:o.dash});}
+function lvl(F,v,label,o={}){const y=F.Y(v),x0=o.x0==null?F.x:F.X(o.x0),x1=o.x1==null?F.x+F.w:F.X(o.x1);
+  return line(x0,y,x1,y,{s:o.s||MUT,sw:o.sw||1.5,dash:o.dash===undefined?'6 5':o.dash,o:o.o})+(label?txt(o.left?x0-8:x1+8,y+6,label,{a:o.left?'end':'start',c:o.s||MUT,sz:o.sz||16,o:o.o,w:o.w||500}):'');}
+function panel(x,y,w,h,label,o){return rect(x,y,w,h,{s:BRD,f:'rgba(255,255,255,.015)',o:o,r:6})+(label?txt(x+12,y+24,label,{c:MUT,sz:15,o:o,w:600}):'');}
+function zone(F,u0,u1,va,vb,o={}){const y1=F.Y(Math.max(va,vb)),y2=F.Y(Math.min(va,vb));return rect(F.X(u0),y1,F.X(u1)-F.X(u0),Math.max(1,y2-y1),{f:o.f||'rgba(248,113,113,.14)',s:o.s||DN,sw:o.sw||1.2,r:2,o:o.o==null?1:o.o,extra:o.dash?`stroke-dasharray="${o.dash}"`:''});}
+function dot(F,u,v,c,o){return circ(F.X(u),F.Y(v),7,{f:c,o:o==null?1:o})+circ(F.X(u),F.Y(v),12,{f:'none',s:c,sw:1.5,o:(o==null?1:o)*.5});}
+// candles from a series of closes; reveal the first k
+function candles(F,cl,k,o={}){let s='';const n=cl.length,bw=F.w/n*.62;for(let i=0;i<Math.min(k,n);i++){const a=i?cl[i-1]:cl[0]-(cl[1]-cl[0]),b=cl[i];const up=b>=a;const c=o.c&&o.c[i]?o.c[i]:(up?OK:DN);
+  const x=F.x+(i+.5)*F.w/n,hi=Math.max(a,b)+(o.wk||.35)*Math.abs(b-a)+(o.wk0||.4),lo=Math.min(a,b)-(o.wk||.35)*Math.abs(b-a)-(o.wk0||.4);
+  s+=line(x,F.Y(hi),x,F.Y(lo),{s:c,sw:1.5,o:o.o})+rect(x-bw/2,F.Y(Math.max(a,b)),bw,Math.max(2,Math.abs(F.Y(a)-F.Y(b))),{f:c,s:'none',r:1,o:o.o});}return s;}
+const cx=(F,i,n)=>F.x+(i+.5)*F.w/n;
+// a bell curve lying on its side: base x, centre y, sd in px, height in px
+function bellSide(x,y,sd,h,o={}){let d='';for(let i=0;i<=80;i++){const z=-3+6*i/80;const yy=y-z*sd,xx=x+h*Math.exp(-z*z/2);d+=(i?'L':'M')+xx.toFixed(1)+' '+yy.toFixed(1);}return path(d,{s:o.s||ACC,sw:2,o:o.o,f:o.f||'rgba(242,208,107,.08)'});}
+// a gauge: centre, radius, needle value -1..1 (left..right)
+function gauge(x,y,r,v,o={}){let s='';const arc=(a0,a1,c,w)=>{const p0=[x+r*Math.cos(Math.PI*(1-a0)),y-r*Math.sin(Math.PI*(1-a0))],p1=[x+r*Math.cos(Math.PI*(1-a1)),y-r*Math.sin(Math.PI*(1-a1))];return path(`M${p0[0].toFixed(1)} ${p0[1].toFixed(1)} A${r} ${r} 0 0 1 ${p1[0].toFixed(1)} ${p1[1].toFixed(1)}`,{s:c,sw:w||10,o:o.o});};
+  s+=arc(0,.333,DN,10)+arc(.333,.667,'rgba(143,163,173,.5)',10)+arc(.667,1,OK,10);const a=Math.PI*(1-(v+1)/2);s+=line(x,y,x+(r-18)*Math.cos(a),y-(r-18)*Math.sin(a),{s:ACC,sw:4,o:o.o})+circ(x,y,8,{f:ACC,o:o.o});
+  if(o.labels!==false){s+=txt(x-r,y+26,'weak',{a:'middle',c:DN,sz:14,o:o.o})+txt(x,y-r-18,'normal',{a:'middle',c:MUT,sz:14,o:o.o})+txt(x+r,y+26,'strong',{a:'middle',c:OK,sz:14,o:o.o});}return s;}
+// a chip: rounded label
+function chip(x,y,s,o={}){const w=o.w||Math.max(60,s.length*(o.sz||17)*.58+26);return rect(x,y,w,o.h||34,{f:o.f||'rgba(242,208,107,.10)',s:o.s||ACC,sw:1.2,r:17,o:o.o})+txt(x+w/2,y+(o.h||34)/2+6,s,{a:'middle',c:o.c||FG,sz:o.sz||17,o:o.o,w:500});}
+// a centred statement
+function big(s,o,c,y){return txt(580,y||270,s,{a:'middle',sz:34,c:c||ACC,o:o,w:600});}
+// an R ruler: n stacked 1R blocks from (x,y) upward, block height h
+function rruler(x,y,h,n,k,c){let s='';for(let i=0;i<Math.min(n,k);i++)s+=rect(x,y-(i+1)*h,40,h-3,{f:'rgba(74,222,128,.22)',s:c||OK,sw:1,r:2})+txt(x+50,y-i*h-h/2+5,`${i+1}R`,{sz:14,c:c||OK});return s;}
+
+const AX=200, Y0=265, SDp=62;
+function draw(t){
+  let s='';
+  s += line(AX,Y0-3.2*SDp,AX,Y0+3.2*SDp,{s:MUT,sw:2});
+  for(let z=-3;z<=3;z++) s += line(AX-8,Y0-z*SDp,AX+8,Y0-z*SDp,{s:MUT}) + txt(AX-16,Y0-z*SDp+6,(z>0?'+':'')+z,{a:'end',c:z==0?ACC:MUT,sz:16,cls:'mono'});
+  s += txt(AX-16,Y0+3.6*SDp,'Z',{a:'end',c:ACC,sz:18,w:600});
+  let zv=0; if(after(t,1)) zv=1; if(after(t,2)) zv=-1; if(after(t,3)) zv=lerp(-1,2.6,pr(t,T(3),1)); if(after(t,4)) zv=2.6;
+  s += circ(AX,Y0-zv*SDp,9,{f:ACC,o:after(t,4)?1-op(t,T(4),.4):1});
+  if (after(t,4)) s += bellSide(AX,Y0,SDp,260,{o:op(t,T(4),.6)});
+  if (after(t,5)){ const o=op(t,T(5),.5); s += rect(AX,Y0-SDp,280,2*SDp,{f:'rgba(123,170,212,.14)',s:BLUE,o,r:2}) + txt(AX+300,Y0+8,'2/3',{c:BLUE,sz:26,o,w:600}); }
+  if (after(t,6)) s += txt(AX+300,Y0+36,'normal slope',{c:BLUE,sz:16,o:op(t,T(6),.4)});
+  if (after(t,7)){ const o=op(t,T(7),.5); let v=0; if(after(t,8)) v=lerp(0,.85,pr(t,T(8),1)); if(after(t,9)) v=lerp(.85,-.85,pr(t,T(9),1.2)); if(after(t,10)) v=-.85+1.7*(.5+.5*Math.sin((t-T(10))*1.2))*1; if(after(t,13)) v=Math.sin((t-T(13))*2)*.9;
+    s += gauge(860,330,190,v,{o}); }
+  if (after(t,8)) s += txt(1040,140,'abnormally strong',{a:'middle',c:OK,sz:16,o:op(t,T(8),.4)});
+  if (after(t,9)) s += txt(680,140,'abnormally weak',{a:'middle',c:DN,sz:16,o:op(t,T(9),.4)});
+  if (after(t,10)) s += txt(860,420,'something special is going on',{a:'middle',c:ACC,sz:18,o:op(t,T(10),.4)});
+  if (after(t,11)) s += txt(860,456,'down: revert, or off the edge of the world',{a:'middle',c:DN,sz:16,o:op(t,T(11),.4)});
+  if (after(t,12)) s += txt(860,484,'up: asymptotically great, or revert',{a:'middle',c:OK,sz:16,o:op(t,T(12),.4)});
+  return s;
+}
+
+return draw;
+})();
+function draw(t) { return __D(t + 95.9); }   // swing-logic-v2 s26 from +95.9 s
+
+window.renderFrame = function (t) {
+  t = clamp(t, 0, ANIM_DURATION);
+  let cap = '', sub = '';
+  for (const b of BEATS) if (t >= b[0]) { cap = b[1]; sub = b[2] || ''; }
+  $('cap').innerHTML = cap; $('sub').textContent = sub;
+  $('svg').innerHTML = WRAP[0] + draw(t) + WRAP[1];
+  const f = $('fade');
+  f.style.opacity = t < 0.5 ? 1 - t / 0.5 : (ANIM_DURATION - t < 0.6 ? 1 - (ANIM_DURATION - t) / 0.6 : 0);
+};
+renderFrame(0);
+</script>
+</body>
+</html>
