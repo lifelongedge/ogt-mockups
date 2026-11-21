@@ -9,7 +9,7 @@
   "topic_class": "shorts",
   "store_sku": null,
   "replaces": null,
-  "notes": "2026-11-21 (owner: 'a second cutroom with his clips you think are worthwhile, some we could animate with his picture in picture or just audio overdub; showcase the learning videos'). Eight bites from the three ink-style store courses (Mental Model 1 and 2, Swing Trading Logic), each a cut (off) with the parent's animated twin (on) started at the bite's offset, so the drawings and captions are the ones already approved; Ken's tile rides on the twins whose source has a crop (t4n, apk, b9h). Four raw coaching moments (a student's RL10 breakthrough, the kettlebells, calculating R, the harsh winter) play as cuts with an animation brief on a twin that is off until anim-overdub draws it. The desk-style Intraday Decision Tree courses are left out of this build because one clip renders in one style; a desk showcase (the STOD lessons) is its own clip. Two more sessions join at rev 2: bar-by-bar ('where would you get long, 1, 2 or 3'; captions refused with HTTP 429, retry queued) and the Hougaard press gut check (still downloading). Transitions by rule (cutroom-24).",
+  "notes": "2026-11-21 (owner: 'a second cutroom with his clips you think are worthwhile, some we could animate with his picture in picture or just audio overdub; showcase the learning videos'). Eight bites from the three ink-style store courses (Mental Model 1 and 2, Swing Trading Logic), each a cut (off) with the parent's animated twin (on) started at the bite's offset, so the drawings and captions are the ones already approved; Ken's tile rides on the twins whose source has a crop (t4n, apk, b9h). Four raw coaching moments (a student's RL10 breakthrough, the kettlebells, calculating R, the harsh winter) play as cuts and carry their animation brief on the cut itself; anim-overdub adds the twin on the owner's word (a placeholder twin with no drawing left 404 thumbnails on the page, so none is carried). The desk-style Intraday Decision Tree courses are left out of this build because one clip renders in one style; a desk showcase (the STOD lessons) is its own clip. Two more sessions join at rev 2: bar-by-bar ('where would you get long, 1, 2 or 3'; captions refused with HTTP 429, retry queued) and the Hougaard press gut check (still downloading). Transitions by rule (cutroom-24).",
   "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/ken-shorts-2/",
   "sources": [
     {
@@ -457,23 +457,12 @@
       "in": 8078.0,
       "out": 8134.5,
       "why": "the room gets better: a real student breakthrough, in Ken's words; the cohort grid wants the animated twin, not faces",
-      "status": "MINED 2026-11-21 (VTT 02:14:38 to 02:15:34; cohort Zoom grid on screen, faces not released)",
+      "status": "MINED 2026-11-21 (VTT 02:14:38 to 02:15:34; cohort Zoom grid on screen, faces not released); no twin yet: anim-overdub draws one from the brief on the owner's word",
       "transition": {
         "type": "dip",
         "dur": 0.6
-      }
-    },
-    {
-      "id": "s09a",
-      "type": "overdub",
-      "include": false,
-      "label": "ALT animated (to draw): A student tuned his position size to the slope of his own R multiples",
-      "source": "xvc",
-      "in": 8078.0,
-      "out": 8134.5,
-      "why": "the room gets better: a real student breakthrough, in Ken's words; the cohort grid wants the animated twin, not faces",
-      "animation_brief": "animate: an equity ladder of R multiples, an RL10 drawn through them, its slope steepening; the position-size dial turns with the slope; captions on 'masterful job', 'slope of the RL10 of his R multiple', 'the difference that makes is enormous'",
-      "status": "no scene yet: anim-overdub draws it on the owner's word; until then the cut plays"
+      },
+      "animation_brief": "animate: an equity ladder of R multiples, an RL10 drawn through them, its slope steepening; the position-size dial turns with the slope; captions on 'masterful job', 'slope of the RL10 of his R multiple', 'the difference that makes is enormous'"
     },
     {
       "id": "s10",
@@ -484,24 +473,12 @@
       "in": 2300.0,
       "out": 2338.5,
       "why": "coaching, not lecturing: rigidity in one hand, revenge in the other, let go and go",
-      "status": "MINED 2026-11-21 (VTT 00:38:20 to 00:38:58); b9h carries pip.crop from mental-model-2-v2",
+      "status": "MINED 2026-11-21 (VTT 00:38:20 to 00:38:58); b9h carries pip.crop from mental-model-2-v2; no twin yet: anim-overdub draws one from the brief on the owner's word",
       "transition": {
         "type": "dip",
         "dur": 0.6
-      }
-    },
-    {
-      "id": "s10a",
-      "type": "overdub",
-      "include": false,
-      "label": "ALT animated (to draw): Drop both kettlebells: snap back to the zero state instantly",
-      "source": "b9h",
-      "in": 2300.0,
-      "out": 2338.5,
-      "why": "coaching, not lecturing: rigidity in one hand, revenge in the other, let go and go",
-      "animation_brief": "animate: two hands each holding a kettlebell labelled rigidity and revenge; both drop; a flat line snaps back to zero; captions on 'empty both hands', 'hey dummy, drop the weights and go', 'snap back to the zero state instantly'",
-      "status": "no scene yet: anim-overdub draws it on the owner's word; until then the cut plays",
-      "pip": true
+      },
+      "animation_brief": "animate: two hands each holding a kettlebell labelled rigidity and revenge; both drop; a flat line snaps back to zero; captions on 'empty both hands', 'hey dummy, drop the weights and go', 'snap back to the zero state instantly'"
     },
     {
       "id": "s11",
@@ -512,23 +489,12 @@
       "in": 656.0,
       "out": 702.5,
       "why": "the systematic and statistical way in one breath: each entry a separate trade, a hypothesis measured in R",
-      "status": "MINED 2026-11-21 (VTT 00:10:56 to 00:11:42)",
+      "status": "MINED 2026-11-21 (VTT 00:10:56 to 00:11:42); no twin yet: anim-overdub draws one from the brief on the owner's word",
       "transition": {
         "type": "dip",
         "dur": 0.6
-      }
-    },
-    {
-      "id": "s11a",
-      "type": "overdub",
-      "include": false,
-      "label": "ALT animated (to draw): The rule doesn't care how much money you have on it",
-      "source": "rdg",
-      "in": 656.0,
-      "out": 702.5,
-      "why": "the systematic and statistical way in one breath: each entry a separate trade, a hypothesis measured in R",
-      "animation_brief": "animate: two entries 1A and 1B on a bare price line, each with its own stop and exit, each scored in R with no dollar sign anywhere; captions on 'the rule doesn't care how much money you have on it', 'measuring the result of that hypothesis', 'positive expectancy', 'each entry is a separate trade'",
-      "status": "no scene yet: anim-overdub draws it on the owner's word; until then the cut plays"
+      },
+      "animation_brief": "animate: two entries 1A and 1B on a bare price line, each with its own stop and exit, each scored in R with no dollar sign anywhere; captions on 'the rule doesn't care how much money you have on it', 'measuring the result of that hypothesis', 'positive expectancy', 'each entry is a separate trade'"
     },
     {
       "id": "s12",
@@ -539,23 +505,12 @@
       "in": 2743.0,
       "out": 2765.5,
       "why": "his world model: the MACD season as regime, larger-than-normal moves until someone wins",
-      "status": "MINED 2026-11-21 (VTT 00:45:43 to 00:46:05)",
+      "status": "MINED 2026-11-21 (VTT 00:45:43 to 00:46:05); no twin yet: anim-overdub draws one from the brief on the owner's word",
       "transition": {
         "type": "dip",
         "dur": 0.6
-      }
-    },
-    {
-      "id": "s12a",
-      "type": "overdub",
-      "include": false,
-      "label": "ALT animated (to draw): What the harsh winter says: this symbol is in play",
-      "source": "qvo",
-      "in": 2743.0,
-      "out": 2765.5,
-      "why": "his world model: the MACD season as regime, larger-than-normal moves until someone wins",
-      "animation_brief": "animate: the MACD Four Seasons quadrant in the canonical colours, a symbol's path dropping into harsh winter, then its bars widening (larger than normal) until the emotion subsides; captions on 'abnormally large directional move', 'in play', 'all subsequent moves are going to be larger than normal', 'until we figure out who's going to win'",
-      "status": "no scene yet: anim-overdub draws it on the owner's word; until then the cut plays"
+      },
+      "animation_brief": "animate: the MACD Four Seasons quadrant in the canonical colours, a symbol's path dropping into harsh winter, then its bars widening (larger than normal) until the emotion subsides; captions on 'abnormally large directional move', 'in play', 'all subsequent moves are going to be larger than normal', 'until we figure out who's going to win'"
     },
     {
       "id": "s13",
