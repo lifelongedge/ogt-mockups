@@ -1,0 +1,458 @@
+{
+  "schema": "coursecraft-plan-v2",
+  "course": "disciplined-operator-v1",
+  "cutroom": "disciplined-operator-v1",
+  "revision": 1,
+  "revised": "2026-11-21",
+  "status": "AS PUBLISHED (c-tosm3, 2026-05 cut): the store course today, scene by scene, for the owner to compare with disciplined-operator-v2. Read-only in spirit: edits here do not change the store.",
+  "title": "The Disciplined Operator — as published",
+  "topic_class": "reference cut",
+  "store_sku": "disciplined-operator",
+  "replaces": null,
+  "notes": "2026-11-21 (owner: 'a cut room with (a) what is there today and (b) a new and improved version'). (a) is this plan: the eight published clip files m3-01 … m3-06 fetched from the course bucket into inbox/ as c-tosm3-m3-*.mp4, the 30 player scenes of c-tosm3.scenes.json mapped onto them by the sequence offsets (0, 452, 721, 961, 1372, 1633, 1903, 2173 s), the player's card text carried in each segment's `why`. The published clips have no captions: machine transcripts (whisper_vtt.py, small.en) feed the transcript panel and are marked as such. (b) is courses/disciplined-operator-v2 rev 2.",
+  "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/disciplined-operator-v1/",
+  "sources": [
+    {
+      "id": "m301",
+      "label": "published clip m3-01.mp4 · Chapter 1 — Rigidity and Revenge (0–452 s of the course)",
+      "file": "c-tosm3-m3-01.mp4",
+      "proxy": "c-tosm3-m3-01.proxy.mp4",
+      "url": "https://storage.googleapis.com/courses.owlgrouptrading.com/m3-01.mp4"
+    },
+    {
+      "id": "m302a",
+      "label": "published clip m3-02a.mp4 · Chapter 1b — Take the Wheel (452–721 s of the course)",
+      "file": "c-tosm3-m3-02a.mp4",
+      "proxy": "c-tosm3-m3-02a.proxy.mp4",
+      "url": "https://storage.googleapis.com/courses.owlgrouptrading.com/m3-02a.mp4"
+    },
+    {
+      "id": "m302b",
+      "label": "published clip m3-02b.mp4 · Chapter 2 — The Soccer Game (721–961 s of the course)",
+      "file": "c-tosm3-m3-02b.mp4",
+      "proxy": "c-tosm3-m3-02b.proxy.mp4",
+      "url": "https://storage.googleapis.com/courses.owlgrouptrading.com/m3-02b.mp4"
+    },
+    {
+      "id": "m303",
+      "label": "published clip m3-03.mp4 · Chapter 3 — Aristotle's Spectrum (961–1372 s of the course)",
+      "file": "c-tosm3-m3-03.mp4",
+      "proxy": "c-tosm3-m3-03.proxy.mp4",
+      "url": "https://storage.googleapis.com/courses.owlgrouptrading.com/m3-03.mp4"
+    },
+    {
+      "id": "m304",
+      "label": "published clip m3-04.mp4 · Chapter 3b — The A/B/C Game (1372–1633 s of the course)",
+      "file": "c-tosm3-m3-04.mp4",
+      "proxy": "c-tosm3-m3-04.proxy.mp4",
+      "url": "https://storage.googleapis.com/courses.owlgrouptrading.com/m3-04.mp4"
+    },
+    {
+      "id": "m305a",
+      "label": "published clip m3-05a.mp4 · Chapter 4 — Three Machine Guns (1633–1903 s of the course)",
+      "file": "c-tosm3-m3-05a.mp4",
+      "proxy": "c-tosm3-m3-05a.proxy.mp4",
+      "url": "https://storage.googleapis.com/courses.owlgrouptrading.com/m3-05a.mp4"
+    },
+    {
+      "id": "m305b",
+      "label": "published clip m3-05b.mp4 · Chapter 4b — Cut the Frankenstein (1903–2173 s of the course)",
+      "file": "c-tosm3-m3-05b.mp4",
+      "proxy": "c-tosm3-m3-05b.proxy.mp4",
+      "url": "https://storage.googleapis.com/courses.owlgrouptrading.com/m3-05b.mp4"
+    },
+    {
+      "id": "m306",
+      "label": "published clip m3-06.mp4 · Chapter 5 — Portfolio Heat (2173–2501 s of the course)",
+      "file": "c-tosm3-m3-06.mp4",
+      "proxy": "c-tosm3-m3-06.proxy.mp4",
+      "url": "https://storage.googleapis.com/courses.owlgrouptrading.com/m3-06.mp4"
+    }
+  ],
+  "voices": [
+    {
+      "id": "ava",
+      "label": "Ava (US, female, polished)",
+      "sample": "vo-ava.mp3"
+    }
+  ],
+  "segments": [
+    {
+      "id": "s00",
+      "type": "slide",
+      "include": true,
+      "label": "Title card (review only)",
+      "slide_id": "title",
+      "duration": 4,
+      "layout": "title",
+      "text": {
+        "kicker": "As published",
+        "title": "**The Disciplined Operator**",
+        "subtitle": "Trader's Operating System · Module 3 · 41:41",
+        "body": "The course as it is in the store today: eight clip files, the cards as drawn in 2026-05"
+      }
+    },
+    {
+      "id": "s01",
+      "type": "cut",
+      "include": true,
+      "label": "The Pathologies Every Operator Carries",
+      "source": "m301",
+      "in": 0,
+      "out": 200,
+      "status": "AS PUBLISHED: course 0–200 s; the player card's text is kept in `why`",
+      "why": "*\"Words never spoken … manifests in each of us as human beings.\"*\n\nTom Hardison and Ken open with rigidity and revenge — the two psychological pathologies that show up in every trader's day, on the road, on the soccer sideline, at the desk."
+    },
+    {
+      "id": "s02",
+      "type": "cut",
+      "include": true,
+      "label": "The Stupid Gate Story",
+      "source": "m301",
+      "in": 200,
+      "out": 380,
+      "status": "AS PUBLISHED: course 200–380 s; the player card's text is kept in `why`",
+      "why": "Tom's microcosm: the same military-base gate he's driven through for 27 years still produces a flash of [col5:rigidity + revenge]. The lesson — the patterns are lifelong. Operating yourself means [col5:managing them], not eliminating them."
+    },
+    {
+      "id": "s03",
+      "type": "cut",
+      "include": true,
+      "label": "Tonight We Get to Explore",
+      "source": "m301",
+      "in": 380,
+      "out": 450,
+      "status": "AS PUBLISHED: course 380–450 s; the player card's text is kept in `why`",
+      "why": "Ken's coaching move: do not fix today. Explore. The discipline of the operator starts with the willingness to look at the pathology without flinching."
+    },
+    {
+      "id": "s04",
+      "type": "slide",
+      "include": true,
+      "label": "Chapter 1b — Take the Wheel",
+      "slide_id": "card04",
+      "duration": 3,
+      "layout": "chapter",
+      "text": {
+        "kicker": "As published",
+        "title": "Chapter 1b — Take the Wheel",
+        "subtitle": "",
+        "body": "Four and a half minutes. The interruption discipline. When you notice the monkey is driving, what do you do?"
+      }
+    },
+    {
+      "id": "s05",
+      "type": "cut",
+      "include": true,
+      "label": "How Long Are You Going to Watch the Monkey Drive?",
+      "source": "m302a",
+      "in": 0,
+      "out": 148,
+      "status": "AS PUBLISHED: course 452–600 s; the player card's text is kept in `why`",
+      "why": "*\"How long are you going to watch the monkey drive? You know that's wrong.\"*\n\nThe central question of the chapter. Awareness is not enough — there is a taking-over move the operator has to make."
+    },
+    {
+      "id": "s06",
+      "type": "cut",
+      "include": true,
+      "label": "Take the Wheel the Way You Would for Your Kids",
+      "source": "m302a",
+      "in": 148,
+      "out": 269,
+      "status": "AS PUBLISHED: course 600–721 s; the player card's text is kept in `why`",
+      "why": "*\"If it was my kids driving the car in a poor state of mind, I wouldn't hesitate to just take the wheel.\"*\n\nKen's reframe: authority over the monkey is not optional. It's the same authority you'd exercise instantly for a child you love. [col5:Stop. Flip. Drive.]"
+    },
+    {
+      "id": "s07",
+      "type": "slide",
+      "include": true,
+      "label": "Chapter 2 — The Soccer Game",
+      "slide_id": "card07",
+      "duration": 3,
+      "layout": "chapter",
+      "text": {
+        "kicker": "As published",
+        "title": "Chapter 2 — The Soccer Game",
+        "subtitle": "",
+        "body": "Four minutes. The single cleanest model Ken has for what a trade actually is — borrowed from the sideline of his daughter's games."
+      }
+    },
+    {
+      "id": "s08",
+      "type": "cut",
+      "include": true,
+      "label": "Protect the Goal First",
+      "source": "m302b",
+      "in": 0,
+      "out": 109,
+      "status": "AS PUBLISHED: course 721–830 s; the player card's text is kept in `why`",
+      "why": "*\"Can we protect our goal?\"*\n\nThe first phase of every trade. Protection against disaster — the [col5:1R loss ceiling] — gets set before anything else happens. Risk box up, mental commitment to honor it."
+    },
+    {
+      "id": "s09",
+      "type": "cut",
+      "include": true,
+      "label": "★ Then Get the Ball",
+      "source": "m302b",
+      "in": 109,
+      "out": 159,
+      "status": "AS PUBLISHED: course 830–880 s; the player card's text is kept in `why`",
+      "why": "*\"Now that we've protected our goal, can we get the ball?\"*\n\nPhase two: stalking — preparing to enter, knowing how to win the ball, [col5:making the entry in the direction of price at exactly the right moment, stepping in and taking possession]."
+    },
+    {
+      "id": "s10",
+      "type": "cut",
+      "include": true,
+      "label": "Go to the Goal — Find Space, Stay Out of Congestion",
+      "source": "m302b",
+      "in": 159,
+      "out": 219,
+      "status": "AS PUBLISHED: course 880–940 s; the player card's text is kept in `why`",
+      "why": "Phase three: execution. \"That path is supposed to find space and stay away from congestion. Let the thing run with speed.\" The trade is in flight; you protect what it's doing rather than over-manage it."
+    },
+    {
+      "id": "s11",
+      "type": "cut",
+      "include": true,
+      "label": "Shoot and Score",
+      "source": "m302b",
+      "in": 219,
+      "out": 238,
+      "status": "AS PUBLISHED: course 940–959 s; the player card's text is kept in `why`",
+      "why": "Phase four: delivery. *\"Can I shoot and score? Can I deliver the result that's indicated?\"*\n\nThe exit. Every trade has all four phases. Skipping one is how trades die."
+    },
+    {
+      "id": "s12",
+      "type": "slide",
+      "include": true,
+      "label": "Chapter 3 — Aristotle's Spectrum",
+      "slide_id": "card12",
+      "duration": 3,
+      "layout": "chapter",
+      "text": {
+        "kicker": "As published",
+        "title": "Chapter 3 — Aristotle's Spectrum",
+        "subtitle": "",
+        "body": "Seven minutes. Why pride is the most dangerous failure mode, and where judgment sits on the spectrum."
+      }
+    },
+    {
+      "id": "s13",
+      "type": "cut",
+      "include": true,
+      "label": "Pride Is the First Deadly Sin",
+      "source": "m303",
+      "in": 0,
+      "out": 159,
+      "status": "AS PUBLISHED: course 961–1120 s; the player card's text is kept in `why`",
+      "why": "*\"Of the seven deadly sins, pride is the first most dangerous one.\"*\n\nNot greed. Not fear. Pride — because pride is what makes the trader ignore the data and override the system."
+    },
+    {
+      "id": "s14",
+      "type": "cut",
+      "include": true,
+      "label": "Aristotle Puts Judgment in the Middle",
+      "source": "m303",
+      "in": 159,
+      "out": 319,
+      "status": "AS PUBLISHED: course 1120–1280 s; the player card's text is kept in `why`",
+      "why": "*\"What Aristotle would say is on the spectrum, judgment is in the middle. Confidence is in the middle.\"*\n\nTo the right: overconfidence → pride. To the left: [col5:unconfidence → fear → self-doubt → timidity]. The operator's job is to live in the middle and recognize the slip in either direction."
+    },
+    {
+      "id": "s15",
+      "type": "cut",
+      "include": true,
+      "label": "Both Failure Modes Cost the Same",
+      "source": "m303",
+      "in": 319,
+      "out": 409,
+      "status": "AS PUBLISHED: course 1280–1370 s; the player card's text is kept in `why`",
+      "why": "Pride kills via overreach. Timidity kills via missed trades and undersized winners. The disciplined operator tracks his own position on the spectrum the way he tracks the chart."
+    },
+    {
+      "id": "s16",
+      "type": "slide",
+      "include": true,
+      "label": "Chapter 3b — The A/B/C Game",
+      "slide_id": "card16",
+      "duration": 3,
+      "layout": "chapter",
+      "text": {
+        "kicker": "As published",
+        "title": "Chapter 3b — The A/B/C Game",
+        "subtitle": "",
+        "body": "Four minutes. The scoring system that turns the confidence spectrum into actionable session feedback."
+      }
+    },
+    {
+      "id": "s17",
+      "type": "cut",
+      "include": true,
+      "label": "The B Game Is Your Center of Mass",
+      "source": "m304",
+      "in": 0,
+      "out": 78,
+      "status": "AS PUBLISHED: course 1372–1450 s; the player card's text is kept in `why`",
+      "why": "*\"The normal game, the B game, is zero plus or minus one [sigma].\"*\n\nKen's grading frame: most of your sessions are B. The B-game band is Z minus one to Z plus one — one standard deviation either side of your personal mean."
+    },
+    {
+      "id": "s18",
+      "type": "cut",
+      "include": true,
+      "label": "★ Z+1 Is Where the A Game Begins",
+      "source": "m304",
+      "in": 78,
+      "out": 158,
+      "status": "AS PUBLISHED: course 1450–1530 s; the player card's text is kept in `why`",
+      "why": "*\"Z plus one — that's the boundary. That's where the A game begins.\"*\n\nThe A game is rare and one-sigma above your norm. Below Z minus one is C — the days when the operator is [col5:not himself]. Centered on A and C at the two-sigma extremes."
+    },
+    {
+      "id": "s19",
+      "type": "cut",
+      "include": true,
+      "label": "Rate the Session, Not the P&L",
+      "source": "m304",
+      "in": 158,
+      "out": 259,
+      "status": "AS PUBLISHED: course 1530–1631 s; the player card's text is kept in `why`",
+      "why": "The grade is about how well you ran the system — not whether the day made money. A perfectly executed B-game session is the win condition. Operator hygiene is rating session by session, not month by month."
+    },
+    {
+      "id": "s20",
+      "type": "slide",
+      "include": true,
+      "label": "Chapter 4 — Three Machine Guns",
+      "slide_id": "card20",
+      "duration": 3,
+      "layout": "chapter",
+      "text": {
+        "kicker": "As published",
+        "title": "Chapter 4 — Three Machine Guns",
+        "subtitle": "",
+        "body": "Four and a half minutes. An army parable for disciplined firepower — and why your trading system is one too."
+      }
+    },
+    {
+      "id": "s21",
+      "type": "cut",
+      "include": true,
+      "label": "Three Guns, One Stream of Fire",
+      "source": "m305a",
+      "in": 0,
+      "out": 147,
+      "status": "AS PUBLISHED: course 1633–1780 s; the player card's text is kept in `why`",
+      "why": "Ken's army parable: three machine guns each at 100 rounds per minute in rotation, sounding like one [col5:continuous burst]. Total firepower equals one gun at full rate, but ammunition lasts 20 minutes instead of running dry."
+    },
+    {
+      "id": "s22",
+      "type": "cut",
+      "include": true,
+      "label": "Disciplined Fire Wins the Engagement",
+      "source": "m305a",
+      "in": 147,
+      "out": 267,
+      "status": "AS PUBLISHED: course 1780–1900 s; the player card's text is kept in `why`",
+      "why": "The point: rationed firepower outlasts the engagement. Most traders fire 600-rounds-a-minute at every setup and run dry by mid-morning. [col5:Rotate. Pause. Conserve.] The system that survives is the one that fires less, more deliberately."
+    },
+    {
+      "id": "s23",
+      "type": "slide",
+      "include": true,
+      "label": "Chapter 4b — Cut the Frankenstein",
+      "slide_id": "card23",
+      "duration": 3,
+      "layout": "chapter",
+      "text": {
+        "kicker": "As published",
+        "title": "Chapter 4b — Cut the Frankenstein",
+        "subtitle": "",
+        "body": "Four and a half minutes. The opposite of adding more rules — the discipline of cutting until only the essential remains."
+      }
+    },
+    {
+      "id": "s24",
+      "type": "cut",
+      "include": true,
+      "label": "The Frankenstein Creature",
+      "source": "m305b",
+      "in": 0,
+      "out": 147,
+      "status": "AS PUBLISHED: course 1903–2050 s; the player card's text is kept in `why`",
+      "why": "*\"You're persuading yourself that the software and the robot are doing it, but you're always watching your little Frankenstein creature.\"*\n\nThe pattern Ken sees in technical-analysis programmers: one more rule, one more indicator, one more test. The system grows but the operator [col5:never stops watching it]."
+    },
+    {
+      "id": "s25",
+      "type": "cut",
+      "include": true,
+      "label": "The Minimum Mission-Essential Set",
+      "source": "m305b",
+      "in": 147,
+      "out": 267,
+      "status": "AS PUBLISHED: course 2050–2170 s; the player card's text is kept in `why`",
+      "why": "*\"What's the minimum mission-essential set of things that I need?\"*\n\nThe army doctrine inverts retail trader instinct. Cut indicators. Cut rules. Cut steps. The system that requires the least monitoring is the strongest one."
+    },
+    {
+      "id": "s26",
+      "type": "slide",
+      "include": true,
+      "label": "Chapter 5 — Portfolio Heat",
+      "slide_id": "card26",
+      "duration": 3,
+      "layout": "chapter",
+      "text": {
+        "kicker": "As published",
+        "title": "Chapter 5 — Portfolio Heat",
+        "subtitle": "",
+        "body": "Five and a half minutes. The book-level risk number every operator must be able to name in seconds."
+      }
+    },
+    {
+      "id": "s27",
+      "type": "cut",
+      "include": true,
+      "label": "Define It Before You Need It",
+      "source": "m306",
+      "in": 0,
+      "out": 157,
+      "status": "AS PUBLISHED: course 2173–2330 s; the player card's text is kept in `why`",
+      "why": "*\"What's your total portfolio heat? Describe that in terms of a number.\"*\n\nKen's coaching with Tom: the operator who can't name his portfolio heat in a number cannot manage it. The number is the sum of open risk across all positions [col5:if every one failed at the same time]."
+    },
+    {
+      "id": "s28",
+      "type": "cut",
+      "include": true,
+      "label": "★ Portfolio Heat Is System-Level Risk",
+      "source": "m306",
+      "in": 157,
+      "out": 267,
+      "status": "AS PUBLISHED: course 2330–2440 s; the player card's text is kept in `why`",
+      "why": "*\"And I summed all of the open risk, and then if all of those trades failed at the same time. That's portfolio heat.\"*\n\nNot the worst-case loss on the worst trade. The worst-case loss across the whole book in a single bad day. The number every disciplined operator monitors at all times."
+    },
+    {
+      "id": "s29",
+      "type": "cut",
+      "include": true,
+      "label": "Dynamic Risk Threshold",
+      "source": "m306",
+      "in": 267,
+      "out": 326,
+      "status": "AS PUBLISHED: course 2440–2499 s; the player card's text is kept in `why`",
+      "why": "Heat is expressed as a percentage of total risk capital — not raw dollars. The threshold is dynamic: it tightens in drawdown, loosens after wins. Sizing the next trade is always sizing against [col5:remaining heat capacity], not absolute dollars."
+    },
+    {
+      "id": "s30",
+      "type": "slide",
+      "include": true,
+      "label": "Five chapters, one operator.",
+      "slide_id": "card30",
+      "duration": 3,
+      "layout": "chapter",
+      "text": {
+        "kicker": "As published",
+        "title": "Five chapters, one operator.",
+        "subtitle": "",
+        "body": "Pathologies named. Wheel taken. Soccer game played. Spectrum tracked. Firepower rationed. Frankenstein cut. Heat measured.\n\nNext: Module 4 turns the operator in"
+      }
+    }
+  ]
+}
