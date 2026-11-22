@@ -8,18 +8,18 @@
 :root{
   --bg:#f9f9f7;--card:#fcfcfb;--fg:#0b0b0b;--dim:#52514e;--faint:#8a8880;--border:#e4e2dc;--grid:#eeece6;
   --accent:#b07a1c;--up:#1d8a4e;--dn:#c23b3b;--water:rgba(58,143,138,.14);--water2:rgba(58,143,138,.30);
-  --boat:#1f6f6a;--sail:#f3efe4;--dots:#b07a1c;--bank:#0b0b0b;--rl:#2a78d6;--wake:rgba(31,111,106,.55);
+  --boat:#1f6f6a;--sail:#f3efe4;--dots:#b07a1c;--bank:#0b0b0b;--rl:#2a78d6;--wake:rgba(31,111,106,.75);--beat:rgba(176,122,28,.7);
   --bar:#4a4945;--sand:#e9dcc2;--sand2:#d9c8a4;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#0d0d0d;--card:#1a1a19;--fg:#f0efec;--dim:#c3c2b7;--faint:#8b8a82;--border:#2e2d2a;--grid:#262624;
   --accent:#d4a559;--up:#4cbf7f;--dn:#e66767;--water:rgba(63,191,143,.14);--water2:rgba(63,191,143,.30);
-  --boat:#5fd3cc;--sail:#f0efec;--dots:#d4a559;--bank:#f0efec;--rl:#3987e5;--wake:rgba(95,211,204,.55);
+  --boat:#5fd3cc;--sail:#f0efec;--dots:#d4a559;--bank:#f0efec;--rl:#3987e5;--wake:rgba(95,211,204,.8);--beat:rgba(212,165,89,.7);
   --bar:#b8b6ad;--sand:#3a3428;--sand2:#4a4232;}}
 :root[data-theme="dark"]{
   --bg:#0d0d0d;--card:#1a1a19;--fg:#f0efec;--dim:#c3c2b7;--faint:#8b8a82;--border:#2e2d2a;--grid:#262624;
   --accent:#d4a559;--up:#4cbf7f;--dn:#e66767;--water:rgba(63,191,143,.14);--water2:rgba(63,191,143,.30);
-  --boat:#5fd3cc;--sail:#f0efec;--dots:#d4a559;--bank:#f0efec;--rl:#3987e5;--wake:rgba(95,211,204,.55);
+  --boat:#5fd3cc;--sail:#f0efec;--dots:#d4a559;--bank:#f0efec;--rl:#3987e5;--wake:rgba(95,211,204,.8);--beat:rgba(212,165,89,.7);
   --bar:#b8b6ad;--sand:#3a3428;--sand2:#4a4232;}
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}
@@ -49,6 +49,7 @@ canvas{width:100%;display:block;border-radius:8px}
 .legend{display:flex;gap:16px;flex-wrap:wrap;color:var(--dim);font-size:.85rem;margin-top:6px}
 .legend i{display:inline-block;width:12px;height:12px;border-radius:50%;vertical-align:-2px;margin-right:5px}
 .legend s{display:inline-block;width:18px;height:0;border-top:2px solid;vertical-align:3px;margin-right:5px;text-decoration:none}
+.legend s.thin{border-top-width:1px}
 .winds{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}
 .wind{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;cursor:pointer}
 .wind:hover{border-color:var(--accent)}
@@ -57,6 +58,7 @@ canvas{width:100%;display:block;border-radius:8px}
 .wind p{margin:6px 0 0;color:var(--dim);font-size:.9rem}
 .wind .stats{display:grid;grid-template-columns:1fr 1fr;gap:2px 12px;margin-top:8px;font-size:.85rem;color:var(--dim)}
 .wind .stats b{color:var(--fg);font-weight:600}
+.wind .stats .w{grid-column:1/-1;margin-top:6px;color:var(--faint);font-size:.78rem;text-transform:uppercase;letter-spacing:.06em}
 .beats{counter-reset:b;list-style:none;padding:0;margin:0}
 .beats li{counter-increment:b;display:grid;grid-template-columns:34px 1fr;gap:10px;padding:10px 0;border-top:1px solid var(--border)}
 .beats li:first-child{border-top:0}
@@ -69,7 +71,6 @@ canvas{width:100%;display:block;border-radius:8px}
 .dec li{margin:6px 0}
 .dec b{font-weight:600}
 .note{color:var(--dim);font-size:.9rem}
-.k{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:.85em;background:var(--grid);padding:1px 5px;border-radius:4px}
 footer{color:var(--faint);font-size:.8rem;padding:24px 0 40px;border-top:1px solid var(--border);margin-top:30px}
 </style>
 </head>
@@ -78,8 +79,8 @@ footer{color:var(--faint);font-size:.8rem;padding:24px 0 40px;border-top:1px sol
   <div class="topbar">
     <div>
       <h1>The Dots Are One Bank</h1>
-      <p class="sub">The PSAR dots are one edge of a channel. When the dots sit under price (the flip is long), the far edge is the highs: the high of the leg and the turn of the RL10. Price gets up the channel the way a sailboat gets up a river against the wind: by tacking from bank to bank. A real SPY session is drawn below, twice.</p>
-      <p class="asof">ogtcoursecraft explainer mockup · SPY and QQQ 3-minute bars from this box's WarmDB, 30 sessions to 2026-11-20 · PSAR and legs computed on the page · nothing here is a trade call</p>
+      <p class="sub">The PSAR dots are one edge of a channel. When the dots sit under price (the flip is long), the far edge is the highs: the high of the leg and the turn of the RL10. The wind is the day's direction: easterlies blow the boat up the chart, westerlies blow it down. The side you sail decides whether the day is a run or a beat. With the wind, the legs are long and the dots fall far astern. Against it, the boat still crosses to touch the other bank, then gives it back on every tack. A real SPY session is drawn below, twice.</p>
+      <p class="asof">ogtcoursecraft explainer mockup · SPY and QQQ 3-minute bars from this box's WarmDB, 30 sessions to 2026-11-20 · PSAR, legs and the side numbers computed on the page · nothing here is a trade call</p>
     </div>
     <button id="theme" title="light / dark">◐</button>
   </div>
@@ -90,7 +91,7 @@ footer{color:var(--faint);font-size:.8rem;padding:24px 0 40px;border-top:1px sol
   <div class="grp"><span class="lbl">Wind</span>
     <button class="preset" data-k="east">Easterlies</button>
     <button class="preset" data-k="west">Westerlies</button>
-    <button class="preset" data-k="run">Downwind run</button>
+    <button class="preset" data-k="run">The clean run</button>
   </div>
   <div class="grp"><span class="lbl">Symbol</span><select id="sym"></select></div>
   <div class="grp"><span class="lbl">Session</span><select id="day"></select></div>
@@ -103,47 +104,49 @@ footer{color:var(--faint);font-size:.8rem;padding:24px 0 40px;border-top:1px sol
 </div>
 
 <div class="card">
-  <div class="hd"><h3>1 · The chart: dots on one side, the highs on the other</h3><p>Amber dots are the PSAR. While the flip is long they are the near bank under the boat; the far bank is the running high of the leg, stepped up as new highs print. The RL10's turn (▽) sits on the far bank when the PSAR's price source is the RL10.</p></div>
+  <div class="hd"><h3>1 · The chart: dots on one side, the highs on the other</h3><p>Amber dots are the PSAR. While the flip is long they are the near bank under the boat and the far bank is the running high of the leg. While the flip is short the dots are above and the far bank is the lows. The RL10's turn (▽) sits on the far bank when the PSAR's price source is the RL10.</p></div>
   <canvas id="chart" height="400"></canvas>
   <div class="legend"><span><i style="background:var(--dots)"></i>PSAR dots (near bank)</span><span><s style="border-color:var(--bank)"></s>far bank: the leg's highs (long) / lows (short)</span><span><s style="border-color:var(--rl)"></s>RL10</span><span>▽ RL10 turning point</span><span><i style="background:var(--water2)"></i>the water between the banks = the risk box</span></div>
 </div>
 
 <div class="card">
-  <div class="hd"><h3>2 · The same session as a river</h3><p>Same x, same y. The boat is the close. Every PSAR flip is a tack: the boat has reached a bank and comes about. The compass shows the day's wind; the wake shows the legs.</p></div>
+  <div class="hd"><h3>2 · The same session as a river</h3><p>Same x, same y. The boat is the close. Every PSAR flip is a tack. Legs sailed with the wind are drawn in teal, legs sailed against it in thin amber. The arrow on the right is the wind: up the chart for easterlies, down for westerlies.</p></div>
   <canvas id="sail" height="320"></canvas>
+  <div class="legend"><span><s style="border-color:var(--boat)"></s>leg with the wind (the run)</span><span><s class="thin" style="border-color:var(--dots)"></s>leg against the wind (the beat)</span><span>○ tack (PSAR flip)</span></div>
   <div class="scrub">
     <button id="play">▶ play</button>
     <input id="t" type="range" min="2" max="129" value="129">
     <span id="clock" class="mono">16:00</span>
   </div>
   <div class="read">
+    <span>wind <b id="rWind">—</b></span>
     <span>tacks so far <b id="rTacks">0</b></span>
-    <span>legs that reached the far bank <b id="rTouch">0 / 0</b></span>
+    <span>with the wind <b id="rWith">—</b></span>
+    <span>against it <b id="rAgainst">—</b></span>
     <span>longest leg <b id="rLong">0 bars</b></span>
     <span>day so far <b id="rNet">+0.00</b> of a <b id="rRng">0.00</b> range</span>
-    <span>wind read <b id="rWind">—</b></span>
   </div>
 </div>
 
-<h2>Three winds, three kinds of day</h2>
-<p class="note">Click a card to load that session above. The drawing on each card is the idea; the numbers under it are measured on the session named.</p>
+<h2>Two winds, and the rare clean run</h2>
+<p class="note">Click a card to load that session above. The drawing on each card is the idea; the numbers under it are measured on the session named. "With the wind" means the legs on the day's side (long in an easterly, short in a westerly); points per bar is the close at the end of a leg less the close at its start, over the bars in the leg.</p>
 <div class="winds">
   <div class="wind" data-k="east">
-    <h3>Easterlies · the boat makes way, by zigzags</h3>
-    <svg viewBox="0 0 300 120"><path d="M8 100 L292 40" stroke="var(--bank)" stroke-width="1.5" fill="none"/><path d="M8 112 L292 76" stroke="var(--dots)" stroke-width="1.5" stroke-dasharray="2 5" fill="none"/><path d="M12 106 L50 92 L70 102 L120 80 L140 90 L190 66 L210 76 L260 50 L288 44" stroke="var(--boat)" stroke-width="2.5" fill="none" stroke-linejoin="round"/><g fill="var(--boat)"><circle cx="50" cy="92" r="3"/><circle cx="120" cy="80" r="3"/><circle cx="190" cy="66" r="3"/><circle cx="260" cy="50" r="3"/></g><g fill="var(--dots)"><circle cx="70" cy="102" r="3"/><circle cx="140" cy="90" r="3"/><circle cx="210" cy="76" r="3"/></g><text x="150" y="16" text-anchor="middle" font-size="11" fill="var(--faint)">wind on the beam → short legs, every one touches a bank</text></svg>
-    <p>The day is with you, but not straight. Each leg runs from the dots to the far bank and comes about. The dots step up behind the boat; they are the trailing stop while the RL10 slope is up.</p>
+    <h3>Easterlies · a bullish wind: long is the run</h3>
+    <svg viewBox="0 0 300 120"><path d="M8 100 L292 40" stroke="var(--bank)" stroke-width="1.5" fill="none"/><path d="M8 112 L292 76" stroke="var(--dots)" stroke-width="1.5" stroke-dasharray="2 5" fill="none"/><path d="M12 106 L62 88 L74 98 L140 74 L152 84 L222 56 L232 64 L288 44" stroke="var(--boat)" stroke-width="2.5" fill="none" stroke-linejoin="round"/><g stroke="var(--dots)" stroke-width="1.5" fill="none"><path d="M62 88 L74 98"/><path d="M140 74 L152 84"/><path d="M222 56 L232 64"/></g><g fill="var(--dots)"><circle cx="74" cy="98" r="3"/><circle cx="152" cy="84" r="3"/><circle cx="232" cy="64" r="3"/></g><text x="150" y="16" text-anchor="middle" font-size="11" fill="var(--faint)">wind up the chart: long legs long, short legs short</text></svg>
+    <p>The wind blows the boat up the chart. Sailing long is running with it: the up-legs are long, the dots step up under the boat, the far bank is the highs. Sailing short is beating into it: short legs that reach the dots above and give the ground straight back.</p>
     <div class="stats" id="st-east"></div>
   </div>
   <div class="wind" data-k="west">
-    <h3>Westerlies · losing ground, still touching the far bank</h3>
-    <svg viewBox="0 0 300 120"><path d="M8 30 L292 80" stroke="var(--bank)" stroke-width="1.5" fill="none"/><path d="M8 10 L292 50" stroke="var(--dots)" stroke-width="1.5" stroke-dasharray="2 5" fill="none"/><path d="M12 20 L50 42 L75 26 L130 60 L150 44 L205 76 L225 62 L288 86" stroke="var(--boat)" stroke-width="2.5" fill="none" stroke-linejoin="round"/><g fill="var(--boat)"><circle cx="50" cy="42" r="3"/><circle cx="130" cy="60" r="3"/><circle cx="205" cy="76" r="3"/></g><g fill="var(--dots)"><circle cx="75" cy="26" r="3"/><circle cx="150" cy="44" r="3"/><circle cx="225" cy="62" r="3"/></g><text x="150" y="112" text-anchor="middle" font-size="11" fill="var(--faint)">the dots are above; the up-legs still cross to touch them</text></svg>
-    <p>The day is against you. The boat still crosses to touch the other side on every counter-leg, and that touch at the dots is where the short re-enters: the belly of the RL10 is where the PSAR flips.</p>
+    <h3>Westerlies · a bearish wind: short is the run</h3>
+    <svg viewBox="0 0 300 120"><path d="M8 30 L292 84" stroke="var(--bank)" stroke-width="1.5" fill="none"/><path d="M8 10 L292 50" stroke="var(--dots)" stroke-width="1.5" stroke-dasharray="2 5" fill="none"/><path d="M12 20 L70 48 L82 36 L150 66 L162 54 L230 84 L240 74 L288 88" stroke="var(--boat)" stroke-width="2.5" fill="none" stroke-linejoin="round"/><g stroke="var(--dots)" stroke-width="1.5" fill="none"><path d="M70 48 L82 36"/><path d="M150 66 L162 54"/><path d="M230 84 L240 74"/></g><g fill="var(--dots)"><circle cx="82" cy="36" r="3"/><circle cx="162" cy="54" r="3"/><circle cx="240" cy="74" r="3"/></g><text x="150" y="112" text-anchor="middle" font-size="11" fill="var(--faint)">the up-legs still touch the dots, then lose</text></svg>
+    <p>The wind blows the boat down the chart. Sailing short is the run: the down-legs are long, the dots sit above, the far bank is the lows. Trying to go long is the beat: the boat does get up to touch the other side, and loses ground on every tack. The belly of the RL10 is where the PSAR flips, and that is where the short re-enters.</p>
     <div class="stats" id="st-west"></div>
   </div>
   <div class="wind" data-k="run">
-    <h3>Downwind run · the rare straight leg</h3>
-    <svg viewBox="0 0 300 120"><path d="M8 104 L292 16" stroke="var(--bank)" stroke-width="1.5" fill="none"/><path d="M8 116 L292 60" stroke="var(--dots)" stroke-width="1.5" stroke-dasharray="2 5" fill="none"/><path d="M12 110 L40 96 L60 104 L288 22" stroke="var(--boat)" stroke-width="2.5" fill="none" stroke-linejoin="round"/><g fill="var(--boat)"><circle cx="40" cy="96" r="3"/></g><g fill="var(--dots)"><circle cx="60" cy="104" r="3"/></g><text x="175" y="112" text-anchor="middle" font-size="11" fill="var(--faint)">wind behind: one long leg, the dots far astern</text></svg>
-    <p>Only now and then does the boat get to run. One leg carries most of the day, price rides the far bank, the dots fall far behind. This is the day not to take the first wiggle.</p>
+    <h3>The clean run · rare, in either wind</h3>
+    <svg viewBox="0 0 300 120"><path d="M8 16 L292 104" stroke="var(--bank)" stroke-width="1.5" fill="none"/><path d="M8 4 L292 60" stroke="var(--dots)" stroke-width="1.5" stroke-dasharray="2 5" fill="none"/><path d="M12 10 L40 24 L48 18 L288 100" stroke="var(--boat)" stroke-width="2.5" fill="none" stroke-linejoin="round"/><path d="M40 24 L48 18" stroke="var(--dots)" stroke-width="1.5" fill="none"/><g fill="var(--dots)"><circle cx="48" cy="18" r="3"/></g><text x="110" y="112" text-anchor="middle" font-size="11" fill="var(--faint)">one leg carries the day, the dots far astern</text></svg>
+    <p>Most days, even with the wind, are sailed in tacks. Once in a while one leg carries nearly the whole day: the boat never needs the far bank and the dots are left far astern. That is the day not to take the first wiggle. First wiggle in a major trend: trust the PSAR.</p>
     <div class="stats" id="st-run"></div>
   </div>
 </div>
@@ -153,23 +156,24 @@ footer{color:var(--faint);font-size:.8rem;padding:24px 0 40px;border-top:1px sol
     <h3>How it would be said</h3>
     <ol class="beats">
       <li><div>Every PSAR dot is a bank. When the dots are under the price, the near bank is under you. The far bank is the highs: the high of this leg, and the turn of the RL10.<small>drawn: the chart, dots only, then the far bank fades in on the highs</small></div></li>
-      <li><div>A sailboat cannot go straight up a river into the wind. It tacks: out to one bank, come about, out to the other. Price does the same between the dots and the highs.<small>drawn: the river panel, the boat's first two legs</small></div></li>
+      <li><div>The wind is the day's direction. Easterlies blow the boat up the chart, westerlies down. The boat picks a side; the wind decides whether that side is a run or a beat.<small>drawn: the river panel, the wind arrow, the boat's first two legs</small></div></li>
       <li><div><q>A risk box that is defined by the space between the PSAR dots.</q> The water between the banks is the risk box. The turn at the near bank is the flip.<small>Ken, 5DD mini-lessons transcript (ogt-coursecraft tools/cutroom/5dd)</small></div></li>
-      <li><div>Easterlies: the wind lets you make way, by zigzags. <q>As long as the RL10 slope is up I'm using the PSAR as my trailing stop.</q><small>Ken, 5DD mini-lessons transcript · card 1</small></div></li>
-      <li><div>Westerlies: the day is against you. The boat still crosses to touch the far bank, and that touch is the short: <q>the belly of the RL10 … which is where the PSAR flips.</q><small>Ken, 5DD mini-lessons transcript · card 2</small></div></li>
-      <li><div>Only occasionally does the boat run downwind. One long leg, no bank touched, <q>the P dots are going to look like this, a nice big long trend.</q> First wiggle in a major trend: trust the PSAR.<small>Ken, 5DD transcript; RL10-wiggle rule from the Jay's-chart session (catalog/topic-outlines.md)</small></div></li>
+      <li><div>Easterlies: a bullish wind. Long is the run, and still a run in legs. <q>As long as the RL10 slope is up I'm using the PSAR as my trailing stop.</q> Short is the beat: short legs up to the dots and back.<small>Ken, 5DD mini-lessons transcript · card 1</small></div></li>
+      <li><div>Westerlies: a bearish wind. Short is the run. Going long is beating into it: the boat gets up to touch the far bank and gives it back on every tack. The touch is the short's re-entry: <q>the belly of the RL10 … which is where the PSAR flips.</q><small>Ken, 5DD mini-lessons transcript · card 2</small></div></li>
+      <li><div>The clean run is rare in either wind. One leg, no far bank needed, <q>the P dots are going to look like this, a nice big long trend.</q> First wiggle in a major trend: trust the PSAR.<small>Ken, 5DD transcript; RL10-wiggle rule from the Jay's-chart session (catalog/topic-outlines.md) · card 3</small></div></li>
       <li><div>With the RL10 as the PSAR's price source, the flip lands exactly on the RL10's turning point: the two turning points of the RL10 define the natural channel.<small>Ken, Jay's-chart session (catalog/topic-outlines.md, 0:00–10:00) · toggle "PSAR source" above to see the difference</small></div></li>
     </ol>
   </div>
   <div class="card">
     <h3>What this page measures</h3>
-    <p class="note">PSAR: step 0.02, max 0.20, on the price source chosen above (RL10 feeds high = low = RL10; null RL10 falls back to the close). A <b>leg</b> is a run of bars with one PSAR side; a <b>tack</b> is a flip. A leg <b>reached the far bank</b> when a long leg's high got to the previous long leg's high (or a short leg's low to the previous short leg's low). The <b>wind read</b> on a session nobody picked is a rule, not a judgement: net ÷ range above +0.6 with a leg of 30+ bars is a run; above +0.25 is easterlies; below −0.5 is westerlies; anything else is light air.</p>
+    <p class="note">PSAR: step 0.02, max 0.20, on the price source chosen above (RL10 feeds high = low = RL10; null RL10 falls back to the close). A <b>leg</b> is a run of bars with one PSAR side; a <b>tack</b> is a flip. A leg's <b>points</b> are its last close less its first close; <b>points per bar</b> divides by the bars in the leg; the side numbers sum the legs on each side. The <b>wind</b> on a session nobody picked is a rule, not a judgement: net ÷ range above +0.25 is easterlies, below −0.25 westerlies, between is light air; a day whose longest leg runs 30+ bars with net ÷ range beyond ±0.6 is also marked a clean run. The three presets name their wind outright.</p>
     <h3 style="margin-top:14px">Decisions for the owner</h3>
     <ol class="dec">
-      <li><b>The far bank.</b> The leg's highs (drawn), the RL10 turn (marked ▽), or both. The page draws both so you can see where they differ.</li>
+      <li><b>The far bank.</b> The leg's highs, the RL10 turn (marked ▽), or both. The page draws both so you can see where they differ.</li>
       <li><b>PSAR source.</b> Ken's setting is the RL10. Default here is RL10; the bars version is one click away.</li>
-      <li><b>The three sessions.</b> Presets are SPY 2026-10-21 (easterlies), 2026-11-20 (westerlies), 2026-11-09 (run). Any of the 30 SPY or QQQ sessions can replace them from the picker.</li>
-      <li><b>The wind words.</b> Your easterlies / westerlies / downwind run, or plain sailing words (headwind, crosswind, running). The compass copy follows whichever you pick.</li>
+      <li><b>The three sessions.</b> Presets are SPY 2026-10-21 (easterlies), 2026-10-16 (westerlies), 2026-11-05 (a westerly clean run). Any of the 30 SPY or QQQ sessions can replace them from the picker.</li>
+      <li><b>The efficiency number.</b> Points per bar by side is on the cards; the share of the day's range each side carried is the other candidate.</li>
+      <li><b>The wind words.</b> Easterlies / westerlies with the bullish / bearish gloss, or plain sailing words (running, beating).</li>
       <li><b>Finish style.</b> Ink Board, Field Notes, Desk or the new stage rules from the Stanford study; the river panel is the one new scene kind the kit does not have yet.</li>
     </ol>
   </div>
@@ -178,9 +182,9 @@ footer{color:var(--faint);font-size:.8rem;padding:24px 0 40px;border-top:1px sol
 <footer>ogt-mockups/courses/psar-channel-sail · data.js holds the bars (SPY, QQQ; 3-minute; 2026-10-12 → 2026-11-20) · source note in ogt-coursecraft/devtimeartifacts/psar-channel-sail-2026-11-21/</footer>
 </main>
 
-<script src="data.js?v=3"></script>
+<script src="data.js?v=5"></script>
 <script>
-const BUILD=3; console.log('[sail] build '+BUILD); window.__edgeBuild=BUILD;
+const BUILD=5; console.log('[sail] build '+BUILD); window.__edgeBuild=BUILD;
 
 // ---------- theme ----------
 const root=document.documentElement;
@@ -190,9 +194,9 @@ const css=n=>getComputedStyle(root).getPropertyValue(n).trim();
 
 // ---------- data ----------
 const DATA=window.SAIL_DATA;
-const PRESETS={east:{sym:'SPY',day:'2026-10-21',wind:'Easterlies',note:'wind on the beam: zigzags up'},
-               west:{sym:'SPY',day:'2026-11-20',wind:'Westerlies',note:'against: ground lost, far bank still touched'},
-               run:{sym:'SPY',day:'2026-11-09',wind:'Downwind run',note:'wind behind: one long leg'}};
+const PRESETS={east:{sym:'SPY',day:'2026-10-21',wind:'Easterlies',dir:1},
+               west:{sym:'SPY',day:'2026-10-16',wind:'Westerlies',dir:-1},
+               run:{sym:'SPY',day:'2026-11-05',wind:'Westerlies · clean run',dir:-1}};
 const state={sym:'SPY',day:'2026-10-21',src:'rl',bank:true,rl:true,water:true,t:129,preset:'east',playing:false};
 
 function psar(h,l,af0=0.02,afmax=0.2){
@@ -212,7 +216,6 @@ function analyse(sym,day,src){
   const d=DATA[sym][day], n=d.c.length;
   const rl=d.rl.map((v,i)=>v==null?d.c[i]:v);
   const p=src==='rl'?psar(rl,rl):psar(d.h,d.l);
-  // legs
   const legs=[]; let cur=null;
   for(let i=1;i<n;i++){
     if(!cur||cur.long!==p.lg[i]){ if(cur) legs.push(cur); cur={long:p.lg[i],i0:i,i1:i,ext:p.lg[i]?d.h[i]:d.l[i],rlTurn:i,rlExt:rl[i]}; }
@@ -221,13 +224,6 @@ function analyse(sym,day,src){
     else { if(d.l[i]<cur.ext) cur.ext=d.l[i]; if(rl[i]<cur.rlExt){cur.rlExt=rl[i];cur.rlTurn=i;} }
   }
   if(cur) legs.push(cur);
-  // far-bank reach: compare to the previous leg of the same side
-  let lastLongExt=null,lastShortExt=null;
-  for(const L of legs){
-    if(L.long){ L.reach=lastLongExt==null?null:(L.ext>=lastLongExt); lastLongExt=L.ext; }
-    else { L.reach=lastShortExt==null?null:(L.ext<=lastShortExt); lastShortExt=L.ext; }
-  }
-  // far-bank series: running extreme within the leg
   const bank=new Array(n).fill(null);
   for(const L of legs){ let e=null; for(let i=L.i0;i<=L.i1;i++){ const v=L.long?d.h[i]:d.l[i]; e=e==null?v:(L.long?Math.max(e,v):Math.min(e,v)); bank[i]=e; } }
   const legOf=new Array(n).fill(null); legs.forEach((L,k)=>{for(let i=L.i0;i<=L.i1;i++) legOf[i]=k;});
@@ -237,9 +233,19 @@ function windRead(a,t){
   const c=a.d.c, h=a.d.h.slice(0,t+1), l=a.d.l.slice(0,t+1);
   const net=c[t]-c[0], rng=Math.max(...h)-Math.min(...l), eff=rng?net/rng:0;
   let longest=0; for(const L of a.legs){ if(L.i0>t) break; longest=Math.max(longest,Math.min(L.i1,t)-L.i0+1); }
-  const tag= eff>0.6&&longest>=30?'Downwind run': eff>0.25?'Easterlies': eff<-0.5?'Westerlies':'Light air';
-  return {net,rng,eff,longest,tag};
+  let dir=0, tag='Light air';
+  if(state.preset){ dir=PRESETS[state.preset].dir; tag=PRESETS[state.preset].wind; }
+  else { dir=eff>0.25?1:eff<-0.25?-1:0; tag=dir>0?'Easterlies':dir<0?'Westerlies':'Light air'; if(dir&&Math.abs(eff)>0.6&&longest>=30) tag+=' · clean run'; }
+  return {net,rng,eff,longest,dir,tag};
 }
+// legs on each side up to bar t: count, points (last close − first close), bars
+function sideStats(a,t){
+  const out={long:{n:0,pts:0,bars:0},short:{n:0,pts:0,bars:0}};
+  for(const L of a.legs){ if(L.i0>t) break; const i1=Math.min(L.i1,t); const s=L.long?out.long:out.short; s.n++; s.pts+=a.d.c[i1]-a.d.c[L.i0]; s.bars+=i1-L.i0+1; }
+  return out;
+}
+const fmt=(v,d=2)=>(v>=0?'+':'')+v.toFixed(d);
+function sideLine(s){ return s.n?`${s.n} leg${s.n>1?'s':''} · ${fmt(s.pts)} pts in ${s.bars} bars · ${fmt(s.pts/s.bars,3)}/bar`:'—'; }
 
 // ---------- canvases ----------
 const C1=document.getElementById('chart'), C2=document.getElementById('sail');
@@ -254,57 +260,45 @@ function timeAxis(g,a,x,H,padB){
   g.fillStyle=css('--faint'); g.font='11px -apple-system,Segoe UI,sans-serif'; g.textAlign='center';
   for(let i=0;i<a.n;i++){ if(a.d.t[i].endsWith(':30')||a.d.t[i].endsWith(':00')){ if(a.d.t[i].slice(3)==='30'&&a.d.t[i]!=='09:30') continue; g.fillText(a.d.t[i],x(i),H-padB+14);} }
 }
+function niceStep(r){ const p=Math.pow(10,Math.floor(Math.log10(r))); const m=r/p; return (m<1.5?1:m<3.5?2.5:m<7.5?5:10)*p; }
 function drawChart(){
   const {g,W,H}=fit(C1), a=A, t=state.t; const padL=8,padR=56,padT=10,padB=22; const {x,y}=scales(a,W,H,padL,padR,padT,padB);
   g.clearRect(0,0,W,H);
-  // grid + price axis
   g.strokeStyle=css('--grid'); g.lineWidth=1; g.fillStyle=css('--faint'); g.font='11px -apple-system,Segoe UI,sans-serif'; g.textAlign='left';
   const lo=Math.min(...a.d.l), hi=Math.max(...a.d.h), step=niceStep((hi-lo)/6);
   for(let v=Math.ceil(lo/step)*step; v<=hi; v+=step){ g.beginPath(); g.moveTo(padL,y(v)); g.lineTo(W-padR,y(v)); g.stroke(); g.fillText(v.toFixed(2),W-padR+6,y(v)+4); }
   timeAxis(g,a,x,H,padB);
-  // water between dots and the far bank
   if(state.water){ for(const L of a.legs){ if(L.i0>t) break; const i1=Math.min(L.i1,t); g.fillStyle=css('--water'); g.beginPath();
       for(let i=L.i0;i<=i1;i++){ g.lineTo(x(i),y(a.sar[i])); } for(let i=i1;i>=L.i0;i--){ g.lineTo(x(i),y(a.bank[i])); } g.closePath(); g.fill(); } }
-  // bars
   const bw=Math.max(1.5,(W-padL-padR)/a.n*0.6);
   for(let i=0;i<=t;i++){ const up=a.d.c[i]>=a.d.o[i]; g.strokeStyle=css('--bar'); g.fillStyle=up?css('--card'):css('--bar'); g.lineWidth=1;
     g.beginPath(); g.moveTo(x(i),y(a.d.h[i])); g.lineTo(x(i),y(a.d.l[i])); g.stroke();
     const yo=y(a.d.o[i]), yc=y(a.d.c[i]); g.fillRect(x(i)-bw/2,Math.min(yo,yc),bw,Math.max(1,Math.abs(yc-yo))); g.strokeRect(x(i)-bw/2,Math.min(yo,yc),bw,Math.max(1,Math.abs(yc-yo))); }
-  // RL10
   if(state.rl){ g.strokeStyle=css('--rl'); g.lineWidth=1.4; g.beginPath(); for(let i=0;i<=t;i++){ if(a.d.rl[i]==null) continue; g.lineTo(x(i),y(a.d.rl[i])); } g.stroke(); }
-  // far bank
   if(state.bank){ g.strokeStyle=css('--bank'); g.lineWidth=1.8; for(const L of a.legs){ if(L.i0>t) break; const i1=Math.min(L.i1,t); g.beginPath(); for(let i=L.i0;i<=i1;i++){ g.lineTo(x(i),y(a.bank[i])); } g.stroke();
       if(L.rlTurn<=t && L.i1-L.i0>=3){ const yy=y(a.rl[L.rlTurn]); g.fillStyle=css('--rl'); g.beginPath(); if(L.long){ g.moveTo(x(L.rlTurn)-5,yy-9); g.lineTo(x(L.rlTurn)+5,yy-9); g.lineTo(x(L.rlTurn),yy-2);} else { g.moveTo(x(L.rlTurn)-5,yy+9); g.lineTo(x(L.rlTurn)+5,yy+9); g.lineTo(x(L.rlTurn),yy+2);} g.closePath(); g.fill(); } } }
-  // dots
   g.fillStyle=css('--dots'); for(let i=1;i<=t;i++){ g.beginPath(); g.arc(x(i),y(a.sar[i]),2.4,0,7); g.fill(); }
-  // flip ticks
   for(const L of a.legs){ if(L.i0>t||L.i0<2) continue; g.strokeStyle=css('--dots'); g.lineWidth=1; g.setLineDash([2,3]); g.beginPath(); g.moveTo(x(L.i0),padT); g.lineTo(x(L.i0),H-padB); g.stroke(); g.setLineDash([]); }
-  // cursor
   g.strokeStyle=css('--accent'); g.lineWidth=1; g.beginPath(); g.moveTo(x(t),padT); g.lineTo(x(t),H-padB); g.stroke();
-  // caption
   g.fillStyle=css('--fg'); g.font='600 13px -apple-system,Segoe UI,sans-serif'; g.textAlign='left';
   g.fillText(state.sym+' · '+state.day+' · 3-minute · PSAR on '+(state.src==='rl'?'RL10':'bar highs/lows'),padL+6,padT+14);
 }
-function niceStep(r){ const p=Math.pow(10,Math.floor(Math.log10(r))); const m=r/p; return (m<1.5?1:m<3.5?2.5:m<7.5?5:10)*p; }
 
 function drawSail(){
-  const {g,W,H}=fit(C2), a=A, t=state.t; const padL=8,padR=150,padT=14,padB=22; const {x,y}=scales(a,W,H,padL,padR,padT,padB);
+  const {g,W,H}=fit(C2), a=A, t=state.t; const padL=8,padR=190,padT=14,padB=22; const {x,y}=scales(a,W,H,padL,padR,padT,padB);
+  const w=windRead(a,t);
   g.clearRect(0,0,W,H);
-  // banks as sand, water between
   for(const L of a.legs){ if(L.i0>t) break; const i1=Math.min(L.i1,t);
-    // water
     g.fillStyle=css('--water2'); g.beginPath(); for(let i=L.i0;i<=i1;i++) g.lineTo(x(i),y(a.sar[i])); for(let i=i1;i>=L.i0;i--) g.lineTo(x(i),y(a.bank[i])); g.closePath(); g.fill();
-    // near bank (dots) as a sand strip beyond the dots
     g.fillStyle=css('--sand'); g.beginPath(); for(let i=L.i0;i<=i1;i++) g.lineTo(x(i),y(a.sar[i])); for(let i=i1;i>=L.i0;i--) g.lineTo(x(i),y(a.sar[i])+(L.long?10:-10)); g.closePath(); g.fill();
-    // far bank sand strip beyond the highs
     g.fillStyle=css('--sand2'); g.beginPath(); for(let i=L.i0;i<=i1;i++) g.lineTo(x(i),y(a.bank[i])); for(let i=i1;i>=L.i0;i--) g.lineTo(x(i),y(a.bank[i])+(L.long?-8:8)); g.closePath(); g.fill();
   }
-  // dots as pilings
   g.fillStyle=css('--dots'); for(let i=1;i<=t;i++){ g.beginPath(); g.arc(x(i),y(a.sar[i]),2,0,7); g.fill(); }
-  // wake: the closes, fading
-  for(let i=2;i<=t;i++){ const age=(t-i)/a.n; g.strokeStyle=css('--wake'); g.globalAlpha=Math.max(.15,1-age*1.6); g.lineWidth=2; g.beginPath(); g.moveTo(x(i-1),y(a.d.c[i-1])); g.lineTo(x(i),y(a.d.c[i])); g.stroke(); }
+  // wake by side: with the wind thick teal, against thin amber
+  for(let i=2;i<=t;i++){ const L=a.legs[a.legOf[i]]; const withWind=w.dir===0?true:(L.long===(w.dir>0)); const age=(t-i)/a.n;
+    g.strokeStyle=withWind?css('--wake'):css('--beat'); g.lineWidth=withWind?2.6:1.2; g.globalAlpha=Math.max(.25,1-age*1.4);
+    g.beginPath(); g.moveTo(x(i-1),y(a.d.c[i-1])); g.lineTo(x(i),y(a.d.c[i])); g.stroke(); }
   g.globalAlpha=1;
-  // tack markers at flips
   for(const L of a.legs){ if(L.i0>t||L.i0<2) continue; g.fillStyle=css('--card'); g.strokeStyle=css('--boat'); g.lineWidth=2; g.beginPath(); g.arc(x(L.i0),y(a.d.c[L.i0]),4.5,0,7); g.fill(); g.stroke(); }
   // the boat
   const i=t, j=Math.max(1,t-2); const ang=Math.atan2(y(a.d.c[i])-y(a.d.c[j]), x(i)-x(j));
@@ -312,36 +306,42 @@ function drawSail(){
   g.fillStyle=css('--boat'); g.beginPath(); g.moveTo(14,0); g.lineTo(4,6); g.lineTo(-10,6); g.lineTo(-12,0); g.lineTo(-10,-6); g.lineTo(4,-6); g.closePath(); g.fill();
   g.fillStyle=css('--sail'); g.strokeStyle=css('--boat'); g.lineWidth=1; const lee=a.lg[i]?-1:1; g.beginPath(); g.moveTo(-6,0); g.lineTo(6,0); g.lineTo(-2,lee*16); g.closePath(); g.fill(); g.stroke();
   g.restore();
-  // compass + wind
-  const w=windRead(a,t), cx=W-76, cy=padT+52, R=34;
+  // the wind: a vertical arrow, up the chart for easterlies, down for westerlies
+  const cx=W-95, cy=padT+56, R=36;
   g.strokeStyle=css('--border'); g.lineWidth=1; g.beginPath(); g.arc(cx,cy,R,0,7); g.stroke();
-  g.fillStyle=css('--faint'); g.font='10px -apple-system,Segoe UI,sans-serif'; g.textAlign='center'; g.fillText('N',cx,cy-R+10); g.fillText('S',cx,cy+R-3); g.fillText('E',cx+R-6,cy+4); g.fillText('W',cx-R+6,cy+4);
-  const label=state.preset?PRESETS[state.preset].wind:w.tag; const from = label==='Easterlies'?0:label==='Westerlies'?Math.PI:label==='Downwind run'?Math.PI/2:null;
-  if(from!=null){ const fx=cx+Math.cos(from)*R*0.8, fy=cy+Math.sin(from)*R*0.8, tx=cx-Math.cos(from)*R*0.5, ty=cy-Math.sin(from)*R*0.5; g.strokeStyle=css('--accent'); g.lineWidth=2.5; g.beginPath(); g.moveTo(fx,fy); g.lineTo(tx,ty); g.stroke(); g.fillStyle=css('--accent'); const b=Math.atan2(ty-fy,tx-fx); g.beginPath(); g.moveTo(tx,ty); g.lineTo(tx-Math.cos(b-.5)*9,ty-Math.sin(b-.5)*9); g.lineTo(tx-Math.cos(b+.5)*9,ty-Math.sin(b+.5)*9); g.closePath(); g.fill(); }
-  g.fillStyle=css('--fg'); g.font='600 12px -apple-system,Segoe UI,sans-serif'; g.textAlign='center'; g.fillText(label,cx,cy+R+16);
-  g.fillStyle=css('--faint'); g.font='10.5px -apple-system,Segoe UI,sans-serif'; g.fillText('up the river = up the chart',cx,cy+R+30);
-  // bank labels at the current leg
+  if(w.dir!==0){ const s=w.dir>0?1:-1; const y0=cy+s*R*0.75, y1=cy-s*R*0.75; g.strokeStyle=css('--accent'); g.lineWidth=3; g.beginPath(); g.moveTo(cx,y0); g.lineTo(cx,y1); g.stroke(); g.fillStyle=css('--accent'); g.beginPath(); g.moveTo(cx,y1-s*2); g.lineTo(cx-7,y1+s*10); g.lineTo(cx+7,y1+s*10); g.closePath(); g.fill(); }
+  else { g.fillStyle=css('--faint'); g.font='11px -apple-system,Segoe UI,sans-serif'; g.textAlign='center'; g.fillText('light air',cx,cy+4); }
+  g.fillStyle=css('--fg'); g.font='600 12px -apple-system,Segoe UI,sans-serif'; g.textAlign='center'; g.fillText(w.tag,cx,cy+R+16);
+  g.fillStyle=css('--faint'); g.font='10.5px -apple-system,Segoe UI,sans-serif';
+  g.fillText(w.dir>0?'bullish wind · blows up the chart':w.dir<0?'bearish wind · blows down the chart':'no wind to run with',cx,cy+R+30);
+  g.fillText(w.dir>0?'long runs · short beats':w.dir<0?'short runs · long beats':'every leg is a beat',cx,cy+R+44);
   const L=a.legs[a.legOf[t]]; if(L){ g.font='600 11px -apple-system,Segoe UI,sans-serif'; g.textAlign='right'; g.fillStyle=css('--dots'); g.fillText('near bank: the dots',x(t)-12,y(a.sar[t])+(L.long?14:-6)); g.fillStyle=css('--bank'); g.fillText(L.long?'far bank: the highs':'far bank: the lows',x(t)-12,y(a.bank[t])+(L.long?-6:14)); }
   timeAxis(g,a,x,H,padB);
 }
 
 function readouts(){
-  const a=A,t=state.t,w=windRead(a,t);
+  const a=A,t=state.t,w=windRead(a,t),ss=sideStats(a,t);
   const done=a.legs.filter(L=>L.i0<=t&&L.i0>=2);
-  const seen=a.legs.filter(L=>L.i0<=t&&L.reach!=null); const hit=seen.filter(L=>L.reach).length;
+  const withS=w.dir>0?ss.long:w.dir<0?ss.short:null, agS=w.dir>0?ss.short:w.dir<0?ss.long:null;
+  document.getElementById('rWind').textContent=w.tag+(state.preset?' (preset)':' (rule)');
   document.getElementById('rTacks').textContent=done.length;
-  document.getElementById('rTouch').textContent=hit+' / '+seen.length;
+  document.getElementById('rWith').textContent=withS?(w.dir>0?'long · ':'short · ')+sideLine(withS):'no wind: long '+sideLine(ss.long)+'; short '+sideLine(ss.short);
+  document.getElementById('rAgainst').textContent=agS?(w.dir>0?'short · ':'long · ')+sideLine(agS):'—';
   document.getElementById('rLong').textContent=w.longest+' bars';
-  document.getElementById('rNet').textContent=(w.net>=0?'+':'')+w.net.toFixed(2);
+  document.getElementById('rNet').textContent=fmt(w.net);
   document.getElementById('rRng').textContent=w.rng.toFixed(2);
-  document.getElementById('rWind').textContent=(state.preset?PRESETS[state.preset].wind+' (preset)':w.tag+' (rule)');
   document.getElementById('clock').textContent=a.d.t[t];
 }
 function cardStats(){
-  for(const k of Object.keys(PRESETS)){ const P=PRESETS[k], a=analyse(P.sym,P.day,state.src), w=windRead(a,a.n-1);
-    const seen=a.legs.filter(L=>L.reach!=null), hit=seen.filter(L=>L.reach).length, tacks=a.legs.filter(L=>L.i0>=2).length;
-    const longest=a.legs.reduce((m,L)=>Math.max(m,L.i1-L.i0+1),0); const longLeg=a.legs.find(L=>L.i1-L.i0+1===longest);
-    document.getElementById('st-'+k).innerHTML=`<span>session</span><b>${P.sym} ${P.day}</b><span>net ÷ range</span><b>${(w.net>=0?'+':'')+w.net.toFixed(2)} ÷ ${w.rng.toFixed(2)} = ${w.eff>=0?'+':''}${w.eff.toFixed(2)}</b><span>tacks (flips)</span><b>${tacks}</b><span>legs that reached the far bank</span><b>${hit} of ${seen.length}</b><span>longest leg</span><b>${longest} bars, ${longLeg.long?'long':'short'}, ${a.d.t[longLeg.i0]}–${a.d.t[longLeg.i1]}</b><span>bars with dots below</span><b>${Math.round(100*a.lg.filter(v=>v).length/(a.n-1))}%</b>`; }
+  const keep=state.preset;
+  for(const k of Object.keys(PRESETS)){ const P=PRESETS[k], a=analyse(P.sym,P.day,state.src); state.preset=k; const w=windRead(a,a.n-1); state.preset=keep;
+    const ss=sideStats(a,a.n-1), withS=P.dir>0?ss.long:ss.short, agS=P.dir>0?ss.short:ss.long;
+    const tacks=a.legs.filter(L=>L.i0>=2).length; const longest=a.legs.reduce((m,L)=>Math.max(m,L.i1-L.i0+1),0); const longLeg=a.legs.find(L=>L.i1-L.i0+1===longest);
+    const ratio=Math.abs(withS.pts/withS.bars)/Math.max(1e-9,Math.abs(agS.pts/agS.bars));
+    document.getElementById('st-'+k).innerHTML=`<span>session</span><b>${P.sym} ${P.day}</b><span>net ÷ range</span><b>${fmt(w.net)} ÷ ${w.rng.toFixed(2)} = ${fmt(w.eff)}</b><span>tacks (flips)</span><b>${tacks}</b><span>longest leg</span><b>${longest} bars, ${longLeg.long?'long':'short'}, ${a.d.t[longLeg.i0]}–${a.d.t[longLeg.i1]}</b>
+      <span class="w">with the wind · ${P.dir>0?'long':'short'} legs</span><span>legs · points · bars</span><b>${withS.n} · ${fmt(withS.pts)} · ${withS.bars}</b><span>points per bar</span><b>${fmt(withS.pts/withS.bars,3)}</b>
+      <span class="w">against it · ${P.dir>0?'short':'long'} legs</span><span>legs · points · bars</span><b>${agS.n} · ${fmt(agS.pts)} · ${agS.bars}</b><span>points per bar</span><b>${fmt(agS.pts/agS.bars,3)}</b>
+      <span>run vs beat, per bar</span><b>${ratio.toFixed(1)}×</b>`; }
   document.querySelectorAll('.wind').forEach(el=>el.classList.toggle('on',el.dataset.k===state.preset));
   document.querySelectorAll('.preset').forEach(el=>el.classList.toggle('on',el.dataset.k===state.preset));
 }
@@ -351,7 +351,7 @@ function draw(){ drawChart(); drawSail(); readouts(); }
 // ---------- controls ----------
 const symSel=document.getElementById('sym'), daySel=document.getElementById('day');
 for(const s of Object.keys(DATA)){ const o=document.createElement('option'); o.value=o.textContent=s; symSel.appendChild(o); }
-function fillDays(){ daySel.innerHTML=''; for(const d of Object.keys(DATA[state.sym])){ const a=analyse(state.sym,d,state.src), w=windRead(a,a.n-1); const o=document.createElement('option'); o.value=d; o.textContent=`${d}  ${w.net>=0?'+':''}${w.net.toFixed(2)}  ${w.tag}`; daySel.appendChild(o); } daySel.value=state.day; }
+function fillDays(){ const keep=state.preset; state.preset=null; daySel.innerHTML=''; for(const d of Object.keys(DATA[state.sym])){ const a=analyse(state.sym,d,state.src), w=windRead(a,a.n-1); const o=document.createElement('option'); o.value=d; o.textContent=`${d}  ${fmt(w.net)}  ${w.tag}`; daySel.appendChild(o); } daySel.value=state.day; state.preset=keep; }
 symSel.onchange=()=>{ state.sym=symSel.value; state.preset=null; const days=Object.keys(DATA[state.sym]); if(!days.includes(state.day)) state.day=days[days.length-1]; fillDays(); state.t=2; load(); };
 daySel.onchange=()=>{ state.day=daySel.value; state.preset=null; state.t=2; load(); };
 document.querySelectorAll('.preset,.wind').forEach(el=>el.addEventListener('click',()=>{ const P=PRESETS[el.dataset.k]; state.preset=el.dataset.k; state.sym=P.sym; state.day=P.day; symSel.value=P.sym; fillDays(); state.t=2; load(); startPlay(); }));
