@@ -39,7 +39,7 @@
   <div id="fade"></div>
 </div>
 <script>
-const BUILD = 's17a-5';
+const BUILD = 's17a-6';
 console.log('[s17a] build', BUILD);
 // Overdub twin of s17: Ken's audio apk 4787.0→4888.0; t is seconds after the in-point.
 // Beat times read from the VTT cues on 2026-11-21 (tools/cutroom/disciplined-operator-v2/transcript-apk.json).
@@ -72,7 +72,9 @@ const type=(s,t,t0,cps)=>s.slice(0,Math.max(0,Math.floor((t-t0)*(cps||28))));
 // a list that reveals one row per step seconds from t0
 // --- the lesson helpers (2026-11-21, read from the Stanford "Probability for AI" screens) ---
 // the question the window answers, top-left of the scene, serif, amber
-const head=(t,t0,q,o={})=>{const a=op(t,t0,.5);if(a<=0)return '';const capH=($('cap')||{}).offsetHeight||0;const y=Math.max(o.y||44,(capH-68)/1.1034+32);return txt(o.x||40,y,q,{sz:o.sz||30,c:o.c||ACC,w:600,o:a,cls:'serif'});};   // under a three-line caption the question steps down
+const headY=(o={})=>{const capH=($('cap')||{}).offsetHeight||0;return Math.max(o.y||44,(capH-68)/1.1034+32);};
+const head=(t,t0,q,o={})=>{const a=op(t,t0,.5);if(a<=0)return '';return txt(o.x||40,headY(o),q,{sz:o.sz||30,c:o.c||ACC,w:600,o:a,cls:'serif'});};
+const bridge=(t,t0,s,o={})=>{const a=op(t,t0+.4,.6);if(a<=0)return '';const x=o.x||40,y=headY(o)+(o.dy||33);return txt(x,y,'in trading:',{sz:o.sz||24,c:MUT,o:a,cls:'hand'})+txt(x+(o.gap||128),y,s,{sz:o.sz||24,c:o.c||FG,o:a*.92,cls:'hand'});};   // the metaphor named as the trade, under the head, for the whole scene (lesson rule 8)   // under a three-line caption the question steps down
 // where to look: a soft ring that glides to the element of the beat. pts=[[t0,x,y],...]; it holds for o.hold s (default 5) after each beat
 function focus(t,pts,o={}){let cur=null,prev=null;for(const p of pts){if(t>=p[0]){prev=cur;cur=p;}}if(!cur)return '';const age=t-cur[0];if(age>(o.hold||5))return '';
   const u=prev?pr(t,cur[0],.6):1;const x=prev?lerp(prev[1],cur[1],u):cur[1],y=prev?lerp(prev[2],cur[2],u):cur[2];const r=(o.r||22)+Math.sin(t*4)*2;const a=op(t,cur[0],.3)*(age>(o.hold||5)-.6?((o.hold||5)-age)/.6:1);
@@ -113,7 +115,7 @@ const ledger=()=>txt(0,24,'$1,000,000',{sz:30,c:FG,cls:'mono'})+txt(0,58,'10 pos
 
 function draw(t){
   let s='';
-  s += head(t,2.4,'What does not vary?');
+  s += head(t,2.4,'What does not vary?')+bridge(t,2.4,"the end-of-day mark on your trading, compared over time");
   // the head: a line that wanders with the weather; the heart: a line that holds
   const x0=60, w=680;
   s += lab(t,13.8,x0,120,'the head: the thinking',{sz:20,c:MUT});

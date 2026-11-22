@@ -1,14 +1,14 @@
 {
   "schema": "coursecraft-plan-v2",
   "course": "disciplined-operator-v2",
-  "revision": 7,
+  "revision": 8,
   "revised": "2026-11-21",
   "status": "DRAFT rev2 (2026-11-21): rev 1's source-mapped, duration-verified cut (title quotes restored, windows follow the speech) carried forward; animation briefs in the current style added on the three framework overdubs and the explainer; corpus re-check done (below). The owner compares it with disciplined-operator-v1 (as published) and edits here.",
   "title": "The Disciplined Operator (v2)",
   "topic_class": "psychology-heavy + three chartable frameworks; ZERO outcomes (nothing decidable in footage)",
   "store_sku": "disciplined-operator",
   "replaces": "c-tosm3",
-  "notes": "Cut track: docs/store-v2-cut-tracks.md §3. Mapping findings folded in: (1) the four soccer beats all live in ONE continuous 65s source passage (18:06-19:03 of coaching-tom-hardison) — v1's scene windows 9-11 sat over unrelated footage and the sting fired ~90s late; the 4-beat overdub is timed to 18:06/18:19/18:41/18:54 with the compact all-four-rules line (15:37-15:43) for the summary frame; (2) systematic scene-title drift — titles anchored to speech earlier than their windows throughout; v2 windows follow the SPEECH; (3) sting prompt fields are stale M1 copy-paste (the _note fields were correct); (4) ATTRIBUTION CHECK for cutroom: the 27-years gate story — card credits Tom, build doc credits Ken; VTT has no speaker tags; LISTEN and card accordingly.\n\n2026-11-21 corpus re-check (kenlong-transcripts, 566 sessions): the four sessions this plan cuts from remain the strongest on every theme. revenge/rigidity 168 mentions in 40 files, 70 of them in coaching-tom-hardison (b9h), the next best 6; monkey-drive / take the wheel: only b9h and apk carry it; soccer protect-the-goal 347 mentions in 75 files, b9h first with 38 (the creativity-202 sessions use the soccer model for coaching, not for the trade lifecycle); Aristotle / pride / timidity: apk carries the trading spectrum, the other hits are Aristotle on coaching in Athens and on formal logic; A/B/C Z-bands: apk 19 of 60; three machine guns: cohort-1-burnout-resilience (c1) 16 of 19; Frankenstein / minimum mission-essential: c1 plus a 2022-08-28 creativity session (courage) and swing-trading-qa-2; portfolio heat: 4321-position-sizing (p4321) 13 of 26, next 2023-06-30 session (uGb4ksTazhk 1:12:02, 'if every single open trade I have is wrong, the accumulated risk of every open trade') as a spoken alternate, not yet a source. So the improvement is structural and visual, not a swap of footage: the restored lines, the speech-aligned windows, the four-beat soccer overdub, the Z-band overdub, the heat gauge, and the Ava explainer for the threshold. The ★ stings of v1 are kept as the twin's caption beats. Style: ink, Ken's tile top-right where b9h and apk have him on camera (crops from mental-model-2-v2 / mental-model-v2).\n\nrev3 (2026-11-21, owner: twins for all the clips with Ken's tile): every cut has an animated twin (anim_gen.py), the cut off and the twin on; b9h and c1 crop to Ken's tile (the student is gone), apk and p4321 show his still (their tiles are thumbnails); s08 and s15 drawn; s27 explainer scripted.\n\nrev4 (2026-11-21, owner: 'i really like the new cut'; two design cards): s00 the internal story arc, s00s the sales promise, both at the head of the cutroom, ON so they sit in the storyboard; neither is meant for the render unless the owner keeps s00s.\n\nrev5 (2026-11-21, owner: two wordy slides as description copy): s00w the arc in prose, s00sw the store description, layout `prose` (new in render_slides and cutroom-30).\n\nrev6 (2026-11-21, owner: 'let's do B'): s000 the course opener from the Stanford style study, option B (the watch) around the Zero State owl portrait; scripts/opener.py writes it; first in the storyboard, ON.\n\nrev7 (2026-11-21, owner: 'recut the operator with our new approach, using all things that help'): the stage cut. Every twin and both overdubs and the explainer rebuilt on the `stage` (pure black, the scene at full width) under the lesson rules from the Stanford study: the question the window answers as the scene's head, one figure across the left with 20-34 px labels and the numbers in a right column, a focus ring on the element of each beat, the rule he states boxed in his words, his asides in the handwritten register, the $1,000,000 / 10 positions / 1 % example carried from s25 into s26 (recall box) and s27, one colour per quantity, the chapter counter bottom-right. Beats unchanged from rev 3.",
+  "notes": "Cut track: docs/store-v2-cut-tracks.md §3. Mapping findings folded in: (1) the four soccer beats all live in ONE continuous 65s source passage (18:06-19:03 of coaching-tom-hardison) — v1's scene windows 9-11 sat over unrelated footage and the sting fired ~90s late; the 4-beat overdub is timed to 18:06/18:19/18:41/18:54 with the compact all-four-rules line (15:37-15:43) for the summary frame; (2) systematic scene-title drift — titles anchored to speech earlier than their windows throughout; v2 windows follow the SPEECH; (3) sting prompt fields are stale M1 copy-paste (the _note fields were correct); (4) ATTRIBUTION CHECK for cutroom: the 27-years gate story — card credits Tom, build doc credits Ken; VTT has no speaker tags; LISTEN and card accordingly.\n\n2026-11-21 corpus re-check (kenlong-transcripts, 566 sessions): the four sessions this plan cuts from remain the strongest on every theme. revenge/rigidity 168 mentions in 40 files, 70 of them in coaching-tom-hardison (b9h), the next best 6; monkey-drive / take the wheel: only b9h and apk carry it; soccer protect-the-goal 347 mentions in 75 files, b9h first with 38 (the creativity-202 sessions use the soccer model for coaching, not for the trade lifecycle); Aristotle / pride / timidity: apk carries the trading spectrum, the other hits are Aristotle on coaching in Athens and on formal logic; A/B/C Z-bands: apk 19 of 60; three machine guns: cohort-1-burnout-resilience (c1) 16 of 19; Frankenstein / minimum mission-essential: c1 plus a 2022-08-28 creativity session (courage) and swing-trading-qa-2; portfolio heat: 4321-position-sizing (p4321) 13 of 26, next 2023-06-30 session (uGb4ksTazhk 1:12:02, 'if every single open trade I have is wrong, the accumulated risk of every open trade') as a spoken alternate, not yet a source. So the improvement is structural and visual, not a swap of footage: the restored lines, the speech-aligned windows, the four-beat soccer overdub, the Z-band overdub, the heat gauge, and the Ava explainer for the threshold. The ★ stings of v1 are kept as the twin's caption beats. Style: ink, Ken's tile top-right where b9h and apk have him on camera (crops from mental-model-2-v2 / mental-model-v2).\n\nrev3 (2026-11-21, owner: twins for all the clips with Ken's tile): every cut has an animated twin (anim_gen.py), the cut off and the twin on; b9h and c1 crop to Ken's tile (the student is gone), apk and p4321 show his still (their tiles are thumbnails); s08 and s15 drawn; s27 explainer scripted.\n\nrev4 (2026-11-21, owner: 'i really like the new cut'; two design cards): s00 the internal story arc, s00s the sales promise, both at the head of the cutroom, ON so they sit in the storyboard; neither is meant for the render unless the owner keeps s00s.\n\nrev5 (2026-11-21, owner: two wordy slides as description copy): s00w the arc in prose, s00sw the store description, layout `prose` (new in render_slides and cutroom-30).\n\nrev6 (2026-11-21, owner: 'let's do B'): s000 the course opener from the Stanford style study, option B (the watch) around the Zero State owl portrait; scripts/opener.py writes it; first in the storyboard, ON.\n\nrev7 (2026-11-21, owner: 'recut the operator with our new approach, using all things that help'): the stage cut. Every twin and both overdubs and the explainer rebuilt on the `stage` (pure black, the scene at full width) under the lesson rules from the Stanford study: the question the window answers as the scene's head, one figure across the left with 20-34 px labels and the numbers in a right column, a focus ring on the element of each beat, the rule he states boxed in his words, his asides in the handwritten register, the $1,000,000 / 10 positions / 1 % example carried from s25 into s26 (recall box) and s27, one colour per quantity, the chapter counter bottom-right. Beats unchanged from rev 3.\n\nrev8 (2026-11-21, owner: 'ken is using familiar daily metaphors ... BUT EVERYTHING he is saying is absolutely about trading performance; make sure people don't have to guess'): the bridge. Every stage scene carries a line under its head, 'in trading: …', naming what the picture is in the trade, for the whole scene (anim_kit bridge(), lesson rule 8); every chapter card's body names the trade the picture stands for; the promise, the arc and the store description say it outright; the end card closes on it. The bridges are his own mappings where the window gives them (s08 18:06-19:03: the goal is one R, the ball the entry, the run the trade, the shot the result; s01 3:09 in: 'the same chimp, only now I'm trading'; s19 'that's what you've got to be like when you're working hard for your trading'; s22 'my intraday trading strategy'; s11 'more confident in the system than is justified by the stats'; s16 'to your trading practice') and a plain reading of the window elsewhere.",
   "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/disciplined-operator-v2/",
   "sources": [
     {
@@ -93,9 +93,9 @@
         "kicker": "INTERNAL · THE STORY ARC · NOT FOR THE CUT",
         "title": "**One operator**: self, trade, capital",
         "subtitle": "Not willpower: a team, a game, a gauge, a ration and a cap, built before the chimp shows up.",
-        "body": "Name it | Ch 1 (s01, s03): revenge and rigidity, the gate story; the same chimp rides into the trade\nTake the wheel | Ch 1b (s05, s06): how long will you watch the monkey drive; the caretaker; the internal team\nPlay the game | Ch 2 (s08, s09): protect the goal, get the ball, go to the goal, score; the coach's job\nGrade yourself | Ch 3, 3b (s11–s17): Aristotle's middle; cynicism = pride; the A/B/C bands; rate the session\nRation the fire | Ch 4, 4b (s19–s23): three machine guns; parsimonious; cut the Frankenstein; respect the few\nCap the heat | Ch 5 (s25–s27): heat defined; sizing against the goal; the dynamic threshold"
+        "body": "Name it | Ch 1 (s01, s03): revenge and rigidity, the gate story; the same chimp rides into the trade\nTake the wheel | Ch 1b (s05, s06): how long will you watch the monkey drive; the caretaker; the internal team\nPlay the game | Ch 2 (s08, s09): protect the goal, get the ball, go to the goal, score; the coach's job\nGrade yourself | Ch 3, 3b (s11–s17): Aristotle's middle; cynicism = pride; the A/B/C bands; rate the session\nRation the fire | Ch 4, 4b (s19–s23): three machine guns; parsimonious; cut the Frankenstein; respect the few\nCap the heat | Ch 5 (s25–s27): heat defined; sizing against the goal; the dynamic threshold\nThe bridge | every chapter opens on an everyday picture (the gate, the monkey, the soccer field, the guns, the creature) and the cut names the trade it stands for on screen every time: the 'in trading:' line under each scene's head, the chapter card body, the end card"
       },
-      "status": "rev4 (owner, 2026-11-21): an internal slide on the story arc, what the whole video says and how the segments relate; in the cutroom for design, not for the render"
+      "status": "rev4 (owner, 2026-11-21): an internal slide on the story arc, what the whole video says and how the segments relate; in the cutroom for design, not for the render · rev8: the text names the trade the picture stands for (owner: no one is left wondering why he is talking about soccer)"
     },
     {
       "id": "s00s",
@@ -108,10 +108,10 @@
       "text": {
         "kicker": "THE DISCIPLINED OPERATOR · ABOUT 40 MINUTES WITH DR. KEN LONG",
         "title": "What you walk away with",
-        "subtitle": "",
+        "subtitle": "Everyday pictures, every one of them about how you trade.",
         "body": "A name for what hijacks you | revenge and rigidity, and how to see them coming\nA way to take the wheel back | the caretaker function and your internal team\nFour questions for every trade | protect the goal, get the ball, go to the goal, shoot and score\nA daily grade that is not your P&L | the A/B/C bands and the mark you make at the close\nFewer rules, sustained | three machine guns, the minimum mission-essential set\nA number that caps the damage | portfolio heat and the dynamic threshold"
       },
-      "status": "rev4 (owner, 2026-11-21): one slide for the sales site on what the user should hope to get; every line names content the cut carries, no outcome promised"
+      "status": "rev4 (owner, 2026-11-21): one slide for the sales site on what the user should hope to get; every line names content the cut carries, no outcome promised · rev8: the text names the trade the picture stands for (owner: no one is left wondering why he is talking about soccer)"
     },
     {
       "id": "s00w",
@@ -125,9 +125,9 @@
         "kicker": "INTERNAL · THE STORY ARC IN PROSE · NOT FOR THE CUT",
         "title": "One argument in five chapters",
         "subtitle": "The trader who loses money is not short of rules. He is short of an operator.",
-        "body": "Ken opens on the two pathologies he says he lives with every day, revenge and rigidity, and on the gate at the post on the way to work, where the same chimp shows up that shows up in a trade (chapter 1, s01 and s03). Chapter 1b asks the question the course is named for: how long are you going to watch the monkey drive? His answer is not willpower. It is a caretaker function that is instantly activated, and an internal team, from the designer of the trade to the scout, so that the operator has one job: make the decision (s05, s06).\n\nChapter 2 gives the trade a shape he can run under pressure, the four questions from the soccer field: can we protect our goal, can we get the ball, can I go to the goal, can I shoot and score, with the coach managing the emotional states between plays (s08, s09). Chapter 3 turns the lens on the operator: Aristotle's spectrum from timidity to pride, cynicism as costly as pride, the parable of the talents, then the A/B/C bands and the mark you make at the close, rating the session rather than the P&L (s11 to s17).\n\nChapter 4 rations the firepower: three machine guns taking turns, parsimonious rules, cutting away the Frankenstein creature to the minimum mission-essential set, respecting the few indicators you keep (s19 to s23). Chapter 5 puts a number on the whole book: portfolio heat defined as the sum of open risk, sizing against the goal rather than against the gut, and the dynamic threshold (s25 to s27). The arc runs self, then trade, then capital, and ends on his own words: let's go, buckle up."
+        "body": "Ken opens on the two pathologies he says he lives with every day, revenge and rigidity, and on the gate at the post on the way to work, where the same chimp shows up that shows up in a trade (chapter 1, s01 and s03). Chapter 1b asks the question the course is named for: how long are you going to watch the monkey drive? His answer is not willpower. It is a caretaker function that is instantly activated, and an internal team, from the designer of the trade to the scout, so that the operator has one job: make the decision (s05, s06).\n\nChapter 2 gives the trade a shape he can run under pressure, the four questions from the soccer field: can we protect our goal, can we get the ball, can I go to the goal, can I shoot and score, with the coach managing the emotional states between plays (s08, s09). Chapter 3 turns the lens on the operator: Aristotle's spectrum from timidity to pride, cynicism as costly as pride, the parable of the talents, then the A/B/C bands and the mark you make at the close, rating the session rather than the P&L (s11 to s17).\n\nChapter 4 rations the firepower: three machine guns taking turns, parsimonious rules, cutting away the Frankenstein creature to the minimum mission-essential set, respecting the few indicators you keep (s19 to s23). Chapter 5 puts a number on the whole book: portfolio heat defined as the sum of open risk, sizing against the goal rather than against the gut, and the dynamic threshold (s25 to s27). The arc runs self, then trade, then capital, and ends on his own words: let's go, buckle up.\n\nThe device the cut must not lose: every idea arrives as an everyday picture, and every picture is a statement about trading performance. He says so himself: \"trading is exactly like that, it's the same chimp, only now I'm trading\"; protecting the goal \"is the protection against disaster of losing more than one R\"; getting the ball is \"making the entry in the direction of price at exactly the right moment\"; the machine guns are \"what you've got to be like when you're working hard for your trading\"; the Frankenstein creature is his own over-built system, cut back to \"my intraday trading strategy\". So the cut names the trade on screen every time the picture changes: a line under each scene's head reads 'in trading: …', each chapter card's body says what the picture is in the trade, and the end card closes on it. No viewer is left wondering why he is talking about soccer."
       },
-      "status": "rev5 (owner, 2026-11-21): 'add two wordy slides for the internal story arc and the sales page that can serve as copies in description'; every claim traces to a segment named in the text"
+      "status": "rev5 (owner, 2026-11-21): 'add two wordy slides for the internal story arc and the sales page that can serve as copies in description'; every claim traces to a segment named in the text · rev8: the text names the trade the picture stands for (owner: no one is left wondering why he is talking about soccer)"
     },
     {
       "id": "s00sw",
@@ -141,9 +141,9 @@
         "kicker": "THE DISCIPLINED OPERATOR · STORE DESCRIPTION",
         "title": "The part of trading no indicator covers",
         "subtitle": "About forty minutes with Dr. Ken Long on the person at the controls.",
-        "body": "Ken names the two habits he says he lives with every day, revenge and rigidity, and shows where they turn up: on the drive to work, and in the next trade after a loss. He asks how long you are going to watch the monkey drive, and answers with a caretaker function and an internal team that leaves the operator one job: make the decision.\n\nHe gives every trade four questions borrowed from the soccer field. Can we protect our goal? Can we get the ball? Can I go to the goal? Can I shoot and score? He grades the trader instead of the P&L, with Aristotle's spectrum from timidity to pride and the A, B and C bands you mark at the close of every session.\n\nHe rations the work with three machine guns and the minimum mission-essential set, and he puts a number on the whole book: portfolio heat, sizing against the goal, and the dynamic threshold that caps the stack.\n\nFive chapters cut from four of his live sessions, in his own words, with new animation drawn to what he says."
+        "body": "Ken names the two habits he says he lives with every day, revenge and rigidity, and shows where they turn up: on the drive to work, and in the next trade after a loss. He asks how long you are going to watch the monkey drive, and answers with a caretaker function and an internal team that leaves the operator one job: make the decision.\n\nHe gives every trade four questions borrowed from the soccer field. Can we protect our goal? Can we get the ball? Can I go to the goal? Can I shoot and score? He grades the trader instead of the P&L, with Aristotle's spectrum from timidity to pride and the A, B and C bands you mark at the close of every session.\n\nHe rations the work with three machine guns and the minimum mission-essential set, and he puts a number on the whole book: portfolio heat, sizing against the goal, and the dynamic threshold that caps the stack.\n\nEvery picture is about trading, and the cut says so on screen: the goal is one R, the ball is the entry, the monkey is the revenge trade, the machine guns are your work rate, the creature is the over-built system.\n\nFive chapters cut from four of his live sessions, in his own words, with new animation drawn to what he says."
       },
-      "status": "rev5 (owner, 2026-11-21): the wordy sales copy; content the cut carries, no outcome promised; growogtx takes the text for the store page"
+      "status": "rev5 (owner, 2026-11-21): the wordy sales copy; content the cut carries, no outcome promised; growogtx takes the text for the store page · rev8: the text names the trade the picture stands for (owner: no one is left wondering why he is talking about soccer)"
     },
     {
       "id": "s01",
@@ -165,7 +165,7 @@
       "in": 208.0,
       "out": 408.0,
       "animation_brief": "drawn from his words in this window; see anim_gen.py",
-      "status": "twin of s01: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example)",
+      "status": "twin of s01: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example) · rev8: the bridge line under the head names the trade",
       "pip": true,
       "transition": {
         "type": "dip",
@@ -207,7 +207,7 @@
       "in": 408.0,
       "out": 520.0,
       "animation_brief": "drawn from his words in this window; see anim_gen.py",
-      "status": "twin of s03: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example)",
+      "status": "twin of s03: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example) · rev8: the bridge line under the head names the trade",
       "pip": true,
       "transition": {
         "type": "dip",
@@ -226,8 +226,9 @@
         "kicker": "Chapter 1b",
         "title": "Take the wheel",
         "subtitle": "",
-        "body": "How long are you going to watch the monkey drive?"
-      }
+        "body": "How long are you going to watch the monkey drive? The monkey is revenge at the controls of your next trade."
+      },
+      "status": "rev8: the text names the trade the picture stands for (owner: no one is left wondering why he is talking about soccer)"
     },
     {
       "id": "s05",
@@ -249,7 +250,7 @@
       "in": 777.0,
       "out": 959.0,
       "animation_brief": "drawn from his words in this window; see anim_gen.py",
-      "status": "twin of s05: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example)",
+      "status": "twin of s05: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example) · rev8: the bridge line under the head names the trade",
       "pip": true,
       "transition": {
         "type": "dip",
@@ -276,7 +277,7 @@
       "in": 959.0,
       "out": 1080.0,
       "animation_brief": "drawn from his words in this window; see anim_gen.py",
-      "status": "twin of s06: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example)",
+      "status": "twin of s06: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example) · rev8: the bridge line under the head names the trade",
       "pip": true,
       "transition": {
         "type": "dip",
@@ -295,8 +296,9 @@
         "kicker": "Chapter 2",
         "title": "The soccer game",
         "subtitle": "",
-        "body": "Protect the goal. Get the ball. Find space. Shoot and score."
-      }
+        "body": "Four questions for every trade. Protect the goal: never lose more than one R. Get the ball: the entry. Go to the goal: let it run. Shoot and score: take the result."
+      },
+      "status": "rev8: the text names the trade the picture stands for (owner: no one is left wondering why he is talking about soccer)"
     },
     {
       "id": "s08",
@@ -306,7 +308,7 @@
       "source": "b9h",
       "in": 1080.0,
       "out": 1143.0,
-      "status": "MAPPED-VERIFIED — the beats are 18:06 protect the goal / 18:19 ★ get the ball / 18:41 find space / 18:54 shoot and score, all inside 18:00-19:03. v1 spread the animation targets across 4 scene windows whose later footage was actually the emotional-state-manager passage; sting goes ON 18:19; rev2: brief for anim-overdub in the current style · rev7: the stage cut (question head, focus ring, boxed rules, running example)",
+      "status": "MAPPED-VERIFIED — the beats are 18:06 protect the goal / 18:19 ★ get the ball / 18:41 find space / 18:54 shoot and score, all inside 18:00-19:03. v1 spread the animation targets across 4 scene windows whose later footage was actually the emotional-state-manager passage; sting goes ON 18:19; rev2: brief for anim-overdub in the current style · rev7: the stage cut (question head, focus ring, boxed rules, running example) · rev8: the bridge line under the head names the trade",
       "animation_brief": "animate (four beats on his words, 18:06 protect the goal / 18:19 get the ball / 18:41 find space / 18:54 shoot and score): a soccer pitch that morphs into a chart; beat 1 a risk box drawn under the entry (the goal protected); beat 2 the entry marker snaps in; beat 3 the trade in flight with congestion shaded; beat 4 the exit and a four-phase summary frame with the compact all-four-rules line (15:37-15:43) as the closing caption",
       "quote_anchor": "now that we've protected our goal... can we get the ball? So, that's stalking... find space and stay away from congestion... can I shoot and score",
       "pip": true
@@ -331,7 +333,7 @@
       "in": 1189.0,
       "out": 1318.0,
       "animation_brief": "drawn from his words in this window; see anim_gen.py",
-      "status": "twin of s09: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example)",
+      "status": "twin of s09: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example) · rev8: the bridge line under the head names the trade",
       "pip": true,
       "transition": {
         "type": "dip",
@@ -350,8 +352,9 @@
         "kicker": "Chapter 3",
         "title": "Aristotle's spectrum",
         "subtitle": "",
-        "body": "Pride on one end, timidity on the other, judgment in the middle."
-      }
+        "body": "How much confidence in your system? Pride on one end, timidity on the other, judgment in the middle: no more than the stats justify."
+      },
+      "status": "rev8: the text names the trade the picture stands for (owner: no one is left wondering why he is talking about soccer)"
     },
     {
       "id": "s11",
@@ -373,7 +376,7 @@
       "in": 3849.0,
       "out": 4008.0,
       "animation_brief": "drawn from his words in this window; see anim_gen.py",
-      "status": "twin of s11: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example)",
+      "status": "twin of s11: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example) · rev8: the bridge line under the head names the trade",
       "pip": true,
       "transition": {
         "type": "dip",
@@ -401,7 +404,7 @@
       "in": 4008.0,
       "out": 4168.0,
       "animation_brief": "drawn from his words in this window; see anim_gen.py",
-      "status": "twin of s12: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example)",
+      "status": "twin of s12: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example) · rev8: the bridge line under the head names the trade",
       "pip": true,
       "transition": {
         "type": "dip",
@@ -428,7 +431,7 @@
       "in": 4168.0,
       "out": 4258.0,
       "animation_brief": "drawn from his words in this window; see anim_gen.py",
-      "status": "twin of s13: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example)",
+      "status": "twin of s13: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example) · rev8: the bridge line under the head names the trade",
       "pip": true,
       "transition": {
         "type": "dip",
@@ -447,8 +450,9 @@
         "kicker": "Chapter 3b",
         "title": "The A/B/C game",
         "subtitle": "",
-        "body": "Rate the session, not the P&L."
-      }
+        "body": "Grade your trading session at the close, on a Z scale. Rate the session, not the P&L."
+      },
+      "status": "rev8: the text names the trade the picture stands for (owner: no one is left wondering why he is talking about soccer)"
     },
     {
       "id": "s15",
@@ -458,7 +462,7 @@
       "source": "apk",
       "in": 4610.0,
       "out": 4707.0,
-      "status": "MAPPED-VERIFIED — v1 in-point (1:17:09) clipped 'the normal game, the B game is 0 plus or minus one' (1:16:51-1:17:05); v2 starts 1:16:50. C/B boundary at -1 sigma 4635-4641; Z-1/Z+1 exchange 4652-4677; ★ 'that's where the A game begins — at Z plus one' 4674-4678 — band-chart boundary draw syncs there. NOTE: 'center of mass rock solid' (4681) is about A and C at +/-2 sigma, not the B game — card the maxim accurately; rev2: brief for anim-overdub in the current style · rev7: the stage cut (question head, focus ring, boxed rules, running example)",
+      "status": "MAPPED-VERIFIED — v1 in-point (1:17:09) clipped 'the normal game, the B game is 0 plus or minus one' (1:16:51-1:17:05); v2 starts 1:16:50. C/B boundary at -1 sigma 4635-4641; Z-1/Z+1 exchange 4652-4677; ★ 'that's where the A game begins — at Z plus one' 4674-4678 — band-chart boundary draw syncs there. NOTE: 'center of mass rock solid' (4681) is about A and C at +/-2 sigma, not the B game — card the maxim accurately; rev2: brief for anim-overdub in the current style · rev7: the stage cut (question head, focus ring, boxed rules, running example) · rev8: the bridge line under the head names the trade",
       "animation_brief": "animate: the band chart of a trader's own session scores, mean in the middle, Z±1 shaded as the B game ('the normal game, the B game, is zero plus or minus one'); on the ★ line the Z+1 boundary draws and the A game lights to the right, the C tail to the left at -2; captions on his exact grading words",
       "quote_anchor": "the normal game, the B game is 0 plus or minus one... that's the boundary. That's where the A game begins — at Z plus one",
       "pip": true
@@ -483,7 +487,7 @@
       "in": 4707.0,
       "out": 4787.0,
       "animation_brief": "drawn from his words in this window; see anim_gen.py",
-      "status": "twin of s16: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example)",
+      "status": "twin of s16: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example) · rev8: the bridge line under the head names the trade",
       "pip": true,
       "transition": {
         "type": "dip",
@@ -510,7 +514,7 @@
       "in": 4787.0,
       "out": 4888.0,
       "animation_brief": "drawn from his words in this window; see anim_gen.py",
-      "status": "twin of s17: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example)",
+      "status": "twin of s17: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example) · rev8: the bridge line under the head names the trade",
       "pip": true,
       "transition": {
         "type": "dip",
@@ -529,8 +533,9 @@
         "kicker": "Chapter 4",
         "title": "Three machine guns",
         "subtitle": "",
-        "body": "Disciplined fire wins the engagement."
-      }
+        "body": "Your work rate as a trader. Disciplined fire wins the engagement; a sustained rate wins the long haul."
+      },
+      "status": "rev8: the text names the trade the picture stands for (owner: no one is left wondering why he is talking about soccer)"
     },
     {
       "id": "s19",
@@ -552,7 +557,7 @@
       "in": 1260.0,
       "out": 1437.0,
       "animation_brief": "drawn from his words in this window; see anim_gen.py",
-      "status": "twin of s19: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example)",
+      "status": "twin of s19: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example) · rev8: the bridge line under the head names the trade",
       "pip": true,
       "transition": {
         "type": "dip",
@@ -579,7 +584,7 @@
       "in": 1437.0,
       "out": 1557.0,
       "animation_brief": "drawn from his words in this window; see anim_gen.py",
-      "status": "twin of s20: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example)",
+      "status": "twin of s20: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example) · rev8: the bridge line under the head names the trade",
       "pip": true,
       "transition": {
         "type": "dip",
@@ -598,8 +603,9 @@
         "kicker": "Chapter 4b",
         "title": "Cut the Frankenstein",
         "subtitle": "",
-        "body": "The minimum mission-essential set."
-      }
+        "body": "The over-built trading system. Cut it to the minimum mission-essential set that keeps your edge."
+      },
+      "status": "rev8: the text names the trade the picture stands for (owner: no one is left wondering why he is talking about soccer)"
     },
     {
       "id": "s22",
@@ -621,7 +627,7 @@
       "in": 1560.0,
       "out": 1707.0,
       "animation_brief": "drawn from his words in this window; see anim_gen.py",
-      "status": "twin of s22: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example)",
+      "status": "twin of s22: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example) · rev8: the bridge line under the head names the trade",
       "pip": true,
       "transition": {
         "type": "dip",
@@ -648,7 +654,7 @@
       "in": 1707.0,
       "out": 1827.0,
       "animation_brief": "drawn from his words in this window; see anim_gen.py",
-      "status": "twin of s23: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example)",
+      "status": "twin of s23: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example) · rev8: the bridge line under the head names the trade",
       "pip": true,
       "transition": {
         "type": "dip",
@@ -667,8 +673,9 @@
         "kicker": "Chapter 5",
         "title": "Portfolio heat",
         "subtitle": "",
-        "body": "Define it before you need it."
-      }
+        "body": "The sum of the open risk across every position you hold. Define it before you need it."
+      },
+      "status": "rev8: the text names the trade the picture stands for (owner: no one is left wondering why he is talking about soccer)"
     },
     {
       "id": "s25",
@@ -691,7 +698,7 @@
       "in": 3060.0,
       "out": 3249.0,
       "animation_brief": "animate at the definition (open on the Ken/Tom exchange as cut, then the twin): positions stacking as rungs of a ladder, each rung a trade's open risk; the rungs collapse to one number on the ★ line ('I summed all of the open risk'); 'worst trade is not worst day' as a caption card",
-      "status": "twin of s25: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example)",
+      "status": "twin of s25: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example) · rev8: the bridge line under the head names the trade",
       "pip": true,
       "transition": {
         "type": "dip",
@@ -718,7 +725,7 @@
       "in": 3249.0,
       "out": 3359.0,
       "animation_brief": "drawn from his words in this window; see anim_gen.py",
-      "status": "twin of s26: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example)",
+      "status": "twin of s26: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example) · rev8: the bridge line under the head names the trade",
       "pip": true,
       "transition": {
         "type": "dip",
@@ -741,7 +748,7 @@
       },
       "animation_brief": "explainer (Ava, typography + the heat gauge, mode 2): the threshold line moving against an equity path, heat as a percentage of risk capital, never dollars; ends on his own 'Let's go. Buckle up.' from the cut tail | scene anim-s27.html (twin=False), no tile: synth voice",
       "quote_anchor": "I hear your concerns. We've taken it into account. Safety measures are in place. Let's go. Buckle up.",
-      "status": "rev3: VO script written (Ava, 34 s est.), scene drawn; the cut tail follows as planned · rev7: the stage cut (question head, focus ring, boxed rules, running example)"
+      "status": "rev3: VO script written (Ava, 34 s est.), scene drawn; the cut tail follows as planned · rev7: the stage cut (question head, focus ring, boxed rules, running example) · rev8: the bridge line under the head names the trade"
     },
     {
       "id": "s28",
@@ -755,8 +762,9 @@
         "kicker": "",
         "title": "Five chapters, one operator.",
         "subtitle": "owlgrouptrading.com",
-        "body": "Pathologies named. Wheel taken. Soccer game played. Spectrum tracked. Firepower rationed. Frankenstein cut. Heat measured."
-      }
+        "body": "Pathologies named. Wheel taken. Soccer game played. Spectrum tracked. Firepower rationed. Frankenstein cut. Heat measured.\nEvery picture was a trade: the chimp, the wheel, the goal, the spectrum, the guns, the creature, the heat."
+      },
+      "status": "rev8: the text names the trade the picture stands for (owner: no one is left wondering why he is talking about soccer)"
     }
   ]
 }
