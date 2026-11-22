@@ -33,7 +33,7 @@
 <header>
   <div>
     <h1>Opener options · the first five seconds of every Owl Group Trading course</h1>
-    <p>What the Stanford videos do: one bright full-frame picture, the lesson title in a frosted box low in the frame, the presenter top-right, held for 7–12 seconds, then the black stage. These three are drawn in code (deterministic, so the kit renders them frame by frame); the owl is the brand archetype, never a stock image. Scrub or play; the title box and the tile are in every option.</p>
+    <p>What the Stanford videos do: one bright full-frame picture, the lesson title in a frosted box low in the frame, the presenter top-right, held for 7–12 seconds, then the black stage. These three are drawn in code (deterministic, so the kit renders them frame by frame); the owl in A and B is the Owl Group Trading owl, the Zero State picture; C keeps the drawn owl in flight. Scrub or play; the title box and the tile are in every option.</p>
   </div>
   <div class="ctl">
     <button id="play">Play</button>
@@ -46,18 +46,18 @@
   </div>
 </header>
 <main>
-  <section class="card"><div class="hd"><span class="tag">Option A</span><h2>First light</h2><p>Golden hour over rolling ridges, the sun just up, a long mist in the valley; the owl on a fence post at the right, watching. The light is the brand: patient, early, awake before the market.</p></div>
+  <section class="card"><div class="hd"><span class="tag">Option A</span><h2>First light</h2><p>Dawn on the left, the night still holding the right of the frame, and the owl in it: the Zero State portrait, lit on one cheek by the sun coming up. Patient, early, awake before the market.</p></div>
     <div class="wrap"><svg id="svgA" viewBox="0 0 1280 720"></svg></div>
-    <div class="note"><b>Moves:</b> the sun lifts, the mist drifts, the far ridges breathe, the owl blinks once; the title box fades in at 1.2 s, the wordmark at 2.0 s. Warm palette on the brand amber; the tile keeps its corner.</div></section>
-  <section class="card"><div class="hd"><span class="tag">Option B</span><h2>The watch</h2><p>Blue hour at the shore, a lighthouse sweeping, the owl on a bollard at the water's edge. Cooler and quieter; the beam says the same thing the Zero State says: nothing moves until it is seen.</p></div>
+    <div class="note"><b>Moves:</b> the sun lifts, the mist drifts, the far ridges breathe, the night thins off the owl over four seconds and the portrait pushes in slowly; the title box fades in at 1.2 s, the wordmark at 2.0 s. The tile sits over the owl's right ear, as the Stanford tile sits over their picture.</div></section>
+  <section class="card"><div class="hd"><span class="tag">Option B</span><h2>The watch</h2><p>Blue hour at the shore, a lighthouse sweeping, the owl portrait in the dark of the right half. Cooler and quieter; the beam says the same thing the Zero State says: nothing moves until it is seen.</p></div>
     <div class="wrap"><svg id="svgB" viewBox="0 0 1280 720"></svg></div>
-    <div class="note"><b>Moves:</b> the beam sweeps once every four seconds, the water shimmers, a few stars, the owl turns its head to the beam; title at 1.2 s. Works best for the system and risk courses.</div></section>
+    <div class="note"><b>Moves:</b> the beam sweeps between the sky and the owl and the face brightens as it passes, the water shimmers, the stars pulse, the portrait pushes in slowly; title at 1.2 s. Works best for the system and risk courses.</div></section>
   <section class="card"><div class="hd"><span class="tag">Option C</span><h2>Above the valley</h2><p>Full daylight: big cumulus, a green valley with a river, the owl gliding across the frame on open wings with its shadow on the land. The most Stanford-like in brightness; the most motion of the three.</p></div>
     <div class="wrap"><svg id="svgC" viewBox="0 0 1280 720"></svg></div>
     <div class="note"><b>Moves:</b> the owl crosses right to left over six seconds with a slow wingbeat, the clouds drift, the river glints; title at 1.2 s. Works for the open-and-intraday courses.</div></section>
 </main>
 <script>
-const BUILD = 'openers-3'; console.log('[openers] build', BUILD); window.__edgeBuild = BUILD;
+const BUILD = 'openers-5'; console.log('[openers] build', BUILD); window.__edgeBuild = BUILD;
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v)), lerp=(a,b,u)=>a+(b-a)*u, ease=u=>{u=clamp(u,0,1);return u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;};
 const op=(t,t0,d)=>clamp((t-t0)/(d||0.5),0,1), pr=(t,t0,d)=>ease((t-t0)/(d||0.6));
 function rng(seed){let s=seed*9301+49297;return()=>{s=(s*9301+49297)%233280;return s/233280;};}
@@ -97,50 +97,56 @@ function ridge(y, amp, seed, col, t, drift){   // a ridge line across the frame
   for(let x=0;x<=1280;x+=40){ const n=Math.sin(x/190+seed)*amp+Math.sin(x/61+seed*2)*amp*0.35+Math.sin(x/23)*amp*0.1; d+=` L${x} ${y+n+Math.sin(t*0.6+x/300)*(drift||0)}`; }
   return `<path d="${d} L1280 720 Z" fill="${col}"/>`;
 }
-// ---- Option A: first light
+// the Owl Group Trading owl (the Zero State picture, edge-ogt-engine/static/owl-logo-full.png, 642x642 on black)
+// drawn as a photo: a radial mask feathers the square, so the black edge of the picture dissolves into the dark part
+// of each frame; the only motion is a slow push-in (the hold).
+function owlPhoto(x,y,size,t,o){
+  const z=1+0.035*clamp(t/6,0,1), sz=size*z, dx=x-(sz-size)/2, dy=y-(sz-size)/2, id=o.id||'m';
+  return `<defs><radialGradient id="g${id}" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#fff"/><stop offset="1" stop-color="#000"/></radialGradient>
+    <mask id="mk${id}"><rect x="${dx}" y="${dy}" width="${sz}" height="${sz}" fill="url(#g${id})"/></mask></defs>
+    <image href="img/owl.png" x="${dx}" y="${dy}" width="${sz}" height="${sz}" mask="url(#mk${id})" opacity="${o.op==null?1:o.op}" preserveAspectRatio="xMidYMid slice"/>`;
+}
+// ---- Option A: first light — the dawn on the left, the owl watching from the dark on the right
 function drawA(t){
   const sun=lerp(300,262,pr(t,0,3.5));
   let s=`<defs><linearGradient id="skyA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2b2a5a"/><stop offset=".45" stop-color="#c2576a"/><stop offset=".75" stop-color="#f3a356"/><stop offset="1" stop-color="#ffe7a8"/></linearGradient>
     <radialGradient id="glowA" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#fff6d0" stop-opacity=".95"/><stop offset=".35" stop-color="#ffd27a" stop-opacity=".55"/><stop offset="1" stop-color="#ffb347" stop-opacity="0"/></radialGradient>
-    <linearGradient id="mistA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe7b0" stop-opacity="0"/><stop offset=".5" stop-color="#ffe7b0" stop-opacity=".55"/><stop offset="1" stop-color="#ffe7b0" stop-opacity="0"/></linearGradient></defs>`;
+    <linearGradient id="mistA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe7b0" stop-opacity="0"/><stop offset=".5" stop-color="#ffe7b0" stop-opacity=".55"/><stop offset="1" stop-color="#ffe7b0" stop-opacity="0"/></linearGradient>
+    <linearGradient id="duskA" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0a0608" stop-opacity="0"/><stop offset=".45" stop-color="#0a0608" stop-opacity=".92"/><stop offset="1" stop-color="#0a0608"/></linearGradient></defs>`;
   s += `<rect width="1280" height="720" fill="url(#skyA)"/>`;
-  s += `<circle cx="470" cy="${sun}" r="260" fill="url(#glowA)"/><circle cx="470" cy="${sun}" r="58" fill="#fff3c4"/>`;
-  // thin clouds
+  s += `<circle cx="400" cy="${sun}" r="260" fill="url(#glowA)"/><circle cx="400" cy="${sun}" r="58" fill="#fff3c4"/>`;
   const r=rng(3); for(let i=0;i<6;i++){ const cx=(r()*1400-60+t*6*(i%2?1:0.6))%1400, cy=90+r()*160, w=180+r()*260; s += `<ellipse cx="${cx}" cy="${cy}" rx="${w/2}" ry="${8+r()*10}" fill="rgba(255,240,210,.35)"/>`; }
   s += ridge(372,22,1,'#9a5c6a',t,2); s += ridge(410,28,2,'#6f3f55',t,1.5);
   s += `<rect x="0" y="380" width="1280" height="120" fill="url(#mistA)" transform="translate(${Math.sin(t*0.5)*12} 0)"/>`;
   s += ridge(470,34,3,'#43283e',t,1); s += ridge(560,40,4,'#2a1a2c',t,0);
   s += `<path d="M0 720 L0 600 C300 585 600 600 1280 575 L1280 720 Z" fill="#1a1120"/>`;
-  // the fence and the owl
-  s += `<rect x="986" y="470" width="16" height="140" rx="3" fill="#1a1410"/><rect x="930" y="500" width="150" height="7" rx="2" fill="#1a1410" transform="rotate(-2 1005 503)"/>`;
-  const blink = (t>3.1&&t<3.3) ? Math.sin((t-3.1)/0.2*Math.PI) : 0;
-  s += owl(994,470,1.0,{blink, look:Math.sin(t*0.7)*0.6});
-  // birds far off
-  for(let i=0;i<5;i++){ const bx=200+i*38+t*14, by=170+Math.sin(t*2+i)*4+i*6; s += `<path d="M${bx-7} ${by} q7 -5 14 0 M${bx+7} ${by} q7 -5 14 0" stroke="#3a2438" stroke-width="2" fill="none" opacity=".7"/>`; }
+  for(let i=0;i<5;i++){ const bx=160+i*38+t*14, by=170+Math.sin(t*2+i)*4+i*6; s += `<path d="M${bx-7} ${by} q7 -5 14 0 M${bx+7} ${by} q7 -5 14 0" stroke="#3a2438" stroke-width="2" fill="none" opacity=".7"/>`; }
+  // the night still holds the right of the frame; the owl is in it, lit by the dawn on its left cheek
+  s += `<rect x="560" y="0" width="720" height="720" fill="url(#duskA)"/>`;
+  s += owlPhoto(690,40,700,t,{id:'A'});
+  s += `<rect x="560" y="0" width="720" height="720" fill="url(#duskA)" opacity="${0.35*(1-pr(t,0.5,4))}"/>`;
   return s + furniture(t,true);
 }
-// ---- Option B: the watch
+// ---- Option B: the watch — blue hour at the shore, the lighthouse beam finds the owl
 function drawB(t){
-  let s=`<defs><linearGradient id="skyB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#050a1c"/><stop offset=".6" stop-color="#15305c"/><stop offset="1" stop-color="#3f6a8e"/></linearGradient>
-    <linearGradient id="seaB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1b3a5c"/><stop offset="1" stop-color="#0a1a2c"/></linearGradient></defs>`;
+  let s=`<defs><linearGradient id="skyB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#03060f"/><stop offset=".55" stop-color="#0f2548"/><stop offset="1" stop-color="#2d5578"/></linearGradient>
+    <linearGradient id="seaB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1b3a5c"/><stop offset="1" stop-color="#0a1a2c"/></linearGradient>
+    <radialGradient id="nightB" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#02040a"/><stop offset=".7" stop-color="#02040a" stop-opacity=".9"/><stop offset="1" stop-color="#02040a" stop-opacity="0"/></radialGradient></defs>`;
   s += `<rect width="1280" height="720" fill="url(#skyB)"/>`;
   const r=rng(11); for(let i=0;i<90;i++){ const x=r()*1280, y=r()*380, k=r(); s += `<circle cx="${x}" cy="${y}" r="${0.8+k*1.4}" fill="#fff" opacity="${0.35+0.6*Math.abs(Math.sin(t*1.5+i))}"/>`; }
-  s += `<circle cx="1060" cy="120" r="34" fill="#f3ead6" opacity=".9"/><circle cx="1048" cy="112" r="30" fill="#0b1a33"/>`;
+  s += `<circle cx="760" cy="110" r="30" fill="#f3ead6" opacity=".9"/><circle cx="749" cy="103" r="26" fill="#0b1a33"/>`;
   s += ridge(392,18,7,'#0d2238',t,0);
-  // the lighthouse on the left point, the beam sweeping
-  const ang = -90 + 70*Math.sin(t*0.8); const rad=ang*Math.PI/180;
-  s += `<polygon points="${210+Math.cos(rad-0.07)*1400},${270+Math.sin(rad-0.07)*1400} 210,270 ${210+Math.cos(rad+0.07)*1400},${270+Math.sin(rad+0.07)*1400}" fill="rgba(255,236,170,.22)"/>`;
+  const ang = -60 + 50*Math.sin(t*0.7); const rad=ang*Math.PI/180;       // sweeps between the sky and the owl
+  s += `<polygon points="${210+Math.cos(rad-0.07)*1500},${270+Math.sin(rad-0.07)*1500} 210,270 ${210+Math.cos(rad+0.07)*1500},${270+Math.sin(rad+0.07)*1500}" fill="rgba(255,236,170,.2)"/>`;
   s += `<path d="M0 720 L0 400 C80 395 160 390 260 392 L300 720 Z" fill="#091a2c"/>`;
   s += `<path d="M190 400 L186 300 L234 300 L230 400 Z" fill="#dfe6ee"/><rect x="182" y="286" width="56" height="16" fill="#1f2a36"/><rect x="190" y="256" width="40" height="30" fill="#ffe8a6" opacity="${0.8+0.2*Math.sin(t*6)}"/><path d="M186 256 L210 236 L234 256 Z" fill="#1f2a36"/>`;
   for(let i=0;i<3;i++) s += `<rect x="196" y="${320+i*26}" width="28" height="4" fill="#c0392b"/>`;
-  // the sea
   s += `<rect x="0" y="420" width="1280" height="300" fill="url(#seaB)"/>`;
   for(let i=0;i<40;i++){ const y=430+i*7+(i*i)%5, w=40+((i*37)%180), x=((i*131)+t*(20+i))%1400-60; s += `<rect x="${x}" y="${y}" width="${w}" height="1.5" fill="#cfe3ff" opacity="${0.08+0.1*Math.abs(Math.sin(t+i))}"/>`; }
-    // the quay and the bollard, the owl on it looking at the beam
-  s += `<path d="M700 600 L1280 580 L1280 720 L700 720 Z" fill="#0a1420"/><rect x="700" y="596" width="580" height="8" fill="#142434"/>`;
-  s += `<rect x="972" y="520" width="44" height="80" rx="8" fill="#1a1410"/><rect x="964" y="512" width="60" height="16" rx="6" fill="#1a1410"/>`;
-  const look = Math.cos(rad) * -1;
-  s += owl(994,514,1.0,{look, c:'#15110d'});
+  // the owl in the dark of the right half; the beam's nearness to it lights the face
+  const lit = clamp(1-Math.abs(ang+22)/30,0,1);
+  s += `<ellipse cx="1000" cy="380" rx="520" ry="440" fill="url(#nightB)"/>`;
+  s += owlPhoto(690,40,700,t,{id:'B',op:0.55+0.45*lit});
   return s + furniture(t,true);
 }
 // ---- Option C: above the valley
