@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>s43a · the supported fall crossing: the higher low is the definition</title>
+<style>
+  :root { --bg:#030507; --fg:#E1EEF5; --muted:#8fa3ad; --border:rgba(56,225,255,0.14); --accent:#F2D06B;
+          --ok:#4ade80; --dn:#f87171; --card:#0a1016; --blue:#7baad4; }
+  html, body { margin:0; background:var(--bg); overflow:hidden; }
+  #stage { position:relative; width:1280px; height:720px; background:var(--bg); color:var(--fg);
+           font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; overflow:hidden; }
+  #cap { position:absolute; left:60px; right:60px; top:30px; font-size:32px; font-weight:600; letter-spacing:-.01em; line-height:1.15; }
+  #cap em { font-style:normal; color:var(--accent); }
+  #sub { position:absolute; left:60px; width:1160px; top:648px; font-size:20px; color:var(--muted); line-height:1.4; }
+  #scene { position:absolute; left:60px; top:112px; width:1160px; height:518px; border:1px solid var(--border);
+           border-radius:10px; background:var(--card); overflow:hidden; }
+  #svg { position:absolute; inset:0; }
+  #fade { position:absolute; inset:0; background:var(--bg); pointer-events:none; opacity:0; }
+  /* the picture-in-picture corner: build_v2 composites Ken's camera tile here (PIP_W/X/Y); the cutroom shows this placeholder */
+  #pip { position:absolute; left:950px; top:22px; width:300px; height:169px; border:1px dashed rgba(56,225,255,0.35); border-radius:4px;
+         display:none; color:var(--muted); font-size:13px; text-align:center; line-height:169px; }
+  .pip #pip { display:block; } .pip #cap { right:360px; font-size:29px; }
+  text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; fill:#E1EEF5; }
+  .mono { font-family:ui-monospace,Menlo,Consolas,monospace; }
+  #third { display:none; }
+</style>
+</head>
+<body>
+<div id="stage" class="pip">
+  <div id="cap"></div>
+  <div id="pip">Ken on camera, composited at render</div>
+  <div id="scene"><svg id="svg" width="1160" height="530" viewBox="0 0 1160 530"></svg></div>
+  <div id="third"></div>
+  <div id="sub"></div>
+  <div id="fade"></div>
+</div>
+<script>
+const BUILD = 's43a-1';
+console.log('[s43a] build', BUILD);
+// Overdub twin of s43: Ken's audio kat 2857.0→3220.0; t is seconds after the in-point.
+// Beat times read from the VTT cues on 2026-11-21 (tools/cutroom/weekend-edge-v2/transcript-kat.json).
+window.ANIM_DURATION = 363.0;
+const ACC='#F2D06B', FG='#E1EEF5', MUT='#8fa3ad', OK='#4ade80', DN='#f87171', BLUE='#7baad4', BRD='rgba(56,225,255,.22)', CARD='#0a1016', TXS=1, WRAP=['',''];
+const W=1160, H=530;
+const $ = id => document.getElementById(id);
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const ease=u=>{u=clamp(u,0,1);return u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;};
+const lerp=(a,b,u)=>a+(b-a)*u;
+const pr=(t,t0,d)=>ease((t-t0)/(d||0.6));          // eased progress 0..1 from t0 over d seconds
+const on=(t,t0)=>t>=t0;
+const op=(t,t0,d)=>clamp((t-t0)/(d||0.5),0,1);      // linear opacity ramp
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const txt=(x,y,s,o={})=>`<text x="${x}" y="${y}" font-size="${(o.sz||20)*TXS}" fill="${o.c||FG}" opacity="${o.o==null?1:o.o}" text-anchor="${o.a||'start'}" font-weight="${o.w||400}" class="${o.cls||''}" ${o.extra||''}>${esc(s)}</text>`;
+const rect=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.r==null?6:o.r}" fill="${o.f||'none'}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}" ${o.extra||''}/>`;
+const circ=(x,y,r,o={})=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${o.f||FG}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}"/>`;
+const line=(x1,y1,x2,y2,o={})=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${o.s||MUT}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" ${o.dash?`stroke-dasharray="${o.dash}"`:''} stroke-linecap="round"/>`;
+const path=(d,o={})=>`<path d="${d}" fill="${o.f||'none'}" stroke="${o.s||FG}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" stroke-linecap="round" stroke-linejoin="round" ${o.dash?`stroke-dasharray="${o.dash}"`:''}/>`;
+const arrow=(x1,y1,x2,y2,o={})=>{const a=Math.atan2(y2-y1,x2-x1),h=10;return line(x1,y1,x2,y2,o)+path(`M${x2} ${y2} L${x2-h*Math.cos(a-0.5)} ${y2-h*Math.sin(a-0.5)} M${x2} ${y2} L${x2-h*Math.cos(a+0.5)} ${y2-h*Math.sin(a+0.5)}`,{s:o.s||MUT,sw:o.sw||2,o:o.o});};
+// a labelled box that grows in from t0
+const box=(t,t0,x,y,w,h,label,o={})=>{const u=pr(t,t0,0.5);if(u<=0)return '';const ww=w*u,hh=h;return rect(x+(w-ww)/2,y,ww,hh,{s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',sw:o.sw||1.5,o:u})+(u>.6?txt(x+w/2,y+h/2+(o.sz||20)/3,label,{a:'middle',sz:o.sz||20,c:o.c||FG,o:op(t,t0+.3,.3),w:o.w||500}):'');};
+// deterministic pseudo-random
+function rng(seed){let s=seed*9301+49297;return()=>{s=(s*9301+49297)%233280;return s/233280;};}
+// a herd of dots in a region; drift is a slow deterministic wander
+function herd(n,seed,x,y,w,h){const r=rng(seed);const pts=[];for(let i=0;i<n;i++)pts.push({x:x+r()*w,y:y+r()*h,p:r()*6.28,q:r()*6.28});return pts;}
+const wander=(p,t,amp)=>[p.x+Math.sin(t*0.9+p.p)*amp,p.y+Math.cos(t*0.7+p.q)*amp];
+// typewriter: the first k chars of s by time
+const type=(s,t,t0,cps)=>s.slice(0,Math.max(0,Math.floor((t-t0)*(cps||28))));
+// a list that reveals one row per step seconds from t0
+function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
+
+const BEATS = [[0.6, "the most reliable, and the <em>least challenging</em> to the beliefs of most new traders", ""], [13.2, "the <em>supported fall crossing</em>, aka the <em>Kata 2</em>", ""], [21.1, "you're not trying to chase the <em>harsh winter</em> right from the opening", ""], [30.1, "it turned around and gave you an <em>SSC</em>: that first leg back", ""], [42.5, "then it rolled over enough to turn it into <em>the fall</em>", ""], [48.9, "but then it found a support level at a <em>higher low</em>", ""], [56.4, "that is the <em>very definition</em> of the Kata 2", ""], [61.2, "draw that line across from the <em>peak of the RL10</em>: I'm up into the emerging dragon", ""], [71.3, "the Kata 2 is entering as soon as it gets <em>across the dragon</em>", ""], [83.5, "a very precise <em>reward to risk</em> entry", ""], [89.8, "you've seen leg one down, one successful leg up, and probably <em>two potential legs</em> up", ""], [106.6, "the harsh winter: jump out the window, then <em>climb up the steps</em>", ""], [114.0, "you've seen one, you <em>plan for two</em>, and you <em>hope for three</em>", ""], [133.2, "everything is based off the most recent price action: an <em>engineering problem</em>", ""], [177.2, "they got the big win early, the other guys got a mini win: now it's <em>game on</em>", ""], [186.2, "away from the shenanigans of the open, but <em>five hours left</em> in the day", ""], [213.7, "when this works you can see <em>three or four or five</em> of those on the way up", ""], [240.9, "translate the day trade to the <em>swing trade</em>: you're going to see Kata 2s all the time", ""], [248.1, "a <em>strong trend</em>, a <em>measured pullback</em> to a measured support level", ""], [265.9, "that's all <em>fractal</em>: here's my stop on my collapsing dragon, a pretty small risk box", ""], [280.3, "two units of reward: my <em>two to one</em> on a swing trade, done in one", ""], [339.7, "I like teaching the Kata 2 first: the <em>highest frequency</em> trade, the easiest to calibrate", ""], [353.1, "buying strength on dips, <em>until it no longer works</em>", ""]];
+
+const m4_pill=(x,y,s,o={})=>{const w=(o.w||s.length*10+22);return rect(x-w/2,y-15,w,30,{r:15,s:o.s||BRD,f:o.f||'rgba(255,255,255,.03)',o:o.o==null?1:o.o})+txt(x,y+6,s,{a:'middle',sz:o.sz||15,c:o.c||FG,o:o.o==null?1:o.o,w:o.wt||500});};
+const m4_card=(x,y,w,h,o={})=>rect(x,y,w,h,{r:10,s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',o:o.o==null?1:o.o});
+const m4_lab=(t,t0,x,y,s,o={})=>{const a=op(t,t0,o.d||.5);return a<=0?'':txt(x,y,s,{...o,o:a*(o.o==null?1:o.o)});};
+// a polyline revealed from its first point to a fraction u of its length
+function m4_poly(pts,u,o={}){u=clamp(u,0,1);if(u<=0)return '';const n=pts.length-1;const k=u*n;const i=Math.floor(k);let d=`M${pts[0][0]} ${pts[0][1]}`;for(let j=1;j<=Math.min(i,n);j++)d+=` L${pts[j][0]} ${pts[j][1]}`;if(i<n){const f=k-i;d+=` L${lerp(pts[i][0],pts[i+1][0],f)} ${lerp(pts[i][1],pts[i+1][1],f)}`;}return path(d,{s:o.s||FG,sw:o.sw||2.5,o:o.o==null?1:o.o,dash:o.dash});}
+// a ring around a point that fades in from t0
+const m4_ring=(t,t0,x,y,o={})=>{const a=op(t,t0,.5);return a<=0?'':circ(x,y,o.r||14,{f:'none',s:o.c||ACC,sw:2.5,o:a});};
+// a horizontal level with a tag at the right
+const m4_level=(t,t0,x1,x2,y,s,o={})=>{const a=op(t,t0,.5);return a<=0?'':line(x1,y,x2,y,{s:o.c||ACC,sw:1.5,o:a,dash:o.dash||'6 5'})+txt(x2+8,y+5,s,{sz:o.sz||13,c:o.c||ACC,o:a});};
+// PSAR dots under (side=1) or over (side=-1) a path segment
+function m4_dots(t,t0,pts,side,o={}){const a=op(t,t0,.5);if(a<=0)return '';let s='';pts.forEach(p=>{s+=circ(p[0],p[1]+side*18,3,{f:o.c||FG,o:a});});return s;}
+
+function draw(t){
+  let s='';
+  s += m4_pill(170,60,'supported fall crossing',{o:op(t,13.2,.5),w:220,c:ACC,s:ACC,sz:15}); s += m4_lab(t,16.4,290,66,'aka the Kata 2',{sz:14,c:MUT});
+  s += m4_lab(t,0.6,60,100,'least challenging to new beliefs',{sz:13,c:MUT});
+  // the intraday path, left two-thirds
+  const HW=[[80,170],[130,250],[180,330],[230,400]];       // harsh winter
+  const L1=[[230,400],[280,350],[330,300]];                 // SSC leg one
+  const FA=[[330,300],[360,330],[385,352]];                 // the fall
+  const L2=[[385,352],[430,300],[480,250]];                 // leg two
+  const L3=[[480,250],[520,275],[550,290],[600,230],[650,180]]; // a pullback and leg three
+  if (t>=21.1){ s += m4_poly(HW,pr(t,21.1,1.5)); s += m4_lab(t,23.3,60,160,'harsh winter',{sz:13,c:DN}); }
+  if (t>=30.1){ s += m4_poly(L1,pr(t,30.1,1.2),{s:OK}); s += m4_lab(t,37.2,245,275,'SSC · leg one',{sz:13,c:OK}); }
+  if (t>=42.5){ s += m4_poly(FA,pr(t,42.5,1.2)); s += m4_lab(t,45,340,380,'the fall',{sz:13,c:MUT}); }
+  if (t>=48.9){ s += m4_ring(t,48.9,385,352,{c:ACC}); s += m4_lab(t,52,400,392,'a higher low',{sz:14,c:ACC}); s += line(200,400,400,400,{s:MUT,sw:1,o:op(t,48.9,.5),dash:'3 4'}); }
+  if (t>=56.4){ s += m4_lab(t,56.4,400,412,'= the definition',{sz:12,c:ACC}); }
+  if (t>=61.2){ s += m4_level(t,61.2,300,700,300,'RL10 peak',{c:ACC}); }
+  if (t>=71.3){ s += m4_poly(L2,pr(t,71.3,1.2),{s:OK,sw:3}); s += circ(430,300,6,{f:ACC,o:op(t,74.5,.5)}); s += m4_lab(t,77.3,440,330,'enter at the crossing',{sz:13,c:ACC}); }
+  if (t>=83.5){ const a=op(t,83.5,.5); s += line(380,360,380,300,{s:DN,sw:2,o:a}); s += m4_lab(t,86.1,374,318,'risk',{sz:12,c:DN,a:'end'}); }
+  // the legs ladder, right of the path
+  if (t>=89.8){ s += m4_poly(L3,pr(t,89.8,2),{dash:'5 4'}); }
+  const legs=[[114.0,'one · seen',330,300,10,-10],[115.8,'two · plan',480,250,10,-10],[118.4,'three · hope',650,180,14,22]];
+  legs.forEach(l=>{ if(t>=l[0]){ const a=op(t,l[0],.5); s += circ(l[2],l[3],5,{f:ACC,o:a}); s += txt(l[2]+l[4],l[3]+l[5],l[1],{sz:13,c:ACC,o:a}); } });
+  if (t>=101.4){ s += m4_level(t,101.4,80,640,150,'fair value',{c:MUT,dash:'2 5'}); }
+  if (t>=106.6){ s += m4_lab(t,106.6,60,470,'jump out the window, climb up the steps',{sz:13,c:MUT}); }
+  if (t>=133.2){ s += m4_lab(t,133.2,60,495,'an engineering problem, not an interpretation',{sz:13,c:MUT}); }
+  if (t>=177.2){ s += m4_lab(t,177.2,420,470,'game on · five hours left',{sz:13,c:MUT}); }
+  if (t>=213.7){ s += m4_lab(t,213.7,420,495,'three, four, five of these on the way up',{sz:13,c:ACC}); }
+  // the swing-scale twin, right third (kept under x 890 / above y 95 clear)
+  if (t>=240.9){ const a=op(t,240.9,.6); s += m4_card(740,110,380,330,{o:a}); s += txt(760,140,'the same shape on the daily',{sz:14,c:MUT,o:a}); }
+  const ST=[[760,400],[800,360],[840,320],[880,280],[920,240]];  // strong trend
+  const PB=[[920,240],[950,270],[975,292]];                    // measured pullback
+  const RS=[[975,292],[1010,250],[1050,200]];                  // resumes
+  if (t>=248.1){ s += m4_poly(ST,pr(t,248.1,1.2),{s:OK}); s += m4_lab(t,249.9,760,380,'strong trend',{sz:12,c:OK}); }
+  if (t>=252.6){ s += m4_poly(PB,pr(t,252.6,1)); s += m4_ring(t,255.9,975,292,{c:ACC,r:12}); s += m4_lab(t,255.9,985,320,'measured pullback',{sz:12,c:ACC}); }
+  if (t>=259.1){ s += m4_poly(RS,pr(t,259.1,1),{s:OK,sw:3}); }
+  if (t>=265.9){ const a=op(t,265.9,.5); s += line(960,305,990,305,{s:DN,sw:2.5,o:a}); s += m4_lab(t,270.7,1000,345,'stop: the CD',{sz:11,c:DN}); }
+  if (t>=280.3){ s += m4_level(t,280.3,900,1080,200,'10-day high',{c:MUT}); s += m4_lab(t,283.2,760,430,'2 : 1 · done in one',{sz:14,c:ACC}); }
+  if (t>=339.7){ s += m4_pill(930,470,'highest frequency · easiest to calibrate',{o:op(t,339.7,.5),w:330,c:ACC,s:ACC,sz:13}); }
+  if (t>=353.1){ s += m4_lab(t,353.1,930,505,'buy strength on dips, until it no longer works',{sz:12,c:MUT,a:'middle'}); }
+  return s;
+}
+
+window.renderFrame = function (t) {
+  t = clamp(t, 0, ANIM_DURATION);
+  let cap = '', sub = '';
+  for (const b of BEATS) if (t >= b[0]) { cap = b[1]; sub = b[2] || ''; }
+  $('cap').innerHTML = cap; $('sub').textContent = sub;
+  $('svg').innerHTML = WRAP[0] + draw(t) + WRAP[1];
+  const f = $('fade');
+  f.style.opacity = t < 0.5 ? 1 - t / 0.5 : (ANIM_DURATION - t < 0.6 ? 1 - (ANIM_DURATION - t) / 0.6 : 0);
+};
+renderFrame(0);
+</script>
+</body>
+</html>

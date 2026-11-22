@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>s45a · the six swing patterns, and why they are fractal</title>
+<style>
+  :root { --bg:#030507; --fg:#E1EEF5; --muted:#8fa3ad; --border:rgba(56,225,255,0.14); --accent:#F2D06B;
+          --ok:#4ade80; --dn:#f87171; --card:#0a1016; --blue:#7baad4; }
+  html, body { margin:0; background:var(--bg); overflow:hidden; }
+  #stage { position:relative; width:1280px; height:720px; background:var(--bg); color:var(--fg);
+           font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; overflow:hidden; }
+  #cap { position:absolute; left:60px; right:60px; top:30px; font-size:32px; font-weight:600; letter-spacing:-.01em; line-height:1.15; }
+  #cap em { font-style:normal; color:var(--accent); }
+  #sub { position:absolute; left:60px; width:1160px; top:648px; font-size:20px; color:var(--muted); line-height:1.4; }
+  #scene { position:absolute; left:60px; top:112px; width:1160px; height:518px; border:1px solid var(--border);
+           border-radius:10px; background:var(--card); overflow:hidden; }
+  #svg { position:absolute; inset:0; }
+  #fade { position:absolute; inset:0; background:var(--bg); pointer-events:none; opacity:0; }
+  /* the picture-in-picture corner: build_v2 composites Ken's camera tile here (PIP_W/X/Y); the cutroom shows this placeholder */
+  #pip { position:absolute; left:950px; top:22px; width:300px; height:169px; border:1px dashed rgba(56,225,255,0.35); border-radius:4px;
+         display:none; color:var(--muted); font-size:13px; text-align:center; line-height:169px; }
+  .pip #pip { display:block; } .pip #cap { right:360px; font-size:29px; }
+  text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; fill:#E1EEF5; }
+  .mono { font-family:ui-monospace,Menlo,Consolas,monospace; }
+  #third { display:none; }
+</style>
+</head>
+<body>
+<div id="stage" class="">
+  <div id="cap"></div>
+  <div id="pip">Ken on camera, composited at render</div>
+  <div id="scene"><svg id="svg" width="1160" height="530" viewBox="0 0 1160 530"></svg></div>
+  <div id="third"></div>
+  <div id="sub"></div>
+  <div id="fade"></div>
+</div>
+<script>
+const BUILD = 's45a-1';
+console.log('[s45a] build', BUILD);
+// Overdub twin of s45: Ken's audio wsp 1746.0→1995.0; t is seconds after the in-point.
+// Beat times read from the VTT cues on 2026-11-21 (tools/cutroom/weekend-edge-v2/transcript-wsp.json).
+window.ANIM_DURATION = 249.0;
+const ACC='#F2D06B', FG='#E1EEF5', MUT='#8fa3ad', OK='#4ade80', DN='#f87171', BLUE='#7baad4', BRD='rgba(56,225,255,.22)', CARD='#0a1016', TXS=1, WRAP=['',''];
+const W=1160, H=530;
+const $ = id => document.getElementById(id);
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const ease=u=>{u=clamp(u,0,1);return u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;};
+const lerp=(a,b,u)=>a+(b-a)*u;
+const pr=(t,t0,d)=>ease((t-t0)/(d||0.6));          // eased progress 0..1 from t0 over d seconds
+const on=(t,t0)=>t>=t0;
+const op=(t,t0,d)=>clamp((t-t0)/(d||0.5),0,1);      // linear opacity ramp
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const txt=(x,y,s,o={})=>`<text x="${x}" y="${y}" font-size="${(o.sz||20)*TXS}" fill="${o.c||FG}" opacity="${o.o==null?1:o.o}" text-anchor="${o.a||'start'}" font-weight="${o.w||400}" class="${o.cls||''}" ${o.extra||''}>${esc(s)}</text>`;
+const rect=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.r==null?6:o.r}" fill="${o.f||'none'}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}" ${o.extra||''}/>`;
+const circ=(x,y,r,o={})=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${o.f||FG}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}"/>`;
+const line=(x1,y1,x2,y2,o={})=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${o.s||MUT}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" ${o.dash?`stroke-dasharray="${o.dash}"`:''} stroke-linecap="round"/>`;
+const path=(d,o={})=>`<path d="${d}" fill="${o.f||'none'}" stroke="${o.s||FG}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" stroke-linecap="round" stroke-linejoin="round" ${o.dash?`stroke-dasharray="${o.dash}"`:''}/>`;
+const arrow=(x1,y1,x2,y2,o={})=>{const a=Math.atan2(y2-y1,x2-x1),h=10;return line(x1,y1,x2,y2,o)+path(`M${x2} ${y2} L${x2-h*Math.cos(a-0.5)} ${y2-h*Math.sin(a-0.5)} M${x2} ${y2} L${x2-h*Math.cos(a+0.5)} ${y2-h*Math.sin(a+0.5)}`,{s:o.s||MUT,sw:o.sw||2,o:o.o});};
+// a labelled box that grows in from t0
+const box=(t,t0,x,y,w,h,label,o={})=>{const u=pr(t,t0,0.5);if(u<=0)return '';const ww=w*u,hh=h;return rect(x+(w-ww)/2,y,ww,hh,{s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',sw:o.sw||1.5,o:u})+(u>.6?txt(x+w/2,y+h/2+(o.sz||20)/3,label,{a:'middle',sz:o.sz||20,c:o.c||FG,o:op(t,t0+.3,.3),w:o.w||500}):'');};
+// deterministic pseudo-random
+function rng(seed){let s=seed*9301+49297;return()=>{s=(s*9301+49297)%233280;return s/233280;};}
+// a herd of dots in a region; drift is a slow deterministic wander
+function herd(n,seed,x,y,w,h){const r=rng(seed);const pts=[];for(let i=0;i<n;i++)pts.push({x:x+r()*w,y:y+r()*h,p:r()*6.28,q:r()*6.28});return pts;}
+const wander=(p,t,amp)=>[p.x+Math.sin(t*0.9+p.p)*amp,p.y+Math.cos(t*0.7+p.q)*amp];
+// typewriter: the first k chars of s by time
+const type=(s,t,t0,cps)=>s.slice(0,Math.max(0,Math.floor((t-t0)*(cps||28))));
+// a list that reveals one row per step seconds from t0
+function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
+
+const BEATS = [[10.6, "during the last two years we've developed some <em>standard fractal patterns</em>", ""], [17.2, "the <em>RLCO</em> patterns: regression line crossover", ""], [22.5, "the first generation identified patterns <em>1 through 7</em>", ""], [41.5, "we use those as a <em>language</em> to recognize the conditions the market is in", ""], [50.8, "the <em>second generation</em>: even better patterns inside that same framework", ""], [61.2, "the <em>owl</em>, the <em>supported spring crossing</em>", ""], [68.3, "the <em>Kata 2</em> continuation pattern", ""], [73.1, "the <em>collapsing dragon</em>, the <em>emerging dragon</em>", ""], [86.4, "there's also the pinches: the <em>Z3 pinch</em> and the <em>super pinch</em>", "When volatility has become abnormally compressed."], [112.2, "those things can all be traded on <em>1-minute, 3-minute, 5-minute, 10-minute</em>", ""], [119.9, "<em>30-minute, 60-minute, 2-hour</em>", ""], [125.7, "they're fractal: <em>daily, weekly</em>, a 3-day, 9-day, <em>monthly</em>", ""], [137.9, "fractal because they represent <em>important moments in trading psychology</em>", ""], [149.9, "core, swing, and day traders, each looking at <em>their favorite chart</em>", ""], [186.2, "when their pattern hits: he sees it, and now he <em>acts</em>", ""], [196.4, "all of these participants have some <em>price level</em> at which they are likely to take action", ""], [207.9, "other people are allowed to have <em>other ideas</em>", ""], [222.2, "what we are calling <em>sniper patterns</em>: they work on <em>every timeframe</em>", ""], [238.6, "the swing patterns we see tonight, through the lens of these patterns", ""]];
+
+const m4_pill=(x,y,s,o={})=>{const w=(o.w||s.length*10+22);return rect(x-w/2,y-15,w,30,{r:15,s:o.s||BRD,f:o.f||'rgba(255,255,255,.03)',o:o.o==null?1:o.o})+txt(x,y+6,s,{a:'middle',sz:o.sz||15,c:o.c||FG,o:o.o==null?1:o.o,w:o.wt||500});};
+const m4_card=(x,y,w,h,o={})=>rect(x,y,w,h,{r:10,s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',o:o.o==null?1:o.o});
+const m4_lab=(t,t0,x,y,s,o={})=>{const a=op(t,t0,o.d||.5);return a<=0?'':txt(x,y,s,{...o,o:a*(o.o==null?1:o.o)});};
+// a polyline revealed from its first point to a fraction u of its length
+function m4_poly(pts,u,o={}){u=clamp(u,0,1);if(u<=0)return '';const n=pts.length-1;const k=u*n;const i=Math.floor(k);let d=`M${pts[0][0]} ${pts[0][1]}`;for(let j=1;j<=Math.min(i,n);j++)d+=` L${pts[j][0]} ${pts[j][1]}`;if(i<n){const f=k-i;d+=` L${lerp(pts[i][0],pts[i+1][0],f)} ${lerp(pts[i][1],pts[i+1][1],f)}`;}return path(d,{s:o.s||FG,sw:o.sw||2.5,o:o.o==null?1:o.o,dash:o.dash});}
+// a ring around a point that fades in from t0
+const m4_ring=(t,t0,x,y,o={})=>{const a=op(t,t0,.5);return a<=0?'':circ(x,y,o.r||14,{f:'none',s:o.c||ACC,sw:2.5,o:a});};
+// a horizontal level with a tag at the right
+const m4_level=(t,t0,x1,x2,y,s,o={})=>{const a=op(t,t0,.5);return a<=0?'':line(x1,y,x2,y,{s:o.c||ACC,sw:1.5,o:a,dash:o.dash||'6 5'})+txt(x2+8,y+5,s,{sz:o.sz||13,c:o.c||ACC,o:a});};
+// PSAR dots under (side=1) or over (side=-1) a path segment
+function m4_dots(t,t0,pts,side,o={}){const a=op(t,t0,.5);if(a<=0)return '';let s='';pts.forEach(p=>{s+=circ(p[0],p[1]+side*18,3,{f:o.c||FG,o:a});});return s;}
+
+function draw(t){
+  let s='';
+  // the two generations, a card at the left
+  if (t>=10.6){ const a=op(t,10.6,.6); s += m4_card(60,40,420,282,{o:a}); s += txt(80,70,'RLCO · regression line crossover',{sz:15,c:MUT,o:op(t,17.2,.5)}); }
+  if (t>=22.5){ const a=op(t,22.5,.5); s += txt(80,100,'1st generation',{sz:14,c:MUT,o:a}); for (let i=0;i<7;i++) s += m4_pill(190+i*38,96,String(i+1),{o:a,w:30,sz:13}); }
+  if (t>=41.5){ s += m4_lab(t,41.5,80,124,'a language for the conditions the market is in',{sz:12,c:MUT}); }
+  if (t>=50.8){ s += txt(80,156,'2nd generation',{sz:14,c:ACC,o:op(t,50.8,.5)}); }
+  const names=[[61.2,'the owl'],[63.7,'the supported spring crossing'],[68.3,'the Kata 2 continuation'],[73.1,'the collapsing dragon'],[76.4,'the emerging dragon']];
+  names.forEach((n,i)=>{ s += m4_lab(t,n[0],100,184+i*22,n[1],{sz:15,c: i==2?ACC:FG}); if (t>=n[0]) s += circ(88,179+i*22,3,{f: i==2?ACC:FG,o:op(t,n[0],.5)}); });
+  if (t>=86.4){ s += m4_lab(t,86.4,100,302,'+ the pinches: Z3 pinch · super pinch',{sz:13,c:MUT}); s += m4_lab(t,91.8,355,302,'(abnormally compressed)',{sz:12,c:MUT}); }
+  // the time-frame ladder across the bottom
+  const tfs=[[112.2,'1m'],[113.5,'3m'],[115.0,'5m'],[117.3,'10m'],[119.9,'30m'],[121.6,'60m'],[123.4,'2h'],[127.6,'D'],[128.8,'W'],[130.0,'3D'],[133.0,'9D'],[135.2,'M']];
+  if (t>=112.2){ s += line(80,400,860,400,{s:BRD,sw:2,o:op(t,112.2,.5)}); tfs.forEach((f,i)=>{ const x=100+i*68; const a=op(t,f[0],.4); if(a>0){ s += line(x,392,x,408,{s:FG,sw:2,o:a}); s += txt(x,432,f[1],{a:'middle',sz:14,c: i>=7?ACC:FG,o:a}); } }); }
+  if (t>=125.7){ s += m4_lab(t,125.7,576,372,'fractal',{sz:14,c:ACC}); }
+  if (t>=137.9){ s += m4_lab(t,137.9,80,470,'the same moments in trading psychology, on every clock',{sz:14,c:MUT}); }
+  // three traders at their charts, right
+  const tr=[[149.9,'core',560,'W · M'],[151.5,'swing',700,'D · 3D · 60m'],[153.1,'day',840,'1m … 30m']];
+  tr.forEach(p=>{ if (t>=p[0]){ const a=op(t,p[0],.5); const x=p[2]; s += m4_card(x-55,70,110,120,{o:a}); s += circ(x,100,9,{f:'none',s:FG,sw:2,o:a}); s += path(`M${x-16} ${136} C${x-16} ${114} ${x+16} ${114} ${x+16} ${136}`,{s:FG,sw:2,o:a}); s += txt(x,160,p[1],{a:'middle',sz:14,c:FG,o:a}); s += txt(x,180,p[3],{a:'middle',sz:11,c:MUT,o:a}); } });
+  if (t>=186.2){ tr.forEach((p,i)=>{ const x=p[2]; const a=op(t,186.2+i*.6,.5); s += line(x-40,230,x+40,230,{s:ACC,sw:2,o:a,dash:'5 4'}); s += txt(x,250,'a price level',{a:'middle',sz:11,c:ACC,o:op(t,196.4,.5)}); if (Math.sin(t*4+i)>0 && t>=188.4 && t<196) s += circ(x,230,5,{f:ACC,o:a}); }); }
+  if (t>=207.9){ s += m4_lab(t,207.9,560,290,'other people are allowed to have other ideas',{sz:13,c:MUT}); }
+  if (t>=222.2){ s += m4_pill(700,330,'sniper patterns · every timeframe',{o:op(t,222.2,.5),w:300,c:ACC,s:ACC,sz:14}); }
+  return s;
+}
+
+window.renderFrame = function (t) {
+  t = clamp(t, 0, ANIM_DURATION);
+  let cap = '', sub = '';
+  for (const b of BEATS) if (t >= b[0]) { cap = b[1]; sub = b[2] || ''; }
+  $('cap').innerHTML = cap; $('sub').textContent = sub;
+  $('svg').innerHTML = WRAP[0] + draw(t) + WRAP[1];
+  const f = $('fade');
+  f.style.opacity = t < 0.5 ? 1 - t / 0.5 : (ANIM_DURATION - t < 0.6 ? 1 - (ANIM_DURATION - t) / 0.6 : 0);
+};
+renderFrame(0);
+</script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>s02 · the spine and the three tools</title>
+<style>
+  :root { --bg:#030507; --fg:#E1EEF5; --muted:#8fa3ad; --border:rgba(56,225,255,0.14); --accent:#F2D06B;
+          --ok:#4ade80; --dn:#f87171; --card:#0a1016; --blue:#7baad4; }
+  html, body { margin:0; background:var(--bg); overflow:hidden; }
+  #stage { position:relative; width:1280px; height:720px; background:var(--bg); color:var(--fg);
+           font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; overflow:hidden; }
+  #cap { position:absolute; left:60px; right:60px; top:30px; font-size:32px; font-weight:600; letter-spacing:-.01em; line-height:1.15; }
+  #cap em { font-style:normal; color:var(--accent); }
+  #sub { position:absolute; left:60px; width:1160px; top:648px; font-size:20px; color:var(--muted); line-height:1.4; }
+  #scene { position:absolute; left:60px; top:112px; width:1160px; height:518px; border:1px solid var(--border);
+           border-radius:10px; background:var(--card); overflow:hidden; }
+  #svg { position:absolute; inset:0; }
+  #fade { position:absolute; inset:0; background:var(--bg); pointer-events:none; opacity:0; }
+  /* the picture-in-picture corner: build_v2 composites Ken's camera tile here (PIP_W/X/Y); the cutroom shows this placeholder */
+  #pip { position:absolute; left:950px; top:22px; width:300px; height:169px; border:1px dashed rgba(56,225,255,0.35); border-radius:4px;
+         display:none; color:var(--muted); font-size:13px; text-align:center; line-height:169px; }
+  .pip #pip { display:block; } .pip #cap { right:360px; font-size:29px; }
+  text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; fill:#E1EEF5; }
+  .mono { font-family:ui-monospace,Menlo,Consolas,monospace; }
+  #third { display:none; }
+</style>
+</head>
+<body>
+<div id="stage" class="">
+  <div id="cap"></div>
+  <div id="pip">Ken on camera, composited at render</div>
+  <div id="scene"><svg id="svg" width="1160" height="530" viewBox="0 0 1160 530"></svg></div>
+  <div id="third"></div>
+  <div id="sub"></div>
+  <div id="fade"></div>
+</div>
+<script>
+const BUILD = 's02-1';
+console.log('[s02] build', BUILD);
+// Overdub twin of s02: Ken's audio ava 0.0→68.0; t is seconds after the in-point.
+// Beat times read from the VTT cues on 2026-11-21 (tools/cutroom/weekend-edge-v2/transcript-ava.json).
+window.ANIM_DURATION = 68.0;
+const ACC='#F2D06B', FG='#E1EEF5', MUT='#8fa3ad', OK='#4ade80', DN='#f87171', BLUE='#7baad4', BRD='rgba(56,225,255,.22)', CARD='#0a1016', TXS=1, WRAP=['',''];
+const W=1160, H=530;
+const $ = id => document.getElementById(id);
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const ease=u=>{u=clamp(u,0,1);return u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;};
+const lerp=(a,b,u)=>a+(b-a)*u;
+const pr=(t,t0,d)=>ease((t-t0)/(d||0.6));          // eased progress 0..1 from t0 over d seconds
+const on=(t,t0)=>t>=t0;
+const op=(t,t0,d)=>clamp((t-t0)/(d||0.5),0,1);      // linear opacity ramp
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const txt=(x,y,s,o={})=>`<text x="${x}" y="${y}" font-size="${(o.sz||20)*TXS}" fill="${o.c||FG}" opacity="${o.o==null?1:o.o}" text-anchor="${o.a||'start'}" font-weight="${o.w||400}" class="${o.cls||''}" ${o.extra||''}>${esc(s)}</text>`;
+const rect=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.r==null?6:o.r}" fill="${o.f||'none'}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}" ${o.extra||''}/>`;
+const circ=(x,y,r,o={})=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${o.f||FG}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}"/>`;
+const line=(x1,y1,x2,y2,o={})=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${o.s||MUT}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" ${o.dash?`stroke-dasharray="${o.dash}"`:''} stroke-linecap="round"/>`;
+const path=(d,o={})=>`<path d="${d}" fill="${o.f||'none'}" stroke="${o.s||FG}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" stroke-linecap="round" stroke-linejoin="round" ${o.dash?`stroke-dasharray="${o.dash}"`:''}/>`;
+const arrow=(x1,y1,x2,y2,o={})=>{const a=Math.atan2(y2-y1,x2-x1),h=10;return line(x1,y1,x2,y2,o)+path(`M${x2} ${y2} L${x2-h*Math.cos(a-0.5)} ${y2-h*Math.sin(a-0.5)} M${x2} ${y2} L${x2-h*Math.cos(a+0.5)} ${y2-h*Math.sin(a+0.5)}`,{s:o.s||MUT,sw:o.sw||2,o:o.o});};
+// a labelled box that grows in from t0
+const box=(t,t0,x,y,w,h,label,o={})=>{const u=pr(t,t0,0.5);if(u<=0)return '';const ww=w*u,hh=h;return rect(x+(w-ww)/2,y,ww,hh,{s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',sw:o.sw||1.5,o:u})+(u>.6?txt(x+w/2,y+h/2+(o.sz||20)/3,label,{a:'middle',sz:o.sz||20,c:o.c||FG,o:op(t,t0+.3,.3),w:o.w||500}):'');};
+// deterministic pseudo-random
+function rng(seed){let s=seed*9301+49297;return()=>{s=(s*9301+49297)%233280;return s/233280;};}
+// a herd of dots in a region; drift is a slow deterministic wander
+function herd(n,seed,x,y,w,h){const r=rng(seed);const pts=[];for(let i=0;i<n;i++)pts.push({x:x+r()*w,y:y+r()*h,p:r()*6.28,q:r()*6.28});return pts;}
+const wander=(p,t,amp)=>[p.x+Math.sin(t*0.9+p.p)*amp,p.y+Math.cos(t*0.7+p.q)*amp];
+// typewriter: the first k chars of s by time
+const type=(s,t,t0,cps)=>s.slice(0,Math.max(0,Math.floor((t-t0)*(cps||28))));
+// a list that reveals one row per step seconds from t0
+function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
+
+const BEATS = [[0.3, "Every Sunday, <em>three questions</em> before a single trade", ""], [4.6, "What kind of market is this?", ""], [7.2, "How much of my capital does the <em>evidence permit</em>?", ""], [10.6, "Which way is the index <em>leaning</em> right now?", ""], [14.0, "Three <em>laconic tools</em> for three questions", ""], [18.4, "The spine: a <em>three by three</em> matrix", ""], [21.0, "direction: bull, sideways or bear", ""], [25.4, "against volatility: quiet, normal or volatile", ""], [30.0, "the <em>cell you are in</em> decides what the week permits", ""], [34.4, "On that spine hang the tools", ""], [36.8, "<em>ETF2</em>: ten regions into one percentage", "Module 2"], [44.6, "the SPY daily <em>PSAR flip</em>: wait, or initiate", "Module 3"], [50.4, "the <em>kata</em> patterns name the turn when it comes", "Module 4"], [55.6, "Four hours, in the <em>order he uses them</em>", "Module 5"], [60.8, "then the week that is on the screen <em>right now</em>", "Module 6"]];
+
+const m0_pill=(x,y,s,o={})=>{const w=(o.w||s.length*10+22);return rect(x-w/2,y-15,w,30,{r:15,s:o.s||BRD,f:o.f||'rgba(255,255,255,.03)',o:o.o==null?1:o.o})+txt(x,y+6,s,{a:'middle',sz:o.sz||15,c:o.c||FG,o:o.o==null?1:o.o,w:o.wt||500});};
+// the 3x3 grid: x,y top-left, cell size c; cols = direction, rows = volatility
+function m0_grid(t,t0,x,y,c,o={}){const a=op(t,t0,.8);if(a<=0)return '';let s='';
+  for(let i=0;i<=3;i++){s+=line(x+i*c,y,x+i*c,y+3*c,{s:MUT,sw:1.5,o:a});s+=line(x,y+i*c,x+3*c,y+i*c,{s:MUT,sw:1.5,o:a});}
+  const cols=o.cols||['bull','sideways','bear'], rows=o.rows||['quiet','normal','volatile'];
+  const ac=op(t,o.tc==null?t0+1:o.tc,.6), ar=op(t,o.tr==null?t0+2:o.tr,.6);
+  cols.forEach((n,i)=>s+=txt(x+i*c+c/2,y-12,n,{a:'middle',sz:15,c:FG,o:ac}));
+  rows.forEach((n,i)=>s+=txt(x-12,y+i*c+c/2+5,n,{a:'end',sz:15,c:FG,o:ar}));
+  if(o.lit&&t>=o.lit[2]){const b=op(t,o.lit[2],.6);s+=rect(x+o.lit[0]*c+3,y+o.lit[1]*c+3,c-6,c-6,{r:6,f:'rgba(242,208,107,.18)',s:ACC,sw:2,o:b});}
+  return s;}
+
+function draw(t){
+  let s='';
+  // the three questions, left column
+  s += list(t,4.6,3.2,['what kind of market?','how much capital?','which way is it leaning?'],60,120,{sz:20,lh:40});
+  if (t>=14.0){ const a=op(t,14,.5); s += txt(60,260,'three tools',{sz:16,c:MUT,o:a}); }
+  // the grid, centre
+  s += m0_grid(t,18.4,520,150,86,{tc:21.0,tr:25.4,lit:[0,1,30.0]});
+  if (t>=30.0) s += txt(650,440,'the cell decides the week',{a:'middle',sz:16,c:ACC,o:op(t,30,.5)});
+  // the tools hung to the right, one per beat, with a line to the grid
+  const tools=[[36.8,'ETF2 exposure','one percentage'],[44.6,'SPY daily PSAR','wait or initiate'],[50.4,'kata patterns','name the turn']];
+  tools.forEach((tl,i)=>{ if(t>=tl[0]){ const a=op(t,tl[0],.6); const y=170+i*90; s += line(778,y,860,y,{s:BRD,sw:1.5,o:a}); s += m0_pill(960,y,tl[1],{w:200,c:FG,s:ACC,o:a}); s += txt(960,y+34,tl[2],{a:'middle',sz:14,c:MUT,o:a}); } });
+  // the order, bottom
+  if (t>=55.6){ const a=op(t,55.6,.6); const names=['market type','exposure','direction','pattern','size']; names.forEach((n,i)=>{ s += m0_pill(150+i*220,480,n,{w:150,o:a*op(t,55.6+i*0.6,.4)}); if(i<4) s += arrow(150+i*220+78,480,150+(i+1)*220-78,480,{s:MUT,sw:1.5,o:a*op(t,55.9+i*0.6,.4)}); }); }
+  if (t>=60.8) s += txt(1060,440,'this week',{a:'end',sz:16,c:ACC,o:op(t,60.8,.5)});
+  return s;
+}
+
+window.renderFrame = function (t) {
+  t = clamp(t, 0, ANIM_DURATION);
+  let cap = '', sub = '';
+  for (const b of BEATS) if (t >= b[0]) { cap = b[1]; sub = b[2] || ''; }
+  $('cap').innerHTML = cap; $('sub').textContent = sub;
+  $('svg').innerHTML = WRAP[0] + draw(t) + WRAP[1];
+  const f = $('fade');
+  f.style.opacity = t < 0.5 ? 1 - t / 0.5 : (ANIM_DURATION - t < 0.6 ? 1 - (ANIM_DURATION - t) / 0.6 : 0);
+};
+renderFrame(0);
+</script>
+</body>
+</html>

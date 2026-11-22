@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>s53a · dollars at risk as a function of market classification</title>
+<style>
+  :root { --bg:#030507; --fg:#E1EEF5; --muted:#8fa3ad; --border:rgba(56,225,255,0.14); --accent:#F2D06B;
+          --ok:#4ade80; --dn:#f87171; --card:#0a1016; --blue:#7baad4; }
+  html, body { margin:0; background:var(--bg); overflow:hidden; }
+  #stage { position:relative; width:1280px; height:720px; background:var(--bg); color:var(--fg);
+           font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; overflow:hidden; }
+  #cap { position:absolute; left:60px; right:60px; top:30px; font-size:32px; font-weight:600; letter-spacing:-.01em; line-height:1.15; }
+  #cap em { font-style:normal; color:var(--accent); }
+  #sub { position:absolute; left:60px; width:1160px; top:648px; font-size:20px; color:var(--muted); line-height:1.4; }
+  #scene { position:absolute; left:60px; top:112px; width:1160px; height:518px; border:1px solid var(--border);
+           border-radius:10px; background:var(--card); overflow:hidden; }
+  #svg { position:absolute; inset:0; }
+  #fade { position:absolute; inset:0; background:var(--bg); pointer-events:none; opacity:0; }
+  /* the picture-in-picture corner: build_v2 composites Ken's camera tile here (PIP_W/X/Y); the cutroom shows this placeholder */
+  #pip { position:absolute; left:950px; top:22px; width:300px; height:169px; border:1px dashed rgba(56,225,255,0.35); border-radius:4px;
+         display:none; color:var(--muted); font-size:13px; text-align:center; line-height:169px; }
+  .pip #pip { display:block; } .pip #cap { right:360px; font-size:29px; }
+  text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; fill:#E1EEF5; }
+  .mono { font-family:ui-monospace,Menlo,Consolas,monospace; }
+  #third { display:none; }
+</style>
+</head>
+<body>
+<div id="stage" class="pip">
+  <div id="cap"></div>
+  <div id="pip">Ken on camera, composited at render</div>
+  <div id="scene"><svg id="svg" width="1160" height="530" viewBox="0 0 1160 530"></svg></div>
+  <div id="third"></div>
+  <div id="sub"></div>
+  <div id="fade"></div>
+</div>
+<script>
+const BUILD = 's53a-1';
+console.log('[s53a] build', BUILD);
+// Overdub twin of s53: Ken's audio c6i 5872.0→6205.0; t is seconds after the in-point.
+// Beat times read from the VTT cues on 2026-11-21 (tools/cutroom/weekend-edge-v2/transcript-c6i.json).
+window.ANIM_DURATION = 333.0;
+const ACC='#F2D06B', FG='#E1EEF5', MUT='#8fa3ad', OK='#4ade80', DN='#f87171', BLUE='#7baad4', BRD='rgba(56,225,255,.22)', CARD='#0a1016', TXS=1, WRAP=['',''];
+const W=1160, H=530;
+const $ = id => document.getElementById(id);
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const ease=u=>{u=clamp(u,0,1);return u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;};
+const lerp=(a,b,u)=>a+(b-a)*u;
+const pr=(t,t0,d)=>ease((t-t0)/(d||0.6));          // eased progress 0..1 from t0 over d seconds
+const on=(t,t0)=>t>=t0;
+const op=(t,t0,d)=>clamp((t-t0)/(d||0.5),0,1);      // linear opacity ramp
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const txt=(x,y,s,o={})=>`<text x="${x}" y="${y}" font-size="${(o.sz||20)*TXS}" fill="${o.c||FG}" opacity="${o.o==null?1:o.o}" text-anchor="${o.a||'start'}" font-weight="${o.w||400}" class="${o.cls||''}" ${o.extra||''}>${esc(s)}</text>`;
+const rect=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.r==null?6:o.r}" fill="${o.f||'none'}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}" ${o.extra||''}/>`;
+const circ=(x,y,r,o={})=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${o.f||FG}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}"/>`;
+const line=(x1,y1,x2,y2,o={})=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${o.s||MUT}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" ${o.dash?`stroke-dasharray="${o.dash}"`:''} stroke-linecap="round"/>`;
+const path=(d,o={})=>`<path d="${d}" fill="${o.f||'none'}" stroke="${o.s||FG}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" stroke-linecap="round" stroke-linejoin="round" ${o.dash?`stroke-dasharray="${o.dash}"`:''}/>`;
+const arrow=(x1,y1,x2,y2,o={})=>{const a=Math.atan2(y2-y1,x2-x1),h=10;return line(x1,y1,x2,y2,o)+path(`M${x2} ${y2} L${x2-h*Math.cos(a-0.5)} ${y2-h*Math.sin(a-0.5)} M${x2} ${y2} L${x2-h*Math.cos(a+0.5)} ${y2-h*Math.sin(a+0.5)}`,{s:o.s||MUT,sw:o.sw||2,o:o.o});};
+// a labelled box that grows in from t0
+const box=(t,t0,x,y,w,h,label,o={})=>{const u=pr(t,t0,0.5);if(u<=0)return '';const ww=w*u,hh=h;return rect(x+(w-ww)/2,y,ww,hh,{s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',sw:o.sw||1.5,o:u})+(u>.6?txt(x+w/2,y+h/2+(o.sz||20)/3,label,{a:'middle',sz:o.sz||20,c:o.c||FG,o:op(t,t0+.3,.3),w:o.w||500}):'');};
+// deterministic pseudo-random
+function rng(seed){let s=seed*9301+49297;return()=>{s=(s*9301+49297)%233280;return s/233280;};}
+// a herd of dots in a region; drift is a slow deterministic wander
+function herd(n,seed,x,y,w,h){const r=rng(seed);const pts=[];for(let i=0;i<n;i++)pts.push({x:x+r()*w,y:y+r()*h,p:r()*6.28,q:r()*6.28});return pts;}
+const wander=(p,t,amp)=>[p.x+Math.sin(t*0.9+p.p)*amp,p.y+Math.cos(t*0.7+p.q)*amp];
+// typewriter: the first k chars of s by time
+const type=(s,t,t0,cps)=>s.slice(0,Math.max(0,Math.floor((t-t0)*(cps||28))));
+// a list that reveals one row per step seconds from t0
+function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
+
+const BEATS = [[0.0, "put the <em>execution stop</em> where the hypothesis of the trade is invalidated, but use your <em>full frog box</em> for your standard position size", ""], [17.0, "that's the one that's <em>most likely to fail</em>", ""], [52.0, "track your <em>R multiple expectancy</em> independent of position size", ""], [68.0, "varying the <em>dollars at risk per trade</em> as a function of <em>market classification</em>", ""], [85.0, "right now we are in <em>bullish normal</em> conditions. You could use that to guide your size", ""], [102.0, "how well aligned your system is to the <em>current market</em>", ""], [122.0, "the shape of your expectancy curve <em>is</em> the market classification for that system", ""], [155.0, "all that means is that it is <em>well suited seasonally</em> to trade in that market", ""], [173.0, "the conventional way: a system should trade well when the market in general is <em>behaving like this</em>", ""], [191.0, "<em>paper trade all your systems all the time</em>; when the curve goes from winter to spring, you start getting bigger", ""], [209.0, "somewhere in the spring you go to <em>full size</em>", ""], [226.0, "I've separated into <em>three buckets</em>", "A student's answer."], [241.0, "the cost of doing business; the minimum desired return; then <em>the turbo</em> starts", "A student's answer."], [272.0, "trading <em>one share live</em>, so you get real data", ""], [289.0, "a positive expectancy of 0.4, but the market classification is <em>sideways volatile</em>", ""], [322.0, "who are you going to believe, me or your <em>lyin' eyes</em>", ""]];
+
+const m5_pill=(x,y,s,o={})=>{const w=(o.w||s.length*10+22);return rect(x-w/2,y-15,w,30,{r:15,s:o.s||BRD,f:o.f||'rgba(255,255,255,.03)',o:o.o==null?1:o.o})+txt(x,y+6,s,{a:'middle',sz:o.sz||15,c:o.c||FG,o:o.o==null?1:o.o,w:o.wt||500});};
+const m5_card=(x,y,w,h,o={})=>rect(x,y,w,h,{r:10,s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',o:o.o==null?1:o.o});
+const m5_lab=(t,t0,x,y,s,o={})=>{const a=op(t,t0,o.d||.5);return a<=0?'':txt(x,y,s,{...o,o:a*(o.o==null?1:o.o)});};
+// the 3x3 market-type grid: rows volatile / normal / quiet, columns bear / sideways / bull; lit = [col,row]
+function m5_grid(x,y,cell,o={}){const a=o.o==null?1:o.o;let s='';const cols=['bear','sideways','bull'],rows=['volatile','normal','quiet'];
+  for(let r=0;r<3;r++)for(let c=0;c<3;c++){const lit=o.lit&&o.lit[0]==c&&o.lit[1]==r;s+=rect(x+c*cell,y+r*cell,cell-4,cell-4,{r:4,f:lit?'rgba(242,208,107,.25)':'rgba(255,255,255,.02)',s:lit?ACC:BRD,sw:lit?2:1,o:a});}
+  cols.forEach((c,i)=>s+=txt(x+i*cell+cell/2-2,y+3*cell+14,c,{a:'middle',sz:12,c:MUT,o:a}));
+  rows.forEach((r,i)=>s+=txt(x-8,y+i*cell+cell/2+4,r,{a:'end',sz:12,c:MUT,o:a}));
+  return s;}
+// a bar that fills to u (0..1) from the left
+const m5_bar=(x,y,w,h,u,o={})=>rect(x,y,w,h,{r:4,s:BRD,f:'none',o:o.o==null?1:o.o})+rect(x,y,Math.max(0,w*clamp(u,0,1)),h,{r:4,f:o.f||'rgba(242,208,107,.35)',s:'none',o:o.o==null?1:o.o});
+// a small person
+const m5_person=(x,y,o={})=>circ(x,y-14,8,{f:'none',s:o.c||FG,sw:2,o:o.o==null?1:o.o})+path(`M${x-14} ${y+20} C${x-14} ${y} ${x+14} ${y} ${x+14} ${y+20}`,{s:o.c||FG,sw:2,o:o.o==null?1:o.o});
+
+function draw(t){
+  let s='';
+  // top-left: two boxes, the stop and the sizing box
+  if (t>=0){ const a=op(t,0,.5); s += rect(90,90,60,120,{r:3,f:'none',s:ACC,sw:2,dash:'6 4',o:a}); s += txt(160,110,'sizing box',{sz:13,c:ACC,o:a}); s += rect(90,180,60,30,{r:3,f:'rgba(248,113,113,.2)',s:DN,sw:1.5,o:a}); s += txt(160,200,'execution stop',{sz:13,c:DN,o:a}); }
+  // the 3x3 grid, bullish normal lit at 85
+  if (t>=68){ const a=op(t,68,.6); s += txt(120,262,'market classification',{sz:13,c:MUT,o:a}); s += m5_grid(120,276,52,{o:a,lit:(t>=85)?[2,1]:null}); if (t>=85) s += m5_lab(t,85,300,330,'bullish normal',{sz:14,c:ACC}); if (t>=289) s += rect(120+1*52,276+0*52,48,48,{r:4,f:'rgba(248,113,113,.25)',s:DN,sw:2,o:op(t,289,.5)}); if (t>=289) s += m5_lab(t,289,300,300,'sideways volatile',{sz:13,c:DN}); }
+  // the R-multiple expectancy curve across seasons; the size bar grows in the spring
+  if (t>=52){ const a=op(t,52,.6); const x0=470,y0=300,w=600; s += line(x0,y0,x0+w,y0,{s:BRD,sw:1,o:a}); s += txt(x0,y0-88,'rolling R expectancy',{sz:12,c:MUT,o:a});
+    const r=rng(53); let d=''; const n=Math.floor(clamp((t-52)/80,0,1)*60); for(let i=0;i<=n;i++){ const u=i/60; const v = y0 - 70*Math.sin(u*Math.PI*2-1.2) + (r()-0.5)*8; d+=(i?'L':'M')+(x0+u*w)+' '+v+' '; } if(n>0) s += path(d,{s:FG,sw:2,o:a});
+    if (t>=191){ const b=op(t,191,.5); ['winter','spring','summer'].forEach((l,i)=>s+=txt(x0+50+i*200,y0-120,l,{sz:13,c:i?OK:MUT,o:b})); }
+    if (t>=209){ const b=op(t,209,.6); for(let i=0;i<6;i++){ const u=i/5; const h = 8 + 44*clamp((u-0.25)/0.5,0,1); s += rect(x0+40+i*100,y0+112-h,30,h,{r:3,f:'rgba(242,208,107,.35)',s:ACC,sw:1,o:b}); } s += txt(x0+40,y0+128,'size: bigger in the spring, full by summer',{sz:12,c:ACC,o:b}); } }
+  if (t>=122) s += m5_lab(t,122,720,120,'the curve is the classification for that system',{sz:14,c:ACC,a:'middle'});
+  // the student's three buckets
+  if (t>=226){ const a=op(t,226,.6); const bx=470,by=486; ['cost of business','minimum return','turbo'].forEach((l,i)=>{ const b=op(t,226+(i?15:0),.5); s += rect(bx+i*170,by-40,150,36,{r:6,f:'rgba(255,255,255,.03)',s:i==2?ACC:BRD,o:b}); s += txt(bx+i*170+75,by-16,l,{a:'middle',sz:13,c:i==2?ACC:FG,o:b}); }); s += txt(bx,by+16,"a student's three buckets",{sz:12,c:MUT,o:a}); }
+  if (t>=272){ const a=op(t,272,.5); s += m5_pill(1000,110,'one share live: real data',{sz:13,w:200,c:OK,s:OK,o:a}); }
+  if (t>=322) s += m5_pill(1000,150,'0.4 expectancy. believe your eyes',{sz:13,w:250,c:ACC,s:ACC,o:op(t,322,.5)});
+  return s;
+}
+
+window.renderFrame = function (t) {
+  t = clamp(t, 0, ANIM_DURATION);
+  let cap = '', sub = '';
+  for (const b of BEATS) if (t >= b[0]) { cap = b[1]; sub = b[2] || ''; }
+  $('cap').innerHTML = cap; $('sub').textContent = sub;
+  $('svg').innerHTML = WRAP[0] + draw(t) + WRAP[1];
+  const f = $('fade');
+  f.style.opacity = t < 0.5 ? 1 - t / 0.5 : (ANIM_DURATION - t < 0.6 ? 1 - (ANIM_DURATION - t) / 0.6 : 0);
+};
+renderFrame(0);
+</script>
+</body>
+</html>

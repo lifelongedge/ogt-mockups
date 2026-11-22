@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>s39 · the chart from the brief</title>
+<style>
+  :root { --bg:#030507; --fg:#E1EEF5; --muted:#8fa3ad; --border:rgba(56,225,255,0.14); --accent:#F2D06B;
+          --ok:#4ade80; --dn:#f87171; --card:#0a1016; --blue:#7baad4; }
+  html, body { margin:0; background:var(--bg); overflow:hidden; }
+  #stage { position:relative; width:1280px; height:720px; background:var(--bg); color:var(--fg);
+           font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; overflow:hidden; }
+  #cap { position:absolute; left:60px; right:60px; top:30px; font-size:32px; font-weight:600; letter-spacing:-.01em; line-height:1.15; }
+  #cap em { font-style:normal; color:var(--accent); }
+  #sub { position:absolute; left:60px; width:1160px; top:648px; font-size:20px; color:var(--muted); line-height:1.4; }
+  #scene { position:absolute; left:60px; top:112px; width:1160px; height:518px; border:1px solid var(--border);
+           border-radius:10px; background:var(--card); overflow:hidden; }
+  #svg { position:absolute; inset:0; }
+  #fade { position:absolute; inset:0; background:var(--bg); pointer-events:none; opacity:0; }
+  /* the picture-in-picture corner: build_v2 composites Ken's camera tile here (PIP_W/X/Y); the cutroom shows this placeholder */
+  #pip { position:absolute; left:950px; top:22px; width:300px; height:169px; border:1px dashed rgba(56,225,255,0.35); border-radius:4px;
+         display:none; color:var(--muted); font-size:13px; text-align:center; line-height:169px; }
+  .pip #pip { display:block; } .pip #cap { right:360px; font-size:29px; }
+  text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; fill:#E1EEF5; }
+  .mono { font-family:ui-monospace,Menlo,Consolas,monospace; }
+  #third { display:none; }
+</style>
+</head>
+<body>
+<div id="stage" class="">
+  <div id="cap"></div>
+  <div id="pip">Ken on camera, composited at render</div>
+  <div id="scene"><svg id="svg" width="1160" height="530" viewBox="0 0 1160 530"></svg></div>
+  <div id="third"></div>
+  <div id="sub"></div>
+  <div id="fade"></div>
+</div>
+<script>
+const BUILD = 's39-1';
+console.log('[s39] build', BUILD);
+// Overdub twin of s39: Ken's audio ava 0.0→80.0; t is seconds after the in-point.
+// Beat times read from the VTT cues on 2026-11-21 (tools/cutroom/weekend-edge-v2/transcript-ava.json).
+window.ANIM_DURATION = 80.0;
+const ACC='#F2D06B', FG='#E1EEF5', MUT='#8fa3ad', OK='#4ade80', DN='#f87171', BLUE='#7baad4', BRD='rgba(56,225,255,.22)', CARD='#0a1016', TXS=1, WRAP=['',''];
+const W=1160, H=530;
+const $ = id => document.getElementById(id);
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const ease=u=>{u=clamp(u,0,1);return u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;};
+const lerp=(a,b,u)=>a+(b-a)*u;
+const pr=(t,t0,d)=>ease((t-t0)/(d||0.6));          // eased progress 0..1 from t0 over d seconds
+const on=(t,t0)=>t>=t0;
+const op=(t,t0,d)=>clamp((t-t0)/(d||0.5),0,1);      // linear opacity ramp
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const txt=(x,y,s,o={})=>`<text x="${x}" y="${y}" font-size="${(o.sz||20)*TXS}" fill="${o.c||FG}" opacity="${o.o==null?1:o.o}" text-anchor="${o.a||'start'}" font-weight="${o.w||400}" class="${o.cls||''}" ${o.extra||''}>${esc(s)}</text>`;
+const rect=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.r==null?6:o.r}" fill="${o.f||'none'}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}" ${o.extra||''}/>`;
+const circ=(x,y,r,o={})=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${o.f||FG}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}"/>`;
+const line=(x1,y1,x2,y2,o={})=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${o.s||MUT}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" ${o.dash?`stroke-dasharray="${o.dash}"`:''} stroke-linecap="round"/>`;
+const path=(d,o={})=>`<path d="${d}" fill="${o.f||'none'}" stroke="${o.s||FG}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" stroke-linecap="round" stroke-linejoin="round" ${o.dash?`stroke-dasharray="${o.dash}"`:''}/>`;
+const arrow=(x1,y1,x2,y2,o={})=>{const a=Math.atan2(y2-y1,x2-x1),h=10;return line(x1,y1,x2,y2,o)+path(`M${x2} ${y2} L${x2-h*Math.cos(a-0.5)} ${y2-h*Math.sin(a-0.5)} M${x2} ${y2} L${x2-h*Math.cos(a+0.5)} ${y2-h*Math.sin(a+0.5)}`,{s:o.s||MUT,sw:o.sw||2,o:o.o});};
+// a labelled box that grows in from t0
+const box=(t,t0,x,y,w,h,label,o={})=>{const u=pr(t,t0,0.5);if(u<=0)return '';const ww=w*u,hh=h;return rect(x+(w-ww)/2,y,ww,hh,{s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',sw:o.sw||1.5,o:u})+(u>.6?txt(x+w/2,y+h/2+(o.sz||20)/3,label,{a:'middle',sz:o.sz||20,c:o.c||FG,o:op(t,t0+.3,.3),w:o.w||500}):'');};
+// deterministic pseudo-random
+function rng(seed){let s=seed*9301+49297;return()=>{s=(s*9301+49297)%233280;return s/233280;};}
+// a herd of dots in a region; drift is a slow deterministic wander
+function herd(n,seed,x,y,w,h){const r=rng(seed);const pts=[];for(let i=0;i<n;i++)pts.push({x:x+r()*w,y:y+r()*h,p:r()*6.28,q:r()*6.28});return pts;}
+const wander=(p,t,amp)=>[p.x+Math.sin(t*0.9+p.p)*amp,p.y+Math.cos(t*0.7+p.q)*amp];
+// typewriter: the first k chars of s by time
+const type=(s,t,t0,cps)=>s.slice(0,Math.max(0,Math.floor((t-t0)*(cps||28))));
+// a list that reveals one row per step seconds from t0
+function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
+
+const BEATS = [[0.0, "SPY, daily bars, through <em>November 20, 2026</em>", "The chart Griff Cooper sent with the brief."], [6.5, "the dots: the parabolic SAR built off the <em>ten-bar regression line</em>; through October they sat under price", ""], [15.0, "at the high near <em>781</em> the regression line turned down and the dots <em>flipped above</em> price", ""], [21.5, "a flip down is bearish: <em>wait for the flip up</em> to initiate", "Ken's words, from this module."], [27.5, "the shaded band is the <em>dragon</em>; the coloured line is the RL10 itself", ""], [35.0, "mid November: a rebound of a few days, then price broke back <em>below the point where the line had turned</em>", ""], [43.0, "the <em>collapsing dragon</em>: taken when price violates the first dot of the new stack, not when the RL10 gets there", ""], [54.0, "below, the MACD <em>red river</em>: the line left it in late October and has stayed red and below zero", ""], [62.0, "flip down, collapsing dragon, winter: three reads, one direction. <em>Not a forecast</em>: what the tools said on that date", ""]];
+
+const m3_pill=(x,y,s,o={})=>{const w=(o.w||s.length*9.5+22);return rect(x-w/2,y-15,w,30,{r:15,s:o.s||BRD,f:o.f||'rgba(255,255,255,.03)',o:o.o==null?1:o.o})+txt(x,y+6,s,{a:'middle',sz:o.sz||15,c:o.c||FG,o:o.o==null?1:o.o,w:o.wt||500});};
+const m3_lab=(t,t0,x,y,s,o={})=>{const a=op(t,t0,o.d||.5);return a<=0?'':txt(x,y,s,{...o,o:a*(o.o==null?1:o.o)});};
+const m3_card=(x,y,w,h,o={})=>rect(x,y,w,h,{r:10,s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',o:o.o==null?1:o.o});
+const m3_person=(x,y,o={})=>circ(x,y-14,9,{f:'none',s:o.c||FG,sw:2,o:o.o==null?1:o.o})+path(`M${x-16} ${y+22} C${x-16} ${y} ${x+16} ${y} ${x+16} ${y+22}`,{s:o.c||FG,sw:2,o:o.o==null?1:o.o});
+// the points of a timed polyline that are visible at t: pts=[[x,y,t0],...]; the segment into the next point eases in
+function m3_vis(t,pts){const v=[];for(let i=0;i<pts.length;i++){const p=pts[i];const t0=p[2]==null?-1e9:p[2];if(t0<=t){v.push([p[0],p[1]]);}else{if(i>0){const q=pts[i-1];const q0=q[2]==null?t0-1:q[2];const u=pr(t,q0,Math.max(0.4,t0-q0));if(u>0)v.push([lerp(q[0],p[0],u),lerp(q[1],p[1],u)]);}break;}}return v;}
+function m3_d(v,smooth){if(v.length<2)return '';let d=`M${v[0][0]} ${v[0][1]}`;if(!smooth){for(let i=1;i<v.length;i++)d+=` L${v[i][0]} ${v[i][1]}`;return d;}for(let i=1;i<v.length-1;i++){const mx=(v[i][0]+v[i+1][0])/2,my=(v[i][1]+v[i+1][1])/2;d+=` Q${v[i][0]} ${v[i][1]} ${mx} ${my}`;}const l=v[v.length-1];d+=` L${l[0]} ${l[1]}`;return d;}
+const m3_poly=(t,pts,o={})=>{const d=m3_d(m3_vis(t,pts),o.smooth);return d?path(d,{s:o.s||FG,sw:o.sw||2.5,o:o.o==null?1:o.o,dash:o.dash||''}):'';};
+// the RL10 of a price path: a 3-point smoothing, shifted right a touch (a lagging line)
+function m3_rl(pts,dx){const r=[];for(let i=0;i<pts.length;i++){const a=pts[Math.max(0,i-1)],b=pts[i],c=pts[Math.min(pts.length-1,i+1)];r.push([b[0]+(dx||8),(a[1]+b[1]+c[1])/3,b[2]]);}return r;}
+// a band of half-width hw around a visible polyline
+function m3_band(t,pts,hw,o={}){const v=m3_vis(t,pts);if(v.length<2)return '';const up=v.map(p=>[p[0],p[1]-hw]),dn=v.slice().reverse().map(p=>[p[0],p[1]+hw]);return path(m3_d(up,true)+' '+m3_d(dn,true).replace('M','L')+' Z',{f:o.f||'rgba(242,208,107,.14)',s:'none',o:o.o==null?1:o.o});}
+// PSAR dots: [[x,y,t0],...]
+const m3_dots=(t,ds,o={})=>ds.map(d=>{const a=op(t,d[2],.3);return a<=0?'':circ(d[0],d[1],o.r||3.5,{f:o.c||FG,o:a*(o.o==null?1:o.o)});}).join('');
+// a candle: body from y1 to y2 at x
+const m3_candle=(x,y1,y2,o={})=>rect(x-5,Math.min(y1,y2),10,Math.abs(y2-y1)||2,{r:1,f:o.f||DN,s:'none',o:o.o==null?1:o.o})+line(x,Math.min(y1,y2)-(o.wick||6),x,Math.max(y1,y2)+(o.wick||6),{s:o.f||DN,sw:1.5,o:o.o==null?1:o.o});
+
+const P=[[100,400,0],[160,360,0.5],[220,380,1],[280,330,1.5],[340,300,2],[400,250,2.5],[460,230,3],[520,200,3.5],[580,170,4],[640,150,4.5],[690,185,15],[730,230,16],[770,300,17],[800,270,35],[830,250,36],[860,300,37],[900,360,38],[940,440,39]];
+const RL=m3_rl(P,10);
+const UNDER=[[160,404,6.5],[220,404,7],[280,372,7.5],[340,340,8],[400,296,8.5],[460,272,9],[520,240,9.5],[580,208,10],[640,184,10.5]];
+const OVER=[[690,120,15],[730,140,15.5],[770,178,16],[800,206,16.5],[830,214,17],[860,214,36.5],[900,250,37.5]];
+const MAC=[[100,452,54],[300,440,54.5],[500,446,55],[620,436,55.5],[700,470,56],[800,482,57],[900,490,58],[940,494,59]];
+function draw(t){
+  let s='';
+  s += txt(100,122,'SPY · daily · to 2026-11-20',{sz:13,c:MUT,o:op(t,0,.5)});
+  s += line(90,415,960,415,{s:BRD,sw:1});
+  s += m3_band(t,RL,14,{o:op(t,27.5,.8)});
+  s += m3_poly(t,P,{s:FG,sw:2.5,smooth:true});
+  if (t>=27.5){ s += m3_poly(t,RL.slice(0,10),{s:OK,sw:2,smooth:true,o:op(t,27.5,.6)}); s += m3_poly(t,RL.slice(9),{s:DN,sw:2,smooth:true,o:op(t,27.5,.6)}); s += m3_lab(t,29,120,160,'the dragon band · the RL10 coloured',{sz:11,c:MUT}); }
+  s += m3_dots(t,UNDER,{c:FG}); s += m3_dots(t,OVER,{c:FG});
+  if (t>=15){ const a=op(t,15,.6); s += txt(640,136,'781.62',{sz:12,c:MUT,a:'middle',o:a}); s += circ(690,120,10,{f:'none',s:BLUE||FG,sw:2,o:a}); s += m3_lab(t,17,700,110,'flip down',{sz:13,c:FG,w:600}); }
+  if (t>=21.5){ s += m3_pill(300,210,'flip down = wait for the flip up',{sz:13,w:270,c:ACC,s:ACC,o:op(t,21.5,.5)}); }
+  if (t>=35){ const a=op(t,35,.6); s += line(760,300,900,300,{s:DN,sw:1.5,dash:'5 4',o:a}); }
+  if (t>=43){ const a=op(t,43,.6); s += circ(860,300,14,{f:'none',s:DN,sw:2.5,o:a}); s += m3_lab(t,43,880,290,'collapsing dragon',{sz:13,c:DN,w:600}); s += m3_lab(t,47,880,308,'price through the first dot',{sz:11,c:MUT}); }
+  if (t>=38) s += txt(1000,436,'700.96',{sz:12,c:MUT,o:op(t,38,.5)});
+  // the MACD strip
+  if (t>=54){ const a=op(t,54,.6); s += rect(100,432,860,66,{r:4,f:'rgba(248,113,113,.10)',s:'none',o:a}); s += line(100,466,960,466,{s:MUT,sw:1,o:a}); s += txt(104,446,'MACD · red river',{sz:11,c:DN,o:a}); }
+  if (t>=54){ s += m3_poly(t,MAC.slice(0,4),{s:FG,sw:2,smooth:true}); s += m3_poly(t,MAC.slice(3),{s:DN,sw:2.5,smooth:true}); s += m3_lab(t,58,480,490,'red, below zero since late October',{sz:11,c:DN}); }
+  if (t>=62){ s += m3_card(990,120,130,150,{o:op(t,62,.5),s:ACC}); s += m3_lab(t,62,1004,148,'flip down',{sz:13,c:FG}); s += m3_lab(t,64,1004,176,'collapsing',{sz:13,c:DN}); s += m3_lab(t,64,1004,194,'dragon',{sz:13,c:DN}); s += m3_lab(t,66,1004,222,'winter',{sz:13,c:FG}); s += m3_lab(t,68,1004,254,'not a forecast',{sz:11,c:MUT}); }
+  return s;
+}
+
+window.renderFrame = function (t) {
+  t = clamp(t, 0, ANIM_DURATION);
+  let cap = '', sub = '';
+  for (const b of BEATS) if (t >= b[0]) { cap = b[1]; sub = b[2] || ''; }
+  $('cap').innerHTML = cap; $('sub').textContent = sub;
+  $('svg').innerHTML = WRAP[0] + draw(t) + WRAP[1];
+  const f = $('fade');
+  f.style.opacity = t < 0.5 ? 1 - t / 0.5 : (ANIM_DURATION - t < 0.6 ? 1 - (ANIM_DURATION - t) / 0.6 : 0);
+};
+renderFrame(0);
+</script>
+</body>
+</html>

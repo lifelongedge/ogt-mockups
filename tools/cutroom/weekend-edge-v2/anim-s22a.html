@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>s22a · core, swing, day: the BMR as a lens</title>
+<style>
+  :root { --bg:#030507; --fg:#E1EEF5; --muted:#8fa3ad; --border:rgba(56,225,255,0.14); --accent:#F2D06B;
+          --ok:#4ade80; --dn:#f87171; --card:#0a1016; --blue:#7baad4; }
+  html, body { margin:0; background:var(--bg); overflow:hidden; }
+  #stage { position:relative; width:1280px; height:720px; background:var(--bg); color:var(--fg);
+           font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; overflow:hidden; }
+  #cap { position:absolute; left:60px; right:60px; top:30px; font-size:32px; font-weight:600; letter-spacing:-.01em; line-height:1.15; }
+  #cap em { font-style:normal; color:var(--accent); }
+  #sub { position:absolute; left:60px; width:1160px; top:648px; font-size:20px; color:var(--muted); line-height:1.4; }
+  #scene { position:absolute; left:60px; top:112px; width:1160px; height:518px; border:1px solid var(--border);
+           border-radius:10px; background:var(--card); overflow:hidden; }
+  #svg { position:absolute; inset:0; }
+  #fade { position:absolute; inset:0; background:var(--bg); pointer-events:none; opacity:0; }
+  /* the picture-in-picture corner: build_v2 composites Ken's camera tile here (PIP_W/X/Y); the cutroom shows this placeholder */
+  #pip { position:absolute; left:950px; top:22px; width:300px; height:169px; border:1px dashed rgba(56,225,255,0.35); border-radius:4px;
+         display:none; color:var(--muted); font-size:13px; text-align:center; line-height:169px; }
+  .pip #pip { display:block; } .pip #cap { right:360px; font-size:29px; }
+  text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; fill:#E1EEF5; }
+  .mono { font-family:ui-monospace,Menlo,Consolas,monospace; }
+  #third { display:none; }
+</style>
+</head>
+<body>
+<div id="stage" class="pip">
+  <div id="cap"></div>
+  <div id="pip">Ken on camera, composited at render</div>
+  <div id="scene"><svg id="svg" width="1160" height="530" viewBox="0 0 1160 530"></svg></div>
+  <div id="third"></div>
+  <div id="sub"></div>
+  <div id="fade"></div>
+</div>
+<script>
+const BUILD = 's22a-1';
+console.log('[s22a] build', BUILD);
+// Overdub twin of s22: Ken's audio wr2 2599.0→2913.0; t is seconds after the in-point.
+// Beat times read from the VTT cues on 2026-11-21 (tools/cutroom/weekend-edge-v2/transcript-wr2.json).
+window.ANIM_DURATION = 314.0;
+const ACC='#F2D06B', FG='#E1EEF5', MUT='#8fa3ad', OK='#4ade80', DN='#f87171', BLUE='#7baad4', BRD='rgba(56,225,255,.22)', CARD='#0a1016', TXS=1, WRAP=['',''];
+const W=1160, H=530;
+const $ = id => document.getElementById(id);
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const ease=u=>{u=clamp(u,0,1);return u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;};
+const lerp=(a,b,u)=>a+(b-a)*u;
+const pr=(t,t0,d)=>ease((t-t0)/(d||0.6));          // eased progress 0..1 from t0 over d seconds
+const on=(t,t0)=>t>=t0;
+const op=(t,t0,d)=>clamp((t-t0)/(d||0.5),0,1);      // linear opacity ramp
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const txt=(x,y,s,o={})=>`<text x="${x}" y="${y}" font-size="${(o.sz||20)*TXS}" fill="${o.c||FG}" opacity="${o.o==null?1:o.o}" text-anchor="${o.a||'start'}" font-weight="${o.w||400}" class="${o.cls||''}" ${o.extra||''}>${esc(s)}</text>`;
+const rect=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.r==null?6:o.r}" fill="${o.f||'none'}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}" ${o.extra||''}/>`;
+const circ=(x,y,r,o={})=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${o.f||FG}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}"/>`;
+const line=(x1,y1,x2,y2,o={})=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${o.s||MUT}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" ${o.dash?`stroke-dasharray="${o.dash}"`:''} stroke-linecap="round"/>`;
+const path=(d,o={})=>`<path d="${d}" fill="${o.f||'none'}" stroke="${o.s||FG}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" stroke-linecap="round" stroke-linejoin="round" ${o.dash?`stroke-dasharray="${o.dash}"`:''}/>`;
+const arrow=(x1,y1,x2,y2,o={})=>{const a=Math.atan2(y2-y1,x2-x1),h=10;return line(x1,y1,x2,y2,o)+path(`M${x2} ${y2} L${x2-h*Math.cos(a-0.5)} ${y2-h*Math.sin(a-0.5)} M${x2} ${y2} L${x2-h*Math.cos(a+0.5)} ${y2-h*Math.sin(a+0.5)}`,{s:o.s||MUT,sw:o.sw||2,o:o.o});};
+// a labelled box that grows in from t0
+const box=(t,t0,x,y,w,h,label,o={})=>{const u=pr(t,t0,0.5);if(u<=0)return '';const ww=w*u,hh=h;return rect(x+(w-ww)/2,y,ww,hh,{s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',sw:o.sw||1.5,o:u})+(u>.6?txt(x+w/2,y+h/2+(o.sz||20)/3,label,{a:'middle',sz:o.sz||20,c:o.c||FG,o:op(t,t0+.3,.3),w:o.w||500}):'');};
+// deterministic pseudo-random
+function rng(seed){let s=seed*9301+49297;return()=>{s=(s*9301+49297)%233280;return s/233280;};}
+// a herd of dots in a region; drift is a slow deterministic wander
+function herd(n,seed,x,y,w,h){const r=rng(seed);const pts=[];for(let i=0;i<n;i++)pts.push({x:x+r()*w,y:y+r()*h,p:r()*6.28,q:r()*6.28});return pts;}
+const wander=(p,t,amp)=>[p.x+Math.sin(t*0.9+p.p)*amp,p.y+Math.cos(t*0.7+p.q)*amp];
+// typewriter: the first k chars of s by time
+const type=(s,t,t0,cps)=>s.slice(0,Math.max(0,Math.floor((t-t0)*(cps||28))));
+// a list that reveals one row per step seconds from t0
+function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
+
+const BEATS = [[0.3, "we have <em>three time frames</em>: core, swing and day trading, each with its own strategies", ""], [16.0, "<em>hybrid trading</em> is a blend of two or more of these", ""], [32.0, "the long-term benefit and a short-term swing momentum", ""], [48.0, "the <em>30 minute</em>, right in between swing and day", ""], [83.0, "the core systems: asset allocation, buy and hold, and the <em>Blended Monthly Rebalancing</em>", "His favorite approach to long-term core holdings."], [99.0, "adjusted on a monthly basis: the ETF 13, the 22 or the 32 portfolios", ""], [132.0, "when markets are poor and we want to be <em>in cash</em>: what are the defensive plays", ""], [181.0, "the ETF Max set, about 300 ETFs: which ones are <em>rising to the top</em>", ""], [198.0, "the ETF2 model also provides <em>week to week insights</em> into relative strength", ""], [216.0, "the 10-week rolling relative strength and the volatility quality measures", ""], [233.0, "sometimes systems give us signals, sometimes <em>information</em> through that lens", ""], [249.0, "the world market leaders right now: <em>US technology</em> plus the Euro-Asia large caps", "April 2023."], [282.0, "already holding for a month: is there some <em>kata two</em> action for a turbo boost?", ""], [298.0, "that's what we call hybrid trading on the longer term", ""]];
+
+const m2_pill=(x,y,s,o={})=>{const w=(o.w||s.length*10+22);return rect(x-w/2,y-15,w,30,{r:15,s:o.s||BRD,f:o.f||'rgba(255,255,255,.03)',o:o.o==null?1:o.o})+txt(x,y+6,s,{a:'middle',sz:o.sz||15,c:o.c||FG,o:o.o==null?1:o.o,w:o.wt||500});};
+const m2_card=(x,y,w,h,o={})=>rect(x,y,w,h,{r:10,s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',o:o.o==null?1:o.o});
+const m2_lab=(t,t0,x,y,s,o={})=>{const a=op(t,t0,o.d||.5);return a<=0?'':txt(x,y,s,{...o,o:a*(o.o==null?1:o.o)});};
+// the ten-box strip: 4 US + 6 global, n lit from the left in the order given (or the first n)
+const M2_IDX=['SPY','QQQ','MDY','IWM','EEM','EFA','EPP','EWJ','IEV','ILF'];
+function m2_strip(x,y,n,o={}){const a=o.o==null?1:o.o,w=o.w||52,g=o.g||8;let s='';for(let i=0;i<10;i++){const lit=(o.lit?o.lit.includes(M2_IDX[i]):i<n);const bx=x+i*(w+g)+(i>=4?14:0);s+=rect(bx,y,w,34,{r:6,f:lit?'rgba(242,208,107,.25)':'rgba(255,255,255,.03)',s:lit?ACC:BRD,sw:lit?2:1.2,o:a});s+=txt(bx+w/2,y+22,M2_IDX[i],{a:'middle',sz:12,c:lit?FG:MUT,o:a});}
+ s+=txt(x+2*(w+g)-g/2,y-8,'US · 40%',{a:'middle',sz:12,c:MUT,o:a});s+=txt(x+7*(w+g)+14,y-8,'global · 60%',{a:'middle',sz:12,c:MUT,o:a});return s;}
+// a horizontal exposure gauge 0..100 over [x, x+w]
+function m2_gauge(x,y,w,pct,o={}){const a=o.o==null?1:o.o;let s=rect(x,y,w,16,{r:8,f:'rgba(255,255,255,.05)',s:BRD,o:a});s+=rect(x,y,w*clamp(pct,0,100)/100,16,{r:8,f:ACC,o:a*.85});for(const p of [0,50,100])s+=txt(x+w*p/100,y+34,p+'%',{a:'middle',sz:12,c:MUT,o:a});if(o.label)s+=txt(x+w*clamp(pct,0,100)/100,y-8,o.label,{a:'middle',sz:14,c:ACC,o:a,w:600});return s;}
+// a price path against a flat moving-average line; pts = [[u,v],...] in 0..1, drawn through t0..t0+d
+function m2_ma(t,t0,x,y,w,h,pts,o={}){const a=op(t,t0,.5);if(a<=0)return '';let s=line(x,y+h*.55,x+w,y+h*.55,{s:BLUE,sw:2,dash:'6 5',o:a});s+=txt(x+w+8,y+h*.55+5,'4-mo MA',{sz:12,c:BLUE,o:a});const u=pr(t,t0,o.d||4);const n=Math.max(2,Math.floor(pts.length*u));let d='';pts.slice(0,n).forEach((p,i)=>{d+=(i?'L':'M')+(x+p[0]*w)+' '+(y+(1-p[1])*h)+' ';});s+=path(d,{s:o.c||FG,sw:2.5,o:a});return s;}
+// the swing grid: strength bands down (green white yellow red), consistency bands across
+const M2_BANDS=['green','white','yellow','red'];const M2_BC={green:OK,white:FG,yellow:ACC,red:DN};
+function m2_grid(x,y,cw,ch,cells,o={}){const a=o.o==null?1:o.o;let s=txt(x+cw*2,y-30,'10-week consistency →',{a:'middle',sz:13,c:MUT,o:a});s+=txt(x-14,y+ch*2,'strength ↓',{a:'end',sz:13,c:MUT,o:a});
+ for(let r=0;r<4;r++){s+=txt(x-14,y+r*ch+ch/2+5,M2_BANDS[r],{a:'end',sz:13,c:M2_BC[M2_BANDS[r]],o:a});for(let c=0;c<4;c++){if(r==0)s+=txt(x+c*cw+cw/2,y-10,M2_BANDS[c],{a:'middle',sz:13,c:M2_BC[M2_BANDS[c]],o:a});s+=rect(x+c*cw,y+r*ch,cw,ch,{r:4,s:BRD,f:'rgba(255,255,255,.015)',o:a});}}
+ for(const k of cells){const [r,c,l1,l2,col,oo]=k;const cx=x+c*cw,cy=y+r*ch;s+=rect(cx+2,cy+2,cw-4,ch-4,{r:4,s:col,sw:2,f:'rgba(255,255,255,.04)',o:oo});s+=txt(cx+cw/2,cy+ch/2-4,l1,{a:'middle',sz:14,c:col,o:oo,w:600});if(l2)s+=txt(cx+cw/2,cy+ch/2+16,l2,{a:'middle',sz:12,c:MUT,o:oo});}
+ return s;}
+
+function draw(t){
+  let s='';
+  // three time bands
+  const bands=[['core',0.3,120],['swing',0.3,230],['day',0.3,340]];
+  bands.forEach((b,i)=>{const a=op(t,b[1]+i*1.2,.5);if(a<=0)return;const y=b[2];s+=rect(110,y,560,70,{r:10,s:BRD,f:'rgba(255,255,255,.02)',o:a});s+=txt(130,y+42,b[0],{sz:22,c:FG,o:a,w:600});
+    // a wavy line of the right period in each band
+    let d='';for(let x=0;x<=440;x+=4){const per=[220,70,22][i];d+=(x?'L':'M')+(220+x)+' '+(y+35+Math.sin(x/per*6.28+t*0.3)*18)+' ';}s+=path(d,{s:[BLUE,ACC,OK][i],sw:2,o:a});});
+  if(t>=16){const a=op(t,16,.6);s+=m2_pill(700,230,'hybrid',{o:a,w:100,c:ACC,s:ACC});s+=line(650,190,672,220,{s:ACC,sw:1.5,o:a});s+=line(650,270,672,240,{s:ACC,sw:1.5,o:a});}
+  if(t>=48){const a=op(t,48,.6);s+=m2_pill(700,300,'30 minute',{o:a,w:110,c:MUT});s+=m2_lab(t,48,760,305,'between swing and day',{sz:13,c:MUT});}
+  // BMR card under core
+  if(t>=83){const a=op(t,83,.6);s+=m2_card(760,100,290,110,{o:a,s:BLUE});s+=txt(780,130,'core systems',{sz:14,c:MUT,o:a});s+=txt(780,158,'Blended Monthly Rebalancing',{sz:17,c:FG,o:a,w:600});s+=m2_lab(t,99,780,190,'ETF 13 · 22 · 32, adjusted monthly',{sz:13,c:BLUE});}
+  if(t>=132){const a=op(t,132,.6);s+=m2_pill(905,240,'poor markets → cash',{o:a,w:190,c:DN,s:DN});}
+  // the lens: a herd sorted into leaders and the rest
+  if(t>=181){const a=op(t,181,.8);const H=herd(120,11,120,430,560,60);H.forEach((p,i)=>{const [px,py]=wander(p,t,1.5);s+=circ(px,py,2.4,{f:MUT,o:a*.7});});s+=m2_lab(t,181,120,420,'about 300 ETFs',{sz:13,c:MUT});
+    if(t>=198){const b=op(t,198,.8);s+=circ(760,455,40,{f:'none',s:ACC,sw:3,o:b});s+=line(790,485,820,515,{s:ACC,sw:4,o:b});s+=m2_lab(t,198,760,500,'the lens',{sz:12,c:ACC,a:'middle'});
+      const lead=['QQQ','XLK','EFA','IEV'];lead.forEach((k,i)=>{const c=op(t,249+i*1.5,.5);if(c>0)s+=m2_pill(880+(i%2)*90,430+Math.floor(i/2)*40,k,{o:c*b,w:70,c:OK,s:OK});});
+      s+=m2_lab(t,216,880,500,'10-week · quality',{sz:12,c:MUT});}}
+  if(t>=233){const a=op(t,233,.6);s+=m2_pill(820,330,'signals',{o:a,w:90,c:FG});s+=m2_pill(930,330,'information',{o:a,w:120,c:ACC,s:ACC});}
+  if(t>=282){const a=op(t,282,.6);s+=m2_lab(t,282,360,400,'held for a month + a kata two on the chart = turbo',{sz:14,c:ACC,a:'middle'});}
+  return s;
+}
+
+window.renderFrame = function (t) {
+  t = clamp(t, 0, ANIM_DURATION);
+  let cap = '', sub = '';
+  for (const b of BEATS) if (t >= b[0]) { cap = b[1]; sub = b[2] || ''; }
+  $('cap').innerHTML = cap; $('sub').textContent = sub;
+  $('svg').innerHTML = WRAP[0] + draw(t) + WRAP[1];
+  const f = $('fade');
+  f.style.opacity = t < 0.5 ? 1 - t / 0.5 : (ANIM_DURATION - t < 0.6 ? 1 - (ANIM_DURATION - t) / 0.6 : 0);
+};
+renderFrame(0);
+</script>
+</body>
+</html>

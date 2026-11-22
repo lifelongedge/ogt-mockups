@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>s48a · Tesla on the daily: higher lows became Kata 2s, until the dragons collapsed</title>
+<style>
+  :root { --bg:#030507; --fg:#E1EEF5; --muted:#8fa3ad; --border:rgba(56,225,255,0.14); --accent:#F2D06B;
+          --ok:#4ade80; --dn:#f87171; --card:#0a1016; --blue:#7baad4; }
+  html, body { margin:0; background:var(--bg); overflow:hidden; }
+  #stage { position:relative; width:1280px; height:720px; background:var(--bg); color:var(--fg);
+           font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; overflow:hidden; }
+  #cap { position:absolute; left:60px; right:60px; top:30px; font-size:32px; font-weight:600; letter-spacing:-.01em; line-height:1.15; }
+  #cap em { font-style:normal; color:var(--accent); }
+  #sub { position:absolute; left:60px; width:1160px; top:648px; font-size:20px; color:var(--muted); line-height:1.4; }
+  #scene { position:absolute; left:60px; top:112px; width:1160px; height:518px; border:1px solid var(--border);
+           border-radius:10px; background:var(--card); overflow:hidden; }
+  #svg { position:absolute; inset:0; }
+  #fade { position:absolute; inset:0; background:var(--bg); pointer-events:none; opacity:0; }
+  /* the picture-in-picture corner: build_v2 composites Ken's camera tile here (PIP_W/X/Y); the cutroom shows this placeholder */
+  #pip { position:absolute; left:950px; top:22px; width:300px; height:169px; border:1px dashed rgba(56,225,255,0.35); border-radius:4px;
+         display:none; color:var(--muted); font-size:13px; text-align:center; line-height:169px; }
+  .pip #pip { display:block; } .pip #cap { right:360px; font-size:29px; }
+  text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; fill:#E1EEF5; }
+  .mono { font-family:ui-monospace,Menlo,Consolas,monospace; }
+  #third { display:none; }
+</style>
+</head>
+<body>
+<div id="stage" class="">
+  <div id="cap"></div>
+  <div id="pip">Ken on camera, composited at render</div>
+  <div id="scene"><svg id="svg" width="1160" height="530" viewBox="0 0 1160 530"></svg></div>
+  <div id="third"></div>
+  <div id="sub"></div>
+  <div id="fade"></div>
+</div>
+<script>
+const BUILD = 's48a-1';
+console.log('[s48a] build', BUILD);
+// Overdub twin of s48: Ken's audio wsp 4731.0→4885.0; t is seconds after the in-point.
+// Beat times read from the VTT cues on 2026-11-21 (tools/cutroom/weekend-edge-v2/transcript-wsp.json).
+window.ANIM_DURATION = 154.0;
+const ACC='#F2D06B', FG='#E1EEF5', MUT='#8fa3ad', OK='#4ade80', DN='#f87171', BLUE='#7baad4', BRD='rgba(56,225,255,.22)', CARD='#0a1016', TXS=1, WRAP=['',''];
+const W=1160, H=530;
+const $ = id => document.getElementById(id);
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const ease=u=>{u=clamp(u,0,1);return u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;};
+const lerp=(a,b,u)=>a+(b-a)*u;
+const pr=(t,t0,d)=>ease((t-t0)/(d||0.6));          // eased progress 0..1 from t0 over d seconds
+const on=(t,t0)=>t>=t0;
+const op=(t,t0,d)=>clamp((t-t0)/(d||0.5),0,1);      // linear opacity ramp
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const txt=(x,y,s,o={})=>`<text x="${x}" y="${y}" font-size="${(o.sz||20)*TXS}" fill="${o.c||FG}" opacity="${o.o==null?1:o.o}" text-anchor="${o.a||'start'}" font-weight="${o.w||400}" class="${o.cls||''}" ${o.extra||''}>${esc(s)}</text>`;
+const rect=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.r==null?6:o.r}" fill="${o.f||'none'}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}" ${o.extra||''}/>`;
+const circ=(x,y,r,o={})=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${o.f||FG}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}"/>`;
+const line=(x1,y1,x2,y2,o={})=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${o.s||MUT}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" ${o.dash?`stroke-dasharray="${o.dash}"`:''} stroke-linecap="round"/>`;
+const path=(d,o={})=>`<path d="${d}" fill="${o.f||'none'}" stroke="${o.s||FG}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" stroke-linecap="round" stroke-linejoin="round" ${o.dash?`stroke-dasharray="${o.dash}"`:''}/>`;
+const arrow=(x1,y1,x2,y2,o={})=>{const a=Math.atan2(y2-y1,x2-x1),h=10;return line(x1,y1,x2,y2,o)+path(`M${x2} ${y2} L${x2-h*Math.cos(a-0.5)} ${y2-h*Math.sin(a-0.5)} M${x2} ${y2} L${x2-h*Math.cos(a+0.5)} ${y2-h*Math.sin(a+0.5)}`,{s:o.s||MUT,sw:o.sw||2,o:o.o});};
+// a labelled box that grows in from t0
+const box=(t,t0,x,y,w,h,label,o={})=>{const u=pr(t,t0,0.5);if(u<=0)return '';const ww=w*u,hh=h;return rect(x+(w-ww)/2,y,ww,hh,{s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',sw:o.sw||1.5,o:u})+(u>.6?txt(x+w/2,y+h/2+(o.sz||20)/3,label,{a:'middle',sz:o.sz||20,c:o.c||FG,o:op(t,t0+.3,.3),w:o.w||500}):'');};
+// deterministic pseudo-random
+function rng(seed){let s=seed*9301+49297;return()=>{s=(s*9301+49297)%233280;return s/233280;};}
+// a herd of dots in a region; drift is a slow deterministic wander
+function herd(n,seed,x,y,w,h){const r=rng(seed);const pts=[];for(let i=0;i<n;i++)pts.push({x:x+r()*w,y:y+r()*h,p:r()*6.28,q:r()*6.28});return pts;}
+const wander=(p,t,amp)=>[p.x+Math.sin(t*0.9+p.p)*amp,p.y+Math.cos(t*0.7+p.q)*amp];
+// typewriter: the first k chars of s by time
+const type=(s,t,t0,cps)=>s.slice(0,Math.max(0,Math.floor((t-t0)*(cps||28))));
+// a list that reveals one row per step seconds from t0
+function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
+
+const BEATS = [[2.6, "<em>Tesla</em>: the most important stock in the world", "His levels as spoken on 2022-10-01."], [12.4, "a weekly consolidation level between <em>260 and 220</em>", ""], [31.4, "here's that 220 support low. <em>220 to 260</em>", ""], [47.3, "this held as resistance; when that resistance <em>broke</em>, it did this", ""], [52.4, "a <em>series of higher lows</em>: these all became Kata 2s to the upside", ""], [57.6, "until the <em>dragons started collapsing</em>", ""], [65.2, "when this all collapses, you get this <em>powerful sell-off</em>", ""], [74.6, "it tried it twice and failed big time: all the way back down to <em>260</em>", ""], [82.6, "if this region does not hold, it will come down to <em>230</em>, the midpoint", ""], [101.2, "if this breaks at 264: about a <em>$35 move</em> to the downside", ""], [108.8, "a <em>$10 risk</em> and still have three to one", ""], [115.5, "a <em>$5 risk</em> and have seven to one", ""], [123.3, "the downside trade is more than justified; the upside has to get through <em>274</em>", ""], [138.0, "Tesla's so big that its momentum will attract more buyers: <em>280, 290</em>", ""]];
+
+const m4_pill=(x,y,s,o={})=>{const w=(o.w||s.length*10+22);return rect(x-w/2,y-15,w,30,{r:15,s:o.s||BRD,f:o.f||'rgba(255,255,255,.03)',o:o.o==null?1:o.o})+txt(x,y+6,s,{a:'middle',sz:o.sz||15,c:o.c||FG,o:o.o==null?1:o.o,w:o.wt||500});};
+const m4_card=(x,y,w,h,o={})=>rect(x,y,w,h,{r:10,s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',o:o.o==null?1:o.o});
+const m4_lab=(t,t0,x,y,s,o={})=>{const a=op(t,t0,o.d||.5);return a<=0?'':txt(x,y,s,{...o,o:a*(o.o==null?1:o.o)});};
+// a polyline revealed from its first point to a fraction u of its length
+function m4_poly(pts,u,o={}){u=clamp(u,0,1);if(u<=0)return '';const n=pts.length-1;const k=u*n;const i=Math.floor(k);let d=`M${pts[0][0]} ${pts[0][1]}`;for(let j=1;j<=Math.min(i,n);j++)d+=` L${pts[j][0]} ${pts[j][1]}`;if(i<n){const f=k-i;d+=` L${lerp(pts[i][0],pts[i+1][0],f)} ${lerp(pts[i][1],pts[i+1][1],f)}`;}return path(d,{s:o.s||FG,sw:o.sw||2.5,o:o.o==null?1:o.o,dash:o.dash});}
+// a ring around a point that fades in from t0
+const m4_ring=(t,t0,x,y,o={})=>{const a=op(t,t0,.5);return a<=0?'':circ(x,y,o.r||14,{f:'none',s:o.c||ACC,sw:2.5,o:a});};
+// a horizontal level with a tag at the right
+const m4_level=(t,t0,x1,x2,y,s,o={})=>{const a=op(t,t0,.5);return a<=0?'':line(x1,y,x2,y,{s:o.c||ACC,sw:1.5,o:a,dash:o.dash||'6 5'})+txt(x2+8,y+5,s,{sz:o.sz||13,c:o.c||ACC,o:a});};
+// PSAR dots under (side=1) or over (side=-1) a path segment
+function m4_dots(t,t0,pts,side,o={}){const a=op(t,t0,.5);if(a<=0)return '';let s='';pts.forEach(p=>{s+=circ(p[0],p[1]+side*18,3,{f:o.c||FG,o:a});});return s;}
+
+function draw(t){
+  let s='';
+  // price scale: y = 470 - (price-200)*2.6  (200..300 over 470..210)
+  const Y=p=>470-(p-200)*2.6; const x0=80, x1=760;
+  // the block 220-260
+  if (t>=12.4){ const a=op(t,12.4,.6); s += rect(x0,Y(260),380,Y(220)-Y(260),{r:4,f:'rgba(225,238,245,.05)',s:BRD,sw:1.5,o:a}); s += m4_lab(t,16.7,x0,Y(260)-8,'260',{sz:12,c:MUT}); s += m4_lab(t,31.4,x0,Y(220)+16,'220 support low',{sz:12,c:MUT}); }
+  // the breakout and the stair of higher lows
+  const stair=[[460,Y(262)],[500,Y(280)],[520,Y(272)],[560,Y(292)],[580,Y(284)],[620,Y(305)],[640,Y(296)],[670,Y(312)]];
+  if (t>=47.3){ s += m4_poly([[380,Y(240)],[430,Y(250)],[460,Y(262)]],pr(t,47.3,1)); s += m4_poly(stair,pr(t,49.8,2.5),{s:OK,sw:2.5}); }
+  if (t>=52.4){ [[520,Y(272)],[580,Y(284)],[640,Y(296)]].forEach((p,i)=>{ s += m4_ring(t,52.4+i*.5,p[0],p[1],{c:ACC,r:10}); }); s += m4_lab(t,55.0,470,Y(312)-10,'higher lows = Kata 2s',{sz:12,c:ACC}); }
+  // the collapse back to 260
+  const fall=[[670,Y(312)],[690,Y(300)],[705,Y(308)],[720,Y(285)],[735,Y(292)],[760,Y(264)]];
+  if (t>=57.6){ s += m4_poly(fall,pr(t,57.6,3),{s:DN,sw:3}); s += m4_lab(t,65.2,700,Y(312)-10,'dragons collapse',{sz:12,c:DN}); }
+  if (t>=74.6){ s += circ(760,Y(264),5,{f:DN,o:op(t,74.6,.5)}); s += m4_lab(t,77.0,770,Y(264)+5,'264 now',{sz:12,c:DN}); }
+  if (t>=82.6){ s += m4_level(t,82.6,x0,800,Y(230),'230 · the midpoint',{c:ACC}); }
+  // the two risk bars against the $35 move, a column at the far right, staggered
+  if (t>=101.2){ const a=op(t,101.2,.5); s += line(960,Y(264),960,Y(230),{s:DN,sw:4,o:a}); s += m4_lab(t,104.5,975,Y(230)-30,'$35 move',{sz:13,c:DN}); }
+  if (t>=108.8){ const a=op(t,108.8,.5); s += rect(940,Y(264)-26,40,26,{r:2,f:'rgba(242,208,107,.25)',s:ACC,o:a}); s += m4_lab(t,110.9,990,Y(264)-18,'$10 risk · 3 : 1',{sz:12,c:ACC}); }
+  if (t>=115.5){ const a=op(t,115.5,.5); s += rect(940,Y(264)-13,40,13,{r:2,f:'rgba(242,208,107,.5)',s:ACC,o:a}); s += m4_lab(t,118.1,990,Y(264)+6,'$5 risk · 7 : 1',{sz:12,c:ACC}); }
+  if (t>=123.3){ s += m4_level(t,126.3,620,800,Y(274),'274 · the lid',{c:MUT}); }
+  if (t>=138.0){ s += m4_level(t,150.9,620,800,Y(280),'280',{c:MUT,dash:'2 5'}); s += m4_level(t,153.6,620,800,Y(290),'290',{c:MUT,dash:'2 5'}); }
+  return s;
+}
+
+window.renderFrame = function (t) {
+  t = clamp(t, 0, ANIM_DURATION);
+  let cap = '', sub = '';
+  for (const b of BEATS) if (t >= b[0]) { cap = b[1]; sub = b[2] || ''; }
+  $('cap').innerHTML = cap; $('sub').textContent = sub;
+  $('svg').innerHTML = WRAP[0] + draw(t) + WRAP[1];
+  const f = $('fade');
+  f.style.opacity = t < 0.5 ? 1 - t / 0.5 : (ANIM_DURATION - t < 0.6 ? 1 - (ANIM_DURATION - t) / 0.6 : 0);
+};
+renderFrame(0);
+</script>
+</body>
+</html>

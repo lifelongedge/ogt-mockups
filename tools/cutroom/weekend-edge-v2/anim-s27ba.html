@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>s27ba · the ETF2 extract and the swing table</title>
+<style>
+  :root { --bg:#030507; --fg:#E1EEF5; --muted:#8fa3ad; --border:rgba(56,225,255,0.14); --accent:#F2D06B;
+          --ok:#4ade80; --dn:#f87171; --card:#0a1016; --blue:#7baad4; }
+  html, body { margin:0; background:var(--bg); overflow:hidden; }
+  #stage { position:relative; width:1280px; height:720px; background:var(--bg); color:var(--fg);
+           font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; overflow:hidden; }
+  #cap { position:absolute; left:60px; right:60px; top:30px; font-size:32px; font-weight:600; letter-spacing:-.01em; line-height:1.15; }
+  #cap em { font-style:normal; color:var(--accent); }
+  #sub { position:absolute; left:60px; width:1160px; top:648px; font-size:20px; color:var(--muted); line-height:1.4; }
+  #scene { position:absolute; left:60px; top:112px; width:1160px; height:518px; border:1px solid var(--border);
+           border-radius:10px; background:var(--card); overflow:hidden; }
+  #svg { position:absolute; inset:0; }
+  #fade { position:absolute; inset:0; background:var(--bg); pointer-events:none; opacity:0; }
+  /* the picture-in-picture corner: build_v2 composites Ken's camera tile here (PIP_W/X/Y); the cutroom shows this placeholder */
+  #pip { position:absolute; left:950px; top:22px; width:300px; height:169px; border:1px dashed rgba(56,225,255,0.35); border-radius:4px;
+         display:none; color:var(--muted); font-size:13px; text-align:center; line-height:169px; }
+  .pip #pip { display:block; } .pip #cap { right:360px; font-size:29px; }
+  text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; fill:#E1EEF5; }
+  .mono { font-family:ui-monospace,Menlo,Consolas,monospace; }
+  #third { display:none; }
+</style>
+</head>
+<body>
+<div id="stage" class="pip">
+  <div id="cap"></div>
+  <div id="pip">Ken on camera, composited at render</div>
+  <div id="scene"><svg id="svg" width="1160" height="530" viewBox="0 0 1160 530"></svg></div>
+  <div id="third"></div>
+  <div id="sub"></div>
+  <div id="fade"></div>
+</div>
+<script>
+const BUILD = 's27ba-1';
+console.log('[s27ba] build', BUILD);
+// Overdub twin of s27b: Ken's audio wr2 5371.0→5920.0; t is seconds after the in-point.
+// Beat times read from the VTT cues on 2026-11-21 (tools/cutroom/weekend-edge-v2/transcript-wr2.json).
+window.ANIM_DURATION = 549.0;
+const ACC='#F2D06B', FG='#E1EEF5', MUT='#8fa3ad', OK='#4ade80', DN='#f87171', BLUE='#7baad4', BRD='rgba(56,225,255,.22)', CARD='#0a1016', TXS=1, WRAP=['',''];
+const W=1160, H=530;
+const $ = id => document.getElementById(id);
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const ease=u=>{u=clamp(u,0,1);return u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;};
+const lerp=(a,b,u)=>a+(b-a)*u;
+const pr=(t,t0,d)=>ease((t-t0)/(d||0.6));          // eased progress 0..1 from t0 over d seconds
+const on=(t,t0)=>t>=t0;
+const op=(t,t0,d)=>clamp((t-t0)/(d||0.5),0,1);      // linear opacity ramp
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const txt=(x,y,s,o={})=>`<text x="${x}" y="${y}" font-size="${(o.sz||20)*TXS}" fill="${o.c||FG}" opacity="${o.o==null?1:o.o}" text-anchor="${o.a||'start'}" font-weight="${o.w||400}" class="${o.cls||''}" ${o.extra||''}>${esc(s)}</text>`;
+const rect=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.r==null?6:o.r}" fill="${o.f||'none'}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}" ${o.extra||''}/>`;
+const circ=(x,y,r,o={})=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${o.f||FG}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}"/>`;
+const line=(x1,y1,x2,y2,o={})=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${o.s||MUT}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" ${o.dash?`stroke-dasharray="${o.dash}"`:''} stroke-linecap="round"/>`;
+const path=(d,o={})=>`<path d="${d}" fill="${o.f||'none'}" stroke="${o.s||FG}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" stroke-linecap="round" stroke-linejoin="round" ${o.dash?`stroke-dasharray="${o.dash}"`:''}/>`;
+const arrow=(x1,y1,x2,y2,o={})=>{const a=Math.atan2(y2-y1,x2-x1),h=10;return line(x1,y1,x2,y2,o)+path(`M${x2} ${y2} L${x2-h*Math.cos(a-0.5)} ${y2-h*Math.sin(a-0.5)} M${x2} ${y2} L${x2-h*Math.cos(a+0.5)} ${y2-h*Math.sin(a+0.5)}`,{s:o.s||MUT,sw:o.sw||2,o:o.o});};
+// a labelled box that grows in from t0
+const box=(t,t0,x,y,w,h,label,o={})=>{const u=pr(t,t0,0.5);if(u<=0)return '';const ww=w*u,hh=h;return rect(x+(w-ww)/2,y,ww,hh,{s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',sw:o.sw||1.5,o:u})+(u>.6?txt(x+w/2,y+h/2+(o.sz||20)/3,label,{a:'middle',sz:o.sz||20,c:o.c||FG,o:op(t,t0+.3,.3),w:o.w||500}):'');};
+// deterministic pseudo-random
+function rng(seed){let s=seed*9301+49297;return()=>{s=(s*9301+49297)%233280;return s/233280;};}
+// a herd of dots in a region; drift is a slow deterministic wander
+function herd(n,seed,x,y,w,h){const r=rng(seed);const pts=[];for(let i=0;i<n;i++)pts.push({x:x+r()*w,y:y+r()*h,p:r()*6.28,q:r()*6.28});return pts;}
+const wander=(p,t,amp)=>[p.x+Math.sin(t*0.9+p.p)*amp,p.y+Math.cos(t*0.7+p.q)*amp];
+// typewriter: the first k chars of s by time
+const type=(s,t,t0,cps)=>s.slice(0,Math.max(0,Math.floor((t-t0)*(cps||28))));
+// a list that reveals one row per step seconds from t0
+function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
+
+const BEATS = [[0.3, "this is an extract of the ETF2 report; the system has a very <em>precise set of rules</em>", ""], [17.0, "constructed about 20 years ago for a hedge fund, for people's retirement accounts", "His history of the model, in his words."], [33.0, "ten ETFs, rules about how to get in and get out, trailing stops", ""], [50.0, "expanded to all <em>185</em> of the liquid ETFs in the world", ""], [66.0, "ranked on <em>strength, consistency and quality</em>, 0 to 100, with colour codes", ""], [119.0, "the best of the 185 liquid ones is <em>tech at 95</em>", ""], [150.0, "about nineteen in the top category: only about <em>ten percent</em> of the liquid ones", ""], [167.0, "sorted by the <em>strength</em> column", ""], [183.0, "strategies for swing trades: not the ETF2 system, but the <em>same model</em>", ""], [199.0, "the strength column and the 10-week consistency. <em>Green and green</em>: that thing is great", ""], [216.0, "reinforce them with <em>trend following</em>", ""], [233.0, "XLK in a kata two? I will buy that and pound on it", ""], [251.0, "and <em>turbo</em>: intraday or short-term swing. The winners are continuing to win", ""], [267.0, "<em>green and white</em>: VUG was good on the ten week", ""], [283.0, "the one-week bumped up: it's <em>accelerating</em> short term", ""], [300.0, "it was good and is now great: exploit new strength. <em>New leaders</em>", ""], [316.0, "green that is now just <em>white</em>: EFA, losing steam. It was great, now it's just good", ""], [333.0, "<em>preserve profits</em> but watch for resumption; a second wind could be a kata two", ""], [367.0, "<em>red and red</em> is terrible: Brazil, natural gas. A collapsing dragon to the max", ""], [382.0, "<em>red and yellow</em>: it used to be weak and now it's terrible. New weakness, falling off the table", ""], [402.0, "concentrate on the <em>extremes</em>: that's where you get the biggest bang", ""], [419.0, "gold miners: great, with a tremendous ATR percentage", ""], [437.0, "what is great, what's getting better, what is starting to decay", ""], [457.0, "IVW, <em>white and yellow</em>: was weak, now good. New strength", ""], [475.0, "front-run the ones that become leaders: <em>catch them earlier at the turn</em>", ""], [496.0, "the <em>MA signal</em>: because we like the four-month moving average anyway", ""], [512.0, "South Korea: the only one below its four-month, but becoming better than average", ""], [527.0, "room to go to the four-month: a long-term value play", ""], [544.0, "who cares about that? Pension funds and hedge funds", ""]];
+
+const m2_pill=(x,y,s,o={})=>{const w=(o.w||s.length*10+22);return rect(x-w/2,y-15,w,30,{r:15,s:o.s||BRD,f:o.f||'rgba(255,255,255,.03)',o:o.o==null?1:o.o})+txt(x,y+6,s,{a:'middle',sz:o.sz||15,c:o.c||FG,o:o.o==null?1:o.o,w:o.wt||500});};
+const m2_card=(x,y,w,h,o={})=>rect(x,y,w,h,{r:10,s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',o:o.o==null?1:o.o});
+const m2_lab=(t,t0,x,y,s,o={})=>{const a=op(t,t0,o.d||.5);return a<=0?'':txt(x,y,s,{...o,o:a*(o.o==null?1:o.o)});};
+// the ten-box strip: 4 US + 6 global, n lit from the left in the order given (or the first n)
+const M2_IDX=['SPY','QQQ','MDY','IWM','EEM','EFA','EPP','EWJ','IEV','ILF'];
+function m2_strip(x,y,n,o={}){const a=o.o==null?1:o.o,w=o.w||52,g=o.g||8;let s='';for(let i=0;i<10;i++){const lit=(o.lit?o.lit.includes(M2_IDX[i]):i<n);const bx=x+i*(w+g)+(i>=4?14:0);s+=rect(bx,y,w,34,{r:6,f:lit?'rgba(242,208,107,.25)':'rgba(255,255,255,.03)',s:lit?ACC:BRD,sw:lit?2:1.2,o:a});s+=txt(bx+w/2,y+22,M2_IDX[i],{a:'middle',sz:12,c:lit?FG:MUT,o:a});}
+ s+=txt(x+2*(w+g)-g/2,y-8,'US · 40%',{a:'middle',sz:12,c:MUT,o:a});s+=txt(x+7*(w+g)+14,y-8,'global · 60%',{a:'middle',sz:12,c:MUT,o:a});return s;}
+// a horizontal exposure gauge 0..100 over [x, x+w]
+function m2_gauge(x,y,w,pct,o={}){const a=o.o==null?1:o.o;let s=rect(x,y,w,16,{r:8,f:'rgba(255,255,255,.05)',s:BRD,o:a});s+=rect(x,y,w*clamp(pct,0,100)/100,16,{r:8,f:ACC,o:a*.85});for(const p of [0,50,100])s+=txt(x+w*p/100,y+34,p+'%',{a:'middle',sz:12,c:MUT,o:a});if(o.label)s+=txt(x+w*clamp(pct,0,100)/100,y-8,o.label,{a:'middle',sz:14,c:ACC,o:a,w:600});return s;}
+// a price path against a flat moving-average line; pts = [[u,v],...] in 0..1, drawn through t0..t0+d
+function m2_ma(t,t0,x,y,w,h,pts,o={}){const a=op(t,t0,.5);if(a<=0)return '';let s=line(x,y+h*.55,x+w,y+h*.55,{s:BLUE,sw:2,dash:'6 5',o:a});s+=txt(x+w+8,y+h*.55+5,'4-mo MA',{sz:12,c:BLUE,o:a});const u=pr(t,t0,o.d||4);const n=Math.max(2,Math.floor(pts.length*u));let d='';pts.slice(0,n).forEach((p,i)=>{d+=(i?'L':'M')+(x+p[0]*w)+' '+(y+(1-p[1])*h)+' ';});s+=path(d,{s:o.c||FG,sw:2.5,o:a});return s;}
+// the swing grid: strength bands down (green white yellow red), consistency bands across
+const M2_BANDS=['green','white','yellow','red'];const M2_BC={green:OK,white:FG,yellow:ACC,red:DN};
+function m2_grid(x,y,cw,ch,cells,o={}){const a=o.o==null?1:o.o;let s=txt(x+cw*2,y-30,'10-week consistency →',{a:'middle',sz:13,c:MUT,o:a});s+=txt(x-14,y+ch*2,'strength ↓',{a:'end',sz:13,c:MUT,o:a});
+ for(let r=0;r<4;r++){s+=txt(x-14,y+r*ch+ch/2+5,M2_BANDS[r],{a:'end',sz:13,c:M2_BC[M2_BANDS[r]],o:a});for(let c=0;c<4;c++){if(r==0)s+=txt(x+c*cw+cw/2,y-10,M2_BANDS[c],{a:'middle',sz:13,c:M2_BC[M2_BANDS[c]],o:a});s+=rect(x+c*cw,y+r*ch,cw,ch,{r:4,s:BRD,f:'rgba(255,255,255,.015)',o:a});}}
+ for(const k of cells){const [r,c,l1,l2,col,oo]=k;const cx=x+c*cw,cy=y+r*ch;s+=rect(cx+2,cy+2,cw-4,ch-4,{r:4,s:col,sw:2,f:'rgba(255,255,255,.04)',o:oo});s+=txt(cx+cw/2,cy+ch/2-4,l1,{a:'middle',sz:14,c:col,o:oo,w:600});if(l2)s+=txt(cx+cw/2,cy+ch/2+16,l2,{a:'middle',sz:12,c:MUT,o:oo});}
+ return s;}
+
+function draw(t){
+  let s='';
+  // the left column: the extract list, collapsing into the grid at 183
+  if(t>=0.3&&t<183){const a=op(t,0.3,.6)*(t>175?1-op(t,175,8):1);s+=txt(120,100,'ETF2 extract · a precise rule set',{sz:15,c:FG,o:a});
+    if(t>=17)s+=m2_lab(t,17,120,128,'20 years ago, a hedge fund, retirement accounts',{sz:12,c:MUT,o:a});
+    if(t>=33)s+=m2_lab(t,33,120,150,'10 ETFs · in · out · trailing stops',{sz:12,c:MUT,o:a});
+    if(t>=50){const b=op(t,50,.8)*a;const H=herd(185,5,120,180,460,120);H.forEach((p,i)=>{const [px,py]=wander(p,t,1);s+=circ(px,py,2,{f:i<19&&t>=150?OK:MUT,o:b*.7});});s+=txt(120,320,'185 liquid ETFs',{sz:13,c:MUT,o:b});}
+    if(t>=66)s+=m2_lab(t,66,120,350,'STR · CON · QUAL, 0–100, colour coded',{sz:13,c:FG,o:a});
+    if(t>=119)s+=m2_pill(230,390,'tech · 95',{o:op(t,119,.5)*a,w:100,c:OK,s:OK});
+    if(t>=150)s+=m2_lab(t,150,350,395,'19 green ≈ 10%',{sz:13,c:OK,o:a});
+    if(t>=167)s+=m2_lab(t,167,120,430,'sorted by strength',{sz:12,c:MUT,o:a});}
+  // the swing grid (rows: strength band; cols: 10-week consistency band)
+  if(t>=183){const a=op(t,183,.8);const cells=[];const add=(r,c,l1,l2,col,t0)=>{const o=op(t,t0,.6);if(o>0)cells.push([r,c,l1,l2,col,o*a]);};
+    add(0,0,'great','reinforce · turbo',OK,199);
+    add(0,1,'new leaders','exploit new strength',OK,267);
+    add(1,0,'was great','preserve · watch',FG,316);
+    add(3,3,'collapsing','dragon',DN,367);
+    add(3,2,'new weakness','falling off',DN,382);
+    add(1,2,'new strength','front-run',ACC,457);
+    s+=m2_grid(170,120,120,76,cells,{o:a});
+    if(t>=183)s+=m2_lab(t,183,410,460,'the same model, read for swing trades',{sz:13,c:MUT,a:'middle'});
+    if(t>=216&&t<267)s+=m2_lab(t,216,410,490,'trend following · XLK kata two · pound on it',{sz:13,c:OK,a:'middle'});
+    if(t>=283&&t<316)s+=m2_lab(t,283,410,490,'VUG: accelerating short term',{sz:13,c:OK,a:'middle'});
+    if(t>=333&&t<367)s+=m2_lab(t,333,410,490,'EFA: losing steam, a second wind would be a kata two',{sz:13,c:FG,a:'middle'});
+    if(t>=402&&t<437){const b=op(t,402,.6);s+=rect(172,122,116,72,{r:4,s:ACC,sw:3,f:'none',o:b*(0.6+0.4*Math.sin(t*4))});s+=rect(532,350,116,72,{r:4,s:ACC,sw:3,f:'none',o:b*(0.6+0.4*Math.sin(t*4))});s+=m2_lab(t,402,410,490,'the extremes: the biggest bang',{sz:13,c:ACC,a:'middle'});}
+    if(t>=419&&t<457)s+=m2_pill(410,490,'gold miners: great + big ATR%',{o:op(t,419,.5),w:260,c:OK,s:OK});
+    if(t>=475&&t<496)s+=m2_lab(t,475,410,490,'catch them earlier at the turn',{sz:13,c:ACC,a:'middle'});
+    // the MA signal column at the right
+    if(t>=496){const b=op(t,496,.6);s+=m2_card(720,120,320,160,{o:b,s:BLUE});s+=txt(736,146,'MA signal · the four-month',{sz:14,c:BLUE,o:b,w:600});
+      const rows=[['XLK','buy',OK],['VUG','buy',OK],['EFA','buy',OK],['EWY','below',DN]];rows.forEach((r,i)=>{const c=op(t,496+i*1.5,.4)*b;s+=txt(736,176+i*24,r[0],{sz:13,c:FG,o:c});s+=txt(820,176+i*24,r[1],{sz:13,c:r[2],o:c});});
+      if(t>=512)s+=m2_lab(t,512,880,248,'South Korea',{sz:12,c:MUT});if(t>=527)s+=m2_lab(t,527,736,300,'room to go: a long-term value play',{sz:12,c:MUT});
+      if(t>=544)s+=m2_pill(880,340,'pension funds · hedge funds',{o:op(t,544,.5),w:230,c:MUT});}}
+  return s;
+}
+
+window.renderFrame = function (t) {
+  t = clamp(t, 0, ANIM_DURATION);
+  let cap = '', sub = '';
+  for (const b of BEATS) if (t >= b[0]) { cap = b[1]; sub = b[2] || ''; }
+  $('cap').innerHTML = cap; $('sub').textContent = sub;
+  $('svg').innerHTML = WRAP[0] + draw(t) + WRAP[1];
+  const f = $('fade');
+  f.style.opacity = t < 0.5 ? 1 - t / 0.5 : (ANIM_DURATION - t < 0.6 ? 1 - (ANIM_DURATION - t) / 0.6 : 0);
+};
+renderFrame(0);
+</script>
+</body>
+</html>

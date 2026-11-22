@@ -1,0 +1,1548 @@
+{
+ "schema": "coursecraft-plan-v2",
+ "course": "weekend-edge-v2",
+ "revision": 1,
+ "revised": "2026-11-21",
+ "status": "DRAFT rev1 (2026-11-21): the first cut from the brief (Griff's 2026-11-20 email; Ken: four hours in one to two weeks; owner: 3x3 = market type, ETF2 rules from edge-sysscq, no commercial cards, internal arc + cutroom with animated twins). Seven modules authored from modules/m*.py: 44 Ken cuts (177 min) each with an animated twin ON and the cut OFF, 6 Ava explainers, 9 cards (s00 the internal arc, OFF before the build). Every window VTT-verified; 50/50 animations pass anim_check; sheets eyeballed and the pile-ups fixed per module. Camera tiles: no source carries a croppable tile (all thumbnails or screen recordings), so the owner's still stands in on every twin except wsp (no tile). About 3 h 10 min against the four-hour ask: Modules 4 and 5 run short on tape (see modules/m4.py, m5.py headers); spare cut cdd 2552-2721 noted in m3. The owner picks cut vs twin and trims in the cutroom.",
+ "title": "The Weekend Edge (v2)",
+ "topic_class": "three laconic tools on the 3x3 spine: regime matrix, ETF2 exposure, SPY daily PSAR flips + kata patterns; outcomes only where computed on bars (edge-sysscq)",
+ "store_sku": "weekend-edge",
+ "notes": "Brief: Griff Cooper's 2026-11-20 email to Ken and Phil (ETF2 Theoretical Exposure Model + SPY daily PSAR flips and kata patterns alongside the 3x3 matrix); Ken: a 4-hour course in one to two weeks. Owner 2026-11-21: 3x3 = the market-type matrix (direction x volatility); ETF2 rules come from edge-sysscq (contracts SCQ-002..006), reference never re-encode; no commercial design cards yet; internal story arc + cutroom with animated twins.",
+ "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/weekend-edge-v2/",
+ "sources": [
+  {
+   "id": "wr2",
+   "label": "ETF2: the weekend report explained (2 h)",
+   "file": "youtube-kr6pU_EbCqs-weekend-report-2-hr-explanation.mp4",
+   "proxy": "youtube-kr6pU_EbCqs-weekend-report-2-hr-explanation.proxy.mp4",
+   "url": "https://www.youtube.com/watch?v=kr6pU_EbCqs",
+   "pip": {
+    "still": "_shared/ken-still.jpg",
+    "note": "full-screen share of the weekend report with a strip of tiles about 30 px tall top right (300, 900, 3000, 5000 s): no usable tile"
+   }
+  },
+  {
+   "id": "rgs",
+   "label": "Sunday session: regime, theoretical exposure, five frames",
+   "file": "youtube-q-df0MVvWBA-really-good-sunday.mp4",
+   "proxy": "youtube-q-df0MVvWBA-really-good-sunday.proxy.mp4",
+   "url": "https://www.youtube.com/watch?v=q-df0MVvWBA",
+   "pip": {
+    "still": "_shared/ken-still.jpg",
+    "note": "the layout changes across the windows (a six-tile gallery at 1260 s, a share with a right column of about 160x90 tiles at 1800, 2200, 6950 s) and Ken's tile is not identified with confidence: the still stands in"
+   }
+  },
+  {
+   "id": "cdd",
+   "label": "Collapsing Dragon deep dive",
+   "file": "youtube-qVoBZizGQR0-collapsing-dragon-deep-dive.mp4",
+   "proxy": "youtube-qVoBZizGQR0-collapsing-dragon-deep-dive.proxy.mp4",
+   "url": "https://www.youtube.com/watch?v=qVoBZizGQR0",
+   "pip": {
+    "still": "_shared/ken-still.jpg",
+    "note": "Zoom gallery column at the right edge, tiles about 90 px at 720p (3600, 3900, 4200, 4450 s): too small to crop"
+   }
+  },
+  {
+   "id": "ss3",
+   "label": "2023-03-06 swing and sniper (PSAR flips)",
+   "file": "youtube-eQiu9AGH8Uw-2023-03-06-swing-and-sniper.mp4",
+   "proxy": "youtube-eQiu9AGH8Uw-2023-03-06-swing-and-sniper.proxy.mp4",
+   "url": "https://www.youtube.com/watch?v=eQiu9AGH8Uw",
+   "pip": {
+    "still": "_shared/ken-still.jpg",
+    "note": "share with one tile about 60 px top right (345, 1200, 1500 s): too small to crop"
+   }
+  },
+  {
+   "id": "kat",
+   "label": "2023-05-25 Foundations Q&A: Kata 2",
+   "file": "youtube-X0WDFsTTfIM-2023-05-25-foundations-q-a-podcast-re-kata-2.mp4",
+   "proxy": "youtube-X0WDFsTTfIM-2023-05-25-foundations-q-a-podcast-re-kata-2.proxy.mp4",
+   "url": "https://www.youtube.com/watch?v=X0WDFsTTfIM",
+   "pip": {
+    "still": "_shared/ken-still.jpg",
+    "note": "top tile of a two-tile column, about 148x80 at 720p (120, 400, 1800, 2900, 3000 s): at the threshold, the still stands in"
+   }
+  },
+  {
+   "id": "wsp",
+   "label": "2022-10-01 weekend swing patterns",
+   "file": "youtube-rmfIYAVNQOA-2022-10-01-weekend-swing-patterns.mp4",
+   "proxy": "youtube-rmfIYAVNQOA-2022-10-01-weekend-swing-patterns.proxy.mp4",
+   "url": "https://www.youtube.com/watch?v=rmfIYAVNQOA",
+   "pip_note": "no camera tile (measured; see assemble.py NO_TILE)"
+  },
+  {
+   "id": "c6i",
+   "label": "Cohort 6 intro: position sizing, the routine",
+   "file": "youtube-XvcsfWFFW20-cohort-6-intro-overview.mp4",
+   "proxy": "youtube-XvcsfWFFW20-cohort-6-intro-overview.proxy.mp4",
+   "url": "https://www.youtube.com/watch?v=XvcsfWFFW20",
+   "pip": {
+    "still": "_shared/ken-still.jpg",
+    "note": "screen share with a gallery column; Ken about 60 px tall at 720p (2000, 5600, 6000, 6600, 7420, 7980 s): too small to crop"
+   }
+  },
+  {
+   "id": "mc",
+   "label": "2023-01-14 masterclass on swing trading",
+   "file": "youtube-nRzzuCEnbFs-2023-01-14-a-coaching-session-and-a-masterclass-on-swing-trad.mp4",
+   "proxy": "youtube-nRzzuCEnbFs-2023-01-14-a-coaching-session-and-a-masterclass-on-swing-trad.proxy.mp4",
+   "url": "https://www.youtube.com/watch?v=nRzzuCEnbFs",
+   "pip": {
+    "still": "_shared/ken-still.jpg",
+    "note": "share of Griff's trading plan with a column of tiles about 25 px wide at the right edge (700, 1000, 1240, 1600 s): no usable tile"
+   }
+  },
+  {
+   "id": "wr24",
+   "label": "2023-03-24 weekend report walk",
+   "file": "youtube-n2lGyseS4hw-2023-03-24-weekend-reports-swing-and-sniper.mp4",
+   "proxy": "youtube-n2lGyseS4hw-2023-03-24-weekend-reports-swing-and-sniper.proxy.mp4",
+   "url": "https://www.youtube.com/watch?v=n2lGyseS4hw",
+   "pip": {
+    "still": "_shared/ken-still.jpg",
+    "note": "screen recording of the report, no camera tile (630, 700, 770 s)"
+   }
+  },
+  {
+   "id": "wr31",
+   "label": "2023-03-31 weekend report walk",
+   "file": "youtube-Mk8_O_VdF3o-2023-03-31-weekend-reports-swing-and-sniper-trading.mp4",
+   "proxy": "youtube-Mk8_O_VdF3o-2023-03-31-weekend-reports-swing-and-sniper-trading.proxy.mp4",
+   "url": "https://www.youtube.com/watch?v=Mk8_O_VdF3o",
+   "pip": {
+    "still": "_shared/ken-still.jpg",
+    "note": "share with a strip of tiles about 30 px tall at the right edge (2220, 2260, 2290 s): no usable tile"
+   }
+  },
+  {
+   "id": "j16",
+   "label": "2023-06-16 session (PSAR, harsh winter)",
+   "file": "youtube-UyhWrEKNSbw-2023-06-16.mp4",
+   "proxy": "youtube-UyhWrEKNSbw-2023-06-16.proxy.mp4",
+   "url": "https://www.youtube.com/watch?v=UyhWrEKNSbw",
+   "pip": {
+    "still": "_shared/ken-still.jpg",
+    "note": "screen recording of the charts, no camera tile (370, 470, 2250, 2340 s); the still stands in for the speaker"
+   }
+  },
+  {
+   "id": "ssf",
+   "label": "scaling simplified framing (sizing)",
+   "file": "youtube-QgIwaNDDimc-scaling-simplified-framing.mp4",
+   "proxy": "youtube-QgIwaNDDimc-scaling-simplified-framing.proxy.mp4",
+   "url": "https://www.youtube.com/watch?v=QgIwaNDDimc",
+   "pip": {
+    "still": "_shared/ken-still.jpg",
+    "note": "share with a right column of five 205x120 tiles (x 1075-1280, y 60-660 at 720p; 1400, 1600, 1750 s); Ken's tile is probably the fourth (crop iw*0.16:ih*0.1667:iw*0.84:ih*0.5833) but not confirmed, so the still stands in"
+   }
+  }
+ ],
+ "voices": [
+  {
+   "id": "ava",
+   "label": "Ava (US, female, polished)",
+   "sample": "vo-ava.mp3"
+  },
+  {
+   "id": "andrew",
+   "label": "Andrew (US, male, conversational)",
+   "sample": "vo-andrew.mp3"
+  }
+ ],
+ "segments": [
+  {
+   "id": "s00",
+   "type": "slide",
+   "include": true,
+   "label": "INTERNAL · story arc (design card, OFF before the build)",
+   "slide_id": "arc",
+   "duration": 8,
+   "layout": "agenda",
+   "text": {
+    "kicker": "INTERNAL · THE STORY ARC · NOT FOR THE CUT",
+    "title": "**Three tools** on one spine",
+    "subtitle": "Market type, exposure number, direction read, the turn, the routine: in that order.",
+    "body": "The spine | Module 1 (s11–s19): 3×3 market type, direction × volatility; the cell decides the week\nThe brake | Module 2 (s21–s28): ETF2 strength, consistency, quality; four-month filter; ten regions × 10%\nThe direction | Module 3 (s31–s39): the SPY daily PSAR flip; the dragon band; collapsing dragon; harsh winter\nThe turn | Module 4 (s41–s49): the kata as a form; Kata 2, the supported fall crossing; the chains\nThe routine | Module 5 (s51–s58): Sunday in five rows; size from the cell and the number\nThis week | Module 6 (s61–s62): the 2026-11-20 read, in the order taught"
+   },
+   "status": "design card (owner, 2026-11-21: 'internal story arcs'): names the modules and their segment ranges; OFF before the build"
+  },
+  {
+   "id": "s01",
+   "type": "slide",
+   "include": true,
+   "label": "Title card",
+   "slide_id": "title",
+   "duration": 5,
+   "layout": "title",
+   "text": {
+    "kicker": "The Weekend Edge · about four hours",
+    "title": "**Three laconic tools** for the swing trader",
+    "subtitle": "with Dr. Ken Long",
+    "body": "The market type. The exposure number. The direction read. In that order, every Sunday."
+   }
+  },
+  {
+   "id": "s02",
+   "type": "explainer",
+   "include": true,
+   "label": "EXPLAINER: the spine and the three tools (Ava, opening)",
+   "voice": "ava",
+   "vo_script": "Every Sunday, Ken Long answers three questions before he looks at a single trade. What kind of market is this? How much of my capital does the evidence permit? And which way is the index leaning right now? This course gives you his three laconic tools for those three questions. The spine is a three by three matrix: market direction, bull, sideways or bear, against volatility, quiet, normal or volatile. The cell you are in decides what the week permits. On that spine hang the tools. The ETF2 theoretical exposure model, which turns a table of ten regions into one percentage. The SPY daily parabolic SAR flip, which says wait or initiate. And the kata patterns, which name the turn when it comes. Four hours, in the order he uses them. Then the week that is on the screen right now.",
+   "est_duration": 68,
+   "animation_brief": "the 3x3 grid drawn axis by axis (direction across, volatility down), the cell lit, then three tool pills hung on it in the order of the course",
+   "status": "opening; every claim is a description of the course, no outcome"
+  },
+  {
+   "id": "s10",
+   "type": "slide",
+   "include": true,
+   "label": "Chapter card: The 3×3",
+   "slide_id": "ch1",
+   "duration": 5,
+   "layout": "chapter",
+   "text": {
+    "kicker": "MODULE 1",
+    "title": "**The 3×3**: direction × volatility",
+    "subtitle": "Nine cells. Ken reads one of them before anything else.",
+    "body": ""
+   }
+  },
+  {
+   "id": "s11",
+   "type": "cut",
+   "include": false,
+   "label": "Direction: the 2 % band around the 200-day, and what tomorrow did",
+   "source": "wr2",
+   "in": 291.0,
+   "out": 420.0,
+   "status": "MAPPED-VERIFIED: 'now we have those three classifications' 4:51; '>2% above the 200-day = bull, in the band sideways, below bear' 4:51-5:06; '30 years, 260 days, 7,800 days' 5:06-5:22; 'bucket of bullish sideways and bearish' 6:01; 'bullish today, tomorrow on average is up; within 2% flat; bear down' 6:16-6:33; 'that's one of the dimensions, the next is volatility' 6:50; out before the questions pause at 7:00",
+   "quote_anchor": "when the market closes in bullish territory today tomorrow on average is up"
+  },
+  {
+   "id": "s11a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: Direction: the 2 % band around the 200-day, and what tomorrow did",
+   "source": "wr2",
+   "in": 291.0,
+   "out": 420.0,
+   "animation_brief": "a price line over its 200-day with the ±2 % band; the three zones named as he names them; 7,800 days tallied into three buckets; tomorrow's arrow per bucket",
+   "status": "twin of s11: his audio, our picture; pip pending the wr2 proxy (check 300, 600, 900 s)",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s12",
+   "type": "cut",
+   "include": false,
+   "label": "Volatility: ATR % against the last 100 days; normal is ±1 SD, volatile and quiet are the sixths",
+   "source": "wr2",
+   "in": 429.0,
+   "out": 785.0,
+   "status": "MAPPED-VERIFIED: 'volatile normal and quiet' 7:09; 'this is all SPY' 7:09; 'relative volatility compared to recent memory, 100 days of look back' 7:41-7:56; 'ATR is a 14-day look back' 8:31; 'ATR divided by price' 9:04; 'price 50, ATR 2, four percent' 9:36; 'six months later at 100, ATR still 2, half the volatility' 9:53-10:41; 'rank, max min average, standard deviation' 11:48; 'range of normal +1 to -1 SD' 12:04; 'two-thirds normal, volatile the upper 1/6, quiet the bottom 1/6' 12:20-12:53; out at 'so that was my initial sorting scheme' 13:03",
+   "quote_anchor": "two-thirds of the data is here stuck in the middle we would call that normal volatility"
+  },
+  {
+   "id": "s12a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: Volatility: ATR % against the last 100 days; normal is ±1 SD, volatile and quiet are the sixths",
+   "source": "wr2",
+   "in": 429.0,
+   "out": 785.0,
+   "animation_brief": "left: the $2 ATR at 50 and at 100 (4 % vs 2 %); right: 100 days of ATR % as a distribution, ±1 SD shaded normal, the two tails named volatile and quiet",
+   "status": "twin of s12; pip pending the wr2 proxy",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s13",
+   "type": "cut",
+   "include": false,
+   "label": "The nine buckets: four cells up tomorrow, three down, two flat; the first thing he reads",
+   "source": "wr2",
+   "in": 785.0,
+   "out": 1075.0,
+   "status": "MAPPED-VERIFIED: 'initial sorting scheme, three buckets' 13:03; 'quiet very good, normal positive, volatile flat' 13:36-13:53; 'why a hundred' 14:08; 'combined matrix that has nine categories' 15:12; 'nine buckets' 15:27; 'bullish volatile normal quiet, sideways, bearish' 15:45; 'four conditions tomorrow up: every bull and sideways quiet' 16:17; 'three negative: bearish volatile normal quiet' 16:34-16:49; 'sideways volatile and normal flat' 16:49; 'guide to what the market will bear' 17:05; 'sideways and bearish markets favor intraday, bird in the hand' 17:20-17:37; 'the very first thing I look at is the market classification' 17:37-17:55; out before 'trade location / NDX' 17:55",
+   "quote_anchor": "the very first thing that I look at on my daily and weekend reports is the market classification"
+  },
+  {
+   "id": "s13a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: The nine buckets: four cells up tomorrow, three down, two flat; the first thing he reads",
+   "source": "wr2",
+   "in": 785.0,
+   "out": 1075.0,
+   "animation_brief": "the 3×3 grid built cell by cell as he names them, then lit by what tomorrow did on average: four green, three red, two flat; 'first thing I look at' lands on the whole grid",
+   "status": "twin of s13; pip pending the wr2 proxy",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s19",
+   "type": "explainer",
+   "include": true,
+   "label": "Explainer: the grid, drawn",
+   "voice": "ava",
+   "vo_script": "The label Ken reads first on page one is Van Tharp's market type, as Ken applies it. Two questions, nine answers. Direction: where did the S and P close against its two-hundred-day moving average? More than two percent above: bull. Within two percent: sideways. More than two percent below: bear. Volatility: where does today's fourteen-day A T R percentage sit among the last one hundred days? Inside one standard deviation of the average: normal. The top sixth: volatile. The bottom sixth: quiet. Three by three. In Ken's thirty-year test, the next day was up on average in four cells: every bull cell, and sideways quiet. Down in the three bear cells. Flat in sideways normal and sideways volatile. The words at the top of the report, bullish normal, name one of these nine cells. Everything else in this course is read after that label.",
+   "est_duration": 90,
+   "animation_brief": "the finished grid: axes named, the nine cells, the up / flat / down tint from his test; one cell highlighted as 'the label on page one'. Facts from wr2 4:51-17:55 (SPY, 200-day, 2 %, 14-day ATR %, 100 days, ±1 SD, the sixths, four up / three down / two flat).",
+   "status": "synth voice, no tile; every rule in the script is Ken's own from s11-s13; 'Van Tharp's market type' is Ken's attribution (c6i 1:33:40 names Tharp beside the classification)"
+  },
+  {
+   "id": "s14",
+   "type": "cut",
+   "include": false,
+   "label": "Dollars at risk vary by market condition; the double secret: a system's own expectancy slope is its market classification",
+   "source": "c6i",
+   "in": 5586.0,
+   "out": 6081.0,
+   "status": "MAPPED-VERIFIED: 'keep track of dollars' 1:33:06; 'vary the size of the dollars at risk on the basis of market condition, on swing trades not intraday' 1:33:24; 'risk Z, bullish normal bullish volatile' 1:33:40; 'the double secret: the actual market classification you want to use is the slope of your R multiple expectancy' 1:33:40-1:33:58; 'MACD four seasons: summer, fall, winter, spring' 1:34:58-1:35:33; 'summer full, fall half, winter one share or failure patterns' 1:35:51-1:36:10; 'vary the dollars, not the architecture and geometry' 1:36:25; 'Tharp style: 400 bucks with a 25-cent stop' 1:36:42; 'execution stop where the hypothesis is invalidated, full frog box for size' 1:37:52; 'page one, right now bullish normal, guide your size' 1:39:00-1:39:17; 'the shape of your expectancy curve is the market classification for that system' 1:39:34-1:39:54; 'paper trade all your systems all the time; winter to spring, get bigger' 1:41:03; out at the student's three buckets 1:41:21. Two voices: the student asks, Ken answers (VTT has no speaker tags; >> marks turns)",
+   "quote_anchor": "the shape of your expectancy curve is the market classification for that system"
+  },
+  {
+   "id": "s14a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: Dollars at risk vary by market condition; the double secret: a system's own expectancy slope",
+   "source": "c6i",
+   "in": 5586.0,
+   "out": 6081.0,
+   "animation_brief": "a rolling expectancy curve crossing its zero line; the four seasons named on it as he names them with the position size each carries; a side card: the stop goes where the hypothesis dies, the size stays the frog box",
+   "status": "twin of s14; c6i: Ken is a ~60 px thumbnail (frames 5600, 6000 s), no pip, his still stands in",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s15",
+   "type": "cut",
+   "include": false,
+   "label": "The theory says the system should not work here; the evidence says it does",
+   "source": "c6i",
+   "in": 6144.0,
+   "out": 6275.0,
+   "status": "MAPPED-VERIFIED: 'edge case: trading one share live, real data' 1:42:24; 'last 30 trades, expectancy 0.4, but the market classification is sideways volatile' 1:42:41-1:42:59; 'who are you going to believe, me or your lying eyes' 1:43:14; 'the symbols had something special going on' 1:43:30; 'move away from strong correlation with the market' 1:43:46; 'target selection becomes important; blend market condition and signal' 1:44:02-1:44:18; out before the Greenland aside 1:44:35",
+   "quote_anchor": "should I trade that system because the theory predicts that it shouldn't work or because the actual evidence of my eyes shows that it's working"
+  },
+  {
+   "id": "s15a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: The theory says the system should not work here; the evidence says it does",
+   "source": "c6i",
+   "in": 6144.0,
+   "out": 6275.0,
+   "animation_brief": "a scale: the market's cell on one pan, thirty live trades on the other; a herd of symbols, a few drifting away from the market's line as he says the correlation loosens",
+   "status": "twin of s15; no pip (c6i thumbnail), his still",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s16",
+   "type": "cut",
+   "include": false,
+   "label": "20 / 40 / 40 by cell: any volatile or any quiet is day-trading weather; full swing money only in bull normal and bull quiet",
+   "source": "c6i",
+   "in": 6322.0,
+   "out": 6690.0,
+   "status": "MAPPED-VERIFIED: 'shifted from core and swing to intraday' 1:45:22; '20% core, 40% swing, 40% day' 1:45:38; 'swing 40% exposure if and only if every symbol has justified position' 1:45:53; 'half employed, the other half into day trading as a hedge' 1:46:10; 'never below 10 in the core; swing as low as flat' 1:46:27-1:46:44; 'if I have money in the swing portfolio I am always day trading' 1:47:00; 'any volatile, any quiet; one sixth of the time quiet, one sixth volatile' 1:47:18; 'bear quiet does not stay bear quiet very long' 1:47:33-1:47:48; 'bear volatile is my favorite time to trade: collapsing dragons all the way down, dead cat bounces, melt up then step aside' 1:48:04-1:48:37; 'in bear markets and any volatile market I am mostly a day trader plus 10% core' 1:48:37; 'fully committed to swing trades only in bullish normal and bullish quiet' 1:48:54-1:49:11; '20 core, 40 swing, 40 cash overnight' 1:49:27-1:50:00; 'pile on with turbo or hedge' 1:50:17; '60% exposed that zeroes the losing days defeats 100% buy and hold' 1:50:35-1:51:07 (his argument, no figures computed); 'find the movers, keep 70%, lather rinse repeat' 1:51:23",
+   "quote_anchor": "fully committed to swing trades is bullish normal and bullish quiet because it's just been grinding grinding grinding"
+  },
+  {
+   "id": "s16a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: 20 / 40 / 40 by cell: full swing money only in bull normal and bull quiet",
+   "source": "c6i",
+   "in": 6322.0,
+   "out": 6690.0,
+   "animation_brief": "left: three bars, core 20 / swing 40 / day 40, the swing bar filling and draining as he says employed or flat; right: the 3×3 grid, cells tagged as he assigns them: volatile and quiet columns to the day book, the bear row to day plus 10 % core, bull normal and bull quiet to full swing",
+   "status": "twin of s16; no pip (c6i thumbnail), his still",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s17",
+   "type": "cut",
+   "include": false,
+   "label": "Page one, live: 'bullish normal, so regular things can apply'",
+   "source": "c6i",
+   "in": 7403.0,
+   "out": 7502.0,
+   "status": "MAPPED-VERIFIED: 'page one is the same on both' 2:03:23; 'the very first thing I look at is the nature of the market right now: bullish normal' 2:03:41-2:03:58; 'regular things can apply; weakness over 2 and 10 days; risk Z is really worried' 2:03:58-2:04:13; 'favors short-term intraday, prime time for short side day trading' 2:04:13; 'strongest are the BMR symbols' 2:04:29; 'the ETF2 weekly system is fully invested; all 10 indexes of the world' 2:04:45; 'ripe to get punched in the face; not allowed to be surprised' 2:04:45-2:05:02. Frame 7420 s shows the Jan 17 2026 weekend report page one on screen (a later report than the ETF2 lesson's 2023 one)",
+   "quote_anchor": "the very first thing I said okay bullish normal so regular things can apply"
+  },
+  {
+   "id": "s17a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: Page one, live: 'bullish normal, so regular things can apply'",
+   "source": "c6i",
+   "in": 7403.0,
+   "out": 7502.0,
+   "animation_brief": "a page-one card: the label BULLISH NORMAL lit in its grid cell, a risk-Z gauge swinging to worried, ETF2 ten of ten invested, and the line 'not allowed to be surprised'",
+   "status": "twin of s17; no pip (c6i thumbnail), his still. The owner may prefer the cut here: his real page one is on screen (frame 7420 s)",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s18",
+   "type": "cut",
+   "include": false,
+   "label": "Page one, live: 'bullish volatile favors the short term'; exposure 10 % to 90 % in a week",
+   "source": "rgs",
+   "in": 6892.0,
+   "out": 7024.0,
+   "status": "MAPPED-VERIFIED: 'bullish volatile favors the short term' 1:54:52; 'multi-time frame NDX recovery out of the war chaos' 1:55:08; 'theoretical exposure went from 10% to 90%' 1:55:08-1:55:24; 'hovering around their four-month moving average; a large change in exposure, you don't see that very often' 1:55:24; 'percent stretch within 2¼% of the 200-day, unusual' 1:55:40; '200-day steaming north, a market that ran out of gas' 1:55:57; 'ATR 1.54% is double the normal volatility; pre-COVID 0.75' 1:56:13; 'risk Z flashed risk on; ceasefire' 1:56:31-1:56:48; out at 'ETF2 90% exposed' 1:57:04 before the mouse-wheel aside",
+   "quote_anchor": "bullish volatile favors the short term"
+  },
+  {
+   "id": "s18a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: Page one, live: 'bullish volatile favors the short term'",
+   "source": "rgs",
+   "in": 6892.0,
+   "out": 7024.0,
+   "animation_brief": "the same page-one card, now with BULLISH VOLATILE lit, the exposure bar jumping 10 to 90, the stretch band around the 200-day, two ATR bars 0.75 and 1.54, the risk-Z needle swinging to risk on",
+   "status": "twin of s18; pip pending the rgs proxy (check 6900, 6950, 7000 s); this window is his screen share of the report, likely a gallery tile",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s20",
+   "type": "slide",
+   "include": true,
+   "label": "Chapter card: The ETF2 Theoretical Exposure Model",
+   "slide_id": "ch2",
+   "duration": 5,
+   "layout": "chapter",
+   "text": {
+    "kicker": "MODULE 2",
+    "title": "**How much to have on**",
+    "subtitle": "The ETF2 Theoretical Exposure Model: ten indexes, one moving average, ten percent each.",
+    "body": ""
+   }
+  },
+  {
+   "id": "s21",
+   "type": "cut",
+   "include": false,
+   "label": "The two-page ETF2 update: what it measures (the report is a salad bar)",
+   "source": "wr2",
+   "in": 30.0,
+   "out": 105.0,
+   "status": "MAPPED-VERIFIED: 'salad bar for a lot of different strategies' 0:30; 'two-page update that uses the etf2 database' 0:47-1:04; 'current relative strength, a 10-week rolling relative strength, a 40-week quality index' 1:04-1:20; 'several hundred symbols in the ETF World model' 1:37; out before 'the third section' 1:45",
+   "quote_anchor": "a two-page update that uses the etf2 database... current relative strength, a 10-week rolling relative strength, a 40-week quality index"
+  },
+  {
+   "id": "s21a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: The two-page ETF2 update: what it measures (the report is a salad bar)",
+   "source": "wr2",
+   "in": 30.0,
+   "out": 105.0,
+   "animation_brief": "the weekend report as three stacked pages; the middle one opens into three measure pills (strength · 10-week · 40-week quality) over a herd of several hundred symbols",
+   "status": "twin of s21: his audio, our picture; pip pending the proxy (check frames at 40, 80 s: is Ken on camera or a document share)",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s22",
+   "type": "cut",
+   "include": false,
+   "label": "Core, swing, day: three time frames, and the Blended Monthly Rebalancing as a lens",
+   "source": "wr2",
+   "in": 2599.0,
+   "out": 2913.0,
+   "status": "MAPPED-VERIFIED: 'three time frames: core, swing and day trading' 43:19; hybrid 43:35-44:24; 'the Blended monthly rebalancing, my favorite approach to long-term core holdings' 44:42; ETF13/22/32 44:58; 'when markets are poor and we want to be in cash' 45:31; ETF Max ~300 ETFs 46:20; 'provides week to week insights into the relative strength' 46:37; 'a lens... US technology plus the Euro Asia' 47:12-47:45; 'kata two action... turbo boost' 48:01; out at 'how we compute the numbers' 48:33",
+   "quote_anchor": "sometimes systems give us signals, sometimes systems give us information about the market through that particular lens"
+  },
+  {
+   "id": "s22a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: Core, swing, day: three time frames, and the Blended Monthly Rebalancing as a lens",
+   "source": "wr2",
+   "in": 2599.0,
+   "out": 2913.0,
+   "animation_brief": "three horizontal time bands (core · swing · day) with hybrid overlaps drawn between them; a BMR card under core; then the card turns into a lens that sorts a herd of symbols into leaders and the rest",
+   "status": "twin of s22: his audio, our picture; pip pending the proxy (check frames at 2650, 2800 s)",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s23",
+   "type": "cut",
+   "include": false,
+   "label": "The market exposure algorithm: ten indexes, the four-month moving average, ten percent each",
+   "source": "wr2",
+   "in": 2913.0,
+   "out": 3155.0,
+   "status": "MAPPED-VERIFIED: 'another conservative swing trade system called etf2' 48:33; 'an additional market exposure algorithm which takes a look at 10 indexes' 48:51; 'four of which are in the US: SPY, the Qs, the mid caps and the small caps... about 60 percent in globals' 49:07; 'price today compared to the four-month moving average' 49:23; 'below... you should be in cash; each one of these 10 indexes controls 10 percent' 49:43; 'why six and four: the US market is about 48 percent of global cap' 50:00; 'six of those 10 are above' 50:18; 'maximum exposure about 60 percent; all above, that goes to a hundred' 50:36; 'this little risk manager' 50:51; the four collapses 51:07-51:25; 'the worst performance... was minus six percent' 51:47 (HIS CLAIM, in his voice, glossed as such); 'page one of my weekend review' 52:18; out 52:35",
+   "quote_anchor": "each one of these 10 indexes controls 10 percent of the total exposure to the world"
+  },
+  {
+   "id": "s23a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: The market exposure algorithm: ten indexes, the four-month moving average, ten percent each",
+   "source": "wr2",
+   "in": 2913.0,
+   "out": 3155.0,
+   "animation_brief": "ten index boxes, four US on the left and six global on the right, each with a price tick against a moving-average line; the boxes above their line light up one by one to six and a gauge reads 60%; his drawdown claim lands as a glossed card, not a number we vouch for",
+   "status": "twin of s23: his audio, our picture; pip pending the proxy (check frames at 2950, 3100 s)",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s24",
+   "type": "cut",
+   "include": false,
+   "label": "The BMR rules: the 70/30 blend, the top three, Buy or cash, a 10 percent trailing stop",
+   "source": "wr2",
+   "in": 4135.0,
+   "out": 4410.0,
+   "status": "MAPPED-VERIFIED: 'a blend of the three-month percent performance and the six month' 1:08:55; '0.7... 0.3' 1:09:12; 'rank... holding positions for a month' 1:09:28; 'top three... above or below its four month moving average' 1:09:45; 'one third of my money in each, a month, 10 percent trailing stop' 1:10:01; 'below its four month moving average, that position would go to cash, it would not roll down' 1:10:18; ETF13/22/32 members 1:11:06-1:11:43; 'collapsing dragons' as the short-side use of the lens 1:11:58; the Dow members 1:12:29-1:13:02; out 1:13:30 before Amgen",
+   "quote_anchor": "if one of these was strong but was still below its four month moving average then that position would go to cash, it would not roll down to the next one"
+  },
+  {
+   "id": "s24a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: The BMR rules: the 70/30 blend, the top three, Buy or cash, a 10 percent trailing stop",
+   "source": "wr2",
+   "in": 4135.0,
+   "out": 4410.0,
+   "animation_brief": "a ranking ladder of symbols sorted by a composite bar (0.7 of 3 m + 0.3 of 6 m); the top three get a gate each (above the MA: a third of the money; below: cash, the slot stays empty); a trailing stop line under each held one; the ladder then widens from 13 to 22 to 32 rungs",
+   "status": "twin of s24: his audio, our picture; pip pending the proxy (check frames at 4200, 4350 s)",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s25",
+   "type": "cut",
+   "include": false,
+   "label": "Strength, consistency, quality: three scores from 0 to 100, and the colour bands",
+   "source": "wr2",
+   "in": 4530.0,
+   "out": 4872.0,
+   "status": "MAPPED-VERIFIED: 'the World Market model review' 1:15:30; 'looks at three things: the average, the strength, consistency and quality' 1:15:48; '70 percent of the three month plus 30 percent of the six month... best a hundred, worst zero' 1:16:04-1:16:37; consistency = the last 10 weeks of that index, scaled again 1:17:18-1:17:52; quality = last 40 weeks as weekly trades, a system quality number, indexed 1:18:09-1:19:02; 'the average is simply the mathematical average: 63, 68, 63 gives 65' 1:19:19-1:19:37; colour codes by the mean and plus or minus one standard deviation: green top sixth, white, yellow, red bottom sixth 1:19:53-1:20:41; 'Europe green across the board' 1:20:41; out 1:21:12",
+   "quote_anchor": "three independent measures... each one of those gets scored on a scale of 0 to 100 and then the average is simply the mathematical average of those three"
+  },
+  {
+   "id": "s25a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: Strength, consistency, quality: three scores from 0 to 100, and the colour bands",
+   "source": "wr2",
+   "in": 4530.0,
+   "out": 4872.0,
+   "animation_brief": "one table row builds left to right: STR (a 3-month and a 6-month bar blended), CON (ten weekly ticks averaged), QUAL (forty weekly bars scored), AVG; under it a 0-100 ruler with the mean and the one-sigma marks colouring green · white · yellow · red",
+   "status": "twin of s25: his audio, our picture; pip pending the proxy (check frames at 4600, 4800 s)",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s26",
+   "type": "cut",
+   "include": false,
+   "label": "The sector extract and the MA filter: six of ten above, 60 percent invested, 40 percent cash",
+   "source": "wr2",
+   "in": 4872.0,
+   "out": 4990.0,
+   "status": "MAPPED-VERIFIED: 'the S&P... tracking it with the XL series' 1:21:12; 'technology is crushing everything, finance has been murdered' 1:21:29; sectors 1:21:45; 'the four month moving average, the moving average filter from the BMR... a buy rating... six of those ten' 1:22:02; '60 percent invested and 40 percent cash; last week 40 invested and 60 cash' 1:22:18; 'the market got 20 percent better in terms of reasonable asset allocation' 1:22:34; ATR and ATR percentage 1:22:51; out 1:23:10",
+   "quote_anchor": "six of those ten are on a buy rating and that's why this week the scoring is 60 percent invested and 40 percent cash"
+  },
+  {
+   "id": "s26a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: The sector extract and the MA filter: six of ten above, 60 percent invested, 40 percent cash",
+   "source": "wr2",
+   "in": 4872.0,
+   "out": 4990.0,
+   "animation_brief": "the nine sector pills sort into above and below the mean; then the ten-index strip lights four (last week) and six (this week) and the gauge moves 40 to 60; an ATR% pill at the end",
+   "status": "twin of s26: his audio, our picture; pip pending the proxy (check frames at 4900, 4970 s)",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s27",
+   "type": "cut",
+   "include": false,
+   "label": "The world market model at a glance: numbers that drive a rule set and inform a view",
+   "source": "wr2",
+   "in": 5205.0,
+   "out": 5360.0,
+   "status": "MAPPED-VERIFIED: 'the World Market model at a glance, the 10 big indexes that drive the BMR and the etf2' 1:26:45; 'an extract of the S&P... the nine sector spiders' 1:27:01; broad asset classes 1:27:16; gold, oil, the Saudi cut 1:27:33-1:27:50; 'this one page... a boatload of information that is actionable' 1:28:06-1:28:22; 'the model is designed to produce numbers which can drive action in a system, but those same numbers also give information' 1:28:39-1:28:55; out 1:29:20",
+   "quote_anchor": "the model is designed to produce numbers which can drive action in a system but those same numbers in that same model also give information"
+  },
+  {
+   "id": "s27a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: The world market model at a glance: numbers that drive a rule set and inform a view",
+   "source": "wr2",
+   "in": 5205.0,
+   "out": 5360.0,
+   "animation_brief": "a page of four panels drawn as he names them (ten indexes · S&P sectors · asset classes · regional); the page then forks into two arrows: action (a rule set) and information (a view)",
+   "status": "twin of s27: his audio, our picture; pip pending the proxy (check frames at 5250, 5330 s)",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s27b",
+   "type": "cut",
+   "include": false,
+   "label": "The ETF2 extract and the swing table: green/green to red/red",
+   "source": "wr2",
+   "in": 5371.0,
+   "out": 5920.0,
+   "status": "MAPPED-VERIFIED: 'an extract of the etf2 report... a very precise set of rules' 1:29:31; 'constructed about 20 years ago for a hedge fund' 1:29:48 (his history, 'saved people millions' is HIS CLAIM, glossed); 'expand it to include all 185 of the liquid ETFs' 1:30:21; 'tech at 95' 1:31:30; 'about 19... only about 10 percent in that top category' 1:31:46-1:32:01; 'strategies for swing trades: not the etf2 system but it uses the same model' 1:32:34; green/green 'great... reinforce with trend following... turbo' 1:32:50-1:33:42; green/white 'was good, now great, new leaders' 1:33:58-1:34:31; white after green 'EFA losing steam: preserve profits, watch for resumption' 1:34:47-1:35:20; red/red 'Brazil, natural gas, a collapsing dragon to the max' 1:35:38; red/yellow 'new weakness emerging' 1:35:53; 'concentrate on the extremes' 1:36:13; gold miners ATR% 1:36:30; IVW white/yellow 'new strength' 1:37:08; 'front run... catch them earlier at the turn' 1:37:26; the MA signal and South Korea 1:37:47-1:38:18; out 1:38:40 at 'pension funds and hedge funds'. Long window (9.2 min) kept whole because the table is one argument; the owner trims in the cutroom. This is the table edge-sysscq pins as SCQ-005.",
+   "quote_anchor": "if something is in the green and the green that thing is great... reinforce them with trend following"
+  },
+  {
+   "id": "s27ba",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: The ETF2 extract and the swing table: green/green to red/red",
+   "source": "wr2",
+   "in": 5371.0,
+   "out": 5920.0,
+   "animation_brief": "a 4x4 grid, strength bands down the side and ten-week consistency bands across, filling cell by cell with his own labels as he names them (great · new leaders · preserve profits · collapsing dragon · new weakness · new strength); the extremes glow; the MA signal column appears at the end with South Korea as the one below its line",
+   "status": "twin of s27b: his audio, our picture; pip pending the proxy (check frames at 5400, 5600, 5850 s)",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s27c",
+   "type": "cut",
+   "include": false,
+   "label": "A Sunday read: theoretical exposure from 10% to 90%",
+   "source": "rgs",
+   "in": 6881.0,
+   "out": 7000.0,
+   "status": "MAPPED-VERIFIED: 'read them economically' 1:54:41; 'bullish volatile favors the short term' 1:54:56; 'the theoretical exposure went from 10% to 90%' 1:55:11; 'hovering right around their four-month moving average that dropped underneath it and then moved back above it... a large change in exposure, you don't see that very often' 1:55:11-1:55:28; percent stretch 1:55:43; 'a market that ran out of gas' 1:56:00; 'ATR 1.54% is double the normal volatility' 1:56:17; out 1:56:40",
+   "quote_anchor": "the theoretical exposure went from 10% to 90%. So there's a bunch of things that are hovering right around their four-month moving average"
+  },
+  {
+   "id": "s27ca",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: A Sunday read: theoretical exposure from 10% to 90%",
+   "source": "rgs",
+   "in": 6881.0,
+   "out": 7000.0,
+   "animation_brief": "the ten-box strip jumps from one lit to nine; above it a price path dips under its moving-average line and climbs back over; a stretch ruler and an ATR pill follow his reading",
+   "status": "twin of s27c: his audio, our picture; pip pending the proxy (rgs is a 2026 Sunday session; check frames at 6900, 6980 s for his tile)",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s27d",
+   "type": "cut",
+   "include": false,
+   "label": "A Friday read: exposure from 10% to 40%, four of ten above the four-month",
+   "source": "wr24",
+   "in": 626.0,
+   "out": 780.0,
+   "status": "MAPPED-VERIFIED: 'sideways normal... risk Z still risk-off... price relative to the 200 began to improve' 10:26; 'the etf2 model theoretical exposure increases from 10 percent to 40 percent, four of the ten indexes are above the four month moving average' 10:43; RL fractal 10:58-11:14; '386 is the crucial support' 11:48; 'etf2 portfolio: the winners continued to win' 12:04; 'the etf2 regional: US tech stretching its legs' 12:28; 'XLK green and white... was good, now great... new leaders' 12:44; out 13:00",
+   "quote_anchor": "the etf2 model theoretical exposure increases from 10 percent to 40 percent: four of the ten indexes are above the four month moving average"
+  },
+  {
+   "id": "s27da",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: A Friday read: exposure from 10% to 40%, four of ten above the four-month",
+   "source": "wr24",
+   "in": 626.0,
+   "out": 780.0,
+   "animation_brief": "the ten-box strip lights one then four; a small regression-channel sketch for his oscillation remark; the green/white cell of the swing grid lights for XLK at the end",
+   "status": "twin of s27d: his audio, our picture; pip pending the proxy (check frames at 650, 750 s)",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s27e",
+   "type": "cut",
+   "include": false,
+   "label": "A turning-point week: 10, then 40, then 60",
+   "source": "wr31",
+   "in": 2210.0,
+   "out": 2295.0,
+   "status": "MAPPED-VERIFIED: 'pulled back, held support, leg one, kata two, leg two' 36:50; 'two really strong upward days in a row, a turning point week in my view; the etf2 asset allocation went from 10' 37:06; 'to 40 last week to 60 for this week; even the etf2 is recognizing the general healing properties of price' 37:25; 'the big winners were the oversold ones: Latin America and real estate' 37:43; 'Brazil and Mexico... tech and the Euro Asia globals' 38:01; out 38:15",
+   "quote_anchor": "the etf2 asset allocation this week went from 10 to 40 last week to 60 for this week"
+  },
+  {
+   "id": "s27ea",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: A turning-point week: 10, then 40, then 60",
+   "source": "wr31",
+   "in": 2210.0,
+   "out": 2295.0,
+   "animation_brief": "a three-step staircase of the ten-box strip, one week per step (1 · 4 · 6 lit), with a price path above it making his leg one, kata two, leg two",
+   "status": "twin of s27e: his audio, our picture; pip pending the proxy (check frames at 2230, 2280 s)",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s27f",
+   "type": "cut",
+   "include": false,
+   "label": "The recap: the four columns, the MA filter, ATR percent, liquidity",
+   "source": "wr2",
+   "in": 6341.0,
+   "out": 6400.0,
+   "status": "MAPPED-VERIFIED: 'two pages of details on etf2 using those four categories: strength' 1:45:41; 'consistency, quality, the blend, the colour code, relative to the four month moving average, ATR percentage, liquidity' 1:45:57; 'our little buddy SPY, almost always in the middle' 1:46:12; 'bottom feeders' 1:46:28; out 1:46:40 before the daily report",
+   "quote_anchor": "there's our little buddy SPY right there, right in the middle, almost always in the middle"
+  },
+  {
+   "id": "s27fa",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: The recap: the four columns, the MA filter, ATR percent, liquidity",
+   "source": "wr2",
+   "in": 6341.0,
+   "out": 6400.0,
+   "animation_brief": "the column headers of the ETF2 page line up as a checklist as he names them; SPY's row slides into the middle of the list",
+   "status": "twin of s27f: his audio, our picture; pip pending the proxy (check frames at 6350, 6390 s)",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s28",
+   "type": "explainer",
+   "include": true,
+   "label": "EXPLAINER: reading the 14 November 2026 Regional Summary (Griff's table)",
+   "voice": "ava",
+   "vo_script": "This is the Regional Summary from Ken's weekend report dated November fourteenth, twenty twenty-six. Ten regional index funds: emerging markets, the Euro-Asian index, Asia less Japan, Japan, the European three fifty, Latin America, then the four US indexes: the S and P five hundred, large-cap growth, mid caps and small caps. Each row carries the four ETF2 scores Ken described: average, strength, consistency and quality, each scaled from zero to one hundred across the list. The Edge Platform's sysSCQ package pins the same three measures as Ken states them on tape, and recomputes them every week from weekly closes. The column that sets exposure is the M A filter: price against the four-month moving average. Above it, Buy. Below it, Cash. Each regional Buy adds ten percent. This week one of the ten is above its line: I E V, the European three fifty. The other nine read Cash. So the theoretical exposure moves from zero percent last week to ten percent this week. Ninety percent of the model portfolio stays in cash. The market label reads Bullish Normal. The strongest regions by the table are Latin America and Japan; the weakest are the US mid caps and small caps. Nothing here is a forecast. It is a count of how many regions trade above their four-month average, and a brake on how much is at risk.",
+   "est_duration": 95,
+   "animation_brief": "explainer (Ava, no tile): the Regional Summary table drawn row by row as she names each region (ticker · AVG STR CON QUAL · MA filter), the Cash rows grey, the one Buy row (IEV) lit; then the strip of ten boxes with one lit and the allocation card 'Last week 0% | This week 10%'; the Bullish Normal label last. Values from edge-sysscq reference/kl_reports_2026.json (report 20261114), the parsed copy of the same printed page; the bitmap @etf2-regional-2026-11-14 can replace the drawn table later",
+   "status": "rev0: VO script written (Ava, ~95 s est.), scene drawn from the parsed report rows. FLAG for the owner: edge-sysscq SCQ-007 marks the 11-14 STR/CON/AVG columns 'suspect' (Ken's printed STR tracks no price lookback that week; QUAL, prices and the MA signal match). The scene shows the printed numbers as printed; the exposure count (1 of 10, IEV) is the verified part (SCQ-006 matches 'This week 10%').",
+   "quote_anchor": "ETF2 Theoretical exposure goes from 0% -> 10%"
+  },
+  {
+   "id": "s30",
+   "type": "slide",
+   "include": true,
+   "label": "Chapter card: SPY daily PSAR flips",
+   "slide_id": "ch3",
+   "duration": 5,
+   "layout": "chapter",
+   "text": {
+    "kicker": "MODULE 3",
+    "title": "**The direction read**: SPY daily PSAR flips",
+    "subtitle": "Flip down, wait. Flip up, initiate. The dragon and the red river tell you when it matters.",
+    "body": ""
+   }
+  },
+  {
+   "id": "s31",
+   "type": "cut",
+   "include": false,
+   "label": "The chain: harsh winter, the sharp point, the PSAR flips at the belly of the RL10; pocket vs emerging dragon",
+   "source": "mc",
+   "in": 604.0,
+   "out": 928.0,
+   "status": "MAPPED-VERIFIED: 'leads to a chain of collapsing dragons' 604; 'fail into the harsh winter' 622; 'three mmrbs or 1.5 frog box' 637–642; 'turning point in the rl-10 … always comes to a sharp point' 677–682; 'the flip always occurs at the belly of the rl10' 715–718; 'SSC to cotta 2 to cotta 2' 762; 'pocket entry' 881; 'emerging Dragon entry' 895; ends 'the main point is that it's holding' 930. Audience: Griff's chain-trading plan (he says 'he' = Griff). | pip pending: check Ken's tile on the proxy at mc 700, 850, 1000 s",
+   "quote_anchor": "the flip always occurs at the belly of the rl10 … inside the channel between those two lines is going to be a pocket entry"
+  },
+  {
+   "id": "s31a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: The chain: harsh winter, the sharp point, the PSAR flips at the belly of the RL10; pocket vs emerging dragon",
+   "source": "mc",
+   "in": 604.0,
+   "out": 928.0,
+   "animation_brief": "a price path drawn as he speaks: consolidation, the harsh winter, the base, the RL10 sharp point, the dots flipping under at the belly, the wrist box, the stairs of Kata 2s; then the peak and belly lines, the pocket shaded, the emerging dragon above",
+   "status": "twin of s31: his audio, our picture",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s32",
+   "type": "cut",
+   "include": false,
+   "label": "Yellow, green and red zones; the breakout above the peak; when it breaks it jumps out the window",
+   "source": "mc",
+   "in": 928.0,
+   "out": 1250.0,
+   "status": "MAPPED-VERIFIED: 'the main point is that it's holding here' 930; 'climbing up the stairs' 975; 'emerging dragon' 1011; 'yellow zone' 1090; 'green zone' 1097; 'red zone … collapsing Dragon territory' 1110; 'Maximum uncertainty' 1123; 'jumps out the window' 1216; 'our favorite pattern' 1239; ends 'that first move is large' 1243–1250. | pip pending: check Ken's tile on the proxy at mc 950, 1100, 1240 s",
+   "quote_anchor": "below that line of the rl10 is the red zone and that's collapsing Dragon territory … when it breaks it jumps out the window"
+  },
+  {
+   "id": "s32a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: Yellow, green and red zones; the breakout above the peak; when it breaks it jumps out the window",
+   "source": "mc",
+   "in": 928.0,
+   "out": 1250.0,
+   "animation_brief": "the same RL10 wave with its three bands coloured as he names them (yellow between peak and belly, green above, red below), the stairs climbing on PSAR dots, the breakout that really goes, then the collapse through the supports",
+   "status": "twin of s32: his audio, our picture",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s33",
+   "type": "cut",
+   "include": false,
+   "label": "PSAR flips inside a sideways quiet channel go nowhere; the harsh winter says the symbol is in play",
+   "source": "mc",
+   "in": 1504.0,
+   "out": 1702.0,
+   "status": "MAPPED-VERIFIED: 'initial conditions of the Frog box move from a PSAR flip' 1519–1522; 'little PSAR flips like this and they never go anywhere' 1562–1567; 'sideways quiet Channel' 1572; 'the harsh winter tells you that the Bears just won' 1591–1593; 'heightened state of emotionality' 1639; 'herd start to Stampede in either direction' 1656; ends 'creates the compound critical state that we want' 1703. | pip pending: check Ken's tile on the proxy at mc 1520, 1600, 1690 s",
+   "quote_anchor": "little PSAR flips like this and they never go anywhere … you gotta wait to see the harsh winter"
+  },
+  {
+   "id": "s33a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: PSAR flips inside a sideways quiet channel go nowhere; the harsh winter says the symbol is in play",
+   "source": "mc",
+   "in": 1504.0,
+   "out": 1702.0,
+   "animation_brief": "a tight channel with little flips that fizzle, then the harsh move out of it; the bears who won and the bulls buying it on sale drawn in as he names them; the stakes gauge; the herd arrows either way",
+   "status": "twin of s33: his audio, our picture",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s34",
+   "type": "cut",
+   "include": false,
+   "label": "Collapsing dragon, case one: the PSAR is built off the RL10, flips at the sharp point; the CD triggers when PRICE violates the first dot",
+   "source": "cdd",
+   "in": 3570.0,
+   "out": 4062.0,
+   "status": "MAPPED-VERIFIED: 'what's the deal with the collapsing Dragon' 3571; 'two cases' 3585; 'P which is built off of the rl10' 3610–3615; 'the PSR will flip and it will be at the same exact price as the sharp point on the rl10' 3664–3676; 'this is the trigger for the collapsing Dragon' 3720; 'price violates that line not when the rl10 crosses it' 3738; 'rl10 is actually 2 to three bars slower' 3751; 'first P dot in that new stack gets violated' 3809–3814; 'where all of the guys who are going long are placing their stops' 3881–3887; 'This explodes' 3912; 'we cannot wait' 3944; 'r10 wrist box off the low' 3978–3981; ends 'the collapsing dragon is actually leged to' 4053–4062. He draws on a student's (Griff's) four-case email; pip False.",
+   "quote_anchor": "the collapsing Dragon occurs when the rl10 and the first P dot in that new stack gets violated … we cannot wait for the rl10"
+  },
+  {
+   "id": "s34a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: Collapsing dragon, case one: the PSAR is built off the RL10, flips at the sharp point; the CD triggers when PRICE violates the first dot",
+   "source": "cdd",
+   "in": 3570.0,
+   "out": 4062.0,
+   "animation_brief": "built up on a blank board like his: the harsh winter, the exaggerated last bar, the RL10 bending to its sharp point, the stack of dots flipping under at exactly that price, the trigger line at the first dot, price cracking it while the RL10 lags two bars, the longs' stops at the true low, the explosion",
+   "status": "twin of s34: his audio, our picture",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s35",
+   "type": "cut",
+   "include": false,
+   "label": "Collapsing dragon, case two: the failed bull; Kata 2 in the pocket; the supported fall crossing; the crucial test",
+   "source": "cdd",
+   "in": 4062.0,
+   "out": 4506.0,
+   "status": "MAPPED-VERIFIED: 'on a failed bull' 4062–4065; 'exit at the skin of the Dragon' 4104; 'Cat 2 occurs inside here … north side of the Dragon' 4127–4133; student: 'is the violation of the low sufficient … or do you need to wait for the close' 4157–4164, Ken: 'as soon as it goes through' 4168; 'success … above the previous high of the r10' 4257–4263; 'supported fall Crossing also known as Cat 2 to the downside' 4317–4320; 'the all important crucial test' 4362–4364; 'not a collapsing Dragon short until the first support level that held collapsed' 4451–4459; review 4470–4500; ends 'very strong signal to the downside' 4496–4506 (before 'the second case' resumes on the RL30).",
+   "quote_anchor": "it's not a collapsing Dragon short until the first support level that held collapsed"
+  },
+  {
+   "id": "s35a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: Collapsing dragon, case two: the failed bull; Kata 2 in the pocket; the supported fall crossing; the crucial test",
+   "source": "cdd",
+   "in": 4062.0,
+   "out": 4506.0,
+   "animation_brief": "the bull leg, the RL10 peak, the exit at the skin, the pullback that finds support and recrosses the dragon, the Kata 2 box between dragon edge and RL10 top, the stop at the support that held; then the lower high and the fall through it, the test of the original support, the second position",
+   "status": "twin of s35: his audio, our picture",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s36",
+   "type": "cut",
+   "include": false,
+   "label": "'I usually wait for the PSAR flip': the 30-minute, front-running, the 3/9 framework, five fractal frames",
+   "source": "ss3",
+   "in": 1195.0,
+   "out": 1532.0,
+   "status": "MAPPED-VERIFIED: 'Mike says I usually wait for the piece or flip on the swing trades' 1195; '12 more bars for it to unwind' 1239; 'psar's just kind of document the turning points' 1285–1288; 'waiting for the PSAR flip has been a pretty good strategy' 1343–1348 (his read, no figure); 'the three nine framework' 1416–1418; 'the PSAR flip is all you really need' 1425; 'three days … trade the PSAR flips on treasuries' 1447–1453; 'five time frames that are really fractal' 1499–1514; ends 'hold it overnight' ~1531. | pip pending: check Ken's tile on the proxy at ss3 1200, 1350, 1500 s",
+   "quote_anchor": "waiting for the PSAR flip has been a pretty good strategy … on three day bars and nine day bars the PSAR flip is all you really need"
+  },
+  {
+   "id": "s36a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: 'I usually wait for the PSAR flip': the 30-minute, front-running, the 3/9 framework, five fractal frames",
+   "source": "ss3",
+   "in": 1195.0,
+   "out": 1532.0,
+   "animation_brief": "a 30-minute day of thirteen bars with the morning flip and the bars left to unwind; the turning points the dots document; then the ladder of five frames, 3 minute to 9 day, built as he names them",
+   "status": "twin of s36: his audio, our picture",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s37",
+   "type": "cut",
+   "include": false,
+   "label": "The nine-day PSAR flip on blue chips and the S&P: 'a reliable guide', 'it takes a little time to unwind'",
+   "source": "j16",
+   "in": 366.0,
+   "out": 474.0,
+   "status": "MAPPED-VERIFIED: 'I want you to notice how powerful the nine-day PSAR flip is' 366–371; 'Microsoft … at 2 45' 389–393; 'caterpillar hasn't made that flip yet' 410–412; 'that's the s p on nine day uh that's been a reliable guide' 427–432; 'it takes a little time for it to unwind' 434–436; 'belief in math' 459; ends 'now it's looking pretty good' 473. 'you can Bank on that' 372 is his claim, glossed as his. | pip pending: check Ken's tile on the proxy at j16 370, 420, 470 s",
+   "quote_anchor": "that's the S&P on nine day, that's been a reliable guide, and now you can see it takes a little time for it to unwind"
+  },
+  {
+   "id": "s37a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: The nine-day PSAR flip on blue chips and the S&P: 'a reliable guide', 'it takes a little time to unwind'",
+   "source": "j16",
+   "in": 366.0,
+   "out": 474.0,
+   "animation_brief": "one nine-day bar series climbing out of a hole with the dots flipping under it; the names he calls land as tags; the unwinding time marked; 'belief in math' as the gloss",
+   "status": "twin of s37: his audio, our picture",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s38",
+   "type": "cut",
+   "include": false,
+   "label": "The MACD red river: inside it is noise; winter, spring, summer; the harsh winter that says it is in play",
+   "source": "j16",
+   "in": 2156.0,
+   "out": 2346.0,
+   "status": "MAPPED-VERIFIED: 'all of these trades are inside the Red River which is perfectly sideways don't trade any of those' 2156–2164; 'the smooth 10 30 moving average differential' 2208–2216; 'inside the Red River is normal there's no signals' 2216–2219; 'comes out of the Red River that's the beginning of a breakdown in the winter' 2226–2233; 'that's where it becomes spring' 2243; 'through the Red River that's when it becomes summer again' 2259; 'the SSC … first must see a harsh winter' 2268–2276; ends 'this is just normal noise' 2343–2346. A student's Intel trades are on his screen. | pip pending: check Ken's tile on the proxy at j16 2160, 2250, 2340 s",
+   "quote_anchor": "inside the Red River is normal, there's no signals happening in there … when the signal line comes out of the Red River that's the beginning of the winter"
+  },
+  {
+   "id": "s38a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: The MACD red river: inside it is noise; winter, spring, summer; the harsh winter that says it is in play",
+   "source": "j16",
+   "in": 2156.0,
+   "out": 2346.0,
+   "animation_brief": "a MACD panel drawn from nothing: the zero line, the river band, the line wandering inside it (noise), leaving it below (winter), turning (end of winter), rising (spring), back through (summer); the harsh winter far out of the river with the previous normal above",
+   "status": "twin of s38: his audio, our picture",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s39",
+   "type": "explainer",
+   "include": true,
+   "label": "Explainer: the chart from the brief (SPY daily to 2026-11-20)",
+   "voice": "ava",
+   "vo_script": "This is SPY on daily bars through November 20, 2026: the chart Griff sent with the brief. The dots are the parabolic SAR Ken builds off the ten-bar regression line. Through October the dots sat under price. At the high near 781, the regression line turned down and the dots flipped above price. In Ken's words, a flip down is bearish. Wait for the flip up to initiate. The shaded band is the dragon, drawn around the regression line, and the coloured line is the RL10 itself. In mid November price rebounded for a few days, then broke back below the point where the regression line had turned. That is the collapsing dragon: Ken's preferred short entry, taken when price violates the first dot of the new stack, not when the regression line gets there. Below, the MACD red river. The line left the river in late October and has stayed red and below zero since. Flip down, collapsing dragon, winter: three reads, one direction. None of this is a forecast; it is what these tools said on that date.",
+   "est_duration": 80,
+   "animation_brief": "schematic of @spy-psar-dragon-2026-11-20 (bitmap at intake): a daily line rising to the high, dots under then over, the band, the rebound that fails (the CD circled), a MACD panel with the river and the line below zero",
+   "status": "facts limited to what the chart shows (781.62 high, 700.96 close, flip at the high, the band, the mid-November failure, the MACD line red below zero from late October); the rules named are Ken's from s34/s35; HARSHWINTER tags on the chart sit at 6/22 and 9/21 only, so November is called 'red and below zero', not a harsh winter"
+  },
+  {
+   "id": "s40",
+   "type": "slide",
+   "include": true,
+   "label": "Chapter card: Kata patterns",
+   "slide_id": "ch4",
+   "duration": 5,
+   "layout": "chapter",
+   "text": {
+    "kicker": "MODULE 4",
+    "title": "**Kata patterns**: the turning-point read",
+    "subtitle": "A form you have drilled until you see it on any time frame: the higher low, the crossing, the chain.",
+    "body": ""
+   }
+  },
+  {
+   "id": "s41",
+   "type": "cut",
+   "include": false,
+   "label": "What a kata is; Kata 2 against the collapsing dragon (the pocket, no-lose-plus-dinner-for-two)",
+   "source": "kat",
+   "in": 81.0,
+   "out": 660.0,
+   "status": "MAPPED-VERIFIED kat 1:21-11:00: 'the key word is Kata ... a form or standard work' 1:30-1:37; front block / back fist 1:59-2:41; 'Kata 2 was our second favorite pattern, the first one being the collapsing dragon' 3:23-3:30; 'if it doesn't fail but hold support at a higher level' 4:02; 'breaks higher than the previous maximum excursion of the RL10' 4:37; emerging dragon = new money stronger than the old sellers 5:09-5:43; 'buying it inside here in the pocket' 6:42; 'no lose plus dinner for two' 8:43; the series harsh winter > SSC > Kata 2, SSC fails > CD 8:53-9:10; 'the PSAR flip is sort of the official entry' 9:22; 'managing our exit instead of chasing an entry ... that's where the name Kata 2 comes from' 10:26-10:50. Out before 'so far so good, thumbs up' 10:57.",
+   "quote_anchor": "the key word is Kata and that means a form or standard work ... if it doesn't fail but holds support at a higher level ... that's where the name Kata 2 comes from"
+  },
+  {
+   "id": "s41a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: What a kata is; Kata 2 against the collapsing dragon (the pocket, no-lose-plus-dinner-for-two)",
+   "source": "kat",
+   "in": 81.0,
+   "out": 660.0,
+   "animation_brief": "one price path built up: harsh winter down, the SSC leg, the pullback that holds at a higher low (the pocket), the RL10 peak line, the emerging-dragon break; the failing branch to the collapsing dragon in red; the kata pill (form / standard work) top-left",
+   "status": "twin of s41: his audio, our picture; the owner picks one of the pair in the cutroom",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s45",
+   "type": "cut",
+   "include": false,
+   "label": "The six swing patterns, and why they are fractal (RLCO generation two)",
+   "source": "wsp",
+   "in": 1746.0,
+   "out": 1995.0,
+   "status": "MAPPED-VERIFIED wsp 29:06-33:15: 'standard fractal patterns ... RLCO patterns, regression line crossover' 29:18-29:26; first generation 1 through 7 as a language for conditions 29:31-29:52; second generation 'the owl, the supported spring crossing, the Kata 2 continuation pattern, the collapsing dragon, the emerging dragon' 30:07-30:22; the pinches 30:32-30:48; time frames 1-minute to 2-hour, daily, weekly, 3-day, 9-day, monthly 30:58-31:21; 'important moments in trading psychology' 31:26; core, swing, day traders each with their chart 31:33-32:16; 'all have some price level at which they are likely to take action' 32:20; 'they work on every timeframe' 32:56-33:13. Out before Ken H's charts 33:13.",
+   "quote_anchor": "the owl, the supported spring crossing, the Kata 2 continuation pattern, the collapsing dragon, the emerging dragon ... fractal in nature because they represent important moments in trading psychology"
+  },
+  {
+   "id": "s45a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: The six swing patterns, and why they are fractal (RLCO generation two)",
+   "source": "wsp",
+   "in": 1746.0,
+   "out": 1995.0,
+   "animation_brief": "a card of the two RLCO generations filling in as he names them; a time-frame ladder from 1-minute to monthly lighting up; three traders (core, swing, day) each at their own chart with a price level that fires",
+   "status": "twin of s45: his audio, our picture; the owner picks one of the pair in the cutroom",
+   "pip": false,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s43",
+   "type": "cut",
+   "include": false,
+   "label": "The supported fall crossing, aka Kata 2: the higher low is the definition; seen one, plan two, hope three",
+   "source": "kat",
+   "in": 2857.0,
+   "out": 3220.0,
+   "status": "MAPPED-VERIFIED kat 47:37-53:40: 'least challenging to the beliefs of most new traders is the supported fall crossing aka the Kata 2' 47:40-47:53; 'rolled over enough to turn it into the fall, but then it found a support level at a higher low, that is the very definition of the Kata 2' 48:25-48:36; 'draw that line across from the peak of the RL10 ... entering as soon as it gets across the dragon' 48:38-48:54; 'you've seen one, you plan for two, and you hope for three' 49:30-49:35; 'that's an engineering problem' 49:53; 'away from the shenanigans of the open but you still have five hours' 50:43; 'three or four or five of those on the way up' 51:10; swing: 'strong trend and then a measured pullback to some measured support level' 51:45-51:56; 'two to one on a swing trade, done in one' 52:20; 'highest frequency trade and the easiest one to calibrate' 53:20. Out at 'least challenging in terms of beliefs' 53:38.",
+   "quote_anchor": "it found a support level at a higher low, that is the very definition of the Kata 2 ... you've seen one, you plan for two, and you hope for three"
+  },
+  {
+   "id": "s43a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: The supported fall crossing, aka Kata 2: the higher low is the definition; seen one, plan two, hope three",
+   "source": "kat",
+   "in": 2857.0,
+   "out": 3220.0,
+   "animation_brief": "the fall and the higher low drawn first, the RL10-peak line across, the crossing marked as the entry; then the three legs back to fair value ladder in; a swing-scale twin of the same shape at the right (strong trend, measured pullback, 2:1)",
+   "status": "twin of s43: his audio, our picture; the owner picks one of the pair in the cutroom",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s46",
+   "type": "cut",
+   "include": false,
+   "label": "Kata 2 chains to the upside: re-entry or a second position",
+   "source": "mc",
+   "in": 733.0,
+   "out": 840.0,
+   "status": "MAPPED-VERIFIED mc 12:13-14:00: SSC entry and the collapsing-dragon signal 12:14-12:17; 'a pullback, and then a series of Kata 2s that leads you from SSC to Kata 2 to Kata 2' 12:35-12:45; 'a higher low in the RL10' 12:52-12:59; 'either become re-entries ... or it could also be a second position' 13:03-13:22; 'confirmation of the trend and starting of the next leg' 13:30; the two lines: the RL10 peak and the base where it reversed 13:35-13:46. Out as he draws the shape 13:59. Speaker: Ken reading a student's plan ('what he's looking for').",
+   "quote_anchor": "a series of Kata 2s that leads you from SSC to Kata 2 to Kata 2 ... either a re-entry or a second position"
+  },
+  {
+   "id": "s46a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: Kata 2 chains to the upside: re-entry or a second position",
+   "source": "mc",
+   "in": 733.0,
+   "out": 840.0,
+   "animation_brief": "one rising path with three Kata 2 pockets; at each, the peak line and the base line drawn, the higher low ringed; the first pocket tagged re-entry, the second tagged second position",
+   "status": "twin of s46: his audio, our picture; the owner picks one of the pair in the cutroom",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s47",
+   "type": "cut",
+   "include": false,
+   "label": "The short chain: when support collapses, fear takes over (collapsing dragon to Kata 2 short)",
+   "source": "mc",
+   "in": 1221.0,
+   "out": 1410.0,
+   "status": "MAPPED-VERIFIED mc 20:21-23:30: 'when these support levels collapse, all of the optimism collapses and then fear takes over' 20:21-20:34; 'that first move is large' 20:43; 'SSCs that work lead to Kata 2 chains' 20:50; 'SSCs that fail leading to collapsing dragons and Kata 2 short' 20:56-21:04; 'the belly of the RL10, he draws that line across' 21:58; 'he only wants to give back a little piece so that he can collect a nice large R multiple' 22:17-22:25; 'the fear that's engendered in here, that downward trend is more powerful than the greed that works on the way up' 22:52-23:02; 'the pattern is in play, that symbol is in play' 23:23. Out before the next branch 23:30. Speaker: Ken on a student's chain.",
+   "quote_anchor": "the fear that's engendered in that downward trend is more powerful than the greed that works on the way up"
+  },
+  {
+   "id": "s47a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: The short chain: when support collapses, fear takes over (collapsing dragon to Kata 2 short)",
+   "source": "mc",
+   "in": 1221.0,
+   "out": 1410.0,
+   "animation_brief": "the mirror of s46: a path that peaks, the SSC that fails, the first big leg down, then short recoveries and collapses with the RL10-belly line at each; a fear versus greed balance tipping",
+   "status": "twin of s47: his audio, our picture; the owner picks one of the pair in the cutroom",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s42",
+   "type": "cut",
+   "include": false,
+   "label": "Reading the move: wait for the unambiguous harsh winter, then one of two things happens",
+   "source": "kat",
+   "in": 1788.0,
+   "out": 1990.0,
+   "status": "MAPPED-VERIFIED kat 29:48-33:10: 'don't try the bracket order around the open ... the noisiest part of the day' 29:52-30:00; 'an unambiguous harsh winter, which I define as something like 1.5 frog boxes' 30:14-30:20; 'the MACD histogram ... clearly in the winter and outside of the Red River' 30:23-30:28; 'one of two things are going to happen' 30:42; SSC works and the Kata 2s work, or fails early into the collapsing dragon 30:55-31:08; 'is it getting larger or smaller, is this decaying or is this expanding' 32:06-32:10; 'a statistically based framework of price ladders to tell you when the Kata 2s still are justified' 32:32-32:37; yesterday's high and low, the 2R battle drill 32:40-32:55. Out at 'new buying pressure taking it' 33:09.",
+   "quote_anchor": "wait for that thing to have broken out to an unambiguous harsh winter ... one of two things are going to happen"
+  },
+  {
+   "id": "s42a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: Reading the move: wait for the unambiguous harsh winter, then one of two things happens",
+   "source": "kat",
+   "in": 1788.0,
+   "out": 1990.0,
+   "animation_brief": "a day's path from the open: the noisy open crossed out, the harsh winter of 1.5 frog boxes with the MACD winter below, then the fork: the SSC that works into a stair of Kata 2s, or the early fail into the collapsing dragon; yesterday's high and low as the last rungs",
+   "status": "twin of s42: his audio, our picture; the owner picks one of the pair in the cutroom",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s48",
+   "type": "cut",
+   "include": false,
+   "label": "Tesla on the daily: a series of higher lows became Kata 2s, until the dragons collapsed",
+   "source": "wsp",
+   "in": 4731.0,
+   "out": 4885.0,
+   "status": "MAPPED-VERIFIED wsp 1:18:51-1:21:25: 'a weekly consolidation level between 260 and 220' 1:19:03-1:19:07; 'when that resistance broke, it did this, and then there was a series of higher lows, so these all became Kata 2s to the upside until the dragons started collapsing' 1:19:38-1:19:52; 'tried it twice and then failed big time, all the way back down to 260' 1:20:05-1:20:10; 'it will come down to 230, which is the midpoint' 1:20:13-1:20:19; 'about a $35 move ... a $10 risk and still have three to one ... a $5 risk and have seven to one' 1:20:32-1:20:49; 'the upside trade has to get through 274' 1:20:57; 280, 290 1:21:22. Out before 'what direction is the S&P going' 1:21:25. His levels as spoken, 2022-10-01.",
+   "quote_anchor": "there was a series of higher lows, so these all became Kata 2s to the upside until the dragons started collapsing"
+  },
+  {
+   "id": "s48a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: Tesla on the daily: a series of higher lows became Kata 2s, until the dragons collapsed",
+   "source": "wsp",
+   "in": 4731.0,
+   "out": 4885.0,
+   "animation_brief": "a daily chart drawn from his words: the 220-260 block, the breakout, the stair of higher lows each ringed as a Kata 2, the collapse back to 260, the 230 midpoint target and the 274 lid as level tags; the 35-dollar move against a 10 and a 5 risk as two bars",
+   "status": "twin of s48: his audio, our picture; the owner picks one of the pair in the cutroom",
+   "pip": false,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s49",
+   "type": "cut",
+   "include": false,
+   "label": "DIA: the intraday turning point held the PSAR flip, a Kata 2 followed (Ken's trade of the week)",
+   "source": "ss3",
+   "in": 339.0,
+   "out": 432.0,
+   "status": "MAPPED-VERIFIED ss3 5:39-7:12: 'the speculative one from last week ... the most oversold, had the best reward to risk ratio' 5:45-5:54; 'an intraday turning point on it, it held the PSAR flip, that's a very narrow risk box, we got the intraday Kata 2' 5:54-6:03; 'two very strong days and then today it peaked and rolled over ... out at the PSAR flip' 6:07-6:18; 'a triple bottom and near a 10-day low and 30-day low' 6:36-6:41; 'if it fails we're happy to be short' 6:44; 'it got 80 percent of that move' 6:56-6:59 (his account of his own trade, glossed as such); 'about the ideal template for that channeling or overreaction style' 7:04-7:10. Out 7:12.",
+   "quote_anchor": "it held the PSAR flip, that's a very narrow risk box, we got the intraday Kata 2"
+  },
+  {
+   "id": "s49a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: DIA: the intraday turning point held the PSAR flip, a Kata 2 followed (Ken's trade of the week)",
+   "source": "ss3",
+   "in": 339.0,
+   "out": 432.0,
+   "animation_brief": "a daily path into a triple bottom at the 10- and 30-day low; the PSAR dots flip under the bar and hold; the narrow risk box; two strong days up to near the 10-day high; the exit dot at the flip; the fail branch in red as 'happy to be short'",
+   "status": "twin of s49: his audio, our picture; the owner picks one of the pair in the cutroom",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s44",
+   "type": "cut",
+   "include": false,
+   "label": "The Kata 2 flashcard, and the progression: Kata, Kaizen, Kaikaku",
+   "source": "kat",
+   "in": 3297.0,
+   "out": 3445.0,
+   "status": "MAPPED-VERIFIED kat 54:57-57:25: 'some Kata 2 flash cards from the olden days' 55:08-55:14; 'the harsh winter, the first turning, the successful higher low, the crossing of the dragon, then you still have a long way to go back to fair value, that's the Kata 2' 55:17-55:32; Griff Cooper's disciplined approach on EWZ and DIA, 'turned him around in a significant way, that's statistically significant' 55:44-56:10 (Ken's claim about a student, in his voice; not computed here); 'Kata 2 is we are having a standard set of rules and we are just going to follow those rules' 56:20-56:33; 'Kaizen is when I'm now ready to start going beyond the rule set and adding some careful judicious micro improvements' 56:38-56:49; 'Kaikaku is when I'm redesigning new systems' 57:12-57:18. Out at 'successful performance of micro improvements' 57:25.",
+   "quote_anchor": "the harsh winter, the first turning, the successful higher low, the crossing of the dragon ... Kata, Kaizen, Kaikaku"
+  },
+  {
+   "id": "s44a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: The Kata 2 flashcard, and the progression: Kata, Kaizen, Kaikaku",
+   "source": "kat",
+   "in": 3297.0,
+   "out": 3445.0,
+   "animation_brief": "the flashcard redrawn: four labelled moments on one path with the long way back to fair value; then a three-step stair, Kata (follow the rules), Kaizen (micro improvements: SSC, then the owl), Kaikaku (new systems)",
+   "status": "twin of s44: his audio, our picture; the owner picks one of the pair in the cutroom",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s50",
+   "type": "slide",
+   "include": true,
+   "label": "Chapter card: The Sunday routine",
+   "slide_id": "ch5",
+   "duration": 5,
+   "layout": "chapter",
+   "text": {
+    "kicker": "MODULE 5",
+    "title": "**The Sunday routine**",
+    "subtitle": "Market type, exposure, direction, pattern, then the size of the bet.",
+    "body": ""
+   }
+  },
+  {
+   "id": "s51",
+   "type": "cut",
+   "include": false,
+   "label": "The sizing box is not the stop: a standard size from dollars at risk over a frog box",
+   "source": "c6i",
+   "in": 1730.0,
+   "out": 2170.0,
+   "status": "MAPPED-VERIFIED: 'here's where guys get into trouble with the way Tharp used to describe how to compute your position size' 28:50 (1730); '$300 of risk per trade ... I could get a thousand shares, but the probability that it fails fast is great' 30:48-31:05; 'use a full frog box as the limit of your position sizing' 33:38; '300 bucks divided by a $1 frog box, each one of these entries is always the same size position' 35:44; out on 'this is the one that is most likely to fail' 36:00-36:10 (2170). Intraday example (frog box, yesterday's low); the principle is the module's: the execution stop and the sizing box are two different boxes. pip: Ken's camera is a thumbnail about 80 px tall at 720p (proxy frames at 2000, 6000, 7980 s: tile ~50x40 at 640x360) -> no tile; the owner's still (_shared/ken-still.jpg) can stand in as disciplined-operator-v2 did for apk.",
+   "quote_anchor": "use a full frog box as the limit of your position sizing ... each one of these entries is always the same size position"
+  },
+  {
+   "id": "s51a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: The sizing box is not the stop: a standard size from dollars at risk over a frog box",
+   "source": "c6i",
+   "in": 1730.0,
+   "out": 2170.0,
+   "animation_brief": "a price ladder off the low: three frog boxes of room, entries at 0.3 / 0.5 / 1.0 off the bottom, the stop under yesterday's low, and a share-count readout that stays at 300 whichever entry he takes",
+   "status": "twin of s51: his audio, our picture; no tile (thumbnail source)",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s52",
+   "type": "cut",
+   "include": false,
+   "label": "One percent of capital, reset weekly: let the system scale itself on its results",
+   "source": "ssf",
+   "in": 1315.0,
+   "out": 1783.0,
+   "status": "MAPPED-VERIFIED: 'let the system scale itself on its results' 21:55 (1315); 'I would reset that weekly and 1% is the maximum size' 22:34; 'go back 300 trades ... the regular frog box is 30 days, the standard deviation of 30 daily ranges' 24:32-24:48; 'I've got my largest position size after my period of greatest return' 26:10; 'average plus one standard deviation' 26:42; 'here's 5,000 bucks, when you can double that give me my five back' 27:48; 'it causes you to look at the numbers carefully each weekend' 29:10; out 29:43 (1783) after 'built-in discipline that I would recommend' (29:27-29:43), before the flash-card aside. A coaching call (Eric); Ken's voice carries the rules. pip: proxy not downloaded yet; check frames at 1400, 1600, 1750 s.",
+   "quote_anchor": "reset weekly, 1% of capital ... my largest position size after my period of greatest return"
+  },
+  {
+   "id": "s52a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: One percent of capital, reset weekly: let the system scale itself on its results",
+   "source": "ssf",
+   "in": 1315.0,
+   "out": 1783.0,
+   "animation_brief": "a strip of weeks with the 1% dial reset at each; a 300-day volatility bar with a quiet 30-day stretch where the box shrinks and the size grows, then the one-day surprise; the $5k ladder; the weekend look at the numbers",
+   "status": "twin of s52: his audio, our picture; pip pending the grab",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s53",
+   "type": "cut",
+   "include": false,
+   "label": "Dollars at risk as a function of market classification: bullish normal, the expectancy curve, winter to spring",
+   "source": "c6i",
+   "in": 5872.0,
+   "out": 6205.0,
+   "status": "MAPPED-VERIFIED: 'put the execution stop where the hypothesis of the trade is invalidated but you use your full frog box for your standard position size' 1:37:52 (5872); 'track your R multiple expectancy independent of position size' 1:38:44; 'varying the dollars at risk per trade as a function of market classification ... right now we are in bullish normal conditions, you could use that to guide your size' 1:39:00-1:39:17; 'the shape of your expectancy curve is the market classification for that system' 1:39:54; 'paper trade all your systems all the time, and when the expectancy curve goes from winter to spring you start getting bigger' 1:41:03; student's three buckets 1:41:38-1:42:09 (gloss: 'A student's answer.'); 'who are you going to believe, me or your lyin' eyes' 1:43:14; out 1:43:25 (6205). pip: thumbnail source (see s51) -> no tile.",
+   "quote_anchor": "right now we are in bullish normal conditions. You could use that to guide your size"
+  },
+  {
+   "id": "s53a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: Dollars at risk as a function of market classification: bullish normal, the expectancy curve, winter to spring",
+   "source": "c6i",
+   "in": 5872.0,
+   "out": 6205.0,
+   "animation_brief": "the 3x3 grid (direction x volatility) with bullish normal lit; an expectancy curve across winter, spring, summer with the size bar growing in the spring; the student's three buckets; the sideways-volatile cell against a 0.4 expectancy",
+   "status": "twin of s53: his audio, our picture; the three buckets are the student's and the gloss says so",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s54",
+   "type": "cut",
+   "include": false,
+   "label": "The valve: evidence, not feeling, decides an increase or decrease in risk",
+   "source": "rgs",
+   "in": 2181.0,
+   "out": 2305.0,
+   "status": "MAPPED-VERIFIED: 'managing a valve to increase or decrease the flow of water into a container without spilling' 36:21 (2181); 'what is the evidence that I use to justify a decision to increase or decrease risk' 37:10; 'the three and the four period moving averages of expectancy to shape the tactical position size or risk per trade' 37:27; 'they don't care how you feel, they care about what you do' 38:00; out 38:25 (2305) before the FX aside. Answer to a student (Micah) raising size after a drawdown. pip: proxy not downloaded yet; check frames at 2200, 2280 s.",
+   "quote_anchor": "what is the evidence that I use to justify a decision to increase or decrease risk"
+  },
+  {
+   "id": "s54a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: The valve: evidence, not feeling, decides an increase or decrease in risk",
+   "source": "rgs",
+   "in": 2181.0,
+   "out": 2305.0,
+   "animation_brief": "a valve on a pipe into a container; an expectancy series with its 3- and 4-period moving averages; the valve opens and closes with the averages, never with the face",
+   "status": "twin of s54: his audio, our picture; pip pending the grab",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s55",
+   "type": "cut",
+   "include": false,
+   "label": "The report is a salad bar: take page 32, and size from the slope of your own R multiple",
+   "source": "c6i",
+   "in": 7987.0,
+   "out": 8137.0,
+   "status": "MAPPED-VERIFIED: 'that whole report, although it's 36 pages, is a salad bar that supports all the different clients' 2:13:07 (7987); 'what you need is page 32' 2:13:24; Hammad (cohort three) 'calculating performance metrics like the R multiple and the equity curve' 2:14:31; 'the slope of the RL10 of his R multiple to develop a position sizing strategy that was tuned to his system's performance' 2:15:03-2:15:20; out 2:15:37 (8137) before 'spend this next week or two'. pip: thumbnail source (see s51) -> no tile.",
+   "quote_anchor": "that whole report, although it's 36 pages, is a salad bar"
+  },
+  {
+   "id": "s55a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: The report is a salad bar: take page 32, and size from the slope of your own R multiple",
+   "source": "c6i",
+   "in": 7987.0,
+   "out": 8137.0,
+   "animation_brief": "36 pages fanned, one pulled (page 32); an R-multiple series with its RL10 and the slope arrow feeding a size bar",
+   "status": "twin of s55: his audio, our picture; no tile (thumbnail source)",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s56",
+   "type": "cut",
+   "include": false,
+   "label": "The Book of Five Frames: the deep library you can question",
+   "source": "rgs",
+   "in": 1238.0,
+   "out": 1292.0,
+   "status": "MAPPED-VERIFIED: 'the book of five frames is a notebook that we have in Google's NotebookLM' 20:38 (1238); 'about 300 million curated words ... all the course lectures, all the coaching sessions over the last probably five years' 20:56; 'research papers, books, notes, everything associated with the way we trade ... a deep library' 21:13; out 21:32 (1292) on 'have you tried it'. The five frames themselves are not enumerated here or in any window read for this module (flag). pip: proxy not downloaded yet; check a frame at 1260 s.",
+   "quote_anchor": "the book of five frames is a notebook ... about 300 million curated words"
+  },
+  {
+   "id": "s56a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: The Book of Five Frames: the deep library you can question",
+   "source": "rgs",
+   "in": 1238.0,
+   "out": 1292.0,
+   "animation_brief": "a book with five panes; lectures, coaching, papers, books, notes flow into it; a question line at the bottom",
+   "status": "twin of s56: his audio, our picture; pip pending the grab",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s57",
+   "type": "cut",
+   "include": false,
+   "label": "A toolmaker whose tool is shaping the tool: the words tune each other, so triangulate",
+   "source": "rgs",
+   "in": 1778.0,
+   "out": 1858.0,
+   "status": "MAPPED-VERIFIED: 'so powerful about the five frames, the LLM, is the ability to have extended conversations with a wise collection of insights that never gets tired of explaining' 1:49:38 (1778); 'your biological model and its digital model ... the words are tuning each other' 1:49:54-1:50:11; 'we are a toolmaker whose tool is shaping the tool' 1:50:26; 'triangulate, use multiple models and talk to different people so that you don't get captured' 1:50:43-1:50:58; out 1:50:58 (1858). pip: proxy not downloaded yet; check a frame at 1800 s.",
+   "quote_anchor": "we are a toolmaker whose tool is shaping the tool"
+  },
+  {
+   "id": "s57a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: A toolmaker whose tool is shaping the tool: the words tune each other, so triangulate",
+   "source": "rgs",
+   "in": 1778.0,
+   "out": 1858.0,
+   "animation_brief": "two circles, the biological model and the digital one, words crossing both ways; a third and fourth model and a person join as the triangle",
+   "status": "twin of s57: his audio, our picture; pip pending the grab",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s58",
+   "type": "explainer",
+   "include": true,
+   "label": "Explainer: the Sunday page, five lines in order",
+   "voice": "ava",
+   "vo_script": "Sunday night, one page, five lines, in this order. One. What is the market type? In Ken's words: right now we are in bullish normal conditions; you could use that to guide your size. Two. What is the theoretical exposure? The last line of the ETF2 table: ten indexes, ten percent each, counted above their four-month moving average. Three. Which way is the daily PSAR on SPY pointing? A flip down says wait; a flip up says initiate. Four. Which kata pattern is in play on the names you are watching? Five. What is the standard position size this week? One percent of capital, reset weekly, divided by the sizing box, and never larger because the stop is tight. Under all five, the line Ken puts under every size decision: what is the evidence that I use to justify a decision to increase or decrease risk?",
+   "est_duration": 82,
+   "animation_brief": "explainer (Ava, the worksheet): a page with five rows filling in order, a small mark per row (the 3x3 grid, the exposure gauge, PSAR dots, a pattern, the size box), then his question under the page | scene anim-s58.html (twin=False)",
+   "status": "composed from the module's windows: row 1 c6i 1:39:17, row 5 ssf 22:34 + c6i 1:37:52, the closing line rgs 37:10. HONESTY FLAG: row 2's words (ten indexes, 10% each, four-month moving average) are Ken's on wr2 49:00-50:38 and rgs 1:55:19, Module 2's windows, not this module's; row 3 (flip down = wait, flip up = initiate) is Griff's annotation on the SPY chart, Module 3's; row 4 is the kata question, Module 4's. Ava states them as the routine, not as quotes."
+  },
+  {
+   "id": "s60",
+   "type": "slide",
+   "include": true,
+   "label": "Chapter card: this week's read",
+   "slide_id": "ch6",
+   "duration": 4,
+   "layout": "chapter",
+   "text": {
+    "kicker": "Module 6",
+    "title": "This week's read",
+    "subtitle": "",
+    "body": "The order taught, on the week that is on the screen."
+   }
+  },
+  {
+   "id": "s61",
+   "type": "explainer",
+   "include": true,
+   "label": "EXPLAINER: the 2026-11-20 read, five rows (Ava)",
+   "voice": "ava",
+   "vo_script": "Here is the week of November 20th, 2026, read in the order you have just learned. Market type. The weekend report of November 14th prints its label as Bullish Normal, and the global line reads EFA below SPY. Exposure. In the regional summary, nine of the ten regions read Cash; IEV, Europe 350, is the only Buy. Ten percent per Buy: the theoretical exposure moves from zero to ten percent. Direction. On the SPY daily, the parabolic SAR flipped to the downside after the high at 781.62. The RL10 line has been red since, the MACD red river sits below zero, and Friday closed at 700.96, down two percent on the day. Pattern. The dragon band is collapsing; the chart's own annotation reads, collapsing dragon, alert. Size. The course's rule for this picture is the one written on the chart: flip down is bearish, wait for the flip up to initiate. With exposure at ten percent, the brake and the direction read agree. That is the whole routine. Five rows, one Sunday, and the discipline to do them in order.",
+   "est_duration": 92,
+   "animation_brief": "the five-row worksheet filling in: market type (label as printed), exposure gauge 0 -> 10%, a schematic SPY daily with PSAR dots flipping above price at the high and a band narrowing, the alert pill, the rule line",
+   "status": "every number read off @etf2-regional-2026-11-14 and @spy-psar-dragon-2026-11-20; the 'Bullish Normal' label is the report's own print on 11-14, six days before the chart; no forecast"
+  },
+  {
+   "id": "s62",
+   "type": "slide",
+   "include": true,
+   "label": "End card",
+   "slide_id": "end",
+   "duration": 10,
+   "layout": "end",
+   "text": {
+    "kicker": "",
+    "title": "Three tools. One order. Every Sunday.",
+    "subtitle": "owlgrouptrading.com",
+    "body": "Market type named. Exposure counted. Direction read. Turn recognised. Size decided."
+   }
+  }
+ ]
+}

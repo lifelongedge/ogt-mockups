@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>s51a · the sizing box is not the stop</title>
+<style>
+  :root { --bg:#030507; --fg:#E1EEF5; --muted:#8fa3ad; --border:rgba(56,225,255,0.14); --accent:#F2D06B;
+          --ok:#4ade80; --dn:#f87171; --card:#0a1016; --blue:#7baad4; }
+  html, body { margin:0; background:var(--bg); overflow:hidden; }
+  #stage { position:relative; width:1280px; height:720px; background:var(--bg); color:var(--fg);
+           font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; overflow:hidden; }
+  #cap { position:absolute; left:60px; right:60px; top:30px; font-size:32px; font-weight:600; letter-spacing:-.01em; line-height:1.15; }
+  #cap em { font-style:normal; color:var(--accent); }
+  #sub { position:absolute; left:60px; width:1160px; top:648px; font-size:20px; color:var(--muted); line-height:1.4; }
+  #scene { position:absolute; left:60px; top:112px; width:1160px; height:518px; border:1px solid var(--border);
+           border-radius:10px; background:var(--card); overflow:hidden; }
+  #svg { position:absolute; inset:0; }
+  #fade { position:absolute; inset:0; background:var(--bg); pointer-events:none; opacity:0; }
+  /* the picture-in-picture corner: build_v2 composites Ken's camera tile here (PIP_W/X/Y); the cutroom shows this placeholder */
+  #pip { position:absolute; left:950px; top:22px; width:300px; height:169px; border:1px dashed rgba(56,225,255,0.35); border-radius:4px;
+         display:none; color:var(--muted); font-size:13px; text-align:center; line-height:169px; }
+  .pip #pip { display:block; } .pip #cap { right:360px; font-size:29px; }
+  text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; fill:#E1EEF5; }
+  .mono { font-family:ui-monospace,Menlo,Consolas,monospace; }
+  #third { display:none; }
+</style>
+</head>
+<body>
+<div id="stage" class="pip">
+  <div id="cap"></div>
+  <div id="pip">Ken on camera, composited at render</div>
+  <div id="scene"><svg id="svg" width="1160" height="530" viewBox="0 0 1160 530"></svg></div>
+  <div id="third"></div>
+  <div id="sub"></div>
+  <div id="fade"></div>
+</div>
+<script>
+const BUILD = 's51a-1';
+console.log('[s51a] build', BUILD);
+// Overdub twin of s51: Ken's audio c6i 1730.0→2170.0; t is seconds after the in-point.
+// Beat times read from the VTT cues on 2026-11-21 (tools/cutroom/weekend-edge-v2/transcript-c6i.json).
+window.ANIM_DURATION = 440.0;
+const ACC='#F2D06B', FG='#E1EEF5', MUT='#8fa3ad', OK='#4ade80', DN='#f87171', BLUE='#7baad4', BRD='rgba(56,225,255,.22)', CARD='#0a1016', TXS=1, WRAP=['',''];
+const W=1160, H=530;
+const $ = id => document.getElementById(id);
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const ease=u=>{u=clamp(u,0,1);return u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;};
+const lerp=(a,b,u)=>a+(b-a)*u;
+const pr=(t,t0,d)=>ease((t-t0)/(d||0.6));          // eased progress 0..1 from t0 over d seconds
+const on=(t,t0)=>t>=t0;
+const op=(t,t0,d)=>clamp((t-t0)/(d||0.5),0,1);      // linear opacity ramp
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const txt=(x,y,s,o={})=>`<text x="${x}" y="${y}" font-size="${(o.sz||20)*TXS}" fill="${o.c||FG}" opacity="${o.o==null?1:o.o}" text-anchor="${o.a||'start'}" font-weight="${o.w||400}" class="${o.cls||''}" ${o.extra||''}>${esc(s)}</text>`;
+const rect=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.r==null?6:o.r}" fill="${o.f||'none'}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}" ${o.extra||''}/>`;
+const circ=(x,y,r,o={})=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${o.f||FG}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}"/>`;
+const line=(x1,y1,x2,y2,o={})=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${o.s||MUT}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" ${o.dash?`stroke-dasharray="${o.dash}"`:''} stroke-linecap="round"/>`;
+const path=(d,o={})=>`<path d="${d}" fill="${o.f||'none'}" stroke="${o.s||FG}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" stroke-linecap="round" stroke-linejoin="round" ${o.dash?`stroke-dasharray="${o.dash}"`:''}/>`;
+const arrow=(x1,y1,x2,y2,o={})=>{const a=Math.atan2(y2-y1,x2-x1),h=10;return line(x1,y1,x2,y2,o)+path(`M${x2} ${y2} L${x2-h*Math.cos(a-0.5)} ${y2-h*Math.sin(a-0.5)} M${x2} ${y2} L${x2-h*Math.cos(a+0.5)} ${y2-h*Math.sin(a+0.5)}`,{s:o.s||MUT,sw:o.sw||2,o:o.o});};
+// a labelled box that grows in from t0
+const box=(t,t0,x,y,w,h,label,o={})=>{const u=pr(t,t0,0.5);if(u<=0)return '';const ww=w*u,hh=h;return rect(x+(w-ww)/2,y,ww,hh,{s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',sw:o.sw||1.5,o:u})+(u>.6?txt(x+w/2,y+h/2+(o.sz||20)/3,label,{a:'middle',sz:o.sz||20,c:o.c||FG,o:op(t,t0+.3,.3),w:o.w||500}):'');};
+// deterministic pseudo-random
+function rng(seed){let s=seed*9301+49297;return()=>{s=(s*9301+49297)%233280;return s/233280;};}
+// a herd of dots in a region; drift is a slow deterministic wander
+function herd(n,seed,x,y,w,h){const r=rng(seed);const pts=[];for(let i=0;i<n;i++)pts.push({x:x+r()*w,y:y+r()*h,p:r()*6.28,q:r()*6.28});return pts;}
+const wander=(p,t,amp)=>[p.x+Math.sin(t*0.9+p.p)*amp,p.y+Math.cos(t*0.7+p.q)*amp];
+// typewriter: the first k chars of s by time
+const type=(s,t,t0,cps)=>s.slice(0,Math.max(0,Math.floor((t-t0)*(cps||28))));
+// a list that reveals one row per step seconds from t0
+function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
+
+const BEATS = [[0.0, "here's where guys get into trouble with the way <em>Tharp</em> described how to compute your position size", ""], [19.0, "if that's the price that tells you to get out of the trade, then that's going to be your <em>one R</em>", ""], [35.0, "how many units of gain I get based on how much <em>risk I was willing to take</em>", "He does not disagree with that part."], [52.0, "I can fit <em>two to three frog boxes</em> into a range stat", ""], [69.0, "as long as my decision box is less than a frog box, I'm going to easily have an <em>asymmetrical</em> reward to risk", ""], [101.0, "for position sizing, use a <em>wide standard frog box</em>: that's the amount of risk I'm protecting against", ""], [118.0, "maybe the doji was 30 cents and the frog box was <em>$1</em>, and I'm going to use <em>$300 of risk</em> per trade", ""], [135.0, "I could get <em>a thousand shares</em>, but then the probability that it fails fast is great", ""], [153.0, "if I just use a frog box normal, I would <em>still get out</em> where the pattern told me I should", ""], [238.0, "if it moves <em>half a frog box</em> off the low, I'm ready to get in", ""], [255.0, "how far up this <em>stack of confidence</em> I want to wait before I actually get in", ""], [272.0, "the price that gets me out is always going to be a violation of <em>yesterday's low</em>", ""], [288.0, "use a <em>full frog box as the limit</em> of your position sizing", "Try the smaller boxes without supercharging the size."], [304.0, "so you take <em>huge losses fast</em>. You don't want that", ""], [363.0, "my loss is only a <em>.3</em>, and if this was a 3.0 frog box up, my win could be <em>2.7</em>", ""], [396.0, "if I waited a full frog box before I get in, I'm getting <em>2.0</em>", ""], [414.0, "300 bucks divided by a $1 frog box: each one of these entries is always the <em>same size position</em>", ""], [430.0, "this is the one that is <em>most likely to fail</em>", ""]];
+
+const m5_pill=(x,y,s,o={})=>{const w=(o.w||s.length*10+22);return rect(x-w/2,y-15,w,30,{r:15,s:o.s||BRD,f:o.f||'rgba(255,255,255,.03)',o:o.o==null?1:o.o})+txt(x,y+6,s,{a:'middle',sz:o.sz||15,c:o.c||FG,o:o.o==null?1:o.o,w:o.wt||500});};
+const m5_card=(x,y,w,h,o={})=>rect(x,y,w,h,{r:10,s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',o:o.o==null?1:o.o});
+const m5_lab=(t,t0,x,y,s,o={})=>{const a=op(t,t0,o.d||.5);return a<=0?'':txt(x,y,s,{...o,o:a*(o.o==null?1:o.o)});};
+// the 3x3 market-type grid: rows volatile / normal / quiet, columns bear / sideways / bull; lit = [col,row]
+function m5_grid(x,y,cell,o={}){const a=o.o==null?1:o.o;let s='';const cols=['bear','sideways','bull'],rows=['volatile','normal','quiet'];
+  for(let r=0;r<3;r++)for(let c=0;c<3;c++){const lit=o.lit&&o.lit[0]==c&&o.lit[1]==r;s+=rect(x+c*cell,y+r*cell,cell-4,cell-4,{r:4,f:lit?'rgba(242,208,107,.25)':'rgba(255,255,255,.02)',s:lit?ACC:BRD,sw:lit?2:1,o:a});}
+  cols.forEach((c,i)=>s+=txt(x+i*cell+cell/2-2,y+3*cell+14,c,{a:'middle',sz:12,c:MUT,o:a}));
+  rows.forEach((r,i)=>s+=txt(x-8,y+i*cell+cell/2+4,r,{a:'end',sz:12,c:MUT,o:a}));
+  return s;}
+// a bar that fills to u (0..1) from the left
+const m5_bar=(x,y,w,h,u,o={})=>rect(x,y,w,h,{r:4,s:BRD,f:'none',o:o.o==null?1:o.o})+rect(x,y,Math.max(0,w*clamp(u,0,1)),h,{r:4,f:o.f||'rgba(242,208,107,.35)',s:'none',o:o.o==null?1:o.o});
+// a small person
+const m5_person=(x,y,o={})=>circ(x,y-14,8,{f:'none',s:o.c||FG,sw:2,o:o.o==null?1:o.o})+path(`M${x-14} ${y+20} C${x-14} ${y} ${x+14} ${y} ${x+14} ${y+20}`,{s:o.c||FG,sw:2,o:o.o==null?1:o.o});
+
+function draw(t){
+  let s='';
+  // the ladder: the low of the day at the bottom, three frog boxes of room above it; x=200..420, box = 90 px
+  const lx=200, ly=430, bx=85;
+  s += line(lx-40,ly,lx+260,ly,{s:FG,sw:2,o:op(t,0,.5)}); s += txt(lx-44,ly+5,'low',{a:'end',sz:13,c:MUT,o:op(t,0,.5)});
+  if (t>=52){ const a=op(t,52,.8); for(let i=0;i<3;i++){ s += rect(lx,ly-(i+1)*bx,220,bx-2,{r:3,f:'rgba(255,255,255,.02)',s:BRD,sw:1,o:a}); s += txt(lx+228,ly-(i+1)*bx+bx/2+4,(i+1)+' frog box'+(i?'es':''),{sz:12,c:MUT,o:a}); } }
+  // Tharp's rule: the stop is 1R
+  if (t>=19){ const a=op(t,19,.5); s += m5_card(560,70,300,70,{o:a}); s += txt(580,98,'the price that gets you out',{sz:15,c:FG,o:a}); s += txt(580,124,'= one R  (Tharp)',{sz:15,c:ACC,o:a}); }
+  // the decision box (the doji, 0.3) vs the sizing box (1 frog box)
+  if (t>=101){ const a=op(t,101,.6); s += rect(lx-6,ly-bx,232,bx,{r:3,f:'none',s:ACC,sw:2.5,o:a,dash:'6 4'}); s += txt(lx+232,ly-bx-8,'sizing box: 1 frog box',{sz:12,c:ACC,o:a,a:'end'}); }
+  if (t>=118){ const a=op(t,118,.6); s += rect(lx,ly-27,220,27,{r:2,f:'rgba(248,113,113,.18)',s:DN,sw:1.5,o:a}); s += txt(lx-44,ly-14,'the doji: 0.30',{a:'end',sz:12,c:DN,o:a}); }
+  // the share readout at the right
+  if (t>=118){ const a=op(t,118,.6); s += m5_card(560,170,300,120,{o:a}); s += txt(580,198,'$300 of risk per trade',{sz:15,c:FG,o:a});
+    s += m5_lab(t,135,580,228,'÷ 0.30  =  1,000 shares',{sz:15,c:DN}); s += m5_lab(t,135,800,228,'fails fast',{sz:12,c:DN});
+    s += m5_lab(t,153,580,262,'÷ 1.00  =  300 shares',{sz:15,c:OK}); s += m5_lab(t,153,800,262,'standard',{sz:12,c:OK}); }
+  // the entries up the stack: 0.3, 0.5, 1.0 off the low; the stop under yesterday's low
+  if (t>=238){ const a=op(t,238,.5); const ent=[[0.3,'0.3 off the low',238],[0.5,'half a box',238],[1.0,'a full box',255]];
+    ent.forEach(([u,l,t0])=>{ const b=op(t,t0,.5); const y=ly-u*bx; s += circ(lx+110,y,6,{f:OK,o:b}); s += txt(lx+124,y+4,l,{sz:12,c:OK,o:b}); }); }
+  if (t>=272){ const a=op(t,272,.5); s += line(lx-20,ly+14,lx+240,ly+14,{s:DN,sw:2,o:a}); s += txt(lx-44,ly+24,"stop: yesterday's low",{a:'end',sz:12,c:DN,o:a}); }
+  if (t>=288){ const a=op(t,288,.6); s += m5_pill(710,330,'the limit of your size: one full frog box',{c:ACC,s:ACC,o:a,w:330,sz:14}); }
+  // the arithmetic of the three entries against a 3-box move
+  if (t>=363){ const a=op(t,363,.6); s += m5_card(560,360,300,120,{o:a}); s += txt(580,386,'a 3-box move',{sz:14,c:MUT,o:a});
+    s += txt(580,412,'in at 0.3:  lose .3, win 2.7',{sz:14,c:FG,o:a}); s += m5_lab(t,380,580,436,'in at 0.5:  win 2.5',{sz:14,c:FG}); s += m5_lab(t,396,580,460,'in at 1.0:  win 2.0',{sz:14,c:FG}); }
+  if (t>=414) s += m5_pill(330,488,'same size position, every entry',{sz:14,c:OK,s:OK,o:op(t,414,.5),w:290});
+  if (t>=430) s += m5_lab(t,430,lx+40,ly-9,'most likely to fail',{sz:12,c:DN});
+  return s;
+}
+
+window.renderFrame = function (t) {
+  t = clamp(t, 0, ANIM_DURATION);
+  let cap = '', sub = '';
+  for (const b of BEATS) if (t >= b[0]) { cap = b[1]; sub = b[2] || ''; }
+  $('cap').innerHTML = cap; $('sub').textContent = sub;
+  $('svg').innerHTML = WRAP[0] + draw(t) + WRAP[1];
+  const f = $('fade');
+  f.style.opacity = t < 0.5 ? 1 - t / 0.5 : (ANIM_DURATION - t < 0.6 ? 1 - (ANIM_DURATION - t) / 0.6 : 0);
+};
+renderFrame(0);
+</script>
+</body>
+</html>

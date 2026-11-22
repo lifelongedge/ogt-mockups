@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>s38a · the MACD red river and its seasons</title>
+<style>
+  :root { --bg:#030507; --fg:#E1EEF5; --muted:#8fa3ad; --border:rgba(56,225,255,0.14); --accent:#F2D06B;
+          --ok:#4ade80; --dn:#f87171; --card:#0a1016; --blue:#7baad4; }
+  html, body { margin:0; background:var(--bg); overflow:hidden; }
+  #stage { position:relative; width:1280px; height:720px; background:var(--bg); color:var(--fg);
+           font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; overflow:hidden; }
+  #cap { position:absolute; left:60px; right:60px; top:30px; font-size:32px; font-weight:600; letter-spacing:-.01em; line-height:1.15; }
+  #cap em { font-style:normal; color:var(--accent); }
+  #sub { position:absolute; left:60px; width:1160px; top:648px; font-size:20px; color:var(--muted); line-height:1.4; }
+  #scene { position:absolute; left:60px; top:112px; width:1160px; height:518px; border:1px solid var(--border);
+           border-radius:10px; background:var(--card); overflow:hidden; }
+  #svg { position:absolute; inset:0; }
+  #fade { position:absolute; inset:0; background:var(--bg); pointer-events:none; opacity:0; }
+  /* the picture-in-picture corner: build_v2 composites Ken's camera tile here (PIP_W/X/Y); the cutroom shows this placeholder */
+  #pip { position:absolute; left:950px; top:22px; width:300px; height:169px; border:1px dashed rgba(56,225,255,0.35); border-radius:4px;
+         display:none; color:var(--muted); font-size:13px; text-align:center; line-height:169px; }
+  .pip #pip { display:block; } .pip #cap { right:360px; font-size:29px; }
+  text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; fill:#E1EEF5; }
+  .mono { font-family:ui-monospace,Menlo,Consolas,monospace; }
+  #third { display:none; }
+</style>
+</head>
+<body>
+<div id="stage" class="pip">
+  <div id="cap"></div>
+  <div id="pip">Ken on camera, composited at render</div>
+  <div id="scene"><svg id="svg" width="1160" height="530" viewBox="0 0 1160 530"></svg></div>
+  <div id="third"></div>
+  <div id="sub"></div>
+  <div id="fade"></div>
+</div>
+<script>
+const BUILD = 's38a-1';
+console.log('[s38a] build', BUILD);
+// Overdub twin of s38: Ken's audio j16 2156.0→2346.0; t is seconds after the in-point.
+// Beat times read from the VTT cues on 2026-11-21 (tools/cutroom/weekend-edge-v2/transcript-j16.json).
+window.ANIM_DURATION = 190.0;
+const ACC='#F2D06B', FG='#E1EEF5', MUT='#8fa3ad', OK='#4ade80', DN='#f87171', BLUE='#7baad4', BRD='rgba(56,225,255,.22)', CARD='#0a1016', TXS=1, WRAP=['',''];
+const W=1160, H=530;
+const $ = id => document.getElementById(id);
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const ease=u=>{u=clamp(u,0,1);return u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;};
+const lerp=(a,b,u)=>a+(b-a)*u;
+const pr=(t,t0,d)=>ease((t-t0)/(d||0.6));          // eased progress 0..1 from t0 over d seconds
+const on=(t,t0)=>t>=t0;
+const op=(t,t0,d)=>clamp((t-t0)/(d||0.5),0,1);      // linear opacity ramp
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const txt=(x,y,s,o={})=>`<text x="${x}" y="${y}" font-size="${(o.sz||20)*TXS}" fill="${o.c||FG}" opacity="${o.o==null?1:o.o}" text-anchor="${o.a||'start'}" font-weight="${o.w||400}" class="${o.cls||''}" ${o.extra||''}>${esc(s)}</text>`;
+const rect=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.r==null?6:o.r}" fill="${o.f||'none'}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}" ${o.extra||''}/>`;
+const circ=(x,y,r,o={})=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${o.f||FG}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}"/>`;
+const line=(x1,y1,x2,y2,o={})=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${o.s||MUT}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" ${o.dash?`stroke-dasharray="${o.dash}"`:''} stroke-linecap="round"/>`;
+const path=(d,o={})=>`<path d="${d}" fill="${o.f||'none'}" stroke="${o.s||FG}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" stroke-linecap="round" stroke-linejoin="round" ${o.dash?`stroke-dasharray="${o.dash}"`:''}/>`;
+const arrow=(x1,y1,x2,y2,o={})=>{const a=Math.atan2(y2-y1,x2-x1),h=10;return line(x1,y1,x2,y2,o)+path(`M${x2} ${y2} L${x2-h*Math.cos(a-0.5)} ${y2-h*Math.sin(a-0.5)} M${x2} ${y2} L${x2-h*Math.cos(a+0.5)} ${y2-h*Math.sin(a+0.5)}`,{s:o.s||MUT,sw:o.sw||2,o:o.o});};
+// a labelled box that grows in from t0
+const box=(t,t0,x,y,w,h,label,o={})=>{const u=pr(t,t0,0.5);if(u<=0)return '';const ww=w*u,hh=h;return rect(x+(w-ww)/2,y,ww,hh,{s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',sw:o.sw||1.5,o:u})+(u>.6?txt(x+w/2,y+h/2+(o.sz||20)/3,label,{a:'middle',sz:o.sz||20,c:o.c||FG,o:op(t,t0+.3,.3),w:o.w||500}):'');};
+// deterministic pseudo-random
+function rng(seed){let s=seed*9301+49297;return()=>{s=(s*9301+49297)%233280;return s/233280;};}
+// a herd of dots in a region; drift is a slow deterministic wander
+function herd(n,seed,x,y,w,h){const r=rng(seed);const pts=[];for(let i=0;i<n;i++)pts.push({x:x+r()*w,y:y+r()*h,p:r()*6.28,q:r()*6.28});return pts;}
+const wander=(p,t,amp)=>[p.x+Math.sin(t*0.9+p.p)*amp,p.y+Math.cos(t*0.7+p.q)*amp];
+// typewriter: the first k chars of s by time
+const type=(s,t,t0,cps)=>s.slice(0,Math.max(0,Math.floor((t-t0)*(cps||28))));
+// a list that reveals one row per step seconds from t0
+function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
+
+const BEATS = [[0.5, "all of these trades are <em>inside the red river</em>, which is perfectly sideways: don't trade any of those", "A student's Intel day on his screen."], [14.0, "here's the first place the red river breaks: when the breakout happens it goes <em>below the zero line</em>", ""], [38.0, "this is all <em>noise</em>. You've got the red river on your chart: relax, wait to see the red river", ""], [50.0, "the red river on MACD is the <em>smoothed 10/30</em> moving-average differential", ""], [60.0, "inside the red river is normal: <em>no signals</em> in there, just noise between machines trading back and forth", ""], [68.0, "when the signal line <em>comes out</em> of the red river, that's the beginning of a breakdown: the <em>winter</em>", ""], [77.0, "when that reverses, that's the end of the winter; it rolls up, and that's where it becomes <em>spring</em>", ""], [100.0, "until it comes back into the red river; if it gets through the red river, that's when it becomes <em>summer</em>", ""], [106.0, "you're getting <em>chewed up</em> inside the grind", ""], [112.0, "remember what the SSC calls for: the supported spring crossing first must see a <em>harsh winter</em>", ""], [123.0, "there's no harsh winters in here; the SSC is the one that tells you this thing is <em>in play</em>", ""], [139.0, "the harsh winter says there is potentially a nice run back up to the <em>previous normal</em>", ""], [156.0, "price leaves that sharply, horribly, and when it stops it's <em>well out of the red river</em>", ""], [172.0, "abnormal fear caused the harsh winter, and the reversal says maybe there's an SSC coming", ""], [187.0, "this is just normal noise", ""]];
+
+const m3_pill=(x,y,s,o={})=>{const w=(o.w||s.length*9.5+22);return rect(x-w/2,y-15,w,30,{r:15,s:o.s||BRD,f:o.f||'rgba(255,255,255,.03)',o:o.o==null?1:o.o})+txt(x,y+6,s,{a:'middle',sz:o.sz||15,c:o.c||FG,o:o.o==null?1:o.o,w:o.wt||500});};
+const m3_lab=(t,t0,x,y,s,o={})=>{const a=op(t,t0,o.d||.5);return a<=0?'':txt(x,y,s,{...o,o:a*(o.o==null?1:o.o)});};
+const m3_card=(x,y,w,h,o={})=>rect(x,y,w,h,{r:10,s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',o:o.o==null?1:o.o});
+const m3_person=(x,y,o={})=>circ(x,y-14,9,{f:'none',s:o.c||FG,sw:2,o:o.o==null?1:o.o})+path(`M${x-16} ${y+22} C${x-16} ${y} ${x+16} ${y} ${x+16} ${y+22}`,{s:o.c||FG,sw:2,o:o.o==null?1:o.o});
+// the points of a timed polyline that are visible at t: pts=[[x,y,t0],...]; the segment into the next point eases in
+function m3_vis(t,pts){const v=[];for(let i=0;i<pts.length;i++){const p=pts[i];const t0=p[2]==null?-1e9:p[2];if(t0<=t){v.push([p[0],p[1]]);}else{if(i>0){const q=pts[i-1];const q0=q[2]==null?t0-1:q[2];const u=pr(t,q0,Math.max(0.4,t0-q0));if(u>0)v.push([lerp(q[0],p[0],u),lerp(q[1],p[1],u)]);}break;}}return v;}
+function m3_d(v,smooth){if(v.length<2)return '';let d=`M${v[0][0]} ${v[0][1]}`;if(!smooth){for(let i=1;i<v.length;i++)d+=` L${v[i][0]} ${v[i][1]}`;return d;}for(let i=1;i<v.length-1;i++){const mx=(v[i][0]+v[i+1][0])/2,my=(v[i][1]+v[i+1][1])/2;d+=` Q${v[i][0]} ${v[i][1]} ${mx} ${my}`;}const l=v[v.length-1];d+=` L${l[0]} ${l[1]}`;return d;}
+const m3_poly=(t,pts,o={})=>{const d=m3_d(m3_vis(t,pts),o.smooth);return d?path(d,{s:o.s||FG,sw:o.sw||2.5,o:o.o==null?1:o.o,dash:o.dash||''}):'';};
+// the RL10 of a price path: a 3-point smoothing, shifted right a touch (a lagging line)
+function m3_rl(pts,dx){const r=[];for(let i=0;i<pts.length;i++){const a=pts[Math.max(0,i-1)],b=pts[i],c=pts[Math.min(pts.length-1,i+1)];r.push([b[0]+(dx||8),(a[1]+b[1]+c[1])/3,b[2]]);}return r;}
+// a band of half-width hw around a visible polyline
+function m3_band(t,pts,hw,o={}){const v=m3_vis(t,pts);if(v.length<2)return '';const up=v.map(p=>[p[0],p[1]-hw]),dn=v.slice().reverse().map(p=>[p[0],p[1]+hw]);return path(m3_d(up,true)+' '+m3_d(dn,true).replace('M','L')+' Z',{f:o.f||'rgba(242,208,107,.14)',s:'none',o:o.o==null?1:o.o});}
+// PSAR dots: [[x,y,t0],...]
+const m3_dots=(t,ds,o={})=>ds.map(d=>{const a=op(t,d[2],.3);return a<=0?'':circ(d[0],d[1],o.r||3.5,{f:o.c||FG,o:a*(o.o==null?1:o.o)});}).join('');
+// a candle: body from y1 to y2 at x
+const m3_candle=(x,y1,y2,o={})=>rect(x-5,Math.min(y1,y2),10,Math.abs(y2-y1)||2,{r:1,f:o.f||DN,s:'none',o:o.o==null?1:o.o})+line(x,Math.min(y1,y2)-(o.wick||6),x,Math.max(y1,y2)+(o.wick||6),{s:o.f||DN,sw:1.5,o:o.o==null?1:o.o});
+
+// the MACD panel: zero line at 300; the river is a band around a slow curve
+const Z=300;
+const riv=x=>Z+18*Math.sin(x/140);
+const SIG=[[100,296,0.5],[150,312,1],[200,292,2],[250,308,3],[300,290,4],[350,306,5],[400,296,14],[440,330,16],[480,372,20],[520,400,68],[560,410,72],[600,396,77],[640,360,80],[680,320,83],[720,290,100],[760,268,103],[800,250,104]];
+const HW=[[840,250,156],[880,300,158],[920,380,160],[950,440,162],[980,460,172],[1010,440,174],[1040,420,176]];
+function draw(t){
+  let s='';
+  // the river
+  { const a=op(t,0,.8); let up='M100 '+(riv(100)-26), dn=''; for(let x=100;x<=1060;x+=20) up+=` L${x} ${riv(x)-26}`; for(let x=1060;x>=100;x-=20) dn+=` L${x} ${riv(x)+26}`; s += path(up+dn+' Z',{f:'rgba(248,113,113,.18)',s:'none',o:a}); s += line(100,Z,1060,Z,{s:MUT,sw:1,o:a}); s += txt(104,Z-34,'red river',{sz:12,c:DN,o:a}); s += txt(1064,Z+4,'0',{sz:11,c:MUT,o:a}); }
+  s += m3_poly(t,SIG,{s:FG,sw:2.5,smooth:true});
+  s += m3_lab(t,0.5,250,250,'inside: sideways, don’t trade',{sz:12,c:MUT,a:'middle'});
+  s += m3_lab(t,38,250,268,'noise',{sz:12,c:MUT,a:'middle'});
+  if (t>=50){ s += m3_lab(t,50,104,Z+50,'smoothed 10/30 differential',{sz:11,c:DN}); }
+  if (t>=14){ const a=op(t,14,.6); s += circ(440,330,7,{f:'none',s:DN,sw:2,o:a}); s += m3_lab(t,22,470,350,'below zero',{sz:11,c:DN}); }
+  if (t>=68){ const a=op(t,68,.6); s += m3_lab(t,68,520,440,'winter',{sz:16,c:BLUE||FG,w:600}); s += m3_lab(t,68,520,458,'the line leaves the river',{sz:11,c:MUT}); }
+  if (t>=77){ s += m3_lab(t,77,600,430,'end of winter',{sz:11,c:MUT}); }
+  if (t>=83){ s += m3_lab(t,83,660,250,'spring',{sz:16,c:OK,w:600}); }
+  if (t>=100){ s += m3_lab(t,100,700,214,'back through the river',{sz:11,c:MUT}); }
+  if (t>=103){ s += m3_lab(t,103,790,226,'summer',{sz:16,c:ACC,w:600}); }
+  if (t>=106){ s += m3_lab(t,106,250,286,'chewed up in the grind',{sz:11,c:DN,a:'middle'}); }
+  // the harsh winter, far out of the river, and the previous normal
+  s += m3_poly(t,HW,{s:DN,sw:3});
+  if (t>=112){ s += m3_lab(t,112,840,150,'the SSC first needs a harsh winter',{sz:12,c:FG}); }
+  if (t>=139){ const a=op(t,139,.6); s += line(820,250,1060,250,{s:MUT,sw:1.2,dash:'4 4',o:a}); s += m3_lab(t,139,840,170,'the previous normal',{sz:11,c:MUT}); }
+  if (t>=156){ s += m3_lab(t,160,860,470,'harsh winter',{sz:15,c:DN,w:600}); s += m3_lab(t,164,860,488,'well out of the river',{sz:11,c:MUT}); }
+  if (t>=172){ const a=op(t,172,.6); s += arrow(1040,420,1040,330,{s:OK,sw:2,o:a}); s += m3_lab(t,180,960,330,'reversal: maybe an SSC',{sz:11,c:OK}); }
+  return s;
+}
+
+window.renderFrame = function (t) {
+  t = clamp(t, 0, ANIM_DURATION);
+  let cap = '', sub = '';
+  for (const b of BEATS) if (t >= b[0]) { cap = b[1]; sub = b[2] || ''; }
+  $('cap').innerHTML = cap; $('sub').textContent = sub;
+  $('svg').innerHTML = WRAP[0] + draw(t) + WRAP[1];
+  const f = $('fade');
+  f.style.opacity = t < 0.5 ? 1 - t / 0.5 : (ANIM_DURATION - t < 0.6 ? 1 - (ANIM_DURATION - t) / 0.6 : 0);
+};
+renderFrame(0);
+</script>
+</body>
+</html>

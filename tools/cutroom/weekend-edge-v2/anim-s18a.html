@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>s18a · page one, live: bullish volatile</title>
+<style>
+  :root { --bg:#030507; --fg:#E1EEF5; --muted:#8fa3ad; --border:rgba(56,225,255,0.14); --accent:#F2D06B;
+          --ok:#4ade80; --dn:#f87171; --card:#0a1016; --blue:#7baad4; }
+  html, body { margin:0; background:var(--bg); overflow:hidden; }
+  #stage { position:relative; width:1280px; height:720px; background:var(--bg); color:var(--fg);
+           font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; overflow:hidden; }
+  #cap { position:absolute; left:60px; right:60px; top:30px; font-size:32px; font-weight:600; letter-spacing:-.01em; line-height:1.15; }
+  #cap em { font-style:normal; color:var(--accent); }
+  #sub { position:absolute; left:60px; width:1160px; top:648px; font-size:20px; color:var(--muted); line-height:1.4; }
+  #scene { position:absolute; left:60px; top:112px; width:1160px; height:518px; border:1px solid var(--border);
+           border-radius:10px; background:var(--card); overflow:hidden; }
+  #svg { position:absolute; inset:0; }
+  #fade { position:absolute; inset:0; background:var(--bg); pointer-events:none; opacity:0; }
+  /* the picture-in-picture corner: build_v2 composites Ken's camera tile here (PIP_W/X/Y); the cutroom shows this placeholder */
+  #pip { position:absolute; left:950px; top:22px; width:300px; height:169px; border:1px dashed rgba(56,225,255,0.35); border-radius:4px;
+         display:none; color:var(--muted); font-size:13px; text-align:center; line-height:169px; }
+  .pip #pip { display:block; } .pip #cap { right:360px; font-size:29px; }
+  text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; fill:#E1EEF5; }
+  .mono { font-family:ui-monospace,Menlo,Consolas,monospace; }
+  #third { display:none; }
+</style>
+</head>
+<body>
+<div id="stage" class="pip">
+  <div id="cap"></div>
+  <div id="pip">Ken on camera, composited at render</div>
+  <div id="scene"><svg id="svg" width="1160" height="530" viewBox="0 0 1160 530"></svg></div>
+  <div id="third"></div>
+  <div id="sub"></div>
+  <div id="fade"></div>
+</div>
+<script>
+const BUILD = 's18a-1';
+console.log('[s18a] build', BUILD);
+// Overdub twin of s18: Ken's audio rgs 6892.0→7024.0; t is seconds after the in-point.
+// Beat times read from the VTT cues on 2026-11-21 (tools/cutroom/weekend-edge-v2/transcript-rgs.json).
+window.ANIM_DURATION = 132.0;
+const ACC='#F2D06B', FG='#E1EEF5', MUT='#8fa3ad', OK='#4ade80', DN='#f87171', BLUE='#7baad4', BRD='rgba(56,225,255,.22)', CARD='#0a1016', TXS=1, WRAP=['',''];
+const W=1160, H=530;
+const $ = id => document.getElementById(id);
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const ease=u=>{u=clamp(u,0,1);return u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;};
+const lerp=(a,b,u)=>a+(b-a)*u;
+const pr=(t,t0,d)=>ease((t-t0)/(d||0.6));          // eased progress 0..1 from t0 over d seconds
+const on=(t,t0)=>t>=t0;
+const op=(t,t0,d)=>clamp((t-t0)/(d||0.5),0,1);      // linear opacity ramp
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const txt=(x,y,s,o={})=>`<text x="${x}" y="${y}" font-size="${(o.sz||20)*TXS}" fill="${o.c||FG}" opacity="${o.o==null?1:o.o}" text-anchor="${o.a||'start'}" font-weight="${o.w||400}" class="${o.cls||''}" ${o.extra||''}>${esc(s)}</text>`;
+const rect=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.r==null?6:o.r}" fill="${o.f||'none'}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}" ${o.extra||''}/>`;
+const circ=(x,y,r,o={})=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${o.f||FG}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}"/>`;
+const line=(x1,y1,x2,y2,o={})=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${o.s||MUT}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" ${o.dash?`stroke-dasharray="${o.dash}"`:''} stroke-linecap="round"/>`;
+const path=(d,o={})=>`<path d="${d}" fill="${o.f||'none'}" stroke="${o.s||FG}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" stroke-linecap="round" stroke-linejoin="round" ${o.dash?`stroke-dasharray="${o.dash}"`:''}/>`;
+const arrow=(x1,y1,x2,y2,o={})=>{const a=Math.atan2(y2-y1,x2-x1),h=10;return line(x1,y1,x2,y2,o)+path(`M${x2} ${y2} L${x2-h*Math.cos(a-0.5)} ${y2-h*Math.sin(a-0.5)} M${x2} ${y2} L${x2-h*Math.cos(a+0.5)} ${y2-h*Math.sin(a+0.5)}`,{s:o.s||MUT,sw:o.sw||2,o:o.o});};
+// a labelled box that grows in from t0
+const box=(t,t0,x,y,w,h,label,o={})=>{const u=pr(t,t0,0.5);if(u<=0)return '';const ww=w*u,hh=h;return rect(x+(w-ww)/2,y,ww,hh,{s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',sw:o.sw||1.5,o:u})+(u>.6?txt(x+w/2,y+h/2+(o.sz||20)/3,label,{a:'middle',sz:o.sz||20,c:o.c||FG,o:op(t,t0+.3,.3),w:o.w||500}):'');};
+// deterministic pseudo-random
+function rng(seed){let s=seed*9301+49297;return()=>{s=(s*9301+49297)%233280;return s/233280;};}
+// a herd of dots in a region; drift is a slow deterministic wander
+function herd(n,seed,x,y,w,h){const r=rng(seed);const pts=[];for(let i=0;i<n;i++)pts.push({x:x+r()*w,y:y+r()*h,p:r()*6.28,q:r()*6.28});return pts;}
+const wander=(p,t,amp)=>[p.x+Math.sin(t*0.9+p.p)*amp,p.y+Math.cos(t*0.7+p.q)*amp];
+// typewriter: the first k chars of s by time
+const type=(s,t,t0,cps)=>s.slice(0,Math.max(0,Math.floor((t-t0)*(cps||28))));
+// a list that reveals one row per step seconds from t0
+function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
+
+const BEATS = [[0.5, "<em>bullish volatile</em> favors the short term", ""], [16.0, "the multi-time-frame NDX has shown a recovery out of the war chaos, which was remarkable", ""], [22.0, "the <em>theoretical exposure went from 10 % to 90 %</em>", ""], [32.0, "a bunch of things hovering right around their <em>four-month moving average</em> dropped underneath and moved back above", ""], [42.0, "a large change in exposure. You don't see that very often", ""], [48.0, "percent stretch: bullish, but in the red, within two and a quarter percent of the <em>200-day</em>", ""], [65.0, "the 200-day continues to steam north: a market that <em>ran out of gas</em>", ""], [81.0, "ATR 1.54 % is <em>double</em> the normal volatility; prior to COVID the average was 0.75", ""], [99.0, "the risk Z has flashed <em>risk on</em>: short-term volatility is draining out", ""], [116.0, "I attribute that to the claim of a ceasefire; risk Z all the way up to 0.44", ""], [128.0, "ETF2: 90 % exposed", ""]];
+
+const m1_pill=(x,y,s,o={})=>{const w=(o.w||s.length*10+22);return rect(x-w/2,y-15,w,30,{r:15,s:o.s||BRD,f:o.f||'rgba(255,255,255,.03)',o:o.o==null?1:o.o})+txt(x,y+6,s,{a:'middle',sz:o.sz||15,c:o.c||FG,o:o.o==null?1:o.o,w:o.wt||500});};
+const m1_card=(x,y,w,h,o={})=>rect(x,y,w,h,{r:10,s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',o:o.o==null?1:o.o});
+const m1_lab=(t,t0,x,y,s,o={})=>{const a=op(t,t0,o.d||.5);return a<=0?'':txt(x,y,s,{...o,o:a*(o.o==null?1:o.o)});};
+// the 3x3 grid: rows bull / sideways / bear (top to bottom), cols volatile / normal / quiet (left to right)
+// cells: {[r*3+c]: {f: fill, s: stroke, o: opacity, tag: text}}; (x,y) top-left, cw x ch per cell
+const M1_ROWS=['bull','sideways','bear'], M1_COLS=['volatile','normal','quiet'];
+function m1_grid(x,y,cw,ch,cells,o={}){const a=o.o==null?1:o.o;let s='';
+  for(let r=0;r<3;r++)for(let c=0;c<3;c++){const k=r*3+c,cl=(cells&&cells[k])||{};const cx=x+c*cw,cy=y+r*ch;
+    s+=rect(cx,cy,cw-6,ch-6,{r:8,f:cl.f||'rgba(255,255,255,.02)',s:cl.s||BRD,sw:cl.sw||1.5,o:a*(cl.o==null?1:cl.o)});
+    if(cl.tag)s+=txt(cx+(cw-6)/2,cy+(ch-6)/2+5,cl.tag,{a:'middle',sz:cl.sz||14,c:cl.c||FG,o:a*(cl.o==null?1:cl.o),w:500});}
+  if(!o.noAxes){for(let r=0;r<3;r++)s+=txt(x-10,y+r*ch+ch/2,M1_ROWS[r],{a:'end',sz:14,c:MUT,o:a});
+    for(let c=0;c<3;c++)s+=txt(x+c*cw+(cw-6)/2,y-10,M1_COLS[c],{a:'middle',sz:14,c:MUT,o:a});}
+  return s;}
+// a drifting price line over [x0,x1] at base y with amplitude amp (deterministic)
+function m1_price(x0,x1,y,amp,seed,t){const r=rng(seed);let d='',v=0;for(let i=0;i<=40;i++){v+=(r()-.5)*amp*.6;v*=.92;const px=x0+(x1-x0)*i/40,py=y+v*1.6+Math.sin(i*.5+seed)*amp*.3;d+=(i?'L':'M')+px+' '+py+' ';}return d;}
+
+function draw(t){
+  let s='';
+  s += m1_card(80,110,1000,340,{o:op(t,0.5,.6)}); s += txt(100,140,'page one',{sz:14,c:MUT,o:op(t,0.5,.6)});
+  const gx=140,gy=180,cw=88,ch=64; const cells={}; for (let k=0;k<9;k++) cells[k]={};
+  cells[0].f='rgba(242,208,107,.18)'; cells[0].s=ACC; cells[0].sw=3; cells[0].tag='BULL VOLATILE'; cells[0].sz=10; cells[0].c=ACC;
+  s += m1_grid(gx,gy,cw,ch,cells,{o:op(t,0.5,.6)});
+  s += m1_lab(t,0.5,gx,gy+3*ch+30,'favors the short term',{sz:14,c:ACC});
+  // exposure bar 10 -> 90
+  if (t>=22){ const a=op(t,22,.5); const u=pr(t,22,2.5); const x=460,y=190,w=300; s += rect(x,y,w,22,{r:6,s:BRD,f:'none',o:a}); s += rect(x,y,w*lerp(.1,.9,u),22,{r:6,f:OK,o:a*.5}); s += txt(x,y-10,'theoretical exposure',{sz:13,c:MUT,o:a}); s += txt(x+w+10,y+17,Math.round(lerp(10,90,u))+' %',{sz:16,c:FG,o:a,w:600});
+    if (t>=32) s += m1_lab(t,32,x,y+44,'ETFs back above their four-month moving average',{sz:12,c:MUT}); if (t>=42) s += m1_lab(t,42,x,y+64,'a large change; you don\'t see that very often',{sz:12,c:ACC}); }
+  // stretch: price near the 200-day
+  if (t>=48){ const a=op(t,48,.5); const x=460,y=330; s += line(x,y,x+300,y-20,{s:ACC,sw:2.5,o:a}); s += rect(x,y-28,300,36,{r:0,f:'rgba(255,255,255,.05)',s:'none',o:a}); s += path(`M${x} ${y+60} C${x+100} ${y+10} ${x+180} ${y-40} ${x+300} ${y-26}`,{s:FG,sw:2,o:a}); s += txt(x,y+40,'stretch: within 2¼ % of the 200-day',{sz:12,c:MUT,o:a}); if (t>=65) s += m1_lab(t,65,x,y+60,'200-day steaming north · ran out of gas',{sz:12,c:DN}); }
+  // ATR bars 0.75 vs 1.54
+  if (t>=81){ const a=op(t,81,.5); const x=840,y=300; s += rect(x,y-75*0.9,40,75*0.9,{r:4,f:'rgba(255,255,255,.1)',s:BRD,o:a}); s += rect(x+70,y-154*0.9,40,154*0.9,{r:4,f:'rgba(248,113,113,.3)',s:DN,o:a}); s += txt(x+20,y+18,'0.75 %',{a:'middle',sz:12,c:MUT,o:a}); s += txt(x+90,y+18,'1.54 %',{a:'middle',sz:12,c:DN,o:a}); s += txt(x,y-160,'ATR: double',{sz:13,c:FG,o:a}); s += txt(x,y+38,'pre-COVID vs now',{sz:11,c:MUT,o:a}); }
+  // risk Z needle to risk on
+  if (t>=99){ const a=op(t,99,.5); const cx=900,cy=440,r=50; const uu=lerp(0.3,0.85,pr(t,99,1.5)); const p=Math.PI+Math.PI*uu;
+    const arc=(u0,u1,st)=>{const p0=Math.PI+Math.PI*u0,p1=Math.PI+Math.PI*u1;return path(`M${cx+r*Math.cos(p0)} ${cy+r*Math.sin(p0)} A${r} ${r} 0 0 1 ${cx+r*Math.cos(p1)} ${cy+r*Math.sin(p1)}`,{s:st,sw:8,o:a});};
+    s += arc(0,0.5,DN)+arc(0.5,1,OK); s += line(cx,cy,cx+(r-12)*Math.cos(p),cy+(r-12)*Math.sin(p),{s:FG,sw:3,o:a}); s += txt(cx+70,cy,'risk Z: risk on',{sz:13,c:OK,o:a}); if (t>=116) s += m1_lab(t,116,cx+70,cy+18,'ceasefire · 0.44',{sz:11,c:MUT}); }
+  if (t>=128) s += m1_pill(300,478,'ETF2: 90 % exposed',{o:op(t,128,.5),w:220,c:ACC,s:ACC});
+  return s;
+}
+
+window.renderFrame = function (t) {
+  t = clamp(t, 0, ANIM_DURATION);
+  let cap = '', sub = '';
+  for (const b of BEATS) if (t >= b[0]) { cap = b[1]; sub = b[2] || ''; }
+  $('cap').innerHTML = cap; $('sub').textContent = sub;
+  $('svg').innerHTML = WRAP[0] + draw(t) + WRAP[1];
+  const f = $('fade');
+  f.style.opacity = t < 0.5 ? 1 - t / 0.5 : (ANIM_DURATION - t < 0.6 ? 1 - (ANIM_DURATION - t) / 0.6 : 0);
+};
+renderFrame(0);
+</script>
+</body>
+</html>

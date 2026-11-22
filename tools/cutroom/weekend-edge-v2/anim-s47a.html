@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>s47a · the short chain: when support collapses, fear takes over</title>
+<style>
+  :root { --bg:#030507; --fg:#E1EEF5; --muted:#8fa3ad; --border:rgba(56,225,255,0.14); --accent:#F2D06B;
+          --ok:#4ade80; --dn:#f87171; --card:#0a1016; --blue:#7baad4; }
+  html, body { margin:0; background:var(--bg); overflow:hidden; }
+  #stage { position:relative; width:1280px; height:720px; background:var(--bg); color:var(--fg);
+           font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; overflow:hidden; }
+  #cap { position:absolute; left:60px; right:60px; top:30px; font-size:32px; font-weight:600; letter-spacing:-.01em; line-height:1.15; }
+  #cap em { font-style:normal; color:var(--accent); }
+  #sub { position:absolute; left:60px; width:1160px; top:648px; font-size:20px; color:var(--muted); line-height:1.4; }
+  #scene { position:absolute; left:60px; top:112px; width:1160px; height:518px; border:1px solid var(--border);
+           border-radius:10px; background:var(--card); overflow:hidden; }
+  #svg { position:absolute; inset:0; }
+  #fade { position:absolute; inset:0; background:var(--bg); pointer-events:none; opacity:0; }
+  /* the picture-in-picture corner: build_v2 composites Ken's camera tile here (PIP_W/X/Y); the cutroom shows this placeholder */
+  #pip { position:absolute; left:950px; top:22px; width:300px; height:169px; border:1px dashed rgba(56,225,255,0.35); border-radius:4px;
+         display:none; color:var(--muted); font-size:13px; text-align:center; line-height:169px; }
+  .pip #pip { display:block; } .pip #cap { right:360px; font-size:29px; }
+  text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; fill:#E1EEF5; }
+  .mono { font-family:ui-monospace,Menlo,Consolas,monospace; }
+  #third { display:none; }
+</style>
+</head>
+<body>
+<div id="stage" class="pip">
+  <div id="cap"></div>
+  <div id="pip">Ken on camera, composited at render</div>
+  <div id="scene"><svg id="svg" width="1160" height="530" viewBox="0 0 1160 530"></svg></div>
+  <div id="third"></div>
+  <div id="sub"></div>
+  <div id="fade"></div>
+</div>
+<script>
+const BUILD = 's47a-1';
+console.log('[s47a] build', BUILD);
+// Overdub twin of s47: Ken's audio mc 1221.0→1410.0; t is seconds after the in-point.
+// Beat times read from the VTT cues on 2026-11-21 (tools/cutroom/weekend-edge-v2/transcript-mc.json).
+window.ANIM_DURATION = 189.0;
+const ACC='#F2D06B', FG='#E1EEF5', MUT='#8fa3ad', OK='#4ade80', DN='#f87171', BLUE='#7baad4', BRD='rgba(56,225,255,.22)', CARD='#0a1016', TXS=1, WRAP=['',''];
+const W=1160, H=530;
+const $ = id => document.getElementById(id);
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const ease=u=>{u=clamp(u,0,1);return u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;};
+const lerp=(a,b,u)=>a+(b-a)*u;
+const pr=(t,t0,d)=>ease((t-t0)/(d||0.6));          // eased progress 0..1 from t0 over d seconds
+const on=(t,t0)=>t>=t0;
+const op=(t,t0,d)=>clamp((t-t0)/(d||0.5),0,1);      // linear opacity ramp
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const txt=(x,y,s,o={})=>`<text x="${x}" y="${y}" font-size="${(o.sz||20)*TXS}" fill="${o.c||FG}" opacity="${o.o==null?1:o.o}" text-anchor="${o.a||'start'}" font-weight="${o.w||400}" class="${o.cls||''}" ${o.extra||''}>${esc(s)}</text>`;
+const rect=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.r==null?6:o.r}" fill="${o.f||'none'}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}" ${o.extra||''}/>`;
+const circ=(x,y,r,o={})=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${o.f||FG}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}"/>`;
+const line=(x1,y1,x2,y2,o={})=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${o.s||MUT}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" ${o.dash?`stroke-dasharray="${o.dash}"`:''} stroke-linecap="round"/>`;
+const path=(d,o={})=>`<path d="${d}" fill="${o.f||'none'}" stroke="${o.s||FG}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" stroke-linecap="round" stroke-linejoin="round" ${o.dash?`stroke-dasharray="${o.dash}"`:''}/>`;
+const arrow=(x1,y1,x2,y2,o={})=>{const a=Math.atan2(y2-y1,x2-x1),h=10;return line(x1,y1,x2,y2,o)+path(`M${x2} ${y2} L${x2-h*Math.cos(a-0.5)} ${y2-h*Math.sin(a-0.5)} M${x2} ${y2} L${x2-h*Math.cos(a+0.5)} ${y2-h*Math.sin(a+0.5)}`,{s:o.s||MUT,sw:o.sw||2,o:o.o});};
+// a labelled box that grows in from t0
+const box=(t,t0,x,y,w,h,label,o={})=>{const u=pr(t,t0,0.5);if(u<=0)return '';const ww=w*u,hh=h;return rect(x+(w-ww)/2,y,ww,hh,{s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',sw:o.sw||1.5,o:u})+(u>.6?txt(x+w/2,y+h/2+(o.sz||20)/3,label,{a:'middle',sz:o.sz||20,c:o.c||FG,o:op(t,t0+.3,.3),w:o.w||500}):'');};
+// deterministic pseudo-random
+function rng(seed){let s=seed*9301+49297;return()=>{s=(s*9301+49297)%233280;return s/233280;};}
+// a herd of dots in a region; drift is a slow deterministic wander
+function herd(n,seed,x,y,w,h){const r=rng(seed);const pts=[];for(let i=0;i<n;i++)pts.push({x:x+r()*w,y:y+r()*h,p:r()*6.28,q:r()*6.28});return pts;}
+const wander=(p,t,amp)=>[p.x+Math.sin(t*0.9+p.p)*amp,p.y+Math.cos(t*0.7+p.q)*amp];
+// typewriter: the first k chars of s by time
+const type=(s,t,t0,cps)=>s.slice(0,Math.max(0,Math.floor((t-t0)*(cps||28))));
+// a list that reveals one row per step seconds from t0
+function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
+
+const BEATS = [[0.1, "the idea of the collapsing dragon: when these <em>support levels collapse</em>", "Ken on a student's chain."], [8.2, "all the optimism that was feeding this collapses, and then <em>fear takes over</em>", ""], [15.1, "the collapsing dragon is our favorite pattern: that <em>first move is large</em>", ""], [29.5, "SSCs that work lead to <em>Kata 2 chains</em>", ""], [38.6, "the other chain: SSCs that fail, leading to collapsing dragons and <em>Kata 2 short</em>", ""], [49.0, "the harsh winter, resolved into the SSC: it peaked, and then took off", ""], [72.6, "those moments where the SSC triggered, and then <em>price fails</em>", ""], [84.5, "and he takes the <em>collapsing dragon</em>", ""], [91.3, "big moves down, short recoveries, <em>collapsing down</em> and collapsing down", ""], [97.4, "whatever the <em>belly of the RL10</em> is, he draws that line across", ""], [109.6, "this little rebound may be enough to <em>lock in his gain</em>", ""], [116.2, "give back a little piece, to collect a nice <em>large R multiple</em>", ""], [138.3, "now he gets a <em>Kata 2</em> with the collapsing dragon: chains all the way down", ""], [151.9, "the <em>fear</em> in that downward trend is more powerful than the <em>greed</em> on the way up", ""], [182.0, "the pattern is in play: that <em>symbol is in play</em>", ""]];
+
+const m4_pill=(x,y,s,o={})=>{const w=(o.w||s.length*10+22);return rect(x-w/2,y-15,w,30,{r:15,s:o.s||BRD,f:o.f||'rgba(255,255,255,.03)',o:o.o==null?1:o.o})+txt(x,y+6,s,{a:'middle',sz:o.sz||15,c:o.c||FG,o:o.o==null?1:o.o,w:o.wt||500});};
+const m4_card=(x,y,w,h,o={})=>rect(x,y,w,h,{r:10,s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',o:o.o==null?1:o.o});
+const m4_lab=(t,t0,x,y,s,o={})=>{const a=op(t,t0,o.d||.5);return a<=0?'':txt(x,y,s,{...o,o:a*(o.o==null?1:o.o)});};
+// a polyline revealed from its first point to a fraction u of its length
+function m4_poly(pts,u,o={}){u=clamp(u,0,1);if(u<=0)return '';const n=pts.length-1;const k=u*n;const i=Math.floor(k);let d=`M${pts[0][0]} ${pts[0][1]}`;for(let j=1;j<=Math.min(i,n);j++)d+=` L${pts[j][0]} ${pts[j][1]}`;if(i<n){const f=k-i;d+=` L${lerp(pts[i][0],pts[i+1][0],f)} ${lerp(pts[i][1],pts[i+1][1],f)}`;}return path(d,{s:o.s||FG,sw:o.sw||2.5,o:o.o==null?1:o.o,dash:o.dash});}
+// a ring around a point that fades in from t0
+const m4_ring=(t,t0,x,y,o={})=>{const a=op(t,t0,.5);return a<=0?'':circ(x,y,o.r||14,{f:'none',s:o.c||ACC,sw:2.5,o:a});};
+// a horizontal level with a tag at the right
+const m4_level=(t,t0,x1,x2,y,s,o={})=>{const a=op(t,t0,.5);return a<=0?'':line(x1,y,x2,y,{s:o.c||ACC,sw:1.5,o:a,dash:o.dash||'6 5'})+txt(x2+8,y+5,s,{sz:o.sz||13,c:o.c||ACC,o:a});};
+// PSAR dots under (side=1) or over (side=-1) a path segment
+function m4_dots(t,t0,pts,side,o={}){const a=op(t,t0,.5);if(a<=0)return '';let s='';pts.forEach(p=>{s+=circ(p[0],p[1]+side*18,3,{f:o.c||FG,o:a});});return s;}
+
+function draw(t){
+  let s='';
+  // the support shelf and the collapse, top-left
+  if (t>=0.1){ const a=op(t,0.1,.5); s += line(80,160,300,160,{s:FG,sw:2.5,o:a}); s += m4_lab(t,0.1,80,150,'support',{sz:12,c:MUT}); }
+  if (t>=4.0){ const u=pr(t,4.0,1.2); s += line(300,160,300+120*u,160+160*u,{s:DN,sw:3}); }
+  if (t>=8.2){ s += m4_lab(t,8.2,330,200,'optimism collapses · fear takes over',{sz:13,c:DN}); }
+  if (t>=15.1){ s += m4_lab(t,22.4,330,222,'the first move is large',{sz:13,c:MUT}); }
+  if (t>=29.5){ s += m4_pill(170,260,'SSC works → Kata 2 chain up',{o:op(t,29.5,.5),w:240,c:OK,s:OK,sz:13}); }
+  if (t>=38.6){ s += m4_pill(170,296,'SSC fails → CD → Kata 2 short',{o:op(t,38.6,.5),w:240,c:DN,s:DN,sz:13}); }
+  // the chain down, main picture, right-centre
+  const U=[[480,440],[520,380],[560,330],[600,300]];                 // the SSC that peaked
+  const D=[[600,300],[640,360],[670,340],[690,330],[720,400],[750,380],[770,372],[800,450],[830,430],[850,425],[880,500]];
+  if (t>=49.0){ s += m4_poly(U,pr(t,49.0,1.5),{s:OK}); s += m4_lab(t,54.9,470,460,'SSC',{sz:13,c:OK}); }
+  if (t>=72.6){ s += m4_poly(D.slice(0,2),pr(t,72.6,1),{s:DN,sw:3}); s += m4_lab(t,77.6,610,290,'fails',{sz:13,c:DN}); }
+  if (t>=84.5){ s += circ(640,360,6,{f:DN,o:op(t,84.5,.5)}); s += m4_lab(t,84.5,655,365,'CD · short',{sz:12,c:DN}); }
+  if (t>=91.3){ s += m4_poly(D.slice(1),pr(t,91.3,5),{s:DN,sw:2.5}); }
+  if (t>=97.4){ s += m4_level(t,97.4,660,900,330,'RL10 belly',{c:ACC}); s += m4_level(t,99.5,740,900,372,'belly',{c:ACC}); s += m4_level(t,101.5,820,900,425,'belly',{c:ACC}); }
+  if (t>=109.6){ s += m4_lab(t,109.6,700,470,'rebound: lock in the gain',{sz:12,c:MUT}); }
+  if (t>=116.2){ s += m4_lab(t,116.2,700,490,'give back a little, collect a large R',{sz:12,c:MUT}); }
+  if (t>=138.3){ [[690,330],[770,372],[850,425]].forEach((p,i)=>{ s += m4_ring(t,138.3+i*.4,p[0],p[1],{c:ACC,r:11}); }); s += m4_lab(t,142,560,505,'Kata 2 shorts, all the way down',{sz:13,c:ACC}); }
+  // fear versus greed: a tipping beam, bottom-left
+  if (t>=151.9){ const a=op(t,151.9,.6); const tilt=pr(t,153.5,1.5)*0.18; const cx=200, cy=430; s += line(cx,cy+30,cx,cy+60,{s:MUT,sw:3,o:a}); s += path(`M${cx-120} ${cy+120*tilt} L${cx+120} ${cy-120*tilt}`,{s:FG,sw:3,o:a}); s += m4_pill(cx-120,cy+120*tilt-22,'fear',{o:a,w:70,c:DN,s:DN,sz:13}); s += m4_pill(cx+120,cy-120*tilt-22,'greed',{o:a,w:70,c:OK,s:OK,sz:13}); s += m4_lab(t,157.1,100,505,'down is more powerful than up',{sz:12,c:MUT}); }
+  if (t>=182.0){ s += m4_pill(640,120,'the symbol is in play',{o:op(t,182.0,.5),w:180,c:ACC,s:ACC,sz:14}); }
+  return s;
+}
+
+window.renderFrame = function (t) {
+  t = clamp(t, 0, ANIM_DURATION);
+  let cap = '', sub = '';
+  for (const b of BEATS) if (t >= b[0]) { cap = b[1]; sub = b[2] || ''; }
+  $('cap').innerHTML = cap; $('sub').textContent = sub;
+  $('svg').innerHTML = WRAP[0] + draw(t) + WRAP[1];
+  const f = $('fade');
+  f.style.opacity = t < 0.5 ? 1 - t / 0.5 : (ANIM_DURATION - t < 0.6 ? 1 - (ANIM_DURATION - t) / 0.6 : 0);
+};
+renderFrame(0);
+</script>
+</body>
+</html>

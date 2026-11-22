@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>s49a · DIA: the intraday turning point held the PSAR flip</title>
+<style>
+  :root { --bg:#030507; --fg:#E1EEF5; --muted:#8fa3ad; --border:rgba(56,225,255,0.14); --accent:#F2D06B;
+          --ok:#4ade80; --dn:#f87171; --card:#0a1016; --blue:#7baad4; }
+  html, body { margin:0; background:var(--bg); overflow:hidden; }
+  #stage { position:relative; width:1280px; height:720px; background:var(--bg); color:var(--fg);
+           font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; overflow:hidden; }
+  #cap { position:absolute; left:60px; right:60px; top:30px; font-size:32px; font-weight:600; letter-spacing:-.01em; line-height:1.15; }
+  #cap em { font-style:normal; color:var(--accent); }
+  #sub { position:absolute; left:60px; width:1160px; top:648px; font-size:20px; color:var(--muted); line-height:1.4; }
+  #scene { position:absolute; left:60px; top:112px; width:1160px; height:518px; border:1px solid var(--border);
+           border-radius:10px; background:var(--card); overflow:hidden; }
+  #svg { position:absolute; inset:0; }
+  #fade { position:absolute; inset:0; background:var(--bg); pointer-events:none; opacity:0; }
+  /* the picture-in-picture corner: build_v2 composites Ken's camera tile here (PIP_W/X/Y); the cutroom shows this placeholder */
+  #pip { position:absolute; left:950px; top:22px; width:300px; height:169px; border:1px dashed rgba(56,225,255,0.35); border-radius:4px;
+         display:none; color:var(--muted); font-size:13px; text-align:center; line-height:169px; }
+  .pip #pip { display:block; } .pip #cap { right:360px; font-size:29px; }
+  text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; fill:#E1EEF5; }
+  .mono { font-family:ui-monospace,Menlo,Consolas,monospace; }
+  #third { display:none; }
+</style>
+</head>
+<body>
+<div id="stage" class="pip">
+  <div id="cap"></div>
+  <div id="pip">Ken on camera, composited at render</div>
+  <div id="scene"><svg id="svg" width="1160" height="530" viewBox="0 0 1160 530"></svg></div>
+  <div id="third"></div>
+  <div id="sub"></div>
+  <div id="fade"></div>
+</div>
+<script>
+const BUILD = 's49a-1';
+console.log('[s49a] build', BUILD);
+// Overdub twin of s49: Ken's audio ss3 339.0→432.0; t is seconds after the in-point.
+// Beat times read from the VTT cues on 2026-11-21 (tools/cutroom/weekend-edge-v2/transcript-ss3.json).
+window.ANIM_DURATION = 93.0;
+const ACC='#F2D06B', FG='#E1EEF5', MUT='#8fa3ad', OK='#4ade80', DN='#f87171', BLUE='#7baad4', BRD='rgba(56,225,255,.22)', CARD='#0a1016', TXS=1, WRAP=['',''];
+const W=1160, H=530;
+const $ = id => document.getElementById(id);
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const ease=u=>{u=clamp(u,0,1);return u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;};
+const lerp=(a,b,u)=>a+(b-a)*u;
+const pr=(t,t0,d)=>ease((t-t0)/(d||0.6));          // eased progress 0..1 from t0 over d seconds
+const on=(t,t0)=>t>=t0;
+const op=(t,t0,d)=>clamp((t-t0)/(d||0.5),0,1);      // linear opacity ramp
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const txt=(x,y,s,o={})=>`<text x="${x}" y="${y}" font-size="${(o.sz||20)*TXS}" fill="${o.c||FG}" opacity="${o.o==null?1:o.o}" text-anchor="${o.a||'start'}" font-weight="${o.w||400}" class="${o.cls||''}" ${o.extra||''}>${esc(s)}</text>`;
+const rect=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.r==null?6:o.r}" fill="${o.f||'none'}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}" ${o.extra||''}/>`;
+const circ=(x,y,r,o={})=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${o.f||FG}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}"/>`;
+const line=(x1,y1,x2,y2,o={})=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${o.s||MUT}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" ${o.dash?`stroke-dasharray="${o.dash}"`:''} stroke-linecap="round"/>`;
+const path=(d,o={})=>`<path d="${d}" fill="${o.f||'none'}" stroke="${o.s||FG}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" stroke-linecap="round" stroke-linejoin="round" ${o.dash?`stroke-dasharray="${o.dash}"`:''}/>`;
+const arrow=(x1,y1,x2,y2,o={})=>{const a=Math.atan2(y2-y1,x2-x1),h=10;return line(x1,y1,x2,y2,o)+path(`M${x2} ${y2} L${x2-h*Math.cos(a-0.5)} ${y2-h*Math.sin(a-0.5)} M${x2} ${y2} L${x2-h*Math.cos(a+0.5)} ${y2-h*Math.sin(a+0.5)}`,{s:o.s||MUT,sw:o.sw||2,o:o.o});};
+// a labelled box that grows in from t0
+const box=(t,t0,x,y,w,h,label,o={})=>{const u=pr(t,t0,0.5);if(u<=0)return '';const ww=w*u,hh=h;return rect(x+(w-ww)/2,y,ww,hh,{s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',sw:o.sw||1.5,o:u})+(u>.6?txt(x+w/2,y+h/2+(o.sz||20)/3,label,{a:'middle',sz:o.sz||20,c:o.c||FG,o:op(t,t0+.3,.3),w:o.w||500}):'');};
+// deterministic pseudo-random
+function rng(seed){let s=seed*9301+49297;return()=>{s=(s*9301+49297)%233280;return s/233280;};}
+// a herd of dots in a region; drift is a slow deterministic wander
+function herd(n,seed,x,y,w,h){const r=rng(seed);const pts=[];for(let i=0;i<n;i++)pts.push({x:x+r()*w,y:y+r()*h,p:r()*6.28,q:r()*6.28});return pts;}
+const wander=(p,t,amp)=>[p.x+Math.sin(t*0.9+p.p)*amp,p.y+Math.cos(t*0.7+p.q)*amp];
+// typewriter: the first k chars of s by time
+const type=(s,t,t0,cps)=>s.slice(0,Math.max(0,Math.floor((t-t0)*(cps||28))));
+// a list that reveals one row per step seconds from t0
+function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
+
+const BEATS = [[6.7, "<em>Diamonds</em>: the speculative one from last week", "Ken's account of his own trade, 2023-03-06."], [10.3, "the <em>most oversold</em>, had the best reward to risk ratio", ""], [15.1, "we got an intraday <em>turning point</em> on it", ""], [18.2, "it held the <em>PSAR flip</em>: that's a very narrow risk box", ""], [24.0, "we got the intraday <em>Kata 2</em>, and a continuation the next morning", ""], [32.2, "two very strong days, and then today it peaked and <em>rolled over</em>", ""], [37.1, "thankful to get out at the <em>PSAR flip</em>", ""], [50.5, "the trade framing logic: why that is such a <em>low risk idea</em>", ""], [57.2, "at that measured support level it's got a <em>triple bottom</em>", ""], [61.8, "near a <em>10-day low</em> and <em>30-day low</em>", ""], [65.5, "if it fails, we're happy to be <em>short</em>", ""], [70.2, "if it doesn't fail, a move back up to the vicinity of the <em>10-day high</em>", ""], [77.8, "it got 80 percent of that move, and we got the <em>fat part</em>", "His claim about his own trade; not computed here."], [85.0, "the ideal template for that <em>channeling</em> or overreaction style", ""]];
+
+const m4_pill=(x,y,s,o={})=>{const w=(o.w||s.length*10+22);return rect(x-w/2,y-15,w,30,{r:15,s:o.s||BRD,f:o.f||'rgba(255,255,255,.03)',o:o.o==null?1:o.o})+txt(x,y+6,s,{a:'middle',sz:o.sz||15,c:o.c||FG,o:o.o==null?1:o.o,w:o.wt||500});};
+const m4_card=(x,y,w,h,o={})=>rect(x,y,w,h,{r:10,s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',o:o.o==null?1:o.o});
+const m4_lab=(t,t0,x,y,s,o={})=>{const a=op(t,t0,o.d||.5);return a<=0?'':txt(x,y,s,{...o,o:a*(o.o==null?1:o.o)});};
+// a polyline revealed from its first point to a fraction u of its length
+function m4_poly(pts,u,o={}){u=clamp(u,0,1);if(u<=0)return '';const n=pts.length-1;const k=u*n;const i=Math.floor(k);let d=`M${pts[0][0]} ${pts[0][1]}`;for(let j=1;j<=Math.min(i,n);j++)d+=` L${pts[j][0]} ${pts[j][1]}`;if(i<n){const f=k-i;d+=` L${lerp(pts[i][0],pts[i+1][0],f)} ${lerp(pts[i][1],pts[i+1][1],f)}`;}return path(d,{s:o.s||FG,sw:o.sw||2.5,o:o.o==null?1:o.o,dash:o.dash});}
+// a ring around a point that fades in from t0
+const m4_ring=(t,t0,x,y,o={})=>{const a=op(t,t0,.5);return a<=0?'':circ(x,y,o.r||14,{f:'none',s:o.c||ACC,sw:2.5,o:a});};
+// a horizontal level with a tag at the right
+const m4_level=(t,t0,x1,x2,y,s,o={})=>{const a=op(t,t0,.5);return a<=0?'':line(x1,y,x2,y,{s:o.c||ACC,sw:1.5,o:a,dash:o.dash||'6 5'})+txt(x2+8,y+5,s,{sz:o.sz||13,c:o.c||ACC,o:a});};
+// PSAR dots under (side=1) or over (side=-1) a path segment
+function m4_dots(t,t0,pts,side,o={}){const a=op(t,t0,.5);if(a<=0)return '';let s='';pts.forEach(p=>{s+=circ(p[0],p[1]+side*18,3,{f:o.c||FG,o:a});});return s;}
+
+function draw(t){
+  let s='';
+  const base=420;
+  // the path into the triple bottom
+  const P=[[100,180],[150,260],[200,330],[240,base],[270,380],[300,base],[330,385],[360,base]];
+  if (t>=6.7){ s += m4_poly(P,pr(t,6.7,3)); s += m4_lab(t,10.3,100,165,'oversold · best reward to risk',{sz:12,c:MUT}); }
+  if (t>=57.2){ [240,300,360].forEach((x,i)=>{ s += m4_ring(t,57.2+i*.4,x,base,{c:ACC,r:9}); }); s += m4_lab(t,60.0,230,base+40,'triple bottom',{sz:13,c:ACC}); }
+  if (t>=61.8){ s += m4_level(t,61.8,80,520,base+6,'10-day low · 30-day low',{c:MUT}); }
+  // the turning point: PSAR flips under and holds
+  if (t>=15.1){ s += m4_ring(t,15.1,360,base,{c:OK,r:16}); s += m4_lab(t,15.1,380,base+5,'turning point',{sz:12,c:OK}); }
+  if (t>=18.2){ s += m4_dots(t,18.2,[[345,base-2],[365,base+2],[385,base-10]],1,{c:ACC}); s += rect(352,base-24,30,24,{r:3,f:'none',s:DN,sw:1.5,o:op(t,22.1,.5),extra:'stroke-dasharray="3 3"'}); s += m4_lab(t,22.1,390,base-30,'narrow risk box',{sz:12,c:DN}); }
+  // the two strong days up to near the 10-day high, then the roll-over and the exit
+  const U=[[360,base],[400,370],[430,385],[470,320],[520,250],[560,200],[600,170]];
+  if (t>=24.0){ s += m4_poly(U.slice(0,3),pr(t,24.0,1.2),{s:OK}); s += m4_ring(t,27,430,385,{c:ACC,r:9}); s += m4_lab(t,27,440,405,'Kata 2',{sz:12,c:ACC}); }
+  if (t>=28.9){ s += m4_poly(U.slice(2),pr(t,28.9,2.5),{s:OK,sw:3}); }
+  if (t>=70.2){ s += m4_level(t,70.2,440,760,150,'10-day high',{c:MUT}); }
+  if (t>=32.2){ s += m4_poly([[600,170],[630,200],[660,240]],pr(t,34.9,1.2),{s:DN,sw:2.5}); }
+  if (t>=37.1){ s += m4_dots(t,37.1,[[625,170],[650,205]],-1,{c:ACC}); s += circ(640,210,6,{f:ACC,o:op(t,38.6,.5)}); s += m4_lab(t,38.6,660,205,'out at the flip',{sz:12,c:ACC}); }
+  if (t>=65.5){ s += m4_poly([[360,base],[400,460],[450,500]],pr(t,65.5,1),{s:DN,dash:'5 4'}); s += m4_lab(t,67.8,460,500,'fails: happy to be short',{sz:12,c:DN}); }
+  if (t>=77.8){ const a=op(t,77.8,.5); s += rect(470,180,120,200,{r:4,f:'rgba(74,222,128,.08)',s:'none',o:a}); s += m4_lab(t,79.9,600,300,'the fat part',{sz:13,c:OK}); s += m4_lab(t,79.9,600,320,'(his account)',{sz:11,c:MUT}); }
+  if (t>=85.0){ s += m4_pill(300,120,'the template: channeling · overreaction',{o:op(t,85.0,.5),w:320,c:ACC,s:ACC,sz:13}); }
+  return s;
+}
+
+window.renderFrame = function (t) {
+  t = clamp(t, 0, ANIM_DURATION);
+  let cap = '', sub = '';
+  for (const b of BEATS) if (t >= b[0]) { cap = b[1]; sub = b[2] || ''; }
+  $('cap').innerHTML = cap; $('sub').textContent = sub;
+  $('svg').innerHTML = WRAP[0] + draw(t) + WRAP[1];
+  const f = $('fade');
+  f.style.opacity = t < 0.5 ? 1 - t / 0.5 : (ANIM_DURATION - t < 0.6 ? 1 - (ANIM_DURATION - t) / 0.6 : 0);
+};
+renderFrame(0);
+</script>
+</body>
+</html>

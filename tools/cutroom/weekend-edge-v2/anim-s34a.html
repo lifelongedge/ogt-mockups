@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>s34a · collapsing dragon, case one</title>
+<style>
+  :root { --bg:#030507; --fg:#E1EEF5; --muted:#8fa3ad; --border:rgba(56,225,255,0.14); --accent:#F2D06B;
+          --ok:#4ade80; --dn:#f87171; --card:#0a1016; --blue:#7baad4; }
+  html, body { margin:0; background:var(--bg); overflow:hidden; }
+  #stage { position:relative; width:1280px; height:720px; background:var(--bg); color:var(--fg);
+           font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; overflow:hidden; }
+  #cap { position:absolute; left:60px; right:60px; top:30px; font-size:32px; font-weight:600; letter-spacing:-.01em; line-height:1.15; }
+  #cap em { font-style:normal; color:var(--accent); }
+  #sub { position:absolute; left:60px; width:1160px; top:648px; font-size:20px; color:var(--muted); line-height:1.4; }
+  #scene { position:absolute; left:60px; top:112px; width:1160px; height:518px; border:1px solid var(--border);
+           border-radius:10px; background:var(--card); overflow:hidden; }
+  #svg { position:absolute; inset:0; }
+  #fade { position:absolute; inset:0; background:var(--bg); pointer-events:none; opacity:0; }
+  /* the picture-in-picture corner: build_v2 composites Ken's camera tile here (PIP_W/X/Y); the cutroom shows this placeholder */
+  #pip { position:absolute; left:950px; top:22px; width:300px; height:169px; border:1px dashed rgba(56,225,255,0.35); border-radius:4px;
+         display:none; color:var(--muted); font-size:13px; text-align:center; line-height:169px; }
+  .pip #pip { display:block; } .pip #cap { right:360px; font-size:29px; }
+  text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; fill:#E1EEF5; }
+  .mono { font-family:ui-monospace,Menlo,Consolas,monospace; }
+  #third { display:none; }
+</style>
+</head>
+<body>
+<div id="stage" class="pip">
+  <div id="cap"></div>
+  <div id="pip">Ken on camera, composited at render</div>
+  <div id="scene"><svg id="svg" width="1160" height="530" viewBox="0 0 1160 530"></svg></div>
+  <div id="third"></div>
+  <div id="sub"></div>
+  <div id="fade"></div>
+</div>
+<script>
+const BUILD = 's34a-1';
+console.log('[s34a] build', BUILD);
+// Overdub twin of s34: Ken's audio cdd 3570.0→4062.0; t is seconds after the in-point.
+// Beat times read from the VTT cues on 2026-11-21 (tools/cutroom/weekend-edge-v2/transcript-cdd.json).
+window.ANIM_DURATION = 492.0;
+const ACC='#F2D06B', FG='#E1EEF5', MUT='#8fa3ad', OK='#4ade80', DN='#f87171', BLUE='#7baad4', BRD='rgba(56,225,255,.22)', CARD='#0a1016', TXS=1, WRAP=['',''];
+const W=1160, H=530;
+const $ = id => document.getElementById(id);
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const ease=u=>{u=clamp(u,0,1);return u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;};
+const lerp=(a,b,u)=>a+(b-a)*u;
+const pr=(t,t0,d)=>ease((t-t0)/(d||0.6));          // eased progress 0..1 from t0 over d seconds
+const on=(t,t0)=>t>=t0;
+const op=(t,t0,d)=>clamp((t-t0)/(d||0.5),0,1);      // linear opacity ramp
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const txt=(x,y,s,o={})=>`<text x="${x}" y="${y}" font-size="${(o.sz||20)*TXS}" fill="${o.c||FG}" opacity="${o.o==null?1:o.o}" text-anchor="${o.a||'start'}" font-weight="${o.w||400}" class="${o.cls||''}" ${o.extra||''}>${esc(s)}</text>`;
+const rect=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.r==null?6:o.r}" fill="${o.f||'none'}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}" ${o.extra||''}/>`;
+const circ=(x,y,r,o={})=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${o.f||FG}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}"/>`;
+const line=(x1,y1,x2,y2,o={})=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${o.s||MUT}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" ${o.dash?`stroke-dasharray="${o.dash}"`:''} stroke-linecap="round"/>`;
+const path=(d,o={})=>`<path d="${d}" fill="${o.f||'none'}" stroke="${o.s||FG}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" stroke-linecap="round" stroke-linejoin="round" ${o.dash?`stroke-dasharray="${o.dash}"`:''}/>`;
+const arrow=(x1,y1,x2,y2,o={})=>{const a=Math.atan2(y2-y1,x2-x1),h=10;return line(x1,y1,x2,y2,o)+path(`M${x2} ${y2} L${x2-h*Math.cos(a-0.5)} ${y2-h*Math.sin(a-0.5)} M${x2} ${y2} L${x2-h*Math.cos(a+0.5)} ${y2-h*Math.sin(a+0.5)}`,{s:o.s||MUT,sw:o.sw||2,o:o.o});};
+// a labelled box that grows in from t0
+const box=(t,t0,x,y,w,h,label,o={})=>{const u=pr(t,t0,0.5);if(u<=0)return '';const ww=w*u,hh=h;return rect(x+(w-ww)/2,y,ww,hh,{s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',sw:o.sw||1.5,o:u})+(u>.6?txt(x+w/2,y+h/2+(o.sz||20)/3,label,{a:'middle',sz:o.sz||20,c:o.c||FG,o:op(t,t0+.3,.3),w:o.w||500}):'');};
+// deterministic pseudo-random
+function rng(seed){let s=seed*9301+49297;return()=>{s=(s*9301+49297)%233280;return s/233280;};}
+// a herd of dots in a region; drift is a slow deterministic wander
+function herd(n,seed,x,y,w,h){const r=rng(seed);const pts=[];for(let i=0;i<n;i++)pts.push({x:x+r()*w,y:y+r()*h,p:r()*6.28,q:r()*6.28});return pts;}
+const wander=(p,t,amp)=>[p.x+Math.sin(t*0.9+p.p)*amp,p.y+Math.cos(t*0.7+p.q)*amp];
+// typewriter: the first k chars of s by time
+const type=(s,t,t0,cps)=>s.slice(0,Math.max(0,Math.floor((t-t0)*(cps||28))));
+// a list that reveals one row per step seconds from t0
+function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
+
+const BEATS = [[1.0, "what's the deal with the <em>collapsing dragon</em>? you identified four cases", "He is answering a student's email of four drawn cases."], [15.0, "<em>two cases</em> of collapsing dragons. One is the SSC side: you had a <em>harsh winter</em>", ""], [33.0, "the RL10 reversed enough that the PSAR, which is <em>built off the RL10</em>, was triggered", ""], [72.0, "when the RL10 crosses the PSAR, when that bar closes, price could already have been up here", ""], [94.0, "the PSAR flips at the <em>same exact price</em> as the sharp point on the RL10", ""], [117.0, "the PSAR will only flip when the RL10 officially hits it, <em>when the bar closes</em>", ""], [142.0, "this is where the PSAR flips, and this is the <em>trigger</em> for the collapsing dragon", ""], [168.0, "<em>price</em> violates that line. Not when the RL10 crosses it: when <em>price</em> crosses it", ""], [177.0, "this collapse is going so fast that the RL10 is actually <em>two to three bars slower</em>", ""], [210.0, "the collapsing dragon occurs when price violates the <em>beginning PSAR dot</em> of the new stack", ""], [236.0, "when the first dot in that new stack gets violated: as soon as price violates, <em>we're short</em>", ""], [269.0, "that last bar of the harsh winter was an <em>exaggerated bar</em>; the RL10 smooths those closes", ""], [299.0, "here's where the RL10 found support; this is where the <em>actual lowest price</em> occurred", ""], [311.0, "this is where all the guys who are going long are placing their <em>stops</em>", ""], [325.0, "a little room left before those stops are hit; below this line <em>this explodes</em>", ""], [349.0, "a great big <em>red candle</em>: it tests the low, hits those stops, and we're already in the trade", ""], [374.0, "we <em>cannot wait</em> for the RL10 to trigger: that's two or three bars behind price", ""], [408.0, "what I'd love to see: the <em>R10 wrist box off the low</em>, the PSAR triggers up: my long entry", ""], [426.0, "the RL10 <em>can't even get out of that box</em>, and price collapses back through: I'm so short", ""], [446.0, "all we know is the previous harsh winter is going to go: another of those <em>big moves</em>", ""], [452.0, "the CD occurs when price violates the <em>pointy edge</em> of the RL10: where the first dot draws", ""], [474.0, "if the SSC works we would see a long glorious PSAR rising; that's the <em>first case</em>", ""]];
+
+const m3_pill=(x,y,s,o={})=>{const w=(o.w||s.length*9.5+22);return rect(x-w/2,y-15,w,30,{r:15,s:o.s||BRD,f:o.f||'rgba(255,255,255,.03)',o:o.o==null?1:o.o})+txt(x,y+6,s,{a:'middle',sz:o.sz||15,c:o.c||FG,o:o.o==null?1:o.o,w:o.wt||500});};
+const m3_lab=(t,t0,x,y,s,o={})=>{const a=op(t,t0,o.d||.5);return a<=0?'':txt(x,y,s,{...o,o:a*(o.o==null?1:o.o)});};
+const m3_card=(x,y,w,h,o={})=>rect(x,y,w,h,{r:10,s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',o:o.o==null?1:o.o});
+const m3_person=(x,y,o={})=>circ(x,y-14,9,{f:'none',s:o.c||FG,sw:2,o:o.o==null?1:o.o})+path(`M${x-16} ${y+22} C${x-16} ${y} ${x+16} ${y} ${x+16} ${y+22}`,{s:o.c||FG,sw:2,o:o.o==null?1:o.o});
+// the points of a timed polyline that are visible at t: pts=[[x,y,t0],...]; the segment into the next point eases in
+function m3_vis(t,pts){const v=[];for(let i=0;i<pts.length;i++){const p=pts[i];const t0=p[2]==null?-1e9:p[2];if(t0<=t){v.push([p[0],p[1]]);}else{if(i>0){const q=pts[i-1];const q0=q[2]==null?t0-1:q[2];const u=pr(t,q0,Math.max(0.4,t0-q0));if(u>0)v.push([lerp(q[0],p[0],u),lerp(q[1],p[1],u)]);}break;}}return v;}
+function m3_d(v,smooth){if(v.length<2)return '';let d=`M${v[0][0]} ${v[0][1]}`;if(!smooth){for(let i=1;i<v.length;i++)d+=` L${v[i][0]} ${v[i][1]}`;return d;}for(let i=1;i<v.length-1;i++){const mx=(v[i][0]+v[i+1][0])/2,my=(v[i][1]+v[i+1][1])/2;d+=` Q${v[i][0]} ${v[i][1]} ${mx} ${my}`;}const l=v[v.length-1];d+=` L${l[0]} ${l[1]}`;return d;}
+const m3_poly=(t,pts,o={})=>{const d=m3_d(m3_vis(t,pts),o.smooth);return d?path(d,{s:o.s||FG,sw:o.sw||2.5,o:o.o==null?1:o.o,dash:o.dash||''}):'';};
+// the RL10 of a price path: a 3-point smoothing, shifted right a touch (a lagging line)
+function m3_rl(pts,dx){const r=[];for(let i=0;i<pts.length;i++){const a=pts[Math.max(0,i-1)],b=pts[i],c=pts[Math.min(pts.length-1,i+1)];r.push([b[0]+(dx||8),(a[1]+b[1]+c[1])/3,b[2]]);}return r;}
+// a band of half-width hw around a visible polyline
+function m3_band(t,pts,hw,o={}){const v=m3_vis(t,pts);if(v.length<2)return '';const up=v.map(p=>[p[0],p[1]-hw]),dn=v.slice().reverse().map(p=>[p[0],p[1]+hw]);return path(m3_d(up,true)+' '+m3_d(dn,true).replace('M','L')+' Z',{f:o.f||'rgba(242,208,107,.14)',s:'none',o:o.o==null?1:o.o});}
+// PSAR dots: [[x,y,t0],...]
+const m3_dots=(t,ds,o={})=>ds.map(d=>{const a=op(t,d[2],.3);return a<=0?'':circ(d[0],d[1],o.r||3.5,{f:o.c||FG,o:a*(o.o==null?1:o.o)});}).join('');
+// a candle: body from y1 to y2 at x
+const m3_candle=(x,y1,y2,o={})=>rect(x-5,Math.min(y1,y2),10,Math.abs(y2-y1)||2,{r:1,f:o.f||DN,s:'none',o:o.o==null?1:o.o})+line(x,Math.min(y1,y2)-(o.wick||6),x,Math.max(y1,y2)+(o.wick||6),{s:o.f||DN,sw:1.5,o:o.o==null?1:o.o});
+
+// the board: a harsh winter down to the low, the rebound, then the collapse through the first dot
+const P=[[120,150,15],[170,230,17],[220,310,19],[270,370,21],[300,440,23],[330,400,33],[360,372,36],[390,350,60],[420,338,72],[450,352,142],[480,372,150],[505,400,168],[520,430,170],[540,480,349]];
+const RL=m3_rl(P,10);
+const STACK=[[120,120,33],[170,196,34],[220,276,35],[270,338,36],[300,392,37]];
+const NEW=[[332,412,94],[362,392,120],[392,374,130],[422,360,138]];
+function draw(t){
+  let s='';
+  s += line(80,490,700,490,{s:BRD,sw:1,o:op(t,15,.5)});
+  s += m3_band(t,RL,12,{o:.7});
+  s += m3_poly(t,P,{s:FG,sw:2.5,smooth:true});
+  s += m3_poly(t,RL,{s:ACC,sw:2,smooth:true,o:op(t,33,.6)});
+  s += m3_lab(t,15,150,120,'case one: the SSC side',{sz:14,c:FG});
+  s += m3_lab(t,22,210,300,'harsh winter',{sz:13,c:DN});
+  s += m3_dots(t,STACK,{c:FG});
+  s += m3_lab(t,40,160,470,'PSAR, built off the RL10',{sz:12,c:MUT});
+  // the sharp point: ringed, and the new stack under the rebound (named in the card)
+  if (t>=94){ const a=op(t,94,.6); s += circ(332,412,8,{f:'none',s:ACC,sw:2,o:a}); }
+  s += m3_dots(t,NEW,{c:OK});
+  // tag one: the trigger line at the first dot
+  if (t>=142){ const a=op(t,142,.6); s += line(320,412,600,412,{s:DN,sw:2,dash:'6 4',o:a}); s += m3_lab(t,150,606,416,'the trigger',{sz:13,c:DN,w:600}); }
+  if (t>=177){ const a=op(t,177,.6); s += line(452,352,540,352,{s:ACC,sw:1.5,dash:'3 3',o:a*.8}); }
+  // the exaggerated bar, the actual low and the stops (drawn, named in the card), tag two: explodes
+  if (t>=269){ const a=op(t,269,.6); s += m3_candle(300,392,440,{f:DN,o:a}); }
+  if (t>=299){ const a=op(t,299,.6); s += line(290,440,600,440,{s:MUT,sw:1.2,dash:'2 4',o:a}); }
+  if (t>=311){ const a=op(t,311,.6); for(let i=0;i<6;i++) s += line(360+i*22,446,360+i*22,454,{s:MUT,sw:2,o:a}); }
+  if (t>=349){ const a=op(t,349,.6); s += m3_candle(545,430,484,{f:DN,wick:4,o:a}); s += m3_lab(t,342,560,474,'explodes',{sz:13,c:DN,w:600}); }
+  if (t>=408){ const a=op(t,408,.6); s += rect(300,400,70,42,{r:3,s:ACC,sw:1.5,f:'rgba(242,208,107,.08)',o:a}); }
+  if (t>=474){ const a=op(t,474,.6); for(let i=0;i<6;i++) s += circ(450+i*30,340-i*22,3.5,{f:OK,o:a*.6}); s += m3_lab(t,474,470,200,'if the SSC works: a long glorious PSAR rising',{sz:12,c:OK}); }
+  // the card: every explanation, in the order he gives it
+  s += m3_card(790,110,340,310,{o:op(t,94,.6)});
+  s += m3_lab(t,94,806,136,'the first dot = the sharp point',{sz:12,c:ACC});
+  s += m3_lab(t,117,806,158,'it flips when the bar closes',{sz:12,c:MUT});
+  s += m3_lab(t,168,806,186,'PRICE violates the trigger, not the RL10',{sz:12,c:DN});
+  s += m3_lab(t,177,806,208,'the RL10 is 2–3 bars slower',{sz:12,c:ACC});
+  s += m3_lab(t,236,806,236,"as soon as it violates: we're short",{sz:12,c:DN});
+  s += m3_lab(t,269,806,264,'the exaggerated last bar',{sz:12,c:MUT});
+  s += m3_lab(t,311,806,286,"the longs' stops at the actual low",{sz:12,c:MUT});
+  s += m3_lab(t,342,806,308,'below them: it explodes',{sz:12,c:DN});
+  s += m3_lab(t,374,806,336,'cannot wait for the RL10',{sz:12,c:ACC});
+  s += m3_lab(t,408,806,364,'wrist box off the low',{sz:12,c:FG});
+  s += m3_lab(t,426,806,386,"can't get out of the box → short",{sz:12,c:DN});
+  s += m3_lab(t,446,806,408,'the harsh winter goes again',{sz:12,c:MUT});
+  return s;
+}
+
+window.renderFrame = function (t) {
+  t = clamp(t, 0, ANIM_DURATION);
+  let cap = '', sub = '';
+  for (const b of BEATS) if (t >= b[0]) { cap = b[1]; sub = b[2] || ''; }
+  $('cap').innerHTML = cap; $('sub').textContent = sub;
+  $('svg').innerHTML = WRAP[0] + draw(t) + WRAP[1];
+  const f = $('fade');
+  f.style.opacity = t < 0.5 ? 1 - t / 0.5 : (ANIM_DURATION - t < 0.6 ? 1 - (ANIM_DURATION - t) / 0.6 : 0);
+};
+renderFrame(0);
+</script>
+</body>
+</html>
