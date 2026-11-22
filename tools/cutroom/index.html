@@ -101,6 +101,11 @@
   .card.L-end .ct { font-size:84px; max-width:none; }
   .card.L-end .cs { font-family:"SF Mono",Menlo,monospace; font-size:60px; color:#d4a559; margin-top:32px; }
   .card.L-end .cb { font-size:38px; margin-top:72px; max-width:1320px; }
+  .card.L-prose { align-items:flex-start; justify-content:flex-start; padding:84px 160px 100px; }
+  .card.L-prose .ck { text-align:left; margin-bottom:22px; }
+  .card.L-prose .ct { font-size:64px; text-align:left; max-width:1600px; }
+  .card.L-prose .cs { font-size:34px; color:#9c978a; text-align:left; margin-top:14px; max-width:1600px; }
+  .card.L-prose .cb { font-size:27px; color:#cfcbc0; line-height:1.45; text-align:left; max-width:1600px; margin-top:30px; }
   .card.L-agenda .ct { font-size:80px; }
   .card.L-agenda ol.ca { list-style:none; margin:64px 0 0; padding:0; width:1460px; counter-reset:n; }
   .card.L-agenda ol.ca li { display:grid; grid-template-columns:72px 1fr; align-items:baseline; padding:24px 8px; border-top:2px solid #2a2925; counter-increment:n; text-align:left; }
@@ -268,7 +273,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const BUILD = 'cutroom-29';
+const BUILD = 'cutroom-30';
 console.log('[cutroom] build', BUILD);
 window.__edgeBuild = BUILD;
 
@@ -459,6 +464,7 @@ const LAYOUTS = {   // field roles per layout; the CSS values mirror scripts/ren
   chapter: { kicker: 'Chapter line (Chapter 2)', title: 'Chapter title', subtitle: 'Subtitle (dim, optional)', body: 'Extra lines (optional)' },
   maxim:   { kicker: 'Kicker (usually empty)', title: 'The maxim (type the quote marks)', subtitle: 'Attribution', body: 'Extra lines (optional)' },
   end:     { kicker: 'Kicker (usually empty)', title: 'Main line', subtitle: 'URL line', body: 'Small lines' },
+  prose:   { kicker: 'Kicker (small amber line)', title: 'Title (left, 64px)', subtitle: 'One-line standfirst', body: 'Paragraphs of copy, left-aligned, 27px; a blank line between paragraphs' },
   agenda:  { kicker: 'Kicker (In this course)', title: 'Title (Four parts, about 28 minutes)', subtitle: 'Subtitle (optional)', body: 'One part per line; after a | its short gloss' },
 };
 function agendaList(body, mark) {   // cutroom-25: mirrors agenda_list() in scripts/render_slides.py
