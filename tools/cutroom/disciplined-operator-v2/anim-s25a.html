@@ -35,7 +35,7 @@
   <div id="fade"></div>
 </div>
 <script>
-const BUILD = 's25a-3';
+const BUILD = 's25a-4';
 console.log('[s25a] build', BUILD);
 // Overdub twin of s25: Ken's audio p4321 3060.0→3249.0; t is seconds after the in-point.
 // Beat times read from the VTT cues on 2026-11-21 (tools/cutroom/disciplined-operator-v2/transcript-p4321.json).
@@ -100,9 +100,9 @@ function draw(t){
   s += heatbars(t,{t0:32.6,unit:20,y:380,step:0.4});
   s += line(130,380,710,380,{s:MUT,o:op(t,32.6,.5)});
   s += lab(t,32.6,140,404,'10 open positions',{sz:13,c:FG});
-  if (t>=48.2){ const a=op(t,48.2,.6); s += rect(140,196-6,550,10,{r:2,f:'rgba(248,113,113,.25)',s:DN,sw:1,o:a}); s += txt(700,204,'if all failed at once',{sz:12,c:DN,o:a}); }
-  if (t>=82.8) s += lab(t,82.8,720,200-20,'1 % risk',{sz:12,c:DN});
-  if (t>=90.2) s += lab(t,90.2,720,300,'9 % pays for the position',{sz:12,c:MUT});
+  if (t>=48.2){ const a=op(t,48.2,.6); s += rect(140,196-6,550,10,{r:2,f:'rgba(248,113,113,.25)',s:DN,sw:1,o:a}); s += txt(745,204,'if all failed at once',{sz:12,c:DN,o:a,a:'end'}); }
+  if (t>=82.8) s += lab(t,82.8,745,200-20,'1 % risk',{sz:12,c:DN,a:'end'});
+  if (t>=90.2) s += lab(t,90.2,745,300,'9 % pays for the position',{sz:12,c:MUT,a:'end'});
   // the ledger at the right
   if (t>=71.9){ const a=op(t,71.9,.6); s += card(760,120,290,150,{o:a}); s += txt(780,150,'$1,000,000 risk capital',{sz:14,c:FG,o:a}); s += lab(t,80.3,780,178,'10 positions × 1 %',{sz:14,c:FG}); s += lab(t,86.3,780,210,'heat max = 10 %',{sz:18,c:ACC}); s += lab(t,90.2,780,240,'the other 90 % pays for them',{sz:12,c:MUT}); }
   // the gut: a quarter of that

@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stanford style study</title>
+<style>
+  :root { --bg:#070a10; --surface:#10141c; --fg:#e6edf3; --muted:#8b98a5; --line:#1f2733; --accent:#d4a559; --teal:#3a8f8a; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif; line-height:1.5; }
+  header { padding:28px 32px 18px; border-bottom:1px solid var(--line); }
+  header h1 { margin:0 0 6px; font-size:26px; font-weight:600; }
+  header p { margin:0; color:var(--muted); font-size:15px; max-width:900px; }
+  .ask { margin-top:14px; display:grid; gap:10px; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); max-width:1100px; }
+  .ask div { background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:12px 14px; font-size:14px; }
+  .ask b { color:var(--accent); display:block; font-size:12px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:4px; }
+  main { padding:10px 32px 80px; max-width:1500px; }
+  section { margin-top:44px; }
+  h2 { font-size:21px; font-weight:600; margin:0 0 6px; padding-top:10px; }
+  h2 small { color:var(--muted); font-weight:400; font-size:14px; margin-left:12px; }
+  h3 { font-size:16px; font-weight:600; margin:26px 0 8px; }
+  p { max-width:900px; }
+  .lede { color:var(--muted); margin-top:0; }
+  figure { margin:16px 0 0; }
+  figure img { width:100%; display:block; border-radius:8px; border:1px solid var(--line); background:#000; }
+  figcaption { color:var(--muted); font-size:13px; margin-top:8px; max-width:1100px; }
+  .grid2 { display:grid; gap:18px; grid-template-columns:repeat(auto-fit,minmax(420px,1fr)); }
+  .grid3 { display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); }
+  table { border-collapse:collapse; font-size:14px; margin-top:12px; width:100%; max-width:1100px; }
+  th, td { text-align:left; padding:8px 12px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th { color:var(--muted); font-weight:500; font-size:12.5px; letter-spacing:.04em; text-transform:uppercase; }
+  td.n { font-family:ui-monospace,Menlo,monospace; white-space:nowrap; }
+  .tag { display:inline-block; font:600 11px ui-monospace,Menlo,monospace; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); border:1px solid rgba(212,165,89,.4); border-radius:4px; padding:2px 7px; margin-right:8px; vertical-align:middle; }
+  .tag.t { color:var(--teal); border-color:rgba(58,143,138,.5); }
+  ul { padding-left:22px; max-width:900px; } li { margin:6px 0; } li b { font-weight:600; }
+  .rule { background:var(--surface); border:1px solid var(--line); border-left:3px solid var(--accent); border-radius:8px; padding:14px 18px; margin-top:12px; max-width:1100px; }
+  .rule h4 { margin:0 0 6px; font-size:15px; }
+  .rule p, .rule ul { margin:4px 0; font-size:14px; }
+  code { font-family:ui-monospace,Menlo,monospace; font-size:.92em; color:#e8d5a8; background:rgba(255,255,255,.05); padding:1px 5px; border-radius:4px; }
+  iframe { width:100%; border:1px solid var(--line); border-radius:10px; background:#000; display:block; }
+  a { color:var(--teal); } a:hover { color:var(--fg); }
+  .dec { counter-reset:d; }
+  .dec .rule { counter-increment:d; } .dec .rule h4::before { content:counter(d) ". "; color:var(--accent); }
+  .pill { display:inline-block; background:rgba(58,143,138,.15); border:1px solid rgba(58,143,138,.4); color:#9fd8d2; border-radius:999px; padding:2px 10px; font-size:12px; margin-left:8px; vertical-align:middle; }
+  .note { color:var(--muted); font-size:13px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Stanford "Probability for AI" videos: what they do, what we take</h1>
+  <p>Nineteen lectures read as frames (every opener at two seconds, three full lectures sampled across their length, two lessons measured at 1280×720). Then our own s25 scene from the Disciplined Operator drawn three ways, and three opener options drawn in code. Written 2026-11-21 for the owner to pick from.</p>
+  <div class="ask">
+    <div><b>Ask 1 · new ideas</b>What their lessons do that our animation skill did not. Nine rules below, seven of them written into the anim-overdub skill today.</div>
+    <div><b>Ask 2 · bigger on the screen</b>Measured: their in-scene type is about twice ours. A new <code>stage</code> style removes the card; the real gain is a scene authored for the size. Both shown.</div>
+    <div><b>Ask 3 · the bright opener as brand</b>Three drawn options with the owl in a bright landscape, the frosted title box and Ken's tile, playable below. The gap: we have no raster hero character.</div>
+  </div>
+</header>
+<main>
+
+<section id="openers">
+  <h2>1 · The opener is the brand <small>what the nineteen videos do in their first seconds</small></h2>
+  <p class="lede">Every lecture opens the same way: one full-frame bright illustration (a robot among animals in a golden-hour landscape; a few are photographed landscapes), the lesson title in a frosted white box low in the frame, the presenter in a tile top-right, held still with no camera move for 7 to 20 seconds, then a hard cut to a pure black lesson. The series is recognisable from the thumbnail alone, and the thumbnail is the opener.</p>
+  <figure><img src="img/openers.jpg" alt="Nineteen opener frames at two seconds" loading="lazy"><figcaption>All nineteen openers at two seconds in. One picture family, one title box, one tile position. The pictures change per lesson; the frame does not.</figcaption></figure>
+  <div class="grid2">
+    <figure><img src="img/opener-cp.jpg" alt="Conditional probability opener" loading="lazy"><figcaption>Conditional probability, the opener at full size. Presenter tile ≈ 333×187 of 1280×720 (26 % of the width); title box ≈ 560×90 centred at y ≈ 620.</figcaption></figure>
+    <figure><img src="img/lect-conditional-probability.jpg" alt="Conditional probability lecture contact sheet" loading="lazy"><figcaption>The same lecture sampled across its length: the opener holds, then every screen is black with one idea on it. The tile and a small seal stay in the corner throughout.</figcaption></figure>
+  </div>
+
+  <h3>Our opener options <span class="pill">drawn in code, deterministic, playable</span></h3>
+  <p>Our brand assets are thin line icons (the archetype and season sets in edge-growogtx); there is no raster hero, and no image generation is available on this box. So the three options below are drawn SVG scenes the kit can render frame by frame today. Each carries the three fixed parts: the frosted title box, the OWL GROUP TRADING wordmark, and the 300×169 tile top-right where Ken is composited at render. Scrub, play, and switch the title to see the box fit.</p>
+  <iframe src="openers.html" style="height:1560px" title="Opener options" loading="lazy"></iframe>
+  <div class="grid3">
+    <figure><img src="img/opener-A-3.png" alt="Option A frame" loading="lazy"><figcaption><b>A · First light.</b> Golden hour, the owl on a fence post. The warmest of the three and the closest to the amber of the course cards.</figcaption></figure>
+    <figure><img src="img/opener-B-3.png" alt="Option B frame" loading="lazy"><figcaption><b>B · The watch.</b> Blue hour, a lighthouse sweeping, the owl on a bollard turning to the beam. Quieter; fits the risk and system courses.</figcaption></figure>
+    <figure><img src="img/opener-C-3.png" alt="Option C frame" loading="lazy"><figcaption><b>C · Above the valley.</b> Full daylight, the owl gliding across the frame with its shadow on the land. The brightest and the most Stanford-like.</figcaption></figure>
+  </div>
+  <div class="rule"><h4>The gap, flagged for growogtx</h4><p>The Stanford openers are painted illustrations with a recurring character. A drawn SVG owl holds the frame and the brand rule (no stock art, no generic icons), but a commissioned or generated owl character set (the same owl in six to eight landscapes, one per course family) would be the real equivalent. Until one exists, option A, B or C ships as the opener; the frame (title box, wordmark, tile) stays the same when the picture is replaced.</p></div>
+</section>
+
+<section id="size">
+  <h2>2 · Bigger on the screen <small>measured, then two answers</small></h2>
+  <p class="lede">Their lesson type is big because the lesson is the whole frame. Ours sits inside a bordered card, with labels about half their size.</p>
+  <div class="grid2">
+    <figure><img src="img/lesson-dl.jpg" alt="Deep learning lesson frame" loading="lazy"><figcaption>A lesson frame (Deep learning). Serif body at ≈ 32 px of 720, key words in colour, the figure across two thirds of the width, tile and seal persistent.</figcaption></figure>
+    <figure><img src="img/lesson-normal.jpg" alt="Normal distribution lesson frame" loading="lazy"><figcaption>Another (The normal distribution): one formula, one figure, one sentence. Nothing on the screen he is not saying.</figcaption></figure>
+  </div>
+  <table>
+    <tr><th>Measured at 1280×720</th><th>Stanford lessons</th><th>Ours (ink, a cut twin)</th></tr>
+    <tr><td>In-scene label type</td><td class="n">26–42 px</td><td class="n">12–16 px in the SVG → 13–18 px on screen</td></tr>
+    <tr><td>Title or caption type</td><td class="n">40–48 px</td><td class="n">32 px caption (29 px on a pip twin)</td></tr>
+    <tr><td>Figure width</td><td class="n">≈ 60–75 % of frame</td><td class="n">≈ 45–55 % of the card</td></tr>
+    <tr><td>Scene area</td><td class="n">full frame, black</td><td class="n">1160×518 card, bordered, on a 1280×720 stage</td></tr>
+    <tr><td>Presenter tile</td><td class="n">≈ 333×187 (26 %)</td><td class="n">300×169 (23 %)</td></tr>
+    <tr><td>Opener hold</td><td class="n">7–20 s static</td><td class="n">title card 4–6 s</td></tr>
+  </table>
+  <p class="note">The 1280×720 numbers are from frames; the render is 1920×1080, where everything scales by 1.5.</p>
+
+  <h3>Answer one: the <code>stage</code> style <span class="pill">in anim_kit.STYLES today</span></h3>
+  <p>Pure black, no card, the scene scaled to the full width with the caption above and the gloss below, type 1.1× (more collides labels laid out for ink). An existing scene runs unchanged: about ten percent larger and a cleaner frame. It does not make a small scene big.</p>
+  <div class="grid2">
+    <figure><img src="img/s25-ink-2.png" alt="s25 in ink" loading="lazy"><figcaption>Disciplined Operator s25 (portfolio heat) in <code>ink</code>, as it ships.</figcaption></figure>
+    <figure><img src="img/s25-stage-2.png" alt="s25 in stage" loading="lazy"><figcaption>The same scene in <code>stage</code>: no card, no border, 10 % larger. The small labels are still small.</figcaption></figure>
+  </div>
+
+  <h3>Answer two: author for the stage <span class="pill">the rule that matters</span></h3>
+  <p>The same scene rewritten under the bigger rules: one figure across the left 700 px, labels at 20–34 px, the numbers in a right column at 30 px, no boxed cards. Same beats, same words at the same seconds. This is the version the rest of the Disciplined Operator would move to if the owner wants the Stanford scale. <a href="anim-s25xl-stage.html">Play it</a> (the kit page; the caption changes on his words).</p>
+  <div class="grid2">
+    <figure><img src="img/s25xl-stage-1.png" alt="s25 XL at 50 percent" loading="lazy"><figcaption>At 50 %: ten positions, the risk slice on each, the running total on the right.</figcaption></figure>
+    <figure><img src="img/s25xl-stage-2.png" alt="s25 XL at 85 percent" loading="lazy"><figcaption>At 85 %: the gut's quarter arrives under the maximum; the last line lands on his last sentence.</figcaption></figure>
+  </div>
+  <div class="grid2">
+    <figure><img src="img/s31-ink-2.png" alt="s31 in ink" loading="lazy"><figcaption>Ken Shorts s31 in <code>ink</code>: the retirement-account scene.</figcaption></figure>
+    <figure><img src="img/s31-stage-2.png" alt="s31 in stage" loading="lazy"><figcaption>In <code>stage</code>: better frame, same small labels. A scene with one big figure gains the most from re-authoring.</figcaption></figure>
+  </div>
+</section>
+
+<section id="ideas">
+  <h2>3 · What to add to the animation skill <small>nine rules read from their lessons</small></h2>
+  <p class="lede">Most of these cost nothing but discipline; two need a line of code. Those marked <span class="tag">skill</span> are in the anim-overdub skill as of today; <span class="tag t">kit</span> marks a kit change.</p>
+  <div class="rule"><h4><span class="tag">skill</span>Destination first</h4><p>Their lessons open cold on "by the end of this lesson you will be able to…" before any picture. Ours open on his first sentence. For a course with a scripted explainer (s27 in the Disciplined Operator), the first beat names what the viewer will be able to do; for a cut, the title card's subtitle carries it.</p></div>
+  <div class="rule"><h4><span class="tag">skill</span>One idea per screen, the figure across the frame</h4><p>A lesson screen holds one sentence and one figure; the figure spans 60–75 % of the width. For a stage scene: one figure across the left 700 px of the 1160, numbers in a right column, no boxed cards (a card inside a frame is a slide inside a slide).</p></div>
+  <div class="rule"><h4><span class="tag">skill</span>Type sizes for the stage</h4><p>Labels 20–34 px in the SVG, the figure's title 30 px, the biggest number 34 px bold, nothing below 17 px. Strokes 2.5–3 px. The ink sizes (12–16 px) are for a card; a stage scene written at those sizes is the small picture on a big black field.</p></div>
+  <div class="rule"><h4><span class="tag">skill</span>Key words in colour, the rest plain</h4><p>Their serif body is white with the operative noun or number in one colour. Ours already does this in the caption (<code>&lt;em&gt;</code> turns amber); the rule extends to in-scene labels: one accent per screen, the number he says.</p></div>
+  <div class="rule"><h4><span class="tag">skill</span>Recall boxes</h4><p>When he refers back to something from earlier ("remember the heat number"), the earlier figure returns small in a corner box for a few seconds, not redrawn in full. Deterministic: draw it from the same helper at a smaller scale.</p></div>
+  <div class="rule"><h4><span class="tag">skill</span>Sources small, in frame</h4><p>A credit (a book, a study, a person he names) sits at 14 px at the bottom edge for the beat he names it, never in the caption. Our honesty rule already keeps credits to his words; this fixes where they go.</p></div>
+  <div class="rule"><h4><span class="tag">skill</span>The hold</h4><p>Their openers do not move for 7–20 s. The course opener holds the picture with a slow ambient motion (the sun, the beam, the glide) and no cut for at least 6 s; the title box fades in at 1.2 s, the wordmark at 2.0 s. The silence is part of it.</p></div>
+  <div class="rule"><h4><span class="tag t">kit · next</span>Persistent seal</h4><p>They keep a small seal bottom-right for the whole lesson. Not in the kit yet: the <code>stage</code> style should reserve 80×80 at bottom-right for a brand mark, once the owner picks one (the line-icon owl from edge-growogtx/icons would do; flagged with the hero gap above). Scenes already keep that corner clear (nothing below y=505).</p></div>
+  <div class="rule"><h4><span class="tag t">kit</span>Black, not a card</h4><p>The <code>stage</code> style: pure black, no card, no border, scene scaled to the width. Done; every style stays available per course and a scene is written once.</p></div>
+</section>
+
+<section id="decisions" class="dec">
+  <h2>4 · For the owner to pick</h2>
+  <div class="rule"><h4>The opener</h4><p>A, B or C as the course opener frame, or none until a hero character exists. The frame (title box, wordmark, tile) is the same in all three; the picture is the only choice.</p></div>
+  <div class="rule"><h4>The Disciplined Operator's stage</h4><p>Keep <code>ink</code> as shipped (rev 5, 32/48 in the cutroom), switch to <code>stage</code> unchanged (10 % larger, cleaner), or re-author the sixteen twins under the stage rules as s25 was (about a day's scene work; same beats, same words).</p></div>
+  <div class="rule"><h4>The hero character</h4><p>Hand growogtx the brief: one owl, six to eight landscapes, painted or generated, at 1920×1080, warm palette. The drawn options stand in until then.</p></div>
+</section>
+
+<p class="note" style="margin-top:50px">Sources read: the nineteen YouTube lectures the owner linked (Conditional probability through Beyond PAI), fetched at 720p on this box and read as frames; none of the frames here is redistributed beyond this internal page. Our frames: Disciplined Operator v2 s25, Ken Shorts s31. Files: <code>ogt-coursecraft/devtimeartifacts/stanford-style-study-2026-11-21/</code>.</p>
+</main>
+<script>const BUILD='stanford-study-1'; console.log('[stanford-study] build', BUILD); window.__edgeBuild = BUILD;</script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Opener options</title>
+<style>
+  :root { --bg:#070a10; --surface:#10141c; --fg:#e6edf3; --muted:#8b98a5; --line:#1f2733; --accent:#d4a559; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif; }
+  header { padding:20px 28px 12px; border-bottom:1px solid var(--line); display:flex; flex-wrap:wrap; gap:12px 28px; align-items:flex-end; }
+  header h1 { margin:0; font-size:21px; font-weight:600; }
+  header p { margin:4px 0 0; color:var(--muted); font-size:14px; max-width:760px; }
+  .ctl { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-left:auto; }
+  button, .seg label { background:var(--surface); color:var(--fg); border:1px solid var(--line); border-radius:6px; padding:7px 12px; font:500 13px Inter,system-ui,sans-serif; cursor:pointer; }
+  .seg { display:flex; } .seg label { border-radius:0; } .seg label:first-child { border-radius:6px 0 0 6px; } .seg label:last-child { border-radius:0 6px 6px 0; }
+  .seg input { display:none; } .seg input:checked + label { background:var(--accent); color:#111; border-color:var(--accent); }
+  input[type=range] { width:260px; accent-color:var(--accent); }
+  .t { font:600 13px ui-monospace,Menlo,monospace; color:var(--muted); min-width:48px; }
+  main { padding:18px 28px 60px; display:grid; gap:24px; grid-template-columns:repeat(auto-fit, minmax(620px, 1fr)); }
+  .card { background:var(--surface); border:1px solid var(--line); border-radius:12px; overflow:hidden; }
+  .card .hd { padding:12px 16px 8px; display:flex; gap:14px; align-items:baseline; flex-wrap:wrap; }
+  .card .hd h2 { margin:0; font-size:16px; font-weight:600; }
+  .card .hd .tag { font:600 11px ui-monospace,Menlo,monospace; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); }
+  .card .hd p { margin:0; color:var(--muted); font-size:13px; flex-basis:100%; line-height:1.45; }
+  .wrap { position:relative; width:100%; aspect-ratio:16/9; background:#000; overflow:hidden; }
+  .wrap svg { position:absolute; inset:0; width:100%; height:100%; display:block; }
+  .note { padding:10px 16px 14px; color:var(--muted); font-size:12.5px; line-height:1.5; border-top:1px solid var(--line); }
+  .note b { color:var(--fg); font-weight:600; }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Opener options · the first five seconds of every Owl Group Trading course</h1>
+    <p>What the Stanford videos do: one bright full-frame picture, the lesson title in a frosted box low in the frame, the presenter top-right, held for 7–12 seconds, then the black stage. These three are drawn in code (deterministic, so the kit renders them frame by frame); the owl is the brand archetype, never a stock image. Scrub or play; the title box and the tile are in every option.</p>
+  </div>
+  <div class="ctl">
+    <button id="play">Play</button>
+    <input id="scrub" type="range" min="0" max="6" step="0.02" value="0"><span class="t" id="tt">0.00s</span>
+    <div class="seg">
+      <input type="radio" name="title" id="t1" value="The Disciplined Operator" checked><label for="t1">Disciplined Operator</label>
+      <input type="radio" name="title" id="t2" value="Swing Trading Logic"><label for="t2">Swing Logic</label>
+      <input type="radio" name="title" id="t3" value="Intraday Decision Tree · Part 1"><label for="t3">Intraday</label>
+    </div>
+  </div>
+</header>
+<main>
+  <section class="card"><div class="hd"><span class="tag">Option A</span><h2>First light</h2><p>Golden hour over rolling ridges, the sun just up, a long mist in the valley; the owl on a fence post at the right, watching. The light is the brand: patient, early, awake before the market.</p></div>
+    <div class="wrap"><svg id="svgA" viewBox="0 0 1280 720"></svg></div>
+    <div class="note"><b>Moves:</b> the sun lifts, the mist drifts, the far ridges breathe, the owl blinks once; the title box fades in at 1.2 s, the wordmark at 2.0 s. Warm palette on the brand amber; the tile keeps its corner.</div></section>
+  <section class="card"><div class="hd"><span class="tag">Option B</span><h2>The watch</h2><p>Blue hour at the shore, a lighthouse sweeping, the owl on a bollard at the water's edge. Cooler and quieter; the beam says the same thing the Zero State says: nothing moves until it is seen.</p></div>
+    <div class="wrap"><svg id="svgB" viewBox="0 0 1280 720"></svg></div>
+    <div class="note"><b>Moves:</b> the beam sweeps once every four seconds, the water shimmers, a few stars, the owl turns its head to the beam; title at 1.2 s. Works best for the system and risk courses.</div></section>
+  <section class="card"><div class="hd"><span class="tag">Option C</span><h2>Above the valley</h2><p>Full daylight: big cumulus, a green valley with a river, the owl gliding across the frame on open wings with its shadow on the land. The most Stanford-like in brightness; the most motion of the three.</p></div>
+    <div class="wrap"><svg id="svgC" viewBox="0 0 1280 720"></svg></div>
+    <div class="note"><b>Moves:</b> the owl crosses right to left over six seconds with a slow wingbeat, the clouds drift, the river glints; title at 1.2 s. Works for the open-and-intraday courses.</div></section>
+</main>
+<script>
+const BUILD = 'openers-3'; console.log('[openers] build', BUILD); window.__edgeBuild = BUILD;
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v)), lerp=(a,b,u)=>a+(b-a)*u, ease=u=>{u=clamp(u,0,1);return u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;};
+const op=(t,t0,d)=>clamp((t-t0)/(d||0.5),0,1), pr=(t,t0,d)=>ease((t-t0)/(d||0.6));
+function rng(seed){let s=seed*9301+49297;return()=>{s=(s*9301+49297)%233280;return s/233280;};}
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+let TITLE = 'The Disciplined Operator';
+// the frame furniture every option shares: the frosted title box, the kicker, the tile placeholder, the wordmark
+function furniture(t, dark){
+  let s='';
+  const a=op(t,1.2,.7), y=lerp(640,610,pr(t,1.2,.9));
+  const w = Math.max(420, TITLE.length*26+80);
+  s += `<g opacity="${a}"><rect x="${640-w/2}" y="${y-44}" width="${w}" height="88" rx="18" fill="rgba(255,255,255,.78)" stroke="rgba(255,255,255,.95)" stroke-width="2"/>
+        <text x="640" y="${y+13}" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="40" fill="#1b1f26">${esc(TITLE)}</text></g>`;
+  const b=op(t,2.0,.6);
+  s += `<g opacity="${b}"><text x="640" y="${y+70}" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="17" letter-spacing="3" fill="${dark?'#f3ead6':'#1b1f26'}" opacity=".9">OWL GROUP TRADING · WITH DR. KEN LONG</text></g>`;
+  s += `<rect x="950" y="22" width="300" height="169" rx="4" fill="rgba(0,0,0,.35)" stroke="rgba(255,255,255,.55)" stroke-dasharray="5 4"/><text x="1100" y="112" text-anchor="middle" font-size="13" fill="rgba(255,255,255,.75)" font-family="Inter,system-ui,sans-serif">Ken on camera, composited at render</text>`;
+  return s;
+}
+// the owl, perched: (x,y) is the top of the post; sc scales; blink in [0,1] closes the eyes; look shifts the pupils
+function owl(x,y,sc,o){
+  const blink=o.blink||0, look=o.look||0, c=o.c||'#1a1410', eye='#F2D06B';
+  const ey=12*(1-blink)+0.8;
+  return `<g transform="translate(${x} ${y}) scale(${sc})">
+    <ellipse cx="0" cy="-44" rx="30" ry="46" fill="${c}"/>
+    <circle cx="0" cy="-96" r="28" fill="${c}"/>
+    <path d="M-24 -116 L-18 -140 L-4 -118 Z M24 -116 L18 -140 L4 -118 Z" fill="${c}"/>
+    <ellipse cx="-11" cy="-98" rx="10" ry="${ey}" fill="${eye}"/><ellipse cx="11" cy="-98" rx="10" ry="${ey}" fill="${eye}"/>
+    <circle cx="${-11+look*3}" cy="-98" r="${4.5*(1-blink)}" fill="#0a0806"/><circle cx="${11+look*3}" cy="-98" r="${4.5*(1-blink)}" fill="#0a0806"/>
+    <circle cx="${-9+look*3}" cy="-101" r="${1.4*(1-blink)}" fill="#fff"/><circle cx="${13+look*3}" cy="-101" r="${1.4*(1-blink)}" fill="#fff"/>
+    <path d="M-4 -88 L4 -88 L0 -80 Z" fill="#c9893a"/>
+    <path d="M-30 -60 C-40 -30 -34 -10 -24 -2" fill="none" stroke="${c}" stroke-width="10" stroke-linecap="round"/>
+    <path d="M30 -60 C40 -30 34 -10 24 -2" fill="none" stroke="${c}" stroke-width="10" stroke-linecap="round"/>
+    <path d="M-12 2 L-16 10 M-8 2 L-8 10 M-4 2 L0 10 M12 2 L16 10 M8 2 L8 10 M4 2 L0 10" stroke="${c}" stroke-width="3" stroke-linecap="round"/>
+  </g>`;
+}
+function ridge(y, amp, seed, col, t, drift){   // a ridge line across the frame
+  const r=rng(seed); let d=`M0 720 L0 ${y}`;
+  for(let x=0;x<=1280;x+=40){ const n=Math.sin(x/190+seed)*amp+Math.sin(x/61+seed*2)*amp*0.35+Math.sin(x/23)*amp*0.1; d+=` L${x} ${y+n+Math.sin(t*0.6+x/300)*(drift||0)}`; }
+  return `<path d="${d} L1280 720 Z" fill="${col}"/>`;
+}
+// ---- Option A: first light
+function drawA(t){
+  const sun=lerp(300,262,pr(t,0,3.5));
+  let s=`<defs><linearGradient id="skyA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2b2a5a"/><stop offset=".45" stop-color="#c2576a"/><stop offset=".75" stop-color="#f3a356"/><stop offset="1" stop-color="#ffe7a8"/></linearGradient>
+    <radialGradient id="glowA" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#fff6d0" stop-opacity=".95"/><stop offset=".35" stop-color="#ffd27a" stop-opacity=".55"/><stop offset="1" stop-color="#ffb347" stop-opacity="0"/></radialGradient>
+    <linearGradient id="mistA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe7b0" stop-opacity="0"/><stop offset=".5" stop-color="#ffe7b0" stop-opacity=".55"/><stop offset="1" stop-color="#ffe7b0" stop-opacity="0"/></linearGradient></defs>`;
+  s += `<rect width="1280" height="720" fill="url(#skyA)"/>`;
+  s += `<circle cx="470" cy="${sun}" r="260" fill="url(#glowA)"/><circle cx="470" cy="${sun}" r="58" fill="#fff3c4"/>`;
+  // thin clouds
+  const r=rng(3); for(let i=0;i<6;i++){ const cx=(r()*1400-60+t*6*(i%2?1:0.6))%1400, cy=90+r()*160, w=180+r()*260; s += `<ellipse cx="${cx}" cy="${cy}" rx="${w/2}" ry="${8+r()*10}" fill="rgba(255,240,210,.35)"/>`; }
+  s += ridge(372,22,1,'#9a5c6a',t,2); s += ridge(410,28,2,'#6f3f55',t,1.5);
+  s += `<rect x="0" y="380" width="1280" height="120" fill="url(#mistA)" transform="translate(${Math.sin(t*0.5)*12} 0)"/>`;
+  s += ridge(470,34,3,'#43283e',t,1); s += ridge(560,40,4,'#2a1a2c',t,0);
+  s += `<path d="M0 720 L0 600 C300 585 600 600 1280 575 L1280 720 Z" fill="#1a1120"/>`;
+  // the fence and the owl
+  s += `<rect x="986" y="470" width="16" height="140" rx="3" fill="#1a1410"/><rect x="930" y="500" width="150" height="7" rx="2" fill="#1a1410" transform="rotate(-2 1005 503)"/>`;
+  const blink = (t>3.1&&t<3.3) ? Math.sin((t-3.1)/0.2*Math.PI) : 0;
+  s += owl(994,470,1.0,{blink, look:Math.sin(t*0.7)*0.6});
+  // birds far off
+  for(let i=0;i<5;i++){ const bx=200+i*38+t*14, by=170+Math.sin(t*2+i)*4+i*6; s += `<path d="M${bx-7} ${by} q7 -5 14 0 M${bx+7} ${by} q7 -5 14 0" stroke="#3a2438" stroke-width="2" fill="none" opacity=".7"/>`; }
+  return s + furniture(t,true);
+}
+// ---- Option B: the watch
+function drawB(t){
+  let s=`<defs><linearGradient id="skyB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#050a1c"/><stop offset=".6" stop-color="#15305c"/><stop offset="1" stop-color="#3f6a8e"/></linearGradient>
+    <linearGradient id="seaB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1b3a5c"/><stop offset="1" stop-color="#0a1a2c"/></linearGradient></defs>`;
+  s += `<rect width="1280" height="720" fill="url(#skyB)"/>`;
+  const r=rng(11); for(let i=0;i<90;i++){ const x=r()*1280, y=r()*380, k=r(); s += `<circle cx="${x}" cy="${y}" r="${0.8+k*1.4}" fill="#fff" opacity="${0.35+0.6*Math.abs(Math.sin(t*1.5+i))}"/>`; }
+  s += `<circle cx="1060" cy="120" r="34" fill="#f3ead6" opacity=".9"/><circle cx="1048" cy="112" r="30" fill="#0b1a33"/>`;
+  s += ridge(392,18,7,'#0d2238',t,0);
+  // the lighthouse on the left point, the beam sweeping
+  const ang = -90 + 70*Math.sin(t*0.8); const rad=ang*Math.PI/180;
+  s += `<polygon points="${210+Math.cos(rad-0.07)*1400},${270+Math.sin(rad-0.07)*1400} 210,270 ${210+Math.cos(rad+0.07)*1400},${270+Math.sin(rad+0.07)*1400}" fill="rgba(255,236,170,.22)"/>`;
+  s += `<path d="M0 720 L0 400 C80 395 160 390 260 392 L300 720 Z" fill="#091a2c"/>`;
+  s += `<path d="M190 400 L186 300 L234 300 L230 400 Z" fill="#dfe6ee"/><rect x="182" y="286" width="56" height="16" fill="#1f2a36"/><rect x="190" y="256" width="40" height="30" fill="#ffe8a6" opacity="${0.8+0.2*Math.sin(t*6)}"/><path d="M186 256 L210 236 L234 256 Z" fill="#1f2a36"/>`;
+  for(let i=0;i<3;i++) s += `<rect x="196" y="${320+i*26}" width="28" height="4" fill="#c0392b"/>`;
+  // the sea
+  s += `<rect x="0" y="420" width="1280" height="300" fill="url(#seaB)"/>`;
+  for(let i=0;i<40;i++){ const y=430+i*7+(i*i)%5, w=40+((i*37)%180), x=((i*131)+t*(20+i))%1400-60; s += `<rect x="${x}" y="${y}" width="${w}" height="1.5" fill="#cfe3ff" opacity="${0.08+0.1*Math.abs(Math.sin(t+i))}"/>`; }
+    // the quay and the bollard, the owl on it looking at the beam
+  s += `<path d="M700 600 L1280 580 L1280 720 L700 720 Z" fill="#0a1420"/><rect x="700" y="596" width="580" height="8" fill="#142434"/>`;
+  s += `<rect x="972" y="520" width="44" height="80" rx="8" fill="#1a1410"/><rect x="964" y="512" width="60" height="16" rx="6" fill="#1a1410"/>`;
+  const look = Math.cos(rad) * -1;
+  s += owl(994,514,1.0,{look, c:'#15110d'});
+  return s + furniture(t,true);
+}
+// ---- Option C: above the valley
+function drawC(t){
+  let s=`<defs><linearGradient id="skyC" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2f7fd6"/><stop offset=".7" stop-color="#9fd0f5"/><stop offset="1" stop-color="#e8f4ff"/></linearGradient>
+    <linearGradient id="landC" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7cb55a"/><stop offset="1" stop-color="#3f7a3a"/></linearGradient></defs>`;
+  s += `<rect width="1280" height="720" fill="url(#skyC)"/>`;
+  s += `<circle cx="1120" cy="90" r="46" fill="#fff8d6"/><circle cx="1120" cy="90" r="90" fill="#fff8d6" opacity=".25"/>`;
+  const r=rng(5);
+  for(let i=0;i<7;i++){ const cx=((r()*1500)+t*(10+i*3))%1500-120, cy=90+r()*170, w=120+r()*200; s += `<g opacity=".95"><ellipse cx="${cx}" cy="${cy}" rx="${w/2}" ry="${w/5}" fill="#fff"/><ellipse cx="${cx-w/5}" cy="${cy+w/14}" rx="${w/3}" ry="${w/6}" fill="#fff"/><ellipse cx="${cx+w/5}" cy="${cy+w/12}" rx="${w/3.2}" ry="${w/6.5}" fill="#fff"/><ellipse cx="${cx}" cy="${cy+w/8}" rx="${w/2}" ry="${w/9}" fill="#dfe9f3"/></g>`; }
+  s += ridge(330,26,21,'#6f93b8',t,0); s += ridge(372,30,22,'#4f7a63',t,0);
+  s += `<path d="M0 720 L0 400 C300 380 700 420 1280 380 L1280 720 Z" fill="url(#landC)"/>`;
+  // the river
+  s += `<path d="M-20 700 C240 600 420 640 620 560 C800 490 980 520 1300 430" fill="none" stroke="#bfe3ff" stroke-width="22" stroke-linecap="round" opacity=".9"/>`;
+  for(let i=0;i<12;i++){ const u=((i/12)+t*0.05)%1; const x=-20+u*1320, y=700-u*270+Math.sin(u*6)*30; s += `<circle cx="${x}" cy="${y}" r="2.5" fill="#fff" opacity=".8"/>`; }
+  // hedges and fields
+  for(let i=0;i<9;i++){ const x=80+i*140, y=470+(i%3)*50; s += `<ellipse cx="${x}" cy="${y}" rx="34" ry="14" fill="#2f6a33" opacity=".8"/>`; }
+  // the owl in flight, right to left, wings beating slowly; its shadow on the land
+  const u=clamp(t/6,0,1), ox=lerp(1180,120,ease(u)), oy=250+Math.sin(t*1.1)*10, flap=Math.sin(t*3.2);
+  s += `<ellipse cx="${ox+40}" cy="${oy+300}" rx="70" ry="12" fill="#000" opacity=".18"/>`;
+  s += `<g transform="translate(${ox} ${oy})">
+    <path d="M-10 0 C-50 ${-18-flap*34} -110 ${-30-flap*62} -175 ${-8-flap*74} C-160 ${12-flap*50} -120 ${18-flap*30} -70 ${22-flap*12} C-40 26 -20 22 -10 14 Z" fill="#1a1410"/>
+    <path d="M10 0 C50 ${-18-flap*34} 110 ${-30-flap*62} 175 ${-8-flap*74} C160 ${12-flap*50} 120 ${18-flap*30} 70 ${22-flap*12} C40 26 20 22 10 14 Z" fill="#1a1410"/>
+    <path d="M-18 18 L-26 52 L0 44 L26 52 L18 18 Z" fill="#1a1410"/>
+    <ellipse cx="0" cy="6" rx="30" ry="26" fill="#1a1410"/>
+    <ellipse cx="0" cy="12" rx="18" ry="16" fill="#3a2d22"/>
+    <circle cx="0" cy="-22" r="20" fill="#1a1410"/>
+    <path d="M-16 -36 L-20 -48 L-8 -40 Z M16 -36 L20 -48 L8 -40 Z" fill="#1a1410"/>
+    <circle cx="-8" cy="-24" r="6.5" fill="#F2D06B"/><circle cx="8" cy="-24" r="6.5" fill="#F2D06B"/><circle cx="-8" cy="-24" r="3" fill="#0a0806"/><circle cx="8" cy="-24" r="3" fill="#0a0806"/>
+    <path d="M-3 -16 L3 -16 L0 -10 Z" fill="#c9893a"/></g>`;
+  return s + furniture(t,false);
+}
+const svgs={A:document.getElementById('svgA'),B:document.getElementById('svgB'),C:document.getElementById('svgC')};
+function render(t){ svgs.A.innerHTML=drawA(t); svgs.B.innerHTML=drawB(t); svgs.C.innerHTML=drawC(t); document.getElementById('tt').textContent=t.toFixed(2)+'s'; }
+const scrub=document.getElementById('scrub'); let playing=false, t0=0, tStart=0;
+scrub.oninput=()=>{ playing=false; document.getElementById('play').textContent='Play'; render(parseFloat(scrub.value)); };
+document.getElementById('play').onclick=function(){ playing=!playing; this.textContent=playing?'Pause':'Play'; if(playing){ tStart=performance.now(); t0=parseFloat(scrub.value); if (t0>=5.98) t0=0; requestAnimationFrame(tick);} };
+function tick(now){ if(!playing) return; let t=t0+(now-tStart)/1000; if(t>6){ t0=0; tStart=now; t=0; } scrub.value=t; render(t); requestAnimationFrame(tick); }
+document.querySelectorAll('input[name=title]').forEach(i=>i.onchange=()=>{ TITLE=i.value; render(parseFloat(scrub.value)); });
+render(0);
+</script>
+</body>
+</html>
