@@ -90,6 +90,11 @@ function recall(t,t0,x,y,w,h,label,inner,o={}){const a=op(t,t0,.5)*(o.until&&t>o
 function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
 
 const BEATS = [[0.3, "the <em>world market model</em> review", ""], [18.0, "the ETF2 performance model looks at three things: the average, the <em>strength</em>, <em>consistency</em> and <em>quality</em>", ""], [34.0, "relative strength on a scale of 0 to 100: <em>70 percent</em> of the three month", ""], [49.0, "plus <em>30 percent</em> of the six month; the best gets 100, the worst 0, everything else calibrated between", ""], [67.0, "the strength column is the <em>current reading</em> each week", ""], [87.0, "the next column: <em>consistency</em>", "'What you're getting tonight is about a four thousand dollar workshop.'"], [108.0, "the last <em>ten weeks</em>: this week, last week, all the way to minus ten", ""], [126.0, "a weighting, then a blended score of their performance over the ten weeks", ""], [142.0, "scaled again 0 to 100: the <em>consistency of strength</em>", ""], [159.0, "the third column: <em>quality</em>. The last <em>40 weeks</em>", ""], [177.0, "each week as if it was a trade, an R multiple; then a <em>system quality number</em> on those 40", ""], [195.0, "the best SQN scores 100, the worst 0", ""], [212.0, "three <em>independent</em> measures", ""], [229.0, "each scored 0 to 100; the <em>average</em> is simply the mathematical average of the three", ""], [247.0, "63, 68 and 63 average to <em>65</em>. Now the <em>colour codes</em>", ""], [263.0, "the mean and plus or minus one <em>standard deviation</em>", ""], [279.0, "the top sixth <em>green</em>; above average <em>white</em>; below average <em>yellow</em>", ""], [295.0, "<em>red</em> in the bottom sixth", ""], [311.0, "a third, a third, a sixth, a sixth. Europe: <em>green across the board</em>", ""], [327.0, "compare Europe and Euro-Asia to the S&P over the last three years", ""]];
+// WARP (optional): [[t_voice, t_authored], …] knots from the voice-over's words; the scene was authored on an estimate
+const WARP = null;
+const warpT = t => { if (!WARP) return t; for (let i = 1; i < WARP.length; i++) if (t <= WARP[i][0]) {
+  const [a0, b0] = WARP[i - 1], [a1, b1] = WARP[i]; return b0 + (b1 - b0) * (t - a0) / Math.max(1e-6, a1 - a0); }
+  return WARP[WARP.length - 1][1]; };
 
 // one colour per quantity, for the whole course
 const INV=OK, CASH=DN, SIG=ACC, PRICE=FG, NOTE=MUT;
@@ -167,12 +172,13 @@ function draw(t){
 
 window.renderFrame = function (t) {
   t = clamp(t, 0, ANIM_DURATION);
+  const tv = t; t = warpT(t);
   let cap = '', sub = '';
   for (const b of BEATS) if (t >= b[0]) { cap = b[1]; sub = b[2] || ''; }
   $('cap').innerHTML = cap; $('sub').textContent = sub;
   $('svg').innerHTML = WRAP[0] + draw(t) + WRAP[1];
   const f = $('fade');
-  f.style.opacity = t < 0.5 ? 1 - t / 0.5 : (ANIM_DURATION - t < 0.6 ? 1 - (ANIM_DURATION - t) / 0.6 : 0);
+  f.style.opacity = tv < 0.5 ? 1 - tv / 0.5 : (ANIM_DURATION - tv < 0.6 ? 1 - (ANIM_DURATION - tv) / 0.6 : 0);
 };
 renderFrame(0);
 </script>

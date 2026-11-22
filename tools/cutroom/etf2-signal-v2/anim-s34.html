@@ -41,9 +41,9 @@
 <script>
 const BUILD = 's34-1';
 console.log('[s34] build', BUILD);
-// Overdub twin of s34: Ken's audio ava 0.0→88.0; t is seconds after the in-point.
+// Overdub twin of s34: Ken's audio ava 0.0→92.4; t is seconds after the in-point.
 // Beat times read from the VTT cues on 2026-11-21 (tools/cutroom/etf2-signal-v2/transcript-ava.json).
-window.ANIM_DURATION = 88.0;
+window.ANIM_DURATION = 92.4;
 const ACC='#F2D06B', FG='#f2f5f7', MUT='#9aa7b0', OK='#4ade80', DN='#f87171', BLUE='#7baad4', BRD='rgba(255,255,255,.18)', CARD='#000', TXS=1.1, WRAP=['',''];
 const W=1160, H=530;
 const $ = id => document.getElementById(id);
@@ -90,6 +90,11 @@ function recall(t,t0,x,y,w,h,label,inner,o={}){const a=op(t,t0,.5)*(o.until&&t>o
 function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
 
 const BEATS = [[0.3, "2022, the rate-hike bear. June 2021: <em>one hundred</em>, SPY 423", ""], [6.5, "second half of 2021: thirty to seventy, <em>a week or two at a time</em>", ""], [13.8, "26 November 2021: <em>thirty</em>, SPY 459; below fifty for <em>37 weeks</em>", ""], [21.8, "the high: <em>3 January 2022, 478</em>, five weeks later", ""], [27.6, "over the cash run SPY <em>−9.9 %</em>", ""], [31.5, "12 August: <em>one hundred</em>, SPY 427", ""], [36.5, "then ten, fifty, <em>zero on 16 September</em>, SPY 386", ""], [43.4, "the low: 12 October, 357: <em>−25 %</em> from the January high", ""], [49.5, "11 November: <em>ninety</em>, SPY 399", ""], [54.1, "forty for three weeks in March 2023; <em>sixty on 31 March</em>", ""], [60.7, "invested to August: SPY <em>+8.9 %</em> over the run", ""], [66.1, "what the signal said: <em>cash five weeks before the high</em>", ""], [71.5, "what SPY did next: a slow bear, <em>a false start in August</em>, the low with the line at zero", ""], [83.0, "the return: <em>four weeks after the low</em>", ""]];
+// WARP (optional): [[t_voice, t_authored], …] knots from the voice-over's words; the scene was authored on an estimate
+const WARP = [[0.0, 0.0], [8.71, 6.5], [15.36, 13.8], [25.51, 21.8], [32.32, 27.6], [35.81, 31.5], [41.64, 36.5], [49.57, 43.4], [56.88, 49.5], [62.29, 54.1], [68.9, 60.7], [73.08, 66.1], [79.0, 71.5], [89.58, 83.0], [92.42, 88.0]];
+const warpT = t => { if (!WARP) return t; for (let i = 1; i < WARP.length; i++) if (t <= WARP[i][0]) {
+  const [a0, b0] = WARP[i - 1], [a1, b1] = WARP[i]; return b0 + (b1 - b0) * (t - a0) / Math.max(1e-6, a1 - a0); }
+  return WARP[WARP.length - 1][1]; };
 
 // one colour per quantity, for the whole course
 const INV=OK, CASH=DN, SIG=ACC, PRICE=FG, NOTE=MUT;
@@ -139,12 +144,13 @@ function draw(t){
 
 window.renderFrame = function (t) {
   t = clamp(t, 0, ANIM_DURATION);
+  const tv = t; t = warpT(t);
   let cap = '', sub = '';
   for (const b of BEATS) if (t >= b[0]) { cap = b[1]; sub = b[2] || ''; }
   $('cap').innerHTML = cap; $('sub').textContent = sub;
   $('svg').innerHTML = WRAP[0] + draw(t) + WRAP[1];
   const f = $('fade');
-  f.style.opacity = t < 0.5 ? 1 - t / 0.5 : (ANIM_DURATION - t < 0.6 ? 1 - (ANIM_DURATION - t) / 0.6 : 0);
+  f.style.opacity = tv < 0.5 ? 1 - tv / 0.5 : (ANIM_DURATION - tv < 0.6 ? 1 - (ANIM_DURATION - tv) / 0.6 : 0);
 };
 renderFrame(0);
 </script>

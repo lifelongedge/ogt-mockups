@@ -41,9 +41,9 @@
 <script>
 const BUILD = 's48-1';
 console.log('[s48] build', BUILD);
-// Overdub twin of s48: Ken's audio ava 0.0→90.0; t is seconds after the in-point.
+// Overdub twin of s48: Ken's audio ava 0.0→58.9; t is seconds after the in-point.
 // Beat times read from the VTT cues on 2026-11-21 (tools/cutroom/etf2-signal-v2/transcript-ava.json).
-window.ANIM_DURATION = 90.0;
+window.ANIM_DURATION = 58.9;
 const ACC='#F2D06B', FG='#f2f5f7', MUT='#9aa7b0', OK='#4ade80', DN='#f87171', BLUE='#7baad4', BRD='rgba(255,255,255,.18)', CARD='#000', TXS=1.1, WRAP=['',''];
 const W=1160, H=530;
 const $ = id => document.getElementById(id);
@@ -90,6 +90,11 @@ function recall(t,t0,x,y,w,h,label,inner,o={}){const a=op(t,t0,.5)*(o.until&&t>o
 function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
 
 const BEATS = [[0.3, "the week of <em>November 14th, 2026</em>, on the page itself", ""], [5.0, "nine of the ten regions read <em>Cash</em>", ""], [8.6, "one, IEV, the European 350, reads <em>Buy</em>", ""], [13.0, "ten percent per Buy: the theoretical exposure goes from <em>zero to ten percent</em>", ""], [19.6, "the label at the top of the block, as printed, is <em>Bullish Normal</em>", "As printed on 2026-11-14."], [25.0, "that is the whole weekend read", ""], [27.6, "one line, built from <em>ten prices against ten four-month averages</em>, and it tells you two things", ""], [35.4, "how much of the <em>long-term book</em> the evidence permits you to have on", ""], [41.2, "and what posture the <em>day book</em> takes into Monday", ""], [45.8, "with the line this low, the long book is mostly cash; the day book trades what the day gives, in either direction", ""], [55.2, "it is <em>not a forecast</em>. It does not know what next week brings", ""], [60.4, "a count of what has already happened, done the same way every Friday for twenty years", ""], [68.6, "so that your Monday starts from a <em>number</em> and not from a feeling", ""], [74.0, "that is what it is for. It is provided for <em>peace of mind</em>", ""]];
+// WARP (optional): [[t_voice, t_authored], …] knots from the voice-over's words; the scene was authored on an estimate
+const WARP = [[0.0, 0.0], [0.77, 0.3], [4.58, 5.0], [6.83, 8.6], [10.15, 13.0], [15.47, 19.6], [19.84, 25.0], [21.8, 27.6], [27.75, 35.4], [31.25, 41.2], [34.15, 45.8], [41.56, 55.2], [45.5, 60.4], [50.91, 68.6], [54.81, 74.0], [58.9, 90.0]];
+const warpT = t => { if (!WARP) return t; for (let i = 1; i < WARP.length; i++) if (t <= WARP[i][0]) {
+  const [a0, b0] = WARP[i - 1], [a1, b1] = WARP[i]; return b0 + (b1 - b0) * (t - a0) / Math.max(1e-6, a1 - a0); }
+  return WARP[WARP.length - 1][1]; };
 
 // one colour per quantity, for the whole course
 const INV=OK, CASH=DN, SIG=ACC, PRICE=FG, NOTE=MUT;
@@ -161,12 +166,13 @@ function draw(t){
 
 window.renderFrame = function (t) {
   t = clamp(t, 0, ANIM_DURATION);
+  const tv = t; t = warpT(t);
   let cap = '', sub = '';
   for (const b of BEATS) if (t >= b[0]) { cap = b[1]; sub = b[2] || ''; }
   $('cap').innerHTML = cap; $('sub').textContent = sub;
   $('svg').innerHTML = WRAP[0] + draw(t) + WRAP[1];
   const f = $('fade');
-  f.style.opacity = t < 0.5 ? 1 - t / 0.5 : (ANIM_DURATION - t < 0.6 ? 1 - (ANIM_DURATION - t) / 0.6 : 0);
+  f.style.opacity = tv < 0.5 ? 1 - tv / 0.5 : (ANIM_DURATION - tv < 0.6 ? 1 - (ANIM_DURATION - tv) / 0.6 : 0);
 };
 renderFrame(0);
 </script>

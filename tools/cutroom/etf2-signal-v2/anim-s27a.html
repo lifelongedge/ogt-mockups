@@ -90,6 +90,11 @@ function recall(t,t0,x,y,w,h,label,inner,o={}){const a=op(t,t0,.5)*(o.until&&t>o
 function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
 
 const BEATS = [[0.3, "this is an extract of the ETF2 report; the system has a very <em>precise set of rules</em>", ""], [17.0, "constructed about 20 years ago for a hedge fund, for people's retirement accounts", "His history of the model, in his words."], [33.0, "ten ETFs, rules about how to get in and get out, trailing stops", ""], [50.0, "expanded to all <em>185</em> of the liquid ETFs in the world", ""], [66.0, "ranked on <em>strength, consistency and quality</em>, 0 to 100, with colour codes", ""], [119.0, "the best of the 185 liquid ones is <em>tech at 95</em>", ""], [150.0, "about nineteen in the top category: only about <em>ten percent</em> of the liquid ones", ""], [167.0, "sorted by the <em>strength</em> column", ""], [183.0, "strategies for swing trades: not the ETF2 system, but the <em>same model</em>", ""], [199.0, "the strength column and the 10-week consistency. <em>Green and green</em>: that thing is great", ""], [216.0, "reinforce them with <em>trend following</em>", ""], [233.0, "XLK in a kata two? I will buy that and pound on it", ""], [251.0, "and <em>turbo</em>: intraday or short-term swing. The winners are continuing to win", ""], [267.0, "<em>green and white</em>: VUG was good on the ten week", ""], [283.0, "the one-week bumped up: it's <em>accelerating</em> short term", ""], [300.0, "it was good and is now great: exploit new strength. <em>New leaders</em>", ""], [316.0, "green that is now just <em>white</em>: EFA, losing steam. It was great, now it's just good", ""], [333.0, "<em>preserve profits</em> but watch for resumption; a second wind could be a kata two", ""], [367.0, "<em>red and red</em> is terrible: Brazil, natural gas. A collapsing dragon to the max", ""], [382.0, "<em>red and yellow</em>: it used to be weak and now it's terrible. New weakness, falling off the table", ""], [402.0, "concentrate on the <em>extremes</em>: that's where you get the biggest bang", ""], [419.0, "gold miners: great, with a tremendous ATR percentage", ""], [437.0, "what is great, what's getting better, what is starting to decay", ""], [457.0, "IVW, <em>white and yellow</em>: was weak, now good. New strength", ""], [475.0, "front-run the ones that become leaders: <em>catch them earlier at the turn</em>", ""], [496.0, "the <em>MA signal</em>: because we like the four-month moving average anyway", ""], [512.0, "South Korea: the only one below its four-month, but becoming better than average", ""], [527.0, "room to go to the four-month: a long-term value play", ""], [544.0, "who cares about that? Pension funds and hedge funds", ""]];
+// WARP (optional): [[t_voice, t_authored], …] knots from the voice-over's words; the scene was authored on an estimate
+const WARP = null;
+const warpT = t => { if (!WARP) return t; for (let i = 1; i < WARP.length; i++) if (t <= WARP[i][0]) {
+  const [a0, b0] = WARP[i - 1], [a1, b1] = WARP[i]; return b0 + (b1 - b0) * (t - a0) / Math.max(1e-6, a1 - a0); }
+  return WARP[WARP.length - 1][1]; };
 
 // one colour per quantity, for the whole course
 const INV=OK, CASH=DN, SIG=ACC, PRICE=FG, NOTE=MUT;
@@ -170,12 +175,13 @@ function draw(t){
 
 window.renderFrame = function (t) {
   t = clamp(t, 0, ANIM_DURATION);
+  const tv = t; t = warpT(t);
   let cap = '', sub = '';
   for (const b of BEATS) if (t >= b[0]) { cap = b[1]; sub = b[2] || ''; }
   $('cap').innerHTML = cap; $('sub').textContent = sub;
   $('svg').innerHTML = WRAP[0] + draw(t) + WRAP[1];
   const f = $('fade');
-  f.style.opacity = t < 0.5 ? 1 - t / 0.5 : (ANIM_DURATION - t < 0.6 ? 1 - (ANIM_DURATION - t) / 0.6 : 0);
+  f.style.opacity = tv < 0.5 ? 1 - tv / 0.5 : (ANIM_DURATION - tv < 0.6 ? 1 - (ANIM_DURATION - tv) / 0.6 : 0);
 };
 renderFrame(0);
 </script>

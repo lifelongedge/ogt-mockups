@@ -90,6 +90,11 @@ function recall(t,t0,x,y,w,h,label,inner,o={}){const a=op(t,t0,.5)*(o.until&&t>o
 function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
 
 const BEATS = [[0.5, "you have shifted from core and swing to more intraday. What favors more intraday?", "The student asks."], [16.0, "right now I am <em>20 % core, 40 % swing and 40 % day</em>", "The student's book."], [31.0, "swing is at 40 % exposure <em>if and only if</em> every symbol has a justified position and is still in the market", ""], [48.0, "I might have half of it employed, and move the other half into the day trading as a <em>hedge</em>", ""], [65.0, "I've never gone below 10 in the core", ""], [82.0, "swing I've gone as low as <em>perfectly flat</em>", ""], [98.0, "my rule of thumb: if I have money in the swing portfolio, I am <em>always day trading</em>", ""], [116.0, "<em>any volatile</em>, and <em>any quiet</em>: only one sixth of the time is it quiet, one sixth volatile", ""], [131.0, "bear quiet does not stay bear quiet very long. It cannot", ""], [146.0, "the bear comes back for a second helping, violently, or steady buying moves it into a directional move", ""], [162.0, "<em>bear volatile is my favorite time to trade</em>: huge intraday selloffs, collapsing dragons all the way down", ""], [178.0, "or dead-cat bounces, the amazing melt-up and no follow-through: I get the melt-up, step aside, go to sleep", ""], [195.0, "in bear markets and any volatile market I am <em>mostly a day trader, plus 10 % core</em>", ""], [212.0, "the only time I ever get fully committed to swing trades", ""], [229.0, "is <em>bullish normal and bullish quiet</em>: it's just been grinding, grinding, grinding", ""], [245.0, "full exposure in the core 20 %, full exposure in the swing 40 %", ""], [278.0, "the other 40 % is <em>cash overnight</em>, ready to trade price tomorrow", ""], [295.0, "piling on with turbo, or taking hedge positions to protect the core or the swing", ""], [313.0, "buy and hold works because the bullish returns pay for the bearish results", ""], [345.0, "60 % exposed, zeroed out on the losing days: that would <em>defeat 100 % buy and hold</em>", "His argument; nothing computed here."], [361.0, "find the movers, the most volatile ones. Keep 70 %. <em>Lather, rinse, repeat</em>", ""]];
+// WARP (optional): [[t_voice, t_authored], …] knots from the voice-over's words; the scene was authored on an estimate
+const WARP = null;
+const warpT = t => { if (!WARP) return t; for (let i = 1; i < WARP.length; i++) if (t <= WARP[i][0]) {
+  const [a0, b0] = WARP[i - 1], [a1, b1] = WARP[i]; return b0 + (b1 - b0) * (t - a0) / Math.max(1e-6, a1 - a0); }
+  return WARP[WARP.length - 1][1]; };
 
 // one colour per quantity, for the whole course
 const INV=OK, CASH=DN, SIG=ACC, PRICE=FG, NOTE=MUT;
@@ -161,12 +166,13 @@ function draw(t){
 
 window.renderFrame = function (t) {
   t = clamp(t, 0, ANIM_DURATION);
+  const tv = t; t = warpT(t);
   let cap = '', sub = '';
   for (const b of BEATS) if (t >= b[0]) { cap = b[1]; sub = b[2] || ''; }
   $('cap').innerHTML = cap; $('sub').textContent = sub;
   $('svg').innerHTML = WRAP[0] + draw(t) + WRAP[1];
   const f = $('fade');
-  f.style.opacity = t < 0.5 ? 1 - t / 0.5 : (ANIM_DURATION - t < 0.6 ? 1 - (ANIM_DURATION - t) / 0.6 : 0);
+  f.style.opacity = tv < 0.5 ? 1 - tv / 0.5 : (ANIM_DURATION - tv < 0.6 ? 1 - (ANIM_DURATION - tv) / 0.6 : 0);
 };
 renderFrame(0);
 </script>

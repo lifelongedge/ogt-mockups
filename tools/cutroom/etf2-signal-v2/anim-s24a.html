@@ -90,6 +90,11 @@ function recall(t,t0,x,y,w,h,label,inner,o={}){const a=op(t,t0,.5)*(o.until&&t>o
 function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
 
 const BEATS = [[0.3, "we have <em>three time frames</em>: core, swing and day trading, each with its own strategies", ""], [16.0, "<em>hybrid trading</em> is a blend of two or more of these", ""], [32.0, "the long-term benefit and a short-term swing momentum", ""], [48.0, "the <em>30 minute</em>, right in between swing and day", ""], [83.0, "the core systems: asset allocation, buy and hold, and the <em>Blended Monthly Rebalancing</em>", "His favorite approach to long-term core holdings."], [99.0, "adjusted on a monthly basis: the ETF 13, the 22 or the 32 portfolios", ""], [132.0, "when markets are poor and we want to be <em>in cash</em>: what are the defensive plays", ""], [181.0, "the ETF Max set, about 300 ETFs: which ones are <em>rising to the top</em>", ""], [198.0, "the ETF2 model also provides <em>week to week insights</em> into relative strength", ""], [216.0, "the 10-week rolling relative strength and the volatility quality measures", ""], [233.0, "sometimes systems give us signals, sometimes <em>information</em> through that lens", ""], [249.0, "the world market leaders right now: <em>US technology</em> plus the Euro-Asia large caps", "April 2023."], [282.0, "already holding for a month: is there some <em>kata two</em> action for a turbo boost?", ""], [298.0, "that's what we call hybrid trading on the longer term", ""]];
+// WARP (optional): [[t_voice, t_authored], …] knots from the voice-over's words; the scene was authored on an estimate
+const WARP = null;
+const warpT = t => { if (!WARP) return t; for (let i = 1; i < WARP.length; i++) if (t <= WARP[i][0]) {
+  const [a0, b0] = WARP[i - 1], [a1, b1] = WARP[i]; return b0 + (b1 - b0) * (t - a0) / Math.max(1e-6, a1 - a0); }
+  return WARP[WARP.length - 1][1]; };
 
 // one colour per quantity, for the whole course
 const INV=OK, CASH=DN, SIG=ACC, PRICE=FG, NOTE=MUT;
@@ -155,12 +160,13 @@ function draw(t){
 
 window.renderFrame = function (t) {
   t = clamp(t, 0, ANIM_DURATION);
+  const tv = t; t = warpT(t);
   let cap = '', sub = '';
   for (const b of BEATS) if (t >= b[0]) { cap = b[1]; sub = b[2] || ''; }
   $('cap').innerHTML = cap; $('sub').textContent = sub;
   $('svg').innerHTML = WRAP[0] + draw(t) + WRAP[1];
   const f = $('fade');
-  f.style.opacity = t < 0.5 ? 1 - t / 0.5 : (ANIM_DURATION - t < 0.6 ? 1 - (ANIM_DURATION - t) / 0.6 : 0);
+  f.style.opacity = tv < 0.5 ? 1 - tv / 0.5 : (ANIM_DURATION - tv < 0.6 ? 1 - (ANIM_DURATION - tv) / 0.6 : 0);
 };
 renderFrame(0);
 </script>

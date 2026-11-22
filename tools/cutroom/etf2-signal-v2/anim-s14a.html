@@ -90,6 +90,11 @@ function recall(t,t0,x,y,w,h,label,inner,o={}){const a=op(t,t0,.5)*(o.until&&t>o
 function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
 
 const BEATS = [[0.3, "sideways normal; risk Z still pointing to risk-off; price relative to the 200 began to <em>improve</em>", "March 2023."], [17.0, "the ETF2 theoretical exposure increases from <em>10 percent to 40 percent</em>: four of the ten above the four-month", ""], [32.0, "look how <em>vicious</em> this oscillation has been in the regression-line fractal", ""], [48.0, "three-day bars holding support, tenuously, but it held: the long side still slightly in play", ""], [66.0, "comfortably above the previous swing low: some chance for recovery", ""], [82.0, "<em>386</em> is the crucial support level that must hold", "His level, March 2023."], [98.0, "the ETF2 portfolio: the winners continued to win, <em>technology and the globals</em>", ""], [122.0, "the ETF2 regional: US tech in the Qs stretching its legs against broad US weakness", ""], [138.0, "XLK is now <em>green and white</em>, as is VGT and the Qs: was good, now great. <em>New leaders</em>", ""]];
+// WARP (optional): [[t_voice, t_authored], …] knots from the voice-over's words; the scene was authored on an estimate
+const WARP = null;
+const warpT = t => { if (!WARP) return t; for (let i = 1; i < WARP.length; i++) if (t <= WARP[i][0]) {
+  const [a0, b0] = WARP[i - 1], [a1, b1] = WARP[i]; return b0 + (b1 - b0) * (t - a0) / Math.max(1e-6, a1 - a0); }
+  return WARP[WARP.length - 1][1]; };
 
 // one colour per quantity, for the whole course
 const INV=OK, CASH=DN, SIG=ACC, PRICE=FG, NOTE=MUT;
@@ -153,12 +158,13 @@ function draw(t){
 
 window.renderFrame = function (t) {
   t = clamp(t, 0, ANIM_DURATION);
+  const tv = t; t = warpT(t);
   let cap = '', sub = '';
   for (const b of BEATS) if (t >= b[0]) { cap = b[1]; sub = b[2] || ''; }
   $('cap').innerHTML = cap; $('sub').textContent = sub;
   $('svg').innerHTML = WRAP[0] + draw(t) + WRAP[1];
   const f = $('fade');
-  f.style.opacity = t < 0.5 ? 1 - t / 0.5 : (ANIM_DURATION - t < 0.6 ? 1 - (ANIM_DURATION - t) / 0.6 : 0);
+  f.style.opacity = tv < 0.5 ? 1 - tv / 0.5 : (ANIM_DURATION - tv < 0.6 ? 1 - (ANIM_DURATION - tv) / 0.6 : 0);
 };
 renderFrame(0);
 </script>

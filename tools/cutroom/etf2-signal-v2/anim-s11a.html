@@ -90,6 +90,11 @@ function recall(t,t0,x,y,w,h,label,inner,o={}){const a=op(t,t0,.5)*(o.until&&t>o
 function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
 
 const BEATS = [[0.3, "another conservative swing trade system called <em>ETF2</em>: the same classification, weekly decisions", ""], [18.0, "an additional <em>market exposure algorithm</em> which takes a look at <em>ten indexes</em>", ""], [34.0, "four in the US: SPY, the Qs, the mid caps, the small caps; about <em>60 percent in globals</em>", ""], [50.0, "price today, compared to the <em>four-month moving average</em>", ""], [70.0, "above it: money you can afford to have at risk. Below it: <em>cash</em>. Each index controls <em>ten percent</em>", ""], [87.0, "why six and four: the US is about <em>48 percent</em> of global market cap", ""], [105.0, "the US controls 40, the globals 60; right now <em>six of the ten</em> are above", ""], [123.0, "the maximum exposure to consider is about <em>60 percent</em>; all above, that goes to a hundred", ""], [138.0, "this little <em>risk manager</em> is a really powerful feature of the ETF2 system", ""], [154.0, "the market collapses since 2000: the internet bubble, LTCM, Covid", ""], [172.0, "the global financial meltdown: each time the broad indexes lost <em>more than 50 percent</em>", ""], [194.0, "the worst ETF2 result with this algorithm was <em>minus six percent</em>", "His figure for his model; not computed here."], [210.0, "four times in 23 years: losses of more than 50 percent", ""], [225.0, "the posture of global market risk is always on <em>page one</em> of my weekend review", ""]];
+// WARP (optional): [[t_voice, t_authored], …] knots from the voice-over's words; the scene was authored on an estimate
+const WARP = null;
+const warpT = t => { if (!WARP) return t; for (let i = 1; i < WARP.length; i++) if (t <= WARP[i][0]) {
+  const [a0, b0] = WARP[i - 1], [a1, b1] = WARP[i]; return b0 + (b1 - b0) * (t - a0) / Math.max(1e-6, a1 - a0); }
+  return WARP[WARP.length - 1][1]; };
 
 // one colour per quantity, for the whole course
 const INV=OK, CASH=DN, SIG=ACC, PRICE=FG, NOTE=MUT;
@@ -157,12 +162,13 @@ function draw(t){
 
 window.renderFrame = function (t) {
   t = clamp(t, 0, ANIM_DURATION);
+  const tv = t; t = warpT(t);
   let cap = '', sub = '';
   for (const b of BEATS) if (t >= b[0]) { cap = b[1]; sub = b[2] || ''; }
   $('cap').innerHTML = cap; $('sub').textContent = sub;
   $('svg').innerHTML = WRAP[0] + draw(t) + WRAP[1];
   const f = $('fade');
-  f.style.opacity = t < 0.5 ? 1 - t / 0.5 : (ANIM_DURATION - t < 0.6 ? 1 - (ANIM_DURATION - t) / 0.6 : 0);
+  f.style.opacity = tv < 0.5 ? 1 - tv / 0.5 : (ANIM_DURATION - tv < 0.6 ? 1 - (ANIM_DURATION - tv) / 0.6 : 0);
 };
 renderFrame(0);
 </script>

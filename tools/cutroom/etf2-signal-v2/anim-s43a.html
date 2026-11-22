@@ -90,6 +90,11 @@ function recall(t,t0,x,y,w,h,label,inner,o={}){const a=op(t,t0,.5)*(o.until&&t>o
 function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
 
 const BEATS = [[0.5, "<em>bullish volatile</em> favors the short term", ""], [16.0, "the multi-time-frame NDX has shown a recovery out of the war chaos, which was remarkable", ""], [22.0, "the <em>theoretical exposure went from 10 % to 90 %</em>", ""], [32.0, "a bunch of things hovering right around their <em>four-month moving average</em> dropped underneath and moved back above", ""], [42.0, "a large change in exposure. <em>You don't see that very often</em>", ""], [48.0, "percent stretch: bullish, but in the red, within two and a quarter percent of the <em>200-day</em>", ""], [65.0, "the 200-day continues to steam north: a market that <em>ran out of gas</em>", ""], [81.0, "ATR 1.54 % is <em>double</em> the normal volatility; prior to COVID the average was 0.75", ""], [99.0, "the risk Z has flashed <em>risk on</em>: short-term volatility is draining out", ""], [116.0, "I attribute that to the claim of a ceasefire; risk Z all the way up to 0.44", ""], [128.0, "ETF2: <em>90 % exposed</em>", ""]];
+// WARP (optional): [[t_voice, t_authored], …] knots from the voice-over's words; the scene was authored on an estimate
+const WARP = null;
+const warpT = t => { if (!WARP) return t; for (let i = 1; i < WARP.length; i++) if (t <= WARP[i][0]) {
+  const [a0, b0] = WARP[i - 1], [a1, b1] = WARP[i]; return b0 + (b1 - b0) * (t - a0) / Math.max(1e-6, a1 - a0); }
+  return WARP[WARP.length - 1][1]; };
 
 // one colour per quantity, for the whole course
 const INV=OK, CASH=DN, SIG=ACC, PRICE=FG, NOTE=MUT;
@@ -163,12 +168,13 @@ function draw(t){
 
 window.renderFrame = function (t) {
   t = clamp(t, 0, ANIM_DURATION);
+  const tv = t; t = warpT(t);
   let cap = '', sub = '';
   for (const b of BEATS) if (t >= b[0]) { cap = b[1]; sub = b[2] || ''; }
   $('cap').innerHTML = cap; $('sub').textContent = sub;
   $('svg').innerHTML = WRAP[0] + draw(t) + WRAP[1];
   const f = $('fade');
-  f.style.opacity = t < 0.5 ? 1 - t / 0.5 : (ANIM_DURATION - t < 0.6 ? 1 - (ANIM_DURATION - t) / 0.6 : 0);
+  f.style.opacity = tv < 0.5 ? 1 - tv / 0.5 : (ANIM_DURATION - tv < 0.6 ? 1 - (ANIM_DURATION - tv) / 0.6 : 0);
 };
 renderFrame(0);
 </script>

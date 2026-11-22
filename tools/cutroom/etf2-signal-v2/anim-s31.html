@@ -41,9 +41,9 @@
 <script>
 const BUILD = 's31-1';
 console.log('[s31] build', BUILD);
-// Overdub twin of s31: Ken's audio ava 0.0→94.0; t is seconds after the in-point.
+// Overdub twin of s31: Ken's audio ava 0.0→99.0; t is seconds after the in-point.
 // Beat times read from the VTT cues on 2026-11-21 (tools/cutroom/etf2-signal-v2/transcript-ava.json).
-window.ANIM_DURATION = 94.0;
+window.ANIM_DURATION = 99.0;
 const ACC='#F2D06B', FG='#f2f5f7', MUT='#9aa7b0', OK='#4ade80', DN='#f87171', BLUE='#7baad4', BRD='rgba(255,255,255,.18)', CARD='#000', TXS=1.1, WRAP=['',''];
 const W=1160, H=530;
 const $ = id => document.getElementById(id);
@@ -90,6 +90,11 @@ function recall(t,t0,x,y,w,h,label,inner,o={}){const a=op(t,t0,.5)*(o.until&&t>o
 function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
 
 const BEATS = [[0.3, "how the number at the bottom of the report is made, <em>every Friday</em>", ""], [6.1, "<em>ten</em> regional index funds", ""], [17.2, "one question each: is Friday's close <em>above its four-month average</em>?", ""], [22.6, "yes adds <em>ten percent</em>; no adds nothing", ""], [25.3, "the sum is the theoretical exposure, <em>zero to one hundred</em>", ""], [29.1, "computed by <em>edge-sysscq</em> from the prices on this machine", "The Edge Platform's copy of the rule (SCQ-006)."], [44.1, "13 November 2026: <em>one fund above, ten percent</em>, the count Ken printed", ""], [52.6, "back to January 2004: <em>1,193 Fridays</em>", ""], [58.0, "816 at fifty or more · 138 at <em>zero</em> · 235 at <em>one hundred</em>", ""], [70.3, "fifty as the switch: <em>136 runs</em>, 68 invested, 68 in cash", ""], [78.0, "longest invested <em>58 weeks</em>; longest in cash <em>42 weeks</em>", ""], [89.1, "four of those periods are next", ""]];
+// WARP (optional): [[t_voice, t_authored], …] knots from the voice-over's words; the scene was authored on an estimate
+const WARP = [[0.0, 0.0], [0.58, 0.3], [4.29, 6.1], [20.8, 17.2], [26.5, 22.6], [29.8, 25.3], [33.88, 29.1], [48.01, 44.1], [57.16, 52.6], [74.03, 70.3], [90.54, 78.0], [96.88, 89.1], [98.95, 94.0]];
+const warpT = t => { if (!WARP) return t; for (let i = 1; i < WARP.length; i++) if (t <= WARP[i][0]) {
+  const [a0, b0] = WARP[i - 1], [a1, b1] = WARP[i]; return b0 + (b1 - b0) * (t - a0) / Math.max(1e-6, a1 - a0); }
+  return WARP[WARP.length - 1][1]; };
 
 // one colour per quantity, for the whole course
 const INV=OK, CASH=DN, SIG=ACC, PRICE=FG, NOTE=MUT;
@@ -145,12 +150,13 @@ function draw(t){
 
 window.renderFrame = function (t) {
   t = clamp(t, 0, ANIM_DURATION);
+  const tv = t; t = warpT(t);
   let cap = '', sub = '';
   for (const b of BEATS) if (t >= b[0]) { cap = b[1]; sub = b[2] || ''; }
   $('cap').innerHTML = cap; $('sub').textContent = sub;
   $('svg').innerHTML = WRAP[0] + draw(t) + WRAP[1];
   const f = $('fade');
-  f.style.opacity = t < 0.5 ? 1 - t / 0.5 : (ANIM_DURATION - t < 0.6 ? 1 - (ANIM_DURATION - t) / 0.6 : 0);
+  f.style.opacity = tv < 0.5 ? 1 - tv / 0.5 : (ANIM_DURATION - tv < 0.6 ? 1 - (ANIM_DURATION - tv) / 0.6 : 0);
 };
 renderFrame(0);
 </script>
