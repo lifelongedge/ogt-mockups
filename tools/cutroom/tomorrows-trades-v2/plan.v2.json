@@ -1,49 +1,524 @@
 {
-  "schema": "coursecraft-plan-v2",
-  "course": "tomorrows-trades-v2",
-  "revision": 1,
-  "revised": "2026-07-14",
-  "status": "DRAFT — store v2 course 7-of-8 by rank. Single-source course (audio cross-correlated, splice-free); all scenes mapped + VTT-verified. KEY CORRECTIONS: both proposed single outcomes (recovery, WMBB3) have NO symbol/date in footage — whiteboard-generic walks; sting-title drift fixed (real 5-ATR audio and nested-frames audio relocated to their true spans); two uncut-gold passages added to the plan.",
-  "title": "Where Tomorrow's Trades Come From (v2)",
-  "topic_class": "chartable process (flagship backtest course)",
-  "store_sku": "tomorrows-trades",
-  "replaces": "c-mka",
-  "notes": "Cut track: docs/store-v2-cut-tracks.md §4. Mapping findings folded in: (1) session identity on tape ('small group coaching... January 22nd, 2024' @0:19) — provenance caption; (2) the personal-log expectancy claim is at 8:03-8:20 WITH Ken's own 'this is not tested' disclaimer — v2 KEEPS his disclaimer (it is the honesty) and follows with the rule-based aggregate; (3) scene-13 recovery and scene-18 WMBB3 singles are NOT satisfiable from footage (no symbol/date) — WMBB3 outcome self-selects an instance and DISCLOSES that on screen; (4) uncut gold restored: full RL270-vs-RL10 fair-value explanation 21:04-23:51 (never made the course) and the literal credo 'that's the essence of that sniper trading' 56:24 (past the old out-point); (5) only symbols named in the hour: DIA, DVN, CLF, AA, AI, HD roster (30:25-30:40) + EWW/EWZ (39:43) — no dates attached. Studies to run BEFORE VO: buyer evidence (flagship), 10-day-high runway, level-reaction frequency.",
-  "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/tomorrows-trades-v2/",
-  "sources": [
-    { "id": "mkt", "label": "2024-01-22 small group coaching W1 (mkt-classification-macd, 61 min — sole source)", "file": "youtube-yIBxW5NdMD4-mkt-classification-macd.mp4", "proxy": "youtube-yIBxW5NdMD4-mkt-classification-macd.proxy.mp4", "url": "https://www.youtube.com/watch?v=yIBxW5NdMD4" }
-  ],
-  "voices": [
-    { "id": "ava", "label": "Ava (US, female, polished)", "sample": "vo-ava.mp3" },
-    { "id": "andrew", "label": "Andrew (US, male, conversational)", "sample": "vo-andrew.mp3" }
-  ],
-  "segments": [
-    { "id": "s01", "type": "cut", "include": true, "label": "Cold open: the daily process map (+ provenance caption)", "source": "mkt", "in": 12.0, "out": 60.0, "status": "MAPPED-VERIFIED (session ID on tape @19s — caption it)", "quote_anchor": "the daily process map that I have" },
-    { "id": "s02", "type": "slide", "include": true, "label": "Title card", "slide_id": "title", "duration": 4 },
-    { "id": "s03", "type": "overdub", "include": true, "label": "OVERDUB: ★ gratitude, forgiveness, three sources + open swings (one continuous passage)", "source": "mkt", "in": 60.0, "out": 200.0, "status": "MAPPED-VERIFIED — ★ sting clean at window open ('three sources of new symbols' @70); open-swings talk 77-185 lives here (v1 carded it a scene late)", "animation_brief": "NEW three-source flow diagram; open-positions board with risk boxes already set.", "quote_anchor": "I give gratitude for the trading that I did and then forgiveness... three sources of new symbols for the day ahead" },
-    { "id": "s04", "type": "overdub", "include": true, "label": "OVERDUB: the six mechanical swing systems (do NOT conflate with the intraday menu)", "source": "mkt", "in": 200.0, "out": 320.0, "status": "MAPPED-VERIFIED (5DD, washout, channeling, overreaction, triple screen, W @217-247 — a DIFFERENT list from the six intraday patterns at 2137-2265)", "animation_brief": "System menu chips.", "quote_anchor": "there's going to be six mechanical points... 5DD, washout, channeling, overreaction, triple screen, W" },
-    { "id": "s05", "type": "overdub", "include": true, "label": "OVERDUB: the one-day continuation opportunity", "source": "mkt", "in": 320.0, "out": 389.0, "status": "MAPPED-VERIFIED", "animation_brief": "Continuation candle sequence; orderly-entry chip.", "quote_anchor": "this little continuation trade is like a one-day opportunity... orderly entry" },
-    { "id": "s06", "type": "slide", "include": true, "label": "Chapter 2 card", "slide_id": "ch2", "duration": 2 },
-    { "id": "s07", "type": "cut", "include": true, "label": "Re-enter what already worked — WITH his own 'not tested' disclaimer", "source": "mkt", "in": 420.0, "out": 580.0, "status": "MAPPED-VERIFIED — the personal-log expectancy claim (8:03-8:20) comes WITH Ken's disclaimer ('this is not tested other than to say...'). v2 keeps the disclaimer in: it sets up the aggregate perfectly. 2:1-to-10-day-high qualifier 467-531 inside", "quote_anchor": "this is not tested other than to say that the continuation pattern as a strategy rolling up all of those is expectancy... good idea to reenter a successful trade that closed in the direction that it was successful" },
-    { "id": "s08", "type": "overdub", "include": true, "label": "OVERDUB: the 10-day-high target (+ the father-son research story)", "source": "mkt", "in": 580.0, "out": 750.0, "status": "MAPPED-VERIFIED ('goes through yesterday's high, I just automatically buy that' @584; research-weekend story @654)", "animation_brief": "Band chart with the 10-day-high runway.", "quote_anchor": "it goes through yesterday's high, I just automatically buy that... the continuation pattern had a positive expectancy" },
-    { "id": "s08b", "type": "outcome", "include": true, "mode": "aggregate", "label": "WHAT HAPPENED: he said 'not tested' — so we tested it", "voice": "ava", "vo_script": "TO WRITE after the study runs. Rule: day closes in trade direction after an up-day -> does price touch the prior 10-day high before violating the prior day's low, within 5 sessions? Liquid universe, full history, stats table. Frames Ken's own disclaimer as the setup: he said it was untested; here is the test.", "est_duration": 55, "data": { "status": "STUDY NOT YET RUN" }, "editorial_rules": "publish whatever it says; split-adjusted bars; ambiguity disclosed" },
-    { "id": "s09", "type": "cut", "include": true, "label": "The channeling win-rate history (extended to the uncut payoff line)", "source": "mkt", "in": 750.0, "out": 893.0, "status": "MAPPED — v1 cut at 869; 'that simple rule turns out to be positive expectancy' lands 872-893 (uncut). 70-85% claims stated on camera; flag: if the channeling rule is decidable from footage, a verification aggregate is a candidate (owner call)", "quote_anchor": "about 70% of the time this thing wins... anywhere from 70 to 85% successful... that simple rule turns out to be positive expectancy" },
-    { "id": "s10", "type": "slide", "include": true, "label": "Chapter 3 card", "slide_id": "ch3", "duration": 2 },
-    { "id": "s11", "type": "overdub", "include": true, "label": "OVERDUB: ★ buyer evidence + wall of worry + the REAL 5-ATR sting", "source": "mkt", "in": 1500.0, "out": 1660.0, "status": "MAPPED-VERIFIED — flagship anchor is the window's first sentence; recovery beat @1546-1576 (whiteboard-generic, NO single outcome); the true 5-ATR-runway sting audio @1563-1571 (v1 carded it two scenes late)", "animation_brief": "Risk box: 1-ATR box vs 5-ATR runway drawn on 'five ATRs to play with of potential gain and I'm managing to a single ATR of risk'.", "quote_anchor": "I have new evidence that new buyers are coming in with the willingness to buy this at a higher price than they had yesterday" },
-    { "id": "s11b", "type": "outcome", "include": true, "mode": "aggregate", "label": "WHAT HAPPENED: the buyer-evidence claim, measured (FLAGSHIP)", "voice": "ava", "vo_script": "TO WRITE after the study runs. Rule: cross above yesterday's high -> same-day close location + next-day follow-through, full quote store, ambiguous bars counted and disclosed.", "est_duration": 60, "data": { "status": "STUDY NOT YET RUN — the course's central claim" }, "editorial_rules": "publish whatever it says" },
-    { "id": "s12", "type": "overdub", "include": true, "label": "OVERDUB + EXPLAINER: RL270 vs RL10 — the UNCUT fair-value explanation", "source": "mkt", "in": 1264.0, "out": 1431.0, "status": "UNCUT GOLD (21:04-23:51 never made the course): fair value vs traders' price, incl. the second 5-to-1 ATR statement @1390. Render lines from real edge-transform rl_series values; Ava defines 'regression line' once for newcomers", "animation_brief": "RL10 vs RL270 divergence on real bars; discrepancy shading.", "quote_anchor": "5 to 1 ATR difference between the traders and the long-term buy-and-holders" },
-    { "id": "s13", "type": "cut", "include": true, "label": "The usual suspects roster (frog champions)", "source": "mkt", "in": 1760.0, "out": 1860.0, "status": "MAPPED-VERIFIED — the only named symbols in the hour: DIA, DVN, CLF, AA, AI, HD ('becoming less interesting'); no dates attached, so no outcomes", "quote_anchor": "usual suspects... frog champions... DIA, Devon, Cliff, Alcoa... AI... Home Depot" },
-    { "id": "s14", "type": "cut", "include": true, "label": "Nightly prep + the fourth slot (gappers)", "source": "mkt", "in": 1860.0, "out": 2039.0, "status": "MAPPED-VERIFIED. The cut track's recovery single is NOT satisfiable (no symbol/date in footage) — no outcome here", "quote_anchor": "when I'm doing my nightly prep, if I see a situation like an SSC on a daily chart... I'm now gonna add a fourth slot... the big gaps, the gappers" },
-    { "id": "s15", "type": "slide", "include": true, "label": "Chapter 4 card", "slide_id": "ch4", "duration": 2 },
-    { "id": "s16", "type": "cut", "include": true, "label": "Frame the night before", "source": "mkt", "in": 2100.0, "out": 2137.0, "status": "MAPPED-VERIFIED ('all of those can be done with prep the night before' @2124); practice card at close", "quote_anchor": "all of those can be done with prep the night before" },
-    { "id": "s17", "type": "overdub", "include": true, "label": "OVERDUB: the six-pattern intraday menu (true span, straddles v1's boundary)", "source": "mkt", "in": 2137.0, "out": 2265.0, "status": "MAPPED-VERIFIED — enumeration spans 35:37-37:45: O3 @2145, 123 @2169, WMBB3 mechanics @2179-2199 (gap down -> W%R oversold -> MACD histogram uptick -> breakout, 'four or five bars'), SSC @2150/2258, collapsing Dragon @2152/2259", "animation_brief": "NEW six-pattern menu: mini candle-shape per pattern with trigger + invalidation labels; MACD sub-pane for the WMBB3 beat; Ava glossary chips for cold names.", "quote_anchor": "if it's not a 123 the next one that usually fires is a WMBB3... causes the Williams %R to be oversold... MACD histogram uptick" },
-    { "id": "s17b", "type": "outcome", "include": true, "mode": "single", "label": "WHAT HAPPENED: one real WMBB3, start to finish (instance self-selected + disclosed)", "voice": "ava", "vo_script": "TO WRITE after instance selection. MAPPING RULE: no demo symbol/date exists in the footage (whiteboard-generic sketch) — we select a real WMBB3 instance from the quote store, SAY SO ON SCREEN ('Ken drew the pattern; here is one the market drew'), and resolve it bar-by-bar, win or failure.", "est_duration": 55, "data": { "status": "INSTANCE NOT YET SELECTED — formalize the WMBB3 test from his stated mechanics, scan, pick a representative fill, publish it" }, "editorial_rules": "self-selected instance DISCLOSED; frame-vs-price only; publish either way" },
-    { "id": "s18", "type": "cut", "include": true, "label": "The big-gap exception + best day ever", "source": "mkt", "in": 2420.0, "out": 2639.0, "status": "MAPPED-VERIFIED ('whatever the big gappers were are going to have my attention all day because that predicts a large range day' @2538-2546; 'The Best Day Ever...' @2568). Honesty caveat class — keep Ken", "quote_anchor": "whatever the big gappers were are going to have my attention all day because that predicts a large range day" },
-    { "id": "s19", "type": "slide", "include": true, "label": "Chapter 5 card", "slide_id": "ch5", "duration": 2 },
-    { "id": "s20", "type": "overdub", "include": true, "label": "OVERDUB: ★ two price levels + the REAL nested-frames audio", "source": "mkt", "in": 2700.0, "out": 2860.0, "status": "MAPPED-VERIFIED — 'something really powerful about those two price levels' @2708; the true daily->10-day->30-day nested-ladder audio is 2730-2837 (v1 carded the ★ a scene late over George's 30-min-bar coaching)", "animation_brief": "Nested band chart: three zoom levels, one question answered per frame; 'statistically significant price level' chip @2821-2837.", "quote_anchor": "there's something really powerful about those two price levels... the 10-day look-back, the 30-day look-back... a statistically significant price level" },
-    { "id": "s20b", "type": "outcome", "include": true, "mode": "aggregate", "label": "WHAT HAPPENED: do those levels actually react?", "voice": "ava", "vo_script": "TO WRITE after the study runs. Rule: reaction frequency at yesterday's H/L and the 10-day H/L (touch -> N-bar reversal vs punch-through), liquid universe.", "est_duration": 50, "data": { "status": "STUDY NOT YET RUN" }, "editorial_rules": "publish whatever it says" },
-    { "id": "s21", "type": "explainer", "include": true, "label": "EXPLAINER: yellow zones (RYG), sourced from the color-code line", "voice": "ava", "vo_script": "TO WRITE — Ava defines the RYG zone vocabulary once (edge-vocab EV-004); Ken's own color-code line ('green, white, yellow and red' @3293) and the uncut tail (3340+) donate the audio beats if an overdub variant is preferred.", "est_duration": 40, "animation_brief": "Day-frame with zone shading + decision-bias arrows; 200-day-MA bias doctrine (2985-3075: 'the 10 biggest daily moves ever were dead-cat bounces in a bear market') available as a Ken cut before it." },
-    { "id": "s22", "type": "cut", "include": true, "label": "The essence of sniper trading (credo RESTORED from the uncut tail)", "source": "mkt", "in": 3130.0, "out": 3410.0, "status": "MAPPED — v1 ended at 55:00; the literal line 'that's the essence of that sniper trading' is @56:24 (3384) in the uncut tail. Trim inside (3173 'sleep like a goddamn baby' -> keep; profanity check for the store cut), end after the credo", "quote_anchor": "I'm going to sleep like a goddamn baby... that's the essence of that sniper trading" },
-    { "id": "s23", "type": "slide", "include": true, "label": "Maxim + end card", "slide_id": "end", "duration": 10 }
-  ]
+ "schema": "coursecraft-plan-v2",
+ "course": "tomorrows-trades-v2",
+ "revision": 2,
+ "revised": "2026-11-22",
+ "status": "DRAFT rev2 (2026-11-22): the recut under the current grammar. The whole hour mapped into 23 windows in seven chapters from start/stop phrases on the word-stamped VTT (make_rev2.py), source order, the cold open lifted from 42:39. Seventeen minutes rev 1 never used are in (14:53-21:04, 26:00-29:35, 38:00-41:03, 43:24-44:55, 56:56-1:00:35). Opener, title, seven chapter cards and the end card carry text. Every window is a plain cut: no twins yet (the owner asks for them next); the four outcome slots and the yellow-zone explainer are OFF until their study or script exists.",
+ "title": "Where Tomorrow's Trades Come From (v2)",
+ "topic_class": "chartable process (flagship backtest course)",
+ "store_sku": "tomorrows-trades",
+ "replaces": "c-mka",
+ "notes": "Cut track: docs/store-v2-cut-tracks.md §4. Mapping findings folded in: (1) session identity on tape ('small group coaching... January 22nd, 2024' @0:19) — provenance caption; (2) the personal-log expectancy claim is at 8:03-8:20 WITH Ken's own 'this is not tested' disclaimer — v2 KEEPS his disclaimer (it is the honesty) and follows with the rule-based aggregate; (3) scene-13 recovery and scene-18 WMBB3 singles are NOT satisfiable from footage (no symbol/date) — WMBB3 outcome self-selects an instance and DISCLOSES that on screen; (4) uncut gold restored: full RL270-vs-RL10 fair-value explanation 21:04-23:51 (never made the course) and the literal credo 'that's the essence of that sniper trading' 56:24 (past the old out-point); (5) only symbols named in the hour: DIA, DVN, CLF, AA, AI, HD roster (30:25-30:40) + EWW/EWZ (39:43) — no dates attached. Studies to run BEFORE VO: buyer evidence (flagship), 10-day-high runway, level-reaction frequency. | rev2: rev 1's ids are not reused for different windows; rev 1's overdub briefs live on as 'Twin candidate' notes in each cut's status.",
+ "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/tomorrows-trades-v2/",
+ "sources": [
+  {
+   "id": "mkt",
+   "label": "2024-01-22 small group coaching W1 (mkt-classification-macd, 61 min — sole source)",
+   "file": "youtube-yIBxW5NdMD4-mkt-classification-macd.mp4",
+   "proxy": "youtube-yIBxW5NdMD4-mkt-classification-macd.proxy.mp4",
+   "url": "https://www.youtube.com/watch?v=yIBxW5NdMD4"
+  }
+ ],
+ "voices": [
+  {
+   "id": "ava",
+   "label": "Ava (US, female, polished)",
+   "sample": "vo-ava.mp3"
+  },
+  {
+   "id": "andrew",
+   "label": "Andrew (US, male, conversational)",
+   "sample": "vo-andrew.mp3"
+  }
+ ],
+ "segments": [
+  {
+   "id": "s000",
+   "type": "explainer",
+   "include": true,
+   "label": "OPENER · The watch (option B): the owl, the lighthouse, the title box",
+   "voice": "ava",
+   "vo_script": "Where Tomorrow's Trades Come From. With Dr. Ken Long. Owl Group Trading.",
+   "est_duration": 8,
+   "hold": true,
+   "toc_title": "Opening",
+   "status": "rev2: the course opener (scripts/opener.py, the DO v2 reference); hold:true keeps the picture 8 s; Ava says only what the course is and the owner's own take from the Voice panel replaces her; the title card s02 stays ON until the owner decides whether the opener replaces it"
+  },
+  {
+   "id": "s00",
+   "type": "slide",
+   "include": false,
+   "label": "INTERNAL · story arc (design card, OFF before the build)",
+   "slide_id": "arc",
+   "duration": 8,
+   "layout": "agenda",
+   "text": {
+    "kicker": "INTERNAL · THE STORY ARC · NOT FOR THE CUT",
+    "title": "**Four slots**, filled at the close",
+    "subtitle": "The trade you take tomorrow was framed last night, or it gapped into your lap.",
+    "body": "Sources | Ch 1 (s03, s04): the close, open trades, patterns vs situations\nContinuation | Ch 2 (s05-s09): re-enter what won, the universal entry, where it came from\nSituations | Ch 3 (s10-s12): RL270 vs RL10, ATRs of runway, new buyers, stalking\nSlots | Ch 4 (s13, s14): the usual suspects, the gappers, two per slot\nThe open | Ch 5 (s15-s18): first out the door, plan-prepare-execute, the battle drill\nLevels | Ch 6 (s20, s21): yesterday, the 10-day, the 30-day, the ladder\nBias | Ch 7 (s24, s25): the 10-day box, MACD seasons, the entry still fires"
+   }
+  },
+  {
+   "id": "s00s",
+   "type": "slide",
+   "include": false,
+   "label": "SALES · what you walk away with (for the store page; OFF before the build unless kept)",
+   "slide_id": "promise",
+   "duration": 8,
+   "layout": "agenda",
+   "text": {
+    "kicker": "WHERE TOMORROW'S TRADES COME FROM · WITH DR. KEN LONG",
+    "title": "What you walk away with",
+    "subtitle": "A watchlist built at the close, from four places, in his own words.",
+    "body": "Four sources for tomorrow | open trades, new patterns, situations, big gappers\nThe continuation | when to re-enter a trade that already won\nThe universal entry | the orderly open and the break of yesterday's high\nTwo crowds, two prices | RL270 against RL10, counted in ATRs\nThe open | which patterns fire first, and why three of four sources need no waiting\nThe frame | yesterday, the 10-day, the 30-day, and bias that is not a signal"
+   }
+  },
+  {
+   "id": "s01",
+   "type": "cut",
+   "include": true,
+   "label": "COLD OPEN: the best day ever (all four sources in one symbol)",
+   "source": "mkt",
+   "in": 2559.01,
+   "out": 2586.45,
+   "status": "rev2: the course in one sentence, lifted from 42:39; s18 stops before it so it is not heard twice. Twin candidate: the four slots light up one by one on one symbol.",
+   "toc_title": "The best day ever",
+   "quote_anchor": "and in a perfect world one of"
+  },
+  {
+   "id": "s02",
+   "type": "slide",
+   "include": true,
+   "label": "Title card",
+   "slide_id": "title",
+   "duration": 4,
+   "layout": "title",
+   "text": {
+    "kicker": "",
+    "title": "Where **Tomorrow's Trades** Come From",
+    "subtitle": "",
+    "body": "Four sources, framed the night before\nwith Dr. Ken Long"
+   }
+  },
+  {
+   "id": "c1",
+   "type": "slide",
+   "include": true,
+   "label": "Chapter 1 card",
+   "slide_id": "ch1",
+   "duration": 3,
+   "layout": "chapter",
+   "text": {
+    "kicker": "Chapter 1",
+    "title": "Three sources, at the close",
+    "subtitle": "",
+    "body": "Tomorrow's list is built at today's close: the trades still open, the patterns that fired, and the situations you know how to read."
+   }
+  },
+  {
+   "id": "s03",
+   "type": "cut",
+   "include": true,
+   "label": "The close: gratitude, forgiveness, three sources; source 1, the open trades (two kinds)",
+   "source": "mkt",
+   "in": 13.57,
+   "out": 181.45,
+   "status": "rev2: provenance on tape at 0:15 ('small group coaching ... January 22nd 2024'): caption it. Open trades 1:20-3:00: a day trade turned swing, a swing that has not hit its stop. Twin candidate: the process map, the close, the list being filled.",
+   "toc_title": "At the close: gratitude, forgiveness, then three sources",
+   "quote_anchor": "this is the uh small group coaching"
+  },
+  {
+   "id": "s04",
+   "type": "cut",
+   "include": true,
+   "label": "Source 2: new symbols that fire, patterns vs situations; the six mechanical systems; the continuation",
+   "source": "mkt",
+   "in": 181.45,
+   "out": 326.53,
+   "status": "rev2: the six swing systems at 3:37-3:57 (5DD, washout, channeling, overreaction, triple screen, W); a DIFFERENT list from the intraday menu in s15. Twin candidate: two bins, six coded patterns, one situation.",
+   "toc_title": "Patterns and situations",
+   "quote_anchor": "and then when I review the charts"
+  },
+  {
+   "id": "c2",
+   "type": "slide",
+   "include": true,
+   "label": "Chapter 2 card",
+   "slide_id": "ch2",
+   "duration": 3,
+   "layout": "chapter",
+   "text": {
+    "kicker": "Chapter 2",
+    "title": "Re-enter what already worked",
+    "subtitle": "",
+    "body": "The continuation: a trade that won in its direction is a candidate tomorrow, taken only on an orderly open inside yesterday's range and a break of yesterday's high."
+   }
+  },
+  {
+   "id": "s05",
+   "type": "cut",
+   "include": true,
+   "label": "The continuation: the one-day opportunity, the risk box at yesterday's low, the 10-day high, his 'not tested'",
+   "source": "mkt",
+   "in": 327.53,
+   "out": 537.21,
+   "status": "rev2: his own disclaimer 7:58-8:05 ('this is not tested other than to say ...') stays in; the personal-log expectancy claim is never shown as ours. The 2:1-to-the-10-day-high preference he states and then says he does not require.",
+   "toc_title": "A one-day opportunity, and 'this is not tested'",
+   "quote_anchor": "so for me this this little continuation"
+  },
+  {
+   "id": "s06",
+   "type": "cut",
+   "include": true,
+   "label": "The universal entry: opens inside yesterday's body, no new low, through yesterday's high; the research weekend",
+   "source": "mkt",
+   "in": 537.21,
+   "out": 684.93,
+   "status": "rev2: the rule in his words 9:10-9:45; the father-son research weekend 10:22-10:55 ('the continuation pattern had a positive expectancy') is THEIR finding as he reports it, not ours. Twin candidate: yesterday's bar, the yellow zone, the open inside it, the break of the high.",
+   "toc_title": "The universal entry",
+   "quote_anchor": "so I say that say that my"
+  },
+  {
+   "id": "s07",
+   "type": "cut",
+   "include": true,
+   "label": "The channeling system, 70 to 85 percent 'year in and year out', the simple rule",
+   "source": "mkt",
+   "in": 684.93,
+   "out": 898.89,
+   "status": "rev2: '70 to 85% successful in the big fat indexes' (14:18) and 'positive expectancy' (14:48) are his claims on camera; untested here (enhancement: the channeling rule run on SPY/DIA/QQQ). The 2001-2003 date he is unsure of on tape.",
+   "toc_title": "Where the idea came from: the channeling system",
+   "quote_anchor": "now the reason I came across that"
+  },
+  {
+   "include": false,
+   "id": "o07",
+   "type": "outcome",
+   "label": "PROPOSED · the continuation rule, measured (study not run)",
+   "status": "rev2: OFF. Rev 1's s08b. A study of the universal entry after a winning mechanical trade (open inside yesterday's range, break of yesterday's high plus a nickel, risk at yesterday's low) on the quote store. Nothing is shown until it has run; it publishes whatever it finds."
+  },
+  {
+   "id": "s08",
+   "type": "cut",
+   "include": true,
+   "label": "Discovery: strict rules, the Cat 2s after the washout, the emerging dragon, the pocket",
+   "source": "mkt",
+   "in": 898.89,
+   "out": 1128.21,
+   "status": "rev2: 15:00-18:48. Never in rev 1 (the 14:53-21:04 gap). Twin candidate: a 5DD's five closes, the washout cashed, the Cat 2s he did not take, the pocket under the prior RL10 peak.",
+   "toc_title": "The Cat 2s he walked away from",
+   "quote_anchor": "I discovered it after about five"
+  },
+  {
+   "id": "s09",
+   "type": "cut",
+   "include": true,
+   "label": "A paper win still qualifies; any successful mechanical trade plus a universal entry is a situation",
+   "source": "mkt",
+   "in": 1128.21,
+   "out": 1238.01,
+   "status": "rev2: 18:48-20:37; the recap of the first two categories closes the chapter. Never in rev 1.",
+   "toc_title": "A paper win still counts",
+   "quote_anchor": "and the other thing that we learned"
+  },
+  {
+   "id": "c3",
+   "type": "slide",
+   "include": true,
+   "label": "Chapter 3 card",
+   "slide_id": "ch3",
+   "duration": 3,
+   "layout": "chapter",
+   "text": {
+    "kicker": "Chapter 3",
+    "title": "Two crowds, two prices",
+    "subtitle": "",
+    "body": "The RL270 is the buy-and-hold crowd's fair value, the RL10 the traders' price. Counted in ATRs, the gap between them is the runway; one ATR is the risk."
+   }
+  },
+  {
+   "id": "s10",
+   "type": "cut",
+   "include": true,
+   "label": "Situations: RL generation 1 and 2; RL270 the buy-and-hold fair value, RL10 the traders' price",
+   "source": "mkt",
+   "in": 1238.01,
+   "out": 1417.69,
+   "status": "rev2: rev 1's uncut gold (21:04-23:37), now from its true start at 20:37 (the generations). The 5:1 ATR count at 23:04 is on his whiteboard, no symbol or date. Twin candidate (ALT on his chart when a clean still exists): the two lines and the ATR ruler between them.",
+   "toc_title": "Two crowds, two prices: RL270 and RL10",
+   "quote_anchor": "and that's what I started adding in"
+  },
+  {
+   "id": "s11",
+   "type": "cut",
+   "include": true,
+   "label": "One ATR of risk, five of runway; the orderly open; 'new evidence that new buyers are coming in'",
+   "source": "mkt",
+   "in": 1417.69,
+   "out": 1562.77,
+   "status": "rev2: the flagship claim 24:58 ('if it goes above yesterday's high I have evidence ... new buyers'). The study (buyer evidence) is not run; its outcome slot o11 is off. 'Seven to 30 days ... climbs the wall of worry' is his estimate, stated as such.",
+   "toc_title": "New buyers: the evidence above yesterday's high",
+   "quote_anchor": "now says well if I can if"
+  },
+  {
+   "include": false,
+   "id": "o11",
+   "type": "outcome",
+   "label": "PROPOSED · the buyer-evidence claim, measured (FLAGSHIP; study not run)",
+   "status": "rev2: OFF. Rev 1's s11b. Cross above yesterday's high from an inside open: close location and next-day follow-through against the unconditional base rate, full quote store, ambiguity disclosed."
+  },
+  {
+   "id": "s12",
+   "type": "cut",
+   "include": true,
+   "label": "Two or three trades in the runway; sell 80, keep 20; coded signals vs interpreted situations; stalking",
+   "source": "mkt",
+   "in": 1562.77,
+   "out": 1774.13,
+   "status": "rev2: 26:00-29:35, never in rev 1. 'Animals in the wild that I'm just stalking' (28:58) is his own bridge to the trade. Twin candidate: one runway, three small boxes inside it.",
+   "toc_title": "Signal or situation: stalking, not searching",
+   "quote_anchor": "and if I've got five"
+  },
+  {
+   "id": "c4",
+   "type": "slide",
+   "include": true,
+   "label": "Chapter 4 card",
+   "slide_id": "ch4",
+   "duration": 3,
+   "layout": "chapter",
+   "text": {
+    "kicker": "Chapter 4",
+    "title": "The usual suspects and the fourth slot",
+    "subtitle": "",
+    "body": "Four slots, two symbols each: open trades, new patterns, situations, big gappers. First come, first served at the open."
+   }
+  },
+  {
+   "id": "s13",
+   "type": "cut",
+   "include": true,
+   "label": "Source 3: the usual suspects (frog champions), seen the same way intraday as on the daily",
+   "source": "mkt",
+   "in": 1774.13,
+   "out": 1937.97,
+   "status": "rev2: the only symbols named in the hour, 30:16-30:40: EWW, EWZ, DIA, Devon (DVN), Cliff (CLF), Alcoa (AA), AI; Home Depot 'becoming less and less interesting'. No dates: no outcome. Typical entries 31:41: WMBB3, OR3, SSC, maybe 123.",
+   "toc_title": "The usual suspects",
+   "quote_anchor": "and then the third category of entries"
+  },
+  {
+   "id": "s14",
+   "type": "cut",
+   "include": true,
+   "label": "Source 4: the big gappers; four slots, two symbols each, first come first served; framed the night before",
+   "source": "mkt",
+   "in": 1937.97,
+   "out": 2138.77,
+   "status": "rev2: 32:15-35:34 (rev 1's s14 + s16 joined, the cut at 33:59 fell mid-thought). 'All of those can be done with prep the night before' 35:21; the gappers you 'have to wait and see'.",
+   "toc_title": "The fourth slot: the big gappers",
+   "quote_anchor": "so so now I now identify that"
+  },
+  {
+   "id": "c5",
+   "type": "slide",
+   "include": true,
+   "label": "Chapter 5 card",
+   "slide_id": "ch5",
+   "duration": 3,
+   "layout": "chapter",
+   "text": {
+    "kicker": "Chapter 5",
+    "title": "At the open: first out the door",
+    "subtitle": "",
+    "body": "Three of the four sources were framed last night. Only the gappers make you wait, and the first patterns to fire on them are the 123, the WMBB3 and the O3."
+   }
+  },
+  {
+   "id": "s15",
+   "type": "cut",
+   "include": true,
+   "label": "The patterns that fire first on a gapper: 123, WMBB3, O3; SSC and the collapsing dragon take longer",
+   "source": "mkt",
+   "in": 2138.77,
+   "out": 2278.49,
+   "status": "rev2: 35:34-38:00 (rev 1 stopped at 37:45, before 'first out the door'). WMBB3 mechanics 36:20-36:40 (gap down, W%R oversold, MACD histogram uptick, breakout); whiteboard only, no symbol or date. Twin candidate: one gap-down open, the three patterns in the order he gives.",
+   "toc_title": "First out the door: 123, WMBB3, O3",
+   "quote_anchor": "and that situation you know the pattern"
+  },
+  {
+   "include": false,
+   "id": "o15",
+   "type": "outcome",
+   "label": "PROPOSED · one real WMBB3, start to finish (instance self-selected and disclosed)",
+   "status": "rev2: OFF. Rev 1's s17b. The hour names no WMBB3 symbol or date; an instance would be chosen by us and the selection said on screen."
+  },
+  {
+   "id": "s16",
+   "type": "cut",
+   "include": true,
+   "label": "Plan, prepare, execute: three of the four sources come out of last night's prep",
+   "source": "mkt",
+   "in": 2278.49,
+   "out": 2379.01,
+   "status": "rev2: 38:00-39:38, never in rev 1. The entry 'five cents above yesterday's high' 38:36; two units of reward back to yesterday's high from inside the yellow zone 39:09.",
+   "toc_title": "Plan, prepare, execute",
+   "quote_anchor": "but this to me is kind of"
+  },
+  {
+   "id": "s17",
+   "type": "cut",
+   "include": true,
+   "label": "The triumvirate battle drill on a usual suspect: harsh winter, the RL10 reversal, the PSAR flip",
+   "source": "mkt",
+   "in": 2379.01,
+   "out": 2466.33,
+   "status": "rev2: 39:38-41:03, never in rev 1. Twin candidate: harsh winter, reversal point, P flip, the two entries (the SSC up, the collapsing dragon down).",
+   "toc_title": "The battle drill after a harsh winter",
+   "quote_anchor": "or it's a it's one of my"
+  },
+  {
+   "id": "s18",
+   "type": "cut",
+   "include": true,
+   "label": "The lunchtime Z3 pinch on a usual suspect; big gappers predict a large-range day",
+   "source": "mkt",
+   "in": 2466.33,
+   "out": 2559.01,
+   "status": "rev2: 41:03-42:39; stops before 'in a perfect world', which is the cold open s01. 'Half the size of the morning move' 41:54 is his rule of thumb, untested here.",
+   "toc_title": "Lunch pinch, and the gappers hold your attention",
+   "quote_anchor": "or no let me say more about"
+  },
+  {
+   "id": "c6",
+   "type": "slide",
+   "include": true,
+   "label": "Chapter 6 card",
+   "slide_id": "ch6",
+   "duration": 3,
+   "layout": "chapter",
+   "text": {
+    "kicker": "Chapter 6",
+    "title": "The levels that frame it",
+    "subtitle": "",
+    "body": "Yesterday's high and low give the bias. The 10-day and 30-day highs and lows are the ladder above and below."
+   }
+  },
+  {
+   "id": "s20",
+   "type": "cut",
+   "include": true,
+   "label": "Where to start: the usual suspects only, worked up at night, traded on 3-minute bars; the Cat 2 challenge",
+   "source": "mkt",
+   "in": 2603.61,
+   "out": 2706.89,
+   "status": "rev2: 43:24-44:55, never in rev 1; starts after the PowerPoint aside (43:14). Ken's advice to Jonathan, the practical first step for a buyer.",
+   "toc_title": "Start with the usual suspects",
+   "quote_anchor": "it sounds like for right now maybe"
+  },
+  {
+   "id": "s21",
+   "type": "cut",
+   "include": true,
+   "label": "Yesterday's high and low as bias; the 10-day and 30-day lookbacks; the price ladder up",
+   "source": "mkt",
+   "in": 2706.89,
+   "out": 2846.69,
+   "status": "rev2: 44:55-47:22. 'Who's afraid to buy that' 45:59. The level-reaction study is not run; outcome slot o21 is off. Twin candidate: a daily box inside a 10-day box inside a 30-day box, the ladder up.",
+   "toc_title": "Two levels, then the ladder",
+   "quote_anchor": "and there's something really powerful about"
+  },
+  {
+   "include": false,
+   "id": "o21",
+   "type": "outcome",
+   "label": "PROPOSED · do yesterday's and the 10-day levels react? (study not run)",
+   "status": "rev2: OFF. Rev 1's s20b. Touch of yesterday's high/low and the 10-day high/low: N-bar reversal vs punch-through frequency against random levels."
+  },
+  {
+   "id": "s22",
+   "type": "cut",
+   "include": false,
+   "label": "To George: 13 thirty-minute bars; don't spend your ammunition in the first 30 minutes",
+   "source": "mkt",
+   "in": 2868.73,
+   "out": 2960.61,
+   "status": "rev2: 47:44-49:19; OFF by default (an answer to George about execution, not about tomorrow's list); turn on in the cutroom to keep it.",
+   "toc_title": "Thirteen bars, keep your bullets",
+   "quote_anchor": "the other thing that I said that"
+  },
+  {
+   "id": "c7",
+   "type": "slide",
+   "include": true,
+   "label": "Chapter 7 card",
+   "slide_id": "ch7",
+   "duration": 3,
+   "layout": "chapter",
+   "text": {
+    "kicker": "Chapter 7",
+    "title": "Bias, not signal",
+    "subtitle": "",
+    "body": "The 10-day box classifies the day trader's market the way the 200-day classifies the swing trader's. A season or a location tilts you; the entry still has to fire."
+   }
+  },
+  {
+   "id": "s23",
+   "type": "cut",
+   "include": false,
+   "label": "To Carlos: the 200-day matters for swing, not day trades; no overnight swing shorts in a bear market",
+   "source": "mkt",
+   "in": 2970.41,
+   "out": 3214.69,
+   "status": "rev2: 49:28-53:34; OFF by default (market classification for swing trades, off the course's line). Profanity at 52:53 ('sleep like a god damn baby'): trim it if this window goes in. 'Top 10 biggest positive days ... after these bearish slides' is his claim, untested here.",
+   "toc_title": "The 200-day, and why he never holds shorts overnight",
+   "quote_anchor": "Carlos what I I want to talk"
+  },
+  {
+   "id": "s24",
+   "type": "cut",
+   "include": true,
+   "label": "The 10-day box as the day-trade market classification; green, white, yellow, red; 'the essence of sniper trading'",
+   "source": "mkt",
+   "in": 3214.69,
+   "out": 3427.25,
+   "status": "rev2: 53:34-56:56. The credo 56:04-56:24 ('that's the essence of that sniper trading'), then 'the same power for me for day trading as the 200 day moving average does ... for swing trading'.",
+   "toc_title": "The 10-day box is the day trader's classification",
+   "quote_anchor": "now what I would also say is"
+  },
+  {
+   "include": false,
+   "id": "x24",
+   "type": "explainer",
+   "label": "PROPOSED · EXPLAINER: the yellow zone and the green/white/yellow/red code",
+   "status": "rev2: OFF. Rev 1's s21. Defined once from his words at 9:27 and 54:51 (EV-004 vocabulary); needs a script and an animation before it can play."
+  },
+  {
+   "id": "s25",
+   "type": "cut",
+   "include": true,
+   "label": "MACD seasons give a bias and an urgency, not a signal; 'I still require a mechanical entry'",
+   "source": "mkt",
+   "in": 3427.25,
+   "out": 3637.37,
+   "status": "rev2: 56:56-1:00:35, never in rev 1. The course's close in his words: the season is not the entry. Twin candidate: the MACD winter, spring, summer, fall with the Red River and the spine, and the mechanical entry the season still waits for.",
+   "toc_title": "Bias, not signal",
+   "quote_anchor": "now I'm gonna say approximately the same"
+  },
+  {
+   "id": "s26",
+   "type": "slide",
+   "include": true,
+   "label": "End card",
+   "slide_id": "end",
+   "duration": 10,
+   "layout": "end",
+   "text": {
+    "kicker": "",
+    "title": "Four slots, filled at the close.",
+    "subtitle": "owlgrouptrading.com",
+    "body": "What is still open. What fired. What you know how to read. What gapped.\nFramed the night before; the entry still has to fire."
+   }
+  }
+ ]
 }
