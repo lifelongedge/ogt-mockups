@@ -1,0 +1,182 @@
+{
+  "schema": "coursecraft-plan-v2",
+  "course": "sgc-preview-v2",
+  "cutroom": "sgc-preview-v2",
+  "revision": 1,
+  "revised": "2026-11-22",
+  "status": "DRAFT rev1: the Small Group Coaching preview recut around two students in Ken's words (Eric Mo, Griff Cooper); plain cuts and typed cards, no twins yet; the owner edits in the cutroom",
+  "title": "Almost Boring: a Small Group Coaching preview",
+  "topic_class": "preview",
+  "store_sku": "lions-and-wolves",
+  "replaces": "c-lions-01",
+  "notes": "2026-11-22 (owner: 'I want to change the sgc preview course. it uses the lions hunt metaphor which we've put in the mental model course. so we need something fresh'; then 'you found the eric mo which is what i meant, do draft a cut room'). Replaces Lions and Wolves (c-lions-01, the only listed title in 'Preview · Small Group Coaching', edge-ogt-engine courses.py). Eric Mo leads (cohort 6 intro, 01:51:15-01:53:41: the 40% day-trade money, keep 70%, lather rinse repeat, study Eric Mo, 10 months in a row of no losing weeks, a dozen symbols, 'almost boring for him, which is where I want you to be', cap 70 past 2R). Griff Cooper follows (VTI special session on trading coaches 2022-11-05, 00:58:02-01:00:17: the Kata 2 challenge, one symbol, three patterns on a three-minute bar, coached every night, no losing week in 2022), split around a 48 s detour into the home-study course and Phil Wu's course build (00:58:49-00:59:36), which the owner can restore from the alternate. Neither window is used in any other course; Eric's in-point overlaps the end of weekend-edge s16 / etf2 s41 (6322-6690) by 15 s; the tighter alternate starts clear of it. Facts: both records are Ken's account of his students, not checked against any trade data; the cards say 'in Ken's words'. Twins (anim-overdub) on the owner's word; the cohort Zoom grid is on screen in xvc (faces not released, as in ken-shorts-2 s09), so the Eric window wants a twin before it goes public. Shipping (clip id, card, hero, waitlist link) is growogtx ogt-course-ship. Transitions by rule (cutroom-24).",
+  "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/sgc-preview-v2/",
+  "sources": [
+    {
+      "id": "xvc",
+      "label": "SGC intro to trading, \"3 hours of gold\" (cohort 6 intro overview)",
+      "file": "youtube-XvcsfWFFW20-cohort-6-intro-overview.mp4",
+      "proxy": "youtube-XvcsfWFFW20-cohort-6-intro-overview.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=XvcsfWFFW20",
+      "pip": {
+        "still": "_shared/ken-still.jpg",
+        "note": "his tile is too small to crop; the owner's still stands in (as ken-shorts-2)"
+      }
+    },
+    {
+      "id": "vti",
+      "label": "Special session on trading coaches with the VTI (2022-11-05)",
+      "file": "youtube-UEggLDyMnI8-vti-trading-coaches.mp4",
+      "url": "https://www.youtube.com/watch?v=UEggLDyMnI8",
+      "proxy": "youtube-UEggLDyMnI8-vti-trading-coaches.proxy.mp4"
+    }
+  ],
+  "voices": [
+    {
+      "id": "ava",
+      "label": "Ava (US, female, polished)",
+      "sample": "vo-ava.mp3"
+    }
+  ],
+  "segments": [
+    {
+      "id": "s00",
+      "type": "slide",
+      "include": true,
+      "label": "Title card",
+      "slide_id": "title",
+      "duration": 5,
+      "layout": "title",
+      "text": {
+        "kicker": "Small Group Coaching · preview",
+        "title": "**Almost** boring",
+        "subtitle": "Two students, a narrow set of rules, and no losing weeks",
+        "body": "with Dr. Ken Long"
+      }
+    },
+    {
+      "id": "s10",
+      "type": "slide",
+      "include": true,
+      "label": "Eric Mo card",
+      "slide_id": "ch1",
+      "duration": 3,
+      "layout": "chapter",
+      "text": {
+        "kicker": "Student 1",
+        "title": "**Eric Mo**, cohort 4",
+        "subtitle": "a dozen symbols, in Ken's words",
+        "body": ""
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 1.0
+      }
+    },
+    {
+      "id": "s11",
+      "type": "cut",
+      "include": true,
+      "label": "Study Eric Mo: 10 months of no losing weeks, almost boring",
+      "source": "xvc",
+      "in": 6675.3,
+      "out": 6820.8,
+      "status": "MINED 2026-11-22 (VTT 01:51:15.8 'And and so the 40% of the day trade money' to 01:53:40.1 'or exit at it close.'); cohort Zoom grid on screen: twin before public",
+      "quote_anchor": "Find the movers. Find the most volatile ones. Keep 70%. Lather, rinse, repeat. Preserve emotional resilience... What I really want you to do is study Eric Mo in cohort four. He's had 10 months in a row of no losing weeks. Trading exactly this way with about a dozen symbols... anywhere from 60 to 70% win rate in a given month and a payoff of 3 to one... it's almost boring for him, which is where I want you to be.",
+      "why": "the owner's pick: a student's record the coaching produced, and the line the preview is named for",
+      "alternates": [
+        {
+          "label": "tighter: from 'What I really want you to do is study Eric Mo' (2:02)",
+          "source": "xvc",
+          "in": 6698.5,
+          "out": 6820.8
+        }
+      ],
+      "animation_brief": "animate: a dozen symbol tiles, one lit at a time; a month strip of 10 weeks-boxes all green; win rate 60-70% and payoff 3:1 as two dials; past 2R a 'cap 70' line drawn and the chart switching off; captions on 'lather, rinse, repeat', '10 months in a row of no losing weeks', 'almost boring', 'which is where I want you to be'",
+      "transition": {
+        "type": "fade",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s20",
+      "type": "slide",
+      "include": true,
+      "label": "Griff Cooper card",
+      "slide_id": "ch2",
+      "duration": 3,
+      "layout": "chapter",
+      "text": {
+        "kicker": "Student 2",
+        "title": "**Griff Cooper**",
+        "subtitle": "one symbol, three patterns, every night",
+        "body": ""
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 1.0
+      }
+    },
+    {
+      "id": "s21",
+      "type": "cut",
+      "include": true,
+      "label": "Griff: one symbol, three patterns, coached every night; no losing week in 2022",
+      "source": "vti",
+      "in": 3482.2,
+      "out": 3528.8,
+      "status": "MINED 2026-11-22 (VTT 00:58:02.2 'you talked to Griff Cooper' to 00:58:48.4 'hasn't had a losing week')",
+      "quote_anchor": "I told Griff stop what you're doing, pick either Brazil or DIA, trade one of these three patterns on a three-minute bar, nothing else... and I beat the living crap out of him in public on camera every night, and in the year 2022 he hasn't had a losing month, he hasn't had a losing week.",
+      "why": "what coaching is: narrow the task, repeat it, get feedback every night",
+      "alternates": [
+        {
+          "label": "whole story, uncut, with the home-study detour (2:15)",
+          "source": "vti",
+          "in": 3482.2,
+          "out": 3616.8
+        }
+      ],
+      "animation_brief": "animate: two flags (EWZ, DIA), three pattern glyphs on a 3-minute chart, a nightly calendar ticking with a red-pen mark each night; a 2022 strip of weeks, none red; captions on 'nothing else', 'every night', 'hasn't had a losing week'",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s22",
+      "type": "cut",
+      "include": true,
+      "label": "Griff: follow these rules exactly until I tell you to stop; 20 hours, 10 minutes a night",
+      "source": "vti",
+      "in": 3576.6,
+      "out": 3616.8,
+      "status": "MINED 2026-11-22 (VTT 00:59:36.9 'I was just so tired of watching' to 01:00:17.0 'your mileage may vary'); the 48 s before it (home study course, Phil Wu) left out",
+      "quote_anchor": "I said follow these rules exactly until I tell you to stop, and he just became excellent at it... 20 hours of just him getting his brains beat out 10 minutes at a time every night... that's what it takes for him, your mileage may vary.",
+      "why": "the price of it, in his words, and his own caveat",
+      "animation_brief": "animate: a stopwatch of 10-minute slices filling to 1,200 minutes; '20 hours' then '24 weeks'; captions on 'follow these rules exactly until I tell you to stop', 'your mileage may vary'",
+      "transition": {
+        "type": "fade",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s90",
+      "type": "slide",
+      "include": true,
+      "label": "End card",
+      "slide_id": "end",
+      "duration": 8,
+      "layout": "end",
+      "text": {
+        "kicker": "Small Group Coaching",
+        "title": "Dr. Ken Long",
+        "subtitle": "owlgrouptrading.com",
+        "body": "Join the Small Group Coaching waitlist."
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 1.0
+      }
+    }
+  ]
+}
