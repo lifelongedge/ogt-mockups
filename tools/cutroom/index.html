@@ -273,7 +273,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const BUILD = 'cutroom-31';
+const BUILD = 'cutroom-32';
 console.log('[cutroom] build', BUILD);
 window.__edgeBuild = BUILD;
 
@@ -380,7 +380,20 @@ async function load() {
         const pub = Object.fromEntries((published.segments||[]).map(x => [x.id, x]));
         for (const x of plan.segments) if (x.type === 'slide' && !x.text && pub[x.id] && pub[x.id].text) { x.text = structuredClone(pub[x.id].text); x.layout = pub[x.id].layout; }   // cutroom-20
         plan.media_base = published.media_base;
-        toast('Loaded local edits (localStorage)');
+        // cutroom-32: a segment published since the local edits began (a new twin) joins the local pass after the
+        // segment it follows in the published plan; the owner's order and picks stay as they are
+        const have = new Set(plan.segments.map(x => x.id)); const added = [];
+        (published.segments || []).forEach((x, i) => {
+          if (have.has(x.id)) return;
+          let at = plan.segments.length;
+          for (let k = i - 1; k >= 0; k--) { const j = plan.segments.findIndex(y => y.id === published.segments[k].id); if (j >= 0) { at = j + 1; break; } }
+          plan.segments.splice(at, 0, structuredClone(x)); have.add(x.id); added.push(x.id);
+          // a new twin sNNa that is in the film takes the place of its cut sNN, so the window's audio plays once
+          const m = /^(.*\d)a$/.exec(x.id), cut = m && plan.segments.find(y => y.id === m[1]);
+          if (x.include && cut && cut.include) { cut.include = false; added.push(`${cut.id} off`); }
+        });
+        if (added.length) persist();
+        toast(added.length ? `Loaded local edits; new since then: ${added.join(', ')}` : 'Loaded local edits (localStorage)', added.length ? 7000 : 3000);
       }
     }
     catch { plan = structuredClone(published); }
