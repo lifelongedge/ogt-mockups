@@ -1,9 +1,9 @@
 {
  "schema": "coursecraft-plan-v2",
  "course": "tomorrows-trades-v2",
- "revision": 2,
+ "revision": 3,
  "revised": "2026-11-22",
- "status": "DRAFT rev2 (2026-11-22): the recut under the current grammar. The whole hour mapped into 23 windows in seven chapters from start/stop phrases on the word-stamped VTT (make_rev2.py), source order, the cold open lifted from 42:39. Seventeen minutes rev 1 never used are in (14:53-21:04, 26:00-29:35, 38:00-41:03, 43:24-44:55, 56:56-1:00:35). Opener, title, seven chapter cards and the end card carry text. Every window is a plain cut: no twins yet (the owner asks for them next); the four outcome slots and the yellow-zone explainer are OFF until their study or script exists.",
+ "status": "DRAFT rev3 (2026-11-22): the animated twins. Every one of the 23 windows has a stage twin (anim_gen.py), drawn from scratch, beats on his phrases; twins ON where the cut was ON, cuts kept OFF behind them. the recut under the current grammar. The whole hour mapped into 23 windows in seven chapters from start/stop phrases on the word-stamped VTT (make_rev2.py), source order, the cold open lifted from 42:39. Seventeen minutes rev 1 never used are in (14:53-21:04, 26:00-29:35, 38:00-41:03, 43:24-44:55, 56:56-1:00:35). Opener, title, seven chapter cards and the end card carry text. Every window is a plain cut: no twins yet (the owner asks for them next); the four outcome slots and the yellow-zone explainer are OFF until their study or script exists.",
  "title": "Where Tomorrow's Trades Come From (v2)",
  "topic_class": "chartable process (flagship backtest course)",
  "store_sku": "tomorrows-trades",
@@ -77,14 +77,31 @@
   {
    "id": "s01",
    "type": "cut",
-   "include": true,
+   "include": false,
    "label": "COLD OPEN: the best day ever (all four sources in one symbol)",
    "source": "mkt",
    "in": 2559.01,
    "out": 2586.45,
-   "status": "rev2: the course in one sentence, lifted from 42:39; s18 stops before it so it is not heard twice. Twin candidate: the four slots light up one by one on one symbol.",
+   "status": "rev2: the course in one sentence, lifted from 42:39; s18 stops before it so it is not heard twice. Twin candidate: the four slots light up one by one on one symbol. · rev3: the twin s01a carries it; this cut stays in the plan, OFF, so the pick reverses here",
    "toc_title": "The best day ever",
    "quote_anchor": "and in a perfect world one of"
+  },
+  {
+   "id": "s01a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: COLD OPEN: the best day ever (all four sources in one symbol)",
+   "source": "mkt",
+   "in": 2559.01,
+   "out": 2586.45,
+   "animation_brief": "anim_gen.py scene s01: the best day ever",
+   "status": "twin of s01: his audio, our picture (stage); no tile (his gallery tiles are about 60 px); the owner picks one of the pair in the cutroom",
+   "pip": false,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   },
+   "toc_title": "The best day ever"
   },
   {
    "id": "s02",
@@ -119,26 +136,60 @@
   {
    "id": "s03",
    "type": "cut",
-   "include": true,
+   "include": false,
    "label": "The close: gratitude, forgiveness, three sources; source 1, the open trades (two kinds)",
    "source": "mkt",
    "in": 13.57,
    "out": 181.45,
-   "status": "rev2: provenance on tape at 0:15 ('small group coaching ... January 22nd 2024'): caption it. Open trades 1:20-3:00: a day trade turned swing, a swing that has not hit its stop. Twin candidate: the process map, the close, the list being filled.",
+   "status": "rev2: provenance on tape at 0:15 ('small group coaching ... January 22nd 2024'): caption it. Open trades 1:20-3:00: a day trade turned swing, a swing that has not hit its stop. Twin candidate: the process map, the close, the list being filled. · rev3: the twin s03a carries it; this cut stays in the plan, OFF, so the pick reverses here",
    "toc_title": "At the close: gratitude, forgiveness, then three sources",
    "quote_anchor": "this is the uh small group coaching"
   },
   {
+   "id": "s03a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: The close: gratitude, forgiveness, three sources; source 1, the open trades (two kinds)",
+   "source": "mkt",
+   "in": 13.57,
+   "out": 181.45,
+   "animation_brief": "anim_gen.py scene s03: at the close: gratitude, forgiveness, three sources",
+   "status": "twin of s03: his audio, our picture (stage); no tile (his gallery tiles are about 60 px); the owner picks one of the pair in the cutroom",
+   "pip": false,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   },
+   "toc_title": "At the close: gratitude, forgiveness, then three sources"
+  },
+  {
    "id": "s04",
    "type": "cut",
-   "include": true,
+   "include": false,
    "label": "Source 2: new symbols that fire, patterns vs situations; the six mechanical systems; the continuation",
    "source": "mkt",
    "in": 181.45,
    "out": 326.53,
-   "status": "rev2: the six swing systems at 3:37-3:57 (5DD, washout, channeling, overreaction, triple screen, W); a DIFFERENT list from the intraday menu in s15. Twin candidate: two bins, six coded patterns, one situation.",
+   "status": "rev2: the six swing systems at 3:37-3:57 (5DD, washout, channeling, overreaction, triple screen, W); a DIFFERENT list from the intraday menu in s15. Twin candidate: two bins, six coded patterns, one situation. · rev3: the twin s04a carries it; this cut stays in the plan, OFF, so the pick reverses here",
    "toc_title": "Patterns and situations",
    "quote_anchor": "and then when I review the charts"
+  },
+  {
+   "id": "s04a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: Source 2: new symbols that fire, patterns vs situations; the six mechanical systems; the continuation",
+   "source": "mkt",
+   "in": 181.45,
+   "out": 326.53,
+   "animation_brief": "anim_gen.py scene s04: patterns and situations",
+   "status": "twin of s04: his audio, our picture (stage); no tile (his gallery tiles are about 60 px); the owner picks one of the pair in the cutroom",
+   "pip": false,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   },
+   "toc_title": "Patterns and situations"
   },
   {
    "id": "c2",
@@ -158,38 +209,89 @@
   {
    "id": "s05",
    "type": "cut",
-   "include": true,
+   "include": false,
    "label": "The continuation: the one-day opportunity, the risk box at yesterday's low, the 10-day high, his 'not tested'",
    "source": "mkt",
    "in": 327.53,
    "out": 537.21,
-   "status": "rev2: his own disclaimer 7:58-8:05 ('this is not tested other than to say ...') stays in; the personal-log expectancy claim is never shown as ours. The 2:1-to-the-10-day-high preference he states and then says he does not require.",
+   "status": "rev2: his own disclaimer 7:58-8:05 ('this is not tested other than to say ...') stays in; the personal-log expectancy claim is never shown as ours. The 2:1-to-the-10-day-high preference he states and then says he does not require. · rev3: the twin s05a carries it; this cut stays in the plan, OFF, so the pick reverses here",
    "toc_title": "A one-day opportunity, and 'this is not tested'",
    "quote_anchor": "so for me this this little continuation"
   },
   {
+   "id": "s05a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: The continuation: the one-day opportunity, the risk box at yesterday's low, the 10-day high, his 'not tested'",
+   "source": "mkt",
+   "in": 327.53,
+   "out": 537.21,
+   "animation_brief": "anim_gen.py scene s05: a one-day opportunity, and 'this is not tested'",
+   "status": "twin of s05: his audio, our picture (stage); no tile (his gallery tiles are about 60 px); the owner picks one of the pair in the cutroom",
+   "pip": false,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   },
+   "toc_title": "A one-day opportunity, and 'this is not tested'"
+  },
+  {
    "id": "s06",
    "type": "cut",
-   "include": true,
+   "include": false,
    "label": "The universal entry: opens inside yesterday's body, no new low, through yesterday's high; the research weekend",
    "source": "mkt",
    "in": 537.21,
    "out": 684.93,
-   "status": "rev2: the rule in his words 9:10-9:45; the father-son research weekend 10:22-10:55 ('the continuation pattern had a positive expectancy') is THEIR finding as he reports it, not ours. Twin candidate: yesterday's bar, the yellow zone, the open inside it, the break of the high.",
+   "status": "rev2: the rule in his words 9:10-9:45; the father-son research weekend 10:22-10:55 ('the continuation pattern had a positive expectancy') is THEIR finding as he reports it, not ours. Twin candidate: yesterday's bar, the yellow zone, the open inside it, the break of the high. · rev3: the twin s06a carries it; this cut stays in the plan, OFF, so the pick reverses here",
    "toc_title": "The universal entry",
    "quote_anchor": "so I say that say that my"
   },
   {
+   "id": "s06a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: The universal entry: opens inside yesterday's body, no new low, through yesterday's high; the research weekend",
+   "source": "mkt",
+   "in": 537.21,
+   "out": 684.93,
+   "animation_brief": "anim_gen.py scene s06: the universal entry",
+   "status": "twin of s06: his audio, our picture (stage); no tile (his gallery tiles are about 60 px); the owner picks one of the pair in the cutroom",
+   "pip": false,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   },
+   "toc_title": "The universal entry"
+  },
+  {
    "id": "s07",
    "type": "cut",
-   "include": true,
+   "include": false,
    "label": "The channeling system, 70 to 85 percent 'year in and year out', the simple rule",
    "source": "mkt",
    "in": 684.93,
    "out": 898.89,
-   "status": "rev2: '70 to 85% successful in the big fat indexes' (14:18) and 'positive expectancy' (14:48) are his claims on camera; untested here (enhancement: the channeling rule run on SPY/DIA/QQQ). The 2001-2003 date he is unsure of on tape.",
+   "status": "rev2: '70 to 85% successful in the big fat indexes' (14:18) and 'positive expectancy' (14:48) are his claims on camera; untested here (enhancement: the channeling rule run on SPY/DIA/QQQ). The 2001-2003 date he is unsure of on tape. · rev3: the twin s07a carries it; this cut stays in the plan, OFF, so the pick reverses here",
    "toc_title": "Where the idea came from: the channeling system",
    "quote_anchor": "now the reason I came across that"
+  },
+  {
+   "id": "s07a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: The channeling system, 70 to 85 percent 'year in and year out', the simple rule",
+   "source": "mkt",
+   "in": 684.93,
+   "out": 898.89,
+   "animation_brief": "anim_gen.py scene s07: where the idea came from: the channeling system",
+   "status": "twin of s07: his audio, our picture (stage); no tile (his gallery tiles are about 60 px); the owner picks one of the pair in the cutroom",
+   "pip": false,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   },
+   "toc_title": "Where the idea came from: the channeling system"
   },
   {
    "include": false,
@@ -201,26 +303,60 @@
   {
    "id": "s08",
    "type": "cut",
-   "include": true,
+   "include": false,
    "label": "Discovery: strict rules, the Cat 2s after the washout, the emerging dragon, the pocket",
    "source": "mkt",
    "in": 898.89,
    "out": 1128.21,
-   "status": "rev2: 15:00-18:48. Never in rev 1 (the 14:53-21:04 gap). Twin candidate: a 5DD's five closes, the washout cashed, the Cat 2s he did not take, the pocket under the prior RL10 peak.",
+   "status": "rev2: 15:00-18:48. Never in rev 1 (the 14:53-21:04 gap). Twin candidate: a 5DD's five closes, the washout cashed, the Cat 2s he did not take, the pocket under the prior RL10 peak. · rev3: the twin s08a carries it; this cut stays in the plan, OFF, so the pick reverses here",
    "toc_title": "The Cat 2s he walked away from",
    "quote_anchor": "I discovered it after about five"
   },
   {
+   "id": "s08a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: Discovery: strict rules, the Cat 2s after the washout, the emerging dragon, the pocket",
+   "source": "mkt",
+   "in": 898.89,
+   "out": 1128.21,
+   "animation_brief": "anim_gen.py scene s08: the Cat 2s he walked away from",
+   "status": "twin of s08: his audio, our picture (stage); no tile (his gallery tiles are about 60 px); the owner picks one of the pair in the cutroom",
+   "pip": false,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   },
+   "toc_title": "The Cat 2s he walked away from"
+  },
+  {
    "id": "s09",
    "type": "cut",
-   "include": true,
+   "include": false,
    "label": "A paper win still qualifies; any successful mechanical trade plus a universal entry is a situation",
    "source": "mkt",
    "in": 1128.21,
    "out": 1238.01,
-   "status": "rev2: 18:48-20:37; the recap of the first two categories closes the chapter. Never in rev 1.",
+   "status": "rev2: 18:48-20:37; the recap of the first two categories closes the chapter. Never in rev 1. · rev3: the twin s09a carries it; this cut stays in the plan, OFF, so the pick reverses here",
    "toc_title": "A paper win still counts",
    "quote_anchor": "and the other thing that we learned"
+  },
+  {
+   "id": "s09a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: A paper win still qualifies; any successful mechanical trade plus a universal entry is a situation",
+   "source": "mkt",
+   "in": 1128.21,
+   "out": 1238.01,
+   "animation_brief": "anim_gen.py scene s09: a paper win still counts",
+   "status": "twin of s09: his audio, our picture (stage); no tile (his gallery tiles are about 60 px); the owner picks one of the pair in the cutroom",
+   "pip": false,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   },
+   "toc_title": "A paper win still counts"
   },
   {
    "id": "c3",
@@ -240,26 +376,60 @@
   {
    "id": "s10",
    "type": "cut",
-   "include": true,
+   "include": false,
    "label": "Situations: RL generation 1 and 2; RL270 the buy-and-hold fair value, RL10 the traders' price",
    "source": "mkt",
    "in": 1238.01,
    "out": 1417.69,
-   "status": "rev2: rev 1's uncut gold (21:04-23:37), now from its true start at 20:37 (the generations). The 5:1 ATR count at 23:04 is on his whiteboard, no symbol or date. Twin candidate (ALT on his chart when a clean still exists): the two lines and the ATR ruler between them.",
+   "status": "rev2: rev 1's uncut gold (21:04-23:37), now from its true start at 20:37 (the generations). The 5:1 ATR count at 23:04 is on his whiteboard, no symbol or date. Twin candidate (ALT on his chart when a clean still exists): the two lines and the ATR ruler between them. · rev3: the twin s10a carries it; this cut stays in the plan, OFF, so the pick reverses here",
    "toc_title": "Two crowds, two prices: RL270 and RL10",
    "quote_anchor": "and that's what I started adding in"
   },
   {
+   "id": "s10a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: Situations: RL generation 1 and 2; RL270 the buy-and-hold fair value, RL10 the traders' price",
+   "source": "mkt",
+   "in": 1238.01,
+   "out": 1417.69,
+   "animation_brief": "anim_gen.py scene s10: two crowds, two prices: RL270 and RL10",
+   "status": "twin of s10: his audio, our picture (stage); no tile (his gallery tiles are about 60 px); the owner picks one of the pair in the cutroom",
+   "pip": false,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   },
+   "toc_title": "Two crowds, two prices: RL270 and RL10"
+  },
+  {
    "id": "s11",
    "type": "cut",
-   "include": true,
+   "include": false,
    "label": "One ATR of risk, five of runway; the orderly open; 'new evidence that new buyers are coming in'",
    "source": "mkt",
    "in": 1417.69,
    "out": 1562.77,
-   "status": "rev2: the flagship claim 24:58 ('if it goes above yesterday's high I have evidence ... new buyers'). The study (buyer evidence) is not run; its outcome slot o11 is off. 'Seven to 30 days ... climbs the wall of worry' is his estimate, stated as such.",
+   "status": "rev2: the flagship claim 24:58 ('if it goes above yesterday's high I have evidence ... new buyers'). The study (buyer evidence) is not run; its outcome slot o11 is off. 'Seven to 30 days ... climbs the wall of worry' is his estimate, stated as such. · rev3: the twin s11a carries it; this cut stays in the plan, OFF, so the pick reverses here",
    "toc_title": "New buyers: the evidence above yesterday's high",
    "quote_anchor": "now says well if I can if"
+  },
+  {
+   "id": "s11a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: One ATR of risk, five of runway; the orderly open; 'new evidence that new buyers are coming in'",
+   "source": "mkt",
+   "in": 1417.69,
+   "out": 1562.77,
+   "animation_brief": "anim_gen.py scene s11: new buyers: the evidence above yesterday's high",
+   "status": "twin of s11: his audio, our picture (stage); no tile (his gallery tiles are about 60 px); the owner picks one of the pair in the cutroom",
+   "pip": false,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   },
+   "toc_title": "New buyers: the evidence above yesterday's high"
   },
   {
    "include": false,
@@ -271,14 +441,31 @@
   {
    "id": "s12",
    "type": "cut",
-   "include": true,
+   "include": false,
    "label": "Two or three trades in the runway; sell 80, keep 20; coded signals vs interpreted situations; stalking",
    "source": "mkt",
    "in": 1562.77,
    "out": 1774.13,
-   "status": "rev2: 26:00-29:35, never in rev 1. 'Animals in the wild that I'm just stalking' (28:58) is his own bridge to the trade. Twin candidate: one runway, three small boxes inside it.",
+   "status": "rev2: 26:00-29:35, never in rev 1. 'Animals in the wild that I'm just stalking' (28:58) is his own bridge to the trade. Twin candidate: one runway, three small boxes inside it. · rev3: the twin s12a carries it; this cut stays in the plan, OFF, so the pick reverses here",
    "toc_title": "Signal or situation: stalking, not searching",
    "quote_anchor": "and if I've got five"
+  },
+  {
+   "id": "s12a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: Two or three trades in the runway; sell 80, keep 20; coded signals vs interpreted situations; stalking",
+   "source": "mkt",
+   "in": 1562.77,
+   "out": 1774.13,
+   "animation_brief": "anim_gen.py scene s12: signal or situation: stalking, not searching",
+   "status": "twin of s12: his audio, our picture (stage); no tile (his gallery tiles are about 60 px); the owner picks one of the pair in the cutroom",
+   "pip": false,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   },
+   "toc_title": "Signal or situation: stalking, not searching"
   },
   {
    "id": "c4",
@@ -298,26 +485,60 @@
   {
    "id": "s13",
    "type": "cut",
-   "include": true,
+   "include": false,
    "label": "Source 3: the usual suspects (frog champions), seen the same way intraday as on the daily",
    "source": "mkt",
    "in": 1774.13,
    "out": 1937.97,
-   "status": "rev2: the only symbols named in the hour, 30:16-30:40: EWW, EWZ, DIA, Devon (DVN), Cliff (CLF), Alcoa (AA), AI; Home Depot 'becoming less and less interesting'. No dates: no outcome. Typical entries 31:41: WMBB3, OR3, SSC, maybe 123.",
+   "status": "rev2: the only symbols named in the hour, 30:16-30:40: EWW, EWZ, DIA, Devon (DVN), Cliff (CLF), Alcoa (AA), AI; Home Depot 'becoming less and less interesting'. No dates: no outcome. Typical entries 31:41: WMBB3, OR3, SSC, maybe 123. · rev3: the twin s13a carries it; this cut stays in the plan, OFF, so the pick reverses here",
    "toc_title": "The usual suspects",
    "quote_anchor": "and then the third category of entries"
   },
   {
+   "id": "s13a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: Source 3: the usual suspects (frog champions), seen the same way intraday as on the daily",
+   "source": "mkt",
+   "in": 1774.13,
+   "out": 1937.97,
+   "animation_brief": "anim_gen.py scene s13: the usual suspects",
+   "status": "twin of s13: his audio, our picture (stage); no tile (his gallery tiles are about 60 px); the owner picks one of the pair in the cutroom",
+   "pip": false,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   },
+   "toc_title": "The usual suspects"
+  },
+  {
    "id": "s14",
    "type": "cut",
-   "include": true,
+   "include": false,
    "label": "Source 4: the big gappers; four slots, two symbols each, first come first served; framed the night before",
    "source": "mkt",
    "in": 1937.97,
    "out": 2138.77,
-   "status": "rev2: 32:15-35:34 (rev 1's s14 + s16 joined, the cut at 33:59 fell mid-thought). 'All of those can be done with prep the night before' 35:21; the gappers you 'have to wait and see'.",
+   "status": "rev2: 32:15-35:34 (rev 1's s14 + s16 joined, the cut at 33:59 fell mid-thought). 'All of those can be done with prep the night before' 35:21; the gappers you 'have to wait and see'. · rev3: the twin s14a carries it; this cut stays in the plan, OFF, so the pick reverses here",
    "toc_title": "The fourth slot: the big gappers",
    "quote_anchor": "so so now I now identify that"
+  },
+  {
+   "id": "s14a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: Source 4: the big gappers; four slots, two symbols each, first come first served; framed the night before",
+   "source": "mkt",
+   "in": 1937.97,
+   "out": 2138.77,
+   "animation_brief": "anim_gen.py scene s14: the fourth slot: the big gappers",
+   "status": "twin of s14: his audio, our picture (stage); no tile (his gallery tiles are about 60 px); the owner picks one of the pair in the cutroom",
+   "pip": false,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   },
+   "toc_title": "The fourth slot: the big gappers"
   },
   {
    "id": "c5",
@@ -337,14 +558,31 @@
   {
    "id": "s15",
    "type": "cut",
-   "include": true,
+   "include": false,
    "label": "The patterns that fire first on a gapper: 123, WMBB3, O3; SSC and the collapsing dragon take longer",
    "source": "mkt",
    "in": 2138.77,
    "out": 2278.49,
-   "status": "rev2: 35:34-38:00 (rev 1 stopped at 37:45, before 'first out the door'). WMBB3 mechanics 36:20-36:40 (gap down, W%R oversold, MACD histogram uptick, breakout); whiteboard only, no symbol or date. Twin candidate: one gap-down open, the three patterns in the order he gives.",
+   "status": "rev2: 35:34-38:00 (rev 1 stopped at 37:45, before 'first out the door'). WMBB3 mechanics 36:20-36:40 (gap down, W%R oversold, MACD histogram uptick, breakout); whiteboard only, no symbol or date. Twin candidate: one gap-down open, the three patterns in the order he gives. · rev3: the twin s15a carries it; this cut stays in the plan, OFF, so the pick reverses here",
    "toc_title": "First out the door: 123, WMBB3, O3",
    "quote_anchor": "and that situation you know the pattern"
+  },
+  {
+   "id": "s15a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: The patterns that fire first on a gapper: 123, WMBB3, O3; SSC and the collapsing dragon take longer",
+   "source": "mkt",
+   "in": 2138.77,
+   "out": 2278.49,
+   "animation_brief": "anim_gen.py scene s15: first out the door: 123, WMBB3, O3",
+   "status": "twin of s15: his audio, our picture (stage); no tile (his gallery tiles are about 60 px); the owner picks one of the pair in the cutroom",
+   "pip": false,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   },
+   "toc_title": "First out the door: 123, WMBB3, O3"
   },
   {
    "include": false,
@@ -356,38 +594,89 @@
   {
    "id": "s16",
    "type": "cut",
-   "include": true,
+   "include": false,
    "label": "Plan, prepare, execute: three of the four sources come out of last night's prep",
    "source": "mkt",
    "in": 2278.49,
    "out": 2379.01,
-   "status": "rev2: 38:00-39:38, never in rev 1. The entry 'five cents above yesterday's high' 38:36; two units of reward back to yesterday's high from inside the yellow zone 39:09.",
+   "status": "rev2: 38:00-39:38, never in rev 1. The entry 'five cents above yesterday's high' 38:36; two units of reward back to yesterday's high from inside the yellow zone 39:09. · rev3: the twin s16a carries it; this cut stays in the plan, OFF, so the pick reverses here",
    "toc_title": "Plan, prepare, execute",
    "quote_anchor": "but this to me is kind of"
   },
   {
+   "id": "s16a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: Plan, prepare, execute: three of the four sources come out of last night's prep",
+   "source": "mkt",
+   "in": 2278.49,
+   "out": 2379.01,
+   "animation_brief": "anim_gen.py scene s16: plan, prepare, execute",
+   "status": "twin of s16: his audio, our picture (stage); no tile (his gallery tiles are about 60 px); the owner picks one of the pair in the cutroom",
+   "pip": false,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   },
+   "toc_title": "Plan, prepare, execute"
+  },
+  {
    "id": "s17",
    "type": "cut",
-   "include": true,
+   "include": false,
    "label": "The triumvirate battle drill on a usual suspect: harsh winter, the RL10 reversal, the PSAR flip",
    "source": "mkt",
    "in": 2379.01,
    "out": 2466.33,
-   "status": "rev2: 39:38-41:03, never in rev 1. Twin candidate: harsh winter, reversal point, P flip, the two entries (the SSC up, the collapsing dragon down).",
+   "status": "rev2: 39:38-41:03, never in rev 1. Twin candidate: harsh winter, reversal point, P flip, the two entries (the SSC up, the collapsing dragon down). · rev3: the twin s17a carries it; this cut stays in the plan, OFF, so the pick reverses here",
    "toc_title": "The battle drill after a harsh winter",
    "quote_anchor": "or it's a it's one of my"
   },
   {
+   "id": "s17a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: The triumvirate battle drill on a usual suspect: harsh winter, the RL10 reversal, the PSAR flip",
+   "source": "mkt",
+   "in": 2379.01,
+   "out": 2466.33,
+   "animation_brief": "anim_gen.py scene s17: the battle drill after a harsh winter",
+   "status": "twin of s17: his audio, our picture (stage); no tile (his gallery tiles are about 60 px); the owner picks one of the pair in the cutroom",
+   "pip": false,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   },
+   "toc_title": "The battle drill after a harsh winter"
+  },
+  {
    "id": "s18",
    "type": "cut",
-   "include": true,
+   "include": false,
    "label": "The lunchtime Z3 pinch on a usual suspect; big gappers predict a large-range day",
    "source": "mkt",
    "in": 2466.33,
    "out": 2559.01,
-   "status": "rev2: 41:03-42:39; stops before 'in a perfect world', which is the cold open s01. 'Half the size of the morning move' 41:54 is his rule of thumb, untested here.",
+   "status": "rev2: 41:03-42:39; stops before 'in a perfect world', which is the cold open s01. 'Half the size of the morning move' 41:54 is his rule of thumb, untested here. · rev3: the twin s18a carries it; this cut stays in the plan, OFF, so the pick reverses here",
    "toc_title": "Lunch pinch, and the gappers hold your attention",
    "quote_anchor": "or no let me say more about"
+  },
+  {
+   "id": "s18a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: The lunchtime Z3 pinch on a usual suspect; big gappers predict a large-range day",
+   "source": "mkt",
+   "in": 2466.33,
+   "out": 2559.01,
+   "animation_brief": "anim_gen.py scene s18: lunch pinch, and the gappers hold your attention",
+   "status": "twin of s18: his audio, our picture (stage); no tile (his gallery tiles are about 60 px); the owner picks one of the pair in the cutroom",
+   "pip": false,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   },
+   "toc_title": "Lunch pinch, and the gappers hold your attention"
   },
   {
    "id": "c6",
@@ -407,26 +696,60 @@
   {
    "id": "s20",
    "type": "cut",
-   "include": true,
+   "include": false,
    "label": "Where to start: the usual suspects only, worked up at night, traded on 3-minute bars; the Cat 2 challenge",
    "source": "mkt",
    "in": 2603.61,
    "out": 2706.89,
-   "status": "rev2: 43:24-44:55, never in rev 1; starts after the PowerPoint aside (43:14). Ken's advice to Jonathan, the practical first step for a buyer.",
+   "status": "rev2: 43:24-44:55, never in rev 1; starts after the PowerPoint aside (43:14). Ken's advice to Jonathan, the practical first step for a buyer. · rev3: the twin s20a carries it; this cut stays in the plan, OFF, so the pick reverses here",
    "toc_title": "Start with the usual suspects",
    "quote_anchor": "it sounds like for right now maybe"
   },
   {
+   "id": "s20a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: Where to start: the usual suspects only, worked up at night, traded on 3-minute bars; the Cat 2 challenge",
+   "source": "mkt",
+   "in": 2603.61,
+   "out": 2706.89,
+   "animation_brief": "anim_gen.py scene s20: start with the usual suspects",
+   "status": "twin of s20: his audio, our picture (stage); no tile (his gallery tiles are about 60 px); the owner picks one of the pair in the cutroom",
+   "pip": false,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   },
+   "toc_title": "Start with the usual suspects"
+  },
+  {
    "id": "s21",
    "type": "cut",
-   "include": true,
+   "include": false,
    "label": "Yesterday's high and low as bias; the 10-day and 30-day lookbacks; the price ladder up",
    "source": "mkt",
    "in": 2706.89,
    "out": 2846.69,
-   "status": "rev2: 44:55-47:22. 'Who's afraid to buy that' 45:59. The level-reaction study is not run; outcome slot o21 is off. Twin candidate: a daily box inside a 10-day box inside a 30-day box, the ladder up.",
+   "status": "rev2: 44:55-47:22. 'Who's afraid to buy that' 45:59. The level-reaction study is not run; outcome slot o21 is off. Twin candidate: a daily box inside a 10-day box inside a 30-day box, the ladder up. · rev3: the twin s21a carries it; this cut stays in the plan, OFF, so the pick reverses here",
    "toc_title": "Two levels, then the ladder",
    "quote_anchor": "and there's something really powerful about"
+  },
+  {
+   "id": "s21a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: Yesterday's high and low as bias; the 10-day and 30-day lookbacks; the price ladder up",
+   "source": "mkt",
+   "in": 2706.89,
+   "out": 2846.69,
+   "animation_brief": "anim_gen.py scene s21: two levels, then the ladder",
+   "status": "twin of s21: his audio, our picture (stage); no tile (his gallery tiles are about 60 px); the owner picks one of the pair in the cutroom",
+   "pip": false,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   },
+   "toc_title": "Two levels, then the ladder"
   },
   {
    "include": false,
@@ -443,9 +766,26 @@
    "source": "mkt",
    "in": 2868.73,
    "out": 2960.61,
-   "status": "rev2: 47:44-49:19; OFF by default (an answer to George about execution, not about tomorrow's list); turn on in the cutroom to keep it.",
+   "status": "rev2: 47:44-49:19; OFF by default (an answer to George about execution, not about tomorrow's list); turn on in the cutroom to keep it. · rev3: the twin s22a carries it; this cut stays in the plan, OFF, so the pick reverses here",
    "toc_title": "Thirteen bars, keep your bullets",
    "quote_anchor": "the other thing that I said that"
+  },
+  {
+   "id": "s22a",
+   "type": "overdub",
+   "include": false,
+   "label": "ALT animated: To George: 13 thirty-minute bars; don't spend your ammunition in the first 30 minutes",
+   "source": "mkt",
+   "in": 2868.73,
+   "out": 2960.61,
+   "animation_brief": "anim_gen.py scene s22: thirteen bars, keep your bullets",
+   "status": "twin of s22: his audio, our picture (stage); no tile (his gallery tiles are about 60 px); the owner picks one of the pair in the cutroom · OFF like its cut",
+   "pip": false,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   },
+   "toc_title": "Thirteen bars, keep your bullets"
   },
   {
    "id": "c7",
@@ -470,21 +810,55 @@
    "source": "mkt",
    "in": 2970.41,
    "out": 3214.69,
-   "status": "rev2: 49:28-53:34; OFF by default (market classification for swing trades, off the course's line). Profanity at 52:53 ('sleep like a god damn baby'): trim it if this window goes in. 'Top 10 biggest positive days ... after these bearish slides' is his claim, untested here.",
+   "status": "rev2: 49:28-53:34; OFF by default (market classification for swing trades, off the course's line). Profanity at 52:53 ('sleep like a god damn baby'): trim it if this window goes in. 'Top 10 biggest positive days ... after these bearish slides' is his claim, untested here. · rev3: the twin s23a carries it; this cut stays in the plan, OFF, so the pick reverses here",
    "toc_title": "The 200-day, and why he never holds shorts overnight",
    "quote_anchor": "Carlos what I I want to talk"
   },
   {
+   "id": "s23a",
+   "type": "overdub",
+   "include": false,
+   "label": "ALT animated: To Carlos: the 200-day matters for swing, not day trades; no overnight swing shorts in a bear market",
+   "source": "mkt",
+   "in": 2970.41,
+   "out": 3214.69,
+   "animation_brief": "anim_gen.py scene s23: the 200-day, and why he never holds shorts overnight",
+   "status": "twin of s23: his audio, our picture (stage); no tile (his gallery tiles are about 60 px); the owner picks one of the pair in the cutroom · OFF like its cut",
+   "pip": false,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   },
+   "toc_title": "The 200-day, and why he never holds shorts overnight"
+  },
+  {
    "id": "s24",
    "type": "cut",
-   "include": true,
+   "include": false,
    "label": "The 10-day box as the day-trade market classification; green, white, yellow, red; 'the essence of sniper trading'",
    "source": "mkt",
    "in": 3214.69,
    "out": 3427.25,
-   "status": "rev2: 53:34-56:56. The credo 56:04-56:24 ('that's the essence of that sniper trading'), then 'the same power for me for day trading as the 200 day moving average does ... for swing trading'.",
+   "status": "rev2: 53:34-56:56. The credo 56:04-56:24 ('that's the essence of that sniper trading'), then 'the same power for me for day trading as the 200 day moving average does ... for swing trading'. · rev3: the twin s24a carries it; this cut stays in the plan, OFF, so the pick reverses here",
    "toc_title": "The 10-day box is the day trader's classification",
    "quote_anchor": "now what I would also say is"
+  },
+  {
+   "id": "s24a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: The 10-day box as the day-trade market classification; green, white, yellow, red; 'the essence of sniper trading'",
+   "source": "mkt",
+   "in": 3214.69,
+   "out": 3427.25,
+   "animation_brief": "anim_gen.py scene s24: the 10-day box is the day trader's classification",
+   "status": "twin of s24: his audio, our picture (stage); no tile (his gallery tiles are about 60 px); the owner picks one of the pair in the cutroom",
+   "pip": false,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   },
+   "toc_title": "The 10-day box is the day trader's classification"
   },
   {
    "include": false,
@@ -496,14 +870,31 @@
   {
    "id": "s25",
    "type": "cut",
-   "include": true,
+   "include": false,
    "label": "MACD seasons give a bias and an urgency, not a signal; 'I still require a mechanical entry'",
    "source": "mkt",
    "in": 3427.25,
    "out": 3637.37,
-   "status": "rev2: 56:56-1:00:35, never in rev 1. The course's close in his words: the season is not the entry. Twin candidate: the MACD winter, spring, summer, fall with the Red River and the spine, and the mechanical entry the season still waits for.",
+   "status": "rev2: 56:56-1:00:35, never in rev 1. The course's close in his words: the season is not the entry. Twin candidate: the MACD winter, spring, summer, fall with the Red River and the spine, and the mechanical entry the season still waits for. · rev3: the twin s25a carries it; this cut stays in the plan, OFF, so the pick reverses here",
    "toc_title": "Bias, not signal",
    "quote_anchor": "now I'm gonna say approximately the same"
+  },
+  {
+   "id": "s25a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: MACD seasons give a bias and an urgency, not a signal; 'I still require a mechanical entry'",
+   "source": "mkt",
+   "in": 3427.25,
+   "out": 3637.37,
+   "animation_brief": "anim_gen.py scene s25: bias, not signal",
+   "status": "twin of s25: his audio, our picture (stage); no tile (his gallery tiles are about 60 px); the owner picks one of the pair in the cutroom",
+   "pip": false,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   },
+   "toc_title": "Bias, not signal"
   },
   {
    "id": "s26",

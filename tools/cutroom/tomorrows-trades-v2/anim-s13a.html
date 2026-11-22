@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>s13a · the usual suspects</title>
+<style>
+  :root { --bg:#000; --fg:#f2f5f7; --muted:#9aa7b0; --border:rgba(255,255,255,0.12); --accent:#F2D06B;
+          --ok:#4ade80; --dn:#f87171; --card:#000; --blue:#7baad4; }
+  html, body { margin:0; background:var(--bg); overflow:hidden; }
+  #stage { position:relative; width:1280px; height:720px; background:var(--bg); color:var(--fg);
+           font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; overflow:hidden; }
+  #cap { position:absolute; left:40px; right:40px; top:22px; font-size:34px; font-weight:600; letter-spacing:-.01em; line-height:1.15; z-index:3; }
+  #cap em { font-style:normal; color:var(--accent); }
+  #sub { position:absolute; left:40px; width:1000px; top:686px; font-size:17px; color:var(--muted); line-height:1.3; z-index:3; }
+  #scene { position:absolute; left:0; top:96px; width:1160px; height:530px; overflow:visible; transform:scale(1.1034); transform-origin:0 0; }
+  #svg { position:absolute; inset:0; }
+  #fade { position:absolute; inset:0; background:var(--bg); pointer-events:none; opacity:0; z-index:4; }
+  #pip { position:absolute; left:950px; top:22px; width:300px; height:169px; border:1px solid rgba(255,255,255,0.35); border-radius:4px;
+         display:none; color:var(--muted); font-size:13px; text-align:center; line-height:169px; z-index:3; background:#000; }
+  .pip #pip { display:block; } .pip #cap { right:360px; font-size:31px; }
+  text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; fill:#f2f5f7; }
+  .mono { font-family:ui-monospace,Menlo,Consolas,monospace; }
+  .serif { font-family:Georgia,"DejaVu Serif","Times New Roman",serif; }
+  .hand { font-family:Caveat,cursive; font-weight:600; }
+  @font-face { font-family:"Caveat"; font-weight:400 700; src:local("Caveat"), url(https://fonts.gstatic.com/s/caveat/v23/Wnz6HAc5bAfYB2Q7ZjYY.woff2) format("woff2"); }
+  /* the seal slot: the chapter counter bottom-right (the brand mark joins it when the owner picks one) */
+  #seal { position:absolute; right:40px; top:688px; font-size:15px; letter-spacing:.08em; color:var(--muted); z-index:3; font-family:ui-monospace,Menlo,Consolas,monospace; }
+  #third { display:none; }
+</style>
+</head>
+<body>
+<div id="stage" class="">
+  <div id="cap"></div>
+  <div id="pip">Ken on camera, composited at render</div>
+  <div id="scene"><svg id="svg" width="1160" height="530" viewBox="0 0 1160 530"></svg></div>
+  <div id="third"></div>
+  <div id="sub"></div>
+  <div id="seal">chapter 4 of 7</div>
+  <div id="fade"></div>
+</div>
+<script>
+const BUILD = 's13a-1';
+console.log('[s13a] build', BUILD);
+// Overdub twin of s13: Ken's audio mkt 1774.13→1937.97; t is seconds after the in-point.
+// Beat times read from the VTT cues on 2026-11-22 (tools/cutroom/tomorrows-trades-v2/transcript-mkt.json).
+window.ANIM_DURATION = 163.8;
+const ACC='#F2D06B', FG='#f2f5f7', MUT='#9aa7b0', OK='#4ade80', DN='#f87171', BLUE='#7baad4', BRD='rgba(255,255,255,.18)', CARD='#000', TXS=1.1, WRAP=['',''];
+const W=1160, H=530;
+const $ = id => document.getElementById(id);
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const ease=u=>{u=clamp(u,0,1);return u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;};
+const lerp=(a,b,u)=>a+(b-a)*u;
+const pr=(t,t0,d)=>ease((t-t0)/(d||0.6));          // eased progress 0..1 from t0 over d seconds
+const on=(t,t0)=>t>=t0;
+const op=(t,t0,d)=>clamp((t-t0)/(d||0.5),0,1);      // linear opacity ramp
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const txt=(x,y,s,o={})=>`<text x="${x}" y="${y}" font-size="${(o.sz||20)*TXS}" fill="${o.c||FG}" opacity="${o.o==null?1:o.o}" text-anchor="${o.a||'start'}" font-weight="${o.w||400}" class="${o.cls||''}" ${o.extra||''}>${esc(s)}</text>`;
+const rect=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.r==null?6:o.r}" fill="${o.f||'none'}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}" ${o.dash?`stroke-dasharray="${o.dash}"`:''} ${o.extra||''}/>`;
+const circ=(x,y,r,o={})=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${o.f||FG}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}"/>`;
+const line=(x1,y1,x2,y2,o={})=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${o.s||MUT}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" ${o.dash?`stroke-dasharray="${o.dash}"`:''} stroke-linecap="round"/>`;
+const path=(d,o={})=>`<path d="${d}" fill="${o.f||'none'}" stroke="${o.s||FG}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" stroke-linecap="round" stroke-linejoin="round" ${o.dash?`stroke-dasharray="${o.dash}"`:''}/>`;
+const arrow=(x1,y1,x2,y2,o={})=>{const a=Math.atan2(y2-y1,x2-x1),h=10;return line(x1,y1,x2,y2,o)+path(`M${x2} ${y2} L${x2-h*Math.cos(a-0.5)} ${y2-h*Math.sin(a-0.5)} M${x2} ${y2} L${x2-h*Math.cos(a+0.5)} ${y2-h*Math.sin(a+0.5)}`,{s:o.s||MUT,sw:o.sw||2,o:o.o});};
+// a labelled box that grows in from t0
+const box=(t,t0,x,y,w,h,label,o={})=>{const u=pr(t,t0,0.5);if(u<=0)return '';const ww=w*u,hh=h;return rect(x+(w-ww)/2,y,ww,hh,{s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',sw:o.sw||1.5,o:u})+(u>.6?txt(x+w/2,y+h/2+(o.sz||20)/3,label,{a:'middle',sz:o.sz||20,c:o.c||FG,o:op(t,t0+.3,.3),w:o.w||500}):'');};
+// deterministic pseudo-random
+function rng(seed){let s=seed*9301+49297;return()=>{s=(s*9301+49297)%233280;return s/233280;};}
+// a herd of dots in a region; drift is a slow deterministic wander
+function herd(n,seed,x,y,w,h){const r=rng(seed);const pts=[];for(let i=0;i<n;i++)pts.push({x:x+r()*w,y:y+r()*h,p:r()*6.28,q:r()*6.28});return pts;}
+const wander=(p,t,amp)=>[p.x+Math.sin(t*0.9+p.p)*amp,p.y+Math.cos(t*0.7+p.q)*amp];
+// typewriter: the first k chars of s by time
+const type=(s,t,t0,cps)=>s.slice(0,Math.max(0,Math.floor((t-t0)*(cps||28))));
+// a list that reveals one row per step seconds from t0
+// --- the lesson helpers (2026-11-21, read from the Stanford "Probability for AI" screens) ---
+// the question the window answers, top-left of the scene, serif, amber
+const headY=(o={})=>{const capH=($('cap')||{}).offsetHeight||0;return Math.max(o.y||44,(capH-68)/1.1034+32);};
+const head=(t,t0,q,o={})=>{const a=op(t,t0,.5);if(a<=0)return '';return txt(o.x||40,headY(o),q,{sz:o.sz||30,c:o.c||ACC,w:600,o:a,cls:'serif'});};
+const bridge=(t,t0,s,o={})=>{const a=op(t,t0+.4,.6);if(a<=0)return '';const x=o.x||40,y=headY(o)+(o.dy||33);return txt(x,y,'in trading:',{sz:o.sz||24,c:MUT,o:a,cls:'hand'})+txt(x+(o.gap||128),y,s,{sz:o.sz||24,c:o.c||FG,o:a*.92,cls:'hand'});};   // the metaphor named as the trade, under the head, for the whole scene (lesson rule 8)   // under a three-line caption the question steps down
+// where to look: a soft ring that glides to the element of the beat. pts=[[t0,x,y],...]; it holds for o.hold s (default 5) after each beat
+function focus(t,pts,o={}){let cur=null,prev=null;for(const p of pts){if(t>=p[0]){prev=cur;cur=p;}}if(!cur)return '';const age=t-cur[0];if(age>(o.hold||5))return '';
+  const u=prev?pr(t,cur[0],.6):1;const x=prev?lerp(prev[1],cur[1],u):cur[1],y=prev?lerp(prev[2],cur[2],u):cur[2];const r=(o.r||22)+Math.sin(t*4)*2;const a=op(t,cur[0],.3)*(age>(o.hold||5)-.6?((o.hold||5)-age)/.6:1);
+  return circ(x,y,r,{f:'none',s:o.c||ACC,sw:2.5,o:a*.9})+circ(x,y,4,{f:o.c||ACC,o:a});}
+// the boxed definition, once the intuition has landed: a serif title and his words under it
+function defn(t,t0,x,y,w,title,lines,o={}){const u=pr(t,t0,.6);if(u<=0)return '';const lh=o.lh||28,h=(o.pad||22)*2+34+lines.length*lh;let s=rect(x,y,w,h,{r:8,s:o.s||FG,sw:2,f:o.f||'rgba(255,255,255,.03)',o:u});
+  if(u>.5){const a=op(t,t0+.3,.4);s+=txt(x+(o.pad||22),y+(o.pad||22)+22,title,{sz:o.sz||26,c:o.c||FG,w:600,o:a,cls:'serif'});lines.forEach((ln,i)=>{s+=txt(x+(o.pad||22),y+(o.pad||22)+34+22+i*lh,ln,{sz:o.lsz||20,c:o.lc||FG,o:op(t,t0+.5+i*.25,.4)});});}return s;}
+// the aside, in a second register: handwritten, amber, a little tilted (sparingly: his aside, not the framework)
+const aside=(t,t0,x,y,s,o={})=>{const a=op(t,t0,.5);return a<=0?'':`<g transform="rotate(${o.rot==null?-2:o.rot} ${x} ${y})">`+txt(x,y,s,{sz:o.sz||24,c:o.c||ACC,o:a*(o.o==null?1:o.o),a:o.a||'start',cls:'hand'})+'</g>';};
+// the recall box: an earlier figure back, small, in a corner, for a few seconds (draw the figure with its own helper inside g)
+function recall(t,t0,x,y,w,h,label,inner,o={}){const a=op(t,t0,.5)*(o.until&&t>o.until?clamp(1-(t-o.until)/.6,0,1):1);if(a<=0)return '';
+  return rect(x,y,w,h,{r:8,s:MUT,sw:1.5,f:'rgba(255,255,255,.03)',o:a,dash:'4 4'})+txt(x+12,y+20,label,{sz:14,c:MUT,o:a})+`<g opacity="${a}" transform="translate(${x} ${y+28}) scale(${o.sc||.5})">${inner}</g>`;}
+function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
+
+const BEATS = [[0.5, "the <em>third category</em>: the usual suspects", ""], [21.2, "symbols I know are tradable intraday because they are <em>frog champions</em>", ""], [28.6, "that comes from the statistics of the <em>average range</em> and the range stat", ""], [35.6, "they're also <em>liquid</em>, and they move in <em>both directions</em>", ""], [41.2, "and they have reliably large moves", ""], [50.8, "<em>EWW, EWZ, DIA, Devon, Cliff, Alcoa</em>", ""], [63.6, "and lately AI; Home Depot used to be in there, it's becoming less interesting", ""], [77.5, "I can see the <em>same situations intraday</em> that made me interested on the daily", ""], [85.4, "in my <em>nightly prep</em>, if I see an SSC on a daily chart, I'm interested tomorrow", ""], [109.7, "on a 30-minute chart: a <em>harsh winter</em>, it pinches, crosses the dragon, hits the P", ""], [126.9, "I've taken it so many times that I'm just used to doing it", ""], [131.0, "the typical entries for me: the <em>WMBB3</em>, the <em>OR3</em>, the <em>SSC</em>", ""], [146.3, "maybe the <em>123</em> also, so there's probably four", ""], [160.9, "I can trade that just because of <em>familiarity</em>", ""]];
+// WARP (optional): [[t_voice, t_authored], …] knots from the voice-over's words; the scene was authored on an estimate
+const WARP = null;
+const warpT = t => { if (!WARP) return t; for (let i = 1; i < WARP.length; i++) if (t <= WARP[i][0]) {
+  const [a0, b0] = WARP[i - 1], [a1, b1] = WARP[i]; return b0 + (b1 - b0) * (t - a0) / Math.max(1e-6, a1 - a0); }
+  return WARP[WARP.length - 1][1]; };
+
+const T=i=>BEATS[Math.min(i,BEATS.length-1)][0];
+const after=(t,i)=>t>=T(i);
+const between=(t,i,j)=>t>=T(i)&&t<T(j);
+const ph=(t,i,j)=>op(t,T(i),.5)*(j==null?1:1-op(t,T(j)-.4,.4));
+const glow=s=>`<g filter="url(#g)">${s}</g>`;
+const mono=(x,y,s,o={})=>txt(x,y,s,Object.assign({cls:'mono'},o));
+const kick=(s,o,x)=>mono(x||0,22,s.toUpperCase(),{sz:14,c:MUT,o:o==null?1:o,extra:'letter-spacing=".12em"'});
+// a dark mask over a region of a still (the Zoom gallery that rides along in a crop)
+const mask=(x0,y0,x1,y1)=>rect(x0,y0,x1-x0,y1-y0,{f:'#05070b',s:'none',r:0});
+const cnt=(t,t0,d,n)=>Math.round(n*pr(t,t0,d||1.2));
+function walk(keys,seed,amp){const r=rng(seed);const N=240;const nz=[];let a=0;for(let i=0;i<=N;i++){a=a*0.82+(r()-.5);nz.push(a);}
+  return u=>{u=clamp(u,0,1);let k=0;while(k<keys.length-2&&u>keys[k+1][0])k++;const [x0,v0]=keys[k],[x1,v1]=keys[k+1];const w=clamp((u-x0)/((x1-x0)||1),0,1);return lerp(v0,v1,w)+nz[Math.round(u*N)]*(amp||0);};}
+function fr(x,y,w,h,lo,hi){return {x,y,w,h,lo,hi,X:u=>x+u*w,Y:v=>y+h-(v-lo)/(hi-lo)*h};}
+function plot(F,f,u0,u1,o={}){if(u1<=u0)return '';let d='';const n=Math.max(2,Math.round((u1-u0)*180));for(let i=0;i<=n;i++){const u=u0+(u1-u0)*i/n;d+=(i?'L':'M')+F.X(u).toFixed(1)+' '+F.Y(f(u)).toFixed(1);}return path(d,{s:o.s||FG,sw:o.sw||2.5,o:o.o==null?1:o.o,dash:o.dash});}
+function lvl(F,v,label,o={}){const y=F.Y(v),x0=o.x0==null?F.x:F.X(o.x0),x1=o.x1==null?F.x+F.w:F.X(o.x1);
+  return line(x0,y,x1,y,{s:o.s||MUT,sw:o.sw||1.5,dash:o.dash===undefined?'6 5':o.dash,o:o.o})+(label?txt(o.left?x0-8:x1+8,y+6,label,{a:o.left?'end':'start',c:o.s||MUT,sz:o.sz||15,o:o.o,w:o.w||500}):'');}
+function zone(F,u0,u1,va,vb,o={}){const y1=F.Y(Math.max(va,vb)),y2=F.Y(Math.min(va,vb));return rect(F.X(u0),y1,F.X(u1)-F.X(u0),Math.max(1,y2-y1),{f:o.f||'rgba(239,90,111,.14)',s:o.s||DN,sw:o.sw||1.2,r:2,o:o.o==null?1:o.o,extra:o.dash?`stroke-dasharray="${o.dash}"`:''});}
+function dot(F,u,v,c,o){return circ(F.X(u),F.Y(v),6,{f:c,o:o==null?1:o})+circ(F.X(u),F.Y(v),11,{f:'none',s:c,sw:1.5,o:(o==null?1:o)*.5});}
+// bars from a series of [o,h,l,c]; reveal the first k
+function bars(F,B,k,o={}){let s='';const n=B.length,bw=F.w/n*(o.bw||.6);for(let i=0;i<Math.min(k,n);i++){const [a,h,l,b]=B[i];const up=b>=a;const c=o.c&&o.c[i]?o.c[i]:(up?OK:DN);
+  const x=F.x+(i+.5)*F.w/n;s+=line(x,F.Y(h),x,F.Y(l),{s:c,sw:1.5,o:o.o})+rect(x-bw/2,F.Y(Math.max(a,b)),bw,Math.max(2,Math.abs(F.Y(a)-F.Y(b))),{f:c,s:'none',r:1,o:o.o});}return s;}
+const cx=(F,i,n)=>F.x+(i+.5)*F.w/n;
+// a vertical bracket at x from y0 to y1 with a label beside it
+function vbr(x,y0,y1,label,o={}){const c=o.s||ACC,d=o.left?-8:8;return path(`M${x+d} ${y0} L${x} ${y0} L${x} ${y1} L${x+d} ${y1}`,{s:c,sw:o.sw||2,o:o.o})+(label?txt(x+(o.left?-14:14),(y0+y1)/2+6,label,{a:o.left?'end':'start',c,sz:o.sz||16,o:o.o,w:600}):'');}
+// a horizontal tick (a close, an open)
+const tick=(x,y,w,c,o)=>line(x-w/2,y,x+w/2,y,{s:c,sw:3,o});
+// a card: panel with a mono label
+function card(x,y,w,h,label,o){return rect(x,y,w,h,{s:BRD,f:CARD,o:o,r:8})+(label?mono(x+14,y+24,label.toUpperCase(),{c:MUT,sz:12,o:o,extra:'letter-spacing=".1em"'}):'');}
+function chip(x,y,s,o={}){const w=o.w||Math.max(60,s.length*(o.sz||17)*.58+26);return rect(x,y,w,o.h||34,{f:o.f||'rgba(95,211,204,.10)',s:o.s||ACC,sw:1.2,r:17,o:o.o})+txt(x+w/2,y+(o.h||34)/2+6,s,{a:'middle',c:o.c||FG,sz:o.sz||17,o:o.o,w:500});}
+function big(s,o,c,y,x){return txt(x==null?580:x,y||270,s,{a:'middle',sz:34,c:c||ACC,o:o,w:600});}
+// a readout: label (mono, muted) above a big number
+function readout(x,y,label,val,o={},c){return mono(x,y,label.toUpperCase(),{sz:12,c:MUT,o:o.o,extra:'letter-spacing=".1em"'})+mono(x,y+40,val,{sz:o.sz||36,c:c||ACC,o:o.o,w:600});}
+// a pen-ish scribble inside a box, deterministic
+function noise(x,y,w,h,seed,k,c,o){const r=rng(seed);let d='';for(let i=0;i<k;i++){d+=(i?'L':'M')+(x+r()*w).toFixed(1)+' '+(y+r()*h).toFixed(1);}return path(d,{s:c||DN,sw:1.4,o:o});}
+// a tag box on a chart still (dark pill, coloured border)
+function tag(x,y,s,c,o,a){const w=s.length*8.8+16;const x0=a==='end'?x-w:x;return rect(x0,y-13,w,24,{f:'rgba(5,7,11,.9)',s:c,sw:1,r:5,o})+txt(x0+w/2,y+5,s,{a:'middle',c:'#fff',sz:14,o,w:600});}
+
+const OPEN=BLUE, PAT='#5fd3cc', SIT='#c58af9', SUS='#f472b6', GAP='#fb923c', RISK=DN, TGT=OK, KEY=ACC, FAIR='#a5b4fc', TRADER='#fda4af';
+const YZ='rgba(242,208,107,.20)';
+const A=(t,i,d)=>op(t,T(i),d||.5);
+const L=(t,i,x,y,s,o={})=>{const a=A(t,i);return a<=0?'':txt(x,y,s,Object.assign({sz:20},o,{o:a*(o.o==null?1:o.o)}));};
+// a rounded chip with its label
+function chipS(t,i,x,y,s,c,o={}){const a=(i==null?1:A(t,i))*(o.o==null?1:o.o);if(a<=0)return '';const sz=o.sz||20;const w=o.w||Math.max(70,s.length*sz*.6+32);
+  return rect(x,y-sz-8,w,sz+20,{r:(sz+20)/2,s:c,sw:2,f:o.f||'rgba(255,255,255,.03)',o:a})+txt(x+w/2,y+2,s,{a:'middle',sz,c:o.tc||c,o:a,w:500});}
+// the running example: yesterday's bar, its yellow zone, today's path, the nickel, the risk box, the ladder
+const YH=104, YL=100, YO=100.8, YC=103.2, TO=101.6, ENT=104.05, H10=113, H30=118;
+function yday(F,a,o={}){if(a<=0)return '';const x=F.X(o.u==null?.16:o.u);let s='';
+  if(o.zone)s+=rect(x+22,F.Y(YH),F.x+F.w-x-22,F.Y(YL)-F.Y(YH),{f:YZ,s:'none',r:0,o:a*o.zone});
+  s+=line(x,F.Y(YH),x,F.Y(YL),{s:FG,sw:3,o:a})+rect(x-15,F.Y(YC),30,F.Y(YO)-F.Y(YC),{f:OK,r:2,o:a});
+  if(o.lines){s+=lvl(F,YH,"yesterday's high",{s:FG,o:a*o.lines,sz:18,dash:'',sw:2});s+=lvl(F,YL,"yesterday's low",{s:FG,o:a*o.lines,sz:18,dash:'',sw:2});}
+  return s;}
+function todayF(F){return fr(F.X(.34),F.y,F.w*.62,F.h,F.lo,F.hi);}
+function today(F,u,o={}){if(u<=0)return '';const G=todayF(F);const f=walk(o.keys||[[0,TO],[.3,YL+.7],[.55,YH-.5],[.75,ENT+1.2],[1,ENT+4.2]],o.seed||7,o.amp==null?.18:o.amp);
+  let s=plot(G,f,0,u,{s:o.c||FG,sw:3});s+=dot(G,0,f(0),o.oc||KEY,op(u,0,.05));return s;}
+function riskbox(F,a,o={}){if(a<=0)return '';const G=todayF(F);const u0=o.u0==null?.62:o.u0,u1=o.u1==null?1:o.u1;
+  return zone(G,u0,u1,ENT,YL,{f:'rgba(248,113,113,.16)',s:RISK,sw:2,o:a})+(o.label===false?'':txt(G.X(u1)+10,(F.Y(ENT)+F.Y(YL))/2+7,o.label||'risk box',{sz:18,c:RISK,o:a}));}
+// a vertical ruler of n counted units from y0 upward, unit px each
+function ruler(x,y0,unit,n,c,a,o={}){if(a<=0)return '';let s=line(x,y0,x,y0-unit*n,{s:c,sw:3,o:a});for(let k=0;k<=n;k++)s+=line(x-9,y0-k*unit,x+9,y0-k*unit,{s:c,sw:2.5,o:a});
+  if(o.label)s+=txt(x+(o.left?-16:16),y0-unit*n/2+7,o.label,{sz:o.sz||20,c,o:a,a:o.left?'end':'start',w:600});return s;}
+// the four slots of tomorrow's list, two symbols each (34:10)
+const SLOTS=[['open trade',OPEN],['new pattern',PAT],['situation',SIT],['big gapper',GAP]];
+function board(x,y,cw,av,o={}){let s='';for(let i=0;i<4;i++){const a=av[i]||0;if(a<=0)continue;const cx=x+i*(cw+12);const [nm,c]=SLOTS[i];
+  s+=txt(cx+cw/2,y,nm,{a:'middle',sz:o.sz||18,c,o:a,w:600});
+  for(let j=0;j<2;j++){const on=o.fill?o.fill[i]>j:0;s+=rect(cx,y+12+j*(o.ch||44),cw,(o.ch||44)-8,{r:7,s:c,sw:2,f:on?'rgba(255,255,255,.10)':'none',o:a});
+    if(o.marks&&o.marks[i])s+=txt(cx+cw/2,y+12+j*(o.ch||44)+((o.ch||44)-8)/2+7,o.marks[i],{a:'middle',sz:18,c:MUT,o:a});}}
+  return s;}
+const moon=(x,y,a,c)=>a<=0?'':path(`M${x+8} ${y-14} A16 16 0 1 0 ${x+8} ${y+14} A12 12 0 1 1 ${x+8} ${y-14} Z`,{s:c||MUT,sw:2,f:'rgba(255,255,255,.05)',o:a});
+const watch=(x,y,a,c)=>a<=0?'':circ(x,y,14,{f:'none',s:c||GAP,sw:2.5,o:a})+line(x,y,x,y-8,{s:c||GAP,sw:2.5,o:a})+line(x,y,x+6,y+3,{s:c||GAP,sw:2.5,o:a})+line(x-4,y-19,x+4,y-19,{s:c||GAP,sw:3,o:a});
+const xmark=(x,y,a,c)=>a<=0?'':line(x-10,y-10,x+10,y+10,{s:c||DN,sw:4,o:a})+line(x+10,y-10,x-10,y+10,{s:c||DN,sw:4,o:a});
+const check=(x,y,a,c)=>a<=0?'':path(`M${x-11} ${y} L${x-3} ${y+9} L${x+12} ${y-10}`,{s:c||OK,sw:4,o:a});
+
+const SUSP=['EWW','EWZ','DIA','DVN','CLF','AA','AI'];   // named at 30:16-30:33 (Devon, Cliff, Alcoa as he says them)
+function suspects(t,t0,x,y,step){let s='';SUSP.forEach((nm,k)=>{const a=op(t,t0+k*(step||.45),.4);if(a<=0)return;s+=chipS(null,null,x+(k%4)*120,y+Math.floor(k/4)*56,nm,SUS,{sz:22,w:104,o:a});});return s;}
+
+function draw(t){let s='';
+  s+=head(t,0,'Which symbols are always worth a look?')+bridge(t,0,'the same few tickers, read the same way every day');
+  s+=L(t,1,40,150,'frog champions',{sz:28,c:SUS,w:600});
+  s+=suspects(t,T(5),40,210);
+  if(t>=T(6)){const a=A(t,6);s+=chipS(null,null,400,266,'HD',MUT,{sz:22,w:90,o:a*.6});s+=line(404,258,486,258,{s:MUT,sw:2.5,o:a});s+=txt(500,266,'less interesting',{sz:18,c:MUT,o:a});}
+  // the same shape on the daily and on 30 minutes
+  const sh=(x,y,sc,a)=>path(`M${x} ${y} L${x+40*sc} ${y+50*sc} L${x+80*sc} ${y+70*sc} L${x+110*sc} ${y+40*sc} L${x+150*sc} ${y+10*sc} L${x+190*sc} ${y-30*sc}`,{s:FG,sw:3,o:a});
+  if(t>=T(7)){const a=A(t,7);s+=sh(60,360,1,a)+txt(60,470,'daily',{sz:20,c:MUT,o:a});s+=sh(330,370,.8,op(t,T(7)+1,.5))+txt(330,470,'30 minutes',{sz:20,c:MUT,o:op(t,T(7)+1,.5)});s+=txt(280,410,'=',{sz:34,c:KEY,o:a,w:600,a:'middle'});}
+  s+=L(t,9,60,505,'harsh winter · pinch · cross the dragon · hit the P',{sz:18,c:FG});
+  // why they qualify, right column
+  s+=L(t,2,800,160,'average range, range stat',{sz:20,c:FG});
+  s+=L(t,3,800,192,'liquid',{sz:20,c:FG});s+=L(t,3,800,224,'both directions',{sz:20,c:FG});
+  s+=L(t,4,800,256,'reliably large moves',{sz:20,c:FG});
+  s+=L(t,11,800,320,'typical entries',{sz:22,c:KEY,w:600});
+  const ent=[[11,'WMBB3'],[11,'OR3'],[11,'SSC'],[12,'123']];ent.forEach(([i,nm],k)=>{s+=chipS(t,i,800+(k%2)*150,372+Math.floor(k/2)*54,nm,PAT,{sz:21,w:130,o:op(t,T(i)+(k%3)*.5,.4)});});
+  s+=aside(t,T(13),800,500,'familiarity',{sz:26});
+  s+=focus(t,[[T(1),140,145],[T(5),200,240],[T(6),445,258],[T(7),130,400],[T(8),400,400],[T(11),940,380],[T(12),870,426]]);
+  return s;}
+
+window.renderFrame = function (t) {
+  t = clamp(t, 0, ANIM_DURATION);
+  const tv = t; t = warpT(t);
+  let cap = '', sub = '';
+  for (const b of BEATS) if (t >= b[0]) { cap = b[1]; sub = b[2] || ''; }
+  $('cap').innerHTML = cap; $('sub').textContent = sub;
+  $('svg').innerHTML = WRAP[0] + draw(t) + WRAP[1];
+  const f = $('fade');
+  f.style.opacity = tv < 0.5 ? 1 - tv / 0.5 : (ANIM_DURATION - tv < 0.6 ? 1 - (ANIM_DURATION - tv) / 0.6 : 0);
+};
+renderFrame(0);
+</script>
+</body>
+</html>
