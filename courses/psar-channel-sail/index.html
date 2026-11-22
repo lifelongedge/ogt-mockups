@@ -7,18 +7,18 @@
 <style>
 :root{
   --bg:#f9f9f7;--card:#fcfcfb;--fg:#0b0b0b;--dim:#52514e;--faint:#8a8880;--border:#e4e2dc;--grid:#eeece6;
-  --accent:#b07a1c;--up:#1d8a4e;--dn:#c23b3b;--water:rgba(58,143,138,.14);--water2:rgba(58,143,138,.30);
+  --accent:#b07a1c;--up:#1d8a4e;--dn:#c23b3b;--water:rgba(58,143,138,.14);--water2:rgba(58,143,138,.20);
   --boat:#1f6f6a;--sail:#f3efe4;--dots:#b07a1c;--bank:#0b0b0b;--rl:#2a78d6;--wake:rgba(31,111,106,.75);--beat:rgba(176,122,28,.7);
   --bar:#4a4945;--sand:#e9dcc2;--sand2:#d9c8a4;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#0d0d0d;--card:#1a1a19;--fg:#f0efec;--dim:#c3c2b7;--faint:#8b8a82;--border:#2e2d2a;--grid:#262624;
-  --accent:#d4a559;--up:#4cbf7f;--dn:#e66767;--water:rgba(63,191,143,.14);--water2:rgba(63,191,143,.30);
+  --accent:#d4a559;--up:#4cbf7f;--dn:#e66767;--water:rgba(63,191,143,.14);--water2:rgba(63,191,143,.20);
   --boat:#5fd3cc;--sail:#f0efec;--dots:#d4a559;--bank:#f0efec;--rl:#3987e5;--wake:rgba(95,211,204,.8);--beat:rgba(212,165,89,.7);
   --bar:#b8b6ad;--sand:#3a3428;--sand2:#4a4232;}}
 :root[data-theme="dark"]{
   --bg:#0d0d0d;--card:#1a1a19;--fg:#f0efec;--dim:#c3c2b7;--faint:#8b8a82;--border:#2e2d2a;--grid:#262624;
-  --accent:#d4a559;--up:#4cbf7f;--dn:#e66767;--water:rgba(63,191,143,.14);--water2:rgba(63,191,143,.30);
+  --accent:#d4a559;--up:#4cbf7f;--dn:#e66767;--water:rgba(63,191,143,.14);--water2:rgba(63,191,143,.20);
   --boat:#5fd3cc;--sail:#f0efec;--dots:#d4a559;--bank:#f0efec;--rl:#3987e5;--wake:rgba(95,211,204,.8);--beat:rgba(212,165,89,.7);
   --bar:#b8b6ad;--sand:#3a3428;--sand2:#4a4232;}
 *{box-sizing:border-box}
@@ -110,9 +110,9 @@ footer{color:var(--faint);font-size:.8rem;padding:24px 0 40px;border-top:1px sol
 </div>
 
 <div class="card">
-  <div class="hd"><h3>2 · The same session as a river</h3><p>Same x, same y. The boat is the close. Every PSAR flip is a tack. Legs sailed with the wind are drawn in teal, legs sailed against it in thin amber. The arrow on the right is the wind: up the chart for easterlies, down for westerlies.</p></div>
+  <div class="hd"><h3>2 · The same session as a river</h3><p>Same x, same y. The boat is the close. Every PSAR flip is a tack. Legs sailed with the wind are drawn in green, legs sailed against it in red. The arrow on the right is the wind: up the chart for easterlies, down for westerlies.</p></div>
   <canvas id="sail" height="320"></canvas>
-  <div class="legend"><span><s style="border-color:var(--boat)"></s>leg with the wind (the run)</span><span><s class="thin" style="border-color:var(--dots)"></s>leg against the wind (the beat)</span><span>○ tack (PSAR flip)</span></div>
+  <div class="legend"><span><s style="border-color:var(--up)"></s>leg with the wind (the run)</span><span><s class="thin" style="border-color:var(--dn)"></s>leg against the wind (the beat)</span><span>○ tack (PSAR flip)</span></div>
   <div class="scrub">
     <button id="play">▶ play</button>
     <input id="t" type="range" min="2" max="129" value="129">
@@ -133,19 +133,19 @@ footer{color:var(--faint);font-size:.8rem;padding:24px 0 40px;border-top:1px sol
 <div class="winds">
   <div class="wind" data-k="east">
     <h3>Easterlies · a bullish wind: long is the run</h3>
-    <svg viewBox="0 0 300 120"><path d="M8 100 L292 40" stroke="var(--bank)" stroke-width="1.5" fill="none"/><path d="M8 112 L292 76" stroke="var(--dots)" stroke-width="1.5" stroke-dasharray="2 5" fill="none"/><path d="M12 106 L62 88 L74 98 L140 74 L152 84 L222 56 L232 64 L288 44" stroke="var(--boat)" stroke-width="2.5" fill="none" stroke-linejoin="round"/><g stroke="var(--dots)" stroke-width="1.5" fill="none"><path d="M62 88 L74 98"/><path d="M140 74 L152 84"/><path d="M222 56 L232 64"/></g><g fill="var(--dots)"><circle cx="74" cy="98" r="3"/><circle cx="152" cy="84" r="3"/><circle cx="232" cy="64" r="3"/></g><text x="150" y="16" text-anchor="middle" font-size="11" fill="var(--faint)">wind up the chart: long legs long, short legs short</text></svg>
+    <svg viewBox="0 0 300 120"><path d="M8 100 L292 40" stroke="var(--bank)" stroke-width="1.5" fill="none"/><path d="M8 112 L292 76" stroke="var(--dots)" stroke-width="1.5" stroke-dasharray="2 5" fill="none"/><path d="M12 106 L62 88 L74 98 L140 74 L152 84 L222 56 L232 64 L288 44" stroke="var(--up)" stroke-width="2.5" fill="none" stroke-linejoin="round"/><g stroke="var(--dn)" stroke-width="2" fill="none"><path d="M62 88 L74 98"/><path d="M140 74 L152 84"/><path d="M222 56 L232 64"/></g><g fill="var(--dots)"><circle cx="74" cy="98" r="3"/><circle cx="152" cy="84" r="3"/><circle cx="232" cy="64" r="3"/></g><text x="150" y="16" text-anchor="middle" font-size="11" fill="var(--faint)">wind up the chart: long legs long, short legs short</text></svg>
     <p>The wind blows the boat up the chart. Sailing long is running with it: the up-legs are long, the dots step up under the boat, the far bank is the highs. Sailing short is beating into it: short legs that reach the dots above and give the ground straight back.</p>
     <div class="stats" id="st-east"></div>
   </div>
   <div class="wind" data-k="west">
     <h3>Westerlies · a bearish wind: short is the run</h3>
-    <svg viewBox="0 0 300 120"><path d="M8 30 L292 84" stroke="var(--bank)" stroke-width="1.5" fill="none"/><path d="M8 10 L292 50" stroke="var(--dots)" stroke-width="1.5" stroke-dasharray="2 5" fill="none"/><path d="M12 20 L70 48 L82 36 L150 66 L162 54 L230 84 L240 74 L288 88" stroke="var(--boat)" stroke-width="2.5" fill="none" stroke-linejoin="round"/><g stroke="var(--dots)" stroke-width="1.5" fill="none"><path d="M70 48 L82 36"/><path d="M150 66 L162 54"/><path d="M230 84 L240 74"/></g><g fill="var(--dots)"><circle cx="82" cy="36" r="3"/><circle cx="162" cy="54" r="3"/><circle cx="240" cy="74" r="3"/></g><text x="150" y="112" text-anchor="middle" font-size="11" fill="var(--faint)">the up-legs still touch the dots, then lose</text></svg>
+    <svg viewBox="0 0 300 120"><path d="M8 30 L292 84" stroke="var(--bank)" stroke-width="1.5" fill="none"/><path d="M8 10 L292 50" stroke="var(--dots)" stroke-width="1.5" stroke-dasharray="2 5" fill="none"/><path d="M12 20 L70 48 L82 36 L150 66 L162 54 L230 84 L240 74 L288 88" stroke="var(--up)" stroke-width="2.5" fill="none" stroke-linejoin="round"/><g stroke="var(--dn)" stroke-width="2" fill="none"><path d="M70 48 L82 36"/><path d="M150 66 L162 54"/><path d="M230 84 L240 74"/></g><g fill="var(--dots)"><circle cx="82" cy="36" r="3"/><circle cx="162" cy="54" r="3"/><circle cx="240" cy="74" r="3"/></g><text x="150" y="112" text-anchor="middle" font-size="11" fill="var(--faint)">the up-legs still touch the dots, then lose</text></svg>
     <p>The wind blows the boat down the chart. Sailing short is the run: the down-legs are long, the dots sit above, the far bank is the lows. Trying to go long is the beat: the boat does get up to touch the other side, and loses ground on every tack. The belly of the RL10 is where the PSAR flips, and that is where the short re-enters.</p>
     <div class="stats" id="st-west"></div>
   </div>
   <div class="wind" data-k="run">
     <h3>The clean run · rare, in either wind</h3>
-    <svg viewBox="0 0 300 120"><path d="M8 16 L292 104" stroke="var(--bank)" stroke-width="1.5" fill="none"/><path d="M8 4 L292 60" stroke="var(--dots)" stroke-width="1.5" stroke-dasharray="2 5" fill="none"/><path d="M12 10 L40 24 L48 18 L288 100" stroke="var(--boat)" stroke-width="2.5" fill="none" stroke-linejoin="round"/><path d="M40 24 L48 18" stroke="var(--dots)" stroke-width="1.5" fill="none"/><g fill="var(--dots)"><circle cx="48" cy="18" r="3"/></g><text x="110" y="112" text-anchor="middle" font-size="11" fill="var(--faint)">one leg carries the day, the dots far astern</text></svg>
+    <svg viewBox="0 0 300 120"><path d="M8 16 L292 104" stroke="var(--bank)" stroke-width="1.5" fill="none"/><path d="M8 4 L292 60" stroke="var(--dots)" stroke-width="1.5" stroke-dasharray="2 5" fill="none"/><path d="M12 10 L40 24 L48 18 L288 100" stroke="var(--up)" stroke-width="2.5" fill="none" stroke-linejoin="round"/><path d="M40 24 L48 18" stroke="var(--dn)" stroke-width="2" fill="none"/><g fill="var(--dots)"><circle cx="48" cy="18" r="3"/></g><text x="110" y="112" text-anchor="middle" font-size="11" fill="var(--faint)">one leg carries the day, the dots far astern</text></svg>
     <p>Most days, even with the wind, are sailed in tacks. Once in a while one leg carries nearly the whole day: the boat never needs the far bank and the dots are left far astern. That is the day not to take the first wiggle. First wiggle in a major trend: trust the PSAR.</p>
     <div class="stats" id="st-run"></div>
   </div>
@@ -182,9 +182,9 @@ footer{color:var(--faint);font-size:.8rem;padding:24px 0 40px;border-top:1px sol
 <footer>ogt-mockups/courses/psar-channel-sail · data.js holds the bars (SPY, QQQ; 3-minute; 2026-10-12 → 2026-11-20) · source note in ogt-coursecraft/devtimeartifacts/psar-channel-sail-2026-11-21/</footer>
 </main>
 
-<script src="data.js?v=5"></script>
+<script src="data.js?v=7"></script>
 <script>
-const BUILD=5; console.log('[sail] build '+BUILD); window.__edgeBuild=BUILD;
+const BUILD=7; console.log('[sail] build '+BUILD); window.__edgeBuild=BUILD;
 
 // ---------- theme ----------
 const root=document.documentElement;
@@ -296,7 +296,7 @@ function drawSail(){
   g.fillStyle=css('--dots'); for(let i=1;i<=t;i++){ g.beginPath(); g.arc(x(i),y(a.sar[i]),2,0,7); g.fill(); }
   // wake by side: with the wind thick teal, against thin amber
   for(let i=2;i<=t;i++){ const L=a.legs[a.legOf[i]]; const withWind=w.dir===0?true:(L.long===(w.dir>0)); const age=(t-i)/a.n;
-    g.strokeStyle=withWind?css('--wake'):css('--beat'); g.lineWidth=withWind?2.6:1.2; g.globalAlpha=Math.max(.25,1-age*1.4);
+    g.strokeStyle=withWind?css('--up'):css('--dn'); g.lineWidth=withWind?3:1.8; g.globalAlpha=Math.max(.55,1-age*1.1);
     g.beginPath(); g.moveTo(x(i-1),y(a.d.c[i-1])); g.lineTo(x(i),y(a.d.c[i])); g.stroke(); }
   g.globalAlpha=1;
   for(const L of a.legs){ if(L.i0>t||L.i0<2) continue; g.fillStyle=css('--card'); g.strokeStyle=css('--boat'); g.lineWidth=2; g.beginPath(); g.arc(x(L.i0),y(a.d.c[L.i0]),4.5,0,7); g.fill(); g.stroke(); }
