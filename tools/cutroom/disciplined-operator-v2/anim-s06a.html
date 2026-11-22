@@ -4,24 +4,27 @@
 <meta charset="utf-8">
 <title>s06a · the team takes the wheel</title>
 <style>
-  :root { --bg:#030507; --fg:#E1EEF5; --muted:#8fa3ad; --border:rgba(56,225,255,0.14); --accent:#F2D06B;
-          --ok:#4ade80; --dn:#f87171; --card:#0a1016; --blue:#7baad4; }
+  :root { --bg:#000; --fg:#f2f5f7; --muted:#9aa7b0; --border:rgba(255,255,255,0.12); --accent:#F2D06B;
+          --ok:#4ade80; --dn:#f87171; --card:#000; --blue:#7baad4; }
   html, body { margin:0; background:var(--bg); overflow:hidden; }
   #stage { position:relative; width:1280px; height:720px; background:var(--bg); color:var(--fg);
            font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; overflow:hidden; }
-  #cap { position:absolute; left:60px; right:60px; top:30px; font-size:32px; font-weight:600; letter-spacing:-.01em; line-height:1.15; }
+  #cap { position:absolute; left:40px; right:40px; top:22px; font-size:34px; font-weight:600; letter-spacing:-.01em; line-height:1.15; z-index:3; }
   #cap em { font-style:normal; color:var(--accent); }
-  #sub { position:absolute; left:60px; width:1160px; top:648px; font-size:20px; color:var(--muted); line-height:1.4; }
-  #scene { position:absolute; left:60px; top:112px; width:1160px; height:518px; border:1px solid var(--border);
-           border-radius:10px; background:var(--card); overflow:hidden; }
+  #sub { position:absolute; left:40px; width:1000px; top:686px; font-size:17px; color:var(--muted); line-height:1.3; z-index:3; }
+  #scene { position:absolute; left:0; top:96px; width:1160px; height:530px; overflow:visible; transform:scale(1.1034); transform-origin:0 0; }
   #svg { position:absolute; inset:0; }
-  #fade { position:absolute; inset:0; background:var(--bg); pointer-events:none; opacity:0; }
-  /* the picture-in-picture corner: build_v2 composites Ken's camera tile here (PIP_W/X/Y); the cutroom shows this placeholder */
-  #pip { position:absolute; left:950px; top:22px; width:300px; height:169px; border:1px dashed rgba(56,225,255,0.35); border-radius:4px;
-         display:none; color:var(--muted); font-size:13px; text-align:center; line-height:169px; }
-  .pip #pip { display:block; } .pip #cap { right:360px; font-size:29px; }
-  text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; fill:#E1EEF5; }
+  #fade { position:absolute; inset:0; background:var(--bg); pointer-events:none; opacity:0; z-index:4; }
+  #pip { position:absolute; left:950px; top:22px; width:300px; height:169px; border:1px solid rgba(255,255,255,0.35); border-radius:4px;
+         display:none; color:var(--muted); font-size:13px; text-align:center; line-height:169px; z-index:3; background:#000; }
+  .pip #pip { display:block; } .pip #cap { right:360px; font-size:31px; }
+  text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; fill:#f2f5f7; }
   .mono { font-family:ui-monospace,Menlo,Consolas,monospace; }
+  .serif { font-family:Georgia,"DejaVu Serif","Times New Roman",serif; }
+  .hand { font-family:Caveat,cursive; font-weight:600; }
+  @font-face { font-family:"Caveat"; font-weight:400 700; src:local("Caveat"), url(https://fonts.gstatic.com/s/caveat/v23/Wnz6HAc5bAfYB2Q7ZjYY.woff2) format("woff2"); }
+  /* the seal slot: the chapter counter bottom-right (the brand mark joins it when the owner picks one) */
+  #seal { position:absolute; right:40px; top:688px; font-size:15px; letter-spacing:.08em; color:var(--muted); z-index:3; font-family:ui-monospace,Menlo,Consolas,monospace; }
   #third { display:none; }
 </style>
 </head>
@@ -32,15 +35,16 @@
   <div id="scene"><svg id="svg" width="1160" height="530" viewBox="0 0 1160 530"></svg></div>
   <div id="third"></div>
   <div id="sub"></div>
+  <div id="seal">chapter 1 of 5</div>
   <div id="fade"></div>
 </div>
 <script>
-const BUILD = 's06a-4';
+const BUILD = 's06a-5';
 console.log('[s06a] build', BUILD);
 // Overdub twin of s06: Ken's audio b9h 959.0→1080.0; t is seconds after the in-point.
 // Beat times read from the VTT cues on 2026-11-21 (tools/cutroom/disciplined-operator-v2/transcript-b9h.json).
 window.ANIM_DURATION = 121.0;
-const ACC='#F2D06B', FG='#E1EEF5', MUT='#8fa3ad', OK='#4ade80', DN='#f87171', BLUE='#7baad4', BRD='rgba(56,225,255,.22)', CARD='#0a1016', TXS=1, WRAP=['',''];
+const ACC='#F2D06B', FG='#f2f5f7', MUT='#9aa7b0', OK='#4ade80', DN='#f87171', BLUE='#7baad4', BRD='rgba(255,255,255,.18)', CARD='#000', TXS=1.1, WRAP=['',''];
 const W=1160, H=530;
 const $ = id => document.getElementById(id);
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
@@ -51,7 +55,7 @@ const on=(t,t0)=>t>=t0;
 const op=(t,t0,d)=>clamp((t-t0)/(d||0.5),0,1);      // linear opacity ramp
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
 const txt=(x,y,s,o={})=>`<text x="${x}" y="${y}" font-size="${(o.sz||20)*TXS}" fill="${o.c||FG}" opacity="${o.o==null?1:o.o}" text-anchor="${o.a||'start'}" font-weight="${o.w||400}" class="${o.cls||''}" ${o.extra||''}>${esc(s)}</text>`;
-const rect=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.r==null?6:o.r}" fill="${o.f||'none'}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}" ${o.extra||''}/>`;
+const rect=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.r==null?6:o.r}" fill="${o.f||'none'}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}" ${o.dash?`stroke-dasharray="${o.dash}"`:''} ${o.extra||''}/>`;
 const circ=(x,y,r,o={})=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${o.f||FG}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}"/>`;
 const line=(x1,y1,x2,y2,o={})=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${o.s||MUT}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" ${o.dash?`stroke-dasharray="${o.dash}"`:''} stroke-linecap="round"/>`;
 const path=(d,o={})=>`<path d="${d}" fill="${o.f||'none'}" stroke="${o.s||FG}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" stroke-linecap="round" stroke-linejoin="round" ${o.dash?`stroke-dasharray="${o.dash}"`:''}/>`;
@@ -66,39 +70,62 @@ const wander=(p,t,amp)=>[p.x+Math.sin(t*0.9+p.p)*amp,p.y+Math.cos(t*0.7+p.q)*amp
 // typewriter: the first k chars of s by time
 const type=(s,t,t0,cps)=>s.slice(0,Math.max(0,Math.floor((t-t0)*(cps||28))));
 // a list that reveals one row per step seconds from t0
+// --- the lesson helpers (2026-11-21, read from the Stanford "Probability for AI" screens) ---
+// the question the window answers, top-left of the scene, serif, amber
+const head=(t,t0,q,o={})=>{const a=op(t,t0,.5);if(a<=0)return '';const capH=($('cap')||{}).offsetHeight||0;const y=Math.max(o.y||44,(capH-68)/1.1034+32);return txt(o.x||40,y,q,{sz:o.sz||30,c:o.c||ACC,w:600,o:a,cls:'serif'});};   // under a three-line caption the question steps down
+// where to look: a soft ring that glides to the element of the beat. pts=[[t0,x,y],...]; it holds for o.hold s (default 5) after each beat
+function focus(t,pts,o={}){let cur=null,prev=null;for(const p of pts){if(t>=p[0]){prev=cur;cur=p;}}if(!cur)return '';const age=t-cur[0];if(age>(o.hold||5))return '';
+  const u=prev?pr(t,cur[0],.6):1;const x=prev?lerp(prev[1],cur[1],u):cur[1],y=prev?lerp(prev[2],cur[2],u):cur[2];const r=(o.r||22)+Math.sin(t*4)*2;const a=op(t,cur[0],.3)*(age>(o.hold||5)-.6?((o.hold||5)-age)/.6:1);
+  return circ(x,y,r,{f:'none',s:o.c||ACC,sw:2.5,o:a*.9})+circ(x,y,4,{f:o.c||ACC,o:a});}
+// the boxed definition, once the intuition has landed: a serif title and his words under it
+function defn(t,t0,x,y,w,title,lines,o={}){const u=pr(t,t0,.6);if(u<=0)return '';const lh=o.lh||28,h=(o.pad||22)*2+34+lines.length*lh;let s=rect(x,y,w,h,{r:8,s:o.s||FG,sw:2,f:o.f||'rgba(255,255,255,.03)',o:u});
+  if(u>.5){const a=op(t,t0+.3,.4);s+=txt(x+(o.pad||22),y+(o.pad||22)+22,title,{sz:o.sz||26,c:o.c||FG,w:600,o:a,cls:'serif'});lines.forEach((ln,i)=>{s+=txt(x+(o.pad||22),y+(o.pad||22)+34+22+i*lh,ln,{sz:o.lsz||20,c:o.lc||FG,o:op(t,t0+.5+i*.25,.4)});});}return s;}
+// the aside, in a second register: handwritten, amber, a little tilted (sparingly: his aside, not the framework)
+const aside=(t,t0,x,y,s,o={})=>{const a=op(t,t0,.5);return a<=0?'':`<g transform="rotate(${o.rot==null?-2:o.rot} ${x} ${y})">`+txt(x,y,s,{sz:o.sz||24,c:o.c||ACC,o:a*(o.o==null?1:o.o),a:o.a||'start',cls:'hand'})+'</g>';};
+// the recall box: an earlier figure back, small, in a corner, for a few seconds (draw the figure with its own helper inside g)
+function recall(t,t0,x,y,w,h,label,inner,o={}){const a=op(t,t0,.5)*(o.until&&t>o.until?clamp(1-(t-o.until)/.6,0,1):1);if(a<=0)return '';
+  return rect(x,y,w,h,{r:8,s:MUT,sw:1.5,f:'rgba(255,255,255,.03)',o:a,dash:'4 4'})+txt(x+12,y+20,label,{sz:14,c:MUT,o:a})+`<g opacity="${a}" transform="translate(${x} ${y+28}) scale(${o.sc||.5})">${inner}</g>`;}
 function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
 
 const BEATS = [[2.0, "phrased in the form of a question, putting the <em>locus of control</em> on the player", ""], [13.3, "hey team, I'm talking to <em>everybody</em> on the team at the same time", ""], [21.5, "it's the <em>team's responsibility</em> to protect the goal, not the goalie", ""], [32.9, "Can we protect our goal? Show me how", ""], [42.8, "my spider sense says: I've got a <em>whole team of internal pieces and parts</em>", ""], [51.8, "working to trade properly: the <em>designer</em> of the trade, the <em>keeper of the rules</em>", ""], [57.2, "the <em>architect</em> designing the trade, the <em>carpenter</em> framing it with his tools", ""], [68.4, "the <em>job site supervisor</em> and <em>safety officer</em> and <em>risk allocator</em>", ""], [72.0, "and <em>signal generator</em> and <em>scout</em>", ""], [75.0, "and then the <em>operator</em> of the trade, who's protected by all these other people", ""], [81.8, "all he's got to do is <em>make the decision</em>", ""], [87.2, "and the <em>monkey</em>, who provides the animal spirits, the energy, the motivation", ""], [97.5, "the never-quit attitude, which is why it can be difficult to overcome", ""], [107.0, "if you're not prepared for it", ""], [114.8, "something that reminds me of the <em>team effort</em>, and the equivalent of that power phrase", ""]];
 
-const person=(x,y,o={})=>circ(x,y-14,9,{f:'none',s:o.c||FG,sw:2,o:o.o==null?1:o.o})+path(`M${x-16} ${y+22} C${x-16} ${y} ${x+16} ${y} ${x+16} ${y+22}`,{s:o.c||FG,sw:2,o:o.o==null?1:o.o});
-const pill=(x,y,s,o={})=>{const w=(o.w||s.length*10+22);return rect(x-w/2,y-15,w,30,{r:15,s:o.s||BRD,f:o.f||'rgba(255,255,255,.03)',o:o.o==null?1:o.o})+txt(x,y+6,s,{a:'middle',sz:o.sz||15,c:o.c||FG,o:o.o==null?1:o.o,w:o.wt||500});};
-const card=(x,y,w,h,o={})=>rect(x,y,w,h,{r:10,s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',o:o.o==null?1:o.o});
+// one colour per quantity, for the whole course
+const RISK=DN, COST=MUT, GUT=BLUE, RULE=OK, SIN=DN, KEY=ACC;
+// scale a drawn figure about (x,y)
+const big=(x,y,sc,inner)=>`<g transform="translate(${x} ${y}) scale(${sc}) translate(${-x} ${-y})">${inner}</g>`;
+const person=(x,y,o={})=>circ(x,y-14,9,{f:'none',s:o.c||FG,sw:2.5,o:o.o==null?1:o.o})+path(`M${x-16} ${y+22} C${x-16} ${y} ${x+16} ${y} ${x+16} ${y+22}`,{s:o.c||FG,sw:2.5,o:o.o==null?1:o.o});
+const pill=(x,y,s,o={})=>{const w=(o.w||s.length*12+28);return rect(x-w/2,y-19,w,38,{r:19,s:o.s||BRD,f:o.f||'rgba(255,255,255,.03)',sw:2,o:o.o==null?1:o.o})+txt(x,y+7,s,{a:'middle',sz:o.sz||20,c:o.c||FG,o:o.o==null?1:o.o,w:o.wt||500});};
+const card=(x,y,w,h,o={})=>rect(x,y,w,h,{r:10,s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',sw:2,o:o.o==null?1:o.o});
 const lab=(t,t0,x,y,s,o={})=>{const a=op(t,t0,o.d||.5);return a<=0?'':txt(x,y,s,{...o,o:a*(o.o==null?1:o.o)});};
-const monkey=(x,y,o={})=>circ(x,y,16,{f:'none',s:o.c||ACC,sw:2,o:o.o==null?1:o.o})+circ(x-16,y-4,6,{f:'none',s:o.c||ACC,sw:2,o:o.o==null?1:o.o})+circ(x+16,y-4,6,{f:'none',s:o.c||ACC,sw:2,o:o.o==null?1:o.o})+path(`M${x-7} ${y+5} Q${x} ${y+12} ${x+7} ${y+5}`,{s:o.c||ACC,sw:2,o:o.o==null?1:o.o})+circ(x-5,y-3,2,{f:o.c||ACC,o:o.o==null?1:o.o})+circ(x+5,y-3,2,{f:o.c||ACC,o:o.o==null?1:o.o});
+const monkey=(x,y,o={})=>circ(x,y,16,{f:'none',s:o.c||ACC,sw:2.5,o:o.o==null?1:o.o})+circ(x-16,y-4,6,{f:'none',s:o.c||ACC,sw:2.5,o:o.o==null?1:o.o})+circ(x+16,y-4,6,{f:'none',s:o.c||ACC,sw:2.5,o:o.o==null?1:o.o})+path(`M${x-7} ${y+5} Q${x} ${y+12} ${x+7} ${y+5}`,{s:o.c||ACC,sw:2.5,o:o.o==null?1:o.o})+circ(x-5,y-3,2,{f:o.c||ACC,o:o.o==null?1:o.o})+circ(x+5,y-3,2,{f:o.c||ACC,o:o.o==null?1:o.o});
 // a car seen from the side, nose to the right; (x,y) is the ground under its centre
-const car=(x,y,o={})=>path(`M${x-44} ${y-10} L${x-40} ${y-26} L${x-14} ${y-30} L${x-2} ${y-44} L${x+26} ${y-44} L${x+40} ${y-28} L${x+46} ${y-10} Z`,{s:o.c||FG,sw:2,f:o.f||'rgba(255,255,255,.04)',o:o.o==null?1:o.o})+circ(x-26,y-8,8,{f:'none',s:o.c||FG,sw:2,o:o.o==null?1:o.o})+circ(x+26,y-8,8,{f:'none',s:o.c||FG,sw:2,o:o.o==null?1:o.o});
+const car=(x,y,o={})=>path(`M${x-44} ${y-10} L${x-40} ${y-26} L${x-14} ${y-30} L${x-2} ${y-44} L${x+26} ${y-44} L${x+40} ${y-28} L${x+46} ${y-10} Z`,{s:o.c||FG,sw:2.5,f:o.f||'rgba(255,255,255,.04)',o:o.o==null?1:o.o})+circ(x-26,y-8,8,{f:'none',s:o.c||FG,sw:2.5,o:o.o==null?1:o.o})+circ(x+26,y-8,8,{f:'none',s:o.c||FG,sw:2.5,o:o.o==null?1:o.o});
 // a wall of bricks
-function wall(x,y,w,h,o={}){let s=rect(x,y,w,h,{f:'rgba(255,255,255,.03)',s:MUT,sw:1.5,o:o.o==null?1:o.o});for(let r=1;r<h/18;r++){s+=line(x,y+r*18,x+w,y+r*18,{s:MUT,sw:1,o:(o.o==null?1:o.o)*0.5});}return s;}
-// a goal (soccer) at the left: posts and net
-const goal=(x,y,o={})=>path(`M${x} ${y+40} L${x} ${y} L${x+16} ${y} L${x+16} ${y+40}`,{s:o.c||FG,sw:3,o:o.o==null?1:o.o})+line(x+4,y+6,x+12,y+34,{s:BRD,sw:1,o:o.o==null?1:o.o})+line(x+12,y+6,x+4,y+34,{s:BRD,sw:1,o:o.o==null?1:o.o});
+function wall(x,y,w,h,o={}){let s=rect(x,y,w,h,{f:'rgba(255,255,255,.03)',s:MUT,sw:2,o:o.o==null?1:o.o});for(let r=1;r<h/22;r++){s+=line(x,y+r*22,x+w,y+r*22,{s:MUT,sw:1.5,o:(o.o==null?1:o.o)*0.5});}return s;}
+// a goal (soccer): posts and net
+const goal=(x,y,o={})=>path(`M${x} ${y+50} L${x} ${y} L${x+20} ${y} L${x+20} ${y+50}`,{s:o.c||FG,sw:3.5,o:o.o==null?1:o.o})+line(x+5,y+8,x+15,y+42,{s:BRD,sw:1.5,o:o.o==null?1:o.o})+line(x+15,y+8,x+5,y+42,{s:BRD,sw:1.5,o:o.o==null?1:o.o});
 // the z spectrum: a horizontal axis from -3 to +3 over [x, x+w]
-function zaxis(x,y,w,o={}){const a=o.o==null?1:o.o;let s=line(x,y,x+w,y,{s:MUT,sw:2,o:a});for(let z=-3;z<=3;z++){const px=x+(z+3)/6*w;s+=line(px,y-6,px,y+6,{s:MUT,sw:1.5,o:a});s+=txt(px,y+26,(z>0?'+':'')+z+(z?'σ':''),{a:'middle',sz:13,c:MUT,o:a});}return s;}
+function zaxis(x,y,w,o={}){const a=o.o==null?1:o.o;let s=line(x,y,x+w,y,{s:MUT,sw:3,o:a});for(let z=-3;z<=3;z++){const px=x+(z+3)/6*w;s+=line(px,y-8,px,y+8,{s:MUT,sw:2,o:a});s+=txt(px,y+32,(z>0?'+':'')+z+(z?'σ':''),{a:'middle',sz:o.sz||18,c:MUT,o:a});}return s;}
 // a gauge arc from the left (0) to the right (1)
-function gauge(cx,cy,r,u,o={}){const a=o.o==null?1:o.o;const arc=(u0,u1,st,sw)=>{const p0=Math.PI+Math.PI*u0,p1=Math.PI+Math.PI*u1;return path(`M${cx+r*Math.cos(p0)} ${cy+r*Math.sin(p0)} A${r} ${r} 0 ${(u1-u0)>.5?1:0} 1 ${cx+r*Math.cos(p1)} ${cy+r*Math.sin(p1)}`,{s:st,sw:sw||10,o:a});};let s=arc(0,1,'rgba(255,255,255,.08)',10)+arc(0,clamp(u,0.001,1),o.c||ACC,10);const p=Math.PI+Math.PI*clamp(u,0,1);s+=line(cx,cy,cx+(r-16)*Math.cos(p),cy+(r-16)*Math.sin(p),{s:FG,sw:3,o:a})+circ(cx,cy,5,{f:FG,o:a});return s;}
+function gauge(cx,cy,r,u,o={}){const a=o.o==null?1:o.o;const arc=(u0,u1,st,sw)=>{const p0=Math.PI+Math.PI*u0,p1=Math.PI+Math.PI*u1;return path(`M${cx+r*Math.cos(p0)} ${cy+r*Math.sin(p0)} A${r} ${r} 0 ${(u1-u0)>.5?1:0} 1 ${cx+r*Math.cos(p1)} ${cy+r*Math.sin(p1)}`,{s:st,sw:sw||12,o:a});};let s=arc(0,1,'rgba(255,255,255,.08)',12)+arc(0,clamp(u,0.001,1),o.c||ACC,12);const p=Math.PI+Math.PI*clamp(u,0,1);s+=line(cx,cy,cx+(r-18)*Math.cos(p),cy+(r-18)*Math.sin(p),{s:FG,sw:4,o:a})+circ(cx,cy,6,{f:FG,o:a});return s;}
+// the s25 ledger, drawn small again where he refers back to it (the recall box)
+const ledger=()=>txt(0,24,'$1,000,000',{sz:30,c:FG,cls:'mono'})+txt(0,58,'10 positions × 1 %',{sz:24,c:RISK})+txt(0,96,'heat max 10 %',{sz:32,c:KEY,w:600});
 
 function draw(t){
   let s='';
-  // the soccer team around its goal, then the internal team around the operator
-  if (t>=2.0){ const a=op(t,2,.6)*(t<42.8?1:.35); s += goal(120,120,{o:a}); const r=rng(4); for(let i=0;i<8;i++){ const x=170+r()*220, y=100+r()*110; s += circ(x,y,6,{f:'none',s:FG,sw:1.5,o:a}); if (t>=13.3) s += circ(x,y,10,{f:'none',s:OK,sw:1,o:a*op(t,13.3,.5)*0.7}); } s += lab(t,13.3,170,240,'hey team: everybody at once',{sz:13,c:OK}); s += lab(t,21.5,170,262,'not the goalie, the team',{sz:13,c:MUT}); s += lab(t,32.9,170,284,'"show me how"',{sz:13,c:MUT}); }
+  s += head(t,2.0,'Who takes the wheel?');
+  // the soccer team around its goal: right column, top
+  if (t>=2.0){ const a=op(t,2,.6); s += goal(800,150,{o:a}); const r=rng(4); for(let i=0;i<8;i++){ const x=850+r()*230, y=130+r()*110; s += circ(x,y,8,{f:'none',s:FG,sw:2,o:a}); if (t>=13.3) s += circ(x,y,14,{f:'none',s:RULE,sw:1.5,o:a*op(t,13.3,.5)*0.7}); } s += lab(t,13.3,800,270,'hey team: everybody at once',{sz:20,c:RULE}); s += lab(t,21.5,800,298,'not the goalie, the team',{sz:18,c:MUT}); s += aside(t,32.9,800,332,'"show me how"',{sz:22,c:MUT,rot:-1}); }
   // the internal team: the operator in the middle, the roles around him as they are named
-  if (t>=42.8){ const a=op(t,42.8,.6); const cx=720, cy=300; s += circ(cx,cy,34,{f:'rgba(242,208,107,.08)',s:ACC,sw:2,o:a*op(t,75,.6)}); s += person(cx,cy,{c:ACC,o:a});
-    s += lab(t,75.0,cx,cy+58,'the operator',{sz:14,c:ACC,a:'middle'}); s += lab(t,81.8,cx,cy+78,'just make the decision',{sz:12,c:MUT,a:'middle'});
+  if (t>=42.8){ const a=op(t,42.8,.6); const cx=430, cy=300; s += circ(cx,cy,50,{f:'rgba(242,208,107,.08)',s:KEY,sw:2.5,o:a*op(t,75,.6)}); s += big(cx,cy,1.8,person(cx,cy,{c:KEY,o:a}));
+    s += lab(t,75.0,cx,cy+84,'the operator',{sz:22,c:KEY,a:'middle'}); s += lab(t,81.8,cx,cy+110,'just make the decision',{sz:18,c:MUT,a:'middle'});
     const roles=[[51.8,'designer'],[53.5,'keeper of the rules'],[57.2,'architect'],[60.7,'carpenter'],[68.4,'job site supervisor'],[69.6,'safety officer'],[70.9,'risk allocator'],[72.0,'signal generator'],[73.5,'scout']];
-    roles.forEach((rl,i)=>{ const b=op(t,rl[0],.5); if (b<=0) return; const ang=-Math.PI/2 + i*(2*Math.PI/9); const rx=cx+Math.cos(ang)*200, ry=cy+Math.sin(ang)*120; s += line(cx+Math.cos(ang)*40,cy+Math.sin(ang)*40,rx-Math.cos(ang)*16,ry-Math.sin(ang)*16,{s:BRD,sw:1,o:b*0.7}); s += circ(rx,ry,5,{f:FG,o:b}); s += txt(rx+(Math.cos(ang)>0.2?12:(Math.cos(ang)<-0.2?-12:0)),ry+(Math.abs(Math.cos(ang))<=0.2?(Math.sin(ang)>0?22:-12):5),rl[1],{a:Math.cos(ang)>0.2?'start':(Math.cos(ang)<-0.2?'end':'middle'),sz:13,c:FG,o:b}); });
+    roles.forEach((rl,i)=>{ const b=op(t,rl[0],.5); if (b<=0) return; const ang=-Math.PI/2 + i*(2*Math.PI/9); const rx=cx+Math.cos(ang)*230, ry=cy+Math.sin(ang)*170; s += line(cx+Math.cos(ang)*56,cy+Math.sin(ang)*56,rx-Math.cos(ang)*18,ry-Math.sin(ang)*18,{s:BRD,sw:1.5,o:b*0.7}); s += circ(rx,ry,7,{f:FG,o:b}); const left=Math.cos(ang)<-0.2, right=Math.cos(ang)>0.2; s += txt(rx+(right?16:(left?-16:0)),ry+(!left&&!right?(Math.sin(ang)>0?30:-16):7),rl[1],{a:right?'start':(left?'end':'middle'),sz:20,c:FG,o:b}); });
   }
-  // the monkey: energy, motivation, never quit
-  if (t>=87.2){ const a=op(t,87.2,.6); s += monkey(200,400,{o:a}); s += list(t,87.2,3.0,['animal spirits','energy, motivation','never quit'],240,392,{sz:14,lh:22,c:MUT}); s += lab(t,107.0,200,470,'hard to overcome if you\'re not prepared',{sz:12,c:DN}); }
-  if (t>=114.8) s += pill(720,480,'a reminder of the team effort',{sz:14,c:ACC,s:ACC,o:op(t,114.8,.5),w:270});
+  // the monkey: energy, motivation, never quit (right column, lower)
+  if (t>=87.2){ const a=op(t,87.2,.6); s += big(830,420,1.6,monkey(830,420,{o:a})); s += list(t,87.2,3.0,['animal spirits','energy, motivation','never quit'],880,400,{sz:20,lh:30,c:MUT}); s += lab(t,107.0,800,500,'hard to overcome if you\'re not prepared',{sz:16,c:DN}); }
+  if (t>=114.8) s += pill(430,505,'a reminder of the team effort',{sz:20,c:KEY,s:KEY,o:op(t,114.8,.5),w:340});
+  s += focus(t,[[2.0,810,175],[13.3,960,185],[42.8,430,300],[51.8,430,130],[75.0,430,300],[87.2,830,420],[114.8,430,505]]);
   return s;
 }
 

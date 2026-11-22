@@ -4,24 +4,27 @@
 <meta charset="utf-8">
 <title>s05a · how long will you watch the monkey drive?</title>
 <style>
-  :root { --bg:#030507; --fg:#E1EEF5; --muted:#8fa3ad; --border:rgba(56,225,255,0.14); --accent:#F2D06B;
-          --ok:#4ade80; --dn:#f87171; --card:#0a1016; --blue:#7baad4; }
+  :root { --bg:#000; --fg:#f2f5f7; --muted:#9aa7b0; --border:rgba(255,255,255,0.12); --accent:#F2D06B;
+          --ok:#4ade80; --dn:#f87171; --card:#000; --blue:#7baad4; }
   html, body { margin:0; background:var(--bg); overflow:hidden; }
   #stage { position:relative; width:1280px; height:720px; background:var(--bg); color:var(--fg);
            font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; overflow:hidden; }
-  #cap { position:absolute; left:60px; right:60px; top:30px; font-size:32px; font-weight:600; letter-spacing:-.01em; line-height:1.15; }
+  #cap { position:absolute; left:40px; right:40px; top:22px; font-size:34px; font-weight:600; letter-spacing:-.01em; line-height:1.15; z-index:3; }
   #cap em { font-style:normal; color:var(--accent); }
-  #sub { position:absolute; left:60px; width:1160px; top:648px; font-size:20px; color:var(--muted); line-height:1.4; }
-  #scene { position:absolute; left:60px; top:112px; width:1160px; height:518px; border:1px solid var(--border);
-           border-radius:10px; background:var(--card); overflow:hidden; }
+  #sub { position:absolute; left:40px; width:1000px; top:686px; font-size:17px; color:var(--muted); line-height:1.3; z-index:3; }
+  #scene { position:absolute; left:0; top:96px; width:1160px; height:530px; overflow:visible; transform:scale(1.1034); transform-origin:0 0; }
   #svg { position:absolute; inset:0; }
-  #fade { position:absolute; inset:0; background:var(--bg); pointer-events:none; opacity:0; }
-  /* the picture-in-picture corner: build_v2 composites Ken's camera tile here (PIP_W/X/Y); the cutroom shows this placeholder */
-  #pip { position:absolute; left:950px; top:22px; width:300px; height:169px; border:1px dashed rgba(56,225,255,0.35); border-radius:4px;
-         display:none; color:var(--muted); font-size:13px; text-align:center; line-height:169px; }
-  .pip #pip { display:block; } .pip #cap { right:360px; font-size:29px; }
-  text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; fill:#E1EEF5; }
+  #fade { position:absolute; inset:0; background:var(--bg); pointer-events:none; opacity:0; z-index:4; }
+  #pip { position:absolute; left:950px; top:22px; width:300px; height:169px; border:1px solid rgba(255,255,255,0.35); border-radius:4px;
+         display:none; color:var(--muted); font-size:13px; text-align:center; line-height:169px; z-index:3; background:#000; }
+  .pip #pip { display:block; } .pip #cap { right:360px; font-size:31px; }
+  text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; fill:#f2f5f7; }
   .mono { font-family:ui-monospace,Menlo,Consolas,monospace; }
+  .serif { font-family:Georgia,"DejaVu Serif","Times New Roman",serif; }
+  .hand { font-family:Caveat,cursive; font-weight:600; }
+  @font-face { font-family:"Caveat"; font-weight:400 700; src:local("Caveat"), url(https://fonts.gstatic.com/s/caveat/v23/Wnz6HAc5bAfYB2Q7ZjYY.woff2) format("woff2"); }
+  /* the seal slot: the chapter counter bottom-right (the brand mark joins it when the owner picks one) */
+  #seal { position:absolute; right:40px; top:688px; font-size:15px; letter-spacing:.08em; color:var(--muted); z-index:3; font-family:ui-monospace,Menlo,Consolas,monospace; }
   #third { display:none; }
 </style>
 </head>
@@ -32,15 +35,16 @@
   <div id="scene"><svg id="svg" width="1160" height="530" viewBox="0 0 1160 530"></svg></div>
   <div id="third"></div>
   <div id="sub"></div>
+  <div id="seal">chapter 1 of 5</div>
   <div id="fade"></div>
 </div>
 <script>
-const BUILD = 's05a-4';
+const BUILD = 's05a-5';
 console.log('[s05a] build', BUILD);
 // Overdub twin of s05: Ken's audio b9h 777.0→959.0; t is seconds after the in-point.
 // Beat times read from the VTT cues on 2026-11-21 (tools/cutroom/disciplined-operator-v2/transcript-b9h.json).
 window.ANIM_DURATION = 182.0;
-const ACC='#F2D06B', FG='#E1EEF5', MUT='#8fa3ad', OK='#4ade80', DN='#f87171', BLUE='#7baad4', BRD='rgba(56,225,255,.22)', CARD='#0a1016', TXS=1, WRAP=['',''];
+const ACC='#F2D06B', FG='#f2f5f7', MUT='#9aa7b0', OK='#4ade80', DN='#f87171', BLUE='#7baad4', BRD='rgba(255,255,255,.18)', CARD='#000', TXS=1.1, WRAP=['',''];
 const W=1160, H=530;
 const $ = id => document.getElementById(id);
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
@@ -51,7 +55,7 @@ const on=(t,t0)=>t>=t0;
 const op=(t,t0,d)=>clamp((t-t0)/(d||0.5),0,1);      // linear opacity ramp
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
 const txt=(x,y,s,o={})=>`<text x="${x}" y="${y}" font-size="${(o.sz||20)*TXS}" fill="${o.c||FG}" opacity="${o.o==null?1:o.o}" text-anchor="${o.a||'start'}" font-weight="${o.w||400}" class="${o.cls||''}" ${o.extra||''}>${esc(s)}</text>`;
-const rect=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.r==null?6:o.r}" fill="${o.f||'none'}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}" ${o.extra||''}/>`;
+const rect=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.r==null?6:o.r}" fill="${o.f||'none'}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}" ${o.dash?`stroke-dasharray="${o.dash}"`:''} ${o.extra||''}/>`;
 const circ=(x,y,r,o={})=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${o.f||FG}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}"/>`;
 const line=(x1,y1,x2,y2,o={})=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${o.s||MUT}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" ${o.dash?`stroke-dasharray="${o.dash}"`:''} stroke-linecap="round"/>`;
 const path=(d,o={})=>`<path d="${d}" fill="${o.f||'none'}" stroke="${o.s||FG}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" stroke-linecap="round" stroke-linejoin="round" ${o.dash?`stroke-dasharray="${o.dash}"`:''}/>`;
@@ -66,47 +70,69 @@ const wander=(p,t,amp)=>[p.x+Math.sin(t*0.9+p.p)*amp,p.y+Math.cos(t*0.7+p.q)*amp
 // typewriter: the first k chars of s by time
 const type=(s,t,t0,cps)=>s.slice(0,Math.max(0,Math.floor((t-t0)*(cps||28))));
 // a list that reveals one row per step seconds from t0
+// --- the lesson helpers (2026-11-21, read from the Stanford "Probability for AI" screens) ---
+// the question the window answers, top-left of the scene, serif, amber
+const head=(t,t0,q,o={})=>{const a=op(t,t0,.5);if(a<=0)return '';const capH=($('cap')||{}).offsetHeight||0;const y=Math.max(o.y||44,(capH-68)/1.1034+32);return txt(o.x||40,y,q,{sz:o.sz||30,c:o.c||ACC,w:600,o:a,cls:'serif'});};   // under a three-line caption the question steps down
+// where to look: a soft ring that glides to the element of the beat. pts=[[t0,x,y],...]; it holds for o.hold s (default 5) after each beat
+function focus(t,pts,o={}){let cur=null,prev=null;for(const p of pts){if(t>=p[0]){prev=cur;cur=p;}}if(!cur)return '';const age=t-cur[0];if(age>(o.hold||5))return '';
+  const u=prev?pr(t,cur[0],.6):1;const x=prev?lerp(prev[1],cur[1],u):cur[1],y=prev?lerp(prev[2],cur[2],u):cur[2];const r=(o.r||22)+Math.sin(t*4)*2;const a=op(t,cur[0],.3)*(age>(o.hold||5)-.6?((o.hold||5)-age)/.6:1);
+  return circ(x,y,r,{f:'none',s:o.c||ACC,sw:2.5,o:a*.9})+circ(x,y,4,{f:o.c||ACC,o:a});}
+// the boxed definition, once the intuition has landed: a serif title and his words under it
+function defn(t,t0,x,y,w,title,lines,o={}){const u=pr(t,t0,.6);if(u<=0)return '';const lh=o.lh||28,h=(o.pad||22)*2+34+lines.length*lh;let s=rect(x,y,w,h,{r:8,s:o.s||FG,sw:2,f:o.f||'rgba(255,255,255,.03)',o:u});
+  if(u>.5){const a=op(t,t0+.3,.4);s+=txt(x+(o.pad||22),y+(o.pad||22)+22,title,{sz:o.sz||26,c:o.c||FG,w:600,o:a,cls:'serif'});lines.forEach((ln,i)=>{s+=txt(x+(o.pad||22),y+(o.pad||22)+34+22+i*lh,ln,{sz:o.lsz||20,c:o.lc||FG,o:op(t,t0+.5+i*.25,.4)});});}return s;}
+// the aside, in a second register: handwritten, amber, a little tilted (sparingly: his aside, not the framework)
+const aside=(t,t0,x,y,s,o={})=>{const a=op(t,t0,.5);return a<=0?'':`<g transform="rotate(${o.rot==null?-2:o.rot} ${x} ${y})">`+txt(x,y,s,{sz:o.sz||24,c:o.c||ACC,o:a*(o.o==null?1:o.o),a:o.a||'start',cls:'hand'})+'</g>';};
+// the recall box: an earlier figure back, small, in a corner, for a few seconds (draw the figure with its own helper inside g)
+function recall(t,t0,x,y,w,h,label,inner,o={}){const a=op(t,t0,.5)*(o.until&&t>o.until?clamp(1-(t-o.until)/.6,0,1):1);if(a<=0)return '';
+  return rect(x,y,w,h,{r:8,s:MUT,sw:1.5,f:'rgba(255,255,255,.03)',o:a,dash:'4 4'})+txt(x+12,y+20,label,{sz:14,c:MUT,o:a})+`<g opacity="${a}" transform="translate(${x} ${y+28}) scale(${o.sc||.5})">${inner}</g>`;}
 function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
 
 const BEATS = [[0.8, "how long am I going to take? <em>How long are you going to watch the monkey drive?</em>", ""], [6.5, "What's it going to take to act?", ""], [8.4, "How do I overcome the <em>emotional strength</em> of the feeling the monkey's going through?", ""], [15.2, "Do I have to wait for that energy to <em>dissipate</em>, and only then take over driving?", ""], [22.4, "or is there something I can do to just: okay, <em>stop, flip</em>", ""], [28.5, "and change the scene instantly to <em>who's driving this thing?</em>", ""], [34.3, "if it was my kids driving the car in a poor state of mind", ""], [41.8, "I wouldn't hesitate to just <em>take the wheel</em>", ""], [50.0, "when you're ready to drive, you can drive", ""], [58.4, "I don't have any hesitation on the <em>soccer field</em> when kids are out of control", ""], [63.2, "instantly establish order, <em>protective custody</em> of their emotions", ""], [70.8, "not allow their emotions to cause any harm, but let them safely be <em>fully expressed</em>", ""], [78.4, "until that energy is dissipated in a safe way", ""], [86.0, "let the <em>gyroscope wind down</em> without causing damage", ""], [94.4, "there's got to be some <em>caretaker function</em> that is instantly activated", ""], [103.5, "overcoming the <em>animal spirits</em>, the emotional satisfaction", ""], [112.4, "of being perversely rigid or perversely revengeful", ""], [116.4, "that's where the <em>intervention</em> has to be", ""], [124.3, "how do you do that on the soccer field with the kids? What do you do?", "The student asks."], [129.4, "<em>Key words</em>. Overtraining in practice the key words that get our mind right", ""], [141.2, "when there's emotion, they've forgotten how to play and how to listen to their inner words", ""], [148.8, "our first touch is <em>control</em>, so we can <em>carry</em> the ball, <em>cross</em> it, and <em>crush</em> it to the corner", ""], [157.6, "our rules are: <em>protect the goal, get the ball, go to the goal, shoot, and score</em>", ""], [166.1, "those are always phrased as <em>questions</em>: can we protect our goal?", ""]];
 
-const person=(x,y,o={})=>circ(x,y-14,9,{f:'none',s:o.c||FG,sw:2,o:o.o==null?1:o.o})+path(`M${x-16} ${y+22} C${x-16} ${y} ${x+16} ${y} ${x+16} ${y+22}`,{s:o.c||FG,sw:2,o:o.o==null?1:o.o});
-const pill=(x,y,s,o={})=>{const w=(o.w||s.length*10+22);return rect(x-w/2,y-15,w,30,{r:15,s:o.s||BRD,f:o.f||'rgba(255,255,255,.03)',o:o.o==null?1:o.o})+txt(x,y+6,s,{a:'middle',sz:o.sz||15,c:o.c||FG,o:o.o==null?1:o.o,w:o.wt||500});};
-const card=(x,y,w,h,o={})=>rect(x,y,w,h,{r:10,s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',o:o.o==null?1:o.o});
+// one colour per quantity, for the whole course
+const RISK=DN, COST=MUT, GUT=BLUE, RULE=OK, SIN=DN, KEY=ACC;
+// scale a drawn figure about (x,y)
+const big=(x,y,sc,inner)=>`<g transform="translate(${x} ${y}) scale(${sc}) translate(${-x} ${-y})">${inner}</g>`;
+const person=(x,y,o={})=>circ(x,y-14,9,{f:'none',s:o.c||FG,sw:2.5,o:o.o==null?1:o.o})+path(`M${x-16} ${y+22} C${x-16} ${y} ${x+16} ${y} ${x+16} ${y+22}`,{s:o.c||FG,sw:2.5,o:o.o==null?1:o.o});
+const pill=(x,y,s,o={})=>{const w=(o.w||s.length*12+28);return rect(x-w/2,y-19,w,38,{r:19,s:o.s||BRD,f:o.f||'rgba(255,255,255,.03)',sw:2,o:o.o==null?1:o.o})+txt(x,y+7,s,{a:'middle',sz:o.sz||20,c:o.c||FG,o:o.o==null?1:o.o,w:o.wt||500});};
+const card=(x,y,w,h,o={})=>rect(x,y,w,h,{r:10,s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',sw:2,o:o.o==null?1:o.o});
 const lab=(t,t0,x,y,s,o={})=>{const a=op(t,t0,o.d||.5);return a<=0?'':txt(x,y,s,{...o,o:a*(o.o==null?1:o.o)});};
-const monkey=(x,y,o={})=>circ(x,y,16,{f:'none',s:o.c||ACC,sw:2,o:o.o==null?1:o.o})+circ(x-16,y-4,6,{f:'none',s:o.c||ACC,sw:2,o:o.o==null?1:o.o})+circ(x+16,y-4,6,{f:'none',s:o.c||ACC,sw:2,o:o.o==null?1:o.o})+path(`M${x-7} ${y+5} Q${x} ${y+12} ${x+7} ${y+5}`,{s:o.c||ACC,sw:2,o:o.o==null?1:o.o})+circ(x-5,y-3,2,{f:o.c||ACC,o:o.o==null?1:o.o})+circ(x+5,y-3,2,{f:o.c||ACC,o:o.o==null?1:o.o});
+const monkey=(x,y,o={})=>circ(x,y,16,{f:'none',s:o.c||ACC,sw:2.5,o:o.o==null?1:o.o})+circ(x-16,y-4,6,{f:'none',s:o.c||ACC,sw:2.5,o:o.o==null?1:o.o})+circ(x+16,y-4,6,{f:'none',s:o.c||ACC,sw:2.5,o:o.o==null?1:o.o})+path(`M${x-7} ${y+5} Q${x} ${y+12} ${x+7} ${y+5}`,{s:o.c||ACC,sw:2.5,o:o.o==null?1:o.o})+circ(x-5,y-3,2,{f:o.c||ACC,o:o.o==null?1:o.o})+circ(x+5,y-3,2,{f:o.c||ACC,o:o.o==null?1:o.o});
 // a car seen from the side, nose to the right; (x,y) is the ground under its centre
-const car=(x,y,o={})=>path(`M${x-44} ${y-10} L${x-40} ${y-26} L${x-14} ${y-30} L${x-2} ${y-44} L${x+26} ${y-44} L${x+40} ${y-28} L${x+46} ${y-10} Z`,{s:o.c||FG,sw:2,f:o.f||'rgba(255,255,255,.04)',o:o.o==null?1:o.o})+circ(x-26,y-8,8,{f:'none',s:o.c||FG,sw:2,o:o.o==null?1:o.o})+circ(x+26,y-8,8,{f:'none',s:o.c||FG,sw:2,o:o.o==null?1:o.o});
+const car=(x,y,o={})=>path(`M${x-44} ${y-10} L${x-40} ${y-26} L${x-14} ${y-30} L${x-2} ${y-44} L${x+26} ${y-44} L${x+40} ${y-28} L${x+46} ${y-10} Z`,{s:o.c||FG,sw:2.5,f:o.f||'rgba(255,255,255,.04)',o:o.o==null?1:o.o})+circ(x-26,y-8,8,{f:'none',s:o.c||FG,sw:2.5,o:o.o==null?1:o.o})+circ(x+26,y-8,8,{f:'none',s:o.c||FG,sw:2.5,o:o.o==null?1:o.o});
 // a wall of bricks
-function wall(x,y,w,h,o={}){let s=rect(x,y,w,h,{f:'rgba(255,255,255,.03)',s:MUT,sw:1.5,o:o.o==null?1:o.o});for(let r=1;r<h/18;r++){s+=line(x,y+r*18,x+w,y+r*18,{s:MUT,sw:1,o:(o.o==null?1:o.o)*0.5});}return s;}
-// a goal (soccer) at the left: posts and net
-const goal=(x,y,o={})=>path(`M${x} ${y+40} L${x} ${y} L${x+16} ${y} L${x+16} ${y+40}`,{s:o.c||FG,sw:3,o:o.o==null?1:o.o})+line(x+4,y+6,x+12,y+34,{s:BRD,sw:1,o:o.o==null?1:o.o})+line(x+12,y+6,x+4,y+34,{s:BRD,sw:1,o:o.o==null?1:o.o});
+function wall(x,y,w,h,o={}){let s=rect(x,y,w,h,{f:'rgba(255,255,255,.03)',s:MUT,sw:2,o:o.o==null?1:o.o});for(let r=1;r<h/22;r++){s+=line(x,y+r*22,x+w,y+r*22,{s:MUT,sw:1.5,o:(o.o==null?1:o.o)*0.5});}return s;}
+// a goal (soccer): posts and net
+const goal=(x,y,o={})=>path(`M${x} ${y+50} L${x} ${y} L${x+20} ${y} L${x+20} ${y+50}`,{s:o.c||FG,sw:3.5,o:o.o==null?1:o.o})+line(x+5,y+8,x+15,y+42,{s:BRD,sw:1.5,o:o.o==null?1:o.o})+line(x+15,y+8,x+5,y+42,{s:BRD,sw:1.5,o:o.o==null?1:o.o});
 // the z spectrum: a horizontal axis from -3 to +3 over [x, x+w]
-function zaxis(x,y,w,o={}){const a=o.o==null?1:o.o;let s=line(x,y,x+w,y,{s:MUT,sw:2,o:a});for(let z=-3;z<=3;z++){const px=x+(z+3)/6*w;s+=line(px,y-6,px,y+6,{s:MUT,sw:1.5,o:a});s+=txt(px,y+26,(z>0?'+':'')+z+(z?'σ':''),{a:'middle',sz:13,c:MUT,o:a});}return s;}
+function zaxis(x,y,w,o={}){const a=o.o==null?1:o.o;let s=line(x,y,x+w,y,{s:MUT,sw:3,o:a});for(let z=-3;z<=3;z++){const px=x+(z+3)/6*w;s+=line(px,y-8,px,y+8,{s:MUT,sw:2,o:a});s+=txt(px,y+32,(z>0?'+':'')+z+(z?'σ':''),{a:'middle',sz:o.sz||18,c:MUT,o:a});}return s;}
 // a gauge arc from the left (0) to the right (1)
-function gauge(cx,cy,r,u,o={}){const a=o.o==null?1:o.o;const arc=(u0,u1,st,sw)=>{const p0=Math.PI+Math.PI*u0,p1=Math.PI+Math.PI*u1;return path(`M${cx+r*Math.cos(p0)} ${cy+r*Math.sin(p0)} A${r} ${r} 0 ${(u1-u0)>.5?1:0} 1 ${cx+r*Math.cos(p1)} ${cy+r*Math.sin(p1)}`,{s:st,sw:sw||10,o:a});};let s=arc(0,1,'rgba(255,255,255,.08)',10)+arc(0,clamp(u,0.001,1),o.c||ACC,10);const p=Math.PI+Math.PI*clamp(u,0,1);s+=line(cx,cy,cx+(r-16)*Math.cos(p),cy+(r-16)*Math.sin(p),{s:FG,sw:3,o:a})+circ(cx,cy,5,{f:FG,o:a});return s;}
+function gauge(cx,cy,r,u,o={}){const a=o.o==null?1:o.o;const arc=(u0,u1,st,sw)=>{const p0=Math.PI+Math.PI*u0,p1=Math.PI+Math.PI*u1;return path(`M${cx+r*Math.cos(p0)} ${cy+r*Math.sin(p0)} A${r} ${r} 0 ${(u1-u0)>.5?1:0} 1 ${cx+r*Math.cos(p1)} ${cy+r*Math.sin(p1)}`,{s:st,sw:sw||12,o:a});};let s=arc(0,1,'rgba(255,255,255,.08)',12)+arc(0,clamp(u,0.001,1),o.c||ACC,12);const p=Math.PI+Math.PI*clamp(u,0,1);s+=line(cx,cy,cx+(r-18)*Math.cos(p),cy+(r-18)*Math.sin(p),{s:FG,sw:4,o:a})+circ(cx,cy,6,{f:FG,o:a});return s;}
+// the s25 ledger, drawn small again where he refers back to it (the recall box)
+const ledger=()=>txt(0,24,'$1,000,000',{sz:30,c:FG,cls:'mono'})+txt(0,58,'10 positions × 1 %',{sz:24,c:RISK})+txt(0,96,'heat max 10 %',{sz:32,c:KEY,w:600});
 
 function draw(t){
   let s='';
-  // the car with the monkey at the wheel; Ken watching from the kerb
-  const swapped = t>=41.8;
-  const gy=250;
-  s += line(100,gy,760,gy,{s:MUT,sw:2});
-  s += car(300,gy,{});
-  if (!swapped){ s += monkey(312,gy-56,{}); s += lab(t,0.8,300,gy+34,'the monkey drives',{sz:13,c:ACC,a:'middle'}); s += person(480,gy-10,{}); s += lab(t,0.8,480,gy+34,'watching',{sz:13,c:MUT,a:'middle'}); }
-  else { const u=pr(t,41.8,.8); s += person(312,gy-52,{c:FG}); s += monkey(lerp(312,480,u),lerp(gy-56,gy-22,u),{o:1}); s += lab(t,41.8,300,gy+34,'take the wheel',{sz:13,c:OK,a:'middle'}); s += lab(t,50.0,480,gy+34,'"when you\'re ready, you can drive"',{sz:12,c:MUT,a:'middle'}); }
+  s += head(t,0.8,'How long will you watch the monkey drive?');
+  // the car with the monkey at the wheel; Ken watching from the kerb (the road across the left)
+  const swapped=t>=41.8, gy=300;
+  s += line(60,gy,740,gy,{s:MUT,sw:3});
+  s += big(260,gy,1.7,car(260,gy,{}));
+  if (!swapped){ s += big(282,gy-95,1.7,monkey(282,gy-95,{})); s += lab(t,0.8,260,gy+40,'the monkey drives',{sz:22,c:KEY,a:'middle'}); s += big(520,gy-16,1.5,person(520,gy-16,{})); s += lab(t,0.8,520,gy+40,'watching',{sz:20,c:MUT,a:'middle'}); }
+  else { const u=pr(t,41.8,.8); s += big(282,gy-90,1.7,person(282,gy-90,{c:FG})); const mx=lerp(282,520,u), my=lerp(gy-95,gy-30,u); s += big(mx,my,1.5,monkey(mx,my,{})); s += lab(t,41.8,260,gy+40,'take the wheel',{sz:22,c:RULE,a:'middle'}); s += aside(t,50.0,470,gy+46,'"when you\'re ready, you can drive"',{sz:22,c:MUT,rot:-1}); }
   // two routes: wait for it to dissipate, or stop, flip
-  if (t>=15.2 && t<41.8){ const a=op(t,15.2,.5); s += txt(560,120,'wait for the energy to dissipate?',{sz:14,c:MUT,o:a}); const k=Math.floor((t-15.2)*4); let d=''; for(let i=0;i<Math.min(k,60);i++){ d+=(i?'L':'M')+(560+i*4)+' '+(150-Math.sin(i*0.6)*18*Math.exp(-i/25))+' '; } if (k>1) s += path(d,{s:MUT,sw:1.5,o:a}); }
-  if (t>=22.4 && t<41.8){ const a=op(t,22.4,.5); s += rect(600,180,70,30,{r:15,s:ACC,f:'rgba(242,208,107,.08)',o:a}); const on=t>=28.5; s += circ(on?655:615,195,11,{f:ACC,o:a}); s += txt(690,200,'stop · flip',{sz:15,c:ACC,o:a}); }
+  if (t>=15.2 && t<41.8){ const a=op(t,15.2,.5); s += txt(60,110,'wait for the energy to dissipate?',{sz:20,c:MUT,o:a}); const k=Math.floor((t-15.2)*4); let d=''; for(let i=0;i<Math.min(k,80);i++){ d+=(i?'L':'M')+(60+i*5)+' '+(150-Math.sin(i*0.6)*24*Math.exp(-i/30))+' '; } if (k>1) s += path(d,{s:MUT,sw:2.5,o:a}); }
+  if (t>=22.4 && t<41.8){ const a=op(t,22.4,.5); s += rect(520,120,90,38,{r:19,s:KEY,f:'rgba(242,208,107,.08)',sw:2,o:a}); const on=t>=28.5; s += circ(on?590:540,139,14,{f:KEY,o:a}); s += txt(624,146,'stop · flip',{sz:22,c:KEY,o:a}); }
   // the soccer field strip: order, protective custody, the gyroscope winding down
-  if (t>=58.4){ const a=op(t,58.4,.6); s += rect(100,330,660,120,{r:6,s:OK,f:'rgba(74,222,128,.04)',o:a}); s += goal(110,370,{o:a}); const r=rng(9); for(let i=0;i<6;i++) s += circ(220+r()*300,350+r()*80,5,{f:'none',s:FG,sw:1.5,o:a}); s += lab(t,63.2,560,360,'order, instantly',{sz:13,c:OK}); s += lab(t,66.4,560,382,'protective custody of their emotions',{sz:12,c:MUT}); s += lab(t,70.8,560,404,'safely, fully expressed',{sz:12,c:MUT}); }
-  if (t>=86.0){ const a=op(t,86,.6); const w=Math.exp(-(t-86)/20); const ang=t*6*w; s += circ(840,370,46,{f:'none',s:MUT,sw:2,o:a}); s += `<ellipse cx="840" cy="370" rx="46" ry="${8+Math.abs(Math.sin(ang))*30}" fill="none" stroke="${ACC}" stroke-width="2" opacity="${a}"/>`; s += txt(840,440,'the gyroscope winds down',{a:'middle',sz:13,c:MUT,o:a}); }
-  if (t>=94.4){ const a=op(t,94.4,.6); s += pill(860,140,'caretaker function',{sz:15,c:FG,s:FG,o:a,w:190}); s += lab(t,103.5,860,172,'over the animal spirits',{sz:12,c:MUT,a:'middle'}); s += lab(t,116.4,860,194,'the intervention is here',{sz:12,c:ACC,a:'middle'}); }
-  // the key words, then the rules as a sequence
-  if (t>=129.4){ const a=op(t,129.4,.6); s += lab(t,129.4,120,480,'key words, overtrained in practice',{sz:14,c:FG}); }
-  if (t>=148.8){ ['control','carry','cross','crush'].forEach((w,i)=> s += pill(430+i*110,480,w,{sz:14,c:ACC,s:ACC,o:op(t,148.8+i*1.5,.4),w:96})); }
-  if (t>=157.6){ const a=op(t,157.6,.6); const R=['protect the goal','get the ball','go to the goal','shoot','score']; R.forEach((w,i)=>{ const b=op(t,157.6+i*1.4,.4); s += rect(100+i*132,118,120,28,{r:5,s:OK,f:'rgba(74,222,128,.06)',o:b}); s += txt(160+i*132,137,w,{a:'middle',sz:12,c:FG,o:b}); if (i<4) s += arrow(222+i*132,132,232+i*132,132,{s:OK,o:b}); }); }
-  if (t>=166.1) s += lab(t,166.1,430,172,'always a question: can we protect our goal?',{sz:14,c:OK,a:'middle'});
+  if (t>=58.4){ const a=op(t,58.4,.6); s += rect(60,370,380,130,{r:8,s:RULE,f:'rgba(74,222,128,.04)',sw:2,o:a}); s += goal(70,410,{o:a}); const r=rng(9); for(let i=0;i<6;i++) s += circ(140+r()*240,392+r()*86,7,{f:'none',s:FG,sw:2,o:a}); s += lab(t,63.2,460,400,'order, instantly',{sz:20,c:RULE}); s += lab(t,66.4,460,428,'protective custody',{sz:18,c:MUT}); s += lab(t,70.8,460,454,'safely, fully expressed',{sz:18,c:MUT}); }
+  if (t>=86.0){ const a=op(t,86,.6); const w=Math.exp(-(t-86)/20); const ang=t*6*w; s += circ(700,440,36,{f:'none',s:MUT,sw:2.5,o:a}); s += `<ellipse cx="700" cy="440" rx="36" ry="${6+Math.abs(Math.sin(ang))*28}" fill="none" stroke="${KEY}" stroke-width="2.5" opacity="${a}"/>`; s += txt(700,504,'winds down',{a:'middle',sz:18,c:MUT,o:a}); }
+  // right column: the caretaker, the key words, the rules
+  if (t>=94.4){ const a=op(t,94.4,.6); s += pill(950,150,'caretaker function',{sz:22,c:FG,s:FG,o:a,w:260}); s += lab(t,103.5,950,190,'over the animal spirits',{sz:18,c:MUT,a:'middle'}); s += lab(t,116.4,950,218,'the intervention is here',{sz:18,c:KEY,a:'middle'}); }
+  if (t>=129.4) s += lab(t,129.4,790,270,'key words, overtrained in practice',{sz:20,c:FG});
+  if (t>=148.8){ ['control','carry','cross','crush'].forEach((w,i)=> s += pill(835+(i%2)*160,310+Math.floor(i/2)*50,w,{sz:20,c:KEY,s:KEY,o:op(t,148.8+i*1.5,.4),w:130})); }
+  if (t>=157.6) s += defn(t,157.6,780,392,340,'the rules',['protect the goal · get the ball','go to the goal · shoot · score'],{lsz:18,lh:26,pad:14,sz:22});
+  if (t>=166.1) s += aside(t,166.1,785,527,'always phrased as a question',{sz:22,c:RULE,rot:-1});
+  s += focus(t,[[0.8,282,gy-95],[15.2,200,150],[22.4,565,139],[41.8,282,gy-90],[58.4,250,435],[86.0,700,440],[94.4,950,150],[148.8,915,335],[157.6,950,460]]);
   return s;
 }
 

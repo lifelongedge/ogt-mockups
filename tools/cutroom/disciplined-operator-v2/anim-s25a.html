@@ -4,24 +4,27 @@
 <meta charset="utf-8">
 <title>s25a · portfolio heat</title>
 <style>
-  :root { --bg:#030507; --fg:#E1EEF5; --muted:#8fa3ad; --border:rgba(56,225,255,0.14); --accent:#F2D06B;
-          --ok:#4ade80; --dn:#f87171; --card:#0a1016; --blue:#7baad4; }
+  :root { --bg:#000; --fg:#f2f5f7; --muted:#9aa7b0; --border:rgba(255,255,255,0.12); --accent:#F2D06B;
+          --ok:#4ade80; --dn:#f87171; --card:#000; --blue:#7baad4; }
   html, body { margin:0; background:var(--bg); overflow:hidden; }
   #stage { position:relative; width:1280px; height:720px; background:var(--bg); color:var(--fg);
            font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; overflow:hidden; }
-  #cap { position:absolute; left:60px; right:60px; top:30px; font-size:32px; font-weight:600; letter-spacing:-.01em; line-height:1.15; }
+  #cap { position:absolute; left:40px; right:40px; top:22px; font-size:34px; font-weight:600; letter-spacing:-.01em; line-height:1.15; z-index:3; }
   #cap em { font-style:normal; color:var(--accent); }
-  #sub { position:absolute; left:60px; width:1160px; top:648px; font-size:20px; color:var(--muted); line-height:1.4; }
-  #scene { position:absolute; left:60px; top:112px; width:1160px; height:518px; border:1px solid var(--border);
-           border-radius:10px; background:var(--card); overflow:hidden; }
+  #sub { position:absolute; left:40px; width:1000px; top:686px; font-size:17px; color:var(--muted); line-height:1.3; z-index:3; }
+  #scene { position:absolute; left:0; top:96px; width:1160px; height:530px; overflow:visible; transform:scale(1.1034); transform-origin:0 0; }
   #svg { position:absolute; inset:0; }
-  #fade { position:absolute; inset:0; background:var(--bg); pointer-events:none; opacity:0; }
-  /* the picture-in-picture corner: build_v2 composites Ken's camera tile here (PIP_W/X/Y); the cutroom shows this placeholder */
-  #pip { position:absolute; left:950px; top:22px; width:300px; height:169px; border:1px dashed rgba(56,225,255,0.35); border-radius:4px;
-         display:none; color:var(--muted); font-size:13px; text-align:center; line-height:169px; }
-  .pip #pip { display:block; } .pip #cap { right:360px; font-size:29px; }
-  text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; fill:#E1EEF5; }
+  #fade { position:absolute; inset:0; background:var(--bg); pointer-events:none; opacity:0; z-index:4; }
+  #pip { position:absolute; left:950px; top:22px; width:300px; height:169px; border:1px solid rgba(255,255,255,0.35); border-radius:4px;
+         display:none; color:var(--muted); font-size:13px; text-align:center; line-height:169px; z-index:3; background:#000; }
+  .pip #pip { display:block; } .pip #cap { right:360px; font-size:31px; }
+  text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; fill:#f2f5f7; }
   .mono { font-family:ui-monospace,Menlo,Consolas,monospace; }
+  .serif { font-family:Georgia,"DejaVu Serif","Times New Roman",serif; }
+  .hand { font-family:Caveat,cursive; font-weight:600; }
+  @font-face { font-family:"Caveat"; font-weight:400 700; src:local("Caveat"), url(https://fonts.gstatic.com/s/caveat/v23/Wnz6HAc5bAfYB2Q7ZjYY.woff2) format("woff2"); }
+  /* the seal slot: the chapter counter bottom-right (the brand mark joins it when the owner picks one) */
+  #seal { position:absolute; right:40px; top:688px; font-size:15px; letter-spacing:.08em; color:var(--muted); z-index:3; font-family:ui-monospace,Menlo,Consolas,monospace; }
   #third { display:none; }
 </style>
 </head>
@@ -32,15 +35,16 @@
   <div id="scene"><svg id="svg" width="1160" height="530" viewBox="0 0 1160 530"></svg></div>
   <div id="third"></div>
   <div id="sub"></div>
+  <div id="seal">chapter 5 of 5</div>
   <div id="fade"></div>
 </div>
 <script>
-const BUILD = 's25a-4';
+const BUILD = 's25a-5';
 console.log('[s25a] build', BUILD);
 // Overdub twin of s25: Ken's audio p4321 3060.0→3249.0; t is seconds after the in-point.
 // Beat times read from the VTT cues on 2026-11-21 (tools/cutroom/disciplined-operator-v2/transcript-p4321.json).
 window.ANIM_DURATION = 189.0;
-const ACC='#F2D06B', FG='#E1EEF5', MUT='#8fa3ad', OK='#4ade80', DN='#f87171', BLUE='#7baad4', BRD='rgba(56,225,255,.22)', CARD='#0a1016', TXS=1, WRAP=['',''];
+const ACC='#F2D06B', FG='#f2f5f7', MUT='#9aa7b0', OK='#4ade80', DN='#f87171', BLUE='#7baad4', BRD='rgba(255,255,255,.18)', CARD='#000', TXS=1.1, WRAP=['',''];
 const W=1160, H=530;
 const $ = id => document.getElementById(id);
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
@@ -51,7 +55,7 @@ const on=(t,t0)=>t>=t0;
 const op=(t,t0,d)=>clamp((t-t0)/(d||0.5),0,1);      // linear opacity ramp
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
 const txt=(x,y,s,o={})=>`<text x="${x}" y="${y}" font-size="${(o.sz||20)*TXS}" fill="${o.c||FG}" opacity="${o.o==null?1:o.o}" text-anchor="${o.a||'start'}" font-weight="${o.w||400}" class="${o.cls||''}" ${o.extra||''}>${esc(s)}</text>`;
-const rect=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.r==null?6:o.r}" fill="${o.f||'none'}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}" ${o.extra||''}/>`;
+const rect=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.r==null?6:o.r}" fill="${o.f||'none'}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}" ${o.dash?`stroke-dasharray="${o.dash}"`:''} ${o.extra||''}/>`;
 const circ=(x,y,r,o={})=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${o.f||FG}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}"/>`;
 const line=(x1,y1,x2,y2,o={})=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${o.s||MUT}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" ${o.dash?`stroke-dasharray="${o.dash}"`:''} stroke-linecap="round"/>`;
 const path=(d,o={})=>`<path d="${d}" fill="${o.f||'none'}" stroke="${o.s||FG}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" stroke-linecap="round" stroke-linejoin="round" ${o.dash?`stroke-dasharray="${o.dash}"`:''}/>`;
@@ -66,49 +70,64 @@ const wander=(p,t,amp)=>[p.x+Math.sin(t*0.9+p.p)*amp,p.y+Math.cos(t*0.7+p.q)*amp
 // typewriter: the first k chars of s by time
 const type=(s,t,t0,cps)=>s.slice(0,Math.max(0,Math.floor((t-t0)*(cps||28))));
 // a list that reveals one row per step seconds from t0
+// --- the lesson helpers (2026-11-21, read from the Stanford "Probability for AI" screens) ---
+// the question the window answers, top-left of the scene, serif, amber
+const head=(t,t0,q,o={})=>{const a=op(t,t0,.5);if(a<=0)return '';const capH=($('cap')||{}).offsetHeight||0;const y=Math.max(o.y||44,(capH-68)/1.1034+32);return txt(o.x||40,y,q,{sz:o.sz||30,c:o.c||ACC,w:600,o:a,cls:'serif'});};   // under a three-line caption the question steps down
+// where to look: a soft ring that glides to the element of the beat. pts=[[t0,x,y],...]; it holds for o.hold s (default 5) after each beat
+function focus(t,pts,o={}){let cur=null,prev=null;for(const p of pts){if(t>=p[0]){prev=cur;cur=p;}}if(!cur)return '';const age=t-cur[0];if(age>(o.hold||5))return '';
+  const u=prev?pr(t,cur[0],.6):1;const x=prev?lerp(prev[1],cur[1],u):cur[1],y=prev?lerp(prev[2],cur[2],u):cur[2];const r=(o.r||22)+Math.sin(t*4)*2;const a=op(t,cur[0],.3)*(age>(o.hold||5)-.6?((o.hold||5)-age)/.6:1);
+  return circ(x,y,r,{f:'none',s:o.c||ACC,sw:2.5,o:a*.9})+circ(x,y,4,{f:o.c||ACC,o:a});}
+// the boxed definition, once the intuition has landed: a serif title and his words under it
+function defn(t,t0,x,y,w,title,lines,o={}){const u=pr(t,t0,.6);if(u<=0)return '';const lh=o.lh||28,h=(o.pad||22)*2+34+lines.length*lh;let s=rect(x,y,w,h,{r:8,s:o.s||FG,sw:2,f:o.f||'rgba(255,255,255,.03)',o:u});
+  if(u>.5){const a=op(t,t0+.3,.4);s+=txt(x+(o.pad||22),y+(o.pad||22)+22,title,{sz:o.sz||26,c:o.c||FG,w:600,o:a,cls:'serif'});lines.forEach((ln,i)=>{s+=txt(x+(o.pad||22),y+(o.pad||22)+34+22+i*lh,ln,{sz:o.lsz||20,c:o.lc||FG,o:op(t,t0+.5+i*.25,.4)});});}return s;}
+// the aside, in a second register: handwritten, amber, a little tilted (sparingly: his aside, not the framework)
+const aside=(t,t0,x,y,s,o={})=>{const a=op(t,t0,.5);return a<=0?'':`<g transform="rotate(${o.rot==null?-2:o.rot} ${x} ${y})">`+txt(x,y,s,{sz:o.sz||24,c:o.c||ACC,o:a*(o.o==null?1:o.o),a:o.a||'start',cls:'hand'})+'</g>';};
+// the recall box: an earlier figure back, small, in a corner, for a few seconds (draw the figure with its own helper inside g)
+function recall(t,t0,x,y,w,h,label,inner,o={}){const a=op(t,t0,.5)*(o.until&&t>o.until?clamp(1-(t-o.until)/.6,0,1):1);if(a<=0)return '';
+  return rect(x,y,w,h,{r:8,s:MUT,sw:1.5,f:'rgba(255,255,255,.03)',o:a,dash:'4 4'})+txt(x+12,y+20,label,{sz:14,c:MUT,o:a})+`<g opacity="${a}" transform="translate(${x} ${y+28}) scale(${o.sc||.5})">${inner}</g>`;}
 function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
 
 const BEATS = [[1.4, "<em>What's your total portfolio heat?</em>", ""], [11.1, "describe that in terms of a number", ""], [21.4, "I've seen the total get to about five times as big as what my gut would be comfortable with", "The student's answer."], [32.6, "if I had <em>10 open positions</em>, which is not atypical", ""], [38.0, "and I summed all of the <em>open risk</em>", ""], [48.2, "if all of those trades failed at the same time: <em>that's portfolio heat</em>", ""], [55.9, "is that number 20 percent? Is that number 10 percent?", ""], [65.4, "of the total amount of <em>risk capital</em>: the dynamic risk threshold", ""], [71.9, "if my capital is <em>a million dollars</em>, and I can have 10 open positions", ""], [82.8, "and each position could be resourced at <em>one percent</em>", ""], [86.3, "then my portfolio heat maximum would be <em>10 percent</em>", ""], [90.2, "and the other 90 is the dollars that are used to pay for the position", ""], [111.4, "about 9 percent of the portfolio to pay for the position, and 1 percent is the actual risk capital", ""], [121.0, "10 open positions, all at 1 percent: my portfolio heat is at 10 percent", ""], [129.5, "if that was your rational mind speaking, but then your gut says I can only take a quarter of that", ""], [137.8, "your portfolio heat would be about <em>2.5 percent</em> total risk", ""], [147.7, "you might as well be in treasuries", "The student: 'that's about what it is.'"], [152.2, "a reflection of all those trades which are <em>smaller than they could be, because of the gut</em>", ""], [163.5, "here's where it gets to be excessive: if my total heat was here, and the cost of the positions was here", ""], [177.0, "and I have this amount of money used. That's what's happening", ""]];
 
-const person=(x,y,o={})=>circ(x,y-14,9,{f:'none',s:o.c||FG,sw:2,o:o.o==null?1:o.o})+path(`M${x-16} ${y+22} C${x-16} ${y} ${x+16} ${y} ${x+16} ${y+22}`,{s:o.c||FG,sw:2,o:o.o==null?1:o.o});
-const pill=(x,y,s,o={})=>{const w=(o.w||s.length*10+22);return rect(x-w/2,y-15,w,30,{r:15,s:o.s||BRD,f:o.f||'rgba(255,255,255,.03)',o:o.o==null?1:o.o})+txt(x,y+6,s,{a:'middle',sz:o.sz||15,c:o.c||FG,o:o.o==null?1:o.o,w:o.wt||500});};
-const card=(x,y,w,h,o={})=>rect(x,y,w,h,{r:10,s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',o:o.o==null?1:o.o});
+// one colour per quantity, for the whole course
+const RISK=DN, COST=MUT, GUT=BLUE, RULE=OK, SIN=DN, KEY=ACC;
+// scale a drawn figure about (x,y)
+const big=(x,y,sc,inner)=>`<g transform="translate(${x} ${y}) scale(${sc}) translate(${-x} ${-y})">${inner}</g>`;
+const person=(x,y,o={})=>circ(x,y-14,9,{f:'none',s:o.c||FG,sw:2.5,o:o.o==null?1:o.o})+path(`M${x-16} ${y+22} C${x-16} ${y} ${x+16} ${y} ${x+16} ${y+22}`,{s:o.c||FG,sw:2.5,o:o.o==null?1:o.o});
+const pill=(x,y,s,o={})=>{const w=(o.w||s.length*12+28);return rect(x-w/2,y-19,w,38,{r:19,s:o.s||BRD,f:o.f||'rgba(255,255,255,.03)',sw:2,o:o.o==null?1:o.o})+txt(x,y+7,s,{a:'middle',sz:o.sz||20,c:o.c||FG,o:o.o==null?1:o.o,w:o.wt||500});};
+const card=(x,y,w,h,o={})=>rect(x,y,w,h,{r:10,s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',sw:2,o:o.o==null?1:o.o});
 const lab=(t,t0,x,y,s,o={})=>{const a=op(t,t0,o.d||.5);return a<=0?'':txt(x,y,s,{...o,o:a*(o.o==null?1:o.o)});};
-const monkey=(x,y,o={})=>circ(x,y,16,{f:'none',s:o.c||ACC,sw:2,o:o.o==null?1:o.o})+circ(x-16,y-4,6,{f:'none',s:o.c||ACC,sw:2,o:o.o==null?1:o.o})+circ(x+16,y-4,6,{f:'none',s:o.c||ACC,sw:2,o:o.o==null?1:o.o})+path(`M${x-7} ${y+5} Q${x} ${y+12} ${x+7} ${y+5}`,{s:o.c||ACC,sw:2,o:o.o==null?1:o.o})+circ(x-5,y-3,2,{f:o.c||ACC,o:o.o==null?1:o.o})+circ(x+5,y-3,2,{f:o.c||ACC,o:o.o==null?1:o.o});
+const monkey=(x,y,o={})=>circ(x,y,16,{f:'none',s:o.c||ACC,sw:2.5,o:o.o==null?1:o.o})+circ(x-16,y-4,6,{f:'none',s:o.c||ACC,sw:2.5,o:o.o==null?1:o.o})+circ(x+16,y-4,6,{f:'none',s:o.c||ACC,sw:2.5,o:o.o==null?1:o.o})+path(`M${x-7} ${y+5} Q${x} ${y+12} ${x+7} ${y+5}`,{s:o.c||ACC,sw:2.5,o:o.o==null?1:o.o})+circ(x-5,y-3,2,{f:o.c||ACC,o:o.o==null?1:o.o})+circ(x+5,y-3,2,{f:o.c||ACC,o:o.o==null?1:o.o});
 // a car seen from the side, nose to the right; (x,y) is the ground under its centre
-const car=(x,y,o={})=>path(`M${x-44} ${y-10} L${x-40} ${y-26} L${x-14} ${y-30} L${x-2} ${y-44} L${x+26} ${y-44} L${x+40} ${y-28} L${x+46} ${y-10} Z`,{s:o.c||FG,sw:2,f:o.f||'rgba(255,255,255,.04)',o:o.o==null?1:o.o})+circ(x-26,y-8,8,{f:'none',s:o.c||FG,sw:2,o:o.o==null?1:o.o})+circ(x+26,y-8,8,{f:'none',s:o.c||FG,sw:2,o:o.o==null?1:o.o});
+const car=(x,y,o={})=>path(`M${x-44} ${y-10} L${x-40} ${y-26} L${x-14} ${y-30} L${x-2} ${y-44} L${x+26} ${y-44} L${x+40} ${y-28} L${x+46} ${y-10} Z`,{s:o.c||FG,sw:2.5,f:o.f||'rgba(255,255,255,.04)',o:o.o==null?1:o.o})+circ(x-26,y-8,8,{f:'none',s:o.c||FG,sw:2.5,o:o.o==null?1:o.o})+circ(x+26,y-8,8,{f:'none',s:o.c||FG,sw:2.5,o:o.o==null?1:o.o});
 // a wall of bricks
-function wall(x,y,w,h,o={}){let s=rect(x,y,w,h,{f:'rgba(255,255,255,.03)',s:MUT,sw:1.5,o:o.o==null?1:o.o});for(let r=1;r<h/18;r++){s+=line(x,y+r*18,x+w,y+r*18,{s:MUT,sw:1,o:(o.o==null?1:o.o)*0.5});}return s;}
-// a goal (soccer) at the left: posts and net
-const goal=(x,y,o={})=>path(`M${x} ${y+40} L${x} ${y} L${x+16} ${y} L${x+16} ${y+40}`,{s:o.c||FG,sw:3,o:o.o==null?1:o.o})+line(x+4,y+6,x+12,y+34,{s:BRD,sw:1,o:o.o==null?1:o.o})+line(x+12,y+6,x+4,y+34,{s:BRD,sw:1,o:o.o==null?1:o.o});
+function wall(x,y,w,h,o={}){let s=rect(x,y,w,h,{f:'rgba(255,255,255,.03)',s:MUT,sw:2,o:o.o==null?1:o.o});for(let r=1;r<h/22;r++){s+=line(x,y+r*22,x+w,y+r*22,{s:MUT,sw:1.5,o:(o.o==null?1:o.o)*0.5});}return s;}
+// a goal (soccer): posts and net
+const goal=(x,y,o={})=>path(`M${x} ${y+50} L${x} ${y} L${x+20} ${y} L${x+20} ${y+50}`,{s:o.c||FG,sw:3.5,o:o.o==null?1:o.o})+line(x+5,y+8,x+15,y+42,{s:BRD,sw:1.5,o:o.o==null?1:o.o})+line(x+15,y+8,x+5,y+42,{s:BRD,sw:1.5,o:o.o==null?1:o.o});
 // the z spectrum: a horizontal axis from -3 to +3 over [x, x+w]
-function zaxis(x,y,w,o={}){const a=o.o==null?1:o.o;let s=line(x,y,x+w,y,{s:MUT,sw:2,o:a});for(let z=-3;z<=3;z++){const px=x+(z+3)/6*w;s+=line(px,y-6,px,y+6,{s:MUT,sw:1.5,o:a});s+=txt(px,y+26,(z>0?'+':'')+z+(z?'σ':''),{a:'middle',sz:13,c:MUT,o:a});}return s;}
+function zaxis(x,y,w,o={}){const a=o.o==null?1:o.o;let s=line(x,y,x+w,y,{s:MUT,sw:3,o:a});for(let z=-3;z<=3;z++){const px=x+(z+3)/6*w;s+=line(px,y-8,px,y+8,{s:MUT,sw:2,o:a});s+=txt(px,y+32,(z>0?'+':'')+z+(z?'σ':''),{a:'middle',sz:o.sz||18,c:MUT,o:a});}return s;}
 // a gauge arc from the left (0) to the right (1)
-function gauge(cx,cy,r,u,o={}){const a=o.o==null?1:o.o;const arc=(u0,u1,st,sw)=>{const p0=Math.PI+Math.PI*u0,p1=Math.PI+Math.PI*u1;return path(`M${cx+r*Math.cos(p0)} ${cy+r*Math.sin(p0)} A${r} ${r} 0 ${(u1-u0)>.5?1:0} 1 ${cx+r*Math.cos(p1)} ${cy+r*Math.sin(p1)}`,{s:st,sw:sw||10,o:a});};let s=arc(0,1,'rgba(255,255,255,.08)',10)+arc(0,clamp(u,0.001,1),o.c||ACC,10);const p=Math.PI+Math.PI*clamp(u,0,1);s+=line(cx,cy,cx+(r-16)*Math.cos(p),cy+(r-16)*Math.sin(p),{s:FG,sw:3,o:a})+circ(cx,cy,5,{f:FG,o:a});return s;}
-
-// ten position bars, each 9 units of cost under 1 unit of risk, over x in [140, 700]
-function heatbars(t,o){ let s=''; const n=o.n||10, y0=o.y||380, bw=46; const a=o.o==null?1:o.o;
-  for(let i=0;i<n;i++){ const b=op(t,o.t0+i*(o.step||0.3),.3); if (b<=0) continue; const x=140+i*(bw+10); const risk=(o.risk||1)*o.unit, cost=9*o.unit;
-    s += rect(x,y0-cost,bw,cost,{r:3,f:'rgba(255,255,255,.06)',s:BRD,sw:1,o:b*a}); s += rect(x,y0-cost-risk,bw,risk,{r:2,f:'rgba(248,113,113,.5)',o:b*a}); }
-  return s; }
+function gauge(cx,cy,r,u,o={}){const a=o.o==null?1:o.o;const arc=(u0,u1,st,sw)=>{const p0=Math.PI+Math.PI*u0,p1=Math.PI+Math.PI*u1;return path(`M${cx+r*Math.cos(p0)} ${cy+r*Math.sin(p0)} A${r} ${r} 0 ${(u1-u0)>.5?1:0} 1 ${cx+r*Math.cos(p1)} ${cy+r*Math.sin(p1)}`,{s:st,sw:sw||12,o:a});};let s=arc(0,1,'rgba(255,255,255,.08)',12)+arc(0,clamp(u,0.001,1),o.c||ACC,12);const p=Math.PI+Math.PI*clamp(u,0,1);s+=line(cx,cy,cx+(r-18)*Math.cos(p),cy+(r-18)*Math.sin(p),{s:FG,sw:4,o:a})+circ(cx,cy,6,{f:FG,o:a});return s;}
+// the s25 ledger, drawn small again where he refers back to it (the recall box)
+const ledger=()=>txt(0,24,'$1,000,000',{sz:30,c:FG,cls:'mono'})+txt(0,58,'10 positions × 1 %',{sz:24,c:RISK})+txt(0,96,'heat max 10 %',{sz:32,c:KEY,w:600});
 
 function draw(t){
   let s='';
-  s += lab(t,1.4,140,120,'portfolio heat',{sz:20,c:ACC});
-  s += lab(t,38.0,140,150,'the open risk of every position, summed',{sz:13,c:MUT});
-  // ten positions: 9 % cost, 1 % risk each
-  s += heatbars(t,{t0:32.6,unit:20,y:380,step:0.4});
-  s += line(130,380,710,380,{s:MUT,o:op(t,32.6,.5)});
-  s += lab(t,32.6,140,404,'10 open positions',{sz:13,c:FG});
-  if (t>=48.2){ const a=op(t,48.2,.6); s += rect(140,196-6,550,10,{r:2,f:'rgba(248,113,113,.25)',s:DN,sw:1,o:a}); s += txt(745,204,'if all failed at once',{sz:12,c:DN,o:a,a:'end'}); }
-  if (t>=82.8) s += lab(t,82.8,745,200-20,'1 % risk',{sz:12,c:DN,a:'end'});
-  if (t>=90.2) s += lab(t,90.2,745,300,'9 % pays for the position',{sz:12,c:MUT,a:'end'});
-  // the ledger at the right
-  if (t>=71.9){ const a=op(t,71.9,.6); s += card(760,120,290,150,{o:a}); s += txt(780,150,'$1,000,000 risk capital',{sz:14,c:FG,o:a}); s += lab(t,80.3,780,178,'10 positions × 1 %',{sz:14,c:FG}); s += lab(t,86.3,780,210,'heat max = 10 %',{sz:18,c:ACC}); s += lab(t,90.2,780,240,'the other 90 % pays for them',{sz:12,c:MUT}); }
-  // the gut: a quarter of that
-  if (t>=129.5){ const a=op(t,129.5,.6); s += card(760,290,290,110,{o:a,s:BLUE}); s += txt(780,318,'the gut: a quarter of that',{sz:14,c:BLUE,o:a}); s += lab(t,137.8,780,352,'heat ≈ 2.5 %',{sz:18,c:FG}); s += lab(t,147.7,780,382,'"might as well be treasuries"',{sz:12,c:MUT}); }
-  if (t>=152.2) s += lab(t,152.2,140,440,'every trade smaller than it could be, because of the gut',{sz:13,c:BLUE});
-  if (t>=163.5){ const a=op(t,163.5,.6); s += line(760,440,1050,440,{s:DN,sw:2,o:a}); s += txt(1050,434,'heat here',{a:'end',sz:11,c:DN,o:a}); s += line(760,470,1050,470,{s:MUT,sw:2,o:a}); s += txt(1050,464,'cost of the positions here',{a:'end',sz:11,c:MUT,o:a}); s += lab(t,177.0,760,500,'money used, sitting there',{sz:12,c:MUT}); }
+  s += head(t,1.4,'What is your total portfolio heat?');
+  const x0=60, bw=56, gap=12, y0=440, unit=28;    // ten bars over the left 680 px; 9 units of cost under 1 unit of risk
+  s += lab(t,38.0,x0,80,'the open risk of every position, summed',{sz:20,c:MUT});
+  for (let i=0;i<10;i++){ const b=op(t,32.6+i*0.35,.3); if (b<=0) continue; const x=x0+i*(bw+gap);
+    s += rect(x,y0-9*unit,bw,9*unit,{r:4,f:'rgba(255,255,255,.07)',s:'rgba(255,255,255,.25)',sw:2,o:b});
+    s += rect(x,y0-10*unit,bw,unit,{r:3,f:'rgba(248,113,113,.7)',o:b}); }
+  s += line(x0-6,y0,x0+10*(bw+gap)-gap+6,y0,{s:MUT,sw:3,o:op(t,32.6,.5)});
+  s += lab(t,32.6,x0,y0+34,'10 open positions',{sz:22,c:FG});
+  s += lab(t,82.8,760,y0-10*unit+18,'1 % at risk',{sz:20,c:RISK});
+  s += lab(t,90.2,760,y0-4*unit,'9 % pays for the position',{sz:20,c:COST});
+  if (t>=48.2){ const a=op(t,48.2,.6); s += rect(x0,124,670,6,{r:3,f:'rgba(248,113,113,.45)',o:a}); s += txt(x0,116,'if every one of them failed at once: that is portfolio heat',{sz:18,c:RISK,o:a}); }
+  if (t>=71.9){ const a=op(t,71.9,.6); s += txt(1120,200,'$1,000,000',{a:'end',sz:30,c:FG,o:a,cls:'mono'}); s += lab(t,80.3,1120,236,'10 positions × 1 %',{a:'end',sz:22,c:RISK}); s += lab(t,86.3,1120,284,'heat max 10 %',{a:'end',sz:34,c:KEY,w:600}); }
+  if (t>=129.5){ const a=op(t,129.5,.6); s += txt(1120,392,'the gut: a quarter of that',{a:'end',sz:20,c:GUT,o:a}); s += lab(t,137.8,1120,436,'heat 2.5 %',{a:'end',sz:34,c:GUT,w:600}); s += aside(t,147.7,1120,468,'"might as well be treasuries"',{sz:20,c:MUT,a:'end',rot:-1}); }
+  if (t>=152.2) s += lab(t,152.2,x0,508,'every trade smaller than it could be, because of the gut',{sz:21,c:GUT});
+  s += focus(t,[[32.6,x0+5*(bw+gap),y0-5*unit],[48.2,x0+300,127],[71.9,1040,190],[86.3,1040,274],[129.5,1040,382],[137.8,1040,426],[152.2,x0+300,500]]);
   return s;
 }
 

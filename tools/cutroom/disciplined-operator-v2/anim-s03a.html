@@ -4,24 +4,27 @@
 <meta charset="utf-8">
 <title>s03a · how revenge shows up in a trade</title>
 <style>
-  :root { --bg:#030507; --fg:#E1EEF5; --muted:#8fa3ad; --border:rgba(56,225,255,0.14); --accent:#F2D06B;
-          --ok:#4ade80; --dn:#f87171; --card:#0a1016; --blue:#7baad4; }
+  :root { --bg:#000; --fg:#f2f5f7; --muted:#9aa7b0; --border:rgba(255,255,255,0.12); --accent:#F2D06B;
+          --ok:#4ade80; --dn:#f87171; --card:#000; --blue:#7baad4; }
   html, body { margin:0; background:var(--bg); overflow:hidden; }
   #stage { position:relative; width:1280px; height:720px; background:var(--bg); color:var(--fg);
            font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; overflow:hidden; }
-  #cap { position:absolute; left:60px; right:60px; top:30px; font-size:32px; font-weight:600; letter-spacing:-.01em; line-height:1.15; }
+  #cap { position:absolute; left:40px; right:40px; top:22px; font-size:34px; font-weight:600; letter-spacing:-.01em; line-height:1.15; z-index:3; }
   #cap em { font-style:normal; color:var(--accent); }
-  #sub { position:absolute; left:60px; width:1160px; top:648px; font-size:20px; color:var(--muted); line-height:1.4; }
-  #scene { position:absolute; left:60px; top:112px; width:1160px; height:518px; border:1px solid var(--border);
-           border-radius:10px; background:var(--card); overflow:hidden; }
+  #sub { position:absolute; left:40px; width:1000px; top:686px; font-size:17px; color:var(--muted); line-height:1.3; z-index:3; }
+  #scene { position:absolute; left:0; top:96px; width:1160px; height:530px; overflow:visible; transform:scale(1.1034); transform-origin:0 0; }
   #svg { position:absolute; inset:0; }
-  #fade { position:absolute; inset:0; background:var(--bg); pointer-events:none; opacity:0; }
-  /* the picture-in-picture corner: build_v2 composites Ken's camera tile here (PIP_W/X/Y); the cutroom shows this placeholder */
-  #pip { position:absolute; left:950px; top:22px; width:300px; height:169px; border:1px dashed rgba(56,225,255,0.35); border-radius:4px;
-         display:none; color:var(--muted); font-size:13px; text-align:center; line-height:169px; }
-  .pip #pip { display:block; } .pip #cap { right:360px; font-size:29px; }
-  text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; fill:#E1EEF5; }
+  #fade { position:absolute; inset:0; background:var(--bg); pointer-events:none; opacity:0; z-index:4; }
+  #pip { position:absolute; left:950px; top:22px; width:300px; height:169px; border:1px solid rgba(255,255,255,0.35); border-radius:4px;
+         display:none; color:var(--muted); font-size:13px; text-align:center; line-height:169px; z-index:3; background:#000; }
+  .pip #pip { display:block; } .pip #cap { right:360px; font-size:31px; }
+  text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; fill:#f2f5f7; }
   .mono { font-family:ui-monospace,Menlo,Consolas,monospace; }
+  .serif { font-family:Georgia,"DejaVu Serif","Times New Roman",serif; }
+  .hand { font-family:Caveat,cursive; font-weight:600; }
+  @font-face { font-family:"Caveat"; font-weight:400 700; src:local("Caveat"), url(https://fonts.gstatic.com/s/caveat/v23/Wnz6HAc5bAfYB2Q7ZjYY.woff2) format("woff2"); }
+  /* the seal slot: the chapter counter bottom-right (the brand mark joins it when the owner picks one) */
+  #seal { position:absolute; right:40px; top:688px; font-size:15px; letter-spacing:.08em; color:var(--muted); z-index:3; font-family:ui-monospace,Menlo,Consolas,monospace; }
   #third { display:none; }
 </style>
 </head>
@@ -32,15 +35,16 @@
   <div id="scene"><svg id="svg" width="1160" height="530" viewBox="0 0 1160 530"></svg></div>
   <div id="third"></div>
   <div id="sub"></div>
+  <div id="seal"></div>
   <div id="fade"></div>
 </div>
 <script>
-const BUILD = 's03a-4';
+const BUILD = 's03a-5';
 console.log('[s03a] build', BUILD);
 // Overdub twin of s03: Ken's audio b9h 408.0→520.0; t is seconds after the in-point.
 // Beat times read from the VTT cues on 2026-11-21 (tools/cutroom/disciplined-operator-v2/transcript-b9h.json).
 window.ANIM_DURATION = 112.0;
-const ACC='#F2D06B', FG='#E1EEF5', MUT='#8fa3ad', OK='#4ade80', DN='#f87171', BLUE='#7baad4', BRD='rgba(56,225,255,.22)', CARD='#0a1016', TXS=1, WRAP=['',''];
+const ACC='#F2D06B', FG='#f2f5f7', MUT='#9aa7b0', OK='#4ade80', DN='#f87171', BLUE='#7baad4', BRD='rgba(255,255,255,.18)', CARD='#000', TXS=1.1, WRAP=['',''];
 const W=1160, H=530;
 const $ = id => document.getElementById(id);
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
@@ -51,7 +55,7 @@ const on=(t,t0)=>t>=t0;
 const op=(t,t0,d)=>clamp((t-t0)/(d||0.5),0,1);      // linear opacity ramp
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
 const txt=(x,y,s,o={})=>`<text x="${x}" y="${y}" font-size="${(o.sz||20)*TXS}" fill="${o.c||FG}" opacity="${o.o==null?1:o.o}" text-anchor="${o.a||'start'}" font-weight="${o.w||400}" class="${o.cls||''}" ${o.extra||''}>${esc(s)}</text>`;
-const rect=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.r==null?6:o.r}" fill="${o.f||'none'}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}" ${o.extra||''}/>`;
+const rect=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.r==null?6:o.r}" fill="${o.f||'none'}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}" ${o.dash?`stroke-dasharray="${o.dash}"`:''} ${o.extra||''}/>`;
 const circ=(x,y,r,o={})=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${o.f||FG}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}"/>`;
 const line=(x1,y1,x2,y2,o={})=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${o.s||MUT}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" ${o.dash?`stroke-dasharray="${o.dash}"`:''} stroke-linecap="round"/>`;
 const path=(d,o={})=>`<path d="${d}" fill="${o.f||'none'}" stroke="${o.s||FG}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" stroke-linecap="round" stroke-linejoin="round" ${o.dash?`stroke-dasharray="${o.dash}"`:''}/>`;
@@ -66,44 +70,67 @@ const wander=(p,t,amp)=>[p.x+Math.sin(t*0.9+p.p)*amp,p.y+Math.cos(t*0.7+p.q)*amp
 // typewriter: the first k chars of s by time
 const type=(s,t,t0,cps)=>s.slice(0,Math.max(0,Math.floor((t-t0)*(cps||28))));
 // a list that reveals one row per step seconds from t0
+// --- the lesson helpers (2026-11-21, read from the Stanford "Probability for AI" screens) ---
+// the question the window answers, top-left of the scene, serif, amber
+const head=(t,t0,q,o={})=>{const a=op(t,t0,.5);if(a<=0)return '';const capH=($('cap')||{}).offsetHeight||0;const y=Math.max(o.y||44,(capH-68)/1.1034+32);return txt(o.x||40,y,q,{sz:o.sz||30,c:o.c||ACC,w:600,o:a,cls:'serif'});};   // under a three-line caption the question steps down
+// where to look: a soft ring that glides to the element of the beat. pts=[[t0,x,y],...]; it holds for o.hold s (default 5) after each beat
+function focus(t,pts,o={}){let cur=null,prev=null;for(const p of pts){if(t>=p[0]){prev=cur;cur=p;}}if(!cur)return '';const age=t-cur[0];if(age>(o.hold||5))return '';
+  const u=prev?pr(t,cur[0],.6):1;const x=prev?lerp(prev[1],cur[1],u):cur[1],y=prev?lerp(prev[2],cur[2],u):cur[2];const r=(o.r||22)+Math.sin(t*4)*2;const a=op(t,cur[0],.3)*(age>(o.hold||5)-.6?((o.hold||5)-age)/.6:1);
+  return circ(x,y,r,{f:'none',s:o.c||ACC,sw:2.5,o:a*.9})+circ(x,y,4,{f:o.c||ACC,o:a});}
+// the boxed definition, once the intuition has landed: a serif title and his words under it
+function defn(t,t0,x,y,w,title,lines,o={}){const u=pr(t,t0,.6);if(u<=0)return '';const lh=o.lh||28,h=(o.pad||22)*2+34+lines.length*lh;let s=rect(x,y,w,h,{r:8,s:o.s||FG,sw:2,f:o.f||'rgba(255,255,255,.03)',o:u});
+  if(u>.5){const a=op(t,t0+.3,.4);s+=txt(x+(o.pad||22),y+(o.pad||22)+22,title,{sz:o.sz||26,c:o.c||FG,w:600,o:a,cls:'serif'});lines.forEach((ln,i)=>{s+=txt(x+(o.pad||22),y+(o.pad||22)+34+22+i*lh,ln,{sz:o.lsz||20,c:o.lc||FG,o:op(t,t0+.5+i*.25,.4)});});}return s;}
+// the aside, in a second register: handwritten, amber, a little tilted (sparingly: his aside, not the framework)
+const aside=(t,t0,x,y,s,o={})=>{const a=op(t,t0,.5);return a<=0?'':`<g transform="rotate(${o.rot==null?-2:o.rot} ${x} ${y})">`+txt(x,y,s,{sz:o.sz||24,c:o.c||ACC,o:a*(o.o==null?1:o.o),a:o.a||'start',cls:'hand'})+'</g>';};
+// the recall box: an earlier figure back, small, in a corner, for a few seconds (draw the figure with its own helper inside g)
+function recall(t,t0,x,y,w,h,label,inner,o={}){const a=op(t,t0,.5)*(o.until&&t>o.until?clamp(1-(t-o.until)/.6,0,1):1);if(a<=0)return '';
+  return rect(x,y,w,h,{r:8,s:MUT,sw:1.5,f:'rgba(255,255,255,.03)',o:a,dash:'4 4'})+txt(x+12,y+20,label,{sz:14,c:MUT,o:a})+`<g opacity="${a}" transform="translate(${x} ${y+28}) scale(${o.sc||.5})">${inner}</g>`;}
 function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
 
 const BEATS = [[-0.1, "I'll follow the rules to the letter of the law and it'll <em>kick me out</em>", ""], [3.4, "and then re-enter, and I'll <em>take that personally</em>", ""], [9.6, "how do I <em>get even</em>, instead of getting to the <em>zero state</em>", ""], [15.0, "or I'll just persist from an intuition that I have. I want to do something", ""], [23.1, "So I make up some rules, commit to following it", ""], [27.8, "and in spite of evidence that it's not working, I'll <em>stay with it</em>", ""], [32.4, "beat my head against the wall", ""], [36.0, "and take some <em>perverse pride</em> in losing money on that trade", ""], [41.2, "proving a point to what? To somebody? To myself?", ""], [58.7, "you're so wrong that I'm losing money, and that <em>proves that I'm right</em>", ""], [65.3, "It just doesn't make sense", ""], [78.6, "it drives me batshit crazy when I see that perverse nature of mine", ""], [87.0, "<em>persisting</em> in a course of action that has been provably wrong", ""], [94.9, "or trying to <em>get even</em> for the last trade by the way I trade the next", ""], [103.8, "I know they're <em>not connected</em>, but I'll act as if they are", ""], [108.9, "both of those tendencies are never far", ""]];
 
-const person=(x,y,o={})=>circ(x,y-14,9,{f:'none',s:o.c||FG,sw:2,o:o.o==null?1:o.o})+path(`M${x-16} ${y+22} C${x-16} ${y} ${x+16} ${y} ${x+16} ${y+22}`,{s:o.c||FG,sw:2,o:o.o==null?1:o.o});
-const pill=(x,y,s,o={})=>{const w=(o.w||s.length*10+22);return rect(x-w/2,y-15,w,30,{r:15,s:o.s||BRD,f:o.f||'rgba(255,255,255,.03)',o:o.o==null?1:o.o})+txt(x,y+6,s,{a:'middle',sz:o.sz||15,c:o.c||FG,o:o.o==null?1:o.o,w:o.wt||500});};
-const card=(x,y,w,h,o={})=>rect(x,y,w,h,{r:10,s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',o:o.o==null?1:o.o});
+// one colour per quantity, for the whole course
+const RISK=DN, COST=MUT, GUT=BLUE, RULE=OK, SIN=DN, KEY=ACC;
+// scale a drawn figure about (x,y)
+const big=(x,y,sc,inner)=>`<g transform="translate(${x} ${y}) scale(${sc}) translate(${-x} ${-y})">${inner}</g>`;
+const person=(x,y,o={})=>circ(x,y-14,9,{f:'none',s:o.c||FG,sw:2.5,o:o.o==null?1:o.o})+path(`M${x-16} ${y+22} C${x-16} ${y} ${x+16} ${y} ${x+16} ${y+22}`,{s:o.c||FG,sw:2.5,o:o.o==null?1:o.o});
+const pill=(x,y,s,o={})=>{const w=(o.w||s.length*12+28);return rect(x-w/2,y-19,w,38,{r:19,s:o.s||BRD,f:o.f||'rgba(255,255,255,.03)',sw:2,o:o.o==null?1:o.o})+txt(x,y+7,s,{a:'middle',sz:o.sz||20,c:o.c||FG,o:o.o==null?1:o.o,w:o.wt||500});};
+const card=(x,y,w,h,o={})=>rect(x,y,w,h,{r:10,s:o.s||BRD,f:o.f||'rgba(255,255,255,.02)',sw:2,o:o.o==null?1:o.o});
 const lab=(t,t0,x,y,s,o={})=>{const a=op(t,t0,o.d||.5);return a<=0?'':txt(x,y,s,{...o,o:a*(o.o==null?1:o.o)});};
-const monkey=(x,y,o={})=>circ(x,y,16,{f:'none',s:o.c||ACC,sw:2,o:o.o==null?1:o.o})+circ(x-16,y-4,6,{f:'none',s:o.c||ACC,sw:2,o:o.o==null?1:o.o})+circ(x+16,y-4,6,{f:'none',s:o.c||ACC,sw:2,o:o.o==null?1:o.o})+path(`M${x-7} ${y+5} Q${x} ${y+12} ${x+7} ${y+5}`,{s:o.c||ACC,sw:2,o:o.o==null?1:o.o})+circ(x-5,y-3,2,{f:o.c||ACC,o:o.o==null?1:o.o})+circ(x+5,y-3,2,{f:o.c||ACC,o:o.o==null?1:o.o});
+const monkey=(x,y,o={})=>circ(x,y,16,{f:'none',s:o.c||ACC,sw:2.5,o:o.o==null?1:o.o})+circ(x-16,y-4,6,{f:'none',s:o.c||ACC,sw:2.5,o:o.o==null?1:o.o})+circ(x+16,y-4,6,{f:'none',s:o.c||ACC,sw:2.5,o:o.o==null?1:o.o})+path(`M${x-7} ${y+5} Q${x} ${y+12} ${x+7} ${y+5}`,{s:o.c||ACC,sw:2.5,o:o.o==null?1:o.o})+circ(x-5,y-3,2,{f:o.c||ACC,o:o.o==null?1:o.o})+circ(x+5,y-3,2,{f:o.c||ACC,o:o.o==null?1:o.o});
 // a car seen from the side, nose to the right; (x,y) is the ground under its centre
-const car=(x,y,o={})=>path(`M${x-44} ${y-10} L${x-40} ${y-26} L${x-14} ${y-30} L${x-2} ${y-44} L${x+26} ${y-44} L${x+40} ${y-28} L${x+46} ${y-10} Z`,{s:o.c||FG,sw:2,f:o.f||'rgba(255,255,255,.04)',o:o.o==null?1:o.o})+circ(x-26,y-8,8,{f:'none',s:o.c||FG,sw:2,o:o.o==null?1:o.o})+circ(x+26,y-8,8,{f:'none',s:o.c||FG,sw:2,o:o.o==null?1:o.o});
+const car=(x,y,o={})=>path(`M${x-44} ${y-10} L${x-40} ${y-26} L${x-14} ${y-30} L${x-2} ${y-44} L${x+26} ${y-44} L${x+40} ${y-28} L${x+46} ${y-10} Z`,{s:o.c||FG,sw:2.5,f:o.f||'rgba(255,255,255,.04)',o:o.o==null?1:o.o})+circ(x-26,y-8,8,{f:'none',s:o.c||FG,sw:2.5,o:o.o==null?1:o.o})+circ(x+26,y-8,8,{f:'none',s:o.c||FG,sw:2.5,o:o.o==null?1:o.o});
 // a wall of bricks
-function wall(x,y,w,h,o={}){let s=rect(x,y,w,h,{f:'rgba(255,255,255,.03)',s:MUT,sw:1.5,o:o.o==null?1:o.o});for(let r=1;r<h/18;r++){s+=line(x,y+r*18,x+w,y+r*18,{s:MUT,sw:1,o:(o.o==null?1:o.o)*0.5});}return s;}
-// a goal (soccer) at the left: posts and net
-const goal=(x,y,o={})=>path(`M${x} ${y+40} L${x} ${y} L${x+16} ${y} L${x+16} ${y+40}`,{s:o.c||FG,sw:3,o:o.o==null?1:o.o})+line(x+4,y+6,x+12,y+34,{s:BRD,sw:1,o:o.o==null?1:o.o})+line(x+12,y+6,x+4,y+34,{s:BRD,sw:1,o:o.o==null?1:o.o});
+function wall(x,y,w,h,o={}){let s=rect(x,y,w,h,{f:'rgba(255,255,255,.03)',s:MUT,sw:2,o:o.o==null?1:o.o});for(let r=1;r<h/22;r++){s+=line(x,y+r*22,x+w,y+r*22,{s:MUT,sw:1.5,o:(o.o==null?1:o.o)*0.5});}return s;}
+// a goal (soccer): posts and net
+const goal=(x,y,o={})=>path(`M${x} ${y+50} L${x} ${y} L${x+20} ${y} L${x+20} ${y+50}`,{s:o.c||FG,sw:3.5,o:o.o==null?1:o.o})+line(x+5,y+8,x+15,y+42,{s:BRD,sw:1.5,o:o.o==null?1:o.o})+line(x+15,y+8,x+5,y+42,{s:BRD,sw:1.5,o:o.o==null?1:o.o});
 // the z spectrum: a horizontal axis from -3 to +3 over [x, x+w]
-function zaxis(x,y,w,o={}){const a=o.o==null?1:o.o;let s=line(x,y,x+w,y,{s:MUT,sw:2,o:a});for(let z=-3;z<=3;z++){const px=x+(z+3)/6*w;s+=line(px,y-6,px,y+6,{s:MUT,sw:1.5,o:a});s+=txt(px,y+26,(z>0?'+':'')+z+(z?'σ':''),{a:'middle',sz:13,c:MUT,o:a});}return s;}
+function zaxis(x,y,w,o={}){const a=o.o==null?1:o.o;let s=line(x,y,x+w,y,{s:MUT,sw:3,o:a});for(let z=-3;z<=3;z++){const px=x+(z+3)/6*w;s+=line(px,y-8,px,y+8,{s:MUT,sw:2,o:a});s+=txt(px,y+32,(z>0?'+':'')+z+(z?'σ':''),{a:'middle',sz:o.sz||18,c:MUT,o:a});}return s;}
 // a gauge arc from the left (0) to the right (1)
-function gauge(cx,cy,r,u,o={}){const a=o.o==null?1:o.o;const arc=(u0,u1,st,sw)=>{const p0=Math.PI+Math.PI*u0,p1=Math.PI+Math.PI*u1;return path(`M${cx+r*Math.cos(p0)} ${cy+r*Math.sin(p0)} A${r} ${r} 0 ${(u1-u0)>.5?1:0} 1 ${cx+r*Math.cos(p1)} ${cy+r*Math.sin(p1)}`,{s:st,sw:sw||10,o:a});};let s=arc(0,1,'rgba(255,255,255,.08)',10)+arc(0,clamp(u,0.001,1),o.c||ACC,10);const p=Math.PI+Math.PI*clamp(u,0,1);s+=line(cx,cy,cx+(r-16)*Math.cos(p),cy+(r-16)*Math.sin(p),{s:FG,sw:3,o:a})+circ(cx,cy,5,{f:FG,o:a});return s;}
+function gauge(cx,cy,r,u,o={}){const a=o.o==null?1:o.o;const arc=(u0,u1,st,sw)=>{const p0=Math.PI+Math.PI*u0,p1=Math.PI+Math.PI*u1;return path(`M${cx+r*Math.cos(p0)} ${cy+r*Math.sin(p0)} A${r} ${r} 0 ${(u1-u0)>.5?1:0} 1 ${cx+r*Math.cos(p1)} ${cy+r*Math.sin(p1)}`,{s:st,sw:sw||12,o:a});};let s=arc(0,1,'rgba(255,255,255,.08)',12)+arc(0,clamp(u,0.001,1),o.c||ACC,12);const p=Math.PI+Math.PI*clamp(u,0,1);s+=line(cx,cy,cx+(r-18)*Math.cos(p),cy+(r-18)*Math.sin(p),{s:FG,sw:4,o:a})+circ(cx,cy,6,{f:FG,o:a});return s;}
+// the s25 ledger, drawn small again where he refers back to it (the recall box)
+const ledger=()=>txt(0,24,'$1,000,000',{sz:30,c:FG,cls:'mono'})+txt(0,58,'10 positions × 1 %',{sz:24,c:RISK})+txt(0,96,'heat max 10 %',{sz:32,c:KEY,w:600});
 
 function draw(t){
   let s='';
+  s += head(t,-0.1,'How does revenge show up in a trade?');
   // the trade line, kicked out, re-entered: the fork between get even and the zero state
-  s += line(120,200,520,200,{s:BRD,sw:2,o:op(t,-0.1,.4)});
-  if (t>=-0.1){ const a=op(t,-0.1,.5); s += circ(220,200,8,{f:FG,o:a}); s += line(212,192,228,208,{s:DN,sw:3,o:a}); s += line(228,192,212,208,{s:DN,sw:3,o:a}); s += txt(220,236,'kicked out',{a:'middle',sz:13,c:MUT,o:a}); }
-  if (t>=3.4){ const a=op(t,3.4,.5); s += circ(320,200,8,{f:ACC,o:a}); s += txt(320,236,'re-enter',{a:'middle',sz:13,c:MUT,o:a}); s += lab(t,5.6,320,170,'personally',{sz:13,c:DN,a:'middle'}); }
-  if (t>=9.6){ const a=op(t,9.6,.5); s += arrow(420,200,520,140,{s:DN,sw:2,o:a}); s += txt(530,136,'get even',{sz:15,c:DN,o:a}); s += arrow(420,200,520,260,{s:OK,sw:2,o:op(t,12.7,.5)}); s += txt(530,266,'zero state',{sz:15,c:OK,o:op(t,12.7,.5)}); }
-  // rigidity: a made-up rule, the wall, the head
-  if (t>=23.1){ const a=op(t,23.1,.6); s += rect(700,120,200,44,{r:6,s:BRD,f:'rgba(255,255,255,.03)',o:a}); s += txt(800,148,'a rule I made up',{a:'middle',sz:14,c:FG,o:a}); }
-  if (t>=27.8){ const a=op(t,27.8,.6); const k=Math.min(6,Math.floor((t-27.8)/1.5)); for(let i=0;i<=k;i++) s += txt(700+i*30,200,'✕',{sz:18,c:DN,o:a}); s += lab(t,27.8,700,224,'the evidence: not working',{sz:12,c:MUT}); }
-  if (t>=32.4){ const a=op(t,32.4,.6); s += wall(960,240,60,120,{o:a}); const bump = Math.max(0,Math.sin(t*4))*10; s += person(900+bump,320,{o:a}); }
-  if (t>=36.0) s += lab(t,36.0,700,300,'perverse pride in losing',{sz:14,c:DN});
-  if (t>=41.2) s += lab(t,41.2,700,324,'proving a point: to whom?',{sz:13,c:MUT});
-  if (t>=58.7){ const a=op(t,58.7,.6); s += card(120,300,400,70,{o:a,s:DN}); s += txt(140,328,'"I\'m losing money',{sz:15,c:FG,o:a}); s += txt(140,352,'and that proves I\'m right"',{sz:15,c:DN,o:a}); }
-  // the two tendencies named, and the chain between last trade and next cut
-  if (t>=87.0){ const a=op(t,87,.6); s += pill(300,440,'rigidity: persist in what is provably wrong',{sz:14,c:ACC,s:ACC,o:a,w:380}); }
-  if (t>=94.9){ const a=op(t,94.9,.6); s += pill(760,440,'revenge: get even for the last trade',{sz:14,c:ACC,s:ACC,o:a,w:340}); }
-  if (t>=103.8){ const a=op(t,103.8,.6); s += rect(640,480,60,22,{r:4,s:MUT,o:a}); s += rect(720,480,60,22,{r:4,s:MUT,o:a}); s += txt(670,496,'last',{a:'middle',sz:11,c:MUT,o:a}); s += txt(750,496,'next',{a:'middle',sz:11,c:MUT,o:a}); s += line(700,491,720,491,{s:MUT,sw:2,o:a}); s += line(705,480,715,502,{s:DN,sw:2,o:a}); s += txt(800,496,'not connected',{sz:12,c:MUT,o:a}); }
+  s += line(60,190,520,190,{s:BRD,sw:3,o:op(t,-0.1,.4)});
+  if (t>=-0.1){ const a=op(t,-0.1,.5); s += circ(180,190,11,{f:FG,o:a}); s += line(168,178,192,202,{s:DN,sw:4,o:a}); s += line(192,178,168,202,{s:DN,sw:4,o:a}); s += txt(180,232,'kicked out',{a:'middle',sz:20,c:MUT,o:a}); }
+  if (t>=3.4){ const a=op(t,3.4,.5); s += circ(320,190,11,{f:KEY,o:a}); s += txt(320,232,'re-enter',{a:'middle',sz:20,c:MUT,o:a}); s += aside(t,5.6,330,160,'personally',{sz:24,c:DN}); }
+  if (t>=9.6){ const a=op(t,9.6,.5); s += arrow(430,190,540,110,{s:DN,sw:3,o:a}); s += txt(552,106,'get even',{sz:24,c:DN,o:a}); s += arrow(430,190,540,270,{s:RULE,sw:3,o:op(t,12.7,.5)}); s += txt(552,278,'the zero state',{sz:24,c:RULE,o:op(t,12.7,.5)}); }
+  // rigidity: a made-up rule, the evidence, the wall and the head
+  if (t>=23.1){ const a=op(t,23.1,.6); s += rect(60,300,260,52,{r:8,s:BRD,f:'rgba(255,255,255,.03)',sw:2,o:a}); s += txt(190,334,'a rule I made up',{a:'middle',sz:20,c:FG,o:a}); }
+  if (t>=27.8){ const a=op(t,27.8,.6); const k=Math.min(6,Math.floor((t-27.8)/1.5)); for(let i=0;i<=k;i++) s += txt(60+i*40,400,'✕',{sz:26,c:DN,o:a}); s += lab(t,27.8,60,432,'the evidence: not working',{sz:18,c:MUT}); }
+  if (t>=32.4){ const a=op(t,32.4,.6); s += wall(560,300,80,160,{o:a}); const bump=Math.max(0,Math.sin(t*4))*14; s += big(480+bump,400,1.5,person(480+bump,400,{o:a})); }
+  if (t>=36.0) s += lab(t,36.0,380,490,'perverse pride in losing',{sz:22,c:DN});
+  if (t>=41.2) s += aside(t,41.2,400,520,'proving a point: to whom?',{sz:22});
+  // right column: the line, the two tendencies, the chain
+  if (t>=58.7){ const a=op(t,58.7,.6); s += card(780,130,340,96,{o:a,s:DN}); s += txt(800,166,'"I\'m losing money,',{sz:22,c:FG,o:a}); s += txt(800,200,'and that proves I\'m right"',{sz:22,c:DN,o:a}); }
+  if (t>=87.0) s += defn(t,87.0,780,260,340,'rigidity',['persist in what is provably wrong'],{lsz:18,lh:26});
+  if (t>=94.9) s += defn(t,94.9,780,378,340,'revenge',['get even for the last trade'],{lsz:18,lh:26});
+  if (t>=103.8){ const a=op(t,103.8,.6); s += rect(800,500,70,24,{r:4,s:MUT,sw:2,o:a}); s += rect(900,500,70,24,{r:4,s:MUT,sw:2,o:a}); s += txt(835,518,'last',{a:'middle',sz:16,c:MUT,o:a}); s += txt(935,518,'next',{a:'middle',sz:16,c:MUT,o:a}); s += line(870,512,900,512,{s:MUT,sw:2.5,o:a}); s += line(878,500,892,524,{s:DN,sw:2.5,o:a}); s += txt(990,518,'not connected',{sz:16,c:MUT,o:a}); }
+  s += focus(t,[[-0.1,180,190],[9.6,540,110],[12.7,540,270],[27.8,180,395],[32.4,560,380],[58.7,950,178],[103.8,885,512]]);
   return s;
 }
 

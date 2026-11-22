@@ -1,14 +1,14 @@
 {
   "schema": "coursecraft-plan-v2",
   "course": "disciplined-operator-v2",
-  "revision": 6,
+  "revision": 7,
   "revised": "2026-11-21",
   "status": "DRAFT rev2 (2026-11-21): rev 1's source-mapped, duration-verified cut (title quotes restored, windows follow the speech) carried forward; animation briefs in the current style added on the three framework overdubs and the explainer; corpus re-check done (below). The owner compares it with disciplined-operator-v1 (as published) and edits here.",
   "title": "The Disciplined Operator (v2)",
   "topic_class": "psychology-heavy + three chartable frameworks; ZERO outcomes (nothing decidable in footage)",
   "store_sku": "disciplined-operator",
   "replaces": "c-tosm3",
-  "notes": "Cut track: docs/store-v2-cut-tracks.md §3. Mapping findings folded in: (1) the four soccer beats all live in ONE continuous 65s source passage (18:06-19:03 of coaching-tom-hardison) — v1's scene windows 9-11 sat over unrelated footage and the sting fired ~90s late; the 4-beat overdub is timed to 18:06/18:19/18:41/18:54 with the compact all-four-rules line (15:37-15:43) for the summary frame; (2) systematic scene-title drift — titles anchored to speech earlier than their windows throughout; v2 windows follow the SPEECH; (3) sting prompt fields are stale M1 copy-paste (the _note fields were correct); (4) ATTRIBUTION CHECK for cutroom: the 27-years gate story — card credits Tom, build doc credits Ken; VTT has no speaker tags; LISTEN and card accordingly.\n\n2026-11-21 corpus re-check (kenlong-transcripts, 566 sessions): the four sessions this plan cuts from remain the strongest on every theme. revenge/rigidity 168 mentions in 40 files, 70 of them in coaching-tom-hardison (b9h), the next best 6; monkey-drive / take the wheel: only b9h and apk carry it; soccer protect-the-goal 347 mentions in 75 files, b9h first with 38 (the creativity-202 sessions use the soccer model for coaching, not for the trade lifecycle); Aristotle / pride / timidity: apk carries the trading spectrum, the other hits are Aristotle on coaching in Athens and on formal logic; A/B/C Z-bands: apk 19 of 60; three machine guns: cohort-1-burnout-resilience (c1) 16 of 19; Frankenstein / minimum mission-essential: c1 plus a 2022-08-28 creativity session (courage) and swing-trading-qa-2; portfolio heat: 4321-position-sizing (p4321) 13 of 26, next 2023-06-30 session (uGb4ksTazhk 1:12:02, 'if every single open trade I have is wrong, the accumulated risk of every open trade') as a spoken alternate, not yet a source. So the improvement is structural and visual, not a swap of footage: the restored lines, the speech-aligned windows, the four-beat soccer overdub, the Z-band overdub, the heat gauge, and the Ava explainer for the threshold. The ★ stings of v1 are kept as the twin's caption beats. Style: ink, Ken's tile top-right where b9h and apk have him on camera (crops from mental-model-2-v2 / mental-model-v2).\n\nrev3 (2026-11-21, owner: twins for all the clips with Ken's tile): every cut has an animated twin (anim_gen.py), the cut off and the twin on; b9h and c1 crop to Ken's tile (the student is gone), apk and p4321 show his still (their tiles are thumbnails); s08 and s15 drawn; s27 explainer scripted.\n\nrev4 (2026-11-21, owner: 'i really like the new cut'; two design cards): s00 the internal story arc, s00s the sales promise, both at the head of the cutroom, ON so they sit in the storyboard; neither is meant for the render unless the owner keeps s00s.\n\nrev5 (2026-11-21, owner: two wordy slides as description copy): s00w the arc in prose, s00sw the store description, layout `prose` (new in render_slides and cutroom-30).\n\nrev6 (2026-11-21, owner: 'let's do B'): s000 the course opener from the Stanford style study, option B (the watch) around the Zero State owl portrait; scripts/opener.py writes it; first in the storyboard, ON.",
+  "notes": "Cut track: docs/store-v2-cut-tracks.md §3. Mapping findings folded in: (1) the four soccer beats all live in ONE continuous 65s source passage (18:06-19:03 of coaching-tom-hardison) — v1's scene windows 9-11 sat over unrelated footage and the sting fired ~90s late; the 4-beat overdub is timed to 18:06/18:19/18:41/18:54 with the compact all-four-rules line (15:37-15:43) for the summary frame; (2) systematic scene-title drift — titles anchored to speech earlier than their windows throughout; v2 windows follow the SPEECH; (3) sting prompt fields are stale M1 copy-paste (the _note fields were correct); (4) ATTRIBUTION CHECK for cutroom: the 27-years gate story — card credits Tom, build doc credits Ken; VTT has no speaker tags; LISTEN and card accordingly.\n\n2026-11-21 corpus re-check (kenlong-transcripts, 566 sessions): the four sessions this plan cuts from remain the strongest on every theme. revenge/rigidity 168 mentions in 40 files, 70 of them in coaching-tom-hardison (b9h), the next best 6; monkey-drive / take the wheel: only b9h and apk carry it; soccer protect-the-goal 347 mentions in 75 files, b9h first with 38 (the creativity-202 sessions use the soccer model for coaching, not for the trade lifecycle); Aristotle / pride / timidity: apk carries the trading spectrum, the other hits are Aristotle on coaching in Athens and on formal logic; A/B/C Z-bands: apk 19 of 60; three machine guns: cohort-1-burnout-resilience (c1) 16 of 19; Frankenstein / minimum mission-essential: c1 plus a 2022-08-28 creativity session (courage) and swing-trading-qa-2; portfolio heat: 4321-position-sizing (p4321) 13 of 26, next 2023-06-30 session (uGb4ksTazhk 1:12:02, 'if every single open trade I have is wrong, the accumulated risk of every open trade') as a spoken alternate, not yet a source. So the improvement is structural and visual, not a swap of footage: the restored lines, the speech-aligned windows, the four-beat soccer overdub, the Z-band overdub, the heat gauge, and the Ava explainer for the threshold. The ★ stings of v1 are kept as the twin's caption beats. Style: ink, Ken's tile top-right where b9h and apk have him on camera (crops from mental-model-2-v2 / mental-model-v2).\n\nrev3 (2026-11-21, owner: twins for all the clips with Ken's tile): every cut has an animated twin (anim_gen.py), the cut off and the twin on; b9h and c1 crop to Ken's tile (the student is gone), apk and p4321 show his still (their tiles are thumbnails); s08 and s15 drawn; s27 explainer scripted.\n\nrev4 (2026-11-21, owner: 'i really like the new cut'; two design cards): s00 the internal story arc, s00s the sales promise, both at the head of the cutroom, ON so they sit in the storyboard; neither is meant for the render unless the owner keeps s00s.\n\nrev5 (2026-11-21, owner: two wordy slides as description copy): s00w the arc in prose, s00sw the store description, layout `prose` (new in render_slides and cutroom-30).\n\nrev6 (2026-11-21, owner: 'let's do B'): s000 the course opener from the Stanford style study, option B (the watch) around the Zero State owl portrait; scripts/opener.py writes it; first in the storyboard, ON.\n\nrev7 (2026-11-21, owner: 'recut the operator with our new approach, using all things that help'): the stage cut. Every twin and both overdubs and the explainer rebuilt on the `stage` (pure black, the scene at full width) under the lesson rules from the Stanford study: the question the window answers as the scene's head, one figure across the left with 20-34 px labels and the numbers in a right column, a focus ring on the element of each beat, the rule he states boxed in his words, his asides in the handwritten register, the $1,000,000 / 10 positions / 1 % example carried from s25 into s26 (recall box) and s27, one colour per quantity, the chapter counter bottom-right. Beats unchanged from rev 3.",
   "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/disciplined-operator-v2/",
   "sources": [
     {
@@ -165,7 +165,7 @@
       "in": 208.0,
       "out": 408.0,
       "animation_brief": "drawn from his words in this window; see anim_gen.py",
-      "status": "twin of s01: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
+      "status": "twin of s01: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example)",
       "pip": true,
       "transition": {
         "type": "dip",
@@ -207,7 +207,7 @@
       "in": 408.0,
       "out": 520.0,
       "animation_brief": "drawn from his words in this window; see anim_gen.py",
-      "status": "twin of s03: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
+      "status": "twin of s03: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example)",
       "pip": true,
       "transition": {
         "type": "dip",
@@ -249,7 +249,7 @@
       "in": 777.0,
       "out": 959.0,
       "animation_brief": "drawn from his words in this window; see anim_gen.py",
-      "status": "twin of s05: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
+      "status": "twin of s05: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example)",
       "pip": true,
       "transition": {
         "type": "dip",
@@ -276,7 +276,7 @@
       "in": 959.0,
       "out": 1080.0,
       "animation_brief": "drawn from his words in this window; see anim_gen.py",
-      "status": "twin of s06: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
+      "status": "twin of s06: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example)",
       "pip": true,
       "transition": {
         "type": "dip",
@@ -306,7 +306,7 @@
       "source": "b9h",
       "in": 1080.0,
       "out": 1143.0,
-      "status": "MAPPED-VERIFIED — the beats are 18:06 protect the goal / 18:19 ★ get the ball / 18:41 find space / 18:54 shoot and score, all inside 18:00-19:03. v1 spread the animation targets across 4 scene windows whose later footage was actually the emotional-state-manager passage; sting goes ON 18:19; rev2: brief for anim-overdub in the current style",
+      "status": "MAPPED-VERIFIED — the beats are 18:06 protect the goal / 18:19 ★ get the ball / 18:41 find space / 18:54 shoot and score, all inside 18:00-19:03. v1 spread the animation targets across 4 scene windows whose later footage was actually the emotional-state-manager passage; sting goes ON 18:19; rev2: brief for anim-overdub in the current style · rev7: the stage cut (question head, focus ring, boxed rules, running example)",
       "animation_brief": "animate (four beats on his words, 18:06 protect the goal / 18:19 get the ball / 18:41 find space / 18:54 shoot and score): a soccer pitch that morphs into a chart; beat 1 a risk box drawn under the entry (the goal protected); beat 2 the entry marker snaps in; beat 3 the trade in flight with congestion shaded; beat 4 the exit and a four-phase summary frame with the compact all-four-rules line (15:37-15:43) as the closing caption",
       "quote_anchor": "now that we've protected our goal... can we get the ball? So, that's stalking... find space and stay away from congestion... can I shoot and score",
       "pip": true
@@ -331,7 +331,7 @@
       "in": 1189.0,
       "out": 1318.0,
       "animation_brief": "drawn from his words in this window; see anim_gen.py",
-      "status": "twin of s09: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
+      "status": "twin of s09: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example)",
       "pip": true,
       "transition": {
         "type": "dip",
@@ -373,7 +373,7 @@
       "in": 3849.0,
       "out": 4008.0,
       "animation_brief": "drawn from his words in this window; see anim_gen.py",
-      "status": "twin of s11: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
+      "status": "twin of s11: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example)",
       "pip": true,
       "transition": {
         "type": "dip",
@@ -401,7 +401,7 @@
       "in": 4008.0,
       "out": 4168.0,
       "animation_brief": "drawn from his words in this window; see anim_gen.py",
-      "status": "twin of s12: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
+      "status": "twin of s12: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example)",
       "pip": true,
       "transition": {
         "type": "dip",
@@ -428,7 +428,7 @@
       "in": 4168.0,
       "out": 4258.0,
       "animation_brief": "drawn from his words in this window; see anim_gen.py",
-      "status": "twin of s13: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
+      "status": "twin of s13: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example)",
       "pip": true,
       "transition": {
         "type": "dip",
@@ -458,7 +458,7 @@
       "source": "apk",
       "in": 4610.0,
       "out": 4707.0,
-      "status": "MAPPED-VERIFIED — v1 in-point (1:17:09) clipped 'the normal game, the B game is 0 plus or minus one' (1:16:51-1:17:05); v2 starts 1:16:50. C/B boundary at -1 sigma 4635-4641; Z-1/Z+1 exchange 4652-4677; ★ 'that's where the A game begins — at Z plus one' 4674-4678 — band-chart boundary draw syncs there. NOTE: 'center of mass rock solid' (4681) is about A and C at +/-2 sigma, not the B game — card the maxim accurately; rev2: brief for anim-overdub in the current style",
+      "status": "MAPPED-VERIFIED — v1 in-point (1:17:09) clipped 'the normal game, the B game is 0 plus or minus one' (1:16:51-1:17:05); v2 starts 1:16:50. C/B boundary at -1 sigma 4635-4641; Z-1/Z+1 exchange 4652-4677; ★ 'that's where the A game begins — at Z plus one' 4674-4678 — band-chart boundary draw syncs there. NOTE: 'center of mass rock solid' (4681) is about A and C at +/-2 sigma, not the B game — card the maxim accurately; rev2: brief for anim-overdub in the current style · rev7: the stage cut (question head, focus ring, boxed rules, running example)",
       "animation_brief": "animate: the band chart of a trader's own session scores, mean in the middle, Z±1 shaded as the B game ('the normal game, the B game, is zero plus or minus one'); on the ★ line the Z+1 boundary draws and the A game lights to the right, the C tail to the left at -2; captions on his exact grading words",
       "quote_anchor": "the normal game, the B game is 0 plus or minus one... that's the boundary. That's where the A game begins — at Z plus one",
       "pip": true
@@ -483,7 +483,7 @@
       "in": 4707.0,
       "out": 4787.0,
       "animation_brief": "drawn from his words in this window; see anim_gen.py",
-      "status": "twin of s16: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
+      "status": "twin of s16: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example)",
       "pip": true,
       "transition": {
         "type": "dip",
@@ -510,7 +510,7 @@
       "in": 4787.0,
       "out": 4888.0,
       "animation_brief": "drawn from his words in this window; see anim_gen.py",
-      "status": "twin of s17: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
+      "status": "twin of s17: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example)",
       "pip": true,
       "transition": {
         "type": "dip",
@@ -552,7 +552,7 @@
       "in": 1260.0,
       "out": 1437.0,
       "animation_brief": "drawn from his words in this window; see anim_gen.py",
-      "status": "twin of s19: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
+      "status": "twin of s19: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example)",
       "pip": true,
       "transition": {
         "type": "dip",
@@ -579,7 +579,7 @@
       "in": 1437.0,
       "out": 1557.0,
       "animation_brief": "drawn from his words in this window; see anim_gen.py",
-      "status": "twin of s20: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
+      "status": "twin of s20: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example)",
       "pip": true,
       "transition": {
         "type": "dip",
@@ -621,7 +621,7 @@
       "in": 1560.0,
       "out": 1707.0,
       "animation_brief": "drawn from his words in this window; see anim_gen.py",
-      "status": "twin of s22: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
+      "status": "twin of s22: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example)",
       "pip": true,
       "transition": {
         "type": "dip",
@@ -648,7 +648,7 @@
       "in": 1707.0,
       "out": 1827.0,
       "animation_brief": "drawn from his words in this window; see anim_gen.py",
-      "status": "twin of s23: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
+      "status": "twin of s23: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example)",
       "pip": true,
       "transition": {
         "type": "dip",
@@ -691,7 +691,7 @@
       "in": 3060.0,
       "out": 3249.0,
       "animation_brief": "animate at the definition (open on the Ken/Tom exchange as cut, then the twin): positions stacking as rungs of a ladder, each rung a trade's open risk; the rungs collapse to one number on the ★ line ('I summed all of the open risk'); 'worst trade is not worst day' as a caption card",
-      "status": "twin of s25: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
+      "status": "twin of s25: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example)",
       "pip": true,
       "transition": {
         "type": "dip",
@@ -718,7 +718,7 @@
       "in": 3249.0,
       "out": 3359.0,
       "animation_brief": "drawn from his words in this window; see anim_gen.py",
-      "status": "twin of s26: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
+      "status": "twin of s26: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom · rev7: the stage cut (question head, focus ring, boxed rules, running example)",
       "pip": true,
       "transition": {
         "type": "dip",
@@ -741,7 +741,7 @@
       },
       "animation_brief": "explainer (Ava, typography + the heat gauge, mode 2): the threshold line moving against an equity path, heat as a percentage of risk capital, never dollars; ends on his own 'Let's go. Buckle up.' from the cut tail | scene anim-s27.html (twin=False), no tile: synth voice",
       "quote_anchor": "I hear your concerns. We've taken it into account. Safety measures are in place. Let's go. Buckle up.",
-      "status": "rev3: VO script written (Ava, 34 s est.), scene drawn; the cut tail follows as planned"
+      "status": "rev3: VO script written (Ava, 34 s est.), scene drawn; the cut tail follows as planned · rev7: the stage cut (question head, focus ring, boxed rules, running example)"
     },
     {
       "id": "s28",
