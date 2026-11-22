@@ -1,14 +1,14 @@
 {
   "schema": "coursecraft-plan-v2",
   "course": "disciplined-operator-v2",
-  "revision": 3,
+  "revision": 4,
   "revised": "2026-11-21",
   "status": "DRAFT rev2 (2026-11-21): rev 1's source-mapped, duration-verified cut (title quotes restored, windows follow the speech) carried forward; animation briefs in the current style added on the three framework overdubs and the explainer; corpus re-check done (below). The owner compares it with disciplined-operator-v1 (as published) and edits here.",
   "title": "The Disciplined Operator (v2)",
   "topic_class": "psychology-heavy + three chartable frameworks; ZERO outcomes (nothing decidable in footage)",
   "store_sku": "disciplined-operator",
   "replaces": "c-tosm3",
-  "notes": "Cut track: docs/store-v2-cut-tracks.md §3. Mapping findings folded in: (1) the four soccer beats all live in ONE continuous 65s source passage (18:06-19:03 of coaching-tom-hardison) — v1's scene windows 9-11 sat over unrelated footage and the sting fired ~90s late; the 4-beat overdub is timed to 18:06/18:19/18:41/18:54 with the compact all-four-rules line (15:37-15:43) for the summary frame; (2) systematic scene-title drift — titles anchored to speech earlier than their windows throughout; v2 windows follow the SPEECH; (3) sting prompt fields are stale M1 copy-paste (the _note fields were correct); (4) ATTRIBUTION CHECK for cutroom: the 27-years gate story — card credits Tom, build doc credits Ken; VTT has no speaker tags; LISTEN and card accordingly.\n\n2026-11-21 corpus re-check (kenlong-transcripts, 566 sessions): the four sessions this plan cuts from remain the strongest on every theme. revenge/rigidity 168 mentions in 40 files, 70 of them in coaching-tom-hardison (b9h), the next best 6; monkey-drive / take the wheel: only b9h and apk carry it; soccer protect-the-goal 347 mentions in 75 files, b9h first with 38 (the creativity-202 sessions use the soccer model for coaching, not for the trade lifecycle); Aristotle / pride / timidity: apk carries the trading spectrum, the other hits are Aristotle on coaching in Athens and on formal logic; A/B/C Z-bands: apk 19 of 60; three machine guns: cohort-1-burnout-resilience (c1) 16 of 19; Frankenstein / minimum mission-essential: c1 plus a 2022-08-28 creativity session (courage) and swing-trading-qa-2; portfolio heat: 4321-position-sizing (p4321) 13 of 26, next 2023-06-30 session (uGb4ksTazhk 1:12:02, 'if every single open trade I have is wrong, the accumulated risk of every open trade') as a spoken alternate, not yet a source. So the improvement is structural and visual, not a swap of footage: the restored lines, the speech-aligned windows, the four-beat soccer overdub, the Z-band overdub, the heat gauge, and the Ava explainer for the threshold. The ★ stings of v1 are kept as the twin's caption beats. Style: ink, Ken's tile top-right where b9h and apk have him on camera (crops from mental-model-2-v2 / mental-model-v2).\n\nrev3 (2026-11-21, owner: twins for all the clips with Ken's tile): every cut has an animated twin (anim_gen.py), the cut off and the twin on; b9h and c1 crop to Ken's tile (the student is gone), apk and p4321 show his still (their tiles are thumbnails); s08 and s15 drawn; s27 explainer scripted.",
+  "notes": "Cut track: docs/store-v2-cut-tracks.md §3. Mapping findings folded in: (1) the four soccer beats all live in ONE continuous 65s source passage (18:06-19:03 of coaching-tom-hardison) — v1's scene windows 9-11 sat over unrelated footage and the sting fired ~90s late; the 4-beat overdub is timed to 18:06/18:19/18:41/18:54 with the compact all-four-rules line (15:37-15:43) for the summary frame; (2) systematic scene-title drift — titles anchored to speech earlier than their windows throughout; v2 windows follow the SPEECH; (3) sting prompt fields are stale M1 copy-paste (the _note fields were correct); (4) ATTRIBUTION CHECK for cutroom: the 27-years gate story — card credits Tom, build doc credits Ken; VTT has no speaker tags; LISTEN and card accordingly.\n\n2026-11-21 corpus re-check (kenlong-transcripts, 566 sessions): the four sessions this plan cuts from remain the strongest on every theme. revenge/rigidity 168 mentions in 40 files, 70 of them in coaching-tom-hardison (b9h), the next best 6; monkey-drive / take the wheel: only b9h and apk carry it; soccer protect-the-goal 347 mentions in 75 files, b9h first with 38 (the creativity-202 sessions use the soccer model for coaching, not for the trade lifecycle); Aristotle / pride / timidity: apk carries the trading spectrum, the other hits are Aristotle on coaching in Athens and on formal logic; A/B/C Z-bands: apk 19 of 60; three machine guns: cohort-1-burnout-resilience (c1) 16 of 19; Frankenstein / minimum mission-essential: c1 plus a 2022-08-28 creativity session (courage) and swing-trading-qa-2; portfolio heat: 4321-position-sizing (p4321) 13 of 26, next 2023-06-30 session (uGb4ksTazhk 1:12:02, 'if every single open trade I have is wrong, the accumulated risk of every open trade') as a spoken alternate, not yet a source. So the improvement is structural and visual, not a swap of footage: the restored lines, the speech-aligned windows, the four-beat soccer overdub, the Z-band overdub, the heat gauge, and the Ava explainer for the threshold. The ★ stings of v1 are kept as the twin's caption beats. Style: ink, Ken's tile top-right where b9h and apk have him on camera (crops from mental-model-2-v2 / mental-model-v2).\n\nrev3 (2026-11-21, owner: twins for all the clips with Ken's tile): every cut has an animated twin (anim_gen.py), the cut off and the twin on; b9h and c1 crop to Ken's tile (the student is gone), apk and p4321 show his still (their tiles are thumbnails); s08 and s15 drawn; s27 explainer scripted.\n\nrev4 (2026-11-21, owner: 'i really like the new cut'; two design cards): s00 the internal story arc, s00s the sales promise, both at the head of the cutroom, ON so they sit in the storyboard; neither is meant for the render unless the owner keeps s00s.",
   "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/disciplined-operator-v2/",
   "sources": [
     {
@@ -69,6 +69,38 @@
     }
   ],
   "segments": [
+    {
+      "id": "s00",
+      "type": "slide",
+      "include": true,
+      "label": "INTERNAL · story arc (design card, OFF before the build)",
+      "slide_id": "arc",
+      "duration": 8,
+      "layout": "agenda",
+      "text": {
+        "kicker": "INTERNAL · THE STORY ARC · NOT FOR THE CUT",
+        "title": "**One operator**: self, trade, capital",
+        "subtitle": "Not willpower: a team, a game, a gauge, a ration and a cap, built before the chimp shows up.",
+        "body": "Name it | Ch 1 (s01, s03): revenge and rigidity, the gate story; the same chimp rides into the trade\nTake the wheel | Ch 1b (s05, s06): how long will you watch the monkey drive; the caretaker; the internal team\nPlay the game | Ch 2 (s08, s09): protect the goal, get the ball, go to the goal, score; the coach's job\nGrade yourself | Ch 3, 3b (s11–s17): Aristotle's middle; cynicism = pride; the A/B/C bands; rate the session\nRation the fire | Ch 4, 4b (s19–s23): three machine guns; parsimonious; cut the Frankenstein; respect the few\nCap the heat | Ch 5 (s25–s27): heat defined; sizing against the goal; the dynamic threshold"
+      },
+      "status": "rev4 (owner, 2026-11-21): an internal slide on the story arc, what the whole video says and how the segments relate; in the cutroom for design, not for the render"
+    },
+    {
+      "id": "s00s",
+      "type": "slide",
+      "include": true,
+      "label": "SALES · what you walk away with (for the store page; OFF before the build unless kept)",
+      "slide_id": "promise",
+      "duration": 8,
+      "layout": "agenda",
+      "text": {
+        "kicker": "THE DISCIPLINED OPERATOR · ABOUT 40 MINUTES WITH DR. KEN LONG",
+        "title": "What you walk away with",
+        "subtitle": "",
+        "body": "A name for what hijacks you | revenge and rigidity, and how to see them coming\nA way to take the wheel back | the caretaker function and your internal team\nFour questions for every trade | protect the goal, get the ball, go to the goal, shoot and score\nA daily grade that is not your P&L | the A/B/C bands and the mark you make at the close\nFewer rules, sustained | three machine guns, the minimum mission-essential set\nA number that caps the damage | portfolio heat and the dynamic threshold"
+      },
+      "status": "rev4 (owner, 2026-11-21): one slide for the sales site on what the user should hope to get; every line names content the cut carries, no outcome promised"
+    },
     {
       "id": "s01",
       "type": "cut",
