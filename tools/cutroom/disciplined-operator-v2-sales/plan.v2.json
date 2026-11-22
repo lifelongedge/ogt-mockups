@@ -1,222 +1,226 @@
 {
-  "schema": "coursecraft-plan-v2",
-  "course": "disciplined-operator-v2-sales",
-  "cutroom": "disciplined-operator-v2-sales",
-  "revision": 2,
-  "revised": "2026-11-22",
-  "status": "DRAFT rev1: a sales clip of disciplined-operator-v2, ~120 s; the owner edits it in the cutroom",
-  "title": "The Disciplined Operator: sales clip",
-  "topic_class": "sales clip",
-  "store_sku": "disciplined-operator",
-  "replaces": null,
-  "notes": "Owner yes 2026-11-22. Bites end on a full sentence (b9h and c1 cues read 2026-11-22). The gate story is Ken's (owner 2026-11-22). Each twin starts the parent's scene at the bite's offset, so the captions stay on his words.",
-  "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/disciplined-operator-v2/",
-  "sources": [
-    {
-      "id": "b9h",
-      "label": "coaching-tom-hardison (Ch1-2: pathologies, monkey, soccer)",
-      "file": "youtube-B9HVuTtPVqM-coaching-tom-hardison.mp4",
-      "proxy": "youtube-B9HVuTtPVqM-coaching-tom-hardison.proxy.mp4",
-      "url": "https://www.youtube.com/watch?v=B9HVuTtPVqM",
-      "pip": {
-        "crop": "iw*0.418:ih*0.418:iw*0.5406:ih*0.2917",
-        "note": "two tiles, Ken on the right; a 16:9 window on his tile (mental-model-2-v2's crop; rechecked 2026-11-21 at 300, 1200 s)"
-      }
-    },
-    {
-      "id": "c1",
-      "label": "cohort-1-burnout-resilience (Ch4: machine guns + Frankenstein)",
-      "file": "youtube-3jnbqQEniyQ-cohort-1-burnout-resilience.mp4",
-      "proxy": "youtube-3jnbqQEniyQ-cohort-1-burnout-resilience.proxy.mp4",
-      "url": "https://www.youtube.com/watch?v=3jnbqQEniyQ",
-      "pip": {
-        "crop": "iw*0.5:ih*0.5:iw*0.5:ih*0.25",
-        "note": "standard Zoom two-up, Ken on the right with the headset; rows 179-540 measured, the column split taken from the layout (checked at 1300, 1500, 1650, 1800 s)"
-      }
-    }
-  ],
-  "voices": [
-    {
-      "id": "ava",
-      "label": "Ava (US, female, polished)",
-      "sample": "vo-ava.mp3"
-    },
-    {
-      "id": "andrew",
-      "label": "Andrew (US, male, conversational)",
-      "sample": "vo-andrew.mp3"
-    }
-  ],
-  "segments": [
-    {
-      "id": "s00",
-      "type": "slide",
-      "include": true,
-      "label": "Title card",
-      "slide_id": "title",
-      "duration": 4,
-      "layout": "title",
-      "text": {
-        "kicker": "",
-        "title": "**The Disciplined Operator**",
-        "subtitle": "Thinking for trading success",
-        "body": "with Dr. Ken Long"
-      }
-    },
-    {
-      "id": "s01",
-      "type": "cut",
-      "include": false,
-      "label": "★ How long will you watch the monkey drive? (title quote RESTORED)",
-      "source": "b9h",
-      "in": 779.4,
-      "out": 799,
-      "why": "the hook: how long are you going to watch the monkey drive? ... and only then take over driving?",
-      "status": "bite of disciplined-operator-v2 s05 (+2.4..+22.0 s); the twin s01a carries it"
-    },
-    {
-      "id": "s01a",
-      "type": "overdub",
-      "include": true,
-      "label": "ALT animated: ★ How long will you watch the monkey drive? (title quote RESTORED)",
-      "source": "b9h",
-      "in": 779.4,
-      "out": 799,
-      "why": "the hook: how long are you going to watch the monkey drive? ... and only then take over driving?",
-      "anim_of": {
-        "course": "disciplined-operator-v2",
-        "scene": "s05"
-      },
-      "animation_brief": "the disciplined-operator-v2 s05 scene, started at its +2.4 s",
-      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
-      "pip": true
-    },
-    {
-      "id": "s02",
-      "type": "cut",
-      "include": false,
-      "label": "OVERDUB: the soccer game — all four beats (one continuous 65s passage)",
-      "source": "b9h",
-      "in": 1082.6,
-      "out": 1099.3,
-      "why": "the soccer game: can we protect our goal, losing more than one R; protect the goal first",
-      "status": "bite of disciplined-operator-v2 s08 (+2.6..+19.3 s); the twin s02a carries it"
-    },
-    {
-      "id": "s02a",
-      "type": "overdub",
-      "include": true,
-      "label": "ALT animated: OVERDUB: the soccer game — all four beats (one continuous 65s passage)",
-      "source": "b9h",
-      "in": 1082.6,
-      "out": 1099.3,
-      "why": "the soccer game: can we protect our goal, losing more than one R; protect the goal first",
-      "anim_of": {
-        "course": "disciplined-operator-v2",
-        "scene": "s08"
-      },
-      "animation_brief": "the disciplined-operator-v2 s08 scene, started at its +2.6 s",
-      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
-      "pip": true
-    },
-    {
-      "id": "s03",
-      "type": "cut",
-      "include": false,
-      "label": "Three machine guns (rotation image RESTORED)",
-      "source": "c1",
-      "in": 1301,
-      "out": 1324,
-      "why": "the line the course is named for: twenty minutes of ammunition, so I have to be disciplined in my fire",
-      "status": "bite of disciplined-operator-v2 s19 (+41.0..+64.0 s); the twin s03a carries it"
-    },
-    {
-      "id": "s03a",
-      "type": "overdub",
-      "include": true,
-      "label": "ALT animated: Three machine guns (rotation image RESTORED)",
-      "source": "c1",
-      "in": 1301,
-      "out": 1324,
-      "why": "the line the course is named for: twenty minutes of ammunition, so I have to be disciplined in my fire",
-      "anim_of": {
-        "course": "disciplined-operator-v2",
-        "scene": "s19"
-      },
-      "animation_brief": "the disciplined-operator-v2 s19 scene, started at its +41.0 s",
-      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
-      "pip": true
-    },
-    {
-      "id": "s04",
-      "type": "cut",
-      "include": false,
-      "label": "★ The Frankenstein creature (+ the minimum-mission-essential question)",
-      "source": "c1",
-      "in": 1584,
-      "out": 1604.5,
-      "why": "the Frankenstein creature: one more test, one more rule, still there watching the damn thing run",
-      "status": "bite of disciplined-operator-v2 s22 (+24.0..+44.5 s); the twin s04a carries it"
-    },
-    {
-      "id": "s04a",
-      "type": "overdub",
-      "include": true,
-      "label": "ALT animated: ★ The Frankenstein creature (+ the minimum-mission-essential question)",
-      "source": "c1",
-      "in": 1584,
-      "out": 1604.5,
-      "why": "the Frankenstein creature: one more test, one more rule, still there watching the damn thing run",
-      "anim_of": {
-        "course": "disciplined-operator-v2",
-        "scene": "s22"
-      },
-      "animation_brief": "the disciplined-operator-v2 s22 scene, started at its +24.0 s",
-      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
-      "pip": true
-    },
-    {
-      "id": "s05",
-      "type": "cut",
-      "include": false,
-      "label": "Pathologies + the stupid gate story (one run — v1 split the story across two mislabeled scenes)",
-      "source": "b9h",
-      "in": 370,
-      "out": 405,
-      "why": "the image a buyer remembers: I don't do that anymore; one idiot away from a murderous chimpanzee; same chimp, only now I'm trading",
-      "status": "bite of disciplined-operator-v2 s01 (+162.0..+197.0 s); the twin s05a carries it"
-    },
-    {
-      "id": "s05a",
-      "type": "overdub",
-      "include": true,
-      "label": "ALT animated: Pathologies + the stupid gate story (one run — v1 split the story across two mislabeled scenes)",
-      "source": "b9h",
-      "in": 370,
-      "out": 405,
-      "why": "the image a buyer remembers: I don't do that anymore; one idiot away from a murderous chimpanzee; same chimp, only now I'm trading",
-      "anim_of": {
-        "course": "disciplined-operator-v2",
-        "scene": "s01"
-      },
-      "animation_brief": "the disciplined-operator-v2 s01 scene, started at its +162.0 s",
-      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
-      "pip": true
-    },
-    {
-      "id": "s06",
-      "type": "slide",
-      "include": true,
-      "label": "End card",
-      "slide_id": "end",
-      "duration": 8,
-      "layout": "end",
-      "text": {
-        "kicker": "",
-        "title": "The Disciplined Operator",
-        "subtitle": "owlgrouptrading.com",
-        "body": "Five chapters, about 40 minutes, with Dr. Ken Long."
-      }
-    }
-  ]
+ "schema": "coursecraft-plan-v2",
+ "course": "disciplined-operator-v2-sales",
+ "cutroom": "disciplined-operator-v2-sales",
+ "revision": 3,
+ "revised": "2026-11-22",
+ "status": "DRAFT rev1: a sales clip of disciplined-operator-v2, ~120 s; the owner edits it in the cutroom · 2026-11-22: toc_title set; the label is the editor's, the student reads toc_title (scripts/student_text.py)",
+ "title": "The Disciplined Operator: sales clip",
+ "topic_class": "sales clip",
+ "store_sku": "disciplined-operator",
+ "replaces": null,
+ "notes": "Owner yes 2026-11-22. Bites end on a full sentence (b9h and c1 cues read 2026-11-22). The gate story is Ken's (owner 2026-11-22). Each twin starts the parent's scene at the bite's offset, so the captions stay on his words.",
+ "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/disciplined-operator-v2/",
+ "sources": [
+  {
+   "id": "b9h",
+   "label": "coaching-tom-hardison (Ch1-2: pathologies, monkey, soccer)",
+   "file": "youtube-B9HVuTtPVqM-coaching-tom-hardison.mp4",
+   "proxy": "youtube-B9HVuTtPVqM-coaching-tom-hardison.proxy.mp4",
+   "url": "https://www.youtube.com/watch?v=B9HVuTtPVqM",
+   "pip": {
+    "crop": "iw*0.418:ih*0.418:iw*0.5406:ih*0.2917",
+    "note": "two tiles, Ken on the right; a 16:9 window on his tile (mental-model-2-v2's crop; rechecked 2026-11-21 at 300, 1200 s)"
+   }
+  },
+  {
+   "id": "c1",
+   "label": "cohort-1-burnout-resilience (Ch4: machine guns + Frankenstein)",
+   "file": "youtube-3jnbqQEniyQ-cohort-1-burnout-resilience.mp4",
+   "proxy": "youtube-3jnbqQEniyQ-cohort-1-burnout-resilience.proxy.mp4",
+   "url": "https://www.youtube.com/watch?v=3jnbqQEniyQ",
+   "pip": {
+    "crop": "iw*0.5:ih*0.5:iw*0.5:ih*0.25",
+    "note": "standard Zoom two-up, Ken on the right with the headset; rows 179-540 measured, the column split taken from the layout (checked at 1300, 1500, 1650, 1800 s)"
+   }
+  }
+ ],
+ "voices": [
+  {
+   "id": "ava",
+   "label": "Ava (US, female, polished)",
+   "sample": "vo-ava.mp3"
+  },
+  {
+   "id": "andrew",
+   "label": "Andrew (US, male, conversational)",
+   "sample": "vo-andrew.mp3"
+  }
+ ],
+ "segments": [
+  {
+   "id": "s00",
+   "type": "slide",
+   "include": true,
+   "label": "Title card",
+   "slide_id": "title",
+   "duration": 4,
+   "layout": "title",
+   "text": {
+    "kicker": "",
+    "title": "**The Disciplined Operator**",
+    "subtitle": "Thinking for trading success",
+    "body": "with Dr. Ken Long"
+   }
+  },
+  {
+   "id": "s01",
+   "type": "cut",
+   "include": false,
+   "label": "★ How long will you watch the monkey drive? (title quote RESTORED)",
+   "source": "b9h",
+   "in": 779.4,
+   "out": 799,
+   "why": "the hook: how long are you going to watch the monkey drive? ... and only then take over driving?",
+   "status": "bite of disciplined-operator-v2 s05 (+2.4..+22.0 s); the twin s01a carries it"
+  },
+  {
+   "id": "s01a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: ★ How long will you watch the monkey drive? (title quote RESTORED)",
+   "source": "b9h",
+   "in": 779.4,
+   "out": 799,
+   "why": "the hook: how long are you going to watch the monkey drive? ... and only then take over driving?",
+   "anim_of": {
+    "course": "disciplined-operator-v2",
+    "scene": "s05"
+   },
+   "animation_brief": "the disciplined-operator-v2 s05 scene, started at its +2.4 s",
+   "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
+   "pip": true,
+   "toc_title": "★ How long will you watch the monkey drive?"
+  },
+  {
+   "id": "s02",
+   "type": "cut",
+   "include": false,
+   "label": "OVERDUB: the soccer game — all four beats (one continuous 65s passage)",
+   "source": "b9h",
+   "in": 1082.6,
+   "out": 1099.3,
+   "why": "the soccer game: can we protect our goal, losing more than one R; protect the goal first",
+   "status": "bite of disciplined-operator-v2 s08 (+2.6..+19.3 s); the twin s02a carries it"
+  },
+  {
+   "id": "s02a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: OVERDUB: the soccer game — all four beats (one continuous 65s passage)",
+   "source": "b9h",
+   "in": 1082.6,
+   "out": 1099.3,
+   "why": "the soccer game: can we protect our goal, losing more than one R; protect the goal first",
+   "anim_of": {
+    "course": "disciplined-operator-v2",
+    "scene": "s08"
+   },
+   "animation_brief": "the disciplined-operator-v2 s08 scene, started at its +2.6 s",
+   "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
+   "pip": true,
+   "toc_title": "The soccer game"
+  },
+  {
+   "id": "s03",
+   "type": "cut",
+   "include": false,
+   "label": "Three machine guns (rotation image RESTORED)",
+   "source": "c1",
+   "in": 1301,
+   "out": 1324,
+   "why": "the line the course is named for: twenty minutes of ammunition, so I have to be disciplined in my fire",
+   "status": "bite of disciplined-operator-v2 s19 (+41.0..+64.0 s); the twin s03a carries it"
+  },
+  {
+   "id": "s03a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: Three machine guns (rotation image RESTORED)",
+   "source": "c1",
+   "in": 1301,
+   "out": 1324,
+   "why": "the line the course is named for: twenty minutes of ammunition, so I have to be disciplined in my fire",
+   "anim_of": {
+    "course": "disciplined-operator-v2",
+    "scene": "s19"
+   },
+   "animation_brief": "the disciplined-operator-v2 s19 scene, started at its +41.0 s",
+   "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
+   "pip": true,
+   "toc_title": "Three machine guns"
+  },
+  {
+   "id": "s04",
+   "type": "cut",
+   "include": false,
+   "label": "★ The Frankenstein creature (+ the minimum-mission-essential question)",
+   "source": "c1",
+   "in": 1584,
+   "out": 1604.5,
+   "why": "the Frankenstein creature: one more test, one more rule, still there watching the damn thing run",
+   "status": "bite of disciplined-operator-v2 s22 (+24.0..+44.5 s); the twin s04a carries it"
+  },
+  {
+   "id": "s04a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: ★ The Frankenstein creature (+ the minimum-mission-essential question)",
+   "source": "c1",
+   "in": 1584,
+   "out": 1604.5,
+   "why": "the Frankenstein creature: one more test, one more rule, still there watching the damn thing run",
+   "anim_of": {
+    "course": "disciplined-operator-v2",
+    "scene": "s22"
+   },
+   "animation_brief": "the disciplined-operator-v2 s22 scene, started at its +24.0 s",
+   "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
+   "pip": true
+  },
+  {
+   "id": "s05",
+   "type": "cut",
+   "include": false,
+   "label": "Pathologies + the stupid gate story (one run — v1 split the story across two mislabeled scenes)",
+   "source": "b9h",
+   "in": 370,
+   "out": 405,
+   "why": "the image a buyer remembers: I don't do that anymore; one idiot away from a murderous chimpanzee; same chimp, only now I'm trading",
+   "status": "bite of disciplined-operator-v2 s01 (+162.0..+197.0 s); the twin s05a carries it"
+  },
+  {
+   "id": "s05a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: Pathologies + the stupid gate story (one run — v1 split the story across two mislabeled scenes)",
+   "source": "b9h",
+   "in": 370,
+   "out": 405,
+   "why": "the image a buyer remembers: I don't do that anymore; one idiot away from a murderous chimpanzee; same chimp, only now I'm trading",
+   "anim_of": {
+    "course": "disciplined-operator-v2",
+    "scene": "s01"
+   },
+   "animation_brief": "the disciplined-operator-v2 s01 scene, started at its +162.0 s",
+   "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
+   "pip": true,
+   "toc_title": "Pathologies and the stupid gate story"
+  },
+  {
+   "id": "s06",
+   "type": "slide",
+   "include": true,
+   "label": "End card",
+   "slide_id": "end",
+   "duration": 8,
+   "layout": "end",
+   "text": {
+    "kicker": "",
+    "title": "The Disciplined Operator",
+    "subtitle": "owlgrouptrading.com",
+    "body": "Five chapters, about 40 minutes, with Dr. Ken Long."
+   }
+  }
+ ]
 }

@@ -1,472 +1,472 @@
 {
-  "schema": "coursecraft-plan-v2",
-  "course": "ken-shorts-v1",
-  "cutroom": "ken-shorts",
-  "revision": 2,
-  "revised": "2026-11-21",
-  "status": "DRAFT rev1: three short-form pieces for the home page rail, YouTube and the emails, cut from one source; the owner edits them in the cutroom",
-  "title": "Ken Long, in his own words: three shorts",
-  "topic_class": "shorts",
-  "store_sku": null,
-  "replaces": null,
-  "notes": "2026-11-21 (owner: 'do you want to build a cut room for me to review?'). The three footage-only starters from the shorts options: (1) the react-not-predict sentence, (2) the bookstore and Van Tharp, (3) his dad's retirement account. One source, the Society of Technical Analysts one-on-one with Dr. Ken Long (host Jeff Boccaccio, STA board). Every window was read off the YouTube captions (kenlong-transcripts raw-vtt, rolling two-line cues; the word lands near the middle of the cue that ends it); edges sit on full sentences, the owner trims to breath in the cutroom. Credential cards carry only what is said on tape, and say whose words they are. The STA owns this recording, as it owns the Bollinger fireside: its reuse permission is one ask for both clips before either goes on the public rail. This is a 16:9 review cut; the 9:16 YouTube Shorts framing is a render question for later (needs a crop that keeps his tile). Transitions by rule (cutroom-24): dip 0.6 s between separate moments, 1.0 s crossfade into a card, 0.6 s out of one.\n\nrev2 (2026-11-21, owner: 'for all the clips, give me an animated twin with Ken's picture in picture; remove the other person'): every cut has a twin, Ken's tile cropped out of the two-up (the host is gone), the cut off and the twin on; the owner flips per segment.",
-  "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/ken-shorts/",
-  "sources": [
+ "schema": "coursecraft-plan-v2",
+ "course": "ken-shorts-v1",
+ "cutroom": "ken-shorts",
+ "revision": 3,
+ "revised": "2026-11-22",
+ "status": "DRAFT rev1: three short-form pieces for the home page rail, YouTube and the emails, cut from one source; the owner edits them in the cutroom",
+ "title": "Ken Long, in his own words: three shorts",
+ "topic_class": "shorts",
+ "store_sku": null,
+ "replaces": null,
+ "notes": "2026-11-21 (owner: 'do you want to build a cut room for me to review?'). The three footage-only starters from the shorts options: (1) the react-not-predict sentence, (2) the bookstore and Van Tharp, (3) his dad's retirement account. One source, the Society of Technical Analysts one-on-one with Dr. Ken Long (host Jeff Boccaccio, STA board). Every window was read off the YouTube captions (kenlong-transcripts raw-vtt, rolling two-line cues; the word lands near the middle of the cue that ends it); edges sit on full sentences, the owner trims to breath in the cutroom. Credential cards carry only what is said on tape, and say whose words they are. The STA owns this recording, as it owns the Bollinger fireside: its reuse permission is one ask for both clips before either goes on the public rail. This is a 16:9 review cut; the 9:16 YouTube Shorts framing is a render question for later (needs a crop that keeps his tile). Transitions by rule (cutroom-24): dip 0.6 s between separate moments, 1.0 s crossfade into a card, 0.6 s out of one.\n\nrev2 (2026-11-21, owner: 'for all the clips, give me an animated twin with Ken's picture in picture; remove the other person'): every cut has a twin, Ken's tile cropped out of the two-up (the host is gone), the cut off and the twin on; the owner flips per segment.",
+ "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/ken-shorts/",
+ "sources": [
+  {
+   "id": "sta",
+   "label": "STA one-on-one with Dr. Ken Long (YouTube copy of the Vimeo recording, 1 h 31)",
+   "file": "youtube--i6j5xPw1OU-sta-interview.mp4",
+   "proxy": "youtube--i6j5xPw1OU-sta-interview.proxy.mp4",
+   "url": "https://www.youtube.com/watch?v=-i6j5xPw1OU",
+   "pip": {
+    "crop": "iw*0.497:ih*0.497:0:ih*0.258",
+    "note": "two-up Zoom inside the STA frame, Ken's tile on the left for the whole session (checked at 190, 720, 2740, 3680 s); the STA mark sits above both tiles"
+   }
+  }
+ ],
+ "voices": [
+  {
+   "id": "ava",
+   "label": "Ava (US, female, polished)",
+   "sample": "vo-ava.mp3"
+  }
+ ],
+ "segments": [
+  {
+   "id": "s00",
+   "type": "slide",
+   "include": true,
+   "label": "Title card (review only)",
+   "slide_id": "title",
+   "duration": 4,
+   "layout": "title",
+   "text": {
+    "kicker": "For review",
+    "title": "**Ken Long**, in his own words",
+    "subtitle": "three shorts",
+    "body": "Source: Society of Technical Analysts one-on-one with Dr. Ken Long"
+   }
+  },
+  {
+   "id": "s10",
+   "type": "slide",
+   "include": true,
+   "label": "Short 1 card",
+   "slide_id": "ch1",
+   "duration": 3,
+   "layout": "chapter",
+   "text": {
+    "kicker": "Short 1 of 3",
+    "title": "**React.** Don't predict.",
+    "subtitle": "about 40 seconds",
+    "body": ""
+   },
+   "transition": {
+    "type": "fade",
+    "dur": 1.0
+   }
+  },
+  {
+   "id": "s11",
+   "type": "cut",
+   "include": false,
+   "label": "I've learned to not predict",
+   "source": "sta",
+   "in": 2727.8,
+   "out": 2766.0,
+   "status": "MINED 2026-11-21 (VTT 00:45:28 to 00:46:04; trim to breath in cutroom); the twin s11a carries it",
+   "quote_anchor": "I've learned to not predict, not have a directional bias. I've learned to take the emotional loss of the complete trade at the moment of entry ... any exit that's better than a loss of the whole position is still a positive feeling for me. So I've learned to incorporate my monkey nature and my emotions in that way, and that allows me to be systematic.",
+   "why": "The single best hook on tape: the react-not-predict idea in his own sentence, ending on 'systematic'.",
+   "alternates": [
     {
-      "id": "sta",
-      "label": "STA one-on-one with Dr. Ken Long (YouTube copy of the Vimeo recording, 1 h 31)",
-      "file": "youtube--i6j5xPw1OU-sta-interview.mp4",
-      "proxy": "youtube--i6j5xPw1OU-sta-interview.proxy.mp4",
-      "url": "https://www.youtube.com/watch?v=-i6j5xPw1OU",
-      "pip": {
-        "crop": "iw*0.497:ih*0.497:0:ih*0.258",
-        "note": "two-up Zoom inside the STA frame, Ken's tile on the left for the whole session (checked at 190, 720, 2740, 3680 s); the STA mark sits above both tiles"
-      }
+     "label": "longer: from 'if I see a price signal, combine that with a critical state' (67 s)",
+     "source": "sta",
+     "in": 2699.0,
+     "out": 2766.0
     }
-  ],
-  "voices": [
+   ],
+   "transition": {
+    "type": "fade",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s11a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: I've learned to not predict",
+   "source": "sta",
+   "in": 2727.8,
+   "out": 2766.0,
+   "animation_brief": "drawn from his words in this window; see anim_gen.py",
+   "status": "twin of s11: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
+   "pip": true,
+   "transition": {
+    "type": "fade",
+    "dur": 0.6
+   },
+   "alternates": [
     {
-      "id": "ava",
-      "label": "Ava (US, female, polished)",
-      "sample": "vo-ava.mp3"
+     "label": "longer: from 'if I see a price signal, combine that with a critical state' (67 s)",
+     "source": "sta",
+     "in": 2699.0,
+     "out": 2766.0
     }
-  ],
-  "segments": [
+   ]
+  },
+  {
+   "id": "s12",
+   "type": "slide",
+   "include": true,
+   "label": "End card 1",
+   "slide_id": "end1",
+   "duration": 5,
+   "layout": "end",
+   "text": {
+    "kicker": "",
+    "title": "Dr. Ken Long",
+    "subtitle": "owlgrouptrading.com",
+    "body": "A free daily note from Dr. Long."
+   },
+   "transition": {
+    "type": "fade",
+    "dur": 1.0
+   }
+  },
+  {
+   "id": "s20",
+   "type": "slide",
+   "include": true,
+   "label": "Short 2 card",
+   "slide_id": "ch2",
+   "duration": 3,
+   "layout": "chapter",
+   "text": {
+    "kicker": "Short 2 of 3",
+    "title": "**The bookstore**",
+    "subtitle": "about 90 seconds",
+    "body": ""
+   },
+   "transition": {
+    "type": "fade",
+    "dur": 1.0
+   }
+  },
+  {
+   "id": "s21",
+   "type": "cut",
+   "include": false,
+   "label": "Waiting for my wife, I found Van Tharp's book",
+   "source": "sta",
+   "in": 709.0,
+   "out": 739.5,
+   "status": "MINED 2026-11-21 (VTT 00:11:49 to 00:12:19); the twin s21a carries it",
+   "quote_anchor": "somehow I was in a bookstore waiting for my wife and I saw Van Tharp's book, Trade Your Way to Financial Freedom ... two hours later she comes and finds me, says let's go, and I found that his combination of psychology, statistics and finding your edge and personalizing it really resonated with me a lot",
+   "why": "The hook: a human story before any credential.",
+   "alternates": [
     {
-      "id": "s00",
-      "type": "slide",
-      "include": true,
-      "label": "Title card (review only)",
-      "slide_id": "title",
-      "duration": 4,
-      "layout": "title",
-      "text": {
-        "kicker": "For review",
-        "title": "**Ken Long**, in his own words",
-        "subtitle": "three shorts",
-        "body": "Source: Society of Technical Analysts one-on-one with Dr. Ken Long"
-      }
-    },
-    {
-      "id": "s10",
-      "type": "slide",
-      "include": true,
-      "label": "Short 1 card",
-      "slide_id": "ch1",
-      "duration": 3,
-      "layout": "chapter",
-      "text": {
-        "kicker": "Short 1 of 3",
-        "title": "**React.** Don't predict.",
-        "subtitle": "about 40 seconds",
-        "body": ""
-      },
-      "transition": {
-        "type": "fade",
-        "dur": 1.0
-      }
-    },
-    {
-      "id": "s11",
-      "type": "cut",
-      "include": false,
-      "label": "I've learned to not predict",
-      "source": "sta",
-      "in": 2727.8,
-      "out": 2766.0,
-      "status": "MINED 2026-11-21 (VTT 00:45:28 to 00:46:04; trim to breath in cutroom); the twin s11a carries it",
-      "quote_anchor": "I've learned to not predict, not have a directional bias. I've learned to take the emotional loss of the complete trade at the moment of entry ... any exit that's better than a loss of the whole position is still a positive feeling for me. So I've learned to incorporate my monkey nature and my emotions in that way, and that allows me to be systematic.",
-      "why": "The single best hook on tape: the react-not-predict idea in his own sentence, ending on 'systematic'.",
-      "alternates": [
-        {
-          "label": "longer: from 'if I see a price signal, combine that with a critical state' (67 s)",
-          "source": "sta",
-          "in": 2699.0,
-          "out": 2766.0
-        }
-      ],
-      "transition": {
-        "type": "fade",
-        "dur": 0.6
-      }
-    },
-    {
-      "id": "s11a",
-      "type": "overdub",
-      "include": true,
-      "label": "ALT animated: I've learned to not predict",
-      "source": "sta",
-      "in": 2727.8,
-      "out": 2766.0,
-      "animation_brief": "drawn from his words in this window; see anim_gen.py",
-      "status": "twin of s11: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
-      "pip": true,
-      "transition": {
-        "type": "fade",
-        "dur": 0.6
-      },
-      "alternates": [
-        {
-          "label": "longer: from 'if I see a price signal, combine that with a critical state' (67 s)",
-          "source": "sta",
-          "in": 2699.0,
-          "out": 2766.0
-        }
-      ]
-    },
-    {
-      "id": "s12",
-      "type": "slide",
-      "include": true,
-      "label": "End card 1",
-      "slide_id": "end1",
-      "duration": 5,
-      "layout": "end",
-      "text": {
-        "kicker": "",
-        "title": "Dr. Ken Long",
-        "subtitle": "owlgrouptrading.com",
-        "body": "A free daily note from Dr. Long."
-      },
-      "transition": {
-        "type": "fade",
-        "dur": 1.0
-      }
-    },
-    {
-      "id": "s20",
-      "type": "slide",
-      "include": true,
-      "label": "Short 2 card",
-      "slide_id": "ch2",
-      "duration": 3,
-      "layout": "chapter",
-      "text": {
-        "kicker": "Short 2 of 3",
-        "title": "**The bookstore**",
-        "subtitle": "about 90 seconds",
-        "body": ""
-      },
-      "transition": {
-        "type": "fade",
-        "dur": 1.0
-      }
-    },
-    {
-      "id": "s21",
-      "type": "cut",
-      "include": false,
-      "label": "Waiting for my wife, I found Van Tharp's book",
-      "source": "sta",
-      "in": 709.0,
-      "out": 739.5,
-      "status": "MINED 2026-11-21 (VTT 00:11:49 to 00:12:19); the twin s21a carries it",
-      "quote_anchor": "somehow I was in a bookstore waiting for my wife and I saw Van Tharp's book, Trade Your Way to Financial Freedom ... two hours later she comes and finds me, says let's go, and I found that his combination of psychology, statistics and finding your edge and personalizing it really resonated with me a lot",
-      "why": "The hook: a human story before any credential.",
-      "alternates": [
-        {
-          "label": "Nick Darvas: 'How I Made Two Million Dollars', trading by telegram (40 s)",
-          "source": "sta",
-          "in": 778.0,
-          "out": 818.5
-        }
-      ],
-      "transition": {
-        "type": "fade",
-        "dur": 0.6
-      }
-    },
-    {
-      "id": "s21a",
-      "type": "overdub",
-      "include": true,
-      "label": "ALT animated: Waiting for my wife, I found Van Tharp's book",
-      "source": "sta",
-      "in": 709.0,
-      "out": 739.5,
-      "animation_brief": "drawn from his words in this window; see anim_gen.py",
-      "status": "twin of s21: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
-      "pip": true,
-      "transition": {
-        "type": "fade",
-        "dur": 0.6
-      },
-      "alternates": [
-        {
-          "label": "Nick Darvas: 'How I Made Two Million Dollars', trading by telegram (40 s)",
-          "source": "sta",
-          "in": 778.0,
-          "out": 818.5
-        }
-      ]
-    },
-    {
-      "id": "s22",
-      "type": "cut",
-      "include": false,
-      "label": "Tharp invited me to teach a course that became multiple courses",
-      "source": "sta",
-      "in": 949.0,
-      "out": 973.5,
-      "status": "MINED 2026-11-21 (VTT 00:15:49 to 00:16:13); the twin s22a carries it",
-      "quote_anchor": "that sort of began a long-term relationship with Tharp ... I went to a workshop, he interviewed me, I was a guest speaker a couple times, he invited me to teach a course that became multiple courses ... learn a little, teach a little, and keep growing in that way",
-      "why": "The Van Tharp instructor fact, in his own words, not ours.",
-      "alternates": [
-        {
-          "label": "from 'I showed him what I was doing and he says step one, get incorporated' (52 s)",
-          "source": "sta",
-          "in": 922.0,
-          "out": 973.5
-        }
-      ],
-      "transition": {
-        "type": "dip",
-        "dur": 0.6
-      }
-    },
-    {
-      "id": "s22a",
-      "type": "overdub",
-      "include": true,
-      "label": "ALT animated: Tharp invited me to teach a course that became multiple courses",
-      "source": "sta",
-      "in": 949.0,
-      "out": 973.5,
-      "animation_brief": "drawn from his words in this window; see anim_gen.py",
-      "status": "twin of s22: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
-      "pip": true,
-      "transition": {
-        "type": "dip",
-        "dur": 0.6
-      },
-      "alternates": [
-        {
-          "label": "from 'I showed him what I was doing and he says step one, get incorporated' (52 s)",
-          "source": "sta",
-          "in": 922.0,
-          "out": 973.5
-        }
-      ]
-    },
-    {
-      "id": "s23",
-      "type": "cut",
-      "include": false,
-      "label": "The host: decorated career, CGSC, retired lieutenant colonel after 25 years",
-      "source": "sta",
-      "in": 162.0,
-      "out": 204.0,
-      "status": "MINED 2026-11-21 (VTT 00:02:42 to 00:03:24). The host's words, not Ken's; he says 'Leavenworth, Texas' (it is Kansas), so the card below does not repeat the place.; the twin s23a carries it",
-      "quote_anchor": "Ken has got a decorated career in a few different areas ... associate professor at the US Army Command and General Staff College ... he's also a retired lieutenant colonel after 25 years' active service",
-      "why": "Credentials from a third party on tape; order: story first, then who is talking.",
-      "transition": {
-        "type": "dip",
-        "dur": 0.6
-      }
-    },
-    {
-      "id": "s23a",
-      "type": "overdub",
-      "include": true,
-      "label": "ALT animated: The host: decorated career, CGSC, retired lieutenant colonel after 25 years",
-      "source": "sta",
-      "in": 162.0,
-      "out": 204.0,
-      "animation_brief": "drawn from his words in this window; see anim_gen.py",
-      "status": "twin of s23: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
-      "pip": true,
-      "transition": {
-        "type": "dip",
-        "dur": 0.6
-      }
-    },
-    {
-      "id": "s24",
-      "type": "cut",
-      "include": false,
-      "label": "Who he teaches: direct-action leaders, 'monkeys like me'",
-      "source": "sta",
-      "in": 282.0,
-      "out": 331.5,
-      "status": "MINED 2026-11-21 (VTT 00:04:41 to 00:05:31); the twin s24a carries it",
-      "quote_anchor": "these are officers that have been direct action leaders, usually in combat, small unit, hands-on, and are making a transition to organizational leadership ... take words on a page and ideas in their head and turn it into something that a bunch of monkeys like me can implement in the world",
-      "why": "Shows the teacher, and his humour about himself; the strategy-to-systems idea is the trading method in another uniform.",
-      "transition": {
-        "type": "dip",
-        "dur": 0.6
-      }
-    },
-    {
-      "id": "s24a",
-      "type": "overdub",
-      "include": true,
-      "label": "ALT animated: Who he teaches: direct-action leaders, 'monkeys like me'",
-      "source": "sta",
-      "in": 282.0,
-      "out": 331.5,
-      "animation_brief": "drawn from his words in this window; see anim_gen.py",
-      "status": "twin of s24: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
-      "pip": true,
-      "transition": {
-        "type": "dip",
-        "dur": 0.6
-      }
-    },
-    {
-      "id": "s25",
-      "type": "slide",
-      "include": true,
-      "label": "Facts card (the host's words on tape)",
-      "slide_id": "facts",
-      "duration": 6,
-      "layout": "chapter",
-      "text": {
-        "kicker": "Said on tape",
-        "title": "Dr. Ken Long",
-        "subtitle": "",
-        "body": "25 years US Army, retired lieutenant colonel\nAssociate professor, US Army Command and General Staff College\nTaught at the Van Tharp Institute from 2009\nFounder, Tortoise Capital"
-      },
-      "transition": {
-        "type": "fade",
-        "dur": 1.0
-      }
-    },
-    {
-      "id": "s26",
-      "type": "slide",
-      "include": true,
-      "label": "End card 2",
-      "slide_id": "end2",
-      "duration": 5,
-      "layout": "end",
-      "text": {
-        "kicker": "",
-        "title": "Dr. Ken Long",
-        "subtitle": "owlgrouptrading.com",
-        "body": "A free daily note from Dr. Long."
-      },
-      "transition": {
-        "type": "fade",
-        "dur": 0.6
-      }
-    },
-    {
-      "id": "s30",
-      "type": "slide",
-      "include": true,
-      "label": "Short 3 card",
-      "slide_id": "ch3",
-      "duration": 3,
-      "layout": "chapter",
-      "text": {
-        "kicker": "Short 3 of 3",
-        "title": "**His dad's** retirement account",
-        "subtitle": "about 80 seconds",
-        "body": ""
-      },
-      "transition": {
-        "type": "fade",
-        "dur": 1.0
-      }
-    },
-    {
-      "id": "s31",
-      "type": "cut",
-      "include": false,
-      "label": "The night he could not sleep",
-      "source": "sta",
-      "in": 3667.0,
-      "out": 3704.5,
-      "status": "MINED 2026-11-21 (VTT 01:01:07 to 01:01:44); the twin s31a carries it",
-      "quote_anchor": "my existential moment was when my dad, who trusted me beyond all reason ... I had his entire retirement account in a position because I thought it was going to go up tomorrow ... I've got more than 100 percent of his retirement in that position and I couldn't sleep the rest of the night, and what I learned was that I have to make long-term decisions based on my pessimistic nature",
-      "why": "The most human moment on tape and the origin of his sizing rule.",
-      "transition": {
-        "type": "fade",
-        "dur": 0.6
-      }
-    },
-    {
-      "id": "s31a",
-      "type": "overdub",
-      "include": true,
-      "label": "ALT animated: The night he could not sleep",
-      "source": "sta",
-      "in": 3667.0,
-      "out": 3704.5,
-      "animation_brief": "drawn from his words in this window; see anim_gen.py",
-      "status": "twin of s31: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
-      "pip": true,
-      "transition": {
-        "type": "fade",
-        "dur": 0.6
-      }
-    },
-    {
-      "id": "s32",
-      "type": "cut",
-      "include": false,
-      "label": "Every decision through the pessimistic mind; that's why I became a systematic trader",
-      "source": "sta",
-      "in": 3736.0,
-      "out": 3774.0,
-      "status": "MINED 2026-11-21 (VTT 01:02:16 to 01:02:53); the twin s32a carries it",
-      "quote_anchor": "every important decision I've ever made had to go through the lens of the pessimistic mind and be satisfied that I understood the maximum adverse consequence, what is the worst thing that could possibly happen, and then if I can live with that then I could proceed ... and that's why I became a systematic trader",
-      "why": "The lesson, ending on the word the whole channel is about.",
-      "alternates": [
-        {
-          "label": "the three minds, optimistic / pessimistic / the engineer in the middle (30 s)",
-          "source": "sta",
-          "in": 3704.5,
-          "out": 3734.5
-        }
-      ],
-      "transition": {
-        "type": "dip",
-        "dur": 0.6
-      }
-    },
-    {
-      "id": "s32a",
-      "type": "overdub",
-      "include": true,
-      "label": "ALT animated: Every decision through the pessimistic mind; that's why I became a systematic trader",
-      "source": "sta",
-      "in": 3736.0,
-      "out": 3774.0,
-      "animation_brief": "drawn from his words in this window; see anim_gen.py",
-      "status": "twin of s32: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
-      "pip": true,
-      "transition": {
-        "type": "dip",
-        "dur": 0.6
-      },
-      "alternates": [
-        {
-          "label": "the three minds, optimistic / pessimistic / the engineer in the middle (30 s)",
-          "source": "sta",
-          "in": 3704.5,
-          "out": 3734.5
-        }
-      ]
-    },
-    {
-      "id": "s33",
-      "type": "slide",
-      "include": true,
-      "label": "End card 3",
-      "slide_id": "end3",
-      "duration": 5,
-      "layout": "end",
-      "text": {
-        "kicker": "",
-        "title": "Dr. Ken Long",
-        "subtitle": "owlgrouptrading.com",
-        "body": "A free daily note from Dr. Long."
-      },
-      "transition": {
-        "type": "fade",
-        "dur": 1.0
-      }
+     "label": "Nick Darvas: 'How I Made Two Million Dollars', trading by telegram (40 s)",
+     "source": "sta",
+     "in": 778.0,
+     "out": 818.5
     }
-  ]
+   ],
+   "transition": {
+    "type": "fade",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s21a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: Waiting for my wife, I found Van Tharp's book",
+   "source": "sta",
+   "in": 709.0,
+   "out": 739.5,
+   "animation_brief": "drawn from his words in this window; see anim_gen.py",
+   "status": "twin of s21: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
+   "pip": true,
+   "transition": {
+    "type": "fade",
+    "dur": 0.6
+   },
+   "alternates": [
+    {
+     "label": "Nick Darvas: 'How I Made Two Million Dollars', trading by telegram (40 s)",
+     "source": "sta",
+     "in": 778.0,
+     "out": 818.5
+    }
+   ]
+  },
+  {
+   "id": "s22",
+   "type": "cut",
+   "include": false,
+   "label": "Tharp invited me to teach a course that became multiple courses",
+   "source": "sta",
+   "in": 949.0,
+   "out": 973.5,
+   "status": "MINED 2026-11-21 (VTT 00:15:49 to 00:16:13); the twin s22a carries it",
+   "quote_anchor": "that sort of began a long-term relationship with Tharp ... I went to a workshop, he interviewed me, I was a guest speaker a couple times, he invited me to teach a course that became multiple courses ... learn a little, teach a little, and keep growing in that way",
+   "why": "The Van Tharp instructor fact, in his own words, not ours.",
+   "alternates": [
+    {
+     "label": "from 'I showed him what I was doing and he says step one, get incorporated' (52 s)",
+     "source": "sta",
+     "in": 922.0,
+     "out": 973.5
+    }
+   ],
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s22a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: Tharp invited me to teach a course that became multiple courses",
+   "source": "sta",
+   "in": 949.0,
+   "out": 973.5,
+   "animation_brief": "drawn from his words in this window; see anim_gen.py",
+   "status": "twin of s22: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   },
+   "alternates": [
+    {
+     "label": "from 'I showed him what I was doing and he says step one, get incorporated' (52 s)",
+     "source": "sta",
+     "in": 922.0,
+     "out": 973.5
+    }
+   ]
+  },
+  {
+   "id": "s23",
+   "type": "cut",
+   "include": false,
+   "label": "The host: decorated career, CGSC, retired lieutenant colonel after 25 years",
+   "source": "sta",
+   "in": 162.0,
+   "out": 204.0,
+   "status": "MINED 2026-11-21 (VTT 00:02:42 to 00:03:24). The host's words, not Ken's; he says 'Leavenworth, Texas' (it is Kansas), so the card below does not repeat the place.; the twin s23a carries it",
+   "quote_anchor": "Ken has got a decorated career in a few different areas ... associate professor at the US Army Command and General Staff College ... he's also a retired lieutenant colonel after 25 years' active service",
+   "why": "Credentials from a third party on tape; order: story first, then who is talking.",
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s23a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: The host: decorated career, CGSC, retired lieutenant colonel after 25 years",
+   "source": "sta",
+   "in": 162.0,
+   "out": 204.0,
+   "animation_brief": "drawn from his words in this window; see anim_gen.py",
+   "status": "twin of s23: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s24",
+   "type": "cut",
+   "include": false,
+   "label": "Who he teaches: direct-action leaders, 'monkeys like me'",
+   "source": "sta",
+   "in": 282.0,
+   "out": 331.5,
+   "status": "MINED 2026-11-21 (VTT 00:04:41 to 00:05:31); the twin s24a carries it",
+   "quote_anchor": "these are officers that have been direct action leaders, usually in combat, small unit, hands-on, and are making a transition to organizational leadership ... take words on a page and ideas in their head and turn it into something that a bunch of monkeys like me can implement in the world",
+   "why": "Shows the teacher, and his humour about himself; the strategy-to-systems idea is the trading method in another uniform.",
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s24a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: Who he teaches: direct-action leaders, 'monkeys like me'",
+   "source": "sta",
+   "in": 282.0,
+   "out": 331.5,
+   "animation_brief": "drawn from his words in this window; see anim_gen.py",
+   "status": "twin of s24: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s25",
+   "type": "slide",
+   "include": true,
+   "label": "Facts card (the host's words on tape)",
+   "slide_id": "facts",
+   "duration": 6,
+   "layout": "chapter",
+   "text": {
+    "kicker": "In his words",
+    "title": "Dr. Ken Long",
+    "subtitle": "",
+    "body": "25 years US Army, retired lieutenant colonel\nAssociate professor, US Army Command and General Staff College\nTaught at the Van Tharp Institute from 2009\nFounder, Tortoise Capital"
+   },
+   "transition": {
+    "type": "fade",
+    "dur": 1.0
+   }
+  },
+  {
+   "id": "s26",
+   "type": "slide",
+   "include": true,
+   "label": "End card 2",
+   "slide_id": "end2",
+   "duration": 5,
+   "layout": "end",
+   "text": {
+    "kicker": "",
+    "title": "Dr. Ken Long",
+    "subtitle": "owlgrouptrading.com",
+    "body": "A free daily note from Dr. Long."
+   },
+   "transition": {
+    "type": "fade",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s30",
+   "type": "slide",
+   "include": true,
+   "label": "Short 3 card",
+   "slide_id": "ch3",
+   "duration": 3,
+   "layout": "chapter",
+   "text": {
+    "kicker": "Short 3 of 3",
+    "title": "**His dad's** retirement account",
+    "subtitle": "about 80 seconds",
+    "body": ""
+   },
+   "transition": {
+    "type": "fade",
+    "dur": 1.0
+   }
+  },
+  {
+   "id": "s31",
+   "type": "cut",
+   "include": false,
+   "label": "The night he could not sleep",
+   "source": "sta",
+   "in": 3667.0,
+   "out": 3704.5,
+   "status": "MINED 2026-11-21 (VTT 01:01:07 to 01:01:44); the twin s31a carries it",
+   "quote_anchor": "my existential moment was when my dad, who trusted me beyond all reason ... I had his entire retirement account in a position because I thought it was going to go up tomorrow ... I've got more than 100 percent of his retirement in that position and I couldn't sleep the rest of the night, and what I learned was that I have to make long-term decisions based on my pessimistic nature",
+   "why": "The most human moment on tape and the origin of his sizing rule.",
+   "transition": {
+    "type": "fade",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s31a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: The night he could not sleep",
+   "source": "sta",
+   "in": 3667.0,
+   "out": 3704.5,
+   "animation_brief": "drawn from his words in this window; see anim_gen.py",
+   "status": "twin of s31: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
+   "pip": true,
+   "transition": {
+    "type": "fade",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s32",
+   "type": "cut",
+   "include": false,
+   "label": "Every decision through the pessimistic mind; that's why I became a systematic trader",
+   "source": "sta",
+   "in": 3736.0,
+   "out": 3774.0,
+   "status": "MINED 2026-11-21 (VTT 01:02:16 to 01:02:53); the twin s32a carries it",
+   "quote_anchor": "every important decision I've ever made had to go through the lens of the pessimistic mind and be satisfied that I understood the maximum adverse consequence, what is the worst thing that could possibly happen, and then if I can live with that then I could proceed ... and that's why I became a systematic trader",
+   "why": "The lesson, ending on the word the whole channel is about.",
+   "alternates": [
+    {
+     "label": "the three minds, optimistic / pessimistic / the engineer in the middle (30 s)",
+     "source": "sta",
+     "in": 3704.5,
+     "out": 3734.5
+    }
+   ],
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s32a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: Every decision through the pessimistic mind; that's why I became a systematic trader",
+   "source": "sta",
+   "in": 3736.0,
+   "out": 3774.0,
+   "animation_brief": "drawn from his words in this window; see anim_gen.py",
+   "status": "twin of s32: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   },
+   "alternates": [
+    {
+     "label": "the three minds, optimistic / pessimistic / the engineer in the middle (30 s)",
+     "source": "sta",
+     "in": 3704.5,
+     "out": 3734.5
+    }
+   ]
+  },
+  {
+   "id": "s33",
+   "type": "slide",
+   "include": true,
+   "label": "End card 3",
+   "slide_id": "end3",
+   "duration": 5,
+   "layout": "end",
+   "text": {
+    "kicker": "",
+    "title": "Dr. Ken Long",
+    "subtitle": "owlgrouptrading.com",
+    "body": "A free daily note from Dr. Long."
+   },
+   "transition": {
+    "type": "fade",
+    "dur": 1.0
+   }
+  }
+ ]
 }

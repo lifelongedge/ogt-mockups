@@ -1,9 +1,9 @@
 {
  "schema": "coursecraft-plan-v2",
  "course": "etf2-signal-v2",
- "revision": 3,
- "revised": "2026-11-21",
- "status": "DRAFT rev3 (2026-11-21 night): Ava's voice-over made for the nine explainers; each scene warped to her sentences (anim_gen warp_to_voice), lengths from the voice; render of the explainers queued",
+ "revision": 4,
+ "revised": "2026-11-22",
+ "status": "DRAFT rev3 (2026-11-21 night): Ava's voice-over made for the nine explainers; each scene warped to her sentences (anim_gen warp_to_voice), lengths from the voice; render of the explainers queued · 2026-11-22: toc_title set; the label is the editor's, the student reads toc_title (scripts/student_text.py)",
  "title": "The ETF2 Signal (v2)",
  "topic_class": "one tool: Ken Long's ETF2 theoretical exposure line read as a regime signal (cash or invested) for the long-term book and the day book; the rationale of the model; the signal's past episodes computed by edge-sysscq (descriptive, never a forecast); 'provided for peace of mind'",
  "store_sku": "etf2-signal",
@@ -99,12 +99,13 @@
    "vo_script": "The ETF2 Signal. With Dr. Ken Long. Owl Group Trading.",
    "est_duration": 8,
    "status": "scripts/opener.py --title 'The ETF2 Signal' --seconds 8; the owner's own take replaces Ava's line",
-   "hold": true
+   "hold": true,
+   "toc_title": "Opening"
   },
   {
    "id": "s00",
    "type": "slide",
-   "include": true,
+   "include": false,
    "label": "INTERNAL · story arc (design card, OFF before the build)",
    "slide_id": "arc",
    "duration": 8,
@@ -115,7 +116,7 @@
     "subtitle": "What it says, why it is built that way, what it has said, how to use it on Sunday.",
     "body": "The line | Ch 1 (s11–s15): ten regions × 10 %, over or under the four-month average\nThe logic | Ch 2 (s21–s27): strength, consistency, quality; the monthly rebalance\nThe record | Ch 3 (s31–s36): 22 years of Fridays from edge-sysscq; 2008, 2020, 2022, now\nThe weekend | Ch 4 (s41–s48): long book on or off, day book posture; peace of mind"
    },
-   "status": "design card (owner, 2026-11-21): the Weekend Edge cut down to this one module; OFF before the build"
+   "status": "design card (owner, 2026-11-21): the Weekend Edge cut down to this one module; OFF before the build · 2026-11-22: OFF (owner: switch both off; it is a design card)"
   },
   {
    "id": "s01",
@@ -141,7 +142,8 @@
    "vo_script": "At the bottom of Ken Long's weekend report there is one line. ETF2 theoretical exposure goes from zero percent to ten percent. By the end of this hour you will be able to read that line, know exactly how it is built, see what it has said through twenty-two years of Fridays, and use it on a Sunday to decide two things: how much of your long-term book is on, and what posture your day trading takes into the week. The model counts ten regions of the world. Each one that closes above its four-month average adds ten percent. That is the whole line. This course is provided for peace of mind. It is not a forecast. It is a way to know, once a week, which kind of week you are in.",
    "est_duration": 41.0,
    "animation_brief": "the real 2026-11-14 report on the left, the exposure line ringed when she reads it; the destination as three rows on the right; ten boxes counted; 'for peace of mind' as the closing aside",
-   "status": "destination first (stage rule); every fact is on the picture or is a description of the course; no outcome"
+   "status": "destination first (stage rule); every fact is on the picture or is a description of the course; no outcome",
+   "toc_title": "The line at the bottom of the report"
   },
   {
    "id": "s10",
@@ -521,7 +523,8 @@
    "vo_script": "Here is how the number at the bottom of Ken's report is made, every Friday. Ten regional index funds: emerging markets, Europe and Asia, Asia less Japan, Japan, the European 350, Latin America, the S&P 500, the Nasdaq 100, the midcaps and the smallcaps. For each one, a single question: is Friday's close above its four-month moving average? Yes adds ten percent. No adds nothing. The sum is the theoretical exposure, zero to one hundred. What you are about to see was computed by edge-sysscq, the Edge Platform's copy of this rule, from the daily prices on this machine: each fund above its eighty-seven day average adds ten percent, counted on the Friday close. On the thirteenth of November, 2026, it matched the count printed in Ken's report of the fourteenth: one fund above, ten percent. Run back to January 2004, that is one thousand one hundred and ninety-three Fridays. On eight hundred and sixteen of them the line stood at fifty percent or more. On one hundred and thirty-eight it read zero. On two hundred and thirty-five it read one hundred. Reading fifty as the switch between invested and cash gives one hundred and thirty-six runs: sixty-eight invested, sixty-eight in cash. The longest stretch invested ran fifty-eight weeks, from the last day of 2016 into February 2018. The longest in cash ran forty-two weeks, from June 2008 to March 2009. Four of those periods are next.",
    "est_duration": 99.0,
    "animation_brief": "the ten funds counted as boxes (the 13 Nov 2026 count lit), then the 22-year invested band under the weekly S&P, revealed left to right; the counts in the right column",
-   "status": "facts from data/episodes.json and data/spy_weekly.json (rule SCQ-006 on this box's quotes, timeline mockup build 2026-11-21); descriptive, no forecast; SPY moves are Friday-to-Friday adjusted closes over each run"
+   "status": "facts from data/episodes.json and data/spy_weekly.json (rule SCQ-006 on this box's quotes, timeline mockup build 2026-11-21); descriptive, no forecast; SPY moves are Friday-to-Friday adjusted closes over each run",
+   "toc_title": "How the line is made each Friday, and 22 years of it"
   },
   {
    "id": "s32",
@@ -532,7 +535,8 @@
    "vo_script": "The financial crisis, 2007 to 2009. In June 2007 the line read ninety. On the twenty-seventh of July it fell to twenty, with SPY at 145. It came back to sixty in September, and dropped to thirty on the fourteenth of December, SPY at 147. SPY had set its high on the ninth of October, at 156. Through the spring of 2008 the line flickered: fifty, ten, ninety, on three Fridays in April. Then on the thirteenth of June, 2008, it fell to forty, with SPY at 136, and it stayed below fifty for forty-two weeks, the longest cash run in the record. Over that run SPY lost forty point one percent. Its low came on the ninth of March, 2009, at 68: fifty-six and a half percent below the October 2007 high. On the third of April, 2009, the line read eighty, with SPY at 84. It stayed invested to January 2010, and SPY gained thirty-four point nine percent over that run. What the signal said: cash from June 2008. What SPY did next: down forty percent, then the turn, and the line back above fifty four weeks after the low. It did not call the top in October 2007. It did not call the bottom in March 2009. It stepped aside eight months after the high, and stepped back four weeks after the low.",
    "est_duration": 90.8,
    "animation_brief": "the episode's weekly invested band under SPY, revealed left to right; the switch Fridays and the high and low ringed; run dates and SPY moves in the right column; the record boxed",
-   "status": "facts from data/episodes.json and data/spy_weekly.json (rule SCQ-006 on this box's quotes, timeline mockup build 2026-11-21); descriptive, no forecast; SPY moves are Friday-to-Friday adjusted closes over each run"
+   "status": "facts from data/episodes.json and data/spy_weekly.json (rule SCQ-006 on this box's quotes, timeline mockup build 2026-11-21); descriptive, no forecast; SPY moves are Friday-to-Friday adjusted closes over each run",
+   "toc_title": "2007-2009, the financial crisis"
   },
   {
    "id": "s33",
@@ -543,7 +547,8 @@
    "vo_script": "2020. In October 2019 the line read sixty, with SPY at 296. That run ended on the twenty-first of February, 2020: SPY had gained twelve point six percent since October, and had set its high two days earlier, on the nineteenth, at 338. On the twenty-eighth of February the line read zero, with SPY at 296, twelve percent below that high. The low came on the twenty-third of March, at 223: thirty-four percent below the high. The line stayed at or below forty for thirteen weeks. On the twenty-ninth of May it read seventy, with SPY at 304. Over the whole cash run, from the Friday it left to the Friday it returned, SPY moved minus zero point three percent: the fall and the rebound both happened inside it. Invested again from the end of May, SPY gained eight point seven percent to September. After two short dips in the autumn, the line read one hundred on the sixth of November, and SPY gained twenty-four point four percent through July 2021. What the signal said: zero, one week after the high. What SPY did next: down a third, then back to where it started, all while the line said cash. In this episode the line was in cash for the fall and for the rebound. It gave back nothing, and it took part in nothing, until June.",
    "est_duration": 86.2,
    "animation_brief": "the episode's weekly invested band under SPY, revealed left to right; the switch Fridays and the high and low ringed; run dates and SPY moves in the right column; the record boxed",
-   "status": "facts from data/episodes.json and data/spy_weekly.json (rule SCQ-006 on this box's quotes, timeline mockup build 2026-11-21); descriptive, no forecast; SPY moves are Friday-to-Friday adjusted closes over each run"
+   "status": "facts from data/episodes.json and data/spy_weekly.json (rule SCQ-006 on this box's quotes, timeline mockup build 2026-11-21); descriptive, no forecast; SPY moves are Friday-to-Friday adjusted closes over each run",
+   "toc_title": "2020, the pandemic crash"
   },
   {
    "id": "s34",
@@ -554,7 +559,8 @@
    "vo_script": "2022, the rate-hike bear. In June 2021 the line read one hundred, with SPY at 423. Through the second half of 2021 it flickered between thirty and seventy, a week or two at a time. On the twenty-sixth of November, 2021, it read thirty, with SPY at 459, and it stayed below fifty for thirty-seven weeks. SPY set its high five weeks later, on the third of January, 2022, at 478. Over the cash run SPY lost nine point nine percent. On the twelfth of August the line read one hundred, SPY at 427. Three weeks later it read ten, then fifty, then zero on the sixteenth of September, SPY at 386. The low came on the twelfth of October, at 357: twenty-five percent below the January high. On the eleventh of November the line read ninety, SPY at 399. It dipped to forty for three weeks in March 2023, read sixty on the thirty-first of March, and stayed invested to August, SPY gaining eight point nine percent over that run. What the signal said: cash from late November 2021, five weeks before the high. What SPY did next: a slow bear, minus ten percent over the first cash run, a false start in August, and the low in October with the line at zero. The return came four weeks after the low.",
    "est_duration": 92.4,
    "animation_brief": "the episode's weekly invested band under SPY, revealed left to right; the switch Fridays and the high and low ringed; run dates and SPY moves in the right column; the record boxed",
-   "status": "facts from data/episodes.json and data/spy_weekly.json (rule SCQ-006 on this box's quotes, timeline mockup build 2026-11-21); descriptive, no forecast; SPY moves are Friday-to-Friday adjusted closes over each run"
+   "status": "facts from data/episodes.json and data/spy_weekly.json (rule SCQ-006 on this box's quotes, timeline mockup build 2026-11-21); descriptive, no forecast; SPY moves are Friday-to-Friday adjusted closes over each run",
+   "toc_title": "2022, the rate-hike bear"
   },
   {
    "id": "s35",
@@ -565,7 +571,8 @@
    "vo_script": "The last two years, up to the Friday before this course was cut. In November 2024 the line read sixty, with SPY at 571. It moved between thirty and sixty through the winter. On the fourth of April, 2025, the tariff week, it read zero, with SPY at 505. The low came four days later, on the eighth of April, at 496. Three Fridays later, on the twenty-fifth of April, the line read sixty, with SPY at 551: over those three weeks of cash SPY rose nine percent. That is a whipsaw, and the record keeps it. From there the line stayed invested for forty-six weeks, to the sixth of March, 2026, and SPY gained twenty-two point one percent over the run. Three weeks of cash in March; then invested again from the tenth of April to the ninth of October, SPY up fourteen point six percent. SPY set its high on the sixth of October, at 779. On the sixteenth of October the line read twenty, with SPY at 763. It read zero on the thirtieth of October and on the sixth of November. On the thirteenth of November it read ten: one fund above its average, the European 350, the count Ken printed in his report of the fourteenth. On the twentieth of November it read zero again, with SPY at 703, nine point eight percent below the October high, and seven point nine percent below the Friday the line left. What the signal said: cash from the sixteenth of October. What SPY has done since: down eight percent. What it does next is not in this course.",
    "est_duration": 103.9,
    "animation_brief": "the episode's weekly invested band under SPY, revealed left to right; the switch Fridays and the high and low ringed; run dates and SPY moves in the right column; the record boxed",
-   "status": "facts from data/episodes.json and data/spy_weekly.json (rule SCQ-006 on this box's quotes, timeline mockup build 2026-11-21); descriptive, no forecast; SPY moves are Friday-to-Friday adjusted closes over each run"
+   "status": "facts from data/episodes.json and data/spy_weekly.json (rule SCQ-006 on this box's quotes, timeline mockup build 2026-11-21); descriptive, no forecast; SPY moves are Friday-to-Friday adjusted closes over each run",
+   "toc_title": "2025-2026, the tariff shock and this autumn"
   },
   {
    "id": "s36",
@@ -576,7 +583,8 @@
    "vo_script": "What the record says, and what it does not say. The line is late by design: a four-month average turns after the price does, so in every episode the switch came after the high and after the low. Eight months after the 2007 high. Nine days after the 2020 high. Four weeks after the 2009 low, ten weeks after the 2020 low, four weeks after the 2022 low. The line whipsaws. Of one hundred and thirty-six runs since 2004, thirty-six lasted one week and seventeen lasted two. In April 2008 it read fifty, ten and ninety on three consecutive Fridays. In April 2025 it sat in cash for three weeks while SPY rose nine percent. The median run is six and a half weeks invested and two and a half weeks in cash. And the line never predicts. It counts where ten prices sit against their averages on a Friday afternoon. That is all it has ever done. Ken reads this line for peace of mind: one number, once a week, that says how much of the world's equity markets are above their trend. That is how this course offers it: not a forecast, a count. What you do with the count is the next chapter.",
    "est_duration": 74.0,
    "animation_brief": "every run since 2004 as a bar, invested up and cash down, the short ones a picket; the lags after highs and lows and the whipsaw counts in the right column",
-   "status": "facts from data/episodes.json and data/spy_weekly.json (rule SCQ-006 on this box's quotes, timeline mockup build 2026-11-21); descriptive, no forecast; 'Ken reads this line for peace of mind' is the owner's framing, spoken as such"
+   "status": "facts from data/episodes.json and data/spy_weekly.json (rule SCQ-006 on this box's quotes, timeline mockup build 2026-11-21); descriptive, no forecast; 'Ken reads this line for peace of mind' is the owner's framing, spoken as such",
+   "toc_title": "What the record says, and does not say"
   },
   {
    "id": "s40",
@@ -737,7 +745,8 @@
    "vo_script": "Here is the week of November 14th, 2026, on the page itself. Nine of the ten regions read Cash. One, IEV, the European 350, reads Buy. Ten percent per Buy: the theoretical exposure goes from zero to ten percent. The label at the top of the block, as printed, is Bullish Normal. That is the whole weekend read. One line, built from ten prices against ten four-month averages, and it tells you two things. How much of the long-term book the evidence permits you to have on. And what posture the day book takes into Monday: with the line this low, the long book is mostly cash, and the day book trades what the day gives, in either direction. It is not a forecast. It does not know what next week brings. It is a count of what has already happened, done the same way every Friday for twenty years, so that your Monday starts from a number and not from a feeling. That is what it is for. It is provided for peace of mind.",
    "est_duration": 58.9,
    "animation_brief": "stage: the real 2026-11-14 picture (@etf2-report-2026-11-14) on screen, the regional rows ringed as she counts them, the exposure line ringed as she reads it, then the two uses in the right column (long book: how much is on; day book: posture) and the closing words 'provided for peace of mind'",
-   "status": "every number read off @etf2-report-2026-11-14 (nine Cash, IEV Buy, 0 % -> 10 %, 'Bullish Normal' as printed); the two uses and 'peace of mind' are the owner's framing (2026-11-21), spoken as framing; no forecast. 'twenty years' = the 2004-2026 weekly series edge-sysscq computed for data/episodes.json"
+   "status": "every number read off @etf2-report-2026-11-14 (nine Cash, IEV Buy, 0 % -> 10 %, 'Bullish Normal' as printed); the two uses and 'peace of mind' are the owner's framing (2026-11-21), spoken as framing; no forecast. 'twenty years' = the 2004-2026 weekly series edge-sysscq computed for data/episodes.json",
+   "toc_title": "This week, and why it is for peace of mind"
   },
   {
    "id": "s60",

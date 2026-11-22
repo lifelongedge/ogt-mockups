@@ -1,9 +1,9 @@
 {
  "schema": "coursecraft-plan-v2",
  "course": "weekend-edge-v2",
- "revision": 1,
- "revised": "2026-11-21",
- "status": "DRAFT rev1 (2026-11-21): the first cut from the brief (Griff's 2026-11-20 email; Ken: four hours in one to two weeks; owner: 3x3 = market type, ETF2 rules from edge-sysscq, no commercial cards, internal arc + cutroom with animated twins). Seven modules authored from modules/m*.py: 44 Ken cuts (177 min) each with an animated twin ON and the cut OFF, 6 Ava explainers, 9 cards (s00 the internal arc, OFF before the build). Every window VTT-verified; 50/50 animations pass anim_check; sheets eyeballed and the pile-ups fixed per module. Camera tiles: no source carries a croppable tile (all thumbnails or screen recordings), so the owner's still stands in on every twin except wsp (no tile). About 3 h 10 min against the four-hour ask: Modules 4 and 5 run short on tape (see modules/m4.py, m5.py headers); spare cut cdd 2552-2721 noted in m3. The owner picks cut vs twin and trims in the cutroom.",
+ "revision": 2,
+ "revised": "2026-11-22",
+ "status": "DRAFT rev1 (2026-11-21): the first cut from the brief (Griff's 2026-11-20 email; Ken: four hours in one to two weeks; owner: 3x3 = market type, ETF2 rules from edge-sysscq, no commercial cards, internal arc + cutroom with animated twins). Seven modules authored from modules/m*.py: 44 Ken cuts (177 min) each with an animated twin ON and the cut OFF, 6 Ava explainers, 9 cards (s00 the internal arc, OFF before the build). Every window VTT-verified; 50/50 animations pass anim_check; sheets eyeballed and the pile-ups fixed per module. Camera tiles: no source carries a croppable tile (all thumbnails or screen recordings), so the owner's still stands in on every twin except wsp (no tile). About 3 h 10 min against the four-hour ask: Modules 4 and 5 run short on tape (see modules/m4.py, m5.py headers); spare cut cdd 2552-2721 noted in m3. The owner picks cut vs twin and trims in the cutroom. · 2026-11-22: toc_title set; the label is the editor's, the student reads toc_title (scripts/student_text.py)",
  "title": "The Weekend Edge (v2)",
  "topic_class": "three laconic tools on the 3x3 spine: regime matrix, ETF2 exposure, SPY daily PSAR flips + kata patterns; outcomes only where computed on bars (edge-sysscq)",
  "store_sku": "weekend-edge",
@@ -156,7 +156,7 @@
   {
    "id": "s00",
    "type": "slide",
-   "include": true,
+   "include": false,
    "label": "INTERNAL · story arc (design card, OFF before the build)",
    "slide_id": "arc",
    "duration": 8,
@@ -167,7 +167,7 @@
     "subtitle": "Market type, exposure number, direction read, the turn, the routine: in that order.",
     "body": "The spine | Module 1 (s11–s19): 3×3 market type, direction × volatility; the cell decides the week\nThe brake | Module 2 (s21–s28): ETF2 strength, consistency, quality; four-month filter; ten regions × 10%\nThe direction | Module 3 (s31–s39): the SPY daily PSAR flip; the dragon band; collapsing dragon; harsh winter\nThe turn | Module 4 (s41–s49): the kata as a form; Kata 2, the supported fall crossing; the chains\nThe routine | Module 5 (s51–s58): Sunday in five rows; size from the cell and the number\nThis week | Module 6 (s61–s62): the 2026-11-20 read, in the order taught"
    },
-   "status": "design card (owner, 2026-11-21: 'internal story arcs'): names the modules and their segment ranges; OFF before the build"
+   "status": "design card (owner, 2026-11-21: 'internal story arcs'): names the modules and their segment ranges; OFF before the build · 2026-11-22: OFF (owner: switch both off; it is a design card)"
   },
   {
    "id": "s01",
@@ -193,7 +193,8 @@
    "vo_script": "Every Sunday, Ken Long answers three questions before he looks at a single trade. What kind of market is this? How much of my capital does the evidence permit? And which way is the index leaning right now? This course gives you his three laconic tools for those three questions. The spine is a three by three matrix: market direction, bull, sideways or bear, against volatility, quiet, normal or volatile. The cell you are in decides what the week permits. On that spine hang the tools. The ETF2 theoretical exposure model, which turns a table of ten regions into one percentage. The SPY daily parabolic SAR flip, which says wait or initiate. And the kata patterns, which name the turn when it comes. Four hours, in the order he uses them. Then the week that is on the screen right now.",
    "est_duration": 68,
    "animation_brief": "the 3x3 grid drawn axis by axis (direction across, volatility down), the cell lit, then three tool pills hung on it in the order of the course",
-   "status": "opening; every claim is a description of the course, no outcome"
+   "status": "opening; every claim is a description of the course, no outcome",
+   "toc_title": "The spine and the three tools"
   },
   {
    "id": "s10",
@@ -300,7 +301,8 @@
    "vo_script": "The label Ken reads first on page one is Van Tharp's market type, as Ken applies it. Two questions, nine answers. Direction: where did the S and P close against its two-hundred-day moving average? More than two percent above: bull. Within two percent: sideways. More than two percent below: bear. Volatility: where does today's fourteen-day A T R percentage sit among the last one hundred days? Inside one standard deviation of the average: normal. The top sixth: volatile. The bottom sixth: quiet. Three by three. In Ken's thirty-year test, the next day was up on average in four cells: every bull cell, and sideways quiet. Down in the three bear cells. Flat in sideways normal and sideways volatile. The words at the top of the report, bullish normal, name one of these nine cells. Everything else in this course is read after that label.",
    "est_duration": 90,
    "animation_brief": "the finished grid: axes named, the nine cells, the up / flat / down tint from his test; one cell highlighted as 'the label on page one'. Facts from wr2 4:51-17:55 (SPY, 200-day, 2 %, 14-day ATR %, 100 days, ±1 SD, the sixths, four up / three down / two flat).",
-   "status": "synth voice, no tile; every rule in the script is Ken's own from s11-s13; 'Van Tharp's market type' is Ken's attribution (c6i 1:33:40 names Tharp beside the classification)"
+   "status": "synth voice, no tile; every rule in the script is Ken's own from s11-s13; 'Van Tharp's market type' is Ken's attribution (c6i 1:33:40 names Tharp beside the classification)",
+   "toc_title": "The grid, drawn"
   },
   {
    "id": "s14",
@@ -786,7 +788,8 @@
    "est_duration": 95,
    "animation_brief": "explainer (Ava, no tile): the Regional Summary table drawn row by row as she names each region (ticker · AVG STR CON QUAL · MA filter), the Cash rows grey, the one Buy row (IEV) lit; then the strip of ten boxes with one lit and the allocation card 'Last week 0% | This week 10%'; the Bullish Normal label last. Values from edge-sysscq reference/kl_reports_2026.json (report 20261114), the parsed copy of the same printed page; the bitmap @etf2-regional-2026-11-14 can replace the drawn table later",
    "status": "rev0: VO script written (Ava, ~95 s est.), scene drawn from the parsed report rows. FLAG for the owner: edge-sysscq SCQ-007 marks the 11-14 STR/CON/AVG columns 'suspect' (Ken's printed STR tracks no price lookback that week; QUAL, prices and the MA signal match). The scene shows the printed numbers as printed; the exposure count (1 of 10, IEV) is the verified part (SCQ-006 matches 'This week 10%').",
-   "quote_anchor": "ETF2 Theoretical exposure goes from 0% -> 10%"
+   "quote_anchor": "ETF2 Theoretical exposure goes from 0% -> 10%",
+   "toc_title": "Reading the 14 November 2026 Regional Summary"
   },
   {
    "id": "s30",
@@ -1028,7 +1031,8 @@
    "vo_script": "This is SPY on daily bars through November 20, 2026: the chart Griff sent with the brief. The dots are the parabolic SAR Ken builds off the ten-bar regression line. Through October the dots sat under price. At the high near 781, the regression line turned down and the dots flipped above price. In Ken's words, a flip down is bearish. Wait for the flip up to initiate. The shaded band is the dragon, drawn around the regression line, and the coloured line is the RL10 itself. In mid November price rebounded for a few days, then broke back below the point where the regression line had turned. That is the collapsing dragon: Ken's preferred short entry, taken when price violates the first dot of the new stack, not when the regression line gets there. Below, the MACD red river. The line left the river in late October and has stayed red and below zero since. Flip down, collapsing dragon, winter: three reads, one direction. None of this is a forecast; it is what these tools said on that date.",
    "est_duration": 80,
    "animation_brief": "schematic of @spy-psar-dragon-2026-11-20 (bitmap at intake): a daily line rising to the high, dots under then over, the band, the rebound that fails (the CD circled), a MACD panel with the river and the line below zero",
-   "status": "facts limited to what the chart shows (781.62 high, 700.96 close, flip at the high, the band, the mid-November failure, the MACD line red below zero from late October); the rules named are Ken's from s34/s35; HARSHWINTER tags on the chart sit at 6/22 and 9/21 only, so November is called 'red and below zero', not a harsh winter"
+   "status": "facts limited to what the chart shows (781.62 high, 700.96 close, flip at the high, the band, the mid-November failure, the MACD line red below zero from late October); the rules named are Ken's from s34/s35; HARSHWINTER tags on the chart sit at 6/22 and 9/21 only, so November is called 'red and below zero', not a harsh winter",
+   "toc_title": "The chart from the brief: SPY daily"
   },
   {
    "id": "s40",
@@ -1501,7 +1505,8 @@
    "vo_script": "Sunday night, one page, five lines, in this order. One. What is the market type? In Ken's words: right now we are in bullish normal conditions; you could use that to guide your size. Two. What is the theoretical exposure? The last line of the ETF2 table: ten indexes, ten percent each, counted above their four-month moving average. Three. Which way is the daily PSAR on SPY pointing? A flip down says wait; a flip up says initiate. Four. Which kata pattern is in play on the names you are watching? Five. What is the standard position size this week? One percent of capital, reset weekly, divided by the sizing box, and never larger because the stop is tight. Under all five, the line Ken puts under every size decision: what is the evidence that I use to justify a decision to increase or decrease risk?",
    "est_duration": 82,
    "animation_brief": "explainer (Ava, the worksheet): a page with five rows filling in order, a small mark per row (the 3x3 grid, the exposure gauge, PSAR dots, a pattern, the size box), then his question under the page | scene anim-s58.html (twin=False)",
-   "status": "composed from the module's windows: row 1 c6i 1:39:17, row 5 ssf 22:34 + c6i 1:37:52, the closing line rgs 37:10. HONESTY FLAG: row 2's words (ten indexes, 10% each, four-month moving average) are Ken's on wr2 49:00-50:38 and rgs 1:55:19, Module 2's windows, not this module's; row 3 (flip down = wait, flip up = initiate) is Griff's annotation on the SPY chart, Module 3's; row 4 is the kata question, Module 4's. Ava states them as the routine, not as quotes."
+   "status": "composed from the module's windows: row 1 c6i 1:39:17, row 5 ssf 22:34 + c6i 1:37:52, the closing line rgs 37:10. HONESTY FLAG: row 2's words (ten indexes, 10% each, four-month moving average) are Ken's on wr2 49:00-50:38 and rgs 1:55:19, Module 2's windows, not this module's; row 3 (flip down = wait, flip up = initiate) is Griff's annotation on the SPY chart, Module 3's; row 4 is the kata question, Module 4's. Ava states them as the routine, not as quotes.",
+   "toc_title": "The Sunday page, five lines in order"
   },
   {
    "id": "s60",
@@ -1527,7 +1532,8 @@
    "vo_script": "Here is the week of November 20th, 2026, read in the order you have just learned. Market type. The weekend report of November 14th prints its label as Bullish Normal, and the global line reads EFA below SPY. Exposure. In the regional summary, nine of the ten regions read Cash; IEV, Europe 350, is the only Buy. Ten percent per Buy: the theoretical exposure moves from zero to ten percent. Direction. On the SPY daily, the parabolic SAR flipped to the downside after the high at 781.62. The RL10 line has been red since, the MACD red river sits below zero, and Friday closed at 700.96, down two percent on the day. Pattern. The dragon band is collapsing; the chart's own annotation reads, collapsing dragon, alert. Size. The course's rule for this picture is the one written on the chart: flip down is bearish, wait for the flip up to initiate. With exposure at ten percent, the brake and the direction read agree. That is the whole routine. Five rows, one Sunday, and the discipline to do them in order.",
    "est_duration": 92,
    "animation_brief": "the five-row worksheet filling in: market type (label as printed), exposure gauge 0 -> 10%, a schematic SPY daily with PSAR dots flipping above price at the high and a band narrowing, the alert pill, the rule line",
-   "status": "every number read off @etf2-regional-2026-11-14 and @spy-psar-dragon-2026-11-20; the 'Bullish Normal' label is the report's own print on 11-14, six days before the chart; no forecast"
+   "status": "every number read off @etf2-regional-2026-11-14 and @spy-psar-dragon-2026-11-20; the 'Bullish Normal' label is the report's own print on 11-14, six days before the chart; no forecast",
+   "toc_title": "The 2026-11-20 read, five rows"
   },
   {
    "id": "s62",

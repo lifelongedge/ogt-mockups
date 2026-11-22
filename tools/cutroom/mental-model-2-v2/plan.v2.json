@@ -1,778 +1,779 @@
 {
-  "schema": "coursecraft-plan-v2",
-  "course": "mental-model-2-v2",
-  "revision": 6,
-  "revised": "2026-11-16",
-  "status": "rev6: transitions by the Module 1 rule (into a card fade 1.0, out of a card fade 0.6, speech that runs on cut, a jump in the tape dip 0.6); rev5: an agenda card after the title card (the parts, for the contents); BUILD rev4 (2026-11-16): the animated cut. Every twin on, its cut off (owner: 'make a complete cut with the animation and Ken in the upper right'); s11 and s16 animated; slide cards made. Sources fetched on stream; built with build_v2 under bounded-run.",
-  "title": "The Mental Model II: The Brain, the System, the Loop (v2)",
-  "topic_class": "psychology (cut-heavy; two overdubs on cohort-only screens; no outcome, never fake one)",
-  "store_sku": "mental-model-2",
-  "replaces": null,
-  "notes": "2026-11-16 (cutroom-20): every slide card carries its text in the plan (`layout` + `text`), editable in the cutroom; render_slides.py renders the png from the plan (the plan wins over slides.html). The maxim attribution lost its dash (style guide). Revision not bumped (slide text merges into an open local pass).\n\nWhy this course exists: the owner's Five Frames notebook produced a seven-cluster outline (2026-11-16); scanned against 352 sessions, five clusters are on tape and two (Munger's lattice, the Army acronyms) are not. This plan carries the on-tape ones in Ken's own windows: (1) the brain builds a model (t4NkztDo_tc, Ken alone, 16 min, 'it takes one slide'); (2) systems thinking (the YRQLU1w_77A interview: definition, feedback loop, structure+process, 80/20 science/art, the meta-system); (3) the chimp (Celia, rJg6jv24s20; Tom's line, B9HVuTtPVqM); (4) plan-prepare-execute-assess with the daily AAR (fbk3g-UCSkc) and the detect-decide-deliver-assess drill-down (muuwye8ozpQ). Not carried: Munger (0 hits in the corpus; the 'inversion' hits are yield curves), FFTC, D3A's 'battle drill with zero-thinking friction' wording, 'flow state' (7 passing mentions), law of large numbers (6 passing mentions). Off-tape clusters belong in the written companion under their own authors' names. Running time about 38 min with the three optional segments off (s07, s13, s30); the shortest honest cut is Ch1 + Ch4 at ~18 min. Speaker permission: Tom Hardison (s22) and Bill Scheidt's questions (s10, s12 lead-ins) are not Ken. Order can flip: Ch2 (systems) before Ch1 (brain) if the owner wants the market before the trader. Rev2 (2026-11-16): every cut sNN has an overdub twin sNNa with the same source window and an animation (anim-sNNa.html from anim_gen.py). Exactly one of each pair should be included; the twins ship include:false so the owner picks in the cutroom. The cut stays the default until a twin is chosen. Twins on the two on-camera sources (t4n, b9h) carry pip:true: Ken's tile is composited top-right at render (build_v2 PIP_*); the other four sources have no usable camera (yrq and fbk a 60 px thumbnail, rjg and muw none). Rev4: the owner chose the animated version for the whole module; the cuts stay in the plan, off, so the choice can be reversed per segment in the cutroom.",
-  "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/mental-model-2-v2/",
-  "sources": [
-    {
-      "id": "t4n",
-      "label": "most-important-edge 2022-11-06 (Ch1 brain)",
-      "file": "youtube-t4NkztDo_tc-most-important-edge.mp4",
-      "url": "https://www.youtube.com/watch?v=t4NkztDo_tc",
-      "proxy": "youtube-t4NkztDo_tc-most-important-edge.proxy.mp4",
-      "pip": {
-        "crop": "iw/3:ih/3:iw/3:0",
-        "note": "Zoom gallery, Ken's tile is top-middle for the whole session (checked at 10,60,380,440,500,620,870,990 s)"
-      }
-    },
-    {
-      "id": "yrq",
-      "label": "systems-thinking-overview interview (Ch2)",
-      "file": "youtube-YRQLU1w_77A-systems-thinking-overview.mp4",
-      "url": "https://www.youtube.com/watch?v=YRQLU1w_77A",
-      "proxy": "youtube-YRQLU1w_77A-systems-thinking-overview.proxy.mp4"
-    },
-    {
-      "id": "rjg",
-      "label": "creativity-202 review, Celia (Ch3)",
-      "file": "youtube-rJg6jv24s20-creativity-202-review.mp4",
-      "url": "https://www.youtube.com/watch?v=rJg6jv24s20",
-      "proxy": "youtube-rJg6jv24s20-creativity-202-review.proxy.mp4"
-    },
-    {
-      "id": "b9h",
-      "label": "coaching-tom-hardison (Ch3 Tom's chimp)",
-      "file": "youtube-B9HVuTtPVqM-coaching-tom-hardison.mp4",
-      "proxy": "youtube-B9HVuTtPVqM-coaching-tom-hardison.proxy.mp4",
-      "url": "https://www.youtube.com/watch?v=B9HVuTtPVqM",
-      "pip": {
-        "crop": "iw*0.418:ih*0.418:iw*0.5406:ih*0.2917",
-        "note": "two tiles, Ken on the right; a 16:9 window on his tile (checked at 370,420,455 s)"
-      }
-    },
-    {
-      "id": "fbk",
-      "label": "nightly strategy 2023-05-06, daily AAR (Ch4)",
-      "file": "youtube-fbk3g-UCSkc-daily-aar-2023-05-06.mp4",
-      "url": "https://www.youtube.com/watch?v=fbk3g-UCSkc",
-      "proxy": "youtube-fbk3g-UCSkc-daily-aar-2023-05-06.proxy.mp4"
-    },
-    {
-      "id": "muw",
-      "label": "strategies 29-37, D3A (Ch4)",
-      "file": "youtube-muuwye8ozpQ-strategies-29-37.mp4",
-      "url": "https://www.youtube.com/watch?v=muuwye8ozpQ",
-      "proxy": "youtube-muuwye8ozpQ-strategies-29-37.proxy.mp4"
-    }
-  ],
-  "voices": [
-    {
-      "id": "ava",
-      "label": "Ava (US, female, polished)",
-      "sample": "vo-ava.mp3"
-    }
-  ],
-  "segments": [
-    {
-      "id": "s01",
-      "type": "cut",
-      "include": false,
-      "label": "Cold open: be of the herd, not in the herd",
-      "source": "t4n",
-      "in": 4.0,
-      "out": 100.0,
-      "status": "MAPPED-VERIFIED 00:04-01:40 (VTT). Out on 'that is the single biggest edge you could possibly ever have'.",
-      "quote_anchor": "the ego reward of being right is the single most powerful biological force... be of the herd but not in the herd... the disinterested mindset... that's what I mean by the science project"
-    },
-    {
-      "id": "s01a",
-      "type": "overdub",
-      "source": "t4n",
-      "in": 4.0,
-      "out": 100.0,
-      "include": true,
-      "label": "ALT animated: Cold open: be of the herd, not in the herd",
-      "animation_brief": "Twin of s01: same Ken audio, drawn scene (be of the herd, not in the herd) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
-      "status": "twin; pick this or s01 in the cutroom",
-      "pip": true
-    },
-    {
-      "id": "s02",
-      "type": "slide",
-      "include": true,
-      "label": "Title card",
-      "slide_id": "title",
-      "duration": 4,
-      "layout": "title",
-      "text": {
-        "kicker": "",
-        "title": "The **Mental Model** II",
-        "subtitle": "",
-        "body": "The Brain, the System, the Loop\nwith Dr. Ken Long"
-      },
-      "transition": {
-        "type": "fade",
-        "dur": 1.0
-      }
-    },
-    {
-      "id": "s02b",
-      "type": "slide",
-      "include": true,
-      "label": "Agenda card",
-      "slide_id": "agenda",
-      "duration": 10,
-      "layout": "agenda",
-      "text": {
-        "kicker": "In this course",
-        "title": "Four parts, about 38 minutes",
-        "subtitle": "",
-        "body": "The brain builds a model | a prediction machine, and the wedge\nSystems thinking | input, process, output, feedback\nThe chimp and the Zero State | the inner trader as a calm chimpanzee\nPlan, prepare, execute, assess | detect, decide, deliver, and the daily review"
-      },
-      "status": "agenda card (2026-11-16, owner go on the contents plan): the parts in course order; edit freely in the cutroom",
-      "transition": {
-        "type": "fade",
-        "dur": 0.6
-      }
-    },
-    {
-      "id": "s03",
-      "type": "cut",
-      "include": false,
-      "label": "The persistent edge: procedures, and one brick",
-      "source": "t4n",
-      "in": 351.0,
-      "out": 420.0,
-      "status": "MAPPED-VERIFIED 05:51-07:00. In on 'the persistent edge consists of'.",
-      "quote_anchor": "establishing procedures and processes that allow you to not be trapped to that fly paper... make one brick, then stack the brick on the pallet correctly"
-    },
-    {
-      "id": "s03a",
-      "type": "overdub",
-      "source": "t4n",
-      "in": 351.0,
-      "out": 420.0,
-      "include": true,
-      "label": "ALT animated: The persistent edge: procedures, and one brick",
-      "animation_brief": "Twin of s03: same Ken audio, drawn scene (procedures, and one brick) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
-      "status": "twin; pick this or s03 in the cutroom",
-      "pip": true,
-      "transition": {
-        "type": "fade",
-        "dur": 0.6
-      }
-    },
-    {
-      "id": "s04",
-      "type": "cut",
-      "include": false,
-      "label": "★ Your brain is a prediction machine; the mental model is the buffer",
-      "source": "t4n",
-      "in": 420.0,
-      "out": 480.0,
-      "status": "MAPPED-VERIFIED 07:00-08:00. ★ at 07:31. Untouchable: this is the course's thesis in Ken's words.",
-      "quote_anchor": "every 1.8 seconds your brain is making an updated prediction... the brain establishes mental models and feelings and emotions as a buffer against that continuous stream... and then it checks for exceptions"
-    },
-    {
-      "id": "s04a",
-      "type": "overdub",
-      "source": "t4n",
-      "in": 420.0,
-      "out": 480.0,
-      "include": true,
-      "label": "ALT animated: ★ Your brain is a prediction machine; the mental model is the buffer",
-      "animation_brief": "Twin of s04: same Ken audio, drawn scene (your brain is a prediction machine) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
-      "status": "twin; pick this or s04 in the cutroom",
-      "pip": true
-    },
-    {
-      "id": "s05",
-      "type": "cut",
-      "include": false,
-      "label": "Shadow, startle, the lion's roar: normal versus abnormal",
-      "source": "t4n",
-      "in": 480.0,
-      "out": 600.0,
-      "status": "MAPPED-VERIFIED 08:00-10:00.",
-      "quote_anchor": "a shadow is danger... your first reaction is fear... a hundred percent of the sniper's frame of reference is being able to distinguish between normal and abnormal and then doing standard work in the normal space and standard work in the abnormal space"
-    },
-    {
-      "id": "s05a",
-      "type": "overdub",
-      "source": "t4n",
-      "in": 480.0,
-      "out": 600.0,
-      "include": true,
-      "label": "ALT animated: Shadow, startle, the lion's roar: normal versus abnormal",
-      "animation_brief": "Twin of s05: same Ken audio, drawn scene (normal versus abnormal) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
-      "status": "twin; pick this or s05 in the cutroom",
-      "pip": true
-    },
-    {
-      "id": "s06",
-      "type": "cut",
-      "include": false,
-      "label": "Look broadly, stalk, localize: how a predator thinks",
-      "source": "t4n",
-      "in": 600.0,
-      "out": 645.0,
-      "status": "MAPPED-VERIFIED 10:00-10:45. Out-point ESTIMATE: end on 'put that wedge between you and that herd animal brain' (~10:40).",
-      "quote_anchor": "learn to look broadly with unfocused vision in order to detect the movements and then stalk and establish the net and the boundaries and localize it until you're ready to strike"
-    },
-    {
-      "id": "s06a",
-      "type": "overdub",
-      "source": "t4n",
-      "in": 600.0,
-      "out": 645.0,
-      "include": true,
-      "label": "ALT animated: Look broadly, stalk, localize: how a predator thinks",
-      "animation_brief": "Twin of s06: same Ken audio, drawn scene (how a predator thinks) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
-      "status": "twin; pick this or s06 in the cutroom",
-      "pip": true
-    },
-    {
-      "id": "s07",
-      "type": "cut",
-      "include": false,
-      "label": "Optional: three bursts of adrenaline; capitulation and elation at the extremes",
-      "source": "t4n",
-      "in": 632.0,
-      "out": 720.0,
-      "status": "MAPPED 10:32-12:00. OFF by default: tactical (max-pain range compression follows at 12:00-14:15 and belongs to the framing module). Re-enable if the chapter needs the emotional-extremes beat.",
-      "quote_anchor": "you only got about three bursts of adrenaline in you before you are done... is it capitulation or elation"
-    },
-    {
-      "id": "s08",
-      "type": "cut",
-      "include": false,
-      "label": "★ The wedge: a buffer between your decision and the herd brain",
-      "source": "t4n",
-      "in": 855.0,
-      "out": 1005.0,
-      "status": "MAPPED-VERIFIED 14:15-16:45. ★ at 14:31. 'no lose plus dinner for two' is named here without definition: a 10 s typography card (stop above entry = the trade cannot lose) covers it; the full rule lives in the sizing module. Out on 'don't you ever forget that'.",
-      "quote_anchor": "place a buffer between your decision making and your craftsmanship and all of the embedded emotion of the herd... instantly shift into craftsman mode... frame it and go be a pro... the disinterested science project"
-    },
-    {
-      "id": "s08a",
-      "type": "overdub",
-      "source": "t4n",
-      "in": 855.0,
-      "out": 1005.0,
-      "include": true,
-      "label": "ALT animated: ★ The wedge: a buffer between your decision and the herd brain",
-      "animation_brief": "Twin of s08: same Ken audio, drawn scene (the wedge) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
-      "status": "twin; pick this or s08 in the cutroom",
-      "pip": true,
-      "transition": {
-        "type": "dip",
-        "dur": 0.6
-      }
-    },
-    {
-      "id": "s09",
-      "type": "slide",
-      "include": true,
-      "label": "Chapter 2 card",
-      "slide_id": "ch2",
-      "duration": 2,
-      "layout": "chapter",
-      "text": {
-        "kicker": "Chapter 2",
-        "title": "Systems thinking",
-        "subtitle": "",
-        "body": ""
-      },
-      "transition": {
-        "type": "fade",
-        "dur": 1.0
-      }
-    },
-    {
-      "id": "s10",
-      "type": "cut",
-      "include": false,
-      "label": "If you want a persistent edge in a dynamic market, be a systems thinker",
-      "source": "yrq",
-      "in": 95.0,
-      "out": 160.0,
-      "status": "MAPPED 01:35-02:40. In-point ESTIMATE on 'if you want a persistent edge'; cutroom trim: the World Economic Forum sentence (~01:45-02:00) and the book mention before it.",
-      "quote_anchor": "if you want a persistent edge in a dynamic market you better be a systems thinker... a system is a group of components organized to seek a goal in an environment"
-    },
-    {
-      "id": "s10a",
-      "type": "overdub",
-      "source": "yrq",
-      "in": 95.0,
-      "out": 160.0,
-      "include": true,
-      "label": "ALT animated: If you want a persistent edge in a dynamic market, be a systems thinker",
-      "animation_brief": "Twin of s10: same Ken audio, drawn scene (be a systems thinker) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
-      "status": "twin; pick this or s10 in the cutroom",
-      "transition": {
-        "type": "fade",
-        "dur": 0.6
-      }
-    },
-    {
-      "id": "s11",
-      "type": "overdub",
-      "include": true,
-      "label": "OVERDUB: input, process, output, feedback loop (system map component)",
-      "source": "yrq",
-      "in": 160.0,
-      "out": 245.0,
-      "status": "MAPPED-VERIFIED 02:40-04:05. The screen is a shared diagram (cohort-only); animate the map to his cadence.",
-      "animation_brief": "NEW system-map component: a box (input → process → output) inside a larger environment; 'you can influence the environment, it can influence you, but you can't control it' (02:55); the trade goes out, results come back as a feedback loop (03:30); the learning subsystem closes the loop (03:50).",
-      "quote_anchor": "an input, process, an output, self-contained, that's an actor inside a larger environment"
-    },
-    {
-      "id": "s12",
-      "type": "cut",
-      "include": false,
-      "label": "Systems thinking: structure and process, in motion",
-      "source": "yrq",
-      "in": 400.0,
-      "out": 562.0,
-      "status": "MAPPED-VERIFIED 06:40-09:22. Starts after the software plug (06:00-06:40).",
-      "quote_anchor": "the art and science of making reliable inferences about behavior by developing an increasingly deep understanding of underlying structure... the trade goes through life cycles... planning, preparing, executing, assessing"
-    },
-    {
-      "id": "s12a",
-      "type": "overdub",
-      "source": "yrq",
-      "in": 400.0,
-      "out": 562.0,
-      "include": true,
-      "label": "ALT animated: Systems thinking: structure and process, in motion",
-      "animation_brief": "Twin of s12: same Ken audio, drawn scene (structure and process, in motion) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
-      "status": "twin; pick this or s12 in the cutroom",
-      "transition": {
-        "type": "dip",
-        "dur": 0.6
-      }
-    },
-    {
-      "id": "s13",
-      "type": "cut",
-      "include": false,
-      "label": "Optional: art, science, and the craft of blending them",
-      "source": "yrq",
-      "in": 600.0,
-      "out": 680.0,
-      "status": "MAPPED 10:00-11:20. OFF by default (Bill's praise of Ken follows at 11:20; the point is restated inside s14).",
-      "quote_anchor": "the craft of trading, the craft of systems thinking, is learning how to usefully blend art and science"
-    },
-    {
-      "id": "s14",
-      "type": "cut",
-      "include": false,
-      "label": "★ Eighty percent science, twenty percent art: be strong where the herd is weak",
-      "source": "yrq",
-      "in": 718.0,
-      "out": 845.0,
-      "status": "MAPPED-VERIFIED 11:58-14:05. ★ at 12:00-12:40. Out on 'that will take care of you in the long run'.",
-      "quote_anchor": "the first 80% of your trading journey should be towards the science of rules-based trading... people dislike discipline and they dislike math... the first and most persistent edge is to be strong on things that the herd is weak on"
-    },
-    {
-      "id": "s14a",
-      "type": "overdub",
-      "source": "yrq",
-      "in": 718.0,
-      "out": 845.0,
-      "include": true,
-      "label": "ALT animated: ★ Eighty percent science, twenty percent art: be strong where the herd is weak",
-      "animation_brief": "Twin of s14: same Ken audio, drawn scene (eighty percent science) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
-      "status": "twin; pick this or s14 in the cutroom",
-      "transition": {
-        "type": "dip",
-        "dur": 0.6
-      }
-    },
-    {
-      "id": "s15",
-      "type": "cut",
-      "include": false,
-      "label": "Strategy versus tactics; the bowl maker",
-      "source": "yrq",
-      "in": 961.0,
-      "out": 1040.0,
-      "status": "MAPPED-VERIFIED 16:01-17:20.",
-      "quote_anchor": "tactics is what you do when you know what to do... if you don't know what to do then you need strategy... I look at trading the same way that a bowl maker makes bowls"
-    },
-    {
-      "id": "s15a",
-      "type": "overdub",
-      "source": "yrq",
-      "in": 961.0,
-      "out": 1040.0,
-      "include": true,
-      "label": "ALT animated: Strategy versus tactics; the bowl maker",
-      "animation_brief": "Twin of s15: same Ken audio, drawn scene (the bowl maker) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
-      "status": "twin; pick this or s15 in the cutroom",
-      "transition": {
-        "type": "dip",
-        "dur": 0.6
-      }
-    },
-    {
-      "id": "s16",
-      "type": "overdub",
-      "include": true,
-      "label": "OVERDUB: three timeframes, three systems, one meta-system",
-      "source": "yrq",
-      "in": 1040.0,
-      "out": 1340.0,
-      "status": "MAPPED-VERIFIED 17:20-22:20 with beat map: day/swing/position 17:20-19:20; mutual support across frames 19:20-20:40; core and turbo + 'systems have systems, a meta system' 20:40-21:20; the trader is the constant, the board of directors 21:20-22:20. Screen is his one-page strategy slide (cohort-only).",
-      "animation_brief": "Stacked-frames component (exists) extended: three rows (day, swing, position) each with its own system label; arrows between rows when he describes mutual support; the rows nest into one frame at 'meta system' (20:50); a figure of the trader appears as the constant at 21:20.",
-      "quote_anchor": "systems have systems and we would call that a meta system"
-    },
-    {
-      "id": "s17",
-      "type": "cut",
-      "include": false,
-      "label": "Why it pays: one unified lens",
-      "source": "yrq",
-      "in": 1340.0,
-      "out": 1402.0,
-      "status": "MAPPED-VERIFIED 22:20-23:22. Out-point ESTIMATE on 'an integrated effort at using systems thinking in that way'.",
-      "quote_anchor": "when I learn to be a systems thinker it makes me a better day trader, a better swing trader, a better position trader, a better businessman, better psychology... through one unified lens"
-    },
-    {
-      "id": "s17a",
-      "type": "overdub",
-      "source": "yrq",
-      "in": 1340.0,
-      "out": 1402.0,
-      "include": true,
-      "label": "ALT animated: Why it pays: one unified lens",
-      "animation_brief": "Twin of s17: same Ken audio, drawn scene (one unified lens) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
-      "status": "twin; pick this or s17 in the cutroom"
-    },
-    {
-      "id": "s18",
-      "type": "slide",
-      "include": true,
-      "label": "Chapter 3 card",
-      "slide_id": "ch3",
-      "duration": 2,
-      "layout": "chapter",
-      "text": {
-        "kicker": "Chapter 3",
-        "title": "The chimp and the **Zero State**",
-        "subtitle": "",
-        "body": ""
-      },
-      "transition": {
-        "type": "fade",
-        "dur": 1.0
-      }
-    },
-    {
-      "id": "s19",
-      "type": "cut",
-      "include": false,
-      "label": "Celia: inventory the feelings",
-      "source": "rjg",
-      "in": 643.0,
-      "out": 702.0,
-      "status": "MAPPED-VERIFIED 10:43-11:42. The photo is on his shared screen: get the image into assets (asset-intake) or card it; without it the beat has no subject.",
-      "quote_anchor": "this is a picture of a chimpanzee that I sponsor and her name is Celia... do an inventory of the feelings that come out of that picture"
-    },
-    {
-      "id": "s19a",
-      "type": "overdub",
-      "source": "rjg",
-      "in": 643.0,
-      "out": 702.0,
-      "include": true,
-      "label": "ALT animated: Celia: inventory the feelings",
-      "animation_brief": "Twin of s19: same Ken audio, drawn scene (Celia) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
-      "status": "twin; pick this or s19 in the cutroom",
-      "transition": {
-        "type": "fade",
-        "dur": 0.6
-      }
-    },
-    {
-      "id": "s20",
-      "type": "cut",
-      "include": false,
-      "label": "★ The inner trader as a calm chimpanzee; when she gives the warning, her job is done",
-      "source": "rjg",
-      "in": 702.0,
-      "out": 782.0,
-      "status": "MAPPED-VERIFIED 11:42-13:02. ★ at 12:41.",
-      "quote_anchor": "model our inner trader as a very calm chimpanzee that would give us an early warning... when the chimp gives us the early warning her job is done... leverage the power of our inner chimp instead of trying to control the chimp or discipline the chimp or suppress the chimp"
-    },
-    {
-      "id": "s20a",
-      "type": "overdub",
-      "source": "rjg",
-      "in": 702.0,
-      "out": 782.0,
-      "include": true,
-      "label": "ALT animated: ★ The inner trader as a calm chimpanzee; when she gives the warning, her job is done",
-      "animation_brief": "Twin of s20: same Ken audio, drawn scene (the inner trader as a calm chimpanzee) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
-      "status": "twin; pick this or s20 in the cutroom"
-    },
-    {
-      "id": "s21",
-      "type": "cut",
-      "include": false,
-      "label": "Map the process from impulse to action",
-      "source": "rjg",
-      "in": 782.0,
-      "out": 880.0,
-      "status": "MAPPED-VERIFIED 13:02-14:40. Out on 'become intentional in the way that we trade'.",
-      "quote_anchor": "is there something we can do about managing our internal state so that when we get stimuli from the world we can learn to act in a way that is preferred and professional instead of something that is impulsive"
-    },
-    {
-      "id": "s21a",
-      "type": "overdub",
-      "source": "rjg",
-      "in": 782.0,
-      "out": 880.0,
-      "include": true,
-      "label": "ALT animated: Map the process from impulse to action",
-      "animation_brief": "Twin of s21: same Ken audio, drawn scene (from impulse to action) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
-      "status": "twin; pick this or s21 in the cutroom"
-    },
-    {
-      "id": "s22",
-      "type": "cut",
-      "include": false,
-      "label": "Tom: one idiot away from the chimp behind the wheel; trading is exactly like that",
-      "source": "b9h",
-      "in": 362.0,
-      "out": 460.0,
-      "status": "MAPPED-VERIFIED 06:02-07:40 (student voice: Tom Hardison; permission status per catalog/course-proposal.md open question 3; he already features in disciplined-operator-v2). Zero State is named here by the student; Ken's own Zero State teaching is the parked topical-zero-state plan, cross-link on screen.",
-      "quote_anchor": "I'm always like one idiot away from becoming a monkey murderous chimpanzee behind the wheel... trading is exactly like that, it's the same chimp... instead of getting to the zero state"
-    },
-    {
-      "id": "s22a",
-      "type": "overdub",
-      "source": "b9h",
-      "in": 362.0,
-      "out": 460.0,
-      "include": true,
-      "label": "ALT animated: Tom: one idiot away from the chimp behind the wheel; trading is exactly like that",
-      "animation_brief": "Twin of s22: same Ken audio, drawn scene (the chimp behind the wheel) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
-      "status": "twin; pick this or s22 in the cutroom",
-      "pip": true,
-      "transition": {
-        "type": "dip",
-        "dur": 0.6
-      }
-    },
-    {
-      "id": "s23",
-      "type": "cut",
-      "include": false,
-      "label": "Turn it into a science project and the chimp is not agitated",
-      "source": "rjg",
-      "in": 2430.0,
-      "out": 2480.0,
-      "status": "MAPPED-VERIFIED 40:30-41:20. Chart share on screen (SPY 2-minute, risk box): overdub candidate with the risk-box component if the share is unusable.",
-      "quote_anchor": "if I can turn this into a science project then my chimpanzee, my inner chimp, is not agitated and I can trade this in a calm and relaxed manner"
-    },
-    {
-      "id": "s23a",
-      "type": "overdub",
-      "source": "rjg",
-      "in": 2430.0,
-      "out": 2480.0,
-      "include": true,
-      "label": "ALT animated: Turn it into a science project and the chimp is not agitated",
-      "animation_brief": "Twin of s23: same Ken audio, drawn scene (the science project) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
-      "status": "twin; pick this or s23 in the cutroom",
-      "transition": {
-        "type": "dip",
-        "dur": 0.6
-      }
-    },
-    {
-      "id": "s24",
-      "type": "slide",
-      "include": true,
-      "label": "Chapter 4 card",
-      "slide_id": "ch4",
-      "duration": 2,
-      "layout": "chapter",
-      "text": {
-        "kicker": "Chapter 4",
-        "title": "Plan, prepare, execute, **assess**",
-        "subtitle": "",
-        "body": ""
-      },
-      "transition": {
-        "type": "fade",
-        "dur": 1.0
-      }
-    },
-    {
-      "id": "s25",
-      "type": "cut",
-      "include": false,
-      "label": "★ Detect, decide, deliver, assess: the drill-down of execute",
-      "source": "muw",
-      "in": 5640.0,
-      "out": 5760.0,
-      "status": "MAPPED-VERIFIED 1:34:00-1:36:00. He says it as 'decide detect deliver' at 1:33:58 and corrects the order at 1:35:02; start at 1:34:00 so the corrected order is the one heard. ★ at 1:35:33.",
-      "quote_anchor": "when you're in that perfect zero state for trading... I detect a target, I decide on a method, system, strategy or technique... I deliver the technique with good execution... if I had plan prepare execute assess, if I broke out the execution I would say detect decide deliver assess, that's the drill-down process"
-    },
-    {
-      "id": "s25a",
-      "type": "overdub",
-      "source": "muw",
-      "in": 5640.0,
-      "out": 5760.0,
-      "include": true,
-      "label": "ALT animated: ★ Detect, decide, deliver, assess: the drill-down of execute",
-      "animation_brief": "Twin of s25: same Ken audio, drawn scene (detect, decide, deliver, assess) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
-      "status": "twin; pick this or s25 in the cutroom",
-      "transition": {
-        "type": "fade",
-        "dur": 0.6
-      }
-    },
-    {
-      "id": "s26",
-      "type": "cut",
-      "include": false,
-      "label": "Sense and respond; a signal I wasn't prepared for, I don't take",
-      "source": "muw",
-      "in": 5760.0,
-      "out": 5820.0,
-      "status": "MAPPED-VERIFIED 1:36:00-1:37:00. Out on 'I can't predict it ahead of time'.",
-      "quote_anchor": "all I have to be able to do is sense and respond... I've already prepared my responses to the expected signals and if it's a signal that I wasn't prepared for I don't do anything"
-    },
-    {
-      "id": "s26a",
-      "type": "overdub",
-      "source": "muw",
-      "in": 5760.0,
-      "out": 5820.0,
-      "include": true,
-      "label": "ALT animated: Sense and respond; a signal I wasn't prepared for, I don't take",
-      "animation_brief": "Twin of s26: same Ken audio, drawn scene (sense and respond) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
-      "status": "twin; pick this or s26 in the cutroom"
-    },
-    {
-      "id": "s27",
-      "type": "cut",
-      "include": false,
-      "label": "★ The daily after-action review: sustains, improves, actions",
-      "source": "fbk",
-      "in": 2433.0,
-      "out": 2551.0,
-      "status": "MAPPED-VERIFIED 40:33-42:31. ★ at 42:02. Typography card: the 4 x 3 grid (phases x sustain/improve/act) builds as he names it.",
-      "quote_anchor": "each day you want to do a daily after action review... plan prepare execute and assess, those are the four phases... sustains, improves and actions... pick one or two things to fix for tomorrow"
-    },
-    {
-      "id": "s27a",
-      "type": "overdub",
-      "source": "fbk",
-      "in": 2433.0,
-      "out": 2551.0,
-      "include": true,
-      "label": "ALT animated: ★ The daily after-action review: sustains, improves, actions",
-      "animation_brief": "Twin of s27: same Ken audio, drawn scene (the daily after-action review) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
-      "status": "twin; pick this or s27 in the cutroom",
-      "transition": {
-        "type": "dip",
-        "dur": 0.6
-      }
-    },
-    {
-      "id": "s28",
-      "type": "cut",
-      "include": false,
-      "label": "Persistent problems to the top; tell your partner; put it in writing",
-      "source": "fbk",
-      "in": 2551.0,
-      "out": 2641.0,
-      "status": "MAPPED-VERIFIED 42:31-44:01.",
-      "quote_anchor": "the things that are persistent problems should move to the top of your list... I'm going to tell my accountability partner... put my affirmation, my intention in writing"
-    },
-    {
-      "id": "s28a",
-      "type": "overdub",
-      "source": "fbk",
-      "in": 2551.0,
-      "out": 2641.0,
-      "include": true,
-      "label": "ALT animated: Persistent problems to the top; tell your partner; put it in writing",
-      "animation_brief": "Twin of s28: same Ken audio, drawn scene (persistent problems to the top) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
-      "status": "twin; pick this or s28 in the cutroom"
-    },
-    {
-      "id": "s29",
-      "type": "cut",
-      "include": false,
-      "label": "Then and only then: plan tomorrow, and sleep with a clear mind",
-      "source": "fbk",
-      "in": 2641.0,
-      "out": 2731.0,
-      "status": "MAPPED-VERIFIED 44:01-45:31. Out on 'the learning journal is what we do to perform the daily AAR'.",
-      "quote_anchor": "once I've committed to what I'm going to do tomorrow then and only then I can go forward and start planning for the next day... next morning I just have to wake up and trade"
-    },
-    {
-      "id": "s29a",
-      "type": "overdub",
-      "source": "fbk",
-      "in": 2641.0,
-      "out": 2731.0,
-      "include": true,
-      "label": "ALT animated: Then and only then: plan tomorrow, and sleep with a clear mind",
-      "animation_brief": "Twin of s29: same Ken audio, drawn scene (then and only then) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
-      "status": "twin; pick this or s29 in the cutroom"
-    },
-    {
-      "id": "s30",
-      "type": "cut",
-      "include": false,
-      "label": "Optional: be relentless, ratchet it in, don't backslide",
-      "source": "muw",
-      "in": 6060.0,
-      "out": 6092.0,
-      "status": "MAPPED-VERIFIED 1:41:00-1:41:32. OFF by default: a second close; use it if s29 lands soft.",
-      "quote_anchor": "every time you make a little improvement ratchet it in... constant assessment, plan prepare execute assess, you got to be relentless and ruthless on that"
-    },
-    {
-      "id": "s31",
-      "type": "slide",
-      "include": true,
-      "label": "Maxim card",
-      "slide_id": "maxim",
-      "duration": 6,
-      "layout": "maxim",
-      "text": {
-        "kicker": "",
-        "title": "“Be of the herd, but not in the herd.”",
-        "subtitle": "Dr. Ken Long",
-        "body": ""
-      },
-      "transition": {
-        "type": "fade",
-        "dur": 1.0
-      }
-    },
-    {
-      "id": "s32",
-      "type": "slide",
-      "include": true,
-      "label": "End card",
-      "slide_id": "end",
-      "duration": 10,
-      "layout": "end",
-      "text": {
-        "kicker": "",
-        "title": "One idea on the craft most mornings",
-        "subtitle": "owlgrouptrading.com",
-        "body": "The Tue to Fri daily note from Owl Group Trading.\nModule 1, The Mental Model, is the companion to this one."
-      },
-      "transition": {
-        "type": "fade",
-        "dur": 1.0
-      }
-    }
-  ]
+ "schema": "coursecraft-plan-v2",
+ "course": "mental-model-2-v2",
+ "revision": 7,
+ "revised": "2026-11-22",
+ "status": "rev6: transitions by the Module 1 rule (into a card fade 1.0, out of a card fade 0.6, speech that runs on cut, a jump in the tape dip 0.6); rev5: an agenda card after the title card (the parts, for the contents); BUILD rev4 (2026-11-16): the animated cut. Every twin on, its cut off (owner: 'make a complete cut with the animation and Ken in the upper right'); s11 and s16 animated; slide cards made. Sources fetched on stream; built with build_v2 under bounded-run. · 2026-11-22: toc_title set; the label is the editor's, the student reads toc_title (scripts/student_text.py)",
+ "title": "The Mental Model II: The Brain, the System, the Loop (v2)",
+ "topic_class": "psychology (cut-heavy; two overdubs on cohort-only screens; no outcome, never fake one)",
+ "store_sku": "mental-model-2",
+ "replaces": null,
+ "notes": "2026-11-16 (cutroom-20): every slide card carries its text in the plan (`layout` + `text`), editable in the cutroom; render_slides.py renders the png from the plan (the plan wins over slides.html). The maxim attribution lost its dash (style guide). Revision not bumped (slide text merges into an open local pass).\n\nWhy this course exists: the owner's Five Frames notebook produced a seven-cluster outline (2026-11-16); scanned against 352 sessions, five clusters are on tape and two (Munger's lattice, the Army acronyms) are not. This plan carries the on-tape ones in Ken's own windows: (1) the brain builds a model (t4NkztDo_tc, Ken alone, 16 min, 'it takes one slide'); (2) systems thinking (the YRQLU1w_77A interview: definition, feedback loop, structure+process, 80/20 science/art, the meta-system); (3) the chimp (Celia, rJg6jv24s20; Tom's line, B9HVuTtPVqM); (4) plan-prepare-execute-assess with the daily AAR (fbk3g-UCSkc) and the detect-decide-deliver-assess drill-down (muuwye8ozpQ). Not carried: Munger (0 hits in the corpus; the 'inversion' hits are yield curves), FFTC, D3A's 'battle drill with zero-thinking friction' wording, 'flow state' (7 passing mentions), law of large numbers (6 passing mentions). Off-tape clusters belong in the written companion under their own authors' names. Running time about 38 min with the three optional segments off (s07, s13, s30); the shortest honest cut is Ch1 + Ch4 at ~18 min. Speaker permission: Tom Hardison (s22) and Bill Scheidt's questions (s10, s12 lead-ins) are not Ken. Order can flip: Ch2 (systems) before Ch1 (brain) if the owner wants the market before the trader. Rev2 (2026-11-16): every cut sNN has an overdub twin sNNa with the same source window and an animation (anim-sNNa.html from anim_gen.py). Exactly one of each pair should be included; the twins ship include:false so the owner picks in the cutroom. The cut stays the default until a twin is chosen. Twins on the two on-camera sources (t4n, b9h) carry pip:true: Ken's tile is composited top-right at render (build_v2 PIP_*); the other four sources have no usable camera (yrq and fbk a 60 px thumbnail, rjg and muw none). Rev4: the owner chose the animated version for the whole module; the cuts stay in the plan, off, so the choice can be reversed per segment in the cutroom.",
+ "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/mental-model-2-v2/",
+ "sources": [
+  {
+   "id": "t4n",
+   "label": "most-important-edge 2022-11-06 (Ch1 brain)",
+   "file": "youtube-t4NkztDo_tc-most-important-edge.mp4",
+   "url": "https://www.youtube.com/watch?v=t4NkztDo_tc",
+   "proxy": "youtube-t4NkztDo_tc-most-important-edge.proxy.mp4",
+   "pip": {
+    "crop": "iw/3:ih/3:iw/3:0",
+    "note": "Zoom gallery, Ken's tile is top-middle for the whole session (checked at 10,60,380,440,500,620,870,990 s)"
+   }
+  },
+  {
+   "id": "yrq",
+   "label": "systems-thinking-overview interview (Ch2)",
+   "file": "youtube-YRQLU1w_77A-systems-thinking-overview.mp4",
+   "url": "https://www.youtube.com/watch?v=YRQLU1w_77A",
+   "proxy": "youtube-YRQLU1w_77A-systems-thinking-overview.proxy.mp4"
+  },
+  {
+   "id": "rjg",
+   "label": "creativity-202 review, Celia (Ch3)",
+   "file": "youtube-rJg6jv24s20-creativity-202-review.mp4",
+   "url": "https://www.youtube.com/watch?v=rJg6jv24s20",
+   "proxy": "youtube-rJg6jv24s20-creativity-202-review.proxy.mp4"
+  },
+  {
+   "id": "b9h",
+   "label": "coaching-tom-hardison (Ch3 Tom's chimp)",
+   "file": "youtube-B9HVuTtPVqM-coaching-tom-hardison.mp4",
+   "proxy": "youtube-B9HVuTtPVqM-coaching-tom-hardison.proxy.mp4",
+   "url": "https://www.youtube.com/watch?v=B9HVuTtPVqM",
+   "pip": {
+    "crop": "iw*0.418:ih*0.418:iw*0.5406:ih*0.2917",
+    "note": "two tiles, Ken on the right; a 16:9 window on his tile (checked at 370,420,455 s)"
+   }
+  },
+  {
+   "id": "fbk",
+   "label": "nightly strategy 2023-05-06, daily AAR (Ch4)",
+   "file": "youtube-fbk3g-UCSkc-daily-aar-2023-05-06.mp4",
+   "url": "https://www.youtube.com/watch?v=fbk3g-UCSkc",
+   "proxy": "youtube-fbk3g-UCSkc-daily-aar-2023-05-06.proxy.mp4"
+  },
+  {
+   "id": "muw",
+   "label": "strategies 29-37, D3A (Ch4)",
+   "file": "youtube-muuwye8ozpQ-strategies-29-37.mp4",
+   "url": "https://www.youtube.com/watch?v=muuwye8ozpQ",
+   "proxy": "youtube-muuwye8ozpQ-strategies-29-37.proxy.mp4"
+  }
+ ],
+ "voices": [
+  {
+   "id": "ava",
+   "label": "Ava (US, female, polished)",
+   "sample": "vo-ava.mp3"
+  }
+ ],
+ "segments": [
+  {
+   "id": "s01",
+   "type": "cut",
+   "include": false,
+   "label": "Cold open: be of the herd, not in the herd",
+   "source": "t4n",
+   "in": 4.0,
+   "out": 100.0,
+   "status": "MAPPED-VERIFIED 00:04-01:40 (VTT). Out on 'that is the single biggest edge you could possibly ever have'.",
+   "quote_anchor": "the ego reward of being right is the single most powerful biological force... be of the herd but not in the herd... the disinterested mindset... that's what I mean by the science project"
+  },
+  {
+   "id": "s01a",
+   "type": "overdub",
+   "source": "t4n",
+   "in": 4.0,
+   "out": 100.0,
+   "include": true,
+   "label": "ALT animated: Cold open: be of the herd, not in the herd",
+   "animation_brief": "Twin of s01: same Ken audio, drawn scene (be of the herd, not in the herd) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
+   "status": "twin; pick this or s01 in the cutroom",
+   "pip": true,
+   "toc_title": "Be of the herd, not in the herd"
+  },
+  {
+   "id": "s02",
+   "type": "slide",
+   "include": true,
+   "label": "Title card",
+   "slide_id": "title",
+   "duration": 4,
+   "layout": "title",
+   "text": {
+    "kicker": "",
+    "title": "The **Mental Model** II",
+    "subtitle": "",
+    "body": "The Brain, the System, the Loop\nwith Dr. Ken Long"
+   },
+   "transition": {
+    "type": "fade",
+    "dur": 1.0
+   }
+  },
+  {
+   "id": "s02b",
+   "type": "slide",
+   "include": true,
+   "label": "Agenda card",
+   "slide_id": "agenda",
+   "duration": 10,
+   "layout": "agenda",
+   "text": {
+    "kicker": "In this course",
+    "title": "Four parts, about 38 minutes",
+    "subtitle": "",
+    "body": "The brain builds a model | a prediction machine, and the wedge\nSystems thinking | input, process, output, feedback\nThe chimp and the Zero State | the inner trader as a calm chimpanzee\nPlan, prepare, execute, assess | detect, decide, deliver, and the daily review"
+   },
+   "status": "agenda card (2026-11-16, owner go on the contents plan): the parts in course order; edit freely in the cutroom",
+   "transition": {
+    "type": "fade",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s03",
+   "type": "cut",
+   "include": false,
+   "label": "The persistent edge: procedures, and one brick",
+   "source": "t4n",
+   "in": 351.0,
+   "out": 420.0,
+   "status": "MAPPED-VERIFIED 05:51-07:00. In on 'the persistent edge consists of'.",
+   "quote_anchor": "establishing procedures and processes that allow you to not be trapped to that fly paper... make one brick, then stack the brick on the pallet correctly"
+  },
+  {
+   "id": "s03a",
+   "type": "overdub",
+   "source": "t4n",
+   "in": 351.0,
+   "out": 420.0,
+   "include": true,
+   "label": "ALT animated: The persistent edge: procedures, and one brick",
+   "animation_brief": "Twin of s03: same Ken audio, drawn scene (procedures, and one brick) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
+   "status": "twin; pick this or s03 in the cutroom",
+   "pip": true,
+   "transition": {
+    "type": "fade",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s04",
+   "type": "cut",
+   "include": false,
+   "label": "★ Your brain is a prediction machine; the mental model is the buffer",
+   "source": "t4n",
+   "in": 420.0,
+   "out": 480.0,
+   "status": "MAPPED-VERIFIED 07:00-08:00. ★ at 07:31. Untouchable: this is the course's thesis in Ken's words.",
+   "quote_anchor": "every 1.8 seconds your brain is making an updated prediction... the brain establishes mental models and feelings and emotions as a buffer against that continuous stream... and then it checks for exceptions"
+  },
+  {
+   "id": "s04a",
+   "type": "overdub",
+   "source": "t4n",
+   "in": 420.0,
+   "out": 480.0,
+   "include": true,
+   "label": "ALT animated: ★ Your brain is a prediction machine; the mental model is the buffer",
+   "animation_brief": "Twin of s04: same Ken audio, drawn scene (your brain is a prediction machine) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
+   "status": "twin; pick this or s04 in the cutroom",
+   "pip": true
+  },
+  {
+   "id": "s05",
+   "type": "cut",
+   "include": false,
+   "label": "Shadow, startle, the lion's roar: normal versus abnormal",
+   "source": "t4n",
+   "in": 480.0,
+   "out": 600.0,
+   "status": "MAPPED-VERIFIED 08:00-10:00.",
+   "quote_anchor": "a shadow is danger... your first reaction is fear... a hundred percent of the sniper's frame of reference is being able to distinguish between normal and abnormal and then doing standard work in the normal space and standard work in the abnormal space"
+  },
+  {
+   "id": "s05a",
+   "type": "overdub",
+   "source": "t4n",
+   "in": 480.0,
+   "out": 600.0,
+   "include": true,
+   "label": "ALT animated: Shadow, startle, the lion's roar: normal versus abnormal",
+   "animation_brief": "Twin of s05: same Ken audio, drawn scene (normal versus abnormal) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
+   "status": "twin; pick this or s05 in the cutroom",
+   "pip": true
+  },
+  {
+   "id": "s06",
+   "type": "cut",
+   "include": false,
+   "label": "Look broadly, stalk, localize: how a predator thinks",
+   "source": "t4n",
+   "in": 600.0,
+   "out": 645.0,
+   "status": "MAPPED-VERIFIED 10:00-10:45. Out-point ESTIMATE: end on 'put that wedge between you and that herd animal brain' (~10:40).",
+   "quote_anchor": "learn to look broadly with unfocused vision in order to detect the movements and then stalk and establish the net and the boundaries and localize it until you're ready to strike"
+  },
+  {
+   "id": "s06a",
+   "type": "overdub",
+   "source": "t4n",
+   "in": 600.0,
+   "out": 645.0,
+   "include": true,
+   "label": "ALT animated: Look broadly, stalk, localize: how a predator thinks",
+   "animation_brief": "Twin of s06: same Ken audio, drawn scene (how a predator thinks) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
+   "status": "twin; pick this or s06 in the cutroom",
+   "pip": true
+  },
+  {
+   "id": "s07",
+   "type": "cut",
+   "include": false,
+   "label": "Optional: three bursts of adrenaline; capitulation and elation at the extremes",
+   "source": "t4n",
+   "in": 632.0,
+   "out": 720.0,
+   "status": "MAPPED 10:32-12:00. OFF by default: tactical (max-pain range compression follows at 12:00-14:15 and belongs to the framing module). Re-enable if the chapter needs the emotional-extremes beat.",
+   "quote_anchor": "you only got about three bursts of adrenaline in you before you are done... is it capitulation or elation"
+  },
+  {
+   "id": "s08",
+   "type": "cut",
+   "include": false,
+   "label": "★ The wedge: a buffer between your decision and the herd brain",
+   "source": "t4n",
+   "in": 855.0,
+   "out": 1005.0,
+   "status": "MAPPED-VERIFIED 14:15-16:45. ★ at 14:31. 'no lose plus dinner for two' is named here without definition: a 10 s typography card (stop above entry = the trade cannot lose) covers it; the full rule lives in the sizing module. Out on 'don't you ever forget that'.",
+   "quote_anchor": "place a buffer between your decision making and your craftsmanship and all of the embedded emotion of the herd... instantly shift into craftsman mode... frame it and go be a pro... the disinterested science project"
+  },
+  {
+   "id": "s08a",
+   "type": "overdub",
+   "source": "t4n",
+   "in": 855.0,
+   "out": 1005.0,
+   "include": true,
+   "label": "ALT animated: ★ The wedge: a buffer between your decision and the herd brain",
+   "animation_brief": "Twin of s08: same Ken audio, drawn scene (the wedge) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
+   "status": "twin; pick this or s08 in the cutroom",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s09",
+   "type": "slide",
+   "include": true,
+   "label": "Chapter 2 card",
+   "slide_id": "ch2",
+   "duration": 2,
+   "layout": "chapter",
+   "text": {
+    "kicker": "Chapter 2",
+    "title": "Systems thinking",
+    "subtitle": "",
+    "body": ""
+   },
+   "transition": {
+    "type": "fade",
+    "dur": 1.0
+   }
+  },
+  {
+   "id": "s10",
+   "type": "cut",
+   "include": false,
+   "label": "If you want a persistent edge in a dynamic market, be a systems thinker",
+   "source": "yrq",
+   "in": 95.0,
+   "out": 160.0,
+   "status": "MAPPED 01:35-02:40. In-point ESTIMATE on 'if you want a persistent edge'; cutroom trim: the World Economic Forum sentence (~01:45-02:00) and the book mention before it.",
+   "quote_anchor": "if you want a persistent edge in a dynamic market you better be a systems thinker... a system is a group of components organized to seek a goal in an environment"
+  },
+  {
+   "id": "s10a",
+   "type": "overdub",
+   "source": "yrq",
+   "in": 95.0,
+   "out": 160.0,
+   "include": true,
+   "label": "ALT animated: If you want a persistent edge in a dynamic market, be a systems thinker",
+   "animation_brief": "Twin of s10: same Ken audio, drawn scene (be a systems thinker) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
+   "status": "twin; pick this or s10 in the cutroom",
+   "transition": {
+    "type": "fade",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s11",
+   "type": "overdub",
+   "include": true,
+   "label": "OVERDUB: input, process, output, feedback loop (system map component)",
+   "source": "yrq",
+   "in": 160.0,
+   "out": 245.0,
+   "status": "MAPPED-VERIFIED 02:40-04:05. The screen is a shared diagram (cohort-only); animate the map to his cadence.",
+   "animation_brief": "NEW system-map component: a box (input → process → output) inside a larger environment; 'you can influence the environment, it can influence you, but you can't control it' (02:55); the trade goes out, results come back as a feedback loop (03:30); the learning subsystem closes the loop (03:50).",
+   "quote_anchor": "an input, process, an output, self-contained, that's an actor inside a larger environment"
+  },
+  {
+   "id": "s12",
+   "type": "cut",
+   "include": false,
+   "label": "Systems thinking: structure and process, in motion",
+   "source": "yrq",
+   "in": 400.0,
+   "out": 562.0,
+   "status": "MAPPED-VERIFIED 06:40-09:22. Starts after the software plug (06:00-06:40).",
+   "quote_anchor": "the art and science of making reliable inferences about behavior by developing an increasingly deep understanding of underlying structure... the trade goes through life cycles... planning, preparing, executing, assessing"
+  },
+  {
+   "id": "s12a",
+   "type": "overdub",
+   "source": "yrq",
+   "in": 400.0,
+   "out": 562.0,
+   "include": true,
+   "label": "ALT animated: Systems thinking: structure and process, in motion",
+   "animation_brief": "Twin of s12: same Ken audio, drawn scene (structure and process, in motion) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
+   "status": "twin; pick this or s12 in the cutroom",
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s13",
+   "type": "cut",
+   "include": false,
+   "label": "Optional: art, science, and the craft of blending them",
+   "source": "yrq",
+   "in": 600.0,
+   "out": 680.0,
+   "status": "MAPPED 10:00-11:20. OFF by default (Bill's praise of Ken follows at 11:20; the point is restated inside s14).",
+   "quote_anchor": "the craft of trading, the craft of systems thinking, is learning how to usefully blend art and science"
+  },
+  {
+   "id": "s14",
+   "type": "cut",
+   "include": false,
+   "label": "★ Eighty percent science, twenty percent art: be strong where the herd is weak",
+   "source": "yrq",
+   "in": 718.0,
+   "out": 845.0,
+   "status": "MAPPED-VERIFIED 11:58-14:05. ★ at 12:00-12:40. Out on 'that will take care of you in the long run'.",
+   "quote_anchor": "the first 80% of your trading journey should be towards the science of rules-based trading... people dislike discipline and they dislike math... the first and most persistent edge is to be strong on things that the herd is weak on"
+  },
+  {
+   "id": "s14a",
+   "type": "overdub",
+   "source": "yrq",
+   "in": 718.0,
+   "out": 845.0,
+   "include": true,
+   "label": "ALT animated: ★ Eighty percent science, twenty percent art: be strong where the herd is weak",
+   "animation_brief": "Twin of s14: same Ken audio, drawn scene (eighty percent science) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
+   "status": "twin; pick this or s14 in the cutroom",
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s15",
+   "type": "cut",
+   "include": false,
+   "label": "Strategy versus tactics; the bowl maker",
+   "source": "yrq",
+   "in": 961.0,
+   "out": 1040.0,
+   "status": "MAPPED-VERIFIED 16:01-17:20.",
+   "quote_anchor": "tactics is what you do when you know what to do... if you don't know what to do then you need strategy... I look at trading the same way that a bowl maker makes bowls"
+  },
+  {
+   "id": "s15a",
+   "type": "overdub",
+   "source": "yrq",
+   "in": 961.0,
+   "out": 1040.0,
+   "include": true,
+   "label": "ALT animated: Strategy versus tactics; the bowl maker",
+   "animation_brief": "Twin of s15: same Ken audio, drawn scene (the bowl maker) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
+   "status": "twin; pick this or s15 in the cutroom",
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s16",
+   "type": "overdub",
+   "include": true,
+   "label": "OVERDUB: three timeframes, three systems, one meta-system",
+   "source": "yrq",
+   "in": 1040.0,
+   "out": 1340.0,
+   "status": "MAPPED-VERIFIED 17:20-22:20 with beat map: day/swing/position 17:20-19:20; mutual support across frames 19:20-20:40; core and turbo + 'systems have systems, a meta system' 20:40-21:20; the trader is the constant, the board of directors 21:20-22:20. Screen is his one-page strategy slide (cohort-only).",
+   "animation_brief": "Stacked-frames component (exists) extended: three rows (day, swing, position) each with its own system label; arrows between rows when he describes mutual support; the rows nest into one frame at 'meta system' (20:50); a figure of the trader appears as the constant at 21:20.",
+   "quote_anchor": "systems have systems and we would call that a meta system"
+  },
+  {
+   "id": "s17",
+   "type": "cut",
+   "include": false,
+   "label": "Why it pays: one unified lens",
+   "source": "yrq",
+   "in": 1340.0,
+   "out": 1402.0,
+   "status": "MAPPED-VERIFIED 22:20-23:22. Out-point ESTIMATE on 'an integrated effort at using systems thinking in that way'.",
+   "quote_anchor": "when I learn to be a systems thinker it makes me a better day trader, a better swing trader, a better position trader, a better businessman, better psychology... through one unified lens"
+  },
+  {
+   "id": "s17a",
+   "type": "overdub",
+   "source": "yrq",
+   "in": 1340.0,
+   "out": 1402.0,
+   "include": true,
+   "label": "ALT animated: Why it pays: one unified lens",
+   "animation_brief": "Twin of s17: same Ken audio, drawn scene (one unified lens) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
+   "status": "twin; pick this or s17 in the cutroom"
+  },
+  {
+   "id": "s18",
+   "type": "slide",
+   "include": true,
+   "label": "Chapter 3 card",
+   "slide_id": "ch3",
+   "duration": 2,
+   "layout": "chapter",
+   "text": {
+    "kicker": "Chapter 3",
+    "title": "The chimp and the **Zero State**",
+    "subtitle": "",
+    "body": ""
+   },
+   "transition": {
+    "type": "fade",
+    "dur": 1.0
+   }
+  },
+  {
+   "id": "s19",
+   "type": "cut",
+   "include": false,
+   "label": "Celia: inventory the feelings",
+   "source": "rjg",
+   "in": 643.0,
+   "out": 702.0,
+   "status": "MAPPED-VERIFIED 10:43-11:42. The photo is on his shared screen: get the image into assets (asset-intake) or card it; without it the beat has no subject.",
+   "quote_anchor": "this is a picture of a chimpanzee that I sponsor and her name is Celia... do an inventory of the feelings that come out of that picture"
+  },
+  {
+   "id": "s19a",
+   "type": "overdub",
+   "source": "rjg",
+   "in": 643.0,
+   "out": 702.0,
+   "include": true,
+   "label": "ALT animated: Celia: inventory the feelings",
+   "animation_brief": "Twin of s19: same Ken audio, drawn scene (Celia) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
+   "status": "twin; pick this or s19 in the cutroom",
+   "transition": {
+    "type": "fade",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s20",
+   "type": "cut",
+   "include": false,
+   "label": "★ The inner trader as a calm chimpanzee; when she gives the warning, her job is done",
+   "source": "rjg",
+   "in": 702.0,
+   "out": 782.0,
+   "status": "MAPPED-VERIFIED 11:42-13:02. ★ at 12:41.",
+   "quote_anchor": "model our inner trader as a very calm chimpanzee that would give us an early warning... when the chimp gives us the early warning her job is done... leverage the power of our inner chimp instead of trying to control the chimp or discipline the chimp or suppress the chimp"
+  },
+  {
+   "id": "s20a",
+   "type": "overdub",
+   "source": "rjg",
+   "in": 702.0,
+   "out": 782.0,
+   "include": true,
+   "label": "ALT animated: ★ The inner trader as a calm chimpanzee; when she gives the warning, her job is done",
+   "animation_brief": "Twin of s20: same Ken audio, drawn scene (the inner trader as a calm chimpanzee) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
+   "status": "twin; pick this or s20 in the cutroom"
+  },
+  {
+   "id": "s21",
+   "type": "cut",
+   "include": false,
+   "label": "Map the process from impulse to action",
+   "source": "rjg",
+   "in": 782.0,
+   "out": 880.0,
+   "status": "MAPPED-VERIFIED 13:02-14:40. Out on 'become intentional in the way that we trade'.",
+   "quote_anchor": "is there something we can do about managing our internal state so that when we get stimuli from the world we can learn to act in a way that is preferred and professional instead of something that is impulsive"
+  },
+  {
+   "id": "s21a",
+   "type": "overdub",
+   "source": "rjg",
+   "in": 782.0,
+   "out": 880.0,
+   "include": true,
+   "label": "ALT animated: Map the process from impulse to action",
+   "animation_brief": "Twin of s21: same Ken audio, drawn scene (from impulse to action) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
+   "status": "twin; pick this or s21 in the cutroom"
+  },
+  {
+   "id": "s22",
+   "type": "cut",
+   "include": false,
+   "label": "Tom: one idiot away from the chimp behind the wheel; trading is exactly like that",
+   "source": "b9h",
+   "in": 362.0,
+   "out": 460.0,
+   "status": "MAPPED-VERIFIED 06:02-07:40 (student voice: Tom Hardison; permission status per catalog/course-proposal.md open question 3; he already features in disciplined-operator-v2). Zero State is named here by the student; Ken's own Zero State teaching is the parked topical-zero-state plan, cross-link on screen.",
+   "quote_anchor": "I'm always like one idiot away from becoming a monkey murderous chimpanzee behind the wheel... trading is exactly like that, it's the same chimp... instead of getting to the zero state"
+  },
+  {
+   "id": "s22a",
+   "type": "overdub",
+   "source": "b9h",
+   "in": 362.0,
+   "out": 460.0,
+   "include": true,
+   "label": "ALT animated: Tom: one idiot away from the chimp behind the wheel; trading is exactly like that",
+   "animation_brief": "Twin of s22: same Ken audio, drawn scene (the chimp behind the wheel) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
+   "status": "twin; pick this or s22 in the cutroom",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s23",
+   "type": "cut",
+   "include": false,
+   "label": "Turn it into a science project and the chimp is not agitated",
+   "source": "rjg",
+   "in": 2430.0,
+   "out": 2480.0,
+   "status": "MAPPED-VERIFIED 40:30-41:20. Chart share on screen (SPY 2-minute, risk box): overdub candidate with the risk-box component if the share is unusable.",
+   "quote_anchor": "if I can turn this into a science project then my chimpanzee, my inner chimp, is not agitated and I can trade this in a calm and relaxed manner"
+  },
+  {
+   "id": "s23a",
+   "type": "overdub",
+   "source": "rjg",
+   "in": 2430.0,
+   "out": 2480.0,
+   "include": true,
+   "label": "ALT animated: Turn it into a science project and the chimp is not agitated",
+   "animation_brief": "Twin of s23: same Ken audio, drawn scene (the science project) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
+   "status": "twin; pick this or s23 in the cutroom",
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s24",
+   "type": "slide",
+   "include": true,
+   "label": "Chapter 4 card",
+   "slide_id": "ch4",
+   "duration": 2,
+   "layout": "chapter",
+   "text": {
+    "kicker": "Chapter 4",
+    "title": "Plan, prepare, execute, **assess**",
+    "subtitle": "",
+    "body": ""
+   },
+   "transition": {
+    "type": "fade",
+    "dur": 1.0
+   }
+  },
+  {
+   "id": "s25",
+   "type": "cut",
+   "include": false,
+   "label": "★ Detect, decide, deliver, assess: the drill-down of execute",
+   "source": "muw",
+   "in": 5640.0,
+   "out": 5760.0,
+   "status": "MAPPED-VERIFIED 1:34:00-1:36:00. He says it as 'decide detect deliver' at 1:33:58 and corrects the order at 1:35:02; start at 1:34:00 so the corrected order is the one heard. ★ at 1:35:33.",
+   "quote_anchor": "when you're in that perfect zero state for trading... I detect a target, I decide on a method, system, strategy or technique... I deliver the technique with good execution... if I had plan prepare execute assess, if I broke out the execution I would say detect decide deliver assess, that's the drill-down process"
+  },
+  {
+   "id": "s25a",
+   "type": "overdub",
+   "source": "muw",
+   "in": 5640.0,
+   "out": 5760.0,
+   "include": true,
+   "label": "ALT animated: ★ Detect, decide, deliver, assess: the drill-down of execute",
+   "animation_brief": "Twin of s25: same Ken audio, drawn scene (detect, decide, deliver, assess) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
+   "status": "twin; pick this or s25 in the cutroom",
+   "transition": {
+    "type": "fade",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s26",
+   "type": "cut",
+   "include": false,
+   "label": "Sense and respond; a signal I wasn't prepared for, I don't take",
+   "source": "muw",
+   "in": 5760.0,
+   "out": 5820.0,
+   "status": "MAPPED-VERIFIED 1:36:00-1:37:00. Out on 'I can't predict it ahead of time'.",
+   "quote_anchor": "all I have to be able to do is sense and respond... I've already prepared my responses to the expected signals and if it's a signal that I wasn't prepared for I don't do anything"
+  },
+  {
+   "id": "s26a",
+   "type": "overdub",
+   "source": "muw",
+   "in": 5760.0,
+   "out": 5820.0,
+   "include": true,
+   "label": "ALT animated: Sense and respond; a signal I wasn't prepared for, I don't take",
+   "animation_brief": "Twin of s26: same Ken audio, drawn scene (sense and respond) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
+   "status": "twin; pick this or s26 in the cutroom"
+  },
+  {
+   "id": "s27",
+   "type": "cut",
+   "include": false,
+   "label": "★ The daily after-action review: sustains, improves, actions",
+   "source": "fbk",
+   "in": 2433.0,
+   "out": 2551.0,
+   "status": "MAPPED-VERIFIED 40:33-42:31. ★ at 42:02. Typography card: the 4 x 3 grid (phases x sustain/improve/act) builds as he names it.",
+   "quote_anchor": "each day you want to do a daily after action review... plan prepare execute and assess, those are the four phases... sustains, improves and actions... pick one or two things to fix for tomorrow"
+  },
+  {
+   "id": "s27a",
+   "type": "overdub",
+   "source": "fbk",
+   "in": 2433.0,
+   "out": 2551.0,
+   "include": true,
+   "label": "ALT animated: ★ The daily after-action review: sustains, improves, actions",
+   "animation_brief": "Twin of s27: same Ken audio, drawn scene (the daily after-action review) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
+   "status": "twin; pick this or s27 in the cutroom",
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s28",
+   "type": "cut",
+   "include": false,
+   "label": "Persistent problems to the top; tell your partner; put it in writing",
+   "source": "fbk",
+   "in": 2551.0,
+   "out": 2641.0,
+   "status": "MAPPED-VERIFIED 42:31-44:01.",
+   "quote_anchor": "the things that are persistent problems should move to the top of your list... I'm going to tell my accountability partner... put my affirmation, my intention in writing"
+  },
+  {
+   "id": "s28a",
+   "type": "overdub",
+   "source": "fbk",
+   "in": 2551.0,
+   "out": 2641.0,
+   "include": true,
+   "label": "ALT animated: Persistent problems to the top; tell your partner; put it in writing",
+   "animation_brief": "Twin of s28: same Ken audio, drawn scene (persistent problems to the top) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
+   "status": "twin; pick this or s28 in the cutroom"
+  },
+  {
+   "id": "s29",
+   "type": "cut",
+   "include": false,
+   "label": "Then and only then: plan tomorrow, and sleep with a clear mind",
+   "source": "fbk",
+   "in": 2641.0,
+   "out": 2731.0,
+   "status": "MAPPED-VERIFIED 44:01-45:31. Out on 'the learning journal is what we do to perform the daily AAR'.",
+   "quote_anchor": "once I've committed to what I'm going to do tomorrow then and only then I can go forward and start planning for the next day... next morning I just have to wake up and trade"
+  },
+  {
+   "id": "s29a",
+   "type": "overdub",
+   "source": "fbk",
+   "in": 2641.0,
+   "out": 2731.0,
+   "include": true,
+   "label": "ALT animated: Then and only then: plan tomorrow, and sleep with a clear mind",
+   "animation_brief": "Twin of s29: same Ken audio, drawn scene (then and only then) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
+   "status": "twin; pick this or s29 in the cutroom"
+  },
+  {
+   "id": "s30",
+   "type": "cut",
+   "include": false,
+   "label": "Optional: be relentless, ratchet it in, don't backslide",
+   "source": "muw",
+   "in": 6060.0,
+   "out": 6092.0,
+   "status": "MAPPED-VERIFIED 1:41:00-1:41:32. OFF by default: a second close; use it if s29 lands soft.",
+   "quote_anchor": "every time you make a little improvement ratchet it in... constant assessment, plan prepare execute assess, you got to be relentless and ruthless on that"
+  },
+  {
+   "id": "s31",
+   "type": "slide",
+   "include": true,
+   "label": "Maxim card",
+   "slide_id": "maxim",
+   "duration": 6,
+   "layout": "maxim",
+   "text": {
+    "kicker": "",
+    "title": "“Be of the herd, but not in the herd.”",
+    "subtitle": "Dr. Ken Long",
+    "body": ""
+   },
+   "transition": {
+    "type": "fade",
+    "dur": 1.0
+   }
+  },
+  {
+   "id": "s32",
+   "type": "slide",
+   "include": true,
+   "label": "End card",
+   "slide_id": "end",
+   "duration": 10,
+   "layout": "end",
+   "text": {
+    "kicker": "",
+    "title": "One idea on the craft most mornings",
+    "subtitle": "owlgrouptrading.com",
+    "body": "The Tue to Fri daily note from Owl Group Trading.\nModule 1, The Mental Model, is the companion to this one."
+   },
+   "transition": {
+    "type": "fade",
+    "dur": 1.0
+   }
+  }
+ ]
 }

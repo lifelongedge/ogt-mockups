@@ -1,242 +1,243 @@
 {
-  "schema": "coursecraft-plan-v2",
-  "course": "mental-model-2-v2-sales",
-  "cutroom": "mental-model-2-v2-sales",
-  "revision": 2,
-  "revised": "2026-11-16",
-  "status": "DRAFT rev1: a sales clip of mental-model-2-v2, ~120 s; the owner edits it in the cutroom",
-  "title": "The Mental Model II: sales clip",
-  "topic_class": "sales clip",
-  "store_sku": "mental-model-2",
-  "replaces": null,
-  "notes": "2026-11-16 (cutroom-24): transitions by the Module 1 rule (owner: 'looks good, do it for module 2 sales clip'): dip 0.6 s between bites, crossfade 0.6 s out of the title card and 1.0 s into the end card.\n\nBites end on a full sentence (cues read 2026-11-16). Each twin starts the parent's scene at the bite's offset, so the captions stay on his words.",
-  "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/mental-model-2-v2/",
-  "sources": [
-    {
-      "id": "t4n",
-      "label": "most-important-edge 2022-11-06 (Ch1 brain)",
-      "file": "youtube-t4NkztDo_tc-most-important-edge.mp4",
-      "url": "https://www.youtube.com/watch?v=t4NkztDo_tc",
-      "proxy": "youtube-t4NkztDo_tc-most-important-edge.proxy.mp4",
-      "pip": {
-        "crop": "iw/3:ih/3:iw/3:0",
-        "note": "Zoom gallery, Ken's tile is top-middle for the whole session (checked at 10,60,380,440,500,620,870,990 s)"
-      }
-    },
-    {
-      "id": "yrq",
-      "label": "systems-thinking-overview interview (Ch2)",
-      "file": "youtube-YRQLU1w_77A-systems-thinking-overview.mp4",
-      "url": "https://www.youtube.com/watch?v=YRQLU1w_77A",
-      "proxy": "youtube-YRQLU1w_77A-systems-thinking-overview.proxy.mp4"
-    },
-    {
-      "id": "rjg",
-      "label": "creativity-202 review, Celia (Ch3)",
-      "file": "youtube-rJg6jv24s20-creativity-202-review.mp4",
-      "url": "https://www.youtube.com/watch?v=rJg6jv24s20",
-      "proxy": "youtube-rJg6jv24s20-creativity-202-review.proxy.mp4"
-    }
-  ],
-  "voices": [
-    {
-      "id": "ava",
-      "label": "Ava (US, female, polished)",
-      "sample": "vo-ava.mp3"
-    }
-  ],
-  "segments": [
-    {
-      "id": "s00",
-      "type": "slide",
-      "include": true,
-      "label": "Title card",
-      "slide_id": "title",
-      "duration": 4,
-      "layout": "title",
-      "text": {
-        "kicker": "",
-        "title": "The **Mental Model** II",
-        "subtitle": "",
-        "body": "The Brain, the System, the Loop\nwith Dr. Ken Long"
-      }
-    },
-    {
-      "id": "s01",
-      "type": "cut",
-      "include": false,
-      "label": "Cold open: be of the herd, not in the herd",
-      "source": "t4n",
-      "in": 15.5,
-      "out": 32.5,
-      "why": "the hook: the ego reward of being right; be of the herd, not in the herd",
-      "status": "bite of mental-model-2-v2 s01 (+11.5..+28.5 s); the twin s01a carries it"
-    },
-    {
-      "id": "s01a",
-      "type": "overdub",
-      "include": true,
-      "label": "ALT animated: Cold open: be of the herd, not in the herd",
-      "source": "t4n",
-      "in": 15.5,
-      "out": 32.5,
-      "why": "the hook: the ego reward of being right; be of the herd, not in the herd",
-      "anim_of": {
-        "course": "mental-model-2-v2",
-        "scene": "s01"
-      },
-      "animation_brief": "the mental-model-2-v2 s01 scene, started at its +11.5 s",
-      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
-      "pip": true,
-      "transition": {
-        "type": "fade",
-        "dur": 0.6
-      }
-    },
-    {
-      "id": "s02",
-      "type": "cut",
-      "include": false,
-      "label": "★ Your brain is a prediction machine; the mental model is the buffer",
-      "source": "t4n",
-      "in": 429.6,
-      "out": 446.4,
-      "why": "your brain is a prediction machine",
-      "status": "bite of mental-model-2-v2 s04 (+9.6..+26.4 s); the twin s02a carries it"
-    },
-    {
-      "id": "s02a",
-      "type": "overdub",
-      "include": true,
-      "label": "ALT animated: ★ Your brain is a prediction machine; the mental model is the buffer",
-      "source": "t4n",
-      "in": 429.6,
-      "out": 446.4,
-      "why": "your brain is a prediction machine",
-      "anim_of": {
-        "course": "mental-model-2-v2",
-        "scene": "s04"
-      },
-      "animation_brief": "the mental-model-2-v2 s04 scene, started at its +9.6 s",
-      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
-      "pip": true,
-      "transition": {
-        "type": "dip",
-        "dur": 0.6
-      }
-    },
-    {
-      "id": "s03",
-      "type": "cut",
-      "include": false,
-      "label": "★ The wedge: a buffer between your decision and the herd brain",
-      "source": "t4n",
-      "in": 868.9,
-      "out": 899.4,
-      "why": "the wedge: a buffer, no lose plus dinner for two, I'm not dead yet",
-      "status": "bite of mental-model-2-v2 s08 (+13.9..+44.4 s); the twin s03a carries it"
-    },
-    {
-      "id": "s03a",
-      "type": "overdub",
-      "include": true,
-      "label": "ALT animated: ★ The wedge: a buffer between your decision and the herd brain",
-      "source": "t4n",
-      "in": 868.9,
-      "out": 899.4,
-      "why": "the wedge: a buffer, no lose plus dinner for two, I'm not dead yet",
-      "anim_of": {
-        "course": "mental-model-2-v2",
-        "scene": "s08"
-      },
-      "animation_brief": "the mental-model-2-v2 s08 scene, started at its +13.9 s",
-      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
-      "pip": true,
-      "transition": {
-        "type": "dip",
-        "dur": 0.6
-      }
-    },
-    {
-      "id": "s04",
-      "type": "cut",
-      "include": false,
-      "label": "★ Eighty percent science, twenty percent art: be strong where the herd is weak",
-      "source": "yrq",
-      "in": 749.3,
-      "out": 773.6,
-      "why": "be strong where the herd is weak",
-      "status": "bite of mental-model-2-v2 s14 (+31.3..+55.6 s); the twin s04a carries it"
-    },
-    {
-      "id": "s04a",
-      "type": "overdub",
-      "include": true,
-      "label": "ALT animated: ★ Eighty percent science, twenty percent art: be strong where the herd is weak",
-      "source": "yrq",
-      "in": 749.3,
-      "out": 773.6,
-      "why": "be strong where the herd is weak",
-      "anim_of": {
-        "course": "mental-model-2-v2",
-        "scene": "s14"
-      },
-      "animation_brief": "the mental-model-2-v2 s14 scene, started at its +31.3 s",
-      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
-      "transition": {
-        "type": "dip",
-        "dur": 0.6
-      }
-    },
-    {
-      "id": "s05",
-      "type": "cut",
-      "include": false,
-      "label": "★ The inner trader as a calm chimpanzee; when she gives the warning, her job is done",
-      "source": "rjg",
-      "in": 743.1,
-      "out": 767.0,
-      "why": "the calm chimpanzee: when she gives the warning, her job is done",
-      "status": "bite of mental-model-2-v2 s20 (+41.1..+65.0 s); the twin s05a carries it"
-    },
-    {
-      "id": "s05a",
-      "type": "overdub",
-      "include": true,
-      "label": "ALT animated: ★ The inner trader as a calm chimpanzee; when she gives the warning, her job is done",
-      "source": "rjg",
-      "in": 743.1,
-      "out": 767.0,
-      "why": "the calm chimpanzee: when she gives the warning, her job is done",
-      "anim_of": {
-        "course": "mental-model-2-v2",
-        "scene": "s20"
-      },
-      "animation_brief": "the mental-model-2-v2 s20 scene, started at its +41.1 s",
-      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
-      "transition": {
-        "type": "dip",
-        "dur": 0.6
-      }
-    },
-    {
-      "id": "s06",
-      "type": "slide",
-      "include": true,
-      "label": "End card",
-      "slide_id": "end",
-      "duration": 8,
-      "layout": "end",
-      "text": {
-        "kicker": "",
-        "title": "The Mental Model II",
-        "subtitle": "owlgrouptrading.com",
-        "body": "Four chapters, about 38 minutes, with Dr. Ken Long."
-      },
-      "transition": {
-        "type": "fade",
-        "dur": 1.0
-      }
-    }
-  ]
+ "schema": "coursecraft-plan-v2",
+ "course": "mental-model-2-v2-sales",
+ "cutroom": "mental-model-2-v2-sales",
+ "revision": 3,
+ "revised": "2026-11-22",
+ "status": "DRAFT rev1: a sales clip of mental-model-2-v2, ~120 s; the owner edits it in the cutroom · 2026-11-22: toc_title set; the label is the editor's, the student reads toc_title (scripts/student_text.py)",
+ "title": "The Mental Model II: sales clip",
+ "topic_class": "sales clip",
+ "store_sku": "mental-model-2",
+ "replaces": null,
+ "notes": "2026-11-16 (cutroom-24): transitions by the Module 1 rule (owner: 'looks good, do it for module 2 sales clip'): dip 0.6 s between bites, crossfade 0.6 s out of the title card and 1.0 s into the end card.\n\nBites end on a full sentence (cues read 2026-11-16). Each twin starts the parent's scene at the bite's offset, so the captions stay on his words.",
+ "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/mental-model-2-v2/",
+ "sources": [
+  {
+   "id": "t4n",
+   "label": "most-important-edge 2022-11-06 (Ch1 brain)",
+   "file": "youtube-t4NkztDo_tc-most-important-edge.mp4",
+   "url": "https://www.youtube.com/watch?v=t4NkztDo_tc",
+   "proxy": "youtube-t4NkztDo_tc-most-important-edge.proxy.mp4",
+   "pip": {
+    "crop": "iw/3:ih/3:iw/3:0",
+    "note": "Zoom gallery, Ken's tile is top-middle for the whole session (checked at 10,60,380,440,500,620,870,990 s)"
+   }
+  },
+  {
+   "id": "yrq",
+   "label": "systems-thinking-overview interview (Ch2)",
+   "file": "youtube-YRQLU1w_77A-systems-thinking-overview.mp4",
+   "url": "https://www.youtube.com/watch?v=YRQLU1w_77A",
+   "proxy": "youtube-YRQLU1w_77A-systems-thinking-overview.proxy.mp4"
+  },
+  {
+   "id": "rjg",
+   "label": "creativity-202 review, Celia (Ch3)",
+   "file": "youtube-rJg6jv24s20-creativity-202-review.mp4",
+   "url": "https://www.youtube.com/watch?v=rJg6jv24s20",
+   "proxy": "youtube-rJg6jv24s20-creativity-202-review.proxy.mp4"
+  }
+ ],
+ "voices": [
+  {
+   "id": "ava",
+   "label": "Ava (US, female, polished)",
+   "sample": "vo-ava.mp3"
+  }
+ ],
+ "segments": [
+  {
+   "id": "s00",
+   "type": "slide",
+   "include": true,
+   "label": "Title card",
+   "slide_id": "title",
+   "duration": 4,
+   "layout": "title",
+   "text": {
+    "kicker": "",
+    "title": "The **Mental Model** II",
+    "subtitle": "",
+    "body": "The Brain, the System, the Loop\nwith Dr. Ken Long"
+   }
+  },
+  {
+   "id": "s01",
+   "type": "cut",
+   "include": false,
+   "label": "Cold open: be of the herd, not in the herd",
+   "source": "t4n",
+   "in": 15.5,
+   "out": 32.5,
+   "why": "the hook: the ego reward of being right; be of the herd, not in the herd",
+   "status": "bite of mental-model-2-v2 s01 (+11.5..+28.5 s); the twin s01a carries it"
+  },
+  {
+   "id": "s01a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: Cold open: be of the herd, not in the herd",
+   "source": "t4n",
+   "in": 15.5,
+   "out": 32.5,
+   "why": "the hook: the ego reward of being right; be of the herd, not in the herd",
+   "anim_of": {
+    "course": "mental-model-2-v2",
+    "scene": "s01"
+   },
+   "animation_brief": "the mental-model-2-v2 s01 scene, started at its +11.5 s",
+   "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
+   "pip": true,
+   "transition": {
+    "type": "fade",
+    "dur": 0.6
+   },
+   "toc_title": "Be of the herd, not in the herd"
+  },
+  {
+   "id": "s02",
+   "type": "cut",
+   "include": false,
+   "label": "★ Your brain is a prediction machine; the mental model is the buffer",
+   "source": "t4n",
+   "in": 429.6,
+   "out": 446.4,
+   "why": "your brain is a prediction machine",
+   "status": "bite of mental-model-2-v2 s04 (+9.6..+26.4 s); the twin s02a carries it"
+  },
+  {
+   "id": "s02a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: ★ Your brain is a prediction machine; the mental model is the buffer",
+   "source": "t4n",
+   "in": 429.6,
+   "out": 446.4,
+   "why": "your brain is a prediction machine",
+   "anim_of": {
+    "course": "mental-model-2-v2",
+    "scene": "s04"
+   },
+   "animation_brief": "the mental-model-2-v2 s04 scene, started at its +9.6 s",
+   "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s03",
+   "type": "cut",
+   "include": false,
+   "label": "★ The wedge: a buffer between your decision and the herd brain",
+   "source": "t4n",
+   "in": 868.9,
+   "out": 899.4,
+   "why": "the wedge: a buffer, no lose plus dinner for two, I'm not dead yet",
+   "status": "bite of mental-model-2-v2 s08 (+13.9..+44.4 s); the twin s03a carries it"
+  },
+  {
+   "id": "s03a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: ★ The wedge: a buffer between your decision and the herd brain",
+   "source": "t4n",
+   "in": 868.9,
+   "out": 899.4,
+   "why": "the wedge: a buffer, no lose plus dinner for two, I'm not dead yet",
+   "anim_of": {
+    "course": "mental-model-2-v2",
+    "scene": "s08"
+   },
+   "animation_brief": "the mental-model-2-v2 s08 scene, started at its +13.9 s",
+   "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s04",
+   "type": "cut",
+   "include": false,
+   "label": "★ Eighty percent science, twenty percent art: be strong where the herd is weak",
+   "source": "yrq",
+   "in": 749.3,
+   "out": 773.6,
+   "why": "be strong where the herd is weak",
+   "status": "bite of mental-model-2-v2 s14 (+31.3..+55.6 s); the twin s04a carries it"
+  },
+  {
+   "id": "s04a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: ★ Eighty percent science, twenty percent art: be strong where the herd is weak",
+   "source": "yrq",
+   "in": 749.3,
+   "out": 773.6,
+   "why": "be strong where the herd is weak",
+   "anim_of": {
+    "course": "mental-model-2-v2",
+    "scene": "s14"
+   },
+   "animation_brief": "the mental-model-2-v2 s14 scene, started at its +31.3 s",
+   "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s05",
+   "type": "cut",
+   "include": false,
+   "label": "★ The inner trader as a calm chimpanzee; when she gives the warning, her job is done",
+   "source": "rjg",
+   "in": 743.1,
+   "out": 767.0,
+   "why": "the calm chimpanzee: when she gives the warning, her job is done",
+   "status": "bite of mental-model-2-v2 s20 (+41.1..+65.0 s); the twin s05a carries it"
+  },
+  {
+   "id": "s05a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: ★ The inner trader as a calm chimpanzee; when she gives the warning, her job is done",
+   "source": "rjg",
+   "in": 743.1,
+   "out": 767.0,
+   "why": "the calm chimpanzee: when she gives the warning, her job is done",
+   "anim_of": {
+    "course": "mental-model-2-v2",
+    "scene": "s20"
+   },
+   "animation_brief": "the mental-model-2-v2 s20 scene, started at its +41.1 s",
+   "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s06",
+   "type": "slide",
+   "include": true,
+   "label": "End card",
+   "slide_id": "end",
+   "duration": 8,
+   "layout": "end",
+   "text": {
+    "kicker": "",
+    "title": "The Mental Model II",
+    "subtitle": "owlgrouptrading.com",
+    "body": "Four chapters, about 38 minutes, with Dr. Ken Long."
+   },
+   "transition": {
+    "type": "fade",
+    "dur": 1.0
+   }
+  }
+ ]
 }
