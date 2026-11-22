@@ -78,8 +78,8 @@ footer{color:var(--faint);font-size:.8rem;padding:24px 0 40px;border-top:1px sol
   <div class="topbar">
     <div>
       <h1>The Dots Are One Bank</h1>
-      <p class="sub">The PSAR dots are one edge of a channel. When the dots sit under price (the flip is long), the far edge is the highs: the high of the leg and the turn of the RL10. Price gets up the channel the way a sailboat gets up a river against the wind: by tacking from bank to bank. A real IWM session is drawn below, twice.</p>
-      <p class="asof">ogtcoursecraft explainer mockup · IWM and SPY 3-minute bars from this box's WarmDB, 30 sessions to 2026-11-20 · PSAR and legs computed on the page · nothing here is a trade call</p>
+      <p class="sub">The PSAR dots are one edge of a channel. When the dots sit under price (the flip is long), the far edge is the highs: the high of the leg and the turn of the RL10. Price gets up the channel the way a sailboat gets up a river against the wind: by tacking from bank to bank. A real SPY session is drawn below, twice.</p>
+      <p class="asof">ogtcoursecraft explainer mockup · SPY and QQQ 3-minute bars from this box's WarmDB, 30 sessions to 2026-11-20 · PSAR and legs computed on the page · nothing here is a trade call</p>
     </div>
     <button id="theme" title="light / dark">◐</button>
   </div>
@@ -163,24 +163,24 @@ footer{color:var(--faint);font-size:.8rem;padding:24px 0 40px;border-top:1px sol
   </div>
   <div class="card">
     <h3>What this page measures</h3>
-    <p class="note">PSAR: step 0.02, max 0.20, on the price source chosen above (RL10 feeds high = low = RL10; null RL10 falls back to the close). A <b>leg</b> is a run of bars with one PSAR side; a <b>tack</b> is a flip. A leg <b>reached the far bank</b> when a long leg's high got to the previous long leg's high (or a short leg's low to the previous short leg's low). The <b>wind read</b> on a session nobody picked is a rule, not a judgement: net ÷ range above +0.6 with a leg of 35+ bars is a run; above +0.25 is easterlies; below −0.5 is westerlies; anything else is light air.</p>
+    <p class="note">PSAR: step 0.02, max 0.20, on the price source chosen above (RL10 feeds high = low = RL10; null RL10 falls back to the close). A <b>leg</b> is a run of bars with one PSAR side; a <b>tack</b> is a flip. A leg <b>reached the far bank</b> when a long leg's high got to the previous long leg's high (or a short leg's low to the previous short leg's low). The <b>wind read</b> on a session nobody picked is a rule, not a judgement: net ÷ range above +0.6 with a leg of 30+ bars is a run; above +0.25 is easterlies; below −0.5 is westerlies; anything else is light air.</p>
     <h3 style="margin-top:14px">Decisions for the owner</h3>
     <ol class="dec">
       <li><b>The far bank.</b> The leg's highs (drawn), the RL10 turn (marked ▽), or both. The page draws both so you can see where they differ.</li>
       <li><b>PSAR source.</b> Ken's setting is the RL10. Default here is RL10; the bars version is one click away.</li>
-      <li><b>The three sessions.</b> Presets are IWM 2026-10-22 (easterlies), 2026-11-20 (westerlies), 2026-11-09 (run). Any of the 30 sessions can replace them from the picker.</li>
+      <li><b>The three sessions.</b> Presets are SPY 2026-10-21 (easterlies), 2026-11-20 (westerlies), 2026-11-09 (run). Any of the 30 SPY or QQQ sessions can replace them from the picker.</li>
       <li><b>The wind words.</b> Your easterlies / westerlies / downwind run, or plain sailing words (headwind, crosswind, running). The compass copy follows whichever you pick.</li>
       <li><b>Finish style.</b> Ink Board, Field Notes, Desk or the new stage rules from the Stanford study; the river panel is the one new scene kind the kit does not have yet.</li>
     </ol>
   </div>
 </div>
 
-<footer>ogt-mockups/courses/psar-channel-sail · data.js holds the bars (IWM, SPY; 3-minute; 2026-10-12 → 2026-11-20) · source note in ogt-coursecraft/devtimeartifacts/psar-channel-sail-2026-11-21/</footer>
+<footer>ogt-mockups/courses/psar-channel-sail · data.js holds the bars (SPY, QQQ; 3-minute; 2026-10-12 → 2026-11-20) · source note in ogt-coursecraft/devtimeartifacts/psar-channel-sail-2026-11-21/</footer>
 </main>
 
-<script src="data.js?v=2"></script>
+<script src="data.js?v=3"></script>
 <script>
-const BUILD=2; console.log('[sail] build '+BUILD); window.__edgeBuild=BUILD;
+const BUILD=3; console.log('[sail] build '+BUILD); window.__edgeBuild=BUILD;
 
 // ---------- theme ----------
 const root=document.documentElement;
@@ -190,10 +190,10 @@ const css=n=>getComputedStyle(root).getPropertyValue(n).trim();
 
 // ---------- data ----------
 const DATA=window.SAIL_DATA;
-const PRESETS={east:{sym:'IWM',day:'2026-10-22',wind:'Easterlies',note:'wind on the beam: zigzags up'},
-               west:{sym:'IWM',day:'2026-11-20',wind:'Westerlies',note:'against: ground lost, far bank still touched'},
-               run:{sym:'IWM',day:'2026-11-09',wind:'Downwind run',note:'wind behind: one long leg'}};
-const state={sym:'IWM',day:'2026-10-22',src:'rl',bank:true,rl:true,water:true,t:129,preset:'east',playing:false};
+const PRESETS={east:{sym:'SPY',day:'2026-10-21',wind:'Easterlies',note:'wind on the beam: zigzags up'},
+               west:{sym:'SPY',day:'2026-11-20',wind:'Westerlies',note:'against: ground lost, far bank still touched'},
+               run:{sym:'SPY',day:'2026-11-09',wind:'Downwind run',note:'wind behind: one long leg'}};
+const state={sym:'SPY',day:'2026-10-21',src:'rl',bank:true,rl:true,water:true,t:129,preset:'east',playing:false};
 
 function psar(h,l,af0=0.02,afmax=0.2){
   const n=h.length, sar=new Array(n).fill(null), lg=new Array(n).fill(null);
@@ -237,13 +237,13 @@ function windRead(a,t){
   const c=a.d.c, h=a.d.h.slice(0,t+1), l=a.d.l.slice(0,t+1);
   const net=c[t]-c[0], rng=Math.max(...h)-Math.min(...l), eff=rng?net/rng:0;
   let longest=0; for(const L of a.legs){ if(L.i0>t) break; longest=Math.max(longest,Math.min(L.i1,t)-L.i0+1); }
-  const tag= eff>0.6&&longest>=35?'Downwind run': eff>0.25?'Easterlies': eff<-0.5?'Westerlies':'Light air';
+  const tag= eff>0.6&&longest>=30?'Downwind run': eff>0.25?'Easterlies': eff<-0.5?'Westerlies':'Light air';
   return {net,rng,eff,longest,tag};
 }
 
 // ---------- canvases ----------
 const C1=document.getElementById('chart'), C2=document.getElementById('sail');
-function fit(c){ const r=c.getBoundingClientRect(); const dpr=window.devicePixelRatio||1; const H=+c.getAttribute('height'); c.width=Math.round(r.width*dpr); c.height=Math.round(H*dpr); c.style.height=H+'px'; const g=c.getContext('2d'); g.setTransform(dpr,0,0,dpr,0,0); return {g,W:r.width,H}; }
+function fit(c){ const r=c.getBoundingClientRect(); const dpr=window.devicePixelRatio||1; if(!c.dataset.h) c.dataset.h=c.getAttribute('height'); const H=+c.dataset.h; c.width=Math.round(r.width*dpr); c.height=Math.round(H*dpr); c.style.height=H+'px'; const g=c.getContext('2d'); g.setTransform(dpr,0,0,dpr,0,0); return {g,W:r.width,H}; }
 let A=null;
 function scales(a,W,H,padL,padR,padT,padB){
   const lo=Math.min(...a.d.l), hi=Math.max(...a.d.h), m=(hi-lo)*0.06;
