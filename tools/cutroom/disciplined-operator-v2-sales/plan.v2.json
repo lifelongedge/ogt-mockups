@@ -2,7 +2,7 @@
   "schema": "coursecraft-plan-v2",
   "course": "disciplined-operator-v2-sales",
   "cutroom": "disciplined-operator-v2-sales",
-  "revision": 1,
+  "revision": 2,
   "revised": "2026-11-22",
   "status": "DRAFT rev1: a sales clip of disciplined-operator-v2, ~120 s; the owner edits it in the cutroom",
   "title": "The Disciplined Operator: sales clip",
@@ -59,7 +59,7 @@
       "text": {
         "kicker": "",
         "title": "**The Disciplined Operator**",
-        "subtitle": "Trader's Operating System, Module 3",
+        "subtitle": "Thinking for trading success",
         "body": "with Dr. Ken Long"
       }
     },
@@ -70,7 +70,7 @@
       "label": "★ How long will you watch the monkey drive? (title quote RESTORED)",
       "source": "b9h",
       "in": 779.4,
-      "out": 799.0,
+      "out": 799,
       "why": "the hook: how long are you going to watch the monkey drive? ... and only then take over driving?",
       "status": "bite of disciplined-operator-v2 s05 (+2.4..+22.0 s); the twin s01a carries it"
     },
@@ -81,7 +81,7 @@
       "label": "ALT animated: ★ How long will you watch the monkey drive? (title quote RESTORED)",
       "source": "b9h",
       "in": 779.4,
-      "out": 799.0,
+      "out": 799,
       "why": "the hook: how long are you going to watch the monkey drive? ... and only then take over driving?",
       "anim_of": {
         "course": "disciplined-operator-v2",
@@ -125,8 +125,8 @@
       "include": false,
       "label": "Three machine guns (rotation image RESTORED)",
       "source": "c1",
-      "in": 1301.0,
-      "out": 1324.0,
+      "in": 1301,
+      "out": 1324,
       "why": "the line the course is named for: twenty minutes of ammunition, so I have to be disciplined in my fire",
       "status": "bite of disciplined-operator-v2 s19 (+41.0..+64.0 s); the twin s03a carries it"
     },
@@ -136,8 +136,8 @@
       "include": true,
       "label": "ALT animated: Three machine guns (rotation image RESTORED)",
       "source": "c1",
-      "in": 1301.0,
-      "out": 1324.0,
+      "in": 1301,
+      "out": 1324,
       "why": "the line the course is named for: twenty minutes of ammunition, so I have to be disciplined in my fire",
       "anim_of": {
         "course": "disciplined-operator-v2",
@@ -153,7 +153,7 @@
       "include": false,
       "label": "★ The Frankenstein creature (+ the minimum-mission-essential question)",
       "source": "c1",
-      "in": 1584.0,
+      "in": 1584,
       "out": 1604.5,
       "why": "the Frankenstein creature: one more test, one more rule, still there watching the damn thing run",
       "status": "bite of disciplined-operator-v2 s22 (+24.0..+44.5 s); the twin s04a carries it"
@@ -164,7 +164,7 @@
       "include": true,
       "label": "ALT animated: ★ The Frankenstein creature (+ the minimum-mission-essential question)",
       "source": "c1",
-      "in": 1584.0,
+      "in": 1584,
       "out": 1604.5,
       "why": "the Frankenstein creature: one more test, one more rule, still there watching the damn thing run",
       "anim_of": {
@@ -181,8 +181,8 @@
       "include": false,
       "label": "Pathologies + the stupid gate story (one run — v1 split the story across two mislabeled scenes)",
       "source": "b9h",
-      "in": 370.0,
-      "out": 405.0,
+      "in": 370,
+      "out": 405,
       "why": "the image a buyer remembers: I don't do that anymore; one idiot away from a murderous chimpanzee; same chimp, only now I'm trading",
       "status": "bite of disciplined-operator-v2 s01 (+162.0..+197.0 s); the twin s05a carries it"
     },
@@ -192,8 +192,8 @@
       "include": true,
       "label": "ALT animated: Pathologies + the stupid gate story (one run — v1 split the story across two mislabeled scenes)",
       "source": "b9h",
-      "in": 370.0,
-      "out": 405.0,
+      "in": 370,
+      "out": 405,
       "why": "the image a buyer remembers: I don't do that anymore; one idiot away from a murderous chimpanzee; same chimp, only now I'm trading",
       "anim_of": {
         "course": "disciplined-operator-v2",
