@@ -1,7 +1,7 @@
 {
  "schema": "coursecraft-plan-v2",
  "course": "tomorrows-trades-v2",
- "revision": 3,
+ "revision": 5,
  "revised": "2026-11-22",
  "status": "DRAFT rev3 (2026-11-22): the animated twins. Every one of the 23 windows has a stage twin (anim_gen.py), drawn from scratch, beats on his phrases; twins ON where the cut was ON, cuts kept OFF behind them. the recut under the current grammar. The whole hour mapped into 23 windows in seven chapters from start/stop phrases on the word-stamped VTT (make_rev2.py), source order, the cold open lifted from 42:39. Seventeen minutes rev 1 never used are in (14:53-21:04, 26:00-29:35, 38:00-41:03, 43:24-44:55, 56:56-1:00:35). Opener, title, seven chapter cards and the end card carry text. Every window is a plain cut: no twins yet (the owner asks for them next); the four outcome slots and the yellow-zone explainer are OFF until their study or script exists.",
  "title": "Where Tomorrow's Trades Come From (v2)",
@@ -154,13 +154,14 @@
    "in": 13.57,
    "out": 181.45,
    "animation_brief": "anim_gen.py scene s03: at the close: gratitude, forgiveness, three sources",
-   "status": "twin of s03: his audio, our picture (stage); no tile (his gallery tiles are about 60 px); the owner picks one of the pair in the cutroom",
+   "status": "twin of s03: his audio, our picture (stage); no tile (his gallery tiles are about 60 px); the owner picks one of the pair in the cutroom · rev4 (owner note): the spoken date taken off the caption at 0:01 (\"Small group coaching\")",
    "pip": false,
    "transition": {
     "type": "dip",
     "dur": 0.6
    },
-   "toc_title": "At the close: gratitude, forgiveness, then three sources"
+   "toc_title": "At the close: gratitude, forgiveness, then three sources",
+   "note_to_coursecraft": "remove the spoken date from the text in the slide."
   },
   {
    "id": "s04",
@@ -183,13 +184,30 @@
    "in": 181.45,
    "out": 326.53,
    "animation_brief": "anim_gen.py scene s04: patterns and situations",
-   "status": "twin of s04: his audio, our picture (stage); no tile (his gallery tiles are about 60 px); the owner picks one of the pair in the cutroom",
+   "status": "twin of s04: his audio, our picture (stage); no tile (his gallery tiles are about 60 px); the owner picks one of the pair in the cutroom · rev4 (owner note): the point made a card of its own, s04k, right after this segment",
    "pip": false,
    "transition": {
     "type": "dip",
     "dur": 0.6
    },
-   "toc_title": "Patterns and situations"
+   "toc_title": "Patterns and situations",
+   "note_to_coursecraft": "really important to identify these two sources - patterns and situations. Successful day traders learn how to execute well and then apply their execution skills to situations that mechanical patterns can't catch because they don't repeat the same way. I think even though ken is not saying this, this is a really important insight. we ought to highlight this point and reinforce in a slide. "
+  },
+  {
+   "id": "s04k",
+   "type": "slide",
+   "include": true,
+   "label": "Patterns repeat, situations don't (the course's point, not Ken's words)",
+   "slide_id": "s04k",
+   "duration": 9,
+   "layout": "setup",
+   "text": {
+    "kicker": "Two sources, two skills",
+    "title": "Patterns repeat. Situations don't.",
+    "subtitle": "",
+    "body": "A mechanical pattern is coded once and **fires the same way every time**. A situation never repeats the same way, so no system catches it. Successful day traders learn to execute well first, then **bring that execution to the situations** the patterns can't catch."
+   },
+   "status": "rev4 (owner, 2026-11-22, note on s04a): 'really important to identify these two sources - patterns and situations ... even though ken is not saying this ... highlight this point and reinforce in a slide.' The course's own point, not his words: no quote marks and no Dr. Ken Long credit on the card."
   },
   {
    "id": "c2",
@@ -304,30 +322,31 @@
    "id": "s08",
    "type": "cut",
    "include": false,
-   "label": "Discovery: strict rules, the Cat 2s after the washout, the emerging dragon, the pocket",
+   "label": "Discovery: strict rules, the Kata 2s after the washout, the emerging dragon, the pocket",
    "source": "mkt",
    "in": 898.89,
    "out": 1128.21,
-   "status": "rev2: 15:00-18:48. Never in rev 1 (the 14:53-21:04 gap). Twin candidate: a 5DD's five closes, the washout cashed, the Cat 2s he did not take, the pocket under the prior RL10 peak. · rev3: the twin s08a carries it; this cut stays in the plan, OFF, so the pick reverses here",
-   "toc_title": "The Cat 2s he walked away from",
+   "status": "rev2: 15:00-18:48. Never in rev 1 (the 14:53-21:04 gap). Twin candidate: a 5DD's five closes, the washout cashed, the Kata 2s he did not take, the pocket under the prior RL10 peak. · rev3: the twin s08a carries it; this cut stays in the plan, OFF, so the pick reverses here",
+   "toc_title": "The Kata 2s he walked away from",
    "quote_anchor": "I discovered it after about five"
   },
   {
    "id": "s08a",
    "type": "overdub",
    "include": true,
-   "label": "ALT animated: Discovery: strict rules, the Cat 2s after the washout, the emerging dragon, the pocket",
+   "label": "ALT animated: Discovery: strict rules, the Kata 2s after the washout, the emerging dragon, the pocket",
    "source": "mkt",
    "in": 898.89,
    "out": 1128.21,
-   "animation_brief": "anim_gen.py scene s08: the Cat 2s he walked away from",
-   "status": "twin of s08: his audio, our picture (stage); no tile (his gallery tiles are about 60 px); the owner picks one of the pair in the cutroom",
+   "animation_brief": "anim_gen.py scene s08: the Kata 2s he walked away from",
+   "status": "twin of s08: his audio, our picture (stage); no tile (his gallery tiles are about 60 px); the owner picks one of the pair in the cutroom · rev4 (owner note): Cat 2 renamed Kata 2 on every screen of the course (s08a s10a s14a s20a, the s08 contents row, the labels)",
    "pip": false,
    "transition": {
     "type": "dip",
     "dur": 0.6
    },
-   "toc_title": "The Cat 2s he walked away from"
+   "toc_title": "The Kata 2s he walked away from",
+   "note_to_coursecraft": "Change Cat2s to Kata 2s"
   },
   {
    "id": "s09",
@@ -394,13 +413,14 @@
    "in": 1238.01,
    "out": 1417.69,
    "animation_brief": "anim_gen.py scene s10: two crowds, two prices: RL270 and RL10",
-   "status": "twin of s10: his audio, our picture (stage); no tile (his gallery tiles are about 60 px); the owner picks one of the pair in the cutroom",
+   "status": "twin of s10: his audio, our picture (stage); no tile (his gallery tiles are about 60 px); the owner picks one of the pair in the cutroom · rev4 (owner note): Cat 2 renamed Kata 2 on every screen of the course (s08a s10a s14a s20a, the s08 contents row, the labels)",
    "pip": false,
    "transition": {
     "type": "dip",
     "dur": 0.6
    },
-   "toc_title": "Two crowds, two prices: RL270 and RL10"
+   "toc_title": "Two crowds, two prices: RL270 and RL10",
+   "note_to_coursecraft": "change Kata 2 to Kata 2"
   },
   {
    "id": "s11",
@@ -697,7 +717,7 @@
    "id": "s20",
    "type": "cut",
    "include": false,
-   "label": "Where to start: the usual suspects only, worked up at night, traded on 3-minute bars; the Cat 2 challenge",
+   "label": "Where to start: the usual suspects only, worked up at night, traded on 3-minute bars; the Kata 2 challenge",
    "source": "mkt",
    "in": 2603.61,
    "out": 2706.89,
@@ -709,18 +729,19 @@
    "id": "s20a",
    "type": "overdub",
    "include": true,
-   "label": "ALT animated: Where to start: the usual suspects only, worked up at night, traded on 3-minute bars; the Cat 2 challenge",
+   "label": "ALT animated: Where to start: the usual suspects only, worked up at night, traded on 3-minute bars; the Kata 2 challenge",
    "source": "mkt",
    "in": 2603.61,
    "out": 2706.89,
    "animation_brief": "anim_gen.py scene s20: start with the usual suspects",
-   "status": "twin of s20: his audio, our picture (stage); no tile (his gallery tiles are about 60 px); the owner picks one of the pair in the cutroom",
+   "status": "twin of s20: his audio, our picture (stage); no tile (his gallery tiles are about 60 px); the owner picks one of the pair in the cutroom · rev4 (owner note): Cat 2 renamed Kata 2 on every screen of the course (s08a s10a s14a s20a, the s08 contents row, the labels)",
    "pip": false,
    "transition": {
     "type": "dip",
     "dur": 0.6
    },
-   "toc_title": "Start with the usual suspects"
+   "toc_title": "Start with the usual suspects",
+   "note_to_coursecraft": "rename Kata 2 to Kata 2\n"
   },
   {
    "id": "s21",

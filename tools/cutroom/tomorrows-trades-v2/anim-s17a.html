@@ -89,7 +89,7 @@ function recall(t,t0,x,y,w,h,label,inner,o={}){const a=op(t,t0,.5)*(o.until&&t>o
   return rect(x,y,w,h,{r:8,s:MUT,sw:1.5,f:'rgba(255,255,255,.03)',o:a,dash:'4 4'})+txt(x+12,y+20,label,{sz:14,c:MUT,o:a})+`<g opacity="${a}" transform="translate(${x} ${y+28}) scale(${o.sc||.5})">${inner}</g>`;}
 function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
 
-const BEATS = [[1.8, "or it's one of my <em>usual suspects</em>: EWW, EWZ", ""], [10.8, "and I recognize a standard pattern: the sniper pattern, <em>SSC, Cat 2, collapsing dragon</em>", ""], [20.0, "that little <em>triumvirate</em>, as a compound <em>battle drill</em>", ""], [27.8, "it's always preceded by a <em>harsh winter</em>", ""], [33.0, "something says this thing was <em>decisively in play</em> to the downside", ""], [36.9, "and then the R10 reversed at a very precise point", ""], [49.0, "and it moved up enough to hit my <em>P flip</em>", ""], [53.1, "now the P is going to be <em>my friend</em> on the way up", ""], [57.7, "a very well-defined entry this way, and a refined collapsing dragon that way", ""], [68.6, "I <em>absolutely love</em> that", ""]];
+const BEATS = [[1.8, "or it's one of my <em>usual suspects</em>: EWW, EWZ", ""], [10.8, "and I recognize a standard pattern: the sniper pattern, <em>SSC, Kata 2, collapsing dragon</em>", ""], [20.0, "that little <em>triumvirate</em>, as a compound <em>battle drill</em>", ""], [27.8, "it's always preceded by a <em>harsh winter</em>", ""], [33.0, "something says this thing was <em>decisively in play</em> to the downside", ""], [36.9, "and then the R10 reversed at a very precise point", ""], [49.0, "and it moved up enough to hit my <em>P flip</em>", ""], [53.1, "now the P is going to be <em>my friend</em> on the way up", ""], [57.7, "a very well-defined entry this way, and a refined collapsing dragon that way", ""], [68.6, "I <em>absolutely love</em> that", ""]];
 // WARP (optional): [[t_voice, t_authored], …] knots from the voice-over's words; the scene was authored on an estimate
 const WARP = null;
 const warpT = t => { if (!WARP) return t; for (let i = 1; i < WARP.length; i++) if (t <= WARP[i][0]) {
@@ -170,7 +170,7 @@ const check=(x,y,a,c)=>a<=0?'':path(`M${x-11} ${y} L${x-3} ${y+9} L${x+12} ${y-1
 function draw(t){let s='';
   s+=head(t,0,'What is the battle drill?')+bridge(t,0,'after a harsh winter: the reversal, the P flip, the entry');
   s+=chipS(t,0,40,150,'EWW',SUS,{sz:21,w:100});s+=chipS(t,0,150,150,'EWZ',SUS,{sz:21,w:100});
-  ['SSC','Cat 2','collapsing dragon'].forEach((nm,k)=>{s+=chipS(t,1,290+[0,100,210][k],150,nm,SIT,{sz:19,o:op(t,T(1)+k*.6,.4)});});
+  ['SSC','Kata 2','collapsing dragon'].forEach((nm,k)=>{s+=chipS(t,1,290+[0,100,210][k],150,nm,SIT,{sz:19,o:op(t,T(1)+k*.6,.4)});});
   // the harsh winter, the precise reversal, the PSAR dots flipping under price
   const F=fr(60,190,600,310,0,1);
   const f=walk([[0,.92],[.45,.16],[.55,.1],[.7,.34],[1,.72]],21,.006);

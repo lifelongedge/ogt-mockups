@@ -89,7 +89,7 @@ function recall(t,t0,x,y,w,h,label,inner,o={}){const a=op(t,t0,.5)*(o.until&&t>o
   return rect(x,y,w,h,{r:8,s:MUT,sw:1.5,f:'rgba(255,255,255,.03)',o:a,dash:'4 4'})+txt(x+12,y+20,label,{sz:14,c:MUT,o:a})+`<g opacity="${a}" transform="translate(${x} ${y+28}) scale(${o.sc||.5})">${inner}</g>`;}
 function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
 
-const BEATS = [[0.2, "For right now, maybe the best thing is to take those <em>usual suspects</em>", ""], [8.1, "maybe just <em>limit it</em> to that; don't worry about scouring the daily report", ""], [16.4, "<em>work them up at night</em>, work them up well, be really prepared", ""], [23.2, "and trade those on <em>three-minute bars</em> the next day", ""], [32.0, "that's also the argument behind the <em>Cat 2 challenge</em>", ""], [46.5, "it would cause you to start with the <em>mechanical frame</em>", ""], [57.6, "I don't recognize any mechanical swing trade pattern in there", ""], [65.8, "there's still a <em>universal entry</em>: the high and the low of yesterday", ""], [79.6, "if this thing opens in the <em>yellow zone</em>, no matter what", ""], [94.0, "there's probably some pattern in there you can trade: a Cat 2, an SSC, a continuation", ""]];
+const BEATS = [[0.2, "For right now, maybe the best thing is to take those <em>usual suspects</em>", ""], [8.1, "maybe just <em>limit it</em> to that; don't worry about scouring the daily report", ""], [16.4, "<em>work them up at night</em>, work them up well, be really prepared", ""], [23.2, "and trade those on <em>three-minute bars</em> the next day", ""], [32.0, "that's also the argument behind the <em>Kata 2 challenge</em>", ""], [46.5, "it would cause you to start with the <em>mechanical frame</em>", ""], [57.6, "I don't recognize any mechanical swing trade pattern in there", ""], [65.8, "there's still a <em>universal entry</em>: the high and the low of yesterday", ""], [79.6, "if this thing opens in the <em>yellow zone</em>, no matter what", ""], [94.0, "there's probably some pattern in there you can trade: a Kata 2, an SSC, a continuation", ""]];
 // WARP (optional): [[t_voice, t_authored], …] knots from the voice-over's words; the scene was authored on an estimate
 const WARP = null;
 const warpT = t => { if (!WARP) return t; for (let i = 1; i < WARP.length; i++) if (t <= WARP[i][0]) {
@@ -181,8 +181,8 @@ function draw(t){let s='';
   // the mechanical frame, the running example small: the yellow zone and its pattern chips
   const F=fr(60,380,520,140,99,105);
   s+=yday(F,A(t,5),{zone:A(t,8),lines:A(t,7)});
-  ['Cat 2','SSC','continuation'].forEach((nm,k)=>{s+=chipS(t,9,todayF(F).X(.1)+k*110,F.Y(102)+10,nm,SIT,{sz:17,w:100,o:op(t,T(9)+k*.6,.4)});});
-  s+=chipS(t,4,800,170,'the Cat 2 challenge',KEY,{sz:22});
+  ['Kata 2','SSC','continuation'].forEach((nm,k)=>{s+=chipS(t,9,todayF(F).X(.1)+k*110,F.Y(102)+10,nm,SIT,{sz:17,w:100,o:op(t,T(9)+k*.6,.4)});});
+  s+=chipS(t,4,800,170,'the Kata 2 challenge',KEY,{sz:22});
   s+=defn(t,T(7),780,220,340,'still a universal entry',['yesterday\'s high and low','an open in the yellow zone','some pattern you can trade'],{lsz:18,lh:26,sz:22,pad:14,s:KEY});
   s+=L(t,6,800,420,'no swing pattern?',{sz:20,c:MUT});
   s+=focus(t,[[T(0),200,180],[T(1),620,240],[T(2),60,300],[T(3),200,340],[T(4),940,162],[T(7),950,270],[T(9),todayF(F).X(.3),F.Y(102)]]);

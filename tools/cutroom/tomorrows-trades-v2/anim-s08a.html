@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>s08a · the Cat 2s he walked away from</title>
+<title>s08a · the Kata 2s he walked away from</title>
 <style>
   :root { --bg:#000; --fg:#f2f5f7; --muted:#9aa7b0; --border:rgba(255,255,255,0.12); --accent:#F2D06B;
           --ok:#4ade80; --dn:#f87171; --card:#000; --blue:#7baad4; }
@@ -89,7 +89,7 @@ function recall(t,t0,x,y,w,h,label,inner,o={}){const a=op(t,t0,.5)*(o.until&&t>o
   return rect(x,y,w,h,{r:8,s:MUT,sw:1.5,f:'rgba(255,255,255,.03)',o:a,dash:'4 4'})+txt(x+12,y+20,label,{sz:14,c:MUT,o:a})+`<g opacity="${a}" transform="translate(${x} ${y+28}) scale(${o.sc||.5})">${inner}</g>`;}
 function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
 
-const BEATS = [[0.2, "I discovered it after about five years of trading just the channeling and the overreaction", ""], [13.8, "these are all <em>specific rules</em>, with very strict criteria", ""], [20.0, "a 5DD: you have to have <em>five lower closes</em>", ""], [44.7, "four days down, then one day up, then four more down: <em>no signal</em>", ""], [62.7, "trading them mechanically, they were positive expectancy", ""], [77.2, "we captured the washout and then I just <em>walked away</em> from the symbol", ""], [83.8, "on the S&P later there were what we came to call <em>Cat 2s</em>, all the way up", ""], [126.0, "by the breakout above yesterday's high <em>plus a nickel</em>", ""], [130.1, "start with a risk box of yesterday's range, and just <em>trail it</em>", ""], [153.9, "above the previous peak of the regression line: what we now call an <em>emerging dragon</em>", ""], [182.2, "while it's still in what I think of as <em>the pocket</em>", ""], [195.5, "if it was going to fail, that's probably where it would fail", ""], [209.4, "you could re-enter as a continuation, <em>regardless of the original source</em>", ""], [219.4, "it ended up becoming a <em>standard re-entry strategy</em>", ""]];
+const BEATS = [[0.2, "I discovered it after about five years of trading just the channeling and the overreaction", ""], [13.8, "these are all <em>specific rules</em>, with very strict criteria", ""], [20.0, "a 5DD: you have to have <em>five lower closes</em>", ""], [44.7, "four days down, then one day up, then four more down: <em>no signal</em>", ""], [62.7, "trading them mechanically, they were positive expectancy", ""], [77.2, "we captured the washout and then I just <em>walked away</em> from the symbol", ""], [83.8, "on the S&P later there were what we came to call <em>Kata 2s</em>, all the way up", ""], [126.0, "by the breakout above yesterday's high <em>plus a nickel</em>", ""], [130.1, "start with a risk box of yesterday's range, and just <em>trail it</em>", ""], [153.9, "above the previous peak of the regression line: what we now call an <em>emerging dragon</em>", ""], [182.2, "while it's still in what I think of as <em>the pocket</em>", ""], [195.5, "if it was going to fail, that's probably where it would fail", ""], [209.4, "you could re-enter as a continuation, <em>regardless of the original source</em>", ""], [219.4, "it ended up becoming a <em>standard re-entry strategy</em>", ""]];
 // WARP (optional): [[t_voice, t_authored], …] knots from the voice-over's words; the scene was authored on an estimate
 const WARP = null;
 const warpT = t => { if (!WARP) return t; for (let i = 1; i < WARP.length; i++) if (t <= WARP[i][0]) {
@@ -168,15 +168,15 @@ const xmark=(x,y,a,c)=>a<=0?'':line(x-10,y-10,x+10,y+10,{s:c||DN,sw:4,o:a})+line
 const check=(x,y,a,c)=>a<=0?'':path(`M${x-11} ${y} L${x-3} ${y+9} L${x+12} ${y-10}`,{s:c||OK,sw:4,o:a});
 
 function draw(t){let s='';
-  s+=head(t,0,'What did the strict rules leave behind?')+bridge(t,0,'the Cat 2s after a cashed trade, and the pocket');
+  s+=head(t,0,'What did the strict rules leave behind?')+bridge(t,0,'the Kata 2s after a cashed trade, and the pocket');
   // five lower closes (counted), then the strict-rule miss: 4 down, 1 up, 4 down
   const cl=(x0,seq,a)=>{let s2='',y=150;seq.forEach((d,k)=>{y+=d*16;s2+=line(x0+k*26-9,y,x0+k*26+9,y,{s:d>0?RISK:TGT,sw:4,o:a});});return s2;};
   if(t>=T(2)){s+=cl(60,[1,1,1,1,1],A(t,2));s+=txt(60,265,'five lower closes',{sz:19,c:RISK,o:A(t,2)});s+=check(210,215,A(t,2),TGT);}
   if(t>=T(3)){s+=cl(290,[1,1,1,1,-1,1,1,1,1],A(t,3));s+=txt(290,265,'4 down, 1 up, 4 down',{sz:19,c:MUT,o:A(t,3)});s+=xmark(540,215,A(t,3));s+=txt(556,222,'no signal',{sz:19,c:RISK,o:A(t,3)});}
-  // the S&P after the washout: cashed and walked away, Cat 2s all the way up (no count given here)
+  // the S&P after the washout: cashed and walked away, Kata 2s all the way up (no count given here)
   const F=fr(60,290,600,220,0,1);
   if(t>=T(5)){const a=A(t,5);s+=path('M60 480 L110 500 L140 470',{s:FG,sw:3,o:a})+circ(140,470,6,{f:TGT,o:a})+txt(70,520,'washout, cashed',{sz:18,c:PAT,o:a});s+=txt(160,468,'walked away',{sz:19,c:MUT,o:a});}
-  if(t>=T(6)){const u=clamp((t-T(6))/10,0,1);const f=walk([[0,.12],[.25,.3],[.5,.5],[.75,.7],[1,.92]],11,.03);s+=plot(fr(180,290,480,220,0,1),f,0,u,{s:FG,sw:3,o:A(t,6)});s+=txt(560,320,'Cat 2s, all the way up',{sz:20,c:KEY,o:A(t,6),a:'end'});}
+  if(t>=T(6)){const u=clamp((t-T(6))/10,0,1);const f=walk([[0,.12],[.25,.3],[.5,.5],[.75,.7],[1,.92]],11,.03);s+=plot(fr(180,290,480,220,0,1),f,0,u,{s:FG,sw:3,o:A(t,6)});s+=txt(560,320,'Kata 2s, all the way up',{sz:20,c:KEY,o:A(t,6),a:'end'});}
   // the RL10, its previous peak, the pocket, the emerging dragon
   if(t>=T(9)){const a=A(t,9);s+=line(300,380,660,380,{s:MUT,sw:2,dash:'7 6',o:a})+txt(380,404,'prior RL10 peak',{sz:17,c:MUT,o:a});}
   if(t>=T(10)){const a=A(t,10);s+=rect(240,380,110,90,{r:6,f:'rgba(197,138,249,.14)',s:SIT,sw:2,o:a})+txt(295,494,'the pocket',{a:'middle',sz:20,c:SIT,o:a});}
