@@ -273,7 +273,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const BUILD = 'cutroom-30';
+const BUILD = 'cutroom-31';
 console.log('[cutroom] build', BUILD);
 window.__edgeBuild = BUILD;
 
@@ -352,7 +352,7 @@ async function loadTranscript(srcId) {
 }
 function segDur(s) {
   const v = VOICE && VOICE.segments && VOICE.segments[s.id];
-  if (v) { const d = (v.take && v.take.duration) || v.synth_duration; if (d) return d; }
+  if (v) { const d = (v.take && v.take.duration) || v.synth_duration; if (d) return s.hold ? Math.max(d, s.est_duration || 0) : d; }   // hold:true (the opener): the picture outlasts a short voice
   if (s.type === 'slide') return s.duration || 0;
   if (s.type === 'board') return s.est_duration || 0;
   if (s.type === 'explainer' || s.type === 'outcome') return s.est_duration || 0;
