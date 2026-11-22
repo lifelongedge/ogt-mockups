@@ -1,0 +1,758 @@
+{
+ "schema": "coursecraft-plan-v2",
+ "course": "etf2-signal-v2",
+ "revision": 2,
+ "revised": "2026-11-21",
+ "status": "DRAFT rev2 (2026-11-21 evening): sheets eyeballed, three overlaps fixed (s13, s36, s48), arc card glosses one line; ready for the owner's pass",
+ "title": "The ETF2 Signal (v2)",
+ "topic_class": "one tool: Ken Long's ETF2 theoretical exposure line read as a regime signal (cash or invested) for the long-term book and the day book; the rationale of the model; the signal's past episodes computed by edge-sysscq (descriptive, never a forecast); 'provided for peace of mind'",
+ "store_sku": "etf2-signal",
+ "notes": "Owner 2026-11-21: 'i think this is a much longer course. let's cut it down to the module. 1) the ETF theoretical model as a signal. See edge-sysscq/devtimeartifacts/timeline-mockup for the idea that the etf model switching from cash to being invested or not is a good enough signal to decide on the regime, both for your long term investment as well as short term day trading. and this can be done all over the weekend. so build a course that demonstrates this, provides the rationale behind how this model is built etc. so people understand there is real logic, then show some periods of how the signals occurred. let's state that this is provided for peace of mind. and use this actual screen from his report.' Parent plan: weekend-edge-v2 rev 1 (parked). Picture on screen: @etf2-report-2026-11-14. Episode data: data/episodes.json from the timeline mockup's data.js (SCQ-006 rule on this box's quotes_eod; matched Ken's printed count on 2026-11-14). Style: stage (skill anim-overdub, the lesson rules).",
+ "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/etf2-signal-v2/",
+ "sources": [
+  {
+   "id": "wr2",
+   "label": "ETF2: the weekend report explained (2 h)",
+   "file": "youtube-kr6pU_EbCqs-weekend-report-2-hr-explanation.mp4",
+   "proxy": "youtube-kr6pU_EbCqs-weekend-report-2-hr-explanation.proxy.mp4",
+   "url": "https://www.youtube.com/watch?v=kr6pU_EbCqs",
+   "pip": {
+    "still": "_shared/ken-still.jpg",
+    "note": "full-screen share of the weekend report with a strip of tiles about 30 px tall top right (300, 900, 3000, 5000 s): no usable tile"
+   }
+  },
+  {
+   "id": "rgs",
+   "label": "Sunday session: regime, theoretical exposure, five frames",
+   "file": "youtube-q-df0MVvWBA-really-good-sunday.mp4",
+   "proxy": "youtube-q-df0MVvWBA-really-good-sunday.proxy.mp4",
+   "url": "https://www.youtube.com/watch?v=q-df0MVvWBA",
+   "pip": {
+    "still": "_shared/ken-still.jpg",
+    "note": "the layout changes across the windows (a six-tile gallery at 1260 s, a share with a right column of about 160x90 tiles at 1800, 2200, 6950 s) and Ken's tile is not identified with confidence: the still stands in"
+   }
+  },
+  {
+   "id": "wr24",
+   "label": "2023-03-24 weekend report walk",
+   "file": "youtube-n2lGyseS4hw-2023-03-24-weekend-reports-swing-and-sniper.mp4",
+   "proxy": "youtube-n2lGyseS4hw-2023-03-24-weekend-reports-swing-and-sniper.proxy.mp4",
+   "url": "https://www.youtube.com/watch?v=n2lGyseS4hw",
+   "pip": {
+    "still": "_shared/ken-still.jpg",
+    "note": "screen recording of the report, no camera tile (630, 700, 770 s)"
+   }
+  },
+  {
+   "id": "wr31",
+   "label": "2023-03-31 weekend report walk",
+   "file": "youtube-Mk8_O_VdF3o-2023-03-31-weekend-reports-swing-and-sniper-trading.mp4",
+   "proxy": "youtube-Mk8_O_VdF3o-2023-03-31-weekend-reports-swing-and-sniper-trading.proxy.mp4",
+   "url": "https://www.youtube.com/watch?v=Mk8_O_VdF3o",
+   "pip": {
+    "still": "_shared/ken-still.jpg",
+    "note": "share with a strip of tiles about 30 px tall at the right edge (2220, 2260, 2290 s): no usable tile"
+   }
+  },
+  {
+   "id": "c6i",
+   "label": "Cohort 6 intro: position sizing, the routine",
+   "file": "youtube-XvcsfWFFW20-cohort-6-intro-overview.mp4",
+   "proxy": "youtube-XvcsfWFFW20-cohort-6-intro-overview.proxy.mp4",
+   "url": "https://www.youtube.com/watch?v=XvcsfWFFW20",
+   "pip": {
+    "still": "_shared/ken-still.jpg",
+    "note": "screen share with a gallery column; Ken about 60 px tall at 720p (2000, 5600, 6000, 6600, 7420, 7980 s): too small to crop"
+   }
+  },
+  {
+   "id": "ssf",
+   "label": "scaling simplified framing (sizing)",
+   "file": "youtube-QgIwaNDDimc-scaling-simplified-framing.mp4",
+   "proxy": "youtube-QgIwaNDDimc-scaling-simplified-framing.proxy.mp4",
+   "url": "https://www.youtube.com/watch?v=QgIwaNDDimc",
+   "pip": {
+    "still": "_shared/ken-still.jpg",
+    "note": "share with a right column of five 205x120 tiles (x 1075-1280, y 60-660 at 720p; 1400, 1600, 1750 s); Ken's tile is probably the fourth (crop iw*0.16:ih*0.1667:iw*0.84:ih*0.5833) but not confirmed, so the still stands in"
+   }
+  }
+ ],
+ "voices": [
+  {
+   "id": "ava",
+   "label": "Ava (US, female, polished)",
+   "sample": "vo-ava.mp3"
+  },
+  {
+   "id": "andrew",
+   "label": "Andrew (US, male, conversational)",
+   "sample": "vo-andrew.mp3"
+  }
+ ],
+ "segments": [
+  {
+   "id": "s000",
+   "type": "explainer",
+   "include": true,
+   "label": "Opener: the watch (hold)",
+   "voice": "ava",
+   "vo_script": "The ETF2 Signal. With Dr. Ken Long. Owl Group Trading.",
+   "est_duration": 8,
+   "status": "scripts/opener.py --title 'The ETF2 Signal' --seconds 8; the owner's own take replaces Ava's line",
+   "hold": true
+  },
+  {
+   "id": "s00",
+   "type": "slide",
+   "include": true,
+   "label": "INTERNAL · story arc (design card, OFF before the build)",
+   "slide_id": "arc",
+   "duration": 8,
+   "layout": "agenda",
+   "text": {
+    "kicker": "INTERNAL · THE STORY ARC · NOT FOR THE CUT",
+    "title": "**One line**, read once a week",
+    "subtitle": "What it says, why it is built that way, what it has said, how to use it on Sunday.",
+    "body": "The line | Ch 1 (s11–s15): ten regions × 10 %, over or under the four-month average\nThe logic | Ch 2 (s21–s27): strength, consistency, quality; the monthly rebalance\nThe record | Ch 3 (s31–s36): 22 years of Fridays from edge-sysscq; 2008, 2020, 2022, now\nThe weekend | Ch 4 (s41–s48): long book on or off, day book posture; peace of mind"
+   },
+   "status": "design card (owner, 2026-11-21): the Weekend Edge cut down to this one module; OFF before the build"
+  },
+  {
+   "id": "s01",
+   "type": "slide",
+   "include": true,
+   "label": "Title card",
+   "slide_id": "title",
+   "duration": 5,
+   "layout": "title",
+   "text": {
+    "kicker": "The ETF2 Signal · about an hour",
+    "title": "**Cash or invested**: one line, read once a week",
+    "subtitle": "with Dr. Ken Long",
+    "body": "Ten regions. Ten percent each. The regime for your long book and your day book, decided on the weekend. Provided for peace of mind."
+   }
+  },
+  {
+   "id": "s02",
+   "type": "explainer",
+   "include": true,
+   "label": "EXPLAINER: the line at the bottom of the report (Ava, opening)",
+   "voice": "ava",
+   "vo_script": "At the bottom of Ken Long's weekend report there is one line. ETF2 theoretical exposure goes from zero percent to ten percent. By the end of this hour you will be able to read that line, know exactly how it is built, see what it has said through twenty-two years of Fridays, and use it on a Sunday to decide two things: how much of your long-term book is on, and what posture your day trading takes into the week. The model counts ten regions of the world. Each one that closes above its four-month average adds ten percent. That is the whole line. This course is provided for peace of mind. It is not a forecast. It is a way to know, once a week, which kind of week you are in.",
+   "est_duration": 62,
+   "animation_brief": "the real 2026-11-14 report on the left, the exposure line ringed when she reads it; the destination as three rows on the right; ten boxes counted; 'for peace of mind' as the closing aside",
+   "status": "destination first (stage rule); every fact is on the picture or is a description of the course; no outcome"
+  },
+  {
+   "id": "s10",
+   "type": "slide",
+   "include": true,
+   "label": "Chapter 1 card: What the line says",
+   "slide_id": "ch1",
+   "duration": 5,
+   "layout": "chapter",
+   "text": {
+    "kicker": "Chapter 1",
+    "title": "What the line says",
+    "subtitle": "",
+    "body": "Ten regions, ten percent each: the line is how much of the long book the evidence lets you have on."
+   }
+  },
+  {
+   "id": "s11",
+   "type": "cut",
+   "include": false,
+   "label": "The market exposure algorithm: ten indexes, the four-month moving average, ten percent each",
+   "source": "wr2",
+   "in": 2913.0,
+   "out": 3155.0,
+   "status": "MAPPED-VERIFIED (re-read 2026-11-21): 'another conservative swing trade system that we have called etf2' 48:33; 'additional Market exposure algorithm which takes a look at 10 indexes' 48:51; 'four of which are in the U.S' 49:07; 'price today ... four-month moving average' 49:23; 'below ... you should be in cash ... each one of these 10 indexes controls 10 percent' 49:43; 'why six and four ... 48 percent' 50:00; 'six of those 10 indexes are above' 50:18; 'maximum exposure ... about 60 percent ... goes to a hundred' 50:36; 'little risk manager' 50:51; the four collapses 51:07-51:25; 'worst performance of etf2 ... six percent' 51:47 (HIS FIGURE for his model, glossed as such, not computed here); 'page one of my weekend review' 52:18; out 52:35 before 'all right'",
+   "quote_anchor": "each one of these 10 indexes controls 10 percent of the total exposure to the world"
+  },
+  {
+   "id": "s11a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: The market exposure algorithm: ten indexes, the four-month moving average, ten percent each",
+   "source": "wr2",
+   "in": 2913.0,
+   "out": 3155.0,
+   "animation_brief": "the ten boxes counted in as he names them, the price-vs-average sketch, the rule boxed in his words, six of ten lit and 60 % as the one number; the four collapses as four marks",
+   "status": "twin of s11: his audio, our picture (stage), his still top-right; the owner picks one of the pair",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s12",
+   "type": "cut",
+   "include": false,
+   "label": "The filter at work: six of ten above, 60 percent invested, 40 cash; last week 40 and 60",
+   "source": "wr2",
+   "in": 4872.0,
+   "out": 4990.0,
+   "status": "MAPPED-VERIFIED (re-read 2026-11-21): sector strength read 1:21:29-1:21:45 (April 2023: technology, finance after the bank runs); 'Computing the four month moving average ... the moving average filter from the BMR ... above ... a buy rating ... six of those ten' 1:22:02; 'this week the scoring is 60 percent invested and 40 percent cash ... last week ... 40 invested and 60 cash' 1:22:18; 'the market actually got 20 percent better' 1:22:34; ATR and ATR % 1:22:51; out 1:23:10 before 'Market classification'. The 'ten' he counts here are read as the ten indexes of the exposure line (he says 'six of those ten ... that's why this week the scoring is 60 percent invested').",
+   "quote_anchor": "if it's above its four month moving average it gets a buy rating ... six of those ten are on a buy rating and that's why this week the scoring is 60 percent invested"
+  },
+  {
+   "id": "s12a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: The filter at work: six of ten above, 60 percent invested, 40 cash; last week 40 and 60",
+   "source": "wr2",
+   "in": 4872.0,
+   "out": 4990.0,
+   "animation_brief": "the sector strength bars he reads, then the filter line, the ten boxes with six lit, 60 / 40 against last week's 40 / 60",
+   "status": "twin of s12: his audio, our picture (stage), his still top-right; the owner picks one of the pair",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s13",
+   "type": "cut",
+   "include": false,
+   "label": "A 2026 Sunday read: the exposure line goes from 10 percent to 90 percent",
+   "source": "rgs",
+   "in": 6881.0,
+   "out": 7000.0,
+   "status": "MAPPED-VERIFIED (re-read 2026-11-21): 'go through this as economically as I can' 1:54:41; 'bullish volatile favors the short term' 1:54:56; 'down at the bottom ... theoretical exposure went from 10% to 90%' 1:55:11; 'hovering right around their fourmonth moving average ... dropped underneath ... moved back above ... You don't see that very often' 1:55:28; percent stretch 1:55:43; '200 day ... steam north ... ran out of gas' 1:56:00; 'ATR 1.54% is double the normal volatility' 1:56:17; out 1:56:40. PICTURE: the real 2026-11-14 report is shown to point at WHERE the line sits in the report; his week read 10 % -> 90 %, the picture's week reads 0 % -> 10 %; the label on screen says so.",
+   "quote_anchor": "You'll notice down at the bottom that the theoretical exposure went from 10% to 90%"
+  },
+  {
+   "id": "s13a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: A 2026 Sunday read: the exposure line goes from 10 percent to 90 percent",
+   "source": "rgs",
+   "in": 6881.0,
+   "out": 7000.0,
+   "animation_brief": "one box lit then nine, 10 % -> 90 % as the number, the dip-under-and-back-above sketch, the real report with the exposure line ringed (labelled as the 11-14 copy)",
+   "status": "twin of s13: his audio, our picture (stage), his still top-right; the owner picks one of the pair",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s14",
+   "type": "cut",
+   "include": false,
+   "label": "A Friday read, March 2023: 10 percent to 40 percent, four of ten above",
+   "source": "wr24",
+   "in": 626.0,
+   "out": 780.0,
+   "status": "MAPPED-VERIFIED (re-read 2026-11-21): 'sideways normal ... risk Z ... risk-off ... price relative to the 200 began to slowly improve' 10:26; 'etf2 model theoretical exposure increases from 10 percent to 40 percent ... four of the ten indexes are above the four month moving average' 10:43; the regression-line oscillation 10:58-11:14; '386 this swing low is the crucial support level' 11:48 (his level, March 2023); 'the winners continued to win technology and the globals' 12:04; 'etf2 regional ... U.S tech in the queues' 12:28; 'xlk is now green and white ... new leaders' 12:44; out 13:00.",
+   "quote_anchor": "the etf2 model theoretical exposure increases from 10 percent to 40 percent is now four of the ten indexes are above the four month moving average"
+  },
+  {
+   "id": "s14a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: A Friday read, March 2023: 10 percent to 40 percent, four of ten above",
+   "source": "wr24",
+   "in": 626.0,
+   "out": 780.0,
+   "animation_brief": "one box lit then four, 10 % -> 40 %, the oscillating channel he describes, 386 as his level, the leaders in the right column",
+   "status": "twin of s14: his audio, our picture (stage), his still top-right; the owner picks one of the pair",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s15",
+   "type": "cut",
+   "include": false,
+   "label": "A turning-point week, March 2023: 10, then 40, then 60",
+   "source": "wr31",
+   "in": 2210.0,
+   "out": 2295.0,
+   "status": "MAPPED-VERIFIED (re-read 2026-11-21): 'pulled back held support leg one cotta two leg two' 36:50; 'two really strong upward days in a row ... turning point week in my view ... went from 10' 37:06; 'to 40 last week to 60 for this week ... even the etf2 is recognizing the general healing properties of price' 37:25; winners 'Latin America and real estate ... Brazil and Mexico' 37:43; 'Tech and the euroasia globals' 38:01; out 38:15.",
+   "quote_anchor": "the etf2 asset allocation this week went from 10 to 40 last week to 60 for this week"
+  },
+  {
+   "id": "s15a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: A turning-point week, March 2023: 10, then 40, then 60",
+   "source": "wr31",
+   "in": 2210.0,
+   "out": 2295.0,
+   "animation_brief": "three strips stacked, one then four then six boxes lit, 60 % as the number, his two-leg sketch, the winners in the right column",
+   "status": "twin of s15: his audio, our picture (stage), his still top-right; the owner picks one of the pair",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s20",
+   "type": "slide",
+   "include": true,
+   "label": "Chapter card: How the model is built",
+   "slide_id": "ch2",
+   "duration": 5,
+   "layout": "chapter",
+   "text": {
+    "kicker": "CHAPTER 2",
+    "title": "**How the model is built**",
+    "subtitle": "",
+    "body": "Every ETF is ranked on strength, consistency and quality, and the four-month average says buy or cash: the line is arithmetic, not opinion."
+   }
+  },
+  {
+   "id": "s21",
+   "type": "cut",
+   "include": false,
+   "label": "What the two-page ETF2 update measures (the report is a salad bar)",
+   "source": "wr2",
+   "in": 30.0,
+   "out": 105.0,
+   "status": "MAPPED-VERIFIED (re-read 2026-11-21): 'salad bar for a lot of different strategies' 0:30; 'two-page update that uses the etf2 database' 0:47-1:04; 'current relative strength, a 10-week rolling relative strength, a 40-week quality index' 1:04-1:20; 'proprietary to us... momentum based and volatility-based insight' 1:20; 'several hundred symbols in the ETF World model' 1:37; out before 'the third section' 1:45",
+   "quote_anchor": "a two-page update that uses the etf2 database... current relative strength, a 10-week rolling relative strength, a 40-week quality index"
+  },
+  {
+   "id": "s21a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: What the two-page ETF2 update measures (the report is a salad bar)",
+   "source": "wr2",
+   "in": 30.0,
+   "out": 105.0,
+   "animation_brief": "stage: head 'What does the two-page update measure?'; the report as three pages on the left, the middle one opening into three bars STR · CON · QUAL; his three measures in the right column; the definition boxed at 'proprietary to us'",
+   "status": "twin of s21: his audio, our picture on the stage; pip from the assembler's wr2 verdict (the owner's still)",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s22",
+   "type": "cut",
+   "include": false,
+   "label": "Strength, consistency, quality: three scores from 0 to 100, and the colour bands",
+   "source": "wr2",
+   "in": 4530.0,
+   "out": 4872.0,
+   "status": "MAPPED-VERIFIED (re-read 2026-11-21): 'the World Market model review' 1:15:30; 'looks at three things: the average, the strength, consistency and quality' 1:15:48; '70 percent of the three month plus 30 percent of the six month... best a hundred, worst zero' 1:16:04-1:16:37; 'the current reading each week' 1:16:37; 'about a four thousand dollar workshop' 1:16:57 (his aside); consistency = the last 10 weeks, a proprietary weighting, scaled 0-100 1:17:18-1:17:52; quality = the last 40 weeks each as a weekly trade, an R multiple, a system quality number, indexed 0-100 1:18:09-1:19:02; 'three independent measures' 1:19:02; 'the average is simply the mathematical average: 63, 68, 63 gives 65' 1:19:19-1:19:37; colour codes by the mean and plus or minus one standard deviation 1:19:53; green top sixth, white above average, yellow below, red bottom sixth 1:20:09-1:20:41; 'Europe green all the way across' 1:20:41; out 1:21:12 at 'the last three years'. The weights he speaks (0.7 / 0.3, 10 weeks, 40 weeks) are also the SCQ-002 pins; the 'proprietary weighting' of consistency is not restated.",
+   "quote_anchor": "three independent measures... each one of those gets scored on a scale of 0 to 100 and then the average is simply the mathematical average of those three"
+  },
+  {
+   "id": "s22a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: Strength, consistency, quality: three scores from 0 to 100, and the colour bands",
+   "source": "wr2",
+   "in": 4530.0,
+   "out": 4872.0,
+   "animation_brief": "stage: head 'How is each column scored?'; three vertical 0-100 gauges STR · CON · QUAL fill as he defines them, AVG as the big number at right (63 · 68 · 63 → 65); the colour ruler (mean, ±1σ; green white yellow red) under them; the definition boxed at 'three independent measures'; his workshop quip aside",
+   "status": "twin of s22: his audio, our picture on the stage; pip from the assembler's wr2 verdict (the owner's still)",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s23",
+   "type": "cut",
+   "include": false,
+   "label": "The BMR rules: the 70/30 blend, the top three, Buy or cash, a 10 percent trailing stop",
+   "source": "wr2",
+   "in": 4135.0,
+   "out": 4410.0,
+   "status": "MAPPED-VERIFIED (re-read 2026-11-21): 'a blend of the three-month percent performance and the six month' 1:08:55; '0.7... 0.3... favors the closer performance' 1:09:12; 'rank... holding positions for a month' 1:09:28; 'top three... above or below its four month moving average' 1:09:45; 'one third of my money in each, hold it for a month, a 10 percent trailing stop' 1:10:01; 'below its four month moving average, that position would go to cash, it would not roll down' 1:10:18; the one-week version 1:10:35; 'treasuries on a tear, Latin America getting murdered' 1:10:50; ETF 13 / 22 / 32 members 1:11:06-1:11:43; 'collapsing dragons' as the short-side use of the lens 1:11:58-1:12:13; the Dow 1:12:29-1:13:02; out 1:13:30 before Amgen",
+   "quote_anchor": "if one of these was strong but was still below its four month moving average then that position would go to cash, it would not roll down to the next one"
+  },
+  {
+   "id": "s23a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: The BMR rules: the 70/30 blend, the top three, Buy or cash, a 10 percent trailing stop",
+   "source": "wr2",
+   "in": 4135.0,
+   "out": 4410.0,
+   "animation_brief": "stage: head 'What are the BMR rules?'; a ranking ladder of eight bars sorted by the blend, the top three ringed, a four-month gate per rung (above: a third of the money; below: cash, the slot stays empty), a trailing-stop line; the rules boxed at 'a third... a month... 10 percent'; the 13 → 22 → 32 ladders and the Dow in the right column",
+   "status": "twin of s23: his audio, our picture on the stage; pip from the assembler's wr2 verdict (the owner's still)",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s24",
+   "type": "cut",
+   "include": false,
+   "label": "Core, swing, day: where the ETF2 sits, and the model as a lens (signals and information)",
+   "source": "wr2",
+   "in": 2599.0,
+   "out": 2913.0,
+   "status": "MAPPED-VERIFIED (re-read 2026-11-21): 'three time frames: core, swing and day trading' 43:19; hybrid 43:35-44:24; 'the 30 minute, right in between swing and day' 44:07; 'the Blended monthly rebalancing, my favorite approach to long-term core holdings' 44:42; ETF 13/22/32, 'the model still works' 44:58; 'when markets are poor and we are wanting to be in cash' 45:31; ETF Max about 300 ETFs 46:20; 'provides week to week insights into the relative strength' 46:37; 'sometimes systems give us signals, sometimes systems give us information' 46:55; 'US technology plus the Euro Asia and European large caps, not the S&P, not the DIA' 47:28 (April 2023); 'kata two action... turbo boost' 48:01; out 48:33",
+   "quote_anchor": "sometimes systems give us signals, sometimes systems give us information about the market through that particular lens"
+  },
+  {
+   "id": "s24a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: Core, swing, day: where the ETF2 sits, and the model as a lens (signals and information)",
+   "source": "wr2",
+   "in": 2599.0,
+   "out": 2913.0,
+   "animation_brief": "stage: head 'Where does the ETF2 sit among the time frames?'; three time bands left (core · swing · day) with the hybrid link and the 30-minute between; the BMR under core; the lens over a herd of about 300 ETFs sorting out the leaders; 'signals and information' boxed",
+   "status": "twin of s24: his audio, our picture on the stage; pip from the assembler's wr2 verdict (the owner's still)",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s25",
+   "type": "cut",
+   "include": false,
+   "label": "The world market model at a glance: numbers that drive a rule set and inform a view",
+   "source": "wr2",
+   "in": 5205.0,
+   "out": 5360.0,
+   "status": "MAPPED-VERIFIED (re-read 2026-11-21): 'the World Market model at a glance, the 10 big indexes that drive the BMR and the etf2' 1:26:45; 'an extract of the S&P... the nine sector spiders' 1:27:01; broad asset classes 1:27:16; 'gold is at a 5,000 year high, did you know that' 1:27:33; oil, the Saudi cut 1:27:50; 'this one page... a boatload of information that is actionable' 1:28:06-1:28:22; 'the model is designed to produce numbers which can drive action in a system, but those same numbers in that same model also give information' 1:28:39-1:28:55; 'complete my understanding of a complicated world' 1:29:12; out 1:29:20",
+   "quote_anchor": "the model is designed to produce numbers which can drive action in a system but those same numbers in that same model also give information"
+  },
+  {
+   "id": "s25a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: The world market model at a glance: numbers that drive a rule set and inform a view",
+   "source": "wr2",
+   "in": 5205.0,
+   "out": 5360.0,
+   "animation_brief": "stage: head 'What is on page one?'; the page drawn left with its four panels as he names them (ten indexes · nine sectors · asset classes · regional); his April 2023 reads in the right column; the fork action / information boxed at 1:28:39",
+   "status": "twin of s25: his audio, our picture on the stage; pip from the assembler's wr2 verdict (the owner's still)",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s26",
+   "type": "cut",
+   "include": false,
+   "label": "The recap: four scores, a colour, the four-month filter, ATR, liquidity ('our little buddy SPY')",
+   "source": "wr2",
+   "in": 6341.0,
+   "out": 6400.0,
+   "status": "MAPPED-VERIFIED (re-read 2026-11-21): 'two pages of details on etf2 using those four categories strength' 1:45:41; 'consistency, quality and the blend with the color code scheming and the relative to the four month moving average... ATR percentage... liquidity' 1:45:57; 'our little buddy SPY right there, right in the middle, almost always in the middle' 1:46:12; 'when I'm looking for bottom feeders these are the things that I look at' 1:46:28; out 1:46:40",
+   "quote_anchor": "there's our little buddy SPY right there, right in the middle, almost always in the middle"
+  },
+  {
+   "id": "s26a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: The recap: four scores, a colour, the four-month filter, ATR, liquidity ('our little buddy SPY')",
+   "source": "wr2",
+   "in": 6341.0,
+   "out": 6400.0,
+   "animation_brief": "stage: head 'What did the two pages hold?'; the eight column names across the top as he lists them; a ranked list with SPY ringed in the middle; his SPY line aside; 'bottom feeders: start here' at the end",
+   "status": "twin of s26: his audio, our picture on the stage; pip from the assembler's wr2 verdict (the owner's still)",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s27",
+   "type": "cut",
+   "include": false,
+   "label": "OPTIONAL deep dive: the ETF2 extract and the swing table, green/green to red/red (9 min)",
+   "source": "wr2",
+   "in": 5371.0,
+   "out": 5920.0,
+   "status": "OPTIONAL, both OFF (2026-11-21): the nine-minute swing-table walk the owner may switch on in the cutroom (cut or twin). MAPPED-VERIFIED in weekend-edge-v2: 'a very precise set of rules' 1:29:31; 'constructed about 20 years ago for a hedge fund' 1:29:48 ('saved people millions' is HIS CLAIM, glossed); 'all 185 of the liquid ETFs' 1:30:21; 'tech at 95' 1:31:30; 'about 19... only about 10 percent' 1:31:46-1:32:01; 'the same model' for swing trades 1:32:34; green/green 1:32:50-1:33:42; green/white 1:33:58-1:34:31; white after green 1:34:47-1:35:20; red/red 1:35:38; red/yellow 1:35:53; 'the extremes' 1:36:13; gold miners 1:36:30; IVW 1:37:08; 'catch them earlier at the turn' 1:37:26; the MA signal and South Korea 1:37:47-1:38:18; out 1:38:40. This is the table edge-sysscq pins as SCQ-005.",
+   "quote_anchor": "if something is in the green and the green that thing is great... reinforce them with trend following"
+  },
+  {
+   "id": "s27a",
+   "type": "overdub",
+   "include": false,
+   "label": "ALT animated: OPTIONAL deep dive: the ETF2 extract and the swing table, green/green to red/red (9 min)",
+   "source": "wr2",
+   "in": 5371.0,
+   "out": 5920.0,
+   "animation_brief": "stage: head 'How is the same table read for swing trades?'; the 4x4 grid (strength bands down, ten-week consistency across) filling cell by cell with his labels; the extract facts in the right column; the MA signal rows at the end",
+   "status": "twin of s27: his audio, our picture on the stage; pip from the assembler's wr2 verdict (the owner's still)",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s30",
+   "type": "slide",
+   "include": true,
+   "label": "Chapter card: the signal through time",
+   "slide_id": "ch3",
+   "duration": 5,
+   "layout": "chapter",
+   "text": {
+    "kicker": "Chapter 3",
+    "title": "The signal through time",
+    "subtitle": "",
+    "body": "Four periods, read off the record: what the line said on the Friday, and what the S&P did next."
+   }
+  },
+  {
+   "id": "s31",
+   "type": "explainer",
+   "include": true,
+   "label": "EXPLAINER: how the line is made each Friday, and 22 years of it (Ava)",
+   "voice": "ava",
+   "vo_script": "Here is how the number at the bottom of Ken's report is made, every Friday. Ten regional index funds: emerging markets, Europe and Asia, Asia less Japan, Japan, the European 350, Latin America, the S&P 500, the Nasdaq 100, the midcaps and the smallcaps. For each one, a single question: is Friday's close above its four-month moving average? Yes adds ten percent. No adds nothing. The sum is the theoretical exposure, zero to one hundred. What you are about to see was computed by edge-sysscq, the Edge Platform's copy of this rule, from the daily prices on this machine: each fund above its eighty-seven day average adds ten percent, counted on the Friday close. On the thirteenth of November, 2026, it matched the count printed in Ken's report of the fourteenth: one fund above, ten percent. Run back to January 2004, that is one thousand one hundred and ninety-three Fridays. On eight hundred and sixteen of them the line stood at fifty percent or more. On one hundred and thirty-eight it read zero. On two hundred and thirty-five it read one hundred. Reading fifty as the switch between invested and cash gives one hundred and thirty-six runs: sixty-eight invested, sixty-eight in cash. The longest stretch invested ran fifty-eight weeks, from the last day of 2016 into February 2018. The longest in cash ran forty-two weeks, from June 2008 to March 2009. Four of those periods are next.",
+   "est_duration": 94,
+   "animation_brief": "the ten funds counted as boxes (the 13 Nov 2026 count lit), then the 22-year invested band under the weekly S&P, revealed left to right; the counts in the right column",
+   "status": "facts from data/episodes.json and data/spy_weekly.json (rule SCQ-006 on this box's quotes, timeline mockup build 2026-11-21); descriptive, no forecast; SPY moves are Friday-to-Friday adjusted closes over each run"
+  },
+  {
+   "id": "s32",
+   "type": "explainer",
+   "include": true,
+   "label": "EXPLAINER: 2007-2009, the financial crisis (Ava)",
+   "voice": "ava",
+   "vo_script": "The financial crisis, 2007 to 2009. In June 2007 the line read ninety. On the twenty-seventh of July it fell to twenty, with SPY at 145. It came back to sixty in September, and dropped to thirty on the fourteenth of December, SPY at 147. SPY had set its high on the ninth of October, at 156. Through the spring of 2008 the line flickered: fifty, ten, ninety, on three Fridays in April. Then on the thirteenth of June, 2008, it fell to forty, with SPY at 136, and it stayed below fifty for forty-two weeks, the longest cash run in the record. Over that run SPY lost forty point one percent. Its low came on the ninth of March, 2009, at 68: fifty-six and a half percent below the October 2007 high. On the third of April, 2009, the line read eighty, with SPY at 84. It stayed invested to January 2010, and SPY gained thirty-four point nine percent over that run. What the signal said: cash from June 2008. What SPY did next: down forty percent, then the turn, and the line back above fifty four weeks after the low. It did not call the top in October 2007. It did not call the bottom in March 2009. It stepped aside eight months after the high, and stepped back four weeks after the low.",
+   "est_duration": 89,
+   "animation_brief": "the episode's weekly invested band under SPY, revealed left to right; the switch Fridays and the high and low ringed; run dates and SPY moves in the right column; the record boxed",
+   "status": "facts from data/episodes.json and data/spy_weekly.json (rule SCQ-006 on this box's quotes, timeline mockup build 2026-11-21); descriptive, no forecast; SPY moves are Friday-to-Friday adjusted closes over each run"
+  },
+  {
+   "id": "s33",
+   "type": "explainer",
+   "include": true,
+   "label": "EXPLAINER: 2020, the pandemic crash (Ava)",
+   "voice": "ava",
+   "vo_script": "2020. In October 2019 the line read sixty, with SPY at 296. That run ended on the twenty-first of February, 2020: SPY had gained twelve point six percent since October, and had set its high two days earlier, on the nineteenth, at 338. On the twenty-eighth of February the line read zero, with SPY at 296, twelve percent below that high. The low came on the twenty-third of March, at 223: thirty-four percent below the high. The line stayed at or below forty for thirteen weeks. On the twenty-ninth of May it read seventy, with SPY at 304. Over the whole cash run, from the Friday it left to the Friday it returned, SPY moved minus zero point three percent: the fall and the rebound both happened inside it. Invested again from the end of May, SPY gained eight point seven percent to September. After two short dips in the autumn, the line read one hundred on the sixth of November, and SPY gained twenty-four point four percent through July 2021. What the signal said: zero, one week after the high. What SPY did next: down a third, then back to where it started, all while the line said cash. In this episode the line was in cash for the fall and for the rebound. It gave back nothing, and it took part in nothing, until June.",
+   "est_duration": 90,
+   "animation_brief": "the episode's weekly invested band under SPY, revealed left to right; the switch Fridays and the high and low ringed; run dates and SPY moves in the right column; the record boxed",
+   "status": "facts from data/episodes.json and data/spy_weekly.json (rule SCQ-006 on this box's quotes, timeline mockup build 2026-11-21); descriptive, no forecast; SPY moves are Friday-to-Friday adjusted closes over each run"
+  },
+  {
+   "id": "s34",
+   "type": "explainer",
+   "include": true,
+   "label": "EXPLAINER: 2022, the rate-hike bear (Ava)",
+   "voice": "ava",
+   "vo_script": "2022, the rate-hike bear. In June 2021 the line read one hundred, with SPY at 423. Through the second half of 2021 it flickered between thirty and seventy, a week or two at a time. On the twenty-sixth of November, 2021, it read thirty, with SPY at 459, and it stayed below fifty for thirty-seven weeks. SPY set its high five weeks later, on the third of January, 2022, at 478. Over the cash run SPY lost nine point nine percent. On the twelfth of August the line read one hundred, SPY at 427. Three weeks later it read ten, then fifty, then zero on the sixteenth of September, SPY at 386. The low came on the twelfth of October, at 357: twenty-five percent below the January high. On the eleventh of November the line read ninety, SPY at 399. It dipped to forty for three weeks in March 2023, read sixty on the thirty-first of March, and stayed invested to August, SPY gaining eight point nine percent over that run. What the signal said: cash from late November 2021, five weeks before the high. What SPY did next: a slow bear, minus ten percent over the first cash run, a false start in August, and the low in October with the line at zero. The return came four weeks after the low.",
+   "est_duration": 88,
+   "animation_brief": "the episode's weekly invested band under SPY, revealed left to right; the switch Fridays and the high and low ringed; run dates and SPY moves in the right column; the record boxed",
+   "status": "facts from data/episodes.json and data/spy_weekly.json (rule SCQ-006 on this box's quotes, timeline mockup build 2026-11-21); descriptive, no forecast; SPY moves are Friday-to-Friday adjusted closes over each run"
+  },
+  {
+   "id": "s35",
+   "type": "explainer",
+   "include": true,
+   "label": "EXPLAINER: 2025-2026, the tariff shock and this autumn (Ava)",
+   "voice": "ava",
+   "vo_script": "The last two years, up to the Friday before this course was cut. In November 2024 the line read sixty, with SPY at 571. It moved between thirty and sixty through the winter. On the fourth of April, 2025, the tariff week, it read zero, with SPY at 505. The low came four days later, on the eighth of April, at 496. Three Fridays later, on the twenty-fifth of April, the line read sixty, with SPY at 551: over those three weeks of cash SPY rose nine percent. That is a whipsaw, and the record keeps it. From there the line stayed invested for forty-six weeks, to the sixth of March, 2026, and SPY gained twenty-two point one percent over the run. Three weeks of cash in March; then invested again from the tenth of April to the ninth of October, SPY up fourteen point six percent. SPY set its high on the sixth of October, at 779. On the sixteenth of October the line read twenty, with SPY at 763. It read zero on the thirtieth of October and on the sixth of November. On the thirteenth of November it read ten: one fund above its average, the European 350, the count Ken printed in his report of the fourteenth. On the twentieth of November it read zero again, with SPY at 703, nine point eight percent below the October high, and seven point nine percent below the Friday the line left. What the signal said: cash from the sixteenth of October. What SPY has done since: down eight percent. What it does next is not in this course.",
+   "est_duration": 106,
+   "animation_brief": "the episode's weekly invested band under SPY, revealed left to right; the switch Fridays and the high and low ringed; run dates and SPY moves in the right column; the record boxed",
+   "status": "facts from data/episodes.json and data/spy_weekly.json (rule SCQ-006 on this box's quotes, timeline mockup build 2026-11-21); descriptive, no forecast; SPY moves are Friday-to-Friday adjusted closes over each run"
+  },
+  {
+   "id": "s36",
+   "type": "explainer",
+   "include": true,
+   "label": "EXPLAINER: what the record says, and does not say (Ava)",
+   "voice": "ava",
+   "vo_script": "What the record says, and what it does not say. The line is late by design: a four-month average turns after the price does, so in every episode the switch came after the high and after the low. Eight months after the 2007 high. Nine days after the 2020 high. Four weeks after the 2009 low, ten weeks after the 2020 low, four weeks after the 2022 low. The line whipsaws. Of one hundred and thirty-six runs since 2004, thirty-six lasted one week and seventeen lasted two. In April 2008 it read fifty, ten and ninety on three consecutive Fridays. In April 2025 it sat in cash for three weeks while SPY rose nine percent. The median run is six and a half weeks invested and two and a half weeks in cash. And the line never predicts. It counts where ten prices sit against their averages on a Friday afternoon. That is all it has ever done. Ken reads this line for peace of mind: one number, once a week, that says how much of the world's equity markets are above their trend. That is how this course offers it: not a forecast, a count. What you do with the count is the next chapter.",
+   "est_duration": 82,
+   "animation_brief": "every run since 2004 as a bar, invested up and cash down, the short ones a picket; the lags after highs and lows and the whipsaw counts in the right column",
+   "status": "facts from data/episodes.json and data/spy_weekly.json (rule SCQ-006 on this box's quotes, timeline mockup build 2026-11-21); descriptive, no forecast; 'Ken reads this line for peace of mind' is the owner's framing, spoken as such"
+  },
+  {
+   "id": "s40",
+   "type": "slide",
+   "include": true,
+   "label": "Chapter card: Using it on the weekend",
+   "slide_id": "ch4",
+   "duration": 5,
+   "layout": "chapter",
+   "text": {
+    "kicker": "Chapter 4",
+    "title": "Using it on the weekend",
+    "subtitle": "",
+    "body": "The line says how much of the long book is on. The day book trades either way, and the label on page one sets its posture."
+   }
+  },
+  {
+   "id": "s42",
+   "type": "cut",
+   "include": false,
+   "label": "Page one, live: 'bullish normal, so regular things can apply'; ETF2 fully invested",
+   "source": "c6i",
+   "in": 7403.0,
+   "out": 7502.0,
+   "status": "MAPPED-VERIFIED (re-read 2026-11-21): 'page one is the same on both' 2:03:23; 'the very first thing I look at is the nature of the market right now ... bullish normal' 2:03:41-2:03:58; 'regular things can apply; weakness over 2 and 10 days; risk Z is really worried' 2:03:58-2:04:13; 'favors short-term intraday, prime time for short side day trading' 2:04:13; 'strongest are the BMR symbols' 2:04:29; 'the ETF2 weekly system is fully invested; all 10 indexes of the world' 2:04:45; 'ripe to get punched in the face; not allowed to be surprised' 2:04:45-2:05:02. His real Jan-2026 page one is on screen at 7420 s: the owner may prefer the cut here. Lifted from weekend-edge-v2 m1 s17.",
+   "quote_anchor": "the very first thing I said okay bullish normal so regular things can apply"
+  },
+  {
+   "id": "s42a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: Page one, live: 'bullish normal, so regular things can apply'; ETF2 fully invested",
+   "source": "c6i",
+   "in": 7403.0,
+   "out": 7502.0,
+   "animation_brief": "stage: the page-one grid with bullish normal lit, the risk-Z needle worried, then the ten regional boxes all green: 'fully invested'; his words in the right column; the aside 'not allowed to be surprised'",
+   "status": "twin of s42: his audio, our picture, the owner's still top-right",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s43",
+   "type": "cut",
+   "include": false,
+   "label": "Page one, live: 'bullish volatile favors the short term'; exposure 10 % to 90 % in a week",
+   "source": "rgs",
+   "in": 6892.0,
+   "out": 7024.0,
+   "status": "MAPPED-VERIFIED (re-read 2026-11-21): 'bullish volatile favors the short term' 1:54:52; 'multi-time frame NDX recovery out of the war chaos' 1:55:08; 'theoretical exposure went from 10% to 90%' 1:55:08-1:55:24; 'hovering around their four-month moving average, dropped underneath, moved back above; a large change in exposure, you don't see that very often' 1:55:24; 'percent stretch within 2¼% of the 200-day, unusual' 1:55:40; '200-day steaming north, a market that ran out of gas' 1:55:57; 'ATR 1.54% is double the normal volatility; prior to COVID 0.75' 1:56:13; 'risk Z flashed risk on; ceasefire; 0.44' 1:56:31-1:56:48; out 1:57:04 before the mouse-wheel aside. Lifted from weekend-edge-v2 m1 s18.",
+   "quote_anchor": "the theoretical exposure went from 10% to 90%"
+  },
+  {
+   "id": "s43a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: Page one, live: 'bullish volatile favors the short term'; exposure 10 % to 90 % in a week",
+   "source": "rgs",
+   "in": 6892.0,
+   "out": 7024.0,
+   "animation_brief": "stage: ten regional boxes, one lit then nine as he says 10 to 90; each box's price dipping under and back over its four-month line; the right column takes stretch, ATR and risk Z as he reads them; defn: a large change in exposure, you don't see that very often",
+   "status": "twin of s43: his audio, our picture, the owner's still top-right",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s41",
+   "type": "cut",
+   "include": false,
+   "label": "20 / 40 / 40 by cell: any volatile or any quiet is day-trading weather; full swing money only in bull normal and bull quiet",
+   "source": "c6i",
+   "in": 6322.0,
+   "out": 6690.0,
+   "status": "MAPPED-VERIFIED (re-read 2026-11-21): student '20% core, 40% swing, 40% day' 1:45:38; 'swing at 40% if and only if every symbol has a justified position' 1:45:53; 'half employed, the other half into day trading as a hedge' 1:46:10; 'never below 10 in the core; swing as low as perfectly flat' 1:46:27-1:46:44; 'if I have money in the swing portfolio I am always day trading' 1:47:00; 'any volatile, any quiet; one sixth quiet, one sixth volatile' 1:47:18-1:47:33; 'bear quiet does not stay bear quiet very long' 1:47:33-1:47:48; 'bear volatile is my favorite time to trade' 1:48:04-1:48:37; 'in bear markets and any volatile market I am mostly a day trader plus 10% core' 1:48:37; 'fully committed to swing trades only in bullish normal and bullish quiet' 1:48:54-1:49:11; '20 core, 40 swing, 40 cash overnight' 1:49:27-1:50:00; 'piling on with turbo or hedging' 1:50:17; '60% exposed ... would defeat 100% buy and hold' 1:50:51-1:51:07 is HIS argument, glossed, nothing computed; 'lather, rinse, repeat' 1:51:23. Two voices (student + Ken), no speaker tags; the first beat is the student's. Lifted from weekend-edge-v2 m1 s16.",
+   "quote_anchor": "fully committed to swing trades is bullish normal and bullish quiet"
+  },
+  {
+   "id": "s41a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: 20 / 40 / 40 by cell: any volatile or any quiet is day-trading weather; full swing money only in bull normal and bull quiet",
+   "source": "c6i",
+   "in": 6322.0,
+   "out": 6690.0,
+   "animation_brief": "stage: the three books as bars (core 20, swing 40, day 40) at the left, the swing bar filling or emptying as he speaks; the page-one grid at the right with the day cells lit red then the two full-swing cells lit green; defn on his rule; the buy-and-hold claim glossed as his",
+   "status": "twin of s41: his audio, our picture, the owner's still top-right; '60 % exposed would defeat buy and hold' carried as his claim in the gloss",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s44",
+   "type": "cut",
+   "include": false,
+   "label": "Dollars at risk as a function of market classification: bullish normal, the expectancy curve, winter to spring",
+   "source": "c6i",
+   "in": 5872.0,
+   "out": 6205.0,
+   "status": "MAPPED-VERIFIED (re-read 2026-11-21): 'execution stop where the hypothesis is invalidated, full frog box for the standard size' 1:37:52; 'most likely to fail' 1:38:09; 'track your R multiple expectancy independent of position size' 1:38:44; 'varying the dollars at risk per trade as a function of market classification ... right now bullish normal, use that to guide your size' 1:39:00-1:39:17; 'the shape of your expectancy curve is the market classification for that system' 1:39:34-1:39:54; 'paper trade all your systems all the time; winter to spring, get bigger' 1:41:03; 'somewhere in the spring you go to full size' 1:41:21; student's three buckets 1:41:38-1:42:09 (glossed 'A student's answer.'); 'one share live, real data; 0.4 expectancy but sideways volatile' 1:42:24-1:42:59; 'who are you going to believe, me or your lyin' eyes' 1:43:14; out 1:43:25. Lifted from weekend-edge-v2 m5 s53.",
+   "quote_anchor": "right now we are in bullish normal conditions. You could use that to guide your size"
+  },
+  {
+   "id": "s44a",
+   "type": "overdub",
+   "include": true,
+   "label": "ALT animated: Dollars at risk as a function of market classification: bullish normal, the expectancy curve, winter to spring",
+   "source": "c6i",
+   "in": 5872.0,
+   "out": 6205.0,
+   "animation_brief": "stage: the rolling R-multiple expectancy curve across the left with winter, spring, summer, fall; the size bars growing from winter to spring; the page-one label at the right as the first guide; defn: the shape of your expectancy curve is the market classification for that system; the student's buckets as an aside",
+   "status": "twin of s44: his audio, our picture, the owner's still top-right; the student's three buckets glossed as a student's answer",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s45",
+   "type": "cut",
+   "include": false,
+   "label": "One percent of capital, reset weekly: let the system scale itself on its results",
+   "source": "ssf",
+   "in": 1315.0,
+   "out": 1783.0,
+   "status": "optional: the sizing discipline that goes with the weekend read. MAPPED-VERIFIED (re-read 2026-11-21): 'let the system scale itself on its results' 21:55; 'reset that weekly and 1% is the maximum' 22:26-22:43; 'reset weekly 1% of capital' 22:59; 'compare the win rates of the overnight trade to the intraday trade' 23:35; 'go back 300 trades ... the regular frog box is 30 days' 24:40-24:56; 'largest position size after my period of greatest return' 26:00; 'average plus one standard deviation' 26:32; 'here's 5,000 bucks, when you can double that give me my five back' 27:37-27:54; 'the weekly discipline of looking at the trade numbers' 28:44; 'look at the numbers carefully each weekend' 29:00; out 29:43. A coaching call (Eric); Ken's voice carries the rules. Lifted from weekend-edge-v2 m5 s52.",
+   "quote_anchor": "reset weekly, 1% of capital"
+  },
+  {
+   "id": "s45a",
+   "type": "overdub",
+   "include": false,
+   "label": "ALT animated: One percent of capital, reset weekly: let the system scale itself on its results",
+   "source": "ssf",
+   "in": 1315.0,
+   "out": 1783.0,
+   "animation_brief": "stage: a row of weekly chips each marked 1 %, the 300-day range histogram with the surprise bar, the ladies' club ladder of fives; defn: reset weekly, 1 % of capital is the maximum",
+   "status": "optional: the sizing discipline that goes with the weekend read; twin of s45, both OFF until the owner wants the sizing beat in this course",
+   "pip": true,
+   "transition": {
+    "type": "dip",
+    "dur": 0.6
+   }
+  },
+  {
+   "id": "s48",
+   "type": "explainer",
+   "include": true,
+   "label": "EXPLAINER: This week, and why it is for peace of mind (Ava, closing)",
+   "voice": "ava",
+   "vo_script": "Here is the week of November 14th, 2026, on the page itself. Nine of the ten regions read Cash. One, IEV, the European 350, reads Buy. Ten percent per Buy: the theoretical exposure goes from zero to ten percent. The label at the top of the block, as printed, is Bullish Normal. That is the whole weekend read. One line, built from ten prices against ten four-month averages, and it tells you two things. How much of the long-term book the evidence permits you to have on. And what posture the day book takes into Monday: with the line this low, the long book is mostly cash, and the day book trades what the day gives, in either direction. It is not a forecast. It does not know what next week brings. It is a count of what has already happened, done the same way every Friday for twenty years, so that your Monday starts from a number and not from a feeling. That is what it is for. It is provided for peace of mind.",
+   "est_duration": 90,
+   "animation_brief": "stage: the real 2026-11-14 picture (@etf2-report-2026-11-14) on screen, the regional rows ringed as she counts them, the exposure line ringed as she reads it, then the two uses in the right column (long book: how much is on; day book: posture) and the closing words 'provided for peace of mind'",
+   "status": "every number read off @etf2-report-2026-11-14 (nine Cash, IEV Buy, 0 % -> 10 %, 'Bullish Normal' as printed); the two uses and 'peace of mind' are the owner's framing (2026-11-21), spoken as framing; no forecast. 'twenty years' = the 2004-2026 weekly series edge-sysscq computed for data/episodes.json"
+  },
+  {
+   "id": "s60",
+   "type": "slide",
+   "include": true,
+   "label": "End card",
+   "slide_id": "end",
+   "duration": 10,
+   "layout": "end",
+   "text": {
+    "kicker": "",
+    "title": "One line. Once a week. Peace of mind.",
+    "subtitle": "owlgrouptrading.com",
+    "body": "Ten regions counted. The long book on or in cash. The day book's posture set. Read on Sunday, kept all week."
+   }
+  }
+ ]
+}
