@@ -1,9 +1,9 @@
 {
  "schema": "coursecraft-plan-v2",
  "course": "intraday-decision-tree-v2",
- "revision": 9,
+ "revision": 10,
  "revised": "2026-11-22",
- "status": "rev 2 (2026-11-17): the two-part rebuild from the corpus scan, Part 1 The Open. Owner: 'i'm good with the intraday course, build the cut room'. Every window from courses/intraday-decision-tree-v2/outline-2026-11-17.md; rev 1's chapters 1-4 (management, tomorrow's list) moved to Part 2 (intraday-decision-tree-2-v2). Style: Desk, every twin and explainer (anim-overdub, after the owner's cutroom pass). Outcome slots OFF until their studies run. Walk dates from what is said in the session are checked against the bars before VERIFIED. · 2026-11-22: toc_title set; the label is the editor's, the student reads toc_title (scripts/student_text.py)",
+ "status": "rev10 (2026-11-22): every twin on the stage under the lesson rules (anim_gen.py over the frozen Desk figures in anim_gen_ink.py): a head question and the 'in trading:' bridge on each, a focus ring per beat, the label floor; Ken's still in the corner of every twin (no source has a croppable tile); chapter cards and the end card carry the bridge; title card in the store's name. rev 2 (2026-11-17): the two-part rebuild from the corpus scan, Part 1 The Open. Owner: 'i'm good with the intraday course, build the cut room'. Every window from courses/intraday-decision-tree-v2/outline-2026-11-17.md; rev 1's chapters 1-4 (management, tomorrow's list) moved to Part 2 (intraday-decision-tree-2-v2). Style: Desk, every twin and explainer (anim-overdub, after the owner's cutroom pass). Outcome slots OFF until their studies run. Walk dates from what is said in the session are checked against the bars before VERIFIED. · 2026-11-22: toc_title set; the label is the editor's, the student reads toc_title (scripts/student_text.py)",
  "title": "The Intraday Decision Tree, Part 1: The Open (v2)",
  "topic_class": "mechanical (most decidable course in the catalog)",
  "store_sku": "intraday-decision-tree",
@@ -16,112 +16,176 @@
    "label": "cohort-2, patterns, symbols, OR3, gap stat (year not spoken; 2024 by hypothesis)",
    "file": "youtube-fOmhSUFWQ80-patterns-symbols-or3-gapstat.mp4",
    "proxy": "youtube-fOmhSUFWQ80-patterns-symbols-or3-gapstat.proxy.mp4",
-   "url": "https://www.youtube.com/watch?v=fOmhSUFWQ80"
+   "url": "https://www.youtube.com/watch?v=fOmhSUFWQ80",
+   "pip": {
+    "still": "_shared/ken-still.jpg",
+    "note": "no croppable camera tile in this source (he is a small gallery tile; rev 2 contact sheets): his still stands in (owner rule 2026-11-22: 'if the slide has no Ken video, substitute his image')"
+   }
   },
   {
    "id": "ish",
    "label": "rule of 4 explained (undated)",
    "file": "youtube-ishrX2_M38I-rule-of-4-explained.mp4",
    "proxy": "youtube-ishrX2_M38I-rule-of-4-explained.proxy.mp4",
-   "url": "https://www.youtube.com/watch?v=ishrX2_M38I"
+   "url": "https://www.youtube.com/watch?v=ishrX2_M38I",
+   "pip": {
+    "still": "_shared/ken-still.jpg",
+    "note": "no croppable camera tile in this source (he is a small gallery tile; rev 2 contact sheets): his still stands in (owner rule 2026-11-22: 'if the slide has no Ken video, substitute his image')"
+   }
   },
   {
    "id": "cjj",
    "label": "2023-01-05 STOD, bar-by-bar opening lesson (CLF)",
    "file": "youtube-cJj-EuSR2u4.mp4",
    "proxy": "youtube-cJj-EuSR2u4.proxy.mp4",
-   "url": "https://www.youtube.com/watch?v=cJj-EuSR2u4"
+   "url": "https://www.youtube.com/watch?v=cJj-EuSR2u4",
+   "pip": {
+    "still": "_shared/ken-still.jpg",
+    "note": "no croppable camera tile in this source (he is a small gallery tile; rev 2 contact sheets): his still stands in (owner rule 2026-11-22: 'if the slide has no Ken video, substitute his image')"
+   }
   },
   {
    "id": "w2k",
    "label": "SPY, SMA30, VWAP, BB (2024-12-03 from what is said)",
    "file": "youtube-W2KK_DvWwIc-spy-sma30-vwap-bb.mp4",
    "proxy": "youtube-W2KK_DvWwIc-spy-sma30-vwap-bb.proxy.mp4",
-   "url": "https://www.youtube.com/watch?v=W2KK_DvWwIc"
+   "url": "https://www.youtube.com/watch?v=W2KK_DvWwIc",
+   "pip": {
+    "still": "_shared/ken-still.jpg",
+    "note": "no croppable camera tile in this source (he is a small gallery tile; rev 2 contact sheets): his still stands in (owner rule 2026-11-22: 'if the slide has no Ken video, substitute his image')"
+   }
   },
   {
    "id": "d1s",
    "label": "2023-07-12 Foundations Q&A special",
    "file": "youtube-d_S1TCk2qnE-2023-07-12-foundations-q-a-special.mp4",
    "proxy": "youtube-d_S1TCk2qnE-2023-07-12-foundations-q-a-special.proxy.mp4",
-   "url": "https://www.youtube.com/watch?v=d_S1TCk2qnE"
+   "url": "https://www.youtube.com/watch?v=d_S1TCk2qnE",
+   "pip": {
+    "still": "_shared/ken-still.jpg",
+    "note": "no croppable camera tile in this source (he is a small gallery tile; rev 2 contact sheets): his still stands in (owner rule 2026-11-22: 'if the slide has no Ken video, substitute his image')"
+   }
   },
   {
    "id": "wlq",
    "label": "2024-05-23 cohort-2 OR3/gaps coaching",
    "file": "youtube-WlqQChOychs-or3-gaps-symbols.mp4",
    "proxy": "youtube-WlqQChOychs-or3-gaps-symbols.proxy.mp4",
-   "url": "https://www.youtube.com/watch?v=WlqQChOychs"
+   "url": "https://www.youtube.com/watch?v=WlqQChOychs",
+   "pip": {
+    "still": "_shared/ken-still.jpg",
+    "note": "no croppable camera tile in this source (he is a small gallery tile; rev 2 contact sheets): his still stands in (owner rule 2026-11-22: 'if the slide has no Ken video, substitute his image')"
+   }
   },
   {
    "id": "ydd",
    "label": "2022-11-16 STOD (EWZ, gap down, 3-min)",
    "file": "youtube-YDDwTf8tFrw-2022-11-16-stod.mp4",
    "proxy": "youtube-YDDwTf8tFrw-2022-11-16-stod.proxy.mp4",
-   "url": "https://www.youtube.com/watch?v=YDDwTf8tFrw"
+   "url": "https://www.youtube.com/watch?v=YDDwTf8tFrw",
+   "pip": {
+    "still": "_shared/ken-still.jpg",
+    "note": "no croppable camera tile in this source (he is a small gallery tile; rev 2 contact sheets): his still stands in (owner rule 2026-11-22: 'if the slide has no Ken video, substitute his image')"
+   }
   },
   {
    "id": "3wu",
    "label": "2023-01-03 STOD lesson, turbo trading in AAPL",
    "file": "youtube-3WUJTysI1LQ-2023-01-03-s-stod-lesson-on-turbo-trading-in-aapl.mp4",
    "proxy": "youtube-3WUJTysI1LQ-2023-01-03-s-stod-lesson-on-turbo-trading-in-aapl.proxy.mp4",
-   "url": "https://www.youtube.com/watch?v=3WUJTysI1LQ"
+   "url": "https://www.youtube.com/watch?v=3WUJTysI1LQ",
+   "pip": {
+    "still": "_shared/ken-still.jpg",
+    "note": "no croppable camera tile in this source (he is a small gallery tile; rev 2 contact sheets): his still stands in (owner rule 2026-11-22: 'if the slide has no Ken video, substitute his image')"
+   }
   },
   {
    "id": "vrw",
    "label": "check-in, visual box trading (DIA; 2024-11-04 from what is said)",
    "file": "youtube-vrwZeB7q04A-checkin-visual-box-trading.mp4",
    "proxy": "youtube-vrwZeB7q04A-checkin-visual-box-trading.proxy.mp4",
-   "url": "https://www.youtube.com/watch?v=vrwZeB7q04A"
+   "url": "https://www.youtube.com/watch?v=vrwZeB7q04A",
+   "pip": {
+    "still": "_shared/ken-still.jpg",
+    "note": "no croppable camera tile in this source (he is a small gallery tile; rev 2 contact sheets): his still stands in (owner rule 2026-11-22: 'if the slide has no Ken video, substitute his image')"
+   }
   },
   {
    "id": "roz",
    "label": "foundational lessons (RGTX day; 2025-10-13 from what is said, check against the bars)",
    "file": "youtube-ROZMqGhOOPU-foundational-lessons.mp4",
    "proxy": "youtube-ROZMqGhOOPU-foundational-lessons.proxy.mp4",
-   "url": "https://www.youtube.com/watch?v=ROZMqGhOOPU"
+   "url": "https://www.youtube.com/watch?v=ROZMqGhOOPU",
+   "pip": {
+    "still": "_shared/ken-still.jpg",
+    "note": "no croppable camera tile in this source (he is a small gallery tile; rev 2 contact sheets): his still stands in (owner rule 2026-11-22: 'if the slide has no Ken video, substitute his image')"
+   }
   },
   {
    "id": "x0w",
    "label": "2023-05-25 Foundations Q&A re Kata 2",
    "file": "youtube-X0WDFsTTfIM-2023-05-25-foundations-q-a-podcast-re-kata-2.mp4",
    "proxy": "youtube-X0WDFsTTfIM-2023-05-25-foundations-q-a-podcast-re-kata-2.proxy.mp4",
-   "url": "https://www.youtube.com/watch?v=X0WDFsTTfIM"
+   "url": "https://www.youtube.com/watch?v=X0WDFsTTfIM",
+   "pip": {
+    "still": "_shared/ken-still.jpg",
+    "note": "no croppable camera tile in this source (he is a small gallery tile; rev 2 contact sheets): his still stands in (owner rule 2026-11-22: 'if the slide has no Ken video, substitute his image')"
+   }
   },
   {
    "id": "erp",
    "label": "exits and psychology (EWW day; 2025-12-11 from what is said, check)",
    "file": "youtube-erpQRiX0V6E-exits-and-psychology.mp4",
    "proxy": "youtube-erpQRiX0V6E-exits-and-psychology.proxy.mp4",
-   "url": "https://www.youtube.com/watch?v=erpQRiX0V6E"
+   "url": "https://www.youtube.com/watch?v=erpQRiX0V6E",
+   "pip": {
+    "still": "_shared/ken-still.jpg",
+    "note": "no croppable camera tile in this source (he is a small gallery tile; rev 2 contact sheets): his still stands in (owner rule 2026-11-22: 'if the slide has no Ken video, substitute his image')"
+   }
   },
   {
    "id": "vrb",
    "label": "2022-11-27 special session on reading the daily report",
    "file": "youtube-vrbNrsRDijE-2022-11-27-special-session-on-reading-the-daily-report.mp4",
    "proxy": "youtube-vrbNrsRDijE-2022-11-27-special-session-on-reading-the-daily-report.proxy.mp4",
-   "url": "https://www.youtube.com/watch?v=vrbNrsRDijE"
+   "url": "https://www.youtube.com/watch?v=vrbNrsRDijE",
+   "pip": {
+    "still": "_shared/ken-still.jpg",
+    "note": "no croppable camera tile in this source (he is a small gallery tile; rev 2 contact sheets): his still stands in (owner rule 2026-11-22: 'if the slide has no Ken video, substitute his image')"
+   }
   },
   {
    "id": "hva",
    "label": "cohort-3 coaching call (Palantir day; 2025-08-20 from what is said, ticker to check)",
    "file": "youtube-hvajbAcWx3Y-cohort-3-significant.mp4",
    "proxy": "youtube-hvajbAcWx3Y-cohort-3-significant.proxy.mp4",
-   "url": "https://www.youtube.com/watch?v=hvajbAcWx3Y"
+   "url": "https://www.youtube.com/watch?v=hvajbAcWx3Y",
+   "pip": {
+    "still": "_shared/ken-still.jpg",
+    "note": "no croppable camera tile in this source (he is a small gallery tile; rev 2 contact sheets): his still stands in (owner rule 2026-11-22: 'if the slide has no Ken video, substitute his image')"
+   }
   },
   {
    "id": "kaa",
    "label": "daily report, 1-hr explanation (undated)",
    "file": "youtube-kAAZUmgDExA-daily-report-1-hr-explanation.mp4",
    "proxy": "youtube-kAAZUmgDExA-daily-report-1-hr-explanation.proxy.mp4",
-   "url": "https://www.youtube.com/watch?v=kAAZUmgDExA"
+   "url": "https://www.youtube.com/watch?v=kAAZUmgDExA",
+   "pip": {
+    "still": "_shared/ken-still.jpg",
+    "note": "no croppable camera tile in this source (he is a small gallery tile; rev 2 contact sheets): his still stands in (owner rule 2026-11-22: 'if the slide has no Ken video, substitute his image')"
+   }
   },
   {
    "id": "yib",
    "label": "cohort-1 market classification, MACD (2024-01-22 from what is said)",
    "file": "youtube-yIBxW5NdMD4-mkt-classification-macd.mp4",
    "proxy": "youtube-yIBxW5NdMD4-mkt-classification-macd.proxy.mp4",
-   "url": "https://www.youtube.com/watch?v=yIBxW5NdMD4"
+   "url": "https://www.youtube.com/watch?v=yIBxW5NdMD4",
+   "pip": {
+    "still": "_shared/ken-still.jpg",
+    "note": "no croppable camera tile in this source (he is a small gallery tile; rev 2 contact sheets): his still stands in (owner rule 2026-11-22: 'if the slide has no Ken video, substitute his image')"
+   }
   }
  ],
  "voices": [
@@ -152,9 +216,9 @@
    "include": true,
    "label": "ALT animated: Cold open: no gap is yesterday continued; a big gap is maximum chaos",
    "animation_brief": "Drawn from scratch (his chart is scribbled over end to end): yesterday's path, the close, the gap that shrinks to nothing and grows abnormal, the 3-to-5 minute window, the payoff bar, the O3 and R10 brackets, the chaos scribble. Desk style; generated by anim_gen.py (scripts/anim_kit.py, style=desk).",
-   "status": "twin of s01, ON since rev 5 (the owner's pick, cutroom save 2026-11-17 19:21 ET); pick per segment in the cutroom",
+   "status": "rev10: stage under the lesson rules; Ken's still in the corner; bridge 'in trading: the gap's size sets the payoff: no gap, no news' (his: 'the size of the gap tells you how much payoff'). twin of s01, ON since rev 5 (the owner's pick, cutroom save 2026-11-17 19:21 ET); pick per segment in the cutroom",
    "quote_anchor": "it's impossible to detect signals that persist inside maximum chaos",
-   "pip": false,
+   "pip": true,
    "toc_title": "No gap is yesterday continued; a big gap is maximum chaos"
   },
   {
@@ -167,14 +231,15 @@
    "layout": "title",
    "text": {
     "kicker": "",
-    "title": "The **Intraday Decision Tree**",
-    "subtitle": "",
-    "body": "Part 1: The Open\nwith Dr. Ken Long"
+    "title": "**Intraday Decision Tree**",
+    "subtitle": "Part 1: The Open",
+    "body": "with Dr. Ken Long"
    },
    "transition": {
     "type": "fade",
     "dur": 1.0
-   }
+   },
+   "status": "rev10: the store's name, Intraday Decision Tree · Part 1: The Open (was 'The Intraday Decision Tree' with the part in the body)."
   },
   {
    "id": "s03",
@@ -207,12 +272,13 @@
     "kicker": "Chapter 1",
     "title": "Why the open is a critical state",
     "subtitle": "",
-    "body": ""
+    "body": "The gap's size sets the day's payoff, and the RangeStat says how far the day can reasonably go."
    },
    "transition": {
     "type": "fade",
     "dur": 1.0
-   }
+   },
+   "status": "rev10: the body carries the chapter's bridge (lesson rule 8)."
   },
   {
    "id": "s05",
@@ -238,9 +304,9 @@
    "include": true,
    "label": "ALT animated: The gap stat: 200 days, one standard deviation, four cases",
    "animation_brief": "Drawn: the close tick and gap bar, the 200-day |gap| strip with the 1 SD band, the direction flip, the four-case grid, the size-to-size scatter. Desk style; generated by anim_gen.py (scripts/anim_kit.py, style=desk).",
-   "status": "twin of s05, ON since rev 5; rev 8 (owner 2026-11-18): starts at \"there's two kinds of gaps\" (78:14.9), skipping the close/open bar his red vertical line did not match; out unchanged",
+   "status": "rev10: stage under the lesson rules; Ken's still in the corner; bridge 'in trading: the gap's size predicts the follow-through, not its direction' (his, the kicker of the window). twin of s05, ON since rev 5; rev 8 (owner 2026-11-18): starts at \"there's two kinds of gaps\" (78:14.9), skipping the close/open bar his red vertical line did not match; out unchanged",
    "quote_anchor": "big gap equals big follow through but we don't know direction",
-   "pip": false
+   "pip": true
   },
   {
    "id": "s06",
@@ -266,9 +332,9 @@
    "include": true,
    "label": "ALT animated: FailStat, GainStat, range, FadeStat",
    "animation_brief": "Drawn: one day's path with open, high, low, close; FailStat, GainStat, range, fade, body and net brackets as he names them. Desk style; generated by anim_gen.py (scripts/anim_kit.py, style=desk).",
-   "status": "twin of s06, ON since rev 5 (the owner's pick, cutroom save 2026-11-17 19:21 ET); pick per segment in the cutroom",
+   "status": "rev10: stage under the lesson rules; Ken's still in the corner; bridge 'in trading: FailStat and GainStat: how far the day runs from the open' (his definitions). twin of s06, ON since rev 5 (the owner's pick, cutroom save 2026-11-17 19:21 ET); pick per segment in the cutroom",
    "quote_anchor": "the fade is from the high of the day to the close",
-   "pip": false
+   "pip": true
   },
   {
    "id": "s07",
@@ -294,9 +360,9 @@
    "include": true,
    "label": "ALT on his chart: RangeStat: the maximum reasonable intraday move",
    "animation_brief": "On a frozen frame of his CLF 3-minute chart (stills/cjj-rangestat-2336.jpg): the RangeStat column lit, the exuberance zone, the four-MMRB stack, the 15 % readout, the 30-day grid, the R10 tenths. Desk style; generated by anim_gen.py (scripts/anim_kit.py, style=desk).",
-   "status": "twin of s07, ON since rev 5 (the owner's pick, cutroom save 2026-11-17 19:21 ET); pick per segment in the cutroom",
+   "status": "rev10: stage under the lesson rules; Ken's still in the corner; bridge 'in trading: the RangeStat caps the move; the R10 is a tenth of it' (his: 'the R10 is simply one-tenth of the RangeStat'). twin of s07, ON since rev 5 (the owner's pick, cutroom save 2026-11-17 19:21 ET); pick per segment in the cutroom",
    "quote_anchor": "exceeded about 15 % of the time; the R10 is one tenth of it",
-   "pip": false
+   "pip": true
   },
   {
    "id": "s08",
@@ -326,12 +392,13 @@
     "kicker": "Chapter 2",
     "title": "The root of the tree",
     "subtitle": "",
-    "body": ""
+    "body": "A big gap: bracket the open at once. No gap: a tight R10 box, then wait for the pinch."
    },
    "transition": {
     "type": "fade",
     "dur": 1.0
-   }
+   },
+   "status": "rev10: the body carries the chapter's bridge (lesson rule 8)."
   },
   {
    "id": "s10",
@@ -357,9 +424,9 @@
    "include": false,
    "label": "ALT animated: The three-way root: big gap, no gap, or not trading the open",
    "animation_brief": "Drawn (SPY sits under his pen but he never references it): the big gap as a harsh winter with the O3 bracket's three outcomes, the no-gap open with an R10 either side, the hook and the risk box. Desk style; generated by anim_gen.py (scripts/anim_kit.py, style=desk).",
-   "status": "twin of s10, OFF in rev 3 (first offer; the cut stays ON); pick per segment in the cutroom",
+   "status": "rev10: stage under the lesson rules; Ken's still in the corner; bridge 'in trading: big gap: bracket the open; no gap: an R10 box either side' (his, the kicker of the window). twin of s10, OFF in rev 3 (first offer; the cut stays ON); pick per segment in the cutroom",
    "quote_anchor": "if there's no gap then I've got to either do an O3 or an O10",
-   "pip": false
+   "pip": true
   },
   {
    "id": "s11",
@@ -385,9 +452,9 @@
    "include": true,
    "label": "ALT animated: No gap is a still pond: a tight bracket from the bell",
    "animation_brief": "Drawn: the no-gap open with a tight risk box, the gap dial, the waves, the still pond and the pebble's rings, the pinch, the popcorn. Desk style; generated by anim_gen.py (scripts/anim_kit.py, style=desk).",
-   "status": "twin of s11, ON since rev 5 (the owner's pick, cutroom save 2026-11-17 19:21 ET); pick per segment in the cutroom",
+   "status": "rev10: stage under the lesson rules; Ken's still in the corner; bridge 'in trading: no gap: a tight risk box from the bell; wait for the pinch' (his: 'a very tight risk box', 'a Z3 pinch'). twin of s11, ON since rev 5 (the owner's pick, cutroom save 2026-11-17 19:21 ET); pick per segment in the cutroom",
    "quote_anchor": "the absence of a gap is as interesting to me as the size of a large gap",
-   "pip": false
+   "pip": true
   },
   {
    "id": "s12",
@@ -413,9 +480,9 @@
    "include": false,
    "label": "ALT animated: When to use the O3, when to use the R10 bracket",
    "animation_brief": "Drawn: the decision tree (big gap: R10 bracket at once; small gap: the O3), the train station, the chug, the gap up in play, the no-lose stop. Desk style; generated by anim_gen.py (scripts/anim_kit.py, style=desk).",
-   "status": "twin of s12, OFF since rev 6 (the owner's pick, cutroom save 2026-11-17 19:40 ET)",
+   "status": "rev10: stage under the lesson rules; Ken's still in the corner; bridge 'in trading: big gap: the R10 bracket at once; small gap: the O3' (his, the kicker of the window). twin of s12, OFF since rev 6 (the owner's pick, cutroom save 2026-11-17 19:40 ET)",
    "quote_anchor": "when to use the O3, when to use the R10 bracket... dinner for two as quickly as I can",
-   "pip": false
+   "pip": true
   },
   {
    "id": "s13",
@@ -445,12 +512,13 @@
     "kicker": "Chapter 3",
     "title": "Small or no gap: the O3",
     "subtitle": "",
-    "body": ""
+    "body": "Wait three minutes, trade the break of the OR3, and size the risk box by the R10."
    },
    "transition": {
     "type": "fade",
     "dur": 1.0
-   }
+   },
+   "status": "rev10: the body carries the chapter's bridge (lesson rule 8)."
   },
   {
    "id": "s15",
@@ -476,9 +544,9 @@
    "include": true,
    "label": "ALT on his chart: The O3 defined, on EWZ",
    "animation_brief": "On a frozen frame of his EWZ OR3 snippet (stills/ydd-or3-301.jpg): the open line, the gap, the OR3 box, long and short arrows, the bars that followed drawn from his words, the MMRB. Desk style; generated by anim_gen.py (scripts/anim_kit.py, style=desk).",
-   "status": "twin of s15, ON since rev 5 (the owner's pick, cutroom save 2026-11-17 19:21 ET); pick per segment in the cutroom",
+   "status": "rev10: stage under the lesson rules; Ken's still in the corner; bridge 'in trading: wait three minutes, then trade the break of the OR3' (his, the kicker of the window). twin of s15, ON since rev 5 (the owner's pick, cutroom save 2026-11-17 19:21 ET); pick per segment in the cutroom",
    "quote_anchor": "we just wait for the first three minutes to go by and then wait for the breakout",
-   "pip": false
+   "pip": true
   },
   {
    "id": "s16",
@@ -504,9 +572,9 @@
    "include": true,
    "label": "ALT animated: The OR3 as the mechanical reason to get in; the MMRB when the O3 is the wrong size",
    "animation_brief": "Drawn: the OR3 bar with its triggers, the OR5 ghost, the MMRB box that stretches and shrinks, low plus one MMRB, the re-anchor at the open. Desk style; generated by anim_gen.py (scripts/anim_kit.py, style=desk).",
-   "status": "twin of s16, ON since rev 5 (the owner's pick, cutroom save 2026-11-17 19:21 ET); pick per segment in the cutroom",
+   "status": "rev10: stage under the lesson rules; Ken's still in the corner; bridge 'in trading: the OR3 is the trigger; the MMRB is the unit of risk' (his: 'the unit of risk is the MMRB'). twin of s16, ON since rev 5 (the owner's pick, cutroom save 2026-11-17 19:21 ET); pick per segment in the cutroom",
    "quote_anchor": "the opening range is simply a way to have a mechanical reason to get in",
-   "pip": false
+   "pip": true
   },
   {
    "id": "s17",
@@ -532,9 +600,9 @@
    "include": true,
    "label": "ALT animated: O3 size against the R10: massive, about equal, smaller",
    "animation_brief": "Drawn: three opening bars, the O3 box and R10 box, the three cases (massive, equal, small), close the gap, the absolute-value bars. Desk style; generated by anim_gen.py (scripts/anim_kit.py, style=desk).",
-   "status": "twin of s17, ON since rev 5 (the owner's pick, cutroom save 2026-11-17 19:21 ET); pick per segment in the cutroom",
+   "status": "rev10: stage under the lesson rules; Ken's still in the corner; bridge 'in trading: size the risk box by the R10, whatever the O3 looks like' (his: 'the size of the risk box I use is the R10'). twin of s17, ON since rev 5 (the owner's pick, cutroom save 2026-11-17 19:21 ET); pick per segment in the cutroom",
    "quote_anchor": "hang on to your hats... a normal gap and go... a full R10 off the low of the day",
-   "pip": false
+   "pip": true
   },
   {
    "id": "s18",
@@ -560,9 +628,9 @@
    "include": false,
    "label": "ALT animated: WALK on his chart: SPY 2023-01-03, the OR3 sniper bar by bar",
    "animation_brief": "Drawn (his chart is a sliver at the canvas edge): the SPY OR3 walk bar by bar from his words, the MMRB, 1R and 2R, the banked snack, the RL10 cross, the short, the 97-cent readout. Desk style; generated by anim_gen.py (scripts/anim_kit.py, style=desk).",
-   "status": "twin of s18, OFF in rev 3 (first offer; the cut stays ON); pick per segment in the cutroom",
+   "status": "rev10: stage under the lesson rules; Ken's still in the corner; bridge 'in trading: the minimum manageable risk box is the R10: about a dollar' (his, the kicker of the window). twin of s18, OFF in rev 3 (first offer; the cut stays ON); pick per segment in the cutroom",
    "quote_anchor": "the R10, which is one tenth of a range stat, which is the maximum reasonable intraday move",
-   "pip": false
+   "pip": true
   },
   {
    "id": "s19",
@@ -576,12 +644,13 @@
     "kicker": "Chapter 4",
     "title": "Big gap: the bracket",
     "subtitle": "",
-    "body": ""
+    "body": "A box on the open with the stop at the open; wrong two or three times, take a ten-minute break."
    },
    "transition": {
     "type": "fade",
     "dur": 1.0
-   }
+   },
+   "status": "rev10: the body carries the chapter's bridge (lesson rule 8)."
   },
   {
    "id": "s20",
@@ -607,9 +676,9 @@
    "include": true,
    "label": "ALT animated: The big-gap procedure: futures ten minutes before, bracket with an R10 or R5, stop at the open",
    "animation_brief": "Drawn: the gap with direction unknown, the 1 SD band, the five-minute clock struck through, the futures check, the box on the open with long and short, three wrongs, the ten-minute break. Desk style; generated by anim_gen.py (scripts/anim_kit.py, style=desk).",
-   "status": "twin of s20, ON since rev 5 (the owner's pick, cutroom save 2026-11-17 19:21 ET); pick per segment in the cutroom",
+   "status": "rev10: stage under the lesson rules; Ken's still in the corner; bridge 'in trading: box on the open, stop at the open; wrong twice, take a break' (his procedure). twin of s20, ON since rev 5 (the owner's pick, cutroom save 2026-11-17 19:21 ET); pick per segment in the cutroom",
    "quote_anchor": "willing to be wrong two to three times in a row in the first 30 minutes... start picking up the trade at 1 hour in",
-   "pip": false
+   "pip": true
   },
   {
    "id": "s21",
@@ -635,9 +704,9 @@
    "include": true,
    "label": "ALT animated: The asymmetric bracket: an R10 toward the fill, an R5 with the gap",
    "animation_brief": "Drawn: close, open, the R10 toward the gap with three counts, the R5 away with four counts to the RangeStat, the went-nuts sketch, the orderly fill, the second position. Desk style; generated by anim_gen.py (scripts/anim_kit.py, style=desk).",
-   "status": "twin of s21, ON since rev 5 (the owner's pick, cutroom save 2026-11-17 19:21 ET); pick per segment in the cutroom",
+   "status": "rev10: stage under the lesson rules; Ken's still in the corner; bridge 'in trading: R10 toward the gap fill, R5 away; size off the R10 both ways' (his). twin of s21, ON since rev 5 (the owner's pick, cutroom save 2026-11-17 19:21 ET); pick per segment in the cutroom",
    "quote_anchor": "I'm going to put an R10 box in the direction of closing the gap",
-   "pip": false
+   "pip": true
   },
   {
    "id": "s22",
@@ -663,9 +732,9 @@
    "include": false,
    "label": "ALT animated: A full R5 continuation doubles the size: the runaway freight train",
    "animation_brief": "Drawn: the gap down and thunderous selloff, the full R5 box, four counts to the RangeStat, the double-size box, two pieces of evidence, the runaway freight train. A student speaks at about 1806-1845. Desk style; generated by anim_gen.py (scripts/anim_kit.py, style=desk).",
-   "status": "twin of s22, OFF in rev 3 (first offer; the cut stays ON); pick per segment in the cutroom",
+   "status": "rev10: stage under the lesson rules; Ken's still in the corner; bridge 'in trading: two pieces of evidence: the big gap and a full R5 move' (his). twin of s22, OFF in rev 3 (first offer; the cut stays ON); pick per segment in the cutroom",
    "quote_anchor": "it now has to move twice as far from the open for me to get short",
-   "pip": false
+   "pip": true
   },
   {
    "id": "s23",
@@ -691,9 +760,9 @@
    "include": false,
    "label": "ALT animated: Visual box trading: an R10 box on both sides of the open, first breakout, stop at the open",
    "animation_brief": "Drawn: the open with an R10 box, the wiggle, the Z3 lines, the R10 either side, the stop at the open, free money, the six-rung ladder, the average-range exit. Desk style; generated by anim_gen.py (scripts/anim_kit.py, style=desk).",
-   "status": "twin of s23, OFF in rev 3 (first offer; the cut stays ON); pick per segment in the cutroom",
+   "status": "rev10: stage under the lesson rules; Ken's still in the corner; bridge 'in trading: an R10 box either side of the open; the first breakout wins' (his). twin of s23, OFF in rev 3 (first offer; the cut stays ON); pick per segment in the cutroom",
    "quote_anchor": "put my stop at the open",
-   "pip": false
+   "pip": true
   },
   {
    "id": "s24",
@@ -719,9 +788,9 @@
    "include": true,
    "label": "ALT on his chart: WALK on his chart: RGTX 2025-10-13, a 10 % gap, the R5 bracket, buying yesterday's fair value",
    "animation_brief": "On frozen frames of his RGTX daily and 10-minute charts (stills/rgtx-daily-3667.jpg, rgtx-10m-3801.jpg; axis fit by chart_still, worst residual 0.34 px): 300, 330, the R5 bracket, 380, 405, 275; then 389 and 435 on the 10-minute, 347 and 350 in the column (below that frame). A member asks for the 10-minute at 3791. Desk style; generated by anim_gen.py (scripts/anim_kit.py, style=desk).",
-   "status": "twin of s24, ON since rev 5 (the owner's pick, cutroom save 2026-11-17 19:21 ET); pick per segment in the cutroom",
+   "status": "rev10: stage under the lesson rules; Ken's still in the corner; bridge 'in trading: R5 bracket the gap; the RangeStat says where it is abnormal' (his: the R5 bracket, 'before it's abnormal'). twin of s24, ON since rev 5 (the owner's pick, cutroom save 2026-11-17 19:21 ET); pick per segment in the cutroom",
    "quote_anchor": "I'm buying the fair value from yesterday... hold one seventh of my position overnight",
-   "pip": false
+   "pip": true
   },
   {
    "id": "s25",
@@ -749,12 +818,13 @@
     "kicker": "Chapter 5",
     "title": "Gap fails, gap holds, the morning hook",
     "subtitle": "",
-    "body": ""
+    "body": "When the gap fails, the fill is the trade; when it holds, Kata 2; after a harsh sell-off, the morning hook."
    },
    "transition": {
     "type": "fade",
     "dur": 1.0
-   }
+   },
+   "status": "rev10: the body carries the chapter's bridge (lesson rule 8)."
   },
   {
    "id": "s27",
@@ -780,9 +850,9 @@
    "include": true,
    "label": "ALT animated: Gap fails: frame the close. Gap holds: fill into the candle, Kata 2",
    "animation_brief": "Drawn: the gap up failing toward yesterday's close, the gap framed as the opportunity, the MMRB two-to-one, the Kata 2 resume, the gap filled into a candle, the emerging dragon, three R10s as a frog box, FQN three. Desk style; generated by anim_gen.py (scripts/anim_kit.py, style=desk).",
-   "status": "twin of s27, ON since rev 5 (the owner's pick, cutroom save 2026-11-17 19:21 ET); pick per segment in the cutroom",
+   "status": "rev10: stage under the lesson rules; Ken's still in the corner; bridge 'in trading: frame the gap: the fill is the trade; if it holds, Kata 2' (his: 'frame the gap as the opportunity'). twin of s27, ON since rev 5 (the owner's pick, cutroom save 2026-11-17 19:21 ET); pick per segment in the cutroom",
    "quote_anchor": "well the bigger the gap, if that thing starts failing...",
-   "pip": false
+   "pip": true
   },
   {
    "id": "s28",
@@ -808,9 +878,9 @@
    "include": true,
    "label": "ALT animated: A news gap that fails to a new low: short back to yesterday's VWAP",
    "animation_brief": "Drawn: yesterday's close and VWAP, the news gap, four bars of no buying, the new low, no support, the risk box at the RL10 high, the new-high invalidation, R5 risk and 3R to support. Desk style; generated by anim_gen.py (scripts/anim_kit.py, style=desk).",
-   "status": "twin of s28, ON since rev 5 (the owner's pick, cutroom save 2026-11-17 19:21 ET); pick per segment in the cutroom",
+   "status": "rev10: stage under the lesson rules; Ken's still in the corner; bridge 'in trading: short the failed gap; the target is yesterday's VWAP' (his: 'back to yesterday's VWAP'). twin of s28, ON since rev 5 (the owner's pick, cutroom save 2026-11-17 19:21 ET); pick per segment in the cutroom",
    "quote_anchor": "the reversion to the mean would be just back to yesterday's VWAP",
-   "pip": false
+   "pip": true
   },
   {
    "id": "s29",
@@ -836,9 +906,9 @@
    "include": true,
    "label": "ALT animated: Big gap down, harsh selloff: the morning hook",
    "animation_brief": "Drawn: the close, the gap down, the harsh selloff into the doji (bar 1), bar 2's higher low, the entry above bar 2's high, bar 3 long, the risk box. Desk style; generated by anim_gen.py (scripts/anim_kit.py, style=desk).",
-   "status": "twin of s29, ON since rev 5 (the owner's pick, cutroom save 2026-11-17 19:21 ET); pick per segment in the cutroom",
+   "status": "rev10: stage under the lesson rules; Ken's still in the corner; bridge 'in trading: long above bar two's high on bar three; the risk box under it' (his). twin of s29, ON since rev 5 (the owner's pick, cutroom save 2026-11-17 19:21 ET); pick per segment in the cutroom",
    "quote_anchor": "I call that one the morning hook... the bigger the gap and the harsher this sell off the more I like it",
-   "pip": false
+   "pip": true
   },
   {
    "id": "s30",
@@ -864,9 +934,9 @@
    "include": true,
    "label": "ALT on his chart: My favorite pattern: gap down, FailStat, reversal; the GainStat take-profit",
    "animation_brief": "On frozen frames of his daily-report pages (stills/failstat-page-1192.jpg, gainstat-page-1275.jpg): the Dow 30 and ETF braces, the Fail Avg column, support at 1.0 failstat, the hook and the collapsing dragon; then the Gain Avg column and the 1.0 gainstat circle. Desk style; generated by anim_gen.py (scripts/anim_kit.py, style=desk).",
-   "status": "twin of s30, ON since rev 5 (the owner's pick, cutroom save 2026-11-17 19:21 ET); pick per segment in the cutroom",
+   "status": "rev10: stage under the lesson rules; Ken's still in the corner; bridge 'in trading: sell-off to an average fail, then the reversal long' (his: 'my favorite pattern'). twin of s30, ON since rev 5 (the owner's pick, cutroom save 2026-11-17 19:21 ET); pick per segment in the cutroom",
    "quote_anchor": "gap down, fail stat, reversal... if it fails through the low of the day, collapsing dragon",
-   "pip": false
+   "pip": true
   },
   {
    "id": "s31",
@@ -892,9 +962,9 @@
    "include": true,
    "label": "ALT animated: The learner rule: do not bracket the open; wait for an unambiguous harsh winter",
    "animation_brief": "Drawn: the bracket struck out, the harsh winter of 1.5 frog boxes, MACD-H under the red river, the SSC risk box, bounce-and-go or the collapsing dragon, saved once, decaying or expanding boxes. Desk style; generated by anim_gen.py (scripts/anim_kit.py, style=desk).",
-   "status": "twin of s31, ON since rev 6 (the owner's pick, cutroom save 2026-11-17 19:40 ET)",
+   "status": "rev10: stage under the lesson rules; Ken's still in the corner; bridge 'in trading: skip the open's bracket; wait for an unambiguous harsh winter' (his, the kicker of the window). twin of s31, ON since rev 6 (the owner's pick, cutroom save 2026-11-17 19:40 ET)",
    "quote_anchor": "the best trade of all, it happens fast, furious, before lunch",
-   "pip": false
+   "pip": true
   },
   {
    "id": "s32",
@@ -920,9 +990,9 @@
    "include": false,
    "label": "ALT on his chart: WALK on his chart: Palantir 2025-08-20, the gap-down fail and the SSC",
    "animation_brief": "On frozen frames of his PTIR (2x PLTR, not PLTR) 10-minute and 3-minute charts (stills/ptir-10m-5990.jpg, ptir-3m-6022.jpg; axis fit worst 0.38 px): three days down, the gap, the instant fail, the SSC with 25 and 19.50 by his axis, the 1-2-3, the cash and re-entry, the spine, the struck reversal, the PSAR flip, the 50-cent box. Members at 6053-6075 and 6104-6111. Desk style; generated by anim_gen.py (scripts/anim_kit.py, style=desk).",
-   "status": "twin of s32, OFF in rev 3 (first offer; the cut stays ON); pick per segment in the cutroom",
+   "status": "rev10: stage under the lesson rules; Ken's still in the corner; bridge 'in trading: the 1-2-3 short off the SSC; cash it, re-enter on the dragon' (his). twin of s32, OFF in rev 3 (first offer; the cut stays ON); pick per segment in the cutroom",
    "quote_anchor": "big gap down, leg one down, fail, leg two down, fail, leg three down, winter turns to spring, PSAR flips",
-   "pip": false
+   "pip": true
   },
   {
    "id": "s33",
@@ -936,12 +1006,13 @@
     "kicker": "Chapter 6",
     "title": "Opening inside yesterday",
     "subtitle": "",
-    "body": ""
+    "body": "Inside yesterday's range, trade only with 2R back to the edge; otherwise stalk the breakout."
    },
    "transition": {
     "type": "fade",
     "dur": 1.0
-   }
+   },
+   "status": "rev10: the body carries the chapter's bridge (lesson rule 8)."
   },
   {
    "id": "s34",
@@ -967,9 +1038,9 @@
    "include": true,
    "label": "ALT on his chart: Yesterday's range is the yellow zone; green and red zones; the 2R battle drill",
    "animation_brief": "On a frozen frame of his SPY 30-minute sniper page (stills/spy-30m-sniper-620.jpg): yesterday's high and low, the yellow zone, new buyers above, the peak of the dragon, the 10-day, 5-day and 1-day boxes, 0 to 100, red and yellow rules, the 2R battle drill. Desk style; generated by anim_gen.py (scripts/anim_kit.py, style=desk).",
-   "status": "twin of s34, ON since rev 6 (the owner's pick, cutroom save 2026-11-17 19:40 ET)",
+   "status": "rev10: stage under the lesson rules; Ken's still in the corner; bridge 'in trading: inside the yellow zone, trade only with 1R risk to 2R reward' (his, the kicker of the window). twin of s34, ON since rev 6 (the owner's pick, cutroom save 2026-11-17 19:40 ET)",
    "quote_anchor": "in the yellow zone I can only trade if I can see an intraday one unit of risk and two units of reward",
-   "pip": false
+   "pip": true
   },
   {
    "id": "s35",
@@ -995,9 +1066,9 @@
    "include": true,
    "label": "ALT animated: Open inside yesterday's bar: the yellow zone with 2:1 to yesterday's high, else stalk the breakout",
    "animation_brief": "Drawn: yesterday's bar with its high and low, the four target sources, the 5-cent entry, the open inside and the move up, no new low, the R10 or R5 box, 2R to the high, stalking. Desk style; generated by anim_gen.py (scripts/anim_kit.py, style=desk).",
-   "status": "twin of s35, ON since rev 6 (the owner's pick, cutroom save 2026-11-17 19:40 ET)",
+   "status": "rev10: stage under the lesson rules; Ken's still in the corner; bridge 'in trading: only with 2R back to yesterday's high; otherwise stalk' (his, the kicker of the window). twin of s35, ON since rev 6 (the owner's pick, cutroom save 2026-11-17 19:40 ET)",
    "quote_anchor": "if the open is inside yesterday's bar with no new low...",
-   "pip": false
+   "pip": true
   },
   {
    "id": "s36",
@@ -1023,9 +1094,9 @@
    "include": true,
    "label": "ALT on his chart: Inside yesterday's last 30-minute bar, or gapped outside it",
    "animation_brief": "On frozen frames of his RGTI and UUUU 10-minute charts (stills/rgti-10m-4828.jpg, uuuu-10m-4882.jpg): the last 30-minute bar, the open inside, the 10 % gap bracket, yesterday's VWAP; then the uranium gap up, the R5 bracket, four R down, back above VWAP, the 3-minute chop. Desk style; generated by anim_gen.py (scripts/anim_kit.py, style=desk).",
-   "status": "twin of s36, ON since rev 6 (the owner's pick, cutroom save 2026-11-17 19:40 ET)",
+   "status": "rev10: stage under the lesson rules; Ken's still in the corner; bridge 'in trading: opens inside: trade its breakout; gaps outside: bracket it' (his, the kicker of the window). twin of s36, ON since rev 6 (the owner's pick, cutroom save 2026-11-17 19:40 ET)",
    "quote_anchor": "if it gaps outside of that thing... I've got to bracket that",
-   "pip": false
+   "pip": true
   },
   {
    "id": "s37",
@@ -1051,9 +1122,9 @@
    "include": true,
    "label": "ALT animated: A narrow yesterday, under 0.6 RangeStat: no trade inside it until it breaks out",
    "animation_brief": "Drawn: the narrow yesterday, not allowed inside, the breakout, resistance and support, the RangeStat bar at 0.6, R5 as two R10s, three fifths, one R5 off the low, two units to the high. A member interjects at 1238-1265. Desk style; generated by anim_gen.py (scripts/anim_kit.py, style=desk).",
-   "status": "twin of s37, ON since rev 6 (the owner's pick, cutroom save 2026-11-17 19:40 ET)",
+   "status": "rev10: stage under the lesson rules; Ken's still in the corner; bridge 'in trading: a narrow yesterday: no trade inside it until it breaks out' (his: 'not allowed to trade it until it breaks out'). twin of s37, ON since rev 6 (the owner's pick, cutroom save 2026-11-17 19:40 ET)",
    "quote_anchor": "I'm not allowed to trade it until it breaks out",
-   "pip": false
+   "pip": true
   },
   {
    "id": "s38",
@@ -1067,12 +1138,13 @@
     "kicker": "Chapter 7",
     "title": "The first hour",
     "subtitle": "",
-    "body": ""
+    "body": "90 % of the time the day's high or low is set in the first hour: wait it out, then trade off it."
    },
    "transition": {
     "type": "fade",
     "dur": 1.0
-   }
+   },
+   "status": "rev10: the body carries the chapter's bridge (lesson rule 8)."
   },
   {
    "id": "s39",
@@ -1098,9 +1170,9 @@
    "include": true,
    "label": "ALT on his chart: 90 % of the time the day's high or low is set in the first hour; the slow frog",
    "animation_brief": "On a frozen frame of his AI 30-minute chart (stills/ai-30m-5045.jpg): the first hour, the 90 % readout, the 60-minute clock, the low and a frog box off it, two to three left, not coming back, the trailing stop. Desk style; generated by anim_gen.py (scripts/anim_kit.py, style=desk).",
-   "status": "twin of s39, ON since rev 6 (the owner's pick, cutroom save 2026-11-17 19:40 ET)",
+   "status": "rev10: stage under the lesson rules; Ken's still in the corner; bridge 'in trading: wait an hour; trade off the low with a frog-box trailing stop' (his). twin of s39, ON since rev 6 (the owner's pick, cutroom save 2026-11-17 19:40 ET)",
    "quote_anchor": "90 % of the time the high or low of the day is set in the first hour",
-   "pip": false
+   "pip": true
   },
   {
    "id": "s40",
@@ -1126,9 +1198,9 @@
    "include": true,
    "label": "ALT animated: OR60, and two days in five you regret waiting a full hour",
    "animation_brief": "Drawn: the day's path with the first hour, the look back, the low and the RangeStat stack, 40 % within 10 %, the giant white candle with its 10 % bands, two days in five, three in five. Desk style; generated by anim_gen.py (scripts/anim_kit.py, style=desk).",
-   "status": "twin of s40, ON since rev 6 (the owner's pick, cutroom save 2026-11-17 19:40 ET)",
+   "status": "rev10: stage under the lesson rules; Ken's still in the corner; bridge 'in trading: the OR60: two days in five you regret waiting, three you don't' (his, the kicker of the window). twin of s40, ON since rev 6 (the owner's pick, cutroom save 2026-11-17 19:40 ET)",
    "quote_anchor": "two days out of five you are regretting the fact that you waited a full hour",
-   "pip": false
+   "pip": true
   },
   {
    "id": "s41",
@@ -1154,9 +1226,9 @@
    "include": true,
    "label": "ALT animated: The open within 10 % of the high or low 40 % of the time; one day in six is a RangeStat day",
    "animation_brief": "Drawn: the first-hour bar with its 90 % bands, the open within 10 %, the bracket that catches the move two days a week, one in six, size not direction, the knife, the sharks. Desk style; generated by anim_gen.py (scripts/anim_kit.py, style=desk).",
-   "status": "twin of s41, ON since rev 6 (the owner's pick, cutroom save 2026-11-17 19:40 ET)",
+   "status": "rev10: stage under the lesson rules; Ken's still in the corner; bridge 'in trading: a gap is noise the sharks feed on: bracket the first hour' (half his: the sharks and the bracket are his; 'noise they feed on' is our reading). twin of s41, ON since rev 6 (the owner's pick, cutroom save 2026-11-17 19:40 ET)",
    "quote_anchor": "that's the day you want to sharpen your knife",
-   "pip": false
+   "pip": true
   },
   {
    "id": "s42",
@@ -1182,9 +1254,9 @@
    "include": true,
    "label": "ALT animated: Four cases of the gap; size predicts the follow-through, not the direction",
    "animation_brief": "Drawn: the four gap cases as cells, direction does not predict, the statistic flipping week to week, size predicts size, regular day versus RangeStat day, the open as high and low, the R10 bracket. Desk style; generated by anim_gen.py (scripts/anim_kit.py, style=desk).",
-   "status": "twin of s42, ON since rev 6 (the owner's pick, cutroom save 2026-11-17 19:40 ET)",
+   "status": "rev10: stage under the lesson rules; Ken's still in the corner; bridge 'in trading: trade the gap's size, not its direction: bracket the open' (his, the kicker of the window). twin of s42, ON since rev 6 (the owner's pick, cutroom save 2026-11-17 19:40 ET)",
    "quote_anchor": "the size of the gap predicts the size of the follow through but just not the direction",
-   "pip": false
+   "pip": true
   },
   {
    "id": "s43",
@@ -1217,12 +1289,13 @@
     "kicker": "",
     "title": "One idea on the craft most mornings",
     "subtitle": "owlgrouptrading.com",
-    "body": "The Tue to Fri daily note from Owl Group Trading.\nPart 2, After the Open, is the companion to this one."
+    "body": "Every picture was a trade: the gap, the O3, the bracket, the hook, the first hour.\nThe Tue to Fri daily note from Owl Group Trading.\nIntraday Decision Tree, Part 2: After the Open, is the companion to this one."
    },
    "transition": {
     "type": "fade",
     "dur": 1.0
-   }
+   },
+   "status": "rev10: first line closes on the bridge (lesson rule 8); Part 2 named by its store name."
   }
  ],
  "intake": {
