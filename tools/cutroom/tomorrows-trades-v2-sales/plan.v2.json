@@ -1,0 +1,240 @@
+{
+  "schema": "coursecraft-plan-v2",
+  "course": "tomorrows-trades-v2-sales",
+  "cutroom": "tomorrows-trades-v2-sales",
+  "revision": 1,
+  "revised": "2026-11-22",
+  "status": "DRAFT rev1: a sales clip of tomorrows-trades-v2, ~120 s; the owner edits it in the cutroom · built on the owner's go without a cutroom pass (ogt-coursecraft#6, 'just do it')",
+  "title": "Where Tomorrow's Trades Come From: sales clip",
+  "topic_class": "sales clip",
+  "store_sku": "tomorrows-trades",
+  "replaces": null,
+  "notes": "Transitions by the Module 1 rule (cutroom-24): crossfade 0.6 s out of the title, dip to black 0.6 s between bites, crossfade 1.0 s into the end card.\n\nBites end on a full sentence (word-stamped VTT read 2026-11-22). Each twin starts the parent's stage scene at the bite's offset, so the captions stay on his words. The source has no camera tile: his still in the corner (owner rule 2026-11-22).",
+  "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/tomorrows-trades-v2/",
+  "sources": [
+    {
+      "id": "mkt",
+      "label": "2024-01-22 small group coaching W1 (mkt-classification-macd, 61 min — sole source)",
+      "file": "youtube-yIBxW5NdMD4-mkt-classification-macd.mp4",
+      "proxy": "youtube-yIBxW5NdMD4-mkt-classification-macd.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=yIBxW5NdMD4",
+      "pip": {
+        "still": "_shared/ken-still.jpg",
+        "note": "no camera tile in this source: his still stands in (owner rule 2026-11-22: 'if the slide has no Ken video, substitute his image')"
+      }
+    }
+  ],
+  "voices": [
+    {
+      "id": "ava",
+      "label": "Ava (US, female, polished)",
+      "sample": "vo-ava.mp3"
+    },
+    {
+      "id": "andrew",
+      "label": "Andrew (US, male, conversational)",
+      "sample": "vo-andrew.mp3"
+    }
+  ],
+  "segments": [
+    {
+      "id": "s00",
+      "type": "slide",
+      "include": true,
+      "label": "Title card",
+      "slide_id": "title",
+      "duration": 4,
+      "layout": "title",
+      "text": {
+        "kicker": "",
+        "title": "Where **Tomorrow's Trades** Come From",
+        "subtitle": "",
+        "body": "Four sources, framed the night before\nwith Dr. Ken Long"
+      }
+    },
+    {
+      "id": "s01",
+      "type": "cut",
+      "include": false,
+      "label": "COLD OPEN: the best day ever (all four sources in one symbol)",
+      "source": "mkt",
+      "in": 2568.0,
+      "out": 2586.4,
+      "why": "the hook: the best day ever, a usual suspect that is an open trade, fired a pattern and gapped",
+      "status": "bite of tomorrows-trades-v2 s01 (+9.0..+27.4 s); the twin s01a carries it"
+    },
+    {
+      "id": "s01a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: COLD OPEN: the best day ever (all four sources in one symbol)",
+      "source": "mkt",
+      "in": 2568.0,
+      "out": 2586.4,
+      "why": "the hook: the best day ever, a usual suspect that is an open trade, fired a pattern and gapped",
+      "anim_of": {
+        "course": "tomorrows-trades-v2",
+        "scene": "s01"
+      },
+      "animation_brief": "the tomorrows-trades-v2 s01 scene, started at its +9.0 s",
+      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
+      "pip": true,
+      "transition": {
+        "type": "fade",
+        "dur": 0.6
+      },
+      "toc_title": "The best day ever"
+    },
+    {
+      "id": "s02",
+      "type": "cut",
+      "include": false,
+      "label": "The close: gratitude, forgiveness, three sources; source 1, the open trades (two kinds)",
+      "source": "mkt",
+      "in": 61.4,
+      "out": 77.0,
+      "why": "at the close: gratitude, forgiveness, then three sources of new symbols for the day ahead",
+      "status": "bite of tomorrows-trades-v2 s03 (+47.8..+63.4 s); the twin s02a carries it"
+    },
+    {
+      "id": "s02a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: The close: gratitude, forgiveness, three sources; source 1, the open trades (two kinds)",
+      "source": "mkt",
+      "in": 61.4,
+      "out": 77.0,
+      "why": "at the close: gratitude, forgiveness, then three sources of new symbols for the day ahead",
+      "anim_of": {
+        "course": "tomorrows-trades-v2",
+        "scene": "s03"
+      },
+      "animation_brief": "the tomorrows-trades-v2 s03 scene, started at its +47.8 s",
+      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
+      "pip": true,
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      },
+      "toc_title": "At the close: gratitude, forgiveness, then three sources"
+    },
+    {
+      "id": "s03",
+      "type": "cut",
+      "include": false,
+      "label": "The universal entry: opens inside yesterday's body, no new low, through yesterday's high; the research weekend",
+      "source": "mkt",
+      "in": 563.0,
+      "out": 594.2,
+      "why": "the universal entry: opens inside yesterday's body, no new low, through yesterday's high, one R",
+      "status": "bite of tomorrows-trades-v2 s06 (+25.8..+57.0 s); the twin s03a carries it"
+    },
+    {
+      "id": "s03a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: The universal entry: opens inside yesterday's body, no new low, through yesterday's high; the research weekend",
+      "source": "mkt",
+      "in": 563.0,
+      "out": 594.2,
+      "why": "the universal entry: opens inside yesterday's body, no new low, through yesterday's high, one R",
+      "anim_of": {
+        "course": "tomorrows-trades-v2",
+        "scene": "s06"
+      },
+      "animation_brief": "the tomorrows-trades-v2 s06 scene, started at its +25.8 s",
+      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
+      "pip": true,
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      },
+      "toc_title": "The universal entry"
+    },
+    {
+      "id": "s04",
+      "type": "cut",
+      "include": false,
+      "label": "One ATR of risk, five of runway; the orderly open; 'new evidence that new buyers are coming in'",
+      "source": "mkt",
+      "in": 1498.2,
+      "out": 1513.3,
+      "why": "new evidence that new buyers are coming in, above yesterday's high",
+      "status": "bite of tomorrows-trades-v2 s11 (+80.5..+95.6 s); the twin s04a carries it"
+    },
+    {
+      "id": "s04a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: One ATR of risk, five of runway; the orderly open; 'new evidence that new buyers are coming in'",
+      "source": "mkt",
+      "in": 1498.2,
+      "out": 1513.3,
+      "why": "new evidence that new buyers are coming in, above yesterday's high",
+      "anim_of": {
+        "course": "tomorrows-trades-v2",
+        "scene": "s11"
+      },
+      "animation_brief": "the tomorrows-trades-v2 s11 scene, started at its +80.5 s",
+      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
+      "pip": true,
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      },
+      "toc_title": "New buyers: the evidence above yesterday's high"
+    },
+    {
+      "id": "s05",
+      "type": "cut",
+      "include": false,
+      "label": "Source 4: the big gappers; four slots, two symbols each, first come first served; framed the night before",
+      "source": "mkt",
+      "in": 2045.1,
+      "out": 2081.0,
+      "why": "the four slots: four categories, two symbols each, first come first served",
+      "status": "bite of tomorrows-trades-v2 s14 (+107.1..+143.0 s); the twin s05a carries it"
+    },
+    {
+      "id": "s05a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: Source 4: the big gappers; four slots, two symbols each, first come first served; framed the night before",
+      "source": "mkt",
+      "in": 2045.1,
+      "out": 2081.0,
+      "why": "the four slots: four categories, two symbols each, first come first served",
+      "anim_of": {
+        "course": "tomorrows-trades-v2",
+        "scene": "s14"
+      },
+      "animation_brief": "the tomorrows-trades-v2 s14 scene, started at its +107.1 s",
+      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
+      "pip": true,
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      },
+      "toc_title": "The fourth slot: the big gappers"
+    },
+    {
+      "id": "s06",
+      "type": "slide",
+      "include": true,
+      "label": "End card",
+      "slide_id": "end",
+      "duration": 8,
+      "layout": "end",
+      "text": {
+        "kicker": "",
+        "title": "Where Tomorrow's Trades Come From",
+        "subtitle": "owlgrouptrading.com",
+        "body": "Seven chapters, about 55 minutes, with Dr. Ken Long."
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 1.0
+      }
+    }
+  ]
+}
