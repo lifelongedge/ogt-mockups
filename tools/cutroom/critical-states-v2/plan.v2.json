@@ -1,10 +1,10 @@
 {
   "schema": "coursecraft-plan-v2",
   "course": "critical-states-v2",
-  "revision": 3,
+  "revision": 4,
   "revised": "2026-11-22",
-  "status": "DRAFT rev3 (2026-11-22): the internal context card split in three (s00w, s00x, s00y) so none clips at the prose layout. DRAFT rev2 (2026-11-22, owner: the wordy internal card): s00w, the context and the story arc in prose, at the head of the cutroom, ON for the storyboard and OFF before the build. DRAFT rev1 (2026-11-22): the owner's ask after the corpus intake of rq3bTCXLvIk ('give me cutroom of the 30 min course first with the segments and animated twins; if his chart is usable I prefer using it and animating on it'). One source, the 01:12:02-01:42:10 block of the 2026-11-22 weekend report review: 14 cuts, 13 twins (12 on his own chart, 1 drawn), seven chapter cards, the opener, title, agenda, maxim and end cards. Every twin ON and its cut OFF, the owner's standing pick since the Disciplined Operator rev 3 (flip per segment in the cutroom). s08 (a political aside) OFF with no twin. Windows are the captions' word stamps (yt-dlp 2026.10.26 auto-captions, fetched the day of upload); the Whisper transcript made first that evening heard two more levels in s11 (630, 645) that the captions drop: check by ear.",
-  "title": "Critical States",
+  "status": "DRAFT rev4 (2026-11-22, owner's title: 'Market in Critical State with Dr Ken Long: Reading the Regression Line Fractal Framework on a heavy week in November 2026'): the plan title, the title card, the opener's box and spoken line, and the end card carry it. DRAFT rev3 (2026-11-22): the internal context card split in three (s00w, s00x, s00y) so none clips at the prose layout. DRAFT rev2 (2026-11-22, owner: the wordy internal card): s00w, the context and the story arc in prose, at the head of the cutroom, ON for the storyboard and OFF before the build. DRAFT rev1 (2026-11-22): the owner's ask after the corpus intake of rq3bTCXLvIk ('give me cutroom of the 30 min course first with the segments and animated twins; if his chart is usable I prefer using it and animating on it'). One source, the 01:12:02-01:42:10 block of the 2026-11-22 weekend report review: 14 cuts, 13 twins (12 on his own chart, 1 drawn), seven chapter cards, the opener, title, agenda, maxim and end cards. Every twin ON and its cut OFF, the owner's standing pick since the Disciplined Operator rev 3 (flip per segment in the cutroom). s08 (a political aside) OFF with no twin. Windows are the captions' word stamps (yt-dlp 2026.10.26 auto-captions, fetched the day of upload); the Whisper transcript made first that evening heard two more levels in s11 (630, 645) that the captions drop: check by ear.",
+  "title": "Market in Critical State",
   "topic_class": "market reading; one framework (the Regression Line Fractal Framework); ZERO outcomes (nothing decidable in footage)",
   "store_sku": "critical-states",
   "replaces": null,
@@ -37,11 +37,11 @@
       "include": true,
       "label": "OPENER · The watch (option B): the owl, the lighthouse, the title box",
       "voice": "ava",
-      "vo_script": "Critical States. With Dr. Ken Long. Owl Group Trading.",
+      "vo_script": "Market in Critical State. With Dr. Ken Long. Owl Group Trading.",
       "est_duration": 8,
       "hold": true,
       "animation_brief": "opener (scripts/opener.py, option B from the Stanford style study): blue hour, the lighthouse beam, the Zero State owl; the frosted title box at 1.2 s, the wordmark at 2.0 s; a slow push-in over the 8 s hold; no tile.",
-      "toc_title": "Critical States",
+      "toc_title": "Market in Critical State",
       "transition": {
         "type": "fade",
         "dur": 1
@@ -117,9 +117,9 @@
       "layout": "title",
       "text": {
         "kicker": "Market reading · the weekend report of November 22, 2026",
-        "title": "**Critical States**",
+        "title": "**Market in Critical State**",
         "subtitle": "with Dr. Ken Long",
-        "body": "The Regression Line Fractal Framework on a week of heavy weather."
+        "body": "Reading the Regression Line Fractal Framework on a heavy week in November 2026."
       },
       "transition": {
         "type": "fade",
@@ -698,7 +698,7 @@
         "kicker": "",
         "title": "One idea on the craft most mornings",
         "subtitle": "owlgrouptrading.com",
-        "body": "Every picture was the trade: the four lines, the 270's own band, the ladder, the nine-day, the mice, 2020, the specification.\nThe Tue to Fri daily note from Owl Group Trading."
+        "body": "Every picture was the trade: the four lines, the 270's own band, the ladder, the nine-day, the mice, 2020, the specification.\nMarket in Critical State: the Regression Line Fractal Framework on a heavy week in November 2026.\nThe Tue to Fri daily note from Owl Group Trading."
       },
       "transition": {
         "type": "fade",
