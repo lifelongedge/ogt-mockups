@@ -273,7 +273,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const BUILD = 'cutroom-32';
+const BUILD = 'cutroom-33';
 console.log('[cutroom] build', BUILD);
 window.__edgeBuild = BUILD;
 
@@ -621,6 +621,7 @@ function fitAnim() {
 const PIP = { x: 950, y: 22, w: 300, h: 169 };
 function pipCrop(s) {
   if (!s.pip) return null;
+  if (s.pip_still) return 'still';   // cutroom-33: this window shows his chart, not his tile; his still stands in (owner 2026-11-22)
   const src = srcById(s.source), c = src && src.pip && src.pip.crop;
   if (!c) return (src && src.pip && src.pip.still) ? 'still' : null;   // cutroom-29: a still stands in for a tile too small to crop
   if (!/^[\d.iwh*/+\-:() ]+$/.test(c)) return null;
@@ -628,7 +629,7 @@ function pipCrop(s) {
 }
 const PIP_STILLS = {};
 function pipStill(s) {   // the still image named by sources[].pip.still, served beside the cutroom (tools/cutroom/<path>)
-  const src = srcById(s.source), name = src && src.pip && src.pip.still;
+  const src = srcById(s.source), name = (src && src.pip && src.pip.still) || (s.pip_still ? '_shared/ken-still.jpg' : null);
   if (!name) return null;
   if (!PIP_STILLS[name]) { const im = new Image(); im.src = name; PIP_STILLS[name] = im; }
   return PIP_STILLS[name];

@@ -4,42 +4,47 @@
 <meta charset="utf-8">
 <title>s26a · sense and respond</title>
 <style>
-  :root { --bg:#030507; --fg:#E1EEF5; --muted:#8fa3ad; --border:rgba(56,225,255,0.14); --accent:#F2D06B;
-          --ok:#4ade80; --dn:#f87171; --card:#0a1016; --blue:#7baad4; }
+  :root { --bg:#000; --fg:#f2f5f7; --muted:#9aa7b0; --border:rgba(255,255,255,0.12); --accent:#F2D06B;
+          --ok:#4ade80; --dn:#f87171; --card:#000; --blue:#7baad4; }
   html, body { margin:0; background:var(--bg); overflow:hidden; }
   #stage { position:relative; width:1280px; height:720px; background:var(--bg); color:var(--fg);
            font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; overflow:hidden; }
-  #cap { position:absolute; left:60px; right:60px; top:30px; font-size:32px; font-weight:600; letter-spacing:-.01em; line-height:1.15; }
+  #cap { position:absolute; left:40px; right:40px; top:22px; font-size:34px; font-weight:600; letter-spacing:-.01em; line-height:1.15; z-index:3; }
   #cap em { font-style:normal; color:var(--accent); }
-  #sub { position:absolute; left:60px; width:1160px; top:648px; font-size:20px; color:var(--muted); line-height:1.4; }
-  #scene { position:absolute; left:60px; top:112px; width:1160px; height:518px; border:1px solid var(--border);
-           border-radius:10px; background:var(--card); overflow:hidden; }
+  #sub { position:absolute; left:40px; width:1000px; top:686px; font-size:17px; color:var(--muted); line-height:1.3; z-index:3; }
+  #scene { position:absolute; left:0; top:96px; width:1160px; height:530px; overflow:visible; transform:scale(1.1034); transform-origin:0 0; }
   #svg { position:absolute; inset:0; }
-  #fade { position:absolute; inset:0; background:var(--bg); pointer-events:none; opacity:0; }
-  /* the picture-in-picture corner: build_v2 composites Ken's camera tile here (PIP_W/X/Y); the cutroom shows this placeholder */
-  #pip { position:absolute; left:950px; top:22px; width:300px; height:169px; border:1px dashed rgba(56,225,255,0.35); border-radius:4px;
-         display:none; color:var(--muted); font-size:13px; text-align:center; line-height:169px; }
-  .pip #pip { display:block; } .pip #cap { right:360px; font-size:29px; }
-  text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; fill:#E1EEF5; }
+  #fade { position:absolute; inset:0; background:var(--bg); pointer-events:none; opacity:0; z-index:4; }
+  #pip { position:absolute; left:950px; top:22px; width:300px; height:169px; border:1px solid rgba(255,255,255,0.35); border-radius:4px;
+         display:none; color:var(--muted); font-size:13px; text-align:center; line-height:169px; z-index:3; background:#000; }
+  .pip #pip { display:block; } .pip #cap { right:360px; font-size:31px; }
+  text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; } svg { fill:#f2f5f7; }
   .mono { font-family:ui-monospace,Menlo,Consolas,monospace; }
+  .serif { font-family:Georgia,"DejaVu Serif","Times New Roman",serif; }
+  .hand { font-family:Caveat,cursive; font-weight:600; }
+  @font-face { font-family:"Caveat"; font-weight:400 700; src:local("Caveat"), url(https://fonts.gstatic.com/s/caveat/v23/Wnz6HAc5bAfYB2Q7ZjYY.woff2) format("woff2"); }
+  /* the seal slot: the chapter counter bottom-right (the brand mark joins it when the owner picks one) */
+  #seal { position:absolute; right:40px; top:688px; font-size:15px; letter-spacing:.08em; color:var(--muted); z-index:3; font-family:ui-monospace,Menlo,Consolas,monospace; }
+  #third { display:none; }
 </style>
 </head>
 <body>
-<div id="stage" class="">
+<div id="stage" class="pip">
   <div id="cap"></div>
   <div id="pip">Ken on camera, composited at render</div>
   <div id="scene"><svg id="svg" width="1160" height="530" viewBox="0 0 1160 530"></svg></div>
+  <div id="third"></div>
   <div id="sub"></div>
+  <div id="seal">chapter 4 of 4</div>
   <div id="fade"></div>
 </div>
 <script>
-const BUILD = 's26a-3';
+const BUILD = 's26a-5';
 console.log('[s26a] build', BUILD);
 // Overdub twin of s26: Ken's audio muw 5760.0→5820.0; t is seconds after the in-point.
 // Beat times read from the VTT cues on 2026-11-16 (tools/cutroom/mental-model-2-v2/transcript-muw.json).
 window.ANIM_DURATION = 60.0;
-
-const ACC='#F2D06B', FG='#E1EEF5', MUT='#8fa3ad', OK='#4ade80', DN='#f87171', BLUE='#7baad4', BRD='rgba(56,225,255,.22)', CARD='#0a1016';
+const ACC='#F2D06B', FG='#f2f5f7', MUT='#9aa7b0', OK='#4ade80', DN='#f87171', BLUE='#7baad4', BRD='rgba(255,255,255,.18)', CARD='#000', TXS=1.1, WRAP=['',''];
 const W=1160, H=530;
 const $ = id => document.getElementById(id);
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
@@ -49,8 +54,8 @@ const pr=(t,t0,d)=>ease((t-t0)/(d||0.6));          // eased progress 0..1 from t
 const on=(t,t0)=>t>=t0;
 const op=(t,t0,d)=>clamp((t-t0)/(d||0.5),0,1);      // linear opacity ramp
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
-const txt=(x,y,s,o={})=>`<text x="${x}" y="${y}" font-size="${o.sz||20}" fill="${o.c||FG}" opacity="${o.o==null?1:o.o}" text-anchor="${o.a||'start'}" font-weight="${o.w||400}" class="${o.cls||''}" ${o.extra||''}>${esc(s)}</text>`;
-const rect=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.r==null?6:o.r}" fill="${o.f||'none'}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}" ${o.extra||''}/>`;
+const txt=(x,y,s,o={})=>`<text x="${x}" y="${y}" font-size="${(o.sz||20)*TXS}" fill="${o.c||FG}" opacity="${o.o==null?1:o.o}" text-anchor="${o.a||'start'}" font-weight="${o.w||400}" class="${o.cls||''}" ${o.extra||''}>${esc(s)}</text>`;
+const rect=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.r==null?6:o.r}" fill="${o.f||'none'}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}" ${o.dash?`stroke-dasharray="${o.dash}"`:''} ${o.extra||''}/>`;
 const circ=(x,y,r,o={})=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${o.f||FG}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}"/>`;
 const line=(x1,y1,x2,y2,o={})=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${o.s||MUT}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" ${o.dash?`stroke-dasharray="${o.dash}"`:''} stroke-linecap="round"/>`;
 const path=(d,o={})=>`<path d="${d}" fill="${o.f||'none'}" stroke="${o.s||FG}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" stroke-linecap="round" stroke-linejoin="round" ${o.dash?`stroke-dasharray="${o.dash}"`:''}/>`;
@@ -65,33 +70,77 @@ const wander=(p,t,amp)=>[p.x+Math.sin(t*0.9+p.p)*amp,p.y+Math.cos(t*0.7+p.q)*amp
 // typewriter: the first k chars of s by time
 const type=(s,t,t0,cps)=>s.slice(0,Math.max(0,Math.floor((t-t0)*(cps||28))));
 // a list that reveals one row per step seconds from t0
+// --- the lesson helpers (2026-11-21, read from the Stanford "Probability for AI" screens) ---
+// the question the window answers, top-left of the scene, serif, amber
+const headY=(o={})=>{const capH=($('cap')||{}).offsetHeight||0;return Math.max(o.y||44,(capH-68)/1.1034+32);};
+const head=(t,t0,q,o={})=>{const a=op(t,t0,.5);if(a<=0)return '';return txt(o.x||40,headY(o),q,{sz:o.sz||30,c:o.c||ACC,w:600,o:a,cls:'serif'});};
+const bridge=(t,t0,s,o={})=>{const a=op(t,t0+.4,.6);if(a<=0)return '';const x=o.x||40,y=headY(o)+(o.dy||33);return txt(x,y,'in trading:',{sz:o.sz||24,c:MUT,o:a,cls:'hand'})+txt(x+(o.gap||128),y,s,{sz:o.sz||24,c:o.c||FG,o:a*.92,cls:'hand'});};   // the metaphor named as the trade, under the head, for the whole scene (lesson rule 8)   // under a three-line caption the question steps down
+// where to look: a soft ring that glides to the element of the beat. pts=[[t0,x,y],...]; it holds for o.hold s (default 5) after each beat
+function focus(t,pts,o={}){let cur=null,prev=null;for(const p of pts){if(t>=p[0]){prev=cur;cur=p;}}if(!cur)return '';const age=t-cur[0];if(age>(o.hold||5))return '';
+  const u=prev?pr(t,cur[0],.6):1;const x=prev?lerp(prev[1],cur[1],u):cur[1],y=prev?lerp(prev[2],cur[2],u):cur[2];const r=(o.r||22)+Math.sin(t*4)*2;const a=op(t,cur[0],.3)*(age>(o.hold||5)-.6?((o.hold||5)-age)/.6:1);
+  return circ(x,y,r,{f:'none',s:o.c||ACC,sw:2.5,o:a*.9})+circ(x,y,4,{f:o.c||ACC,o:a});}
+// the boxed definition, once the intuition has landed: a serif title and his words under it
+function defn(t,t0,x,y,w,title,lines,o={}){const u=pr(t,t0,.6);if(u<=0)return '';const lh=o.lh||28,h=(o.pad||22)*2+34+lines.length*lh;let s=rect(x,y,w,h,{r:8,s:o.s||FG,sw:2,f:o.f||'rgba(255,255,255,.03)',o:u});
+  if(u>.5){const a=op(t,t0+.3,.4);s+=txt(x+(o.pad||22),y+(o.pad||22)+22,title,{sz:o.sz||26,c:o.c||FG,w:600,o:a,cls:'serif'});lines.forEach((ln,i)=>{s+=txt(x+(o.pad||22),y+(o.pad||22)+34+22+i*lh,ln,{sz:o.lsz||20,c:o.lc||FG,o:op(t,t0+.5+i*.25,.4)});});}return s;}
+// the aside, in a second register: handwritten, amber, a little tilted (sparingly: his aside, not the framework)
+const aside=(t,t0,x,y,s,o={})=>{const a=op(t,t0,.5);return a<=0?'':`<g transform="rotate(${o.rot==null?-2:o.rot} ${x} ${y})">`+txt(x,y,s,{sz:o.sz||24,c:o.c||ACC,o:a*(o.o==null?1:o.o),a:o.a||'start',cls:'hand'})+'</g>';};
+// the recall box: an earlier figure back, small, in a corner, for a few seconds (draw the figure with its own helper inside g)
+function recall(t,t0,x,y,w,h,label,inner,o={}){const a=op(t,t0,.5)*(o.until&&t>o.until?clamp(1-(t-o.until)/.6,0,1):1);if(a<=0)return '';
+  return rect(x,y,w,h,{r:8,s:MUT,sw:1.5,f:'rgba(255,255,255,.03)',o:a,dash:'4 4'})+txt(x+12,y+20,label,{sz:14,c:MUT,o:a})+`<g opacity="${a}" transform="translate(${x} ${y+28}) scale(${o.sc||.5})">${inner}</g>`;}
 function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
 
 const BEATS = [[0.0, "To do that, I have to eliminate everything else", "That is why the Zero State, the planning and the preparation matter."], [9.2, "All I have to be able to do is <em>sense and respond</em>", ""], [18.1, "I have already prepared my responses to the expected signals", ""], [23.1, "A signal I wasn't prepared for? <em>I don't do anything.</em>", ""], [29.3, "The sages: I'd rather be outside the trade wishing I was in than inside wishing I was out", ""], [38.6, "Not on my training plan? I don't take it. I study it, so I can be ready in the future.", ""], [42.6, "They all look the same leaving the station from a critical state", "Take the signals; see what shapes out later."], [52.8, "Don't confuse activity with results", "Be relentless about deciding which things you are going to do."]];
+// WARP (optional): [[t_voice, t_authored], …] knots from the voice-over's words; the scene was authored on an estimate
+const WARP = null;
+const warpT = t => { if (!WARP) return t; for (let i = 1; i < WARP.length; i++) if (t <= WARP[i][0]) {
+  const [a0, b0] = WARP[i - 1], [a1, b1] = WARP[i]; return b0 + (b1 - b0) * (t - a0) / Math.max(1e-6, a1 - a0); }
+  return WARP[WARP.length - 1][1]; };
+
+const RULE=BLUE, RISK=DN, REWARD=OK, KEY=ACC, CHIMP='#fb923c', DAY='#f472b6', SWING='#2dd4bf', POS='#c084fc';
+const PHASES=['plan','prepare','execute','assess'];
+const big=(x,y,sc,inner)=>`<g transform="translate(${x} ${y}) scale(${sc}) translate(${-x} ${-y})">${inner}</g>`;
+const person=(x,y,o={})=>circ(x,y-14,9,{f:'none',s:o.c||FG,sw:2.5,o:o.o==null?1:o.o})+path(`M${x-16} ${y+22} C${x-16} ${y} ${x+16} ${y} ${x+16} ${y+22}`,{s:o.c||FG,sw:2.5,o:o.o==null?1:o.o});
+const pill=(x,y,s,o={})=>{const w=(o.w||s.length*11+30);return rect(x-w/2,y-19,w,38,{r:19,s:o.s||BRD,f:o.f||'rgba(255,255,255,.03)',sw:2,o:o.o==null?1:o.o})+txt(x,y+7,s,{a:'middle',sz:o.sz||20,c:o.c||FG,o:o.o==null?1:o.o,w:o.wt||500});};
+const lab=(t,t0,x,y,s,o={})=>{const a=op(t,t0,o.d||.5);return a<=0?'':txt(x,y,s,{sz:20,...o,o:a*(o.o==null?1:o.o)});};
+const fade=(t,t0,t1,d)=>op(t,t0,d||.5)*(t1==null?1:1-op(t,t1,d||.5));
+function candles(x,y,w,h,n,seed,d,o={}){const r=rng(seed);let v=h*0.55,s='';const bw=w/n;for(let i=0;i<(o.k==null?n:o.k);i++){const o1=v;v=clamp(v-(r()-0.5+(d||0))*h*0.14,8,h-8);const hi=Math.min(o1,v)-r()*8,lo=Math.max(o1,v)+r()*8;const up=v<o1;s+=line(x+i*bw+bw/2,y+hi,x+i*bw+bw/2,y+lo,{s:up?OK:DN,sw:2,o:o.o==null?1:o.o});s+=rect(x+i*bw+2,y+Math.min(o1,v),bw-4,Math.max(2,Math.abs(v-o1)),{f:up?OK:DN,r:1,o:o.o==null?1:o.o});}return s;}
+// the running example: the risk box, entry at y0, the stop under it by h; u moves the stop up above the entry (no lose plus dinner for two)
+function riskbox(x,w,y0,h,u,o={}){const a=o.o==null?1:o.o,sz=o.sz||20,sy=lerp(y0+h,y0-h*0.35,u||0);let s='';
+  if((u||0)<0.99)s+=rect(x,y0,w,Math.max(2,sy-y0),{r:3,f:'rgba(248,113,113,.18)',s:RISK,sw:2,o:a*(1-(u||0))});
+  s+=line(x,y0,x+w,y0,{s:FG,sw:3,o:a})+txt(x+w+10,y0+7,'entry',{sz,c:FG,o:a});
+  s+=line(x,sy,x+w,sy,{s:(u||0)>0.6?REWARD:RISK,sw:3,o:a})+txt(x+w+10,sy+7,'stop',{sz,c:(u||0)>0.6?REWARD:RISK,o:a});return s;}
+// the four phases as a row of pills; k lights one
+function phases(x,y,gap,t,t0,o={}){let s='';PHASES.forEach((p,i)=>{const a=op(t,t0+i*(o.step||0.6),.4);if(a<=0)return;const lit=o.k===i;s+=pill(x+i*gap,y,p,{o:a,w:gap-14,sz:o.sz||20,c:lit?KEY:FG,s:lit?KEY:BRD});});return s;}
+const hunter=(x,y,c,o={})=>path(`M${x-16} ${y+13} L${x} ${y-15} L${x+16} ${y+13} Z`,{s:c,f:c,sw:2,o:o.o==null?1:o.o});
+// a chimp face, drawn
+const chimp=(x,y,o={})=>{const a=o.o==null?1:o.o,c=o.c||CHIMP;return circ(x,y,30,{f:'none',s:c,sw:3,o:a})+circ(x-34,y-4,11,{f:'none',s:c,sw:3,o:a})+circ(x+34,y-4,11,{f:'none',s:c,sw:3,o:a})+path(`M${x-16} ${y+2} Q${x} ${y+24} ${x+16} ${y+2}`,{s:c,sw:3,o:a})+circ(x-10,y-8,3,{f:c,o:a})+circ(x+10,y-8,3,{f:c,o:a})+path(`M${x-8} ${y+14} Q${x} ${y+19} ${x+8} ${y+14}`,{s:c,sw:2.5,o:a});};
 
 function draw(t){
   let s='';
-  // a prepared table: signal → response; an unknown signal gets 'no action'
-  const rows=[['breakout above the range','standard entry'],['failed signal','stop, reverse'],['critical state, range compression','frame both ways']];
-  if (t>=18.1){ const o=op(t,18.1,.6); s += txt(180,120,'expected signal',{c:MUT,sz:14,o}); s += txt(620,120,'prepared response',{c:MUT,sz:14,o}); s += line(160,130,1000,130,{s:BRD,sw:1,o});
-    rows.forEach((r,i)=>{ const u=op(t,18.5+i*1.2,.4); s += txt(180,165+i*44,r[0],{sz:18,o:u}); s += arrow(560,159+i*44,600,159+i*44,{s:OK,o:u}); s += txt(620,165+i*44,r[1],{sz:18,c:OK,o:u}); }); }
-  if (t>=23.1){ const u=op(t,23.1,.5); s += txt(180,165+3*44,'something I wasn\'t prepared for',{sz:18,c:DN,o:u}); s += arrow(560,159+3*44,600,159+3*44,{s:DN,o:u}); s += txt(620,165+3*44,'no action',{sz:18,c:DN,w:600,o:u}); }
-  if (t>=9.2 && t<18.1){ const o=op(t,9.2,.5); s += txt(580,250,'sense → respond',{a:'middle',c:ACC,sz:34,w:700,o}); }
-  if (t<9.2){ const o=op(t,0,.5); const H4=herd(30,13,200,150,760,220); for(const p of H4){ const [x,y]=wander(p,t,4); s += circ(x,y,5,{f:MUT,o:0.5*(1-op(t,2,4))*o}); } s += txt(580,420,'eliminate everything else',{a:'middle',c:MUT,sz:18,o}); }
-  if (t>=29.3 && t<52.8){ const o=op(t,29.3,.6); s += rect(160,360,400,110,{s:BRD,f:'rgba(255,255,255,.02)',o}); s += txt(360,400,'outside, wishing I was in',{a:'middle',c:OK,sz:16,o}); s += txt(360,430,'beats inside, wishing I was out',{a:'middle',c:MUT,sz:14,o});
-    if (t>=42.6){ const o2=op(t,42.6,.6); for(let i=0;i<5;i++){ const u=((t-42.6)*0.4+i*0.2)%1; s += circ(620+u*380,415-i*0+Math.sin(u*6)*(i-2)*18*u,5,{f:BLUE,o:o2*(1-u)}); } s += txt(810,470,'they all look the same leaving the station',{a:'middle',c:MUT,sz:13,o:o2}); } }
-  if (t>=52.8){ const o=op(t,52.8,.6); s += txt(580,440,'activity ≠ results',{a:'middle',c:ACC,sz:26,w:700,o}); }
+  s += head(t,0,'What if the signal is not on your plan?')+bridge(t,0,"an unplanned signal: no trade; study it for later");
+  // sense → respond, with the prepared responses
+  const a=op(t,9.2,.6); s += pill(140,200,'sense',{o:a,w:150,sz:24,c:FG}); s += arrow(220,200,320,200,{s:MUT,sw:3,o:a}); s += pill(410,200,'respond',{o:a,w:160,sz:24,c:REWARD,s:REWARD});
+  if (t>=18.1){ const a2=op(t,18.1,.6); ['signal A','signal B','signal C'].forEach((n,i)=>{ s += txt(60,280+i*36,n,{c:FG,sz:20,o:a2}); s += arrow(160,274+i*36,300,274+i*36,{s:REWARD,sw:2.5,o:a2}); s += txt(310,280+i*36,'prepared',{c:REWARD,sz:20,o:a2}); }); }
+  if (t>=23.1){ const a2=op(t,23.1,.6); s += txt(60,410,'signal ?',{c:KEY,sz:22,o:a2,w:600}); s += arrow(170,404,240,404,{s:MUT,sw:2.5,o:a2}); s += txt(250,410,'I don’t do anything',{c:KEY,sz:22,o:a2,w:600}); }
+  if (t>=38.6) s += lab(t,38.6,60,460,'I study it, to be ready next time',{c:RULE,sz:22});
+  if (t>=52.8) s += aside(t,52.8,60,510,'don’t confuse activity with results',{sz:26});
+  // right column: the sages, boxed
+  s += lab(t,0,790,170,'the Zero State, the',{c:MUT,sz:20}); s += lab(t,0.5,790,198,'planning, the preparation',{c:MUT,sz:20});
+  if (t>=29.3) s += defn(t,29.3,780,230,340,'The sages',['rather outside, wishing','I was in, than inside,','wishing I was out'],{pad:14,lsz:20,s:KEY,sz:26});
+  s += aside(t,42.6,790,430,'they all look the same',{sz:24}); s += aside(t,43.4,800,462,'leaving the station',{sz:24});
+  s += focus(t,[[9.2,140,200],[18.1,300,300],[23.1,250,404],[29.3,950,290],[38.6,250,455],[52.8,250,505]]);
   return s;
 }
 
 window.renderFrame = function (t) {
   t = clamp(t, 0, ANIM_DURATION);
+  const tv = t; t = warpT(t);
   let cap = '', sub = '';
   for (const b of BEATS) if (t >= b[0]) { cap = b[1]; sub = b[2] || ''; }
   $('cap').innerHTML = cap; $('sub').textContent = sub;
-  $('svg').innerHTML = draw(t);
+  $('svg').innerHTML = WRAP[0] + draw(t) + WRAP[1];
   const f = $('fade');
-  f.style.opacity = t < 0.5 ? 1 - t / 0.5 : (ANIM_DURATION - t < 0.6 ? 1 - (ANIM_DURATION - t) / 0.6 : 0);
+  f.style.opacity = tv < 0.5 ? 1 - tv / 0.5 : (ANIM_DURATION - tv < 0.6 ? 1 - (ANIM_DURATION - tv) / 0.6 : 0);
 };
 renderFrame(0);
 </script>
