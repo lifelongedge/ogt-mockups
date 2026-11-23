@@ -1,9 +1,9 @@
 {
   "schema": "coursecraft-plan-v2",
   "course": "critical-states-v2",
-  "revision": 1,
+  "revision": 2,
   "revised": "2026-11-22",
-  "status": "DRAFT rev1 (2026-11-22): the owner's ask after the corpus intake of rq3bTCXLvIk ('give me cutroom of the 30 min course first with the segments and animated twins; if his chart is usable I prefer using it and animating on it'). One source, the 01:12:02-01:42:10 block of the 2026-11-22 weekend report review: 14 cuts, 13 twins (12 on his own chart, 1 drawn), seven chapter cards, the opener, title, agenda, maxim and end cards. Every twin ON and its cut OFF, the owner's standing pick since the Disciplined Operator rev 3 (flip per segment in the cutroom). s08 (a political aside) OFF with no twin. Windows are the captions' word stamps (yt-dlp 2026.10.26 auto-captions, fetched the day of upload); the Whisper transcript made first that evening heard two more levels in s11 (630, 645) that the captions drop: check by ear.",
+  "status": "DRAFT rev2 (2026-11-22, owner: the wordy internal card): s00w, the context and the story arc in prose, at the head of the cutroom, ON for the storyboard and OFF before the build. DRAFT rev1 (2026-11-22): the owner's ask after the corpus intake of rq3bTCXLvIk ('give me cutroom of the 30 min course first with the segments and animated twins; if his chart is usable I prefer using it and animating on it'). One source, the 01:12:02-01:42:10 block of the 2026-11-22 weekend report review: 14 cuts, 13 twins (12 on his own chart, 1 drawn), seven chapter cards, the opener, title, agenda, maxim and end cards. Every twin ON and its cut OFF, the owner's standing pick since the Disciplined Operator rev 3 (flip per segment in the cutroom). s08 (a political aside) OFF with no twin. Windows are the captions' word stamps (yt-dlp 2026.10.26 auto-captions, fetched the day of upload); the Whisper transcript made first that evening heard two more levels in s11 (630, 645) that the captions drop: check by ear.",
   "title": "Critical States",
   "topic_class": "market reading; one framework (the Regression Line Fractal Framework); ZERO outcomes (nothing decidable in footage)",
   "store_sku": "critical-states",
@@ -42,6 +42,26 @@
       "hold": true,
       "animation_brief": "opener (scripts/opener.py, option B from the Stanford style study): blue hour, the lighthouse beam, the Zero State owl; the frosted title box at 1.2 s, the wordmark at 2.0 s; a slow push-in over the 8 s hold; no tile.",
       "toc_title": "Critical States",
+      "transition": {
+        "type": "fade",
+        "dur": 1
+      }
+    },
+    {
+      "id": "s00w",
+      "type": "slide",
+      "include": true,
+      "label": "INTERNAL · story arc, the wordy version (context for the cut; OFF before the build)",
+      "slide_id": "arc-prose",
+      "duration": 12,
+      "layout": "prose",
+      "text": {
+        "kicker": "INTERNAL · THE CONTEXT AND THE STORY ARC IN PROSE · NOT FOR THE CUT",
+        "title": "One reading of one weekend, in seven chapters",
+        "subtitle": "A market in a critical state, and the framework that reads it: four regression lines and the 270's own band, on any time frame.",
+        "body": "Where this comes from. Dr. Long's weekly coaching check-in of Sunday, November 22, 2026, two hours on YouTube (rq3bTCXLvIk), the first hour on his AI coaching project and the week's options positioning, the second on the weekend report. The course is the second hour's heart, 01:12 to 01:42: chart two and chart three of the report, read live, with Luis and another student in the room. He holds the session there himself: \"I almost want to say that's enough for today, but we're only on chart three. All of the other ones are derivative of that insight\" (s23).\n\nThe moment. SPY has fallen about 12 percent from 780 to 690 in a shortened week; Friday closed on a collapse. Every slope on the 3-day stack is down, the 270 has gone from rising to sideways, and the RL10, the SMA30 and the RL90 have each breached the 270's own Bollinger band in turn, so the 270 is coming back to its own long-term average with \"a very thin layer of support, statistically\" (s04). The metamodel has swing and short-term sizing at zero and the long-term model at zero; the only open door is the day trade and the one-to-three-day swing (s05). That is the critical state the course is named for: not one signal but several arriving together, and the framework that reads them.\n\nThe argument, in seven chapters. One: rig for heavy weather, the four lines and the breaches in order (s04, s05). Two: why four regression lines at all; price pulls away from the RL10 and the 10, 30, 90 and 270 chase it in order, and the fractal framework shows the turning points \"when the 270 comes back to its own Bollinger band\" (s07, s09). Three: the downside ladder read off the stack, the SMA30 peak, the bottom of the dragon, the bottom of the RL10, the fat tail, 690 and 660, and the recovery that has to fight back up the same stack (s11). Four: the nine-day as the same picture times three, each past sell-off, the kata 2 entry, the sideways warning, and no support yet; the 270 on nine-day bars is a 2,500-day line, \"that's what fractal means\" (s13, s14). Five: the five mice mapped on the run, who is shorting, who stepped aside, who is deciding, and the arithmetic from a correction to a bear: 600 is the line, COVID took three nine-day bars (s16, s17). Six: Luis brings the March 2020 report; the breach of the 270 was followed by another 25 percent, 285 to 220, and the same distance today is 640 to 500; the SuperPinch targets 610 and 471 agree (s19, s20). Seven: the definition. The Regression Line Fractal Framework is \"an engineering specification\": the difference between the 10 and the 270 is traders against buy-and-holders, \"whether T is one minute or nine days\", and the buy-and-holder buys in the existential moment with a 20 percent trailing stop, never from the top (s22, s23).\n\nWhat the cut must keep. He never calls the direction: \"Is it going to do this in a hurry, or that in a hurry? I don't know. I don't care, because I know how to trade this short-term volatility and my long-term money is protected until this thing resolves\" (s07, the maxim card). The course is a reading method, not a forecast, and every number on screen is one he or Luis says. Twelve of the thirteen animated twins are drawn on frozen frames of his own charts with the levels placed on his own price axis; the thirteenth is drawn where Luis speaks with no chart on screen. Two rungs of the chapter-3 ladder, 630 and 645, are heard by Whisper and dropped by the captions, and are marked \"by ear\" until checked. The political aside at 01:19:44 is out of the cut and off by default.\n\nThe hinge for the student, said once per chapter card and under every scene's head: the picture is the trade. The stack is where the market's long and short money sit; the band is the last support; the ladder is where the next bid may stand; the mice are who is buying and who is selling; the specification is why the same reading works on any time frame."
+      },
+      "status": "rev2 (2026-11-22, owner: 'we need to add the wordy slide for the internal cut that provides context on this course'): the context card, after the Disciplined Operator's s00w; ON so it sits at the head of the storyboard, OFF before the build.",
       "transition": {
         "type": "fade",
         "dur": 1
