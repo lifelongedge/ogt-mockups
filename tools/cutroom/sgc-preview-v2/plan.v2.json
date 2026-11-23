@@ -1,302 +1,302 @@
 {
- "schema": "coursecraft-plan-v2",
- "course": "sgc-preview-v2",
- "cutroom": "sgc-preview-v2",
- "revision": 2,
- "revised": "2026-11-22",
- "status": "DRAFT rev2: intercut, his screen then the stage. Eric Mo: s11 his chart, s12a the record (animated), s13 his chart, s14a the advice (animated). Griff Cooper: s21a and s22a open on his own OneNote page (a still: the live frame shows attendees' faces) and build the stage. The plain cuts stay in the plan, off, so each pick reverses in the cutroom.",
- "title": "Almost Boring: a Small Group Coaching preview",
- "topic_class": "preview",
- "store_sku": "lions-and-wolves",
- "replaces": "c-lions-01",
- "notes": "2026-11-22 (owner: 'I want to change the sgc preview course. it uses the lions hunt metaphor which we've put in the mental model course. so we need something fresh'; then 'you found the eric mo which is what i meant, do draft a cut room'). Replaces Lions and Wolves (c-lions-01, the only listed title in 'Preview · Small Group Coaching', edge-ogt-engine courses.py). Eric Mo leads (cohort 6 intro, 01:51:15-01:53:41: the 40% day-trade money, keep 70%, lather rinse repeat, study Eric Mo, 10 months in a row of no losing weeks, a dozen symbols, 'almost boring for him, which is where I want you to be', cap 70 past 2R). Griff Cooper follows (VTI special session on trading coaches 2022-11-05, 00:58:02-01:00:17: the Kata 2 challenge, one symbol, three patterns on a three-minute bar, coached every night, no losing week in 2022), split around a 48 s detour into the home-study course and Phil Wu's course build (00:58:49-00:59:36), which the owner can restore from the alternate. Neither window is used in any other course; Eric's in-point overlaps the end of weekend-edge s16 / etf2 s41 (6322-6690) by 15 s; the tighter alternate starts clear of it. Facts: both records are Ken's account of his students, not checked against any trade data; the cards say 'in Ken's words'. Twins (anim-overdub) on the owner's word; the cohort Zoom grid is on screen in xvc (faces not released, as in ken-shorts-2 s09), so the Eric window wants a twin before it goes public. Shipping (clip id, card, hero, waitlist link) is growogtx ogt-course-ship. Transitions by rule (cutroom-24).\n\nrev2 (2026-11-22, owner: 'create animated twin that makes the topic interesting and exciting visually for the audience, while somewhat preserving what it means to be in SGC. I'm imagining some clips of the original screens and then switching to animation that calls out the key accomplishment and advice from Ken'): Eric's window split on his words into four, contiguous, hard cuts between them so no word is lost or doubled: s11 6675.3-6699.9 his chart (40% of day-trade money, keep 70%, lather rinse repeat), s12a 6699.9-6738.5 the record (10 months of no losing weeks, a dozen symbols, 60-70% / 3:1, almost boring), s13 6738.5-6798.0 his chart ('the way I just shaped this chart right here', the hybrid frame), s14a 6798.0-6820.8 the advice (10/3-minute, the 30, past 2R cap 70, chart off, keep 70 or exit at the close). Griff: twins on the whole windows, each opening on the OneNote page he had up that night (stills/vti-page-3485.jpg, cropped clear of the faces strip) and s22a recalling his own 'Josh Kaufman, the first 20 hours' line when he says 20 hours. Stage style; his still in the corner on both sources (tiles too small to crop). anim_gen.py.",
- "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/sgc-preview-v2/",
- "sources": [
-  {
-   "id": "xvc",
-   "label": "SGC intro to trading, \"3 hours of gold\" (cohort 6 intro overview)",
-   "file": "youtube-XvcsfWFFW20-cohort-6-intro-overview.mp4",
-   "proxy": "youtube-XvcsfWFFW20-cohort-6-intro-overview.proxy.mp4",
-   "url": "https://www.youtube.com/watch?v=XvcsfWFFW20",
-   "pip": {
-    "still": "_shared/ken-still.jpg",
-    "note": "his tile is too small to crop; the owner's still stands in (as ken-shorts-2)"
-   }
-  },
-  {
-   "id": "vti",
-   "label": "Special session on trading coaches with the VTI (2022-11-05)",
-   "file": "youtube-UEggLDyMnI8-vti-trading-coaches.mp4",
-   "url": "https://www.youtube.com/watch?v=UEggLDyMnI8",
-   "proxy": "youtube-UEggLDyMnI8-vti-trading-coaches.proxy.mp4",
-   "pip": {
-    "still": "_shared/ken-still.jpg",
-    "note": "his tile is about 75 px at the top of the attendee strip (checked 3485, 3590 s): too small to crop; his still stands in"
-   }
-  }
- ],
- "voices": [
-  {
-   "id": "ava",
-   "label": "Ava (US, female, polished)",
-   "sample": "vo-ava.mp3"
-  }
- ],
- "segments": [
-  {
-   "id": "s00",
-   "type": "slide",
-   "include": true,
-   "label": "Title card",
-   "slide_id": "title",
-   "duration": 5,
-   "layout": "title",
-   "text": {
-    "kicker": "Small Group Coaching · preview",
-    "title": "**Almost** boring",
-    "subtitle": "Two students, a narrow set of rules, and no losing weeks",
-    "body": "with Dr. Ken Long"
-   }
-  },
-  {
-   "id": "s10",
-   "type": "slide",
-   "include": true,
-   "label": "Eric Mo card",
-   "slide_id": "ch1",
-   "duration": 3,
-   "layout": "chapter",
-   "text": {
-    "kicker": "Student 1",
-    "title": "**Eric Mo**, cohort 4",
-    "subtitle": "a dozen symbols, in Ken's words",
-    "body": ""
-   },
-   "transition": {
-    "type": "fade",
-    "dur": 1.0
-   }
-  },
-  {
-   "id": "s11",
-   "type": "cut",
-   "include": false,
-   "label": "Ken on his chart: the 40% of day-trade money, keep 70%, lather, rinse, repeat",
-   "source": "xvc",
-   "in": 6675.3,
-   "out": 6699.9,
-   "status": "MINED 2026-11-22 (VTT 01:51:15.8 'And and so the 40%' to 01:51:39.9 'whatevers that you got.'); his chart (the rule-of-four frame), one small tile top-right, no faces; the screen half of the intercut",
-   "why": "the owner's pick: a student's record the coaching produced, and the line the preview is named for",
-   "alternates": [],
-   "transition": {
-    "type": "fade",
-    "dur": 0.6
-   },
-   "toc_title": "Keep 70%. Lather, rinse, repeat.",
-   "quote_anchor": "Find the movers. Find the most volatile ones. Keep 70%. Lather, rinse, repeat. Preserve emotional resilience. Do not pay attention to news or anything. Just trade the couple patterns and whatevers that you got."
-  },
-  {
-   "id": "s11a",
-   "type": "overdub",
-   "include": true,
-   "label": "ALT on his chart: Ken on his chart: the 40% of day-trade money, keep 70%, lather, rinse, repeat",
-   "toc_title": "Keep 70%. Lather, rinse, repeat.",
-   "source": "xvc",
-   "in": 6675.3,
-   "out": 6699.9,
-   "pip": true,
-   "animation_brief": "his 10-minute chart frozen (xvc 6740 s), cropped to the chart frame, drawing tool gone; the run traced as 'a mover'; right column: 40% as 4 of 10 cells, low-risk opportunities, a rule box on his words (find the movers, the most volatile ones, keep 70% with 7 of 10 cells, lather rinse repeat, no news, the couple patterns); 'preserve emotional resilience' handwritten (anim_gen.py s11)",
-   "status": "twin of s11 (owner, 2026-11-22: his chart cropped, drawing tool removed, his key words animated on it): his audio, his still top-right; 'the 40%' is the day-trade share of the money he describes in the sentence before the window",
-   "transition": {
-    "type": "fade",
-    "dur": 0.6
-   }
-  },
-  {
-   "id": "s12",
-   "type": "cut",
-   "include": false,
-   "label": "Study Eric Mo: 10 months in a row of no losing weeks, almost boring",
-   "source": "xvc",
-   "in": 6699.9,
-   "out": 6738.5,
-   "status": "MINED 2026-11-22 (VTT 01:51:39.9 'What I really want you to do' to 01:52:18.5 'where I want you to be.'); the twin s12a carries it",
-   "quote_anchor": "What I really want you to do is study Eric Mo in cohort four. He's had 10 months in a row of no losing weeks. Trading exactly this way with about a dozen symbols... 60 to 70% win rate in a given month and a payoff of 3 to one... it's almost boring for him, which is where I want you to be."
-  },
-  {
-   "id": "s12a",
-   "type": "overdub",
-   "include": true,
-   "label": "ALT animated: Study Eric Mo: 10 months in a row of no losing weeks, almost boring",
-   "toc_title": "Eric Mo: ten months in a row of no losing weeks",
-   "source": "xvc",
-   "in": 6699.9,
-   "out": 6738.5,
-   "pip": true,
-   "animation_brief": "stage: ten month tiles light green in a row; Eric with a ring of 12 symbol tiles; right column 10 months / 60-70% (a 10-cell bar) / 3 : 1 (two bars); 'almost boring' handwritten, the motion calms; 'where I want you to be' (anim_gen.py s12)",
-   "status": "twin of s12: his audio, our picture, his still top-right; the record is Ken's account of a student, not checked on data"
-  },
-  {
-   "id": "s13",
-   "type": "cut",
-   "include": false,
-   "label": "Ken on his chart: adopt Eric's approach, the rule of four, the hybrid frame on this chart",
-   "toc_title": "How Eric picks his trades",
-   "source": "xvc",
-   "in": 6738.5,
-   "out": 6798.0,
-   "status": "MINED 2026-11-22 (VTT 01:52:18.5 'So, so here's what I'm going to say' to 01:53:18.0 'the rule of five.'); he points at 'this chart right here': the screen half of the intercut; trim to taste",
-   "quote_anchor": "adopt his approach to target selection and pattern selection... the rule of four, and intraday position sizing, we're calling it the Hougaard press, and relentless attention to detail on a dozen symbols... the way I just shaped this chart right here was putting the hybrid frame on it, the rule of four or the rule of five."
-  },
-  {
-   "id": "s13a",
-   "type": "overdub",
-   "include": true,
-   "label": "ALT on his chart: Ken on his chart: adopt Eric's approach, the rule of four, the hybrid frame on this chart",
-   "toc_title": "How Eric picks his trades",
-   "source": "xvc",
-   "in": 6738.5,
-   "out": 6798.0,
-   "pip": true,
-   "animation_brief": "the same frozen chart; right column: the daily report (range stats, a swing trade once in a while), a rule box 'Adopt his approach' (target selection, pattern selection, the rule of four, intraday position sizing, the Hougaard press, relentless attention to detail), 12 symbol tiles, one fires a swing; at 'the way I just shaped this chart' the frame lights amber and 'the hybrid frame', 'rule of four · rule of five' land on the chart (anim_gen.py s13)",
-   "status": "twin of s13 (owner, 2026-11-22): his audio, his still top-right; the marks on the chart are his own, not labelled one by one (the window does not say which mark is which)"
-  },
-  {
-   "id": "s14",
-   "type": "cut",
-   "include": false,
-   "label": "Past 2R: put the cap 70 on it and turn off the chart",
-   "source": "xvc",
-   "in": 6798.0,
-   "out": 6820.8,
-   "status": "MINED 2026-11-22 (VTT 01:53:18.0 'And just he's using 10-minute charts' to 01:53:40.8 'or exit at it close.'); the twin s14a carries it"
-  },
-  {
-   "id": "s14a",
-   "type": "overdub",
-   "include": true,
-   "label": "ALT animated: Past 2R: put the cap 70 on it and turn off the chart",
-   "toc_title": "Past 2R: cap 70, and turn off the chart",
-   "source": "xvc",
-   "in": 6798.0,
-   "out": 6820.8,
-   "pip": true,
-   "animation_brief": "stage: a trade drawn as it goes, 10-min and 3-min chips then the 30 (the line calms); 2R dashed; the cap-70 line ratchets under the peak; the chart dims to 'chart off' with the cap still drawn; the close; right column his rules this session, then 'Past 2R' boxed on his words (anim_gen.py s14)",
-   "status": "twin of s14: his audio, our picture, his still top-right; the cap line is drawn at 70 % of the best open gain past 2R, his rule as stated in intraday-decision-tree-2-v2 s24 (outside this window)"
-  },
-  {
-   "id": "s20",
-   "type": "slide",
-   "include": true,
-   "label": "Griff Cooper card",
-   "slide_id": "ch2",
-   "duration": 3,
-   "layout": "chapter",
-   "text": {
-    "kicker": "Student 2",
-    "title": "**Griff Cooper**",
-    "subtitle": "one symbol, three patterns, every night",
-    "body": ""
-   },
-   "transition": {
-    "type": "fade",
-    "dur": 1.0
-   }
-  },
-  {
-   "id": "s21",
-   "type": "cut",
-   "include": false,
-   "label": "Griff: one symbol, three patterns, coached every night; no losing week in 2022",
-   "source": "vti",
-   "in": 3482.2,
-   "out": 3528.8,
-   "status": "MINED 2026-11-22 (VTT 00:58:02.2 'you talked to Griff Cooper' to 00:58:48.4 'hasn't had a losing week'); the twin s21a carries it (the live frame shows the attendee strip)",
-   "quote_anchor": "I told Griff stop what you're doing, pick either Brazil or DIA, trade one of these three patterns on a three-minute bar, nothing else... and I beat the living crap out of him in public on camera every night, and in the year 2022 he hasn't had a losing month, he hasn't had a losing week.",
-   "why": "what coaching is: narrow the task, repeat it, get feedback every night",
-   "alternates": [
+  "schema": "coursecraft-plan-v2",
+  "course": "sgc-preview-v2",
+  "cutroom": "sgc-preview-v2",
+  "revision": 3,
+  "revised": "2026-11-22",
+  "status": "DRAFT rev2: intercut, his screen then the stage. Eric Mo: s11 his chart, s12a the record (animated), s13 his chart, s14a the advice (animated). Griff Cooper: s21a and s22a open on his own OneNote page (a still: the live frame shows attendees' faces) and build the stage. The plain cuts stay in the plan, off, so each pick reverses in the cutroom.",
+  "title": "Almost Boring: a Small Group Coaching preview",
+  "topic_class": "preview",
+  "store_sku": "lions-and-wolves",
+  "replaces": "c-lions-01",
+  "notes": "2026-11-22 (owner: 'I want to change the sgc preview course. it uses the lions hunt metaphor which we've put in the mental model course. so we need something fresh'; then 'you found the eric mo which is what i meant, do draft a cut room'). Replaces Lions and Wolves (c-lions-01, the only listed title in 'Preview · Small Group Coaching', edge-ogt-engine courses.py). Eric Mo leads (cohort 6 intro, 01:51:15-01:53:41: the 40% day-trade money, keep 70%, lather rinse repeat, study Eric Mo, 10 months in a row of no losing weeks, a dozen symbols, 'almost boring for him, which is where I want you to be', cap 70 past 2R). Griff Cooper follows (VTI special session on trading coaches 2022-11-05, 00:58:02-01:00:17: the Kata 2 challenge, one symbol, three patterns on a three-minute bar, coached every night, no losing week in 2022), split around a 48 s detour into the home-study course and Phil Wu's course build (00:58:49-00:59:36), which the owner can restore from the alternate. Neither window is used in any other course; Eric's in-point overlaps the end of weekend-edge s16 / etf2 s41 (6322-6690) by 15 s; the tighter alternate starts clear of it. Facts: both records are Ken's account of his students, not checked against any trade data; the cards say 'in Ken's words'. Twins (anim-overdub) on the owner's word; the cohort Zoom grid is on screen in xvc (faces not released, as in ken-shorts-2 s09), so the Eric window wants a twin before it goes public. Shipping (clip id, card, hero, waitlist link) is growogtx ogt-course-ship. Transitions by rule (cutroom-24).\n\nrev2 (2026-11-22, owner: 'create animated twin that makes the topic interesting and exciting visually for the audience, while somewhat preserving what it means to be in SGC. I'm imagining some clips of the original screens and then switching to animation that calls out the key accomplishment and advice from Ken'): Eric's window split on his words into four, contiguous, hard cuts between them so no word is lost or doubled: s11 6675.3-6699.9 his chart (40% of day-trade money, keep 70%, lather rinse repeat), s12a 6699.9-6738.5 the record (10 months of no losing weeks, a dozen symbols, 60-70% / 3:1, almost boring), s13 6738.5-6798.0 his chart ('the way I just shaped this chart right here', the hybrid frame), s14a 6798.0-6820.8 the advice (10/3-minute, the 30, past 2R cap 70, chart off, keep 70 or exit at the close). Griff: twins on the whole windows, each opening on the OneNote page he had up that night (stills/vti-page-3485.jpg, cropped clear of the faces strip) and s22a recalling his own 'Josh Kaufman, the first 20 hours' line when he says 20 hours. Stage style; his still in the corner on both sources (tiles too small to crop). anim_gen.py.",
+  "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/sgc-preview-v2/",
+  "sources": [
     {
-     "label": "whole story, uncut, with the home-study detour (2:15)",
-     "source": "vti",
-     "in": 3482.2,
-     "out": 3616.8
+      "id": "xvc",
+      "label": "SGC intro to trading, \"3 hours of gold\" (cohort 6 intro overview)",
+      "file": "youtube-XvcsfWFFW20-cohort-6-intro-overview.mp4",
+      "proxy": "youtube-XvcsfWFFW20-cohort-6-intro-overview.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=XvcsfWFFW20",
+      "pip": {
+        "still": "_shared/ken-still.jpg",
+        "note": "his tile is too small to crop; the owner's still stands in (as ken-shorts-2)"
+      }
+    },
+    {
+      "id": "vti",
+      "label": "Special session on trading coaches with the VTI (2022-11-05)",
+      "file": "youtube-UEggLDyMnI8-vti-trading-coaches.mp4",
+      "url": "https://www.youtube.com/watch?v=UEggLDyMnI8",
+      "proxy": "youtube-UEggLDyMnI8-vti-trading-coaches.proxy.mp4",
+      "pip": {
+        "still": "_shared/ken-still.jpg",
+        "note": "his tile is about 75 px at the top of the attendee strip (checked 3485, 3590 s): too small to crop; his still stands in"
+      }
     }
-   ],
-   "animation_brief": "animate: two flags (EWZ, DIA), three pattern glyphs on a 3-minute chart, a nightly calendar ticking with a red-pen mark each night; a 2022 strip of weeks, none red; captions on 'nothing else', 'every night', 'hasn't had a losing week'",
-   "transition": {
-    "type": "dip",
-    "dur": 0.6
-   }
-  },
-  {
-   "id": "s21a",
-   "type": "overdub",
-   "include": true,
-   "label": "ALT on his screen: Griff: one symbol, three patterns, coached every night; no losing week in 2022",
-   "source": "vti",
-   "in": 3482.2,
-   "out": 3528.8,
-   "pip": true,
-   "animation_brief": "animate: two flags (EWZ, DIA), three pattern glyphs on a 3-minute chart, a nightly calendar ticking with a red-pen mark each night; a 2022 strip of weeks, none red; captions on 'nothing else', 'every night', 'hasn't had a losing week'",
-   "transition": {
-    "type": "dip",
-    "dur": 0.6
-   },
-   "toc_title": "Griff Cooper: one market, three patterns, every night",
-   "status": "twin of s21: opens on his OneNote page that night (still, cropped clear of the faces) for 11 s, then the stage: Brazil or DIA, three patterns, the 3-minute bar, nothing else, the feedback loop, every night on camera, 2022 to the session's date (5 Nov) with no losing month or week; Ken's account, not checked on data"
-  },
-  {
-   "id": "s22",
-   "type": "cut",
-   "include": false,
-   "label": "Griff: follow these rules exactly until I tell you to stop; 20 hours, 10 minutes a night",
-   "source": "vti",
-   "in": 3576.6,
-   "out": 3616.8,
-   "status": "MINED 2026-11-22 (VTT 00:59:36.9 'I was just so tired of watching' to 01:00:17.0 'your mileage may vary'); the 48 s before it (home study course, Phil Wu) left out; the twin s22a carries it (the live frame shows the attendee strip)",
-   "quote_anchor": "I said follow these rules exactly until I tell you to stop, and he just became excellent at it... 20 hours of just him getting his brains beat out 10 minutes at a time every night... that's what it takes for him, your mileage may vary.",
-   "why": "the price of it, in his words, and his own caveat",
-   "animation_brief": "animate: a stopwatch of 10-minute slices filling to 1,200 minutes; '20 hours' then '24 weeks'; captions on 'follow these rules exactly until I tell you to stop', 'your mileage may vary'",
-   "transition": {
-    "type": "fade",
-    "dur": 0.6
-   }
-  },
-  {
-   "id": "s22a",
-   "type": "overdub",
-   "include": true,
-   "label": "ALT on his screen: Griff: follow these rules exactly until I tell you to stop; 20 hours, 10 minutes a night",
-   "source": "vti",
-   "in": 3576.6,
-   "out": 3616.8,
-   "pip": true,
-   "animation_brief": "animate: a stopwatch of 10-minute slices filling to 1,200 minutes; '20 hours' then '24 weeks'; captions on 'follow these rules exactly until I tell you to stop', 'your mileage may vary'",
-   "transition": {
-    "type": "fade",
-    "dur": 0.6
-   },
-   "toc_title": "Follow these rules exactly: 20 hours, 120 nights",
-   "status": "twin of s22: opens on his page, then his rule boxed; at '20 hours' his own 'Josh Kaufman, the first 20 hours' line from that page; 1,200 minutes; 120 nights as 24 columns (24 weeks); your mileage may vary"
-  },
-  {
-   "id": "s90",
-   "type": "slide",
-   "include": true,
-   "label": "End card",
-   "slide_id": "end",
-   "duration": 8,
-   "layout": "end",
-   "text": {
-    "kicker": "Small Group Coaching",
-    "title": "Dr. Ken Long",
-    "subtitle": "owlgrouptrading.com",
-    "body": "Join the Small Group Coaching waitlist."
-   },
-   "transition": {
-    "type": "fade",
-    "dur": 1.0
-   }
-  }
- ]
+  ],
+  "voices": [
+    {
+      "id": "ava",
+      "label": "Ava (US, female, polished)",
+      "sample": "vo-ava.mp3"
+    }
+  ],
+  "segments": [
+    {
+      "id": "s00",
+      "type": "slide",
+      "include": true,
+      "label": "Title card",
+      "slide_id": "title",
+      "duration": 5,
+      "layout": "title",
+      "text": {
+        "kicker": "Small Group Coaching · preview",
+        "title": "**Almost** boring",
+        "subtitle": "Two students, a narrow set of rules, and no losing weeks",
+        "body": "with Dr. Ken Long"
+      }
+    },
+    {
+      "id": "s10",
+      "type": "slide",
+      "include": true,
+      "label": "Eric Mo card",
+      "slide_id": "ch1",
+      "duration": 3,
+      "layout": "chapter",
+      "text": {
+        "kicker": "Student 1",
+        "title": "**Eric Mo**, cohort 4",
+        "subtitle": "a dozen symbols, in Ken's words",
+        "body": ""
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 1
+      }
+    },
+    {
+      "id": "s12a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: Study Eric Mo: 10 months in a row of no losing weeks, almost boring",
+      "toc_title": "Eric Mo: ten months in a row of no losing weeks",
+      "source": "xvc",
+      "in": 6699.9,
+      "out": 6738.5,
+      "pip": true,
+      "animation_brief": "stage: ten month tiles light green in a row; Eric with a ring of 12 symbol tiles; right column 10 months / 60-70% (a 10-cell bar) / 3 : 1 (two bars); 'almost boring' handwritten, the motion calms; 'where I want you to be' (anim_gen.py s12)",
+      "status": "twin of s12: his audio, our picture, his still top-right; the record is Ken's account of a student, not checked on data"
+    },
+    {
+      "id": "s13",
+      "type": "cut",
+      "include": false,
+      "label": "Ken on his chart: adopt Eric's approach, the rule of four, the hybrid frame on this chart",
+      "toc_title": "How Eric picks his trades",
+      "source": "xvc",
+      "in": 6738.5,
+      "out": 6798,
+      "status": "MINED 2026-11-22 (VTT 01:52:18.5 'So, so here's what I'm going to say' to 01:53:18.0 'the rule of five.'); he points at 'this chart right here': the screen half of the intercut; trim to taste",
+      "quote_anchor": "adopt his approach to target selection and pattern selection... the rule of four, and intraday position sizing, we're calling it the Hougaard press, and relentless attention to detail on a dozen symbols... the way I just shaped this chart right here was putting the hybrid frame on it, the rule of four or the rule of five."
+    },
+    {
+      "id": "s13a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT on his chart: Ken on his chart: adopt Eric's approach, the rule of four, the hybrid frame on this chart",
+      "toc_title": "How Eric picks his trades",
+      "source": "xvc",
+      "in": 6738.5,
+      "out": 6798,
+      "pip": true,
+      "animation_brief": "the same frozen chart; right column: the daily report (range stats, a swing trade once in a while), a rule box 'Adopt his approach' (target selection, pattern selection, the rule of four, intraday position sizing, the Hougaard press, relentless attention to detail), 12 symbol tiles, one fires a swing; at 'the way I just shaped this chart' the frame lights amber and 'the hybrid frame', 'rule of four · rule of five' land on the chart (anim_gen.py s13)",
+      "status": "twin of s13 (owner, 2026-11-22): his audio, his still top-right; the marks on the chart are his own, not labelled one by one (the window does not say which mark is which)"
+    },
+    {
+      "id": "s11",
+      "type": "cut",
+      "include": false,
+      "label": "Ken on his chart: the 40% of day-trade money, keep 70%, lather, rinse, repeat",
+      "source": "xvc",
+      "in": 6675.3,
+      "out": 6699.9,
+      "status": "MINED 2026-11-22 (VTT 01:51:15.8 'And and so the 40%' to 01:51:39.9 'whatevers that you got.'); his chart (the rule-of-four frame), one small tile top-right, no faces; the screen half of the intercut",
+      "why": "the owner's pick: a student's record the coaching produced, and the line the preview is named for",
+      "alternates": [],
+      "transition": {
+        "type": "fade",
+        "dur": 0.6
+      },
+      "toc_title": "Keep 70%. Lather, rinse, repeat.",
+      "quote_anchor": "Find the movers. Find the most volatile ones. Keep 70%. Lather, rinse, repeat. Preserve emotional resilience. Do not pay attention to news or anything. Just trade the couple patterns and whatevers that you got."
+    },
+    {
+      "id": "s11a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT on his chart: Ken on his chart: the 40% of day-trade money, keep 70%, lather, rinse, repeat",
+      "toc_title": "Keep 70%. Lather, rinse, repeat.",
+      "source": "xvc",
+      "in": 6675.3,
+      "out": 6699.9,
+      "pip": true,
+      "animation_brief": "his 10-minute chart frozen (xvc 6740 s), cropped to the chart frame, drawing tool gone; the run traced as 'a mover'; right column: 40% as 4 of 10 cells, low-risk opportunities, a rule box on his words (find the movers, the most volatile ones, keep 70% with 7 of 10 cells, lather rinse repeat, no news, the couple patterns); 'preserve emotional resilience' handwritten (anim_gen.py s11)",
+      "status": "twin of s11 (owner, 2026-11-22: his chart cropped, drawing tool removed, his key words animated on it): his audio, his still top-right; 'the 40%' is the day-trade share of the money he describes in the sentence before the window",
+      "transition": {
+        "type": "fade",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s12",
+      "type": "cut",
+      "include": false,
+      "label": "Study Eric Mo: 10 months in a row of no losing weeks, almost boring",
+      "source": "xvc",
+      "in": 6699.9,
+      "out": 6738.5,
+      "status": "MINED 2026-11-22 (VTT 01:51:39.9 'What I really want you to do' to 01:52:18.5 'where I want you to be.'); the twin s12a carries it",
+      "quote_anchor": "What I really want you to do is study Eric Mo in cohort four. He's had 10 months in a row of no losing weeks. Trading exactly this way with about a dozen symbols... 60 to 70% win rate in a given month and a payoff of 3 to one... it's almost boring for him, which is where I want you to be."
+    },
+    {
+      "id": "s14",
+      "type": "cut",
+      "include": false,
+      "label": "Past 2R: put the cap 70 on it and turn off the chart",
+      "source": "xvc",
+      "in": 6798,
+      "out": 6820.8,
+      "status": "MINED 2026-11-22 (VTT 01:53:18.0 'And just he's using 10-minute charts' to 01:53:40.8 'or exit at it close.'); the twin s14a carries it"
+    },
+    {
+      "id": "s14a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: Past 2R: put the cap 70 on it and turn off the chart",
+      "toc_title": "Past 2R: cap 70, and turn off the chart",
+      "source": "xvc",
+      "in": 6798,
+      "out": 6820.8,
+      "pip": true,
+      "animation_brief": "stage: a trade drawn as it goes, 10-min and 3-min chips then the 30 (the line calms); 2R dashed; the cap-70 line ratchets under the peak; the chart dims to 'chart off' with the cap still drawn; the close; right column his rules this session, then 'Past 2R' boxed on his words (anim_gen.py s14)",
+      "status": "twin of s14: his audio, our picture, his still top-right; the cap line is drawn at 70 % of the best open gain past 2R, his rule as stated in intraday-decision-tree-2-v2 s24 (outside this window)"
+    },
+    {
+      "id": "s20",
+      "type": "slide",
+      "include": true,
+      "label": "Griff Cooper card",
+      "slide_id": "ch2",
+      "duration": 3,
+      "layout": "chapter",
+      "text": {
+        "kicker": "Student 2",
+        "title": "**Griff Cooper**",
+        "subtitle": "one symbol, three patterns, every night",
+        "body": ""
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 1
+      }
+    },
+    {
+      "id": "s21",
+      "type": "cut",
+      "include": false,
+      "label": "Griff: one symbol, three patterns, coached every night; no losing week in 2022",
+      "source": "vti",
+      "in": 3482.2,
+      "out": 3528.8,
+      "status": "MINED 2026-11-22 (VTT 00:58:02.2 'you talked to Griff Cooper' to 00:58:48.4 'hasn't had a losing week'); the twin s21a carries it (the live frame shows the attendee strip)",
+      "quote_anchor": "I told Griff stop what you're doing, pick either Brazil or DIA, trade one of these three patterns on a three-minute bar, nothing else... and I beat the living crap out of him in public on camera every night, and in the year 2022 he hasn't had a losing month, he hasn't had a losing week.",
+      "why": "what coaching is: narrow the task, repeat it, get feedback every night",
+      "alternates": [
+        {
+          "label": "whole story, uncut, with the home-study detour (2:15)",
+          "source": "vti",
+          "in": 3482.2,
+          "out": 3616.8
+        }
+      ],
+      "animation_brief": "animate: two flags (EWZ, DIA), three pattern glyphs on a 3-minute chart, a nightly calendar ticking with a red-pen mark each night; a 2022 strip of weeks, none red; captions on 'nothing else', 'every night', 'hasn't had a losing week'",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s21a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT on his screen: Griff: one symbol, three patterns, coached every night; no losing week in 2022",
+      "source": "vti",
+      "in": 3482.2,
+      "out": 3528.8,
+      "pip": true,
+      "animation_brief": "animate: two flags (EWZ, DIA), three pattern glyphs on a 3-minute chart, a nightly calendar ticking with a red-pen mark each night; a 2022 strip of weeks, none red; captions on 'nothing else', 'every night', 'hasn't had a losing week'",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      },
+      "toc_title": "Griff Cooper: one market, three patterns, every night",
+      "status": "twin of s21: opens on his OneNote page that night (still, cropped clear of the faces) for 11 s, then the stage: Brazil or DIA, three patterns, the 3-minute bar, nothing else, the feedback loop, every night on camera, 2022 to the session's date (5 Nov) with no losing month or week; Ken's account, not checked on data"
+    },
+    {
+      "id": "s22",
+      "type": "cut",
+      "include": false,
+      "label": "Griff: follow these rules exactly until I tell you to stop; 20 hours, 10 minutes a night",
+      "source": "vti",
+      "in": 3576.6,
+      "out": 3616.8,
+      "status": "MINED 2026-11-22 (VTT 00:59:36.9 'I was just so tired of watching' to 01:00:17.0 'your mileage may vary'); the 48 s before it (home study course, Phil Wu) left out; the twin s22a carries it (the live frame shows the attendee strip)",
+      "quote_anchor": "I said follow these rules exactly until I tell you to stop, and he just became excellent at it... 20 hours of just him getting his brains beat out 10 minutes at a time every night... that's what it takes for him, your mileage may vary.",
+      "why": "the price of it, in his words, and his own caveat",
+      "animation_brief": "animate: a stopwatch of 10-minute slices filling to 1,200 minutes; '20 hours' then '24 weeks'; captions on 'follow these rules exactly until I tell you to stop', 'your mileage may vary'",
+      "transition": {
+        "type": "fade",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s22a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT on his screen: Griff: follow these rules exactly until I tell you to stop; 20 hours, 10 minutes a night",
+      "source": "vti",
+      "in": 3576.6,
+      "out": 3616.8,
+      "pip": true,
+      "animation_brief": "animate: a stopwatch of 10-minute slices filling to 1,200 minutes; '20 hours' then '24 weeks'; captions on 'follow these rules exactly until I tell you to stop', 'your mileage may vary'",
+      "transition": {
+        "type": "fade",
+        "dur": 0.6
+      },
+      "toc_title": "Follow these rules exactly: 20 hours, 120 nights",
+      "status": "twin of s22: opens on his page, then his rule boxed; at '20 hours' his own 'Josh Kaufman, the first 20 hours' line from that page; 1,200 minutes; 120 nights as 24 columns (24 weeks); your mileage may vary"
+    },
+    {
+      "id": "s90",
+      "type": "slide",
+      "include": true,
+      "label": "End card",
+      "slide_id": "end",
+      "duration": 8,
+      "layout": "end",
+      "text": {
+        "kicker": "Small Group Coaching",
+        "title": "Dr. Ken Long",
+        "subtitle": "owlgrouptrading.com",
+        "body": "Join the Small Group Coaching waitlist."
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 1
+      }
+    }
+  ]
 }
