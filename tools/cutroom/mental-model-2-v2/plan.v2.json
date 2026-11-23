@@ -1,9 +1,9 @@
 {
  "schema": "coursecraft-plan-v2",
  "course": "mental-model-2-v2",
- "revision": 8,
+ "revision": 9,
  "revised": "2026-11-22",
- "status": "rev8 (2026-11-22): every twin re-authored on the stage under the lesson rules, each headed by its question with the 'in trading:' bridge; chapter cards 2-4 and the end card carry the bridge; title card and end card use the store names; the ink build frozen in anim_gen_ink.py. rev6: transitions by the Module 1 rule (into a card fade 1.0, out of a card fade 0.6, speech that runs on cut, a jump in the tape dip 0.6); rev5: an agenda card after the title card (the parts, for the contents); BUILD rev4 (2026-11-16): the animated cut. Every twin on, its cut off (owner: 'make a complete cut with the animation and Ken in the upper right'); s11 and s16 animated; slide cards made. Sources fetched on stream; built with build_v2 under bounded-run. · 2026-11-22: toc_title set; the label is the editor's, the student reads toc_title (scripts/student_text.py)",
+ "status": "rev9 (2026-11-22): his still in the corner of every twin whose source has no camera tile (yrq, rjg, fbk, muw; owner rule: 'if the slide has no Ken video, substitute his image'). rev8 (2026-11-22): every twin re-authored on the stage under the lesson rules, each headed by its question with the 'in trading:' bridge; chapter cards 2-4 and the end card carry the bridge; title card and end card use the store names; the ink build frozen in anim_gen_ink.py. rev6: transitions by the Module 1 rule (into a card fade 1.0, out of a card fade 0.6, speech that runs on cut, a jump in the tape dip 0.6); rev5: an agenda card after the title card (the parts, for the contents); BUILD rev4 (2026-11-16): the animated cut. Every twin on, its cut off (owner: 'make a complete cut with the animation and Ken in the upper right'); s11 and s16 animated; slide cards made. Sources fetched on stream; built with build_v2 under bounded-run. · 2026-11-22: toc_title set; the label is the editor's, the student reads toc_title (scripts/student_text.py)",
  "title": "The Mental Model II: The Brain, the System, the Loop (v2)",
  "topic_class": "psychology (cut-heavy; two overdubs on cohort-only screens; no outcome, never fake one)",
  "store_sku": "mental-model-2",
@@ -27,14 +27,22 @@
    "label": "systems-thinking-overview interview (Ch2)",
    "file": "youtube-YRQLU1w_77A-systems-thinking-overview.mp4",
    "url": "https://www.youtube.com/watch?v=YRQLU1w_77A",
-   "proxy": "youtube-YRQLU1w_77A-systems-thinking-overview.proxy.mp4"
+   "proxy": "youtube-YRQLU1w_77A-systems-thinking-overview.proxy.mp4",
+   "pip": {
+    "still": "_shared/ken-still.jpg",
+    "note": "no camera tile in this source: his still stands in (owner rule 2026-11-22: 'if the slide has no Ken video, substitute his image')"
+   }
   },
   {
    "id": "rjg",
    "label": "creativity-202 review, Celia (Ch3)",
    "file": "youtube-rJg6jv24s20-creativity-202-review.mp4",
    "url": "https://www.youtube.com/watch?v=rJg6jv24s20",
-   "proxy": "youtube-rJg6jv24s20-creativity-202-review.proxy.mp4"
+   "proxy": "youtube-rJg6jv24s20-creativity-202-review.proxy.mp4",
+   "pip": {
+    "still": "_shared/ken-still.jpg",
+    "note": "no camera tile in this source: his still stands in (owner rule 2026-11-22: 'if the slide has no Ken video, substitute his image')"
+   }
   },
   {
    "id": "b9h",
@@ -52,14 +60,22 @@
    "label": "nightly strategy 2023-05-06, daily AAR (Ch4)",
    "file": "youtube-fbk3g-UCSkc-daily-aar-2023-05-06.mp4",
    "url": "https://www.youtube.com/watch?v=fbk3g-UCSkc",
-   "proxy": "youtube-fbk3g-UCSkc-daily-aar-2023-05-06.proxy.mp4"
+   "proxy": "youtube-fbk3g-UCSkc-daily-aar-2023-05-06.proxy.mp4",
+   "pip": {
+    "still": "_shared/ken-still.jpg",
+    "note": "no camera tile in this source: his still stands in (owner rule 2026-11-22: 'if the slide has no Ken video, substitute his image')"
+   }
   },
   {
    "id": "muw",
    "label": "strategies 29-37, D3A (Ch4)",
    "file": "youtube-muuwye8ozpQ-strategies-29-37.mp4",
    "url": "https://www.youtube.com/watch?v=muuwye8ozpQ",
-   "proxy": "youtube-muuwye8ozpQ-strategies-29-37.proxy.mp4"
+   "proxy": "youtube-muuwye8ozpQ-strategies-29-37.proxy.mp4",
+   "pip": {
+    "still": "_shared/ken-still.jpg",
+    "note": "no camera tile in this source: his still stands in (owner rule 2026-11-22: 'if the slide has no Ken video, substitute his image')"
+   }
   }
  ],
  "voices": [
@@ -312,7 +328,8 @@
    "transition": {
     "type": "fade",
     "dur": 0.6
-   }
+   },
+   "pip": true
   },
   {
    "id": "s11",
@@ -324,7 +341,8 @@
    "out": 245.0,
    "status": "rev8: stage under the lesson rules; bridge 'in trading: a trade goes out; its result comes back to adjust' (the mapping is his, in this window). MAPPED-VERIFIED 02:40-04:05. The screen is a shared diagram (cohort-only); animate the map to his cadence.",
    "animation_brief": "NEW system-map component: a box (input → process → output) inside a larger environment; 'you can influence the environment, it can influence you, but you can't control it' (02:55); the trade goes out, results come back as a feedback loop (03:30); the learning subsystem closes the loop (03:50).",
-   "quote_anchor": "an input, process, an output, self-contained, that's an actor inside a larger environment"
+   "quote_anchor": "an input, process, an output, self-contained, that's an actor inside a larger environment",
+   "pip": true
   },
   {
    "id": "s12",
@@ -350,7 +368,8 @@
    "transition": {
     "type": "dip",
     "dur": 0.6
-   }
+   },
+   "pip": true
   },
   {
    "id": "s13",
@@ -387,7 +406,8 @@
    "transition": {
     "type": "dip",
     "dur": 0.6
-   }
+   },
+   "pip": true
   },
   {
    "id": "s15",
@@ -413,7 +433,8 @@
    "transition": {
     "type": "dip",
     "dur": 0.6
-   }
+   },
+   "pip": true
   },
   {
    "id": "s16",
@@ -425,7 +446,8 @@
    "out": 1340.0,
    "status": "rev8: stage under the lesson rules; bridge 'in trading: day, swing, position: three systems, one meta-system' (the mapping is his, in this window). MAPPED-VERIFIED 17:20-22:20 with beat map: day/swing/position 17:20-19:20; mutual support across frames 19:20-20:40; core and turbo + 'systems have systems, a meta system' 20:40-21:20; the trader is the constant, the board of directors 21:20-22:20. Screen is his one-page strategy slide (cohort-only).",
    "animation_brief": "Stacked-frames component (exists) extended: three rows (day, swing, position) each with its own system label; arrows between rows when he describes mutual support; the rows nest into one frame at 'meta system' (20:50); a figure of the trader appears as the constant at 21:20.",
-   "quote_anchor": "systems have systems and we would call that a meta system"
+   "quote_anchor": "systems have systems and we would call that a meta system",
+   "pip": true
   },
   {
    "id": "s17",
@@ -447,7 +469,8 @@
    "include": true,
    "label": "ALT animated: Why it pays: one unified lens",
    "animation_brief": "Twin of s17: same Ken audio, drawn scene (one unified lens) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
-   "status": "rev8: stage under the lesson rules; bridge 'in trading: one view from the monthly chart down to the 1-minute' (the mapping is his, in this window). twin; pick this or s17 in the cutroom"
+   "status": "rev8: stage under the lesson rules; bridge 'in trading: one view from the monthly chart down to the 1-minute' (the mapping is his, in this window). twin; pick this or s17 in the cutroom",
+   "pip": true
   },
   {
    "id": "s18",
@@ -493,7 +516,8 @@
    "transition": {
     "type": "fade",
     "dur": 0.6
-   }
+   },
+   "pip": true
   },
   {
    "id": "s20",
@@ -515,7 +539,8 @@
    "include": true,
    "label": "ALT animated: ★ The inner trader as a calm chimpanzee; when she gives the warning, her job is done",
    "animation_brief": "Twin of s20: same Ken audio, drawn scene (the inner trader as a calm chimpanzee) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
-   "status": "rev8: stage under the lesson rules; bridge 'in trading: the chimp warns; the trading system acts on the signal' (the mapping is his, in this window). twin; pick this or s20 in the cutroom"
+   "status": "rev8: stage under the lesson rules; bridge 'in trading: the chimp warns; the trading system acts on the signal' (the mapping is his, in this window). twin; pick this or s20 in the cutroom",
+   "pip": true
   },
   {
    "id": "s21",
@@ -537,7 +562,8 @@
    "include": true,
    "label": "ALT animated: Map the process from impulse to action",
    "animation_brief": "Twin of s21: same Ken audio, drawn scene (from impulse to action) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
-   "status": "rev8: stage under the lesson rules; bridge 'in trading: filters and triggers, so a signal gets a planned act' (the mapping is his, in this window). twin; pick this or s21 in the cutroom"
+   "status": "rev8: stage under the lesson rules; bridge 'in trading: filters and triggers, so a signal gets a planned act' (the mapping is his, in this window). twin; pick this or s21 in the cutroom",
+   "pip": true
   },
   {
    "id": "s22",
@@ -590,7 +616,8 @@
    "transition": {
     "type": "dip",
     "dur": 0.6
-   }
+   },
+   "pip": true
   },
   {
    "id": "s24",
@@ -636,7 +663,8 @@
    "transition": {
     "type": "fade",
     "dur": 0.6
-   }
+   },
+   "pip": true
   },
   {
    "id": "s26",
@@ -658,7 +686,8 @@
    "include": true,
    "label": "ALT animated: Sense and respond; a signal I wasn't prepared for, I don't take",
    "animation_brief": "Twin of s26: same Ken audio, drawn scene (sense and respond) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
-   "status": "rev8: stage under the lesson rules; bridge 'in trading: an unplanned signal: no trade; study it for later' (the mapping is his, in this window). twin; pick this or s26 in the cutroom"
+   "status": "rev8: stage under the lesson rules; bridge 'in trading: an unplanned signal: no trade; study it for later' (the mapping is his, in this window). twin; pick this or s26 in the cutroom",
+   "pip": true
   },
   {
    "id": "s27",
@@ -684,7 +713,8 @@
    "transition": {
     "type": "dip",
     "dur": 0.6
-   }
+   },
+   "pip": true
   },
   {
    "id": "s28",
@@ -706,7 +736,8 @@
    "include": true,
    "label": "ALT animated: Persistent problems to the top; tell your partner; put it in writing",
    "animation_brief": "Twin of s28: same Ken audio, drawn scene (persistent problems to the top) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
-   "status": "rev8: stage under the lesson rules; bridge 'in trading: the repeat mistake is tomorrow’s number one fix' (the mapping is his, in this window). twin; pick this or s28 in the cutroom"
+   "status": "rev8: stage under the lesson rules; bridge 'in trading: the repeat mistake is tomorrow’s number one fix' (the mapping is his, in this window). twin; pick this or s28 in the cutroom",
+   "pip": true
   },
   {
    "id": "s29",
@@ -728,7 +759,8 @@
    "include": true,
    "label": "ALT animated: Then and only then: plan tomorrow, and sleep with a clear mind",
    "animation_brief": "Twin of s29: same Ken audio, drawn scene (then and only then) in the s2-intro style, captions keyed to his words. Generated by anim_gen.py.",
-   "status": "rev8: stage under the lesson rules; bridge 'in trading: close today’s review before you plan the next session' (the mapping is his, in this window). twin; pick this or s29 in the cutroom"
+   "status": "rev8: stage under the lesson rules; bridge 'in trading: close today’s review before you plan the next session' (the mapping is his, in this window). twin; pick this or s29 in the cutroom",
+   "pip": true
   },
   {
    "id": "s30",
