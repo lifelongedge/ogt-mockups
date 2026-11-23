@@ -1,0 +1,211 @@
+{
+  "schema": "coursecraft-plan-v2",
+  "course": "critical-states-v2-sales",
+  "cutroom": "critical-states-v2-sales",
+  "revision": 1,
+  "revised": "2026-11-23",
+  "status": "DRAFT rev1: a sales clip of critical-states-v2, ~120 s; the owner edits it in the cutroom",
+  "title": "Market in Critical State: sales clip",
+  "topic_class": "sales clip",
+  "store_sku": "critical-states",
+  "replaces": null,
+  "notes": "Bites end on a full sentence (word-stamped en-orig VTT read 2026-11-23). Each twin starts the parent's scene at the bite's offset, so the captions stay on his words. s07a ends 0.8 s before the political aside at 4787 (kept out of the cut).",
+  "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/critical-states-v2/",
+  "sources": [
+    {
+      "id": "wkr",
+      "label": "Daily Trading Plan 20261122 weekend report review; AI coaching (Ken Long, 2026-11-22)",
+      "file": "youtube-rq3bTCXLvIk-2026-11-22-weekend-report-review-ai-coaching.mp4",
+      "proxy": "youtube-rq3bTCXLvIk-2026-11-22-weekend-report-review-ai-coaching.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=rq3bTCXLvIk",
+      "pip": {
+        "still": "_shared/ken-still.jpg",
+        "note": "his camera is a Zoom thumbnail top-right, 77x83 px at 720p (x 1202-1279, y 0-83; measured at 4440 and 5000 s): too small to crop; the owner's still stands in (rule of 2026-11-22)"
+      }
+    }
+  ],
+  "voices": [
+    {
+      "id": "ava",
+      "label": "Ava (US, female, polished)",
+      "sample": "vo-ava.mp3"
+    }
+  ],
+  "segments": [
+    {
+      "id": "s00",
+      "type": "slide",
+      "include": true,
+      "label": "Title card",
+      "slide_id": "title",
+      "duration": 4,
+      "layout": "title",
+      "text": {
+        "kicker": "",
+        "title": "Market in **Critical State**",
+        "subtitle": "",
+        "body": "The Regression Line Fractal Framework on a heavy week\nwith Dr. Ken Long"
+      }
+    },
+    {
+      "id": "s01",
+      "type": "cut",
+      "include": false,
+      "label": "The stack: every slope down, the breaches in order, the 270 back at its own band",
+      "source": "wkr",
+      "in": 4447.7,
+      "out": 4465.2,
+      "why": "the hook: the 270 comes back to its long-term average; a very thin layer of support, statistically",
+      "status": "bite of critical-states-v2 s04 (+125.7..+143.2 s); the twin s01a carries it"
+    },
+    {
+      "id": "s01a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT on his chart: The stack: every slope down, the breaches in order, the 270 back at its own band",
+      "source": "wkr",
+      "in": 4447.7,
+      "out": 4465.2,
+      "why": "the hook: the 270 comes back to its long-term average; a very thin layer of support, statistically",
+      "anim_of": {
+        "course": "critical-states-v2",
+        "scene": "s04"
+      },
+      "animation_brief": "the critical-states-v2 s04 scene, started at its +125.7 s",
+      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
+      "toc_title": "The four lines, and the 270's own band",
+      "pip": true
+    },
+    {
+      "id": "s02",
+      "type": "cut",
+      "include": false,
+      "label": "The 270 times nine is a 2,500-day regression line: that is what fractal means",
+      "source": "wkr",
+      "in": 5214.0,
+      "out": 5235.8,
+      "why": "the line the course is named for: each line times three, read identically; that's what fractal means",
+      "status": "bite of critical-states-v2 s14 (+59.0..+80.8 s); the twin s02a carries it"
+    },
+    {
+      "id": "s02a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT on his chart: The 270 times nine is a 2,500-day regression line: that is what fractal means",
+      "source": "wkr",
+      "in": 5214.0,
+      "out": 5235.8,
+      "why": "the line the course is named for: each line times three, read identically; that's what fractal means",
+      "anim_of": {
+        "course": "critical-states-v2",
+        "scene": "s14"
+      },
+      "animation_brief": "the critical-states-v2 s14 scene, started at its +59.0 s",
+      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
+      "toc_title": "Times three: that is what fractal means",
+      "pip": true
+    },
+    {
+      "id": "s03",
+      "type": "cut",
+      "include": false,
+      "label": "A student asks; the five mice on the nine-day; who is selling now",
+      "source": "wkr",
+      "in": 5351.1,
+      "out": 5378.3,
+      "why": "the five mice mapped on the last run: first, second, third, fourth; who takes profits, who gets punished",
+      "status": "bite of critical-states-v2 s16 (+77.1..+104.3 s); the twin s03a carries it"
+    },
+    {
+      "id": "s03a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT on his chart: A student asks; the five mice on the nine-day; who is selling now",
+      "source": "wkr",
+      "in": 5351.1,
+      "out": 5378.3,
+      "why": "the five mice mapped on the last run: first, second, third, fourth; who takes profits, who gets punished",
+      "anim_of": {
+        "course": "critical-states-v2",
+        "scene": "s16"
+      },
+      "animation_brief": "the critical-states-v2 s16 scene, started at its +77.1 s",
+      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
+      "toc_title": "The five mice on the nine-day",
+      "pip": true
+    },
+    {
+      "id": "s04",
+      "type": "cut",
+      "include": false,
+      "label": "The Regression Line Fractal Framework is an engineering specification",
+      "source": "wkr",
+      "in": 5944.7,
+      "out": 5969.0,
+      "why": "traders against buy-and-hold: the 10 against the 270, whether T is one minute or nine days",
+      "status": "bite of critical-states-v2 s22 (+39.7..+64.0 s); the twin s04a carries it"
+    },
+    {
+      "id": "s04a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT on his chart: The Regression Line Fractal Framework is an engineering specification",
+      "source": "wkr",
+      "in": 5944.7,
+      "out": 5969.0,
+      "why": "traders against buy-and-hold: the 10 against the 270, whether T is one minute or nine days",
+      "anim_of": {
+        "course": "critical-states-v2",
+        "scene": "s22"
+      },
+      "animation_brief": "the critical-states-v2 s22 scene, started at its +39.7 s",
+      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
+      "toc_title": "The framework as an engineering specification",
+      "pip": true
+    },
+    {
+      "id": "s05",
+      "type": "cut",
+      "include": false,
+      "label": "Price pulls away from the RL10; the four lines chase it; the fractal framework",
+      "source": "wkr",
+      "in": 4768.1,
+      "out": 4786.2,
+      "why": "the end: I don't know, I don't care; I know how to trade this short-term volatility and my long-term money is protected",
+      "status": "bite of critical-states-v2 s07 (+131.1..+149.2 s); the twin s05a carries it"
+    },
+    {
+      "id": "s05a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT on his chart: Price pulls away from the RL10; the four lines chase it; the fractal framework",
+      "source": "wkr",
+      "in": 4768.1,
+      "out": 4786.2,
+      "why": "the end: I don't know, I don't care; I know how to trade this short-term volatility and my long-term money is protected",
+      "anim_of": {
+        "course": "critical-states-v2",
+        "scene": "s07"
+      },
+      "animation_brief": "the critical-states-v2 s07 scene, started at its +131.1 s",
+      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
+      "toc_title": "The four lines chase price; the fractal framework",
+      "pip": true
+    },
+    {
+      "id": "s06",
+      "type": "slide",
+      "include": true,
+      "label": "End card",
+      "slide_id": "end",
+      "duration": 8,
+      "layout": "end",
+      "text": {
+        "kicker": "",
+        "title": "Market in Critical State",
+        "subtitle": "owlgrouptrading.com",
+        "body": "Seven chapters, about 30 minutes, with Dr. Ken Long."
+      }
+    }
+  ]
+}
