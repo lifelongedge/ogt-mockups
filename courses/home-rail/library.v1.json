@@ -1,0 +1,48 @@
+{
+  "schema": "ogt-home-rail-library-v1",
+  "revised": "2026-11-22",
+  "note": "The home page's rotating clip library, proposed. edge-ogt-engine reads a copy of this file (approved clips only ship); ogt-coursecraft authors the clips and delivers mp4 + poster + captions to the course bucket under rail/; growogtx flips `approved` after the owner's word. `rung` is the trust-ladder step the clip answers: 1 who is this · 2 is it real · 3 is he honest · 4 someone like me · 5 what it does to my life · 6 what it costs to find out. `rights`: ken = Ken's own recording; sta = the Society of Technical Analysts' recording (one permission ask covers both STA sources).",
+  "rungs": {
+    "1": "Who is this? Others vouch for him on tape.",
+    "2": "Is it real? His own screens, his own trades, a free chapter.",
+    "3": "Is he honest? He says what does not work.",
+    "4": "Is it for someone like me? Students in their own words.",
+    "5": "What will it do to my life? The family-future beat.",
+    "6": "What does it cost to find out? Free chapter, $19.97 to $79, the daily note."
+  },
+  "cta_default": {"label": "Start with a free chapter", "href": "/store#free-chapter"},
+  "clips": [
+    {"id": "rail-01", "title": "John Bollinger on Ken Long's charts", "kind": "collage: verbatim + cards", "source": "STA fireside clip 1:18.0 to 2:08.3; facts card; testimonial credibility-and-integrity", "seconds": 76, "rung": [1, 3], "rights": "sta", "cta": "/store#free-chapter", "poster_line": "“A better chance you've got something really robust on your hands.” John Bollinger", "state": "in the cutroom (ken-rail)", "approved": false, "weight": 3},
+    {"id": "rail-02", "title": "His dad's retirement account", "kind": "collage: animated twin + cards", "source": "STA one-on-one 1:01:07 to 1:01:44 (+ React, don't predict 45:28 to 46:06 optional); testimonial system-that-fits-me", "seconds": 60, "rung": [5, 2], "rights": "sta", "cta": "/store#free-chapter", "poster_line": "“I had his entire retirement account in a position.”", "state": "in the cutroom (ken-rail)", "approved": false, "weight": 3},
+    {"id": "rail-03", "title": "I don't try to eliminate the monkey", "kind": "collage: animated twin + card", "source": "STA one-on-one 1:03:57 to 1:04:23; testimonial chaos-to-craftsmanship", "seconds": 47, "rung": [3, 4], "rights": "sta", "cta": "/store#free-chapter", "poster_line": "“Most of them don't work, but some of them do.”", "state": "in the cutroom (ken-rail)", "approved": false, "weight": 2},
+    {"id": "short-01", "title": "React. Don't predict.", "kind": "animated twin", "source": "STA one-on-one 45:28 to 46:06", "seconds": 46, "rung": [3], "rights": "sta", "cta": "/store/disciplined-operator#free-chapter", "state": "in the cutroom (ken-shorts rev 2)", "approved": false, "weight": 1},
+    {"id": "short-02", "title": "The bookstore", "kind": "animated twins + facts card", "source": "STA one-on-one 11:49, 15:49, 2:42, 4:41", "seconds": 150, "rung": [1], "rights": "sta", "cta": "/store#free-chapter", "state": "in the cutroom (ken-shorts rev 2)", "approved": false, "weight": 1},
+    {"id": "jb-01", "title": "John Bollinger on Ken Long's charts (full)", "kind": "verbatim, captioned twin available", "source": "gs://ogt-media-clips/bollinger-on-ken-long.mp4", "seconds": 134, "rung": [1], "rights": "sta", "cta": "/store#free-chapter", "state": "LIVE as the third card since 2026-11-20; Ken approved; STA ask unsent", "approved": true, "weight": 2},
+    {"id": "trailer-mmt1", "title": "Mental Model for Traders, Part 1: trailer", "kind": "course trailer: his words, the course's pictures", "source": "gs://courses.owlgrouptrading.com/c-mmt1.sales.mp4", "seconds": 120, "rung": [2], "rights": "ken", "cta": "/store/mental-model#free-chapter", "sku": "mental-model", "state": "rendered (ink build); the stage rebuild is rev 8, not built", "approved": false, "weight": 2},
+    {"id": "trailer-mmt2", "title": "Mental Model for Traders, Part 2: trailer", "kind": "course trailer", "source": "gs://courses.owlgrouptrading.com/c-mmt2.sales.mp4", "seconds": 120, "rung": [2], "rights": "ken", "cta": "/store/mental-model-2#free-chapter", "sku": "mental-model-2", "state": "rendered", "approved": false, "weight": 2},
+    {"id": "trailer-idt1", "title": "Intraday Decision Tree, Part 1: trailer", "kind": "course trailer", "source": "gs://courses.owlgrouptrading.com/c-idt1.sales.mp4", "seconds": 120, "rung": [2], "rights": "ken", "cta": "/store/intraday-decision-tree#free-chapter", "sku": "intraday-decision-tree", "state": "rendered", "approved": false, "weight": 2},
+    {"id": "trailer-idt2", "title": "Intraday Decision Tree, Part 2: trailer", "kind": "course trailer", "source": "gs://courses.owlgrouptrading.com/c-idt2.sales.mp4", "seconds": 120, "rung": [2], "rights": "ken", "cta": "/store/intraday-decision-tree-2#free-chapter", "sku": "intraday-decision-tree-2", "state": "rendered", "approved": false, "weight": 2},
+    {"id": "trailer-do2", "title": "The Disciplined Operator: trailer", "kind": "course trailer (stage style)", "source": "gs://courses.owlgrouptrading.com/c-do2.sales.mp4", "seconds": 120, "rung": [2, 3], "rights": "ken", "cta": "/store/disciplined-operator#free-chapter", "sku": "disciplined-operator", "state": "rendered 2026-11-22 (v2 rev 10)", "approved": false, "weight": 3},
+    {"id": "trailer-swing", "title": "Swing Trading Logic: trailer", "kind": "course trailer", "source": "gs://courses.owlgrouptrading.com/_cutroom/swing-logic-v2-sales/swing-logic-v2-sales-rev3.mp4", "seconds": 120, "rung": [2], "rights": "ken", "cta": "/store/swing-logic#free-chapter", "sku": "swing-logic", "state": "rev 3 in the cutroom", "approved": false, "weight": 1},
+    {"id": "v17-cat", "title": "Twenty-five years in the Army, twenty-three teaching", "kind": "verbatim, his own channel", "source": "gs://ogt-media-clips/v17-cat-credentials.mp4 (Consensual Assessment Technique video, 0:00 to 1:30)", "seconds": 90, "rung": [1], "rights": "ken", "cta": "/store#free-chapter", "state": "cut 2026-03-19, never reviewed by the owner; the YouTube original is private", "approved": false, "weight": 1},
+    {"id": "v13-ecosystem", "title": "What we teach and why: the one-page ecosystem", "kind": "verbatim, his own channel", "source": "gs://ogt-media-clips/v13-ecosystem-overview.mp4", "seconds": 90, "rung": [2], "rights": "ken", "cta": "/store#free-chapter", "state": "cut 2026-03-19, never reviewed", "approved": false, "weight": 1},
+    {"id": "cards-testimonials", "title": "Ten approved trader testimonials as 8-second cards", "kind": "cards, intercut into any collage", "source": "edge-ogt-engine site_pages.py _TESTIMONIALS (verbatim excerpts, attributions as approved)", "seconds": 8, "rung": [4, 5], "rights": "ogt", "state": "three rendered in ken-rail (t1, t2, t3)", "approved": false, "weight": 0},
+    {"id": "todo-why-i-teach", "title": "Why I teach (to mine from Ken-owned sources, not the STA)", "kind": "verbatim or twin", "source": "candidates: Ecosystem Part 2 (V14, military background), SGC cohort sessions, the Hougaard R session", "seconds": 60, "rung": [1, 5], "rights": "ken", "state": "to cut", "approved": false, "weight": 0},
+    {"id": "todo-student-on-camera", "title": "A student on camera (ask Trader BL / HT / ET)", "kind": "verbatim", "source": "none yet; the ten written testimonials are the pool", "seconds": 45, "rung": [4], "rights": "student", "state": "ask", "approved": false, "weight": 0}
+  ],
+  "rotation": {
+    "first_visit": "a rung-1 clip (who is this); the Bollinger collage while approved alone",
+    "return_visit": "the next rung the visitor has not seen, from the cookie; never the same clip twice until the library is exhausted",
+    "after_50pct": "the up-next strip leads with the matching course trailer (rung 2) so the next click is a product",
+    "unapproved": "never served; ?rail=<id> previews one clip for the owner",
+    "retire": "after 500 impressions a clip in the bottom third on revenue per 100 impressions (then CTA rate) leaves the rotation; the next approved clip takes its slot; reviewed monthly in the growth report"
+  },
+  "events": {
+    "clip_impression": {"clip_id": "", "slot": "hero | next", "pos": 0, "first_visit": true},
+    "video_play": "existing (ogt:event bus)",
+    "video_progress": {"clip_id": "", "pct": "25 | 50 | 75"},
+    "video_end": "existing",
+    "clip_cta_click": {"clip_id": "", "target": "", "pct_watched": 0},
+    "cookie": "ogt_rail = {first, last, plays}; carried on free_chapter_request, buy_now_click and into Stripe metadata as rail_clip (the ogt_ab pattern)"
+  }
+}

@@ -1,0 +1,366 @@
+{
+  "schema": "coursecraft-plan-v2",
+  "course": "ken-rail-v1",
+  "cutroom": "ken-rail",
+  "revision": 1,
+  "revised": "2026-11-22",
+  "status": "DRAFT rev1: three home-rail clips (the rotating library's first entries) in one cutroom for the owner's pass; each rail ends on the store card",
+  "title": "Dr. Ken Long: three clips for the home rail",
+  "topic_class": "home rail",
+  "store_sku": null,
+  "replaces": "the Daily Trading Plan card on the home page (owner 2026-11-22: it is him doing what he does, it does not sell)",
+  "notes": "2026-11-22 (owner: a short clip or collage to replace the Daily Trading Plan card; rotating clips from a library we author and approve; verbatim and animated; designed to make a stranger want to follow him; testimonials used; the CTA to the store). Three rails in one cutroom, the ken-shorts pattern: Rail 1 'Vouched for' (John Bollinger on his charts, the host's facts, a student on his lack of hype); Rail 2 'His dad's retirement account' (the night he could not sleep, a student on her financial future, react-don't-predict as the method beat); Rail 3 'The monkey' (I don't try to eliminate the monkey). Every window read off the cues (kenlong-transcripts raw-vtt for the STA one-on-one, growogtx captions-clean.srt for the Bollinger clip); edges on full sentences; the owner trims to breath. Testimonial cards quote the approved testimonials in edge-ogt-engine site_pages.py word for word, with their attributions; no card paraphrases him or promises an outcome. Both recordings are the Society of Technical Analysts' (the fireside and the one-on-one): one permission ask covers both before any rail goes on the public page; the Bollinger card is already live with that ask unsent. Rails 1 and 2 reuse the ken-shorts twins (s31 the dad, s11 react) with a head question, an in-trading bridge and a focus ring added for the stage; Rail 3 draws a new scene. Transitions by rule (cutroom-24). Media streams from the ken-shorts folder (the STA proxy is already there); the Bollinger proxy is uploaded beside it. Render per rail is a build_v2 question (one mp4 per chapter card) still open from ken-shorts.",
+  "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/ken-shorts/",
+  "sources": [
+    {
+      "id": "sta",
+      "label": "STA one-on-one with Dr. Ken Long (YouTube copy of the Vimeo recording, 1 h 31)",
+      "file": "youtube--i6j5xPw1OU-sta-interview.mp4",
+      "proxy": "youtube--i6j5xPw1OU-sta-interview.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=-i6j5xPw1OU",
+      "pip": {
+        "crop": "iw*0.497:ih*0.497:0:ih*0.258",
+        "note": "two-up Zoom inside the STA frame, Ken's tile on the left for the whole session (checked at 190, 720, 2740, 3680 s); the STA mark sits above both tiles"
+      }
+    },
+    {
+      "id": "jb",
+      "label": "John Bollinger on Ken Long's charts (growogtx clip of the STA fireside, 2:14; clip time)",
+      "file": "clip-bollinger-on-ken-long.mp4",
+      "url": "https://www.youtube.com/watch?v=azG7CCoE-6I",
+      "note": "edge-growogtx/media/clips/bollinger-on-ken-long: title card 0-4 s, tape 4-128.3 s (source 40:49-42:54), end card to 134 s. Captions in clip time (captions-clean.srt). The STA's recording; reuse to confirm with the STA.",
+      "proxy": "clip-bollinger-on-ken-long.proxy.mp4"
+    }
+  ],
+  "voices": [],
+  "segments": [
+    {
+      "id": "r00",
+      "type": "slide",
+      "include": true,
+      "label": "Title card (review only)",
+      "slide_id": "title",
+      "duration": 4,
+      "layout": "title",
+      "text": {
+        "kicker": "For review",
+        "title": "**Dr. Ken Long**",
+        "subtitle": "three clips for the home rail",
+        "body": "Sources: the Society of Technical Analysts fireside with John Bollinger; the STA one-on-one with Dr. Ken Long"
+      }
+    },
+    {
+      "id": "r10",
+      "type": "slide",
+      "include": true,
+      "label": "Rail 1 card",
+      "slide_id": "ch1",
+      "duration": 3,
+      "layout": "chapter",
+      "text": {
+        "kicker": "Rail 1 of 3",
+        "title": "**John Bollinger** on Ken Long's charts",
+        "subtitle": "Society of Technical Analysts fireside",
+        "body": ""
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 1.0
+      }
+    },
+    {
+      "id": "r11",
+      "type": "cut",
+      "include": true,
+      "label": "Bollinger: I looked at a couple of his charts ... something really robust on your hands",
+      "toc_title": "John Bollinger on Ken Long's charts",
+      "source": "jb",
+      "in": 78.0,
+      "out": 128.3,
+      "status": "MINED 2026-11-22 (captions-clean.srt 01:18.0 to 02:08.3, the tape's end). Verbatim, no twin: it is Bollinger speaking, the STA frame stays. Alternate: two bites that skip the Wyckoff aside.",
+      "quote_anchor": "To point out something about your friend Ken Long: I looked at a couple of his charts ... my favorite classic technical analyst is Richard Wyckoff. Several of the ideas that he was talking about would be intuitively correct to people who have studied Wyckoff. So I really like that ... you know that there's a better chance that you've got something really robust on your hands.",
+      "why": "The first rung of trust: someone the viewer already knows vouches for him, on tape, unprompted.",
+      "alternates": [
+        {
+          "label": "shorter: two bites, 78.0-84.9 then 101.5-128.3 (34 s; the first ends on a comma)",
+          "source": "jb",
+          "in": 101.5,
+          "out": 128.3
+        }
+      ],
+      "transition": {
+        "type": "fade",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "r12",
+      "type": "slide",
+      "include": true,
+      "label": "Facts card (the host's words on tape, from ken-shorts s25)",
+      "slide_id": "facts1",
+      "duration": 6,
+      "layout": "chapter",
+      "text": {
+        "kicker": "In the host's words",
+        "title": "Dr. Ken Long",
+        "subtitle": "",
+        "body": "25 years US Army, retired lieutenant colonel\nAssociate professor, US Army Command and General Staff College\nTaught at the Van Tharp Institute from 2009\nFounder, Tortoise Capital"
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 1.0
+      }
+    },
+    {
+      "id": "r13",
+      "type": "slide",
+      "include": true,
+      "label": "Testimonial card: credibility-and-integrity (site_pages.py, verbatim excerpt)",
+      "slide_id": "t1",
+      "duration": 8,
+      "layout": "prose",
+      "text": {
+        "kicker": "A student in the Owl Group",
+        "title": "“I've been burned by glossy trading programs before. What drew me to Ken was his honesty and his complete lack of hype.”",
+        "subtitle": "Owl Group student",
+        "body": ""
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "r14",
+      "type": "slide",
+      "include": true,
+      "label": "End card 1 (the store)",
+      "slide_id": "end1",
+      "duration": 6,
+      "layout": "end",
+      "text": {
+        "kicker": "",
+        "title": "Start with a free chapter",
+        "subtitle": "owlgrouptrading.com/store",
+        "body": "Chapter 1 of any course, free. His daily note comes with it."
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 1.0
+      }
+    },
+    {
+      "id": "r20",
+      "type": "slide",
+      "include": true,
+      "label": "Rail 2 card",
+      "slide_id": "ch2",
+      "duration": 3,
+      "layout": "chapter",
+      "text": {
+        "kicker": "Rail 2 of 3",
+        "title": "**His dad's** retirement account",
+        "subtitle": "",
+        "body": ""
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 1.0
+      }
+    },
+    {
+      "id": "r21",
+      "type": "cut",
+      "include": false,
+      "label": "The night he could not sleep",
+      "toc_title": "His dad's retirement account",
+      "source": "sta",
+      "in": 3667.2,
+      "out": 3704.3,
+      "status": "MINED 2026-11-21 for ken-shorts s31 (VTT 01:01:07 to 01:01:44); re-read 2026-11-22; the twin r21a carries it",
+      "quote_anchor": "my existential moment was when my dad, who trusted me beyond all reason ... I had his entire retirement account in a position because I thought it was going to go up tomorrow ... I've got more than 100 percent of his retirement in that position and I couldn't sleep the rest of the night, and what I learned was that I have to make long-term decisions based on my pessimistic nature",
+      "why": "The custodian-of-the-family beat in his own life, and the reason he became systematic. Nothing we could write would carry it."
+    },
+    {
+      "id": "r21a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: The night he could not sleep",
+      "toc_title": "His dad's retirement account",
+      "source": "sta",
+      "in": 3667.2,
+      "out": 3704.3,
+      "pip": true,
+      "animation_brief": "ken-shorts s31 scene on the stage with a head question, the in-trading bridge and a focus ring; see anim_gen.py",
+      "status": "twin of r21: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
+      "transition": {
+        "type": "fade",
+        "dur": 0.6
+      },
+      "alternates": [
+        {
+          "label": "shorter: from 'my existential moment' to 'the rest of the night' (27 s)",
+          "source": "sta",
+          "in": 3669.4,
+          "out": 3696.2
+        }
+      ]
+    },
+    {
+      "id": "r22",
+      "type": "slide",
+      "include": true,
+      "label": "Testimonial card: system-that-fits-me (site_pages.py, verbatim excerpt)",
+      "slide_id": "t2",
+      "duration": 8,
+      "layout": "prose",
+      "text": {
+        "kicker": "A trader in the Owl Group",
+        "title": "“The RLCO and MACD season tools have helped me protect capital and confidently ride the markets. I finally feel in control of my financial future.”",
+        "subtitle": "Trader HT",
+        "body": ""
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "r23",
+      "type": "cut",
+      "include": false,
+      "label": "I've learned to not predict (the method beat; drop if the rail runs long)",
+      "toc_title": "React. Don't predict.",
+      "source": "sta",
+      "in": 2727.8,
+      "out": 2766.0,
+      "status": "MINED 2026-11-21 for ken-shorts s11 (VTT 00:45:28 to 00:46:04); the twin r23a carries it",
+      "quote_anchor": "I've learned to not predict, not have a directional bias. I've learned to take the emotional loss of the complete trade at the moment of entry ... any exit that's better than a loss of the whole position is still a positive feeling for me. So I've learned to incorporate my monkey nature and my emotions in that way, and that allows me to be systematic.",
+      "why": "After the night he could not sleep: what he does instead. Optional; Rail 2 stands without it at about 60 s."
+    },
+    {
+      "id": "r23a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: I've learned to not predict",
+      "toc_title": "React. Don't predict.",
+      "source": "sta",
+      "in": 2727.8,
+      "out": 2766.0,
+      "pip": true,
+      "animation_brief": "ken-shorts s11 scene on the stage with a head question, the in-trading bridge and a focus ring; see anim_gen.py",
+      "status": "twin of r23; the owner picks one of the pair, or drops both",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "r24",
+      "type": "slide",
+      "include": true,
+      "label": "End card 2 (the store)",
+      "slide_id": "end2",
+      "duration": 6,
+      "layout": "end",
+      "text": {
+        "kicker": "",
+        "title": "Start with a free chapter",
+        "subtitle": "owlgrouptrading.com/store",
+        "body": "Chapter 1 of any course, free. His daily note comes with it."
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 1.0
+      }
+    },
+    {
+      "id": "r30",
+      "type": "slide",
+      "include": true,
+      "label": "Rail 3 card",
+      "slide_id": "ch3",
+      "duration": 3,
+      "layout": "chapter",
+      "text": {
+        "kicker": "Rail 3 of 3",
+        "title": "**The monkey**",
+        "subtitle": "",
+        "body": ""
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 1.0
+      }
+    },
+    {
+      "id": "r31",
+      "type": "cut",
+      "include": false,
+      "label": "I don't try to eliminate the monkey",
+      "toc_title": "I don't try to eliminate the monkey",
+      "source": "sta",
+      "in": 3836.9,
+      "out": 3863.6,
+      "status": "MINED 2026-11-22 (VTT 01:03:57 to 01:04:23; cue 3837.0 'Lesson learned was not so much this system versus that system', cue 3860.8 ends 'helped me with risk' before 'I see a question'); the twin r31a carries it",
+      "quote_anchor": "Lesson learned was not so much this system versus that system, but really to accommodate the internal dialogue and the emotional nature of trade. I don't try to eliminate the monkey. The monkey is the source of my inspirations and intuitions. Most of them don't work, but some of them do. And so finding a way to cherish and accommodate that helped me with risk.",
+      "why": "The anti-hype rung: a teacher who says most of his own ideas don't work. The line growogtx's clip assessment called the best in the tape."
+    },
+    {
+      "id": "r31a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: I don't try to eliminate the monkey",
+      "toc_title": "I don't try to eliminate the monkey",
+      "source": "sta",
+      "in": 3836.9,
+      "out": 3863.6,
+      "pip": true,
+      "animation_brief": "new stage scene: two systems crossed out, the monkey kept beside the trader, its ideas as bulbs (most dark, some lit), his rule boxed, the risk box it feeds; see anim_gen.py",
+      "status": "twin of r31: his audio, our picture, his tile top-right; the owner picks one of the pair in the cutroom",
+      "transition": {
+        "type": "fade",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "r32",
+      "type": "slide",
+      "include": true,
+      "label": "Testimonial card: chaos-to-craftsmanship (site_pages.py, verbatim excerpt)",
+      "slide_id": "t3",
+      "duration": 8,
+      "layout": "prose",
+      "text": {
+        "kicker": "A trader in the Owl Group",
+        "title": "“Trading used to feel like gambling. Then I found Ken's systems. It isn't about brilliance. It's about process.”",
+        "subtitle": "Trader BL",
+        "body": ""
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "r33",
+      "type": "slide",
+      "include": true,
+      "label": "End card 3 (the store)",
+      "slide_id": "end3",
+      "duration": 6,
+      "layout": "end",
+      "text": {
+        "kicker": "",
+        "title": "Start with a free chapter",
+        "subtitle": "owlgrouptrading.com/store",
+        "body": "Chapter 1 of any course, free. His daily note comes with it."
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 1.0
+      }
+    }
+  ]
+}

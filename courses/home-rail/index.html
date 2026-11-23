@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Home Rail</title>
+<meta name="description" content="owlgrouptrading.com home page: the three video cards replaced by one rotating clip above the fold, the library behind it, the trust ladder it climbs, the tracking that scores each clip, and the three first rails in the cutroom.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0d1117; --bg-topbar:#080b10; --card:#161b22; --card-hover:#1c2128; --card-border:#21262d;
+    --text:#e6edf3; --text-muted:#8b949e; --text-dim:#6e7681;
+    --amber:#d4940a; --amber-glow:rgba(212,148,10,.15); --gold:#d4a559; --accent:#58a6ff;
+    --red:#f85149; --green:#3fb950; --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  }
+  [data-theme="light"] { --bg:#f6f8fa; --bg-topbar:#ffffff; --card:#ffffff; --card-hover:#f3f4f6; --card-border:#d0d7de;
+    --text:#1f2328; --text-muted:#656d76; --text-dim:#8b949e; --amber:#9a6a1f; --gold:#9a6a1f; --amber-glow:rgba(154,106,31,.12); }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; line-height:1.5; }
+  .wrap { max-width:1320px; margin:0 auto; padding:24px 16px 80px; }
+  h1 { font-family:Georgia,serif; font-weight:400; font-size:32px; margin:0 0 6px; }
+  h2 { font-family:Georgia,serif; font-weight:400; font-size:24px; margin:0 0 4px; }
+  h3 { font-size:16px; font-weight:600; margin:18px 0 6px; }
+  .lede { color:var(--text-muted); max-width:860px; margin:0 0 14px; font-size:16px; }
+  .num { font-family:var(--mono); color:var(--gold); font-size:12px; letter-spacing:.12em; text-transform:uppercase; }
+  .claim { color:var(--gold); font-style:italic; font-family:Georgia,serif; font-size:17px; margin:0 0 14px; }
+  .bar { position:sticky; top:0; z-index:5; background:var(--bg); border-bottom:1px solid var(--card-border); padding:10px 0; margin-bottom:26px; display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+  .bar .tg { background:var(--card); color:var(--text); border:1px solid var(--card-border); border-radius:6px; padding:6px 12px; font-size:13px; cursor:pointer; }
+  .bar .nav { display:flex; gap:8px; flex-wrap:wrap; }
+  .bar .nav a { color:var(--text-muted); font-size:12px; text-decoration:none; padding:4px 9px; border:1px solid var(--card-border); border-radius:12px; }
+  .bar .nav a:hover { color:var(--gold); border-color:var(--gold); }
+  section.opt { margin:0 0 54px; padding-top:8px; scroll-margin-top:70px; }
+  .quote { border-left:3px solid var(--gold); padding:6px 16px; color:var(--text-muted); font-style:italic; margin:10px 0 18px; max-width:900px; }
+  .grid2 { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:18px; }
+  .grid3 { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px; }
+  .card { background:var(--card); border:1px solid var(--card-border); border-radius:8px; padding:16px 18px; }
+  .card h4 { margin:0 0 6px; font-size:15px; }
+  .card p { margin:0 0 6px; font-size:13.5px; color:var(--text-muted); }
+  .shot { background:#000; border:1px solid var(--card-border); border-radius:6px; overflow:hidden; }
+  .shot img { display:block; width:100%; height:auto; }
+  .cap { font-size:12.5px; color:var(--text-dim); margin:6px 2px 0; }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  th, td { text-align:left; padding:8px 10px; border-bottom:1px solid var(--card-border); vertical-align:top; }
+  th { color:var(--text-dim); font-weight:600; font-size:12px; text-transform:uppercase; letter-spacing:.06em; }
+  td.m, th.m { font-family:var(--mono); font-size:12px; white-space:nowrap; }
+  .tag { display:inline-block; font-family:var(--mono); font-size:11px; padding:1px 7px; border-radius:10px; border:1px solid var(--card-border); color:var(--text-muted); margin-right:4px; }
+  .tag.ken { border-color:var(--green); color:var(--green); } .tag.sta { border-color:var(--amber); color:var(--amber); } .tag.live { border-color:var(--accent); color:var(--accent); } .tag.ask { border-color:var(--red); color:var(--red); }
+  pre { background:#0b0e13; border:1px solid var(--card-border); border-radius:6px; padding:12px 14px; font-family:var(--mono); font-size:12px; overflow:auto; color:#cdd6e0; }
+  [data-theme="light"] pre { background:#f0f2f5; color:#1f2328; }
+  .ladder { display:grid; grid-template-columns:48px 1fr 1fr 1fr; gap:0; border:1px solid var(--card-border); border-radius:8px; overflow:hidden; }
+  .ladder > div { padding:12px 14px; border-bottom:1px solid var(--card-border); font-size:13.5px; }
+  .ladder > div:nth-child(-n+4) { background:var(--card); color:var(--text-dim); font-size:12px; text-transform:uppercase; letter-spacing:.06em; }
+  .ladder .r { font-family:var(--mono); color:var(--gold); font-size:18px; }
+  .ladder .q { font-family:Georgia,serif; font-size:16px; }
+  .dec { counter-reset:d; }
+  .dec .card { margin-bottom:10px; }
+  .dec .card h4::before { counter-increment:d; content:counter(d) ". "; color:var(--gold); font-family:var(--mono); }
+  .rec { color:var(--green); font-weight:600; }
+  .flag { color:var(--red); font-weight:600; }
+
+  /* ---------- the proposed fold, a working replica of the site chrome ---------- */
+  .site { border:1px solid var(--card-border); border-radius:8px; overflow:hidden; background:var(--bg); }
+  .site .top { display:flex; align-items:center; gap:10px; padding:10px 18px; background:var(--bg-topbar); border-bottom:1px solid var(--card-border); font-size:13px; }
+  .site .top .brand { font-weight:700; font-size:15px; } .site .top .by { color:var(--text-dim); font-size:12px; }
+  .site .top .links { margin-left:auto; display:flex; gap:14px; color:var(--text-muted); font-size:12.5px; }
+  .site .top .links span.on { color:var(--accent); }
+  .site .owlmark { width:26px; height:26px; border-radius:50%; background:radial-gradient(circle at 50% 40%, #f0c419 0 22%, #2b2b2b 24% 100%); box-shadow:0 0 0 1px var(--card-border); }
+  .fold { position:relative; padding:34px 28px 26px; background:linear-gradient(180deg,var(--bg-topbar) 0%,var(--bg) 100%); overflow:hidden; }
+  .fold::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 30% 0%, var(--amber-glow) 0%, transparent 55%); pointer-events:none; }
+  .fold .cols { position:relative; display:grid; grid-template-columns:minmax(0,1.25fr) minmax(0,1fr); gap:32px; align-items:center; }
+  .player { position:relative; background:#000; aspect-ratio:16/9; border-radius:8px; overflow:hidden; border:1px solid var(--card-border); box-shadow:0 10px 40px rgba(0,0,0,.45); }
+  .player video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
+  .player .poster { position:absolute; inset:0; background-size:cover; background-position:center; }
+  .player .poster::after { content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,0) 35%, rgba(0,0,0,.78) 100%); }
+  .player .pline { position:absolute; left:18px; right:92px; bottom:16px; color:#fff; font-family:Georgia,serif; font-size:clamp(14px,1.6vw,21px); line-height:1.3; text-shadow:0 1px 6px rgba(0,0,0,.8); z-index:2; }
+  .player .pline small { display:block; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; font-size:12px; color:#d0d7de; margin-top:4px; font-style:normal; }
+  .player .play { position:absolute; right:18px; bottom:16px; width:56px; height:56px; border-radius:50%; background:var(--amber); border:0; cursor:pointer; z-index:3; display:grid; place-items:center; box-shadow:0 4px 18px rgba(0,0,0,.5); }
+  .player .play::after { content:''; width:0; height:0; border-left:18px solid #111; border-top:11px solid transparent; border-bottom:11px solid transparent; margin-left:4px; }
+  .player.playing .poster, .player.playing .pline, .player.playing .play { display:none; }
+  .player .srctag { position:absolute; left:12px; top:10px; z-index:2; font-size:11px; color:#d0d7de; background:rgba(0,0,0,.45); padding:2px 8px; border-radius:10px; }
+  .dots { display:flex; gap:6px; margin-top:10px; align-items:center; }
+  .dots i { width:22px; height:3px; background:var(--card-border); border-radius:2px; display:block; }
+  .dots i.on { background:var(--amber); }
+  .dots .lbl { margin-left:auto; font-size:12px; color:var(--text-dim); font-family:var(--mono); }
+  .copy .eyebrow { font-family:var(--mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--gold); margin-bottom:10px; }
+  .copy h1 { font-size:clamp(24px,2.6vw,36px); line-height:1.15; margin:0 0 14px; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; font-weight:800; letter-spacing:-.01em; }
+  .copy h1 .hi { color:var(--amber); }
+  .proof { list-style:none; padding:0; margin:0 0 18px; }
+  .proof li { font-size:14.5px; color:var(--text-muted); padding:5px 0 5px 20px; position:relative; }
+  .proof li::before { content:''; position:absolute; left:2px; top:13px; width:8px; height:8px; border-radius:50%; background:var(--amber); }
+  .proof li b { color:var(--text); font-weight:600; }
+  .ctas { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+  .btn { padding:12px 20px; border-radius:7px; font-size:15px; font-weight:700; text-decoration:none; cursor:pointer; border:1px solid transparent; }
+  .btn.p { background:var(--amber); color:#111; } .btn.p:hover { filter:brightness(1.08); }
+  .btn.s { background:transparent; color:var(--text); border-color:var(--card-border); } .btn.s:hover { border-color:var(--gold); }
+  .fine { font-size:12.5px; color:var(--text-dim); margin-top:10px; }
+  .next { padding:14px 28px 18px; border-top:1px solid var(--card-border); }
+  .next .h { font-size:12px; color:var(--text-dim); text-transform:uppercase; letter-spacing:.08em; margin-bottom:8px; font-family:var(--mono); }
+  .next .row { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+  .thumb { display:flex; gap:10px; align-items:center; cursor:pointer; border:1px solid var(--card-border); border-radius:6px; padding:6px 8px 6px 6px; background:var(--card); }
+  .thumb:hover { border-color:var(--gold); }
+  .thumb .im { width:92px; aspect-ratio:16/9; border-radius:4px; background:#000 center/cover; flex:none; }
+  .thumb .t { font-size:12.5px; line-height:1.3; } .thumb .t small { display:block; color:var(--text-dim); font-size:11px; font-family:var(--mono); margin-top:2px; }
+  .say { padding:16px 28px 20px; border-top:1px solid var(--card-border); background:var(--card); }
+  .say blockquote { margin:0; font-family:Georgia,serif; font-style:italic; font-size:16px; color:var(--text-muted); }
+  .say .who { font-size:12.5px; color:var(--gold); font-weight:600; margin-top:6px; }
+  .console { margin-top:12px; }
+  .console .h { font-family:var(--mono); font-size:11px; color:var(--text-dim); text-transform:uppercase; letter-spacing:.08em; margin-bottom:4px; }
+  .console pre { max-height:170px; margin:0; font-size:11.5px; }
+  /* the phone */
+  .phone { width:390px; max-width:100%; margin:0 auto; border:10px solid #1b1f26; border-radius:34px; overflow:hidden; background:var(--bg); box-shadow:0 10px 40px rgba(0,0,0,.4); }
+  .phone .site { border:0; border-radius:0; }
+  .phone .fold { padding:16px 14px 14px; }
+  .phone .fold .cols { grid-template-columns:1fr; gap:14px; }
+  .phone .copy h1 { font-size:22px; }
+  .phone .proof li { font-size:13px; }
+  .phone .next { padding:10px 14px 12px; } .phone .next .row { grid-template-columns:1fr; gap:6px; }
+  .phone .say { padding:12px 14px; }
+  .phone .btn { width:100%; text-align:center; }
+  .phone .player .pline { font-size:13px; right:70px; bottom:10px; left:12px; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+  .phone .player .pline small { font-size:10px; }
+  .phone .player .play { width:44px; height:44px; right:12px; bottom:10px; }
+  .phone .player .srctag { font-size:9px; }
+  .phone .top .links { display:none; }
+  @media (max-width: 900px) { .fold .cols { grid-template-columns:1fr; } .ladder { grid-template-columns:40px 1fr; } .ladder > div:nth-child(4n+3), .ladder > div:nth-child(4n+4) { display:none; } .next .row { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="num">ogt-mockups · courses/home-rail · built 2026-11-22 by ogtcoursecraft · for the owner</div>
+  <h1>The Home Rail</h1>
+  <p class="lede">owlgrouptrading.com's home page carries three video cards five screens down: Ken's Daily Trading Plan, a favourites playlist, and John Bollinger on his charts. The proposal: one clip above the fold, drawn from a library we author and the owner approves, each clip built to climb one rung of a stranger's trust, each ending on the store, each scored on the purchases it leads to. The three first rails are cut and waiting in the cutroom.</p>
+  <div class="quote">Owner, 2026-11-22: "replace the three videos with rotating clips from a library we author and approve. some will be verbatim with his screens, some will be animation cut, but they need to designed to sell ... heavy on the sales pitch (in a brand respectful way) to make people become better traders and better persons and better custodian of their family future. Use whatever trader testimonials we have ... the home page CTA should be for them to sign up to something in the store ... track these video for hits and conversions too and perhaps a more prominent placement above the fold."</div>
+
+  <div class="bar">
+    <button class="tg" id="themeBtn">Light</button>
+    <div class="nav">
+      <a href="#today">Today</a><a href="#fold">The fold</a><a href="#why">Why they buy</a><a href="#library">The library</a><a href="#rotation">Rotation</a><a href="#tracking">Tracking</a><a href="#rails">The rails</a><a href="#build">What ships where</a><a href="#decisions">Decisions</a>
+    </div>
+  </div>
+
+  <!-- ============================================================ TODAY -->
+  <section class="opt" id="today">
+    <div class="num">1 · Today</div>
+    <h2>The fold is a logo; the videos are five screens down</h2>
+    <p class="claim">A first-time visitor sees an owl, a name, and two buttons that sell nothing.</p>
+    <div class="grid2">
+      <div>
+        <div class="shot"><img src="img/home-today-fold.png" alt="owlgrouptrading.com home page at 1366 by 800: owl, title, tagline, two secondary buttons"></div>
+        <div class="cap">Desktop fold, 2026-11-22 (live page). "Start with the concepts" leads to /learn; "See what we offer" to /store. No proof, no face, no price, no video.</div>
+      </div>
+      <div style="display:grid;grid-template-columns:200px 1fr;gap:16px;align-items:start">
+        <div><div class="shot"><img src="img/home-today-mobile.png" alt="the same page at phone width"></div><div class="cap">Phone fold: the owl and the title.</div></div>
+        <div class="card">
+          <h4>What the page does today</h4>
+          <p>Hero (owl, title, tagline) → Market / System / Self triad → "Why Dr. Ken Long" (four credential cards) → <b>From Dr. Long</b>: three video cards → Trader Stories (six of ten approved testimonials) → Offerings → footer.</p>
+          <p>The three cards: <b>Daily Trading Plan</b> (YouTube, him doing what he does), <b>Favorite Shorts Playlist</b> (YouTube), <b>John Bollinger on Ken Long's charts</b> (a native video, live since 2026-11-20; Ken approved; the STA's reuse permission is still unsent).</p>
+          <p>Tracking today: every YouTube iframe and native video already emits <span class="tag">video_play</span><span class="tag">video_pause</span><span class="tag">video_end</span> on the site's event bus; the growth report counts plays per video id. Nothing ties a play to a purchase.</p>
+          <p>Store today: nine courses at $19.97 to $79, each with chapter 1 free on request (the request joins the daily note; day 7 and day 14 offers follow). The free chapter is the strongest low-risk first step the site has, and the home page never mentions it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ THE FOLD -->
+  <section class="opt" id="fold">
+    <div class="num">2 · The fold, proposed</div>
+    <h2>One clip, one claim, one first step</h2>
+    <p class="claim">The player is the hero. The copy beside it answers "who is this?" in three lines. The button costs nothing.</p>
+    <p class="lede">A working replica: the player below rotates through real clips from the buckets (the course trailers, the Bollinger clip, his credentials clip), the "up next" strip swaps the clip, the testimonial under the fold follows the playing clip, and the event console shows what the page would send to the tracker. The owl moves to the topbar; the triad and the credential cards stay below the fold.</p>
+    <div id="heroDesktop"></div>
+    <div class="console"><div class="h">Events this page would send (the tracker's bus, new events marked +)</div><pre id="evlog">waiting for the first impression…</pre></div>
+    <h3>The same fold on a phone</h3>
+    <p class="lede">The player first, the button under it, before any text. On a 390 px screen the primary button is inside the first screen.</p>
+    <div class="phone"><div id="heroPhone"></div></div>
+  </section>
+
+  <!-- ============================================================ WHY -->
+  <section class="opt" id="why">
+    <div class="num">3 · Why a stranger trusts him and buys</div>
+    <h2>The trust ladder</h2>
+    <p class="claim">Nobody buys a course from a face. They buy after six questions are answered in order, and a clip can answer one or two of them well.</p>
+    <div class="ladder">
+      <div></div><div>The question in the stranger's head</div><div>What answers it, in a brand-respectful way</div><div>Which clips carry it</div>
+      <div class="r">1</div><div class="q">Who is this?</div><div>Other people vouch for him, on tape, unprompted: John Bollinger on his charts; the STA host's facts (25 years Army, CGSC professor, Van Tharp instructor); the fact that the STA put him in the series that hosted Larry Williams, Bollinger and Kaufman. Said by them, not by us.</div><div>rail-01 · jb-01 · v17-cat · short-02 (the bookstore)</div>
+      <div class="r">2</div><div class="q">Is it real?</div><div>His own screens and his own words from the courses; a free chapter of the course he is talking about. "Instead of promises, I found proof" (Owl Group student).</div><div>the six course trailers · v13-ecosystem · the free chapter 1 clips</div>
+      <div class="r">3</div><div class="q">Is he honest?</div><div>He says what does not work. "Most of them don't work, but some of them do." "I've learned to take the emotional loss of the complete trade at the moment of entry." No countdown clocks, no income claims, prices stated plainly.</div><div>rail-03 (the monkey) · short-01 (react) · trailer-do2</div>
+      <div class="r">4</div><div class="q">Is it for someone like me?</div><div>Students at three stages, in their own words, as approved: from gambling to craft (Trader BL), a system that fits me (Trader HT), a place to belong (Trader ET), burned by glossy programs before (Owl Group student). Cards intercut into the clips, verbatim, with the attributions the site already uses.</div><div>the ten testimonial cards, three cut so far (t1, t2, t3)</div>
+      <div class="r">5</div><div class="q">What will it do to my life?</div><div>The family-future beat, carried by his own story and theirs, never by a promise of ours: the night his dad's retirement account could not let him sleep; "I finally feel in control of my financial future"; "a practice and a future I can run on my own terms"; "better custodian" is the viewer's conclusion, not our caption.</div><div>rail-02 · t2 · t-frustration-to-freedom</div>
+      <div class="r">6</div><div class="q">What does it cost to find out?</div><div>Chapter 1 of any course, free; the daily note comes with it; courses $19.97 to $79; coaching when they are ready. The end card of every clip says exactly this and nothing else.</div><div>every end card · the primary button</div>
+    </div>
+    <div class="grid3" style="margin-top:16px">
+      <div class="card"><h4>The pitch is heavy; the voice is his</h4><p>Every clip sells hard by selection: the strongest 30 to 60 seconds of a 90-minute tape, cut on full sentences, with the proof line on the poster frame. The words stay his. Cards say what a course is, who said what, and the price. No card paraphrases him or promises an outcome (sales-clip skill rule; content-rules.md).</p></div>
+      <div class="card"><h4>Better traders, better persons, custodians of the family future</h4><p>The three themes map onto material already on tape: the method (react, don't predict; the pessimistic mind), the person (the monkey kept, not killed; "take the wheel"), the family (his dad's account; Trader HT's financial future; Trader ET's future on her own terms). Nothing has to be written for him.</p></div>
+      <div class="card"><h4>What we do not do</h4><p>No stock-footage lifestyle shots, no synthetic narration over him, no "limited seats", no testimonials beyond the ten he approved, no numbers that are not on tape (the retirement-account return figure is not; the 9-box model is not). STA material carries the STA attribution; nothing of the STA's goes public before they say yes.</p></div>
+    </div>
+  </section>
+
+  <!-- ============================================================ LIBRARY -->
+  <section class="opt" id="library">
+    <div class="num">4 · The library, v1</div>
+    <h2>Seventeen entries: three new rails, six trailers, two credibility clips, the cards, and two to make</h2>
+    <p class="claim">Rights decide the launch order: everything the STA owns waits for one email; everything Ken owns can go live this week.</p>
+    <table>
+      <thead><tr><th class="m">id</th><th>clip</th><th>kind</th><th>source and window</th><th class="m">s</th><th class="m">rung</th><th>rights</th><th>state</th></tr></thead>
+      <tbody id="libRows"></tbody>
+    </table>
+    <p class="cap" style="margin-top:8px">The file: <span style="font-family:var(--mono)">ogt-coursecraft/devtimeartifacts/home-rail-2026-11-22/library.v1.json</span> (a copy beside this page as <a href="library.v1.json" style="color:var(--accent)">library.v1.json</a>). Rungs: 1 who is this · 2 is it real · 3 is he honest · 4 someone like me · 5 what it does to my life · 6 what it costs. Weights are starting guesses for the rotation; the tracking replaces them with numbers.</p>
+  </section>
+
+  <!-- ============================================================ ROTATION -->
+  <section class="opt" id="rotation">
+    <div class="num">5 · Rotation</div>
+    <h2>Which clip a visitor gets, and when a clip leaves</h2>
+    <div class="grid3">
+      <div class="card"><h4>First visit: rung 1</h4><p>No cookie means a stranger: the page serves a "who is this" clip (the Bollinger collage while it is the only approved one; later a random pick among rung-1 clips by weight). The poster frame carries the clip's proof line and the source, so a visitor who never presses play still reads John Bollinger's sentence.</p></div>
+      <div class="card"><h4>Return visit: the next rung</h4><p>The cookie remembers the clips seen and the deepest rung watched to 50 %. A returning visitor gets the next rung up, never the same clip twice until the library is exhausted. After any play past 50 %, "up next" leads with the course trailer that matches, so the next click is a product.</p></div>
+      <div class="card"><h4>Approval is the only gate</h4><p>A clip ships only with <span style="font-family:var(--mono)">approved: true</span> in the manifest, flipped by growogtx on the owner's word in the cutroom. <span style="font-family:var(--mono)">?rail=&lt;id&gt;</span> previews one clip for the owner on the live page without changing anyone's cookie (the <span style="font-family:var(--mono)">?ab=</span> pattern).</p></div>
+      <div class="card"><h4>Click to play, captions burned in</h4><p>Recommended: a poster with a big play button, not muted autoplay. This audience distrusts motion that starts by itself, the play press is itself the first measured intent, and the captioned twins (the Bollinger one exists) serve the viewer who plays muted. An autoplay cohort can be tested after four weeks of baseline.</p></div>
+      <div class="card"><h4>Retire by the numbers</h4><p>After 500 impressions, a clip in the bottom third on revenue per 100 impressions (then on CTA-click rate) leaves the rotation and the next approved clip takes its slot. Reviewed monthly in the growth report. A clip never retires on taste alone once it has numbers.</p></div>
+      <div class="card"><h4>One manifest, three owners</h4><p>ogt-coursecraft authors and renders (mp4, poster jpg, captions vtt into the course bucket under <span style="font-family:var(--mono)">rail/</span>); growogtx approves and owns the copy around the player; edge-ogt-engine reads the manifest and serves. The manifest shape is below.</p></div>
+    </div>
+<pre>{ "id": "rail-02", "title": "His dad's retirement account", "kind": "collage: animated twin + cards",
+  "mp4": "rail/rail-02.mp4", "poster": "rail/rail-02.jpg", "captions": "rail/rail-02.vtt", "seconds": 60,
+  "rung": [5, 2], "rights": "sta", "approved": false, "weight": 3,
+  "poster_line": "“I had his entire retirement account in a position.”",
+  "cta": { "label": "Start with a free chapter", "href": "/store#free-chapter" },
+  "testimonial": "system-that-fits-me" }</pre>
+  </section>
+
+  <!-- ============================================================ TRACKING -->
+  <section class="opt" id="tracking">
+    <div class="num">6 · Tracking: hits and conversions per clip</div>
+    <h2>Every clip gets a revenue number</h2>
+    <p class="claim">The site already attributes purchases to a sales-page cohort through a cookie and Stripe metadata. The rail uses the same path with a second cookie.</p>
+    <div class="grid2">
+      <div class="card">
+        <h4>Events (existing bus; new ones marked +)</h4>
+        <table>
+          <tr><td class="m">+ clip_impression</td><td>clip_id, slot (hero | next), position, first_visit. Sent when the player is in view, once per clip per page.</td></tr>
+          <tr><td class="m">video_play / pause / end</td><td>already emitted by the player code; gains clip_id.</td></tr>
+          <tr><td class="m">+ video_progress</td><td>clip_id, pct 25 | 50 | 75. The 50 % mark is the "watched" threshold.</td></tr>
+          <tr><td class="m">+ clip_cta_click</td><td>clip_id, target, pct_watched. The button under the player and the end-card link.</td></tr>
+          <tr><td class="m">+ cookie ogt_rail</td><td>{first, last, plays}. Read by the free-chapter form, by buy_now_click, and written into Stripe checkout metadata as <span style="font-family:var(--mono)">rail_clip</span>, beside <span style="font-family:var(--mono)">ab_sales</span>.</td></tr>
+          <tr><td class="m">free_chapter_request</td><td>gains rail_clip from the cookie, so a request made the same day as a play is attributed.</td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <h4>The scorecard per clip (growth report, new "Home rail" block)</h4>
+        <table>
+          <tr><td>impressions</td><td>hero + next, separately</td></tr>
+          <tr><td>play rate</td><td>plays ÷ hero impressions</td></tr>
+          <tr><td>watched</td><td>50 % reached ÷ plays; finish rate beside it</td></tr>
+          <tr><td>CTA rate</td><td>clip_cta_click ÷ plays</td></tr>
+          <tr><td>free chapters</td><td>requests with rail_clip ÷ 100 plays</td></tr>
+          <tr><td>purchases</td><td>Stripe rows with rail_clip within 14 days ÷ 100 plays</td></tr>
+          <tr><td><b>revenue per 100 impressions</b></td><td>the ranking number; the retire rule reads it</td></tr>
+        </table>
+        <p style="margin-top:8px">Honesty about sample size: I have not verified the home page's weekly visit count; the growth report has it. If it is in the low hundreds, a month separates play rate and CTA rate between clips but not purchases. The retire rule's 500-impression floor is set for that.</p>
+        <p>Admin: the numbers land in <span style="font-family:var(--mono)">/admin/funnel-diagnostic.json</span> first (the A/B pattern), a dashboard tab after the first month.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ RAILS -->
+  <section class="opt" id="rails">
+    <div class="num">7 · The three first rails, in the cutroom</div>
+    <h2>Cut, animated, carded, waiting for the owner's pass</h2>
+    <p class="claim">Cutroom <span style="font-family:var(--mono)">ken-rail</span>: three rails in one plan, the ken-shorts pattern. Every edge read off the cues; the owner trims to breath, flips cut or twin per segment, and drops the optional beat.</p>
+    <div class="grid3">
+      <div class="card"><h4>Rail 1 · John Bollinger on Ken Long's charts · about 76 s</h4><p>Card (3 s) → Bollinger, STA fireside clip 1:18.0 to 2:08.3: "To point out something about your friend Ken Long: I looked at a couple of his charts … a better chance that you've got something really robust on your hands" (50 s, verbatim, the STA frame kept; a shorter two-bite alternate is carried) → the host's facts card (6 s) → "What drew me to Ken was his honesty and his complete lack of hype." (8 s) → the store card (6 s).</p><p>Rungs 1 and 3. <span class="tag sta">STA</span></p></div>
+      <div class="card"><h4>Rail 2 · His dad's retirement account · about 60 s, 100 s with the method beat</h4><p>Card → the night he could not sleep, 1:01:07 to 1:01:44, as the animated twin with his tile top-right (the ken-shorts scene on the stage: head "What did one night teach him?", bridge "size so you can sleep", a focus ring per beat; the cut is the alternate) → "I finally feel in control of my financial future." Trader HT (8 s) → optional: "React. Don't predict." 45:28 to 46:06 as its twin → the store card.</p><p>Rung 5, then 2. <span class="tag sta">STA</span></p></div>
+      <div class="card"><h4>Rail 3 · The monkey · about 47 s</h4><p>Card → "Lesson learned was not so much this system versus that system … I don't try to eliminate the monkey. The monkey is the source of my inspirations and intuitions. Most of them don't work, but some of them do … helped me with risk." 1:03:57 to 1:04:23, a new stage scene (two systems crossed out, the monkey kept beside the trader, his ideas as bulbs with two lit, his rule boxed, the risk box it feeds) → "Trading used to feel like gambling. Then I found Ken's systems." Trader BL → the store card.</p><p>Rungs 3 and 4. <span class="tag sta">STA</span></p></div>
+    </div>
+    <h3>The twins, three frames each (25 %, 60 %, 95 %; anim_check 3/3 OK)</h3>
+    <div class="shot"><img src="img/rails-sheet.png" alt="contact sheet of the three animated twins: the dad's account, react don't predict, the monkey"></div>
+    <div class="cap">Row 1: r21a the dad's account (head "What did one night teach him?"). Row 2: r23a react, don't predict. Row 3: r31a the monkey. The grey box top-right is where Ken's tile is composited at render.</div>
+    <h3>The cards</h3>
+    <div class="grid3">
+      <div><div class="shot"><img src="img/card-ch1.png" alt="Rail 1 card"></div><div class="cap">Rail 1 card</div></div>
+      <div><div class="shot"><img src="img/card-facts1.png" alt="facts card"></div><div class="cap">The host's facts, his words on tape</div></div>
+      <div><div class="shot"><img src="img/card-t1.png" alt="testimonial card"></div><div class="cap">Testimonial card, verbatim excerpt, attribution as approved</div></div>
+      <div><div class="shot"><img src="img/card-ch2.png" alt="Rail 2 card"></div><div class="cap">Rail 2 card</div></div>
+      <div><div class="shot"><img src="img/card-t2.png" alt="testimonial card 2"></div><div class="cap">Trader HT</div></div>
+      <div><div class="shot"><img src="img/card-end1.png" alt="end card"></div><div class="cap">The store card every rail ends on</div></div>
+    </div>
+    <p class="lede" style="margin-top:14px"><span class="flag">Rights flag.</span> All three rails and the live Bollinger card are the Society of Technical Analysts' recordings. One email covers both sources; a draft is in the note beside this page. Until the STA answers, the rail can launch on Ken-owned clips alone (the six course trailers, the credentials clip), and the Bollinger card that is already live is the owner's call.</p>
+  </section>
+
+  <!-- ============================================================ BUILD -->
+  <section class="opt" id="build">
+    <div class="num">8 · What ships where</div>
+    <h2>Three repos, one week</h2>
+    <div class="grid3">
+      <div class="card"><h4>ogt-coursecraft (this persona)</h4><p>The owner's cutroom pass on ken-rail → cutroom-intake → render per rail (one mp4 per chapter card is a small build_v2 addition, open since ken-shorts) → poster jpg from the proof-line frame, captions vtt → upload to the course bucket under rail/ → the manifest rows. Then the next rails from Ken-owned sources (why I teach; the Hougaard R session; the 4-3-2-1 position sizing talk).</p></div>
+      <div class="card"><h4>edge-ogt-engine (growogtx's store, no persona of its own)</h4><p>site_pages.py: the hero becomes the two-column fold (player + copy + buttons), the three cards go, the owl shrinks to the topbar; a rail module reads the manifest, picks by cookie, emits the new events; products.py and free_chapter.py read ogt_rail into checkout metadata and the request row; growth_report.py gains the Home rail block. /store gains a free-chapter strip at the top (today the form lives only on each course page), so /store#free-chapter has somewhere to land.</p></div>
+      <div class="card"><h4>edge-growogtx</h4><p>Sends the STA ask; approves clips in the manifest on the owner's word; owns the headline and the three proof lines (drafted here, in the fold); the "quiet offers" line in the daily note can point at a rail clip's course page once attribution works.</p></div>
+    </div>
+  </section>
+
+  <!-- ============================================================ DECISIONS -->
+  <section class="opt" id="decisions">
+    <div class="num">9 · Decisions for the owner</div>
+    <h2>Nine calls</h2>
+    <div class="dec">
+      <div class="card"><h4>The fold</h4><p>Replace the hero with the player-plus-copy fold above and drop the three cards section. <span class="rec">Recommended.</span> Alternative: keep the hero, put one rail player where the three cards are (cheaper, five screens down, little change in behaviour).</p></div>
+      <div class="card"><h4>Primary button</h4><p>"Start with a free chapter" first, "Browse the courses" second. <span class="rec">Recommended:</span> the free chapter is the lowest-cost yes the site has and it already joins the daily note. Alternative: the store first.</p></div>
+      <div class="card"><h4>Click to play or muted autoplay</h4><p><span class="rec">Click to play with the proof line on the poster</span>, then test autoplay as a cohort after four weeks.</p></div>
+      <div class="card"><h4>The STA ask</h4><p>Send it now, one email for both recordings (draft in the note). Until the answer: launch on Ken-owned clips, and decide whether the Bollinger card that is already live stays up.</p></div>
+      <div class="card"><h4>Rail 2 with or without the method beat</h4><p>60 s (the dad, a student, the store) or 100 s with "React. Don't predict." <span class="rec">Recommended: 60 s</span>; the react bite becomes its own rail.</p></div>
+      <div class="card"><h4>Headline and proof lines</h4><p>Drafted in the fold ("He taught Army officers to decide under pressure…"). growogtx owns the final words; say if the register is right.</p></div>
+      <div class="card"><h4>Testimonial cards</h4><p>Initials as approved (Trader BL, HT, ET, "Owl Group student"), or ask the three for first names and a photo for the cards and the "what traders say" band.</p></div>
+      <div class="card"><h4>Trailers in the rotation now</h4><p>The six course trailers exist; four are rendered from the owner's pass, two are at a revision he has not blessed. Which go in on day one?</p></div>
+      <div class="card"><h4>The retire rule</h4><p>500 impressions, bottom third on revenue per 100 impressions, monthly. Change the floor if home-page traffic is smaller than that in a month.</p></div>
+    </div>
+  </section>
+</div>
+
+<script>
+// ---------- theme
+const root=document.documentElement, tb=document.getElementById('themeBtn');
+tb.onclick=()=>{const l=root.dataset.theme==='light'; root.dataset.theme=l?'dark':'light'; tb.textContent=l?'Light':'Dark';};
+
+// ---------- the demo library (real public files stand in for the rails until they are rendered)
+const COURSES='https://storage.googleapis.com/courses.owlgrouptrading.com/', CLIPS='https://storage.googleapis.com/ogt-media-clips/';
+const DEMO=[
+  {id:'jb-01', title:"John Bollinger on Ken Long's charts", src:CLIPS+'bollinger-on-ken-long.mp4', poster:CLIPS+'bollinger-on-ken-long.jpg', rung:1, s:134,
+   line:'“A better chance that you’ve got something really robust on your hands.”', who:'John Bollinger, Society of Technical Analysts fireside', srctag:'STA fireside · reproduced with attribution', t:'credibility-and-integrity', cta:'/store#free-chapter'},
+  {id:'trailer-do2', title:'The Disciplined Operator: trailer', src:COURSES+'c-do2.sales.mp4', poster:COURSES+'c-do2.sales.jpg', rung:2, s:120,
+   line:'“I’m always one idiot away from a murderous chimpanzee behind the wheel.”', who:'Dr. Ken Long, The Disciplined Operator', srctag:'from the course', t:'chaos-to-craftsmanship', cta:'/store/disciplined-operator#free-chapter'},
+  {id:'trailer-mmt1', title:'Mental Model for Traders, Part 1: trailer', src:COURSES+'c-mmt1.sales.mp4', poster:COURSES+'c-mmt1.sales.jpg', rung:2, s:120,
+   line:'“The trader is the instrument.”', who:'Dr. Ken Long, Mental Model for Traders', srctag:'from the course', t:'framework-i-can-trust', cta:'/store/mental-model#free-chapter'},
+  {id:'v17-cat', title:'Twenty-five years in the Army, twenty-three teaching', src:CLIPS+'v17-cat-credentials.mp4', poster:'', rung:1, s:90,
+   line:'Associate professor, US Army Command and General Staff College.', who:'Dr. Ken Long, in his own words', srctag:'his channel', t:'credibility-and-integrity', cta:'/store#free-chapter'},
+  {id:'trailer-idt1', title:'Intraday Decision Tree, Part 1: trailer', src:COURSES+'c-idt1.sales.mp4', poster:COURSES+'c-idt1.sales.jpg', rung:2, s:120,
+   line:'“Why the open is a critical state.”', who:'Dr. Ken Long, Intraday Decision Tree', srctag:'from the course', t:'clarity-in-trade-management', cta:'/store/intraday-decision-tree#free-chapter'},
+];
+const T={
+ 'credibility-and-integrity':['I’ve been burned by glossy trading programs before. What drew me to Ken was his honesty and his complete lack of hype. The live trade reviews, the clear setups, and the community gave me confidence that trading is a craft, not magic.','Owl Group student'],
+ 'chaos-to-craftsmanship':['Trading used to feel like gambling. Then I found Ken’s systems. For the first time I could define my edge, control my risk, and make trading repeatable. It isn’t about brilliance. It’s about process.','Trader BL'],
+ 'framework-i-can-trust':['Before I found Ken’s work, I was lost in scattered tools and ideas. The Tortoise systems gave me a complete, adaptable framework that made trading purposeful and manageable.','Trader ET, Denmark'],
+ 'system-that-fits-me':['The RLCO and MACD season tools have helped me protect capital and confidently ride the markets. I finally feel in control of my financial future.','Trader HT'],
+ 'clarity-in-trade-management':['I’m finally learning when to take a tight stop and when to let a trade breathe, and how to line my trades up with what the broader market is doing.','Owl Group student'],
+};
+const log=document.getElementById('evlog'); const seen=[];
+function emit(type,data){ const line=`${new Date().toISOString().slice(11,19)}  ${type.padEnd(16)} ${JSON.stringify(data)}`; seen.unshift(line); log.textContent=seen.slice(0,14).join('\n'); }
+
+function renderHero(el, mode){
+  el.innerHTML=`
+  <div class="site">
+    <div class="top"><div class="owlmark"></div><span class="brand">Owl Group Trading</span><span class="by">by Dr. Ken Long</span>
+      <div class="links"><span class="on">Home</span><span>About</span><span>Learn</span><span>Courses</span><span>Essays</span><span>Store</span></div></div>
+    <div class="fold"><div class="cols">
+      <div>
+        <div class="player" id="pl-${mode}">
+          <span class="srctag"></span>
+          <video playsinline preload="none"></video>
+          <div class="poster"></div>
+          <div class="pline"><span class="q"></span><small></small></div>
+          <button class="play" aria-label="Play"></button>
+        </div>
+        <div class="dots"></div>
+      </div>
+      <div class="copy">
+        <div class="eyebrow">Dr. Ken Long · Owl Group Trading</div>
+        <h1>He taught Army officers to decide under pressure. <span class="hi">He trades the same way.</span> He will teach you the same way.</h1>
+        <ul class="proof">
+          <li><b>John Bollinger, on his charts:</b> "a better chance you've got something really robust on your hands."</li>
+          <li><b>25 years US Army, retired lieutenant colonel.</b> Associate professor, US Army Command and General Staff College. Van Tharp Institute instructor from 2009.</li>
+          <li><b>His students:</b> "What drew me to Ken was his honesty and his complete lack of hype."</li>
+        </ul>
+        <div class="ctas"><a class="btn p" href="#" data-cta="free">Start with a free chapter</a><a class="btn s" href="#" data-cta="store">Browse the courses</a></div>
+        <div class="fine">Chapter 1 of any course, free. His daily note comes with it. Courses $19.97 to $79. No card.</div>
+      </div>
+    </div></div>
+    <div class="next"><div class="h">Up next</div><div class="row"></div></div>
+    <div class="say"><blockquote></blockquote><div class="who"></div></div>
+  </div>`;
+  const P=el.querySelector('.player'), V=P.querySelector('video'), dots=el.querySelector('.dots'), row=el.querySelector('.next .row'), say=el.querySelector('.say');
+  let cur=0, marks={};
+  const order=DEMO.map((_,i)=>i);
+  function show(i, slot){
+    cur=i; const c=DEMO[i]; marks={};
+    P.classList.remove('playing'); V.pause(); V.removeAttribute('src'); V.load(); V.src=c.src; V.poster=c.poster||'';
+    P.querySelector('.poster').style.backgroundImage=c.poster?`url(${c.poster})`:'linear-gradient(135deg,#1a1f27,#000)';
+    P.querySelector('.pline .q').textContent=c.line; P.querySelector('.pline small').textContent=c.who; P.querySelector('.srctag').textContent=c.srctag;
+    dots.innerHTML=DEMO.map((d,k)=>`<i class="${k===i?'on':''}"></i>`).join('')+`<span class="lbl">${c.id} · rung ${c.rung} · ${c.s}s</span>`;
+    const nx=[1,2,3].map(k=>DEMO[(i+k)%DEMO.length]);
+    row.innerHTML=nx.map((d,k)=>`<div class="thumb" data-i="${(i+k+1)%DEMO.length}"><div class="im" style="background-image:url(${d.poster||''})"></div><div class="t">${d.title}<small>rung ${d.rung} · ${d.s}s</small></div></div>`).join('');
+    row.querySelectorAll('.thumb').forEach((th,k)=>{ th.onclick=()=>{ emit('clip_impression',{clip_id:DEMO[+th.dataset.i].id,slot:'next',pos:k+1}); show(+th.dataset.i,'next'); }; });
+    say.querySelector('blockquote').textContent='“'+T[c.t][0]+'”'; say.querySelector('.who').textContent=T[c.t][1];
+    if (slot!=='next') emit('clip_impression',{clip_id:c.id,slot:'hero',pos:0,first_visit:true,view:mode});
+  }
+  P.querySelector('.play').onclick=()=>{ P.classList.add('playing'); V.controls=true; V.play(); };
+  V.addEventListener('play',()=>emit('video_play',{clip_id:DEMO[cur].id,view:mode}));
+  V.addEventListener('pause',()=>{ if(!V.ended) emit('video_pause',{clip_id:DEMO[cur].id,at:Math.floor(V.currentTime)}); });
+  V.addEventListener('ended',()=>{ emit('video_end',{clip_id:DEMO[cur].id}); show((cur+1)%DEMO.length); });
+  V.addEventListener('timeupdate',()=>{ if(!V.duration) return; const p=V.currentTime/V.duration*100; [25,50,75].forEach(m=>{ if(p>=m&&!marks[m]){ marks[m]=1; emit('video_progress',{clip_id:DEMO[cur].id,pct:m}); } }); });
+  el.querySelectorAll('[data-cta]').forEach(a=>a.onclick=e=>{ e.preventDefault(); const c=DEMO[cur]; const pct=V.duration?Math.round(V.currentTime/V.duration*100):0; emit('clip_cta_click',{clip_id:c.id,target:a.dataset.cta==='free'?c.cta:'/store',pct_watched:pct}); alert('Would go to '+(a.dataset.cta==='free'?c.cta:'/store')+'\nwith cookie ogt_rail = {first:"'+DEMO[0].id+'", last:"'+c.id+'"}'); });
+  show(0);
+}
+renderHero(document.getElementById('heroDesktop'),'desktop');
+renderHero(document.getElementById('heroPhone'),'phone');
+
+// ---------- the library table from the json beside this page (inline fallback for file://)
+const LIB_FALLBACK={clips:[]};
+fetch('library.v1.json').then(r=>r.json()).catch(()=>LIB_FALLBACK).then(lib=>{
+  const tb=document.getElementById('libRows');
+  const rights=r=>({ken:'<span class="tag ken">Ken</span>',sta:'<span class="tag sta">STA</span>',ogt:'<span class="tag">OGT</span>',student:'<span class="tag ask">ask</span>'})[r]||r;
+  tb.innerHTML=(lib.clips||[]).map(c=>`<tr><td class="m">${c.id}</td><td>${c.title}</td><td>${c.kind}</td><td style="max-width:360px">${c.source}</td><td class="m">${c.seconds}</td><td class="m">${[].concat(c.rung).join(', ')}</td><td>${rights(c.rights)}</td><td>${c.state}${c.approved?' <span class="tag live">approved</span>':''}</td></tr>`).join('')
+    || '<tr><td colspan="8" style="color:var(--text-dim)">library.v1.json did not load (open this page over http, or see the file beside it).</td></tr>';
+});
+</script>
+</body>
+</html>
