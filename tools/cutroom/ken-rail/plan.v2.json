@@ -2,9 +2,9 @@
   "schema": "coursecraft-plan-v2",
   "course": "ken-rail-v1",
   "cutroom": "ken-rail",
-  "revision": 1,
+  "revision": 3,
   "revised": "2026-11-22",
-  "status": "DRAFT rev1: three home-rail clips (the rotating library's first entries) in one cutroom for the owner's pass; each rail ends on the store card",
+  "status": "rev 3 (2026-11-22): the owner's cutroom note on r11 acted on (Bollinger bite in four cuts, his words as a lower third and a quote card); Rail 2 without the react beat (owner's go on the recommendations). rev 2 = the owner's pass adopted.",
   "title": "Dr. Ken Long: three clips for the home rail",
   "topic_class": "home rail",
   "store_sku": null,
@@ -65,29 +65,88 @@
       },
       "transition": {
         "type": "fade",
-        "dur": 1.0
+        "dur": 1
       }
     },
     {
       "id": "r11",
       "type": "cut",
       "include": true,
-      "label": "Bollinger: I looked at a couple of his charts ... something really robust on your hands",
+      "label": "Bollinger: I'll point out something about your friend, Ken Long.",
       "toc_title": "John Bollinger on Ken Long's charts",
       "source": "jb",
       "in": 78.0,
-      "out": 128.3,
-      "status": "MINED 2026-11-22 (captions-clean.srt 01:18.0 to 02:08.3, the tape's end). Verbatim, no twin: it is Bollinger speaking, the STA frame stays. Alternate: two bites that skip the Wyckoff aside.",
+      "out": 81.15,
+      "status": "rev 3 (owner's note, 2026-11-22): 'is that his name' (81.15-81.65, Whisper small.en word timings) cut out; the bite resumes in r11b",
+      "transition": {
+        "type": "fade",
+        "dur": 0.6
+      },
       "quote_anchor": "To point out something about your friend Ken Long: I looked at a couple of his charts ... my favorite classic technical analyst is Richard Wyckoff. Several of the ideas that he was talking about would be intuitively correct to people who have studied Wyckoff. So I really like that ... you know that there's a better chance that you've got something really robust on your hands.",
       "why": "The first rung of trust: someone the viewer already knows vouches for him, on tape, unprompted.",
-      "alternates": [
-        {
-          "label": "shorter: two bites, 78.0-84.9 then 101.5-128.3 (34 s; the first ends on a comma)",
-          "source": "jb",
-          "in": 101.5,
-          "out": 128.3
-        }
-      ],
+      "note_to_coursecraft": "can you edit out the part where john says \"is that his name\"; and the part \"and one of my... until I don't need to hedge that\". Then add the text of what he said to reinforce to the viewer. ",
+      "note_answered": "rev 3, 2026-11-22: 'is that his name' and 'and one of my ... hedge that' cut out (r11 | r11b | r11c | r11d); his words added as a lower third on r11d and a quote card r11q after the bite"
+    },
+    {
+      "id": "r11b",
+      "type": "cut",
+      "include": true,
+      "label": "Bollinger: I looked at a couple of his charts.",
+      "toc_title": "John Bollinger on Ken Long's charts",
+      "source": "jb",
+      "in": 81.65,
+      "out": 85.45,
+      "status": "rev 3: ends on 'charts' (85.36); 'and one of my favorite classic technical analysts, I don't need to hedge that' (85.4-94.3) cut out on the owner's note",
+      "transition": {
+        "type": "cut",
+        "dur": 0
+      }
+    },
+    {
+      "id": "r11c",
+      "type": "cut",
+      "include": true,
+      "label": "Bollinger: my favorite classic technical analyst is Richard Wyckoff.",
+      "toc_title": "John Bollinger on Ken Long's charts",
+      "source": "jb",
+      "in": 94.3,
+      "out": 99.45,
+      "status": "rev 3: 'my favorite' at 94.32 to 'Wyckoff.' at 99.30 (Whisper); the 'yeah' after it left out",
+      "transition": {
+        "type": "cut",
+        "dur": 0
+      }
+    },
+    {
+      "id": "r11d",
+      "type": "cut",
+      "include": true,
+      "label": "Bollinger: Several of the ideas ... something really robust on your hands.",
+      "toc_title": "John Bollinger on Ken Long's charts",
+      "source": "jb",
+      "in": 101.5,
+      "out": 128.5,
+      "status": "rev 3: 'Several' at 101.54 to 'hands.' at 128.40 (Whisper). Lower third with his Wyckoff sentence for the first 7 s (the owner: add the text of what he said)",
+      "lower_third": "lt_r11d.png",
+      "transition": {
+        "type": "cut",
+        "dur": 0
+      }
+    },
+    {
+      "id": "r11q",
+      "type": "slide",
+      "include": true,
+      "label": "Quote card: what Bollinger said, in text (owner's note)",
+      "slide_id": "q1",
+      "duration": 8,
+      "layout": "prose",
+      "text": {
+        "kicker": "John Bollinger, on Ken Long's charts",
+        "title": "“Several of the ideas he was talking about would be intuitively correct to people who have studied Wyckoff. There's a better chance that you've got something really robust on your hands.”",
+        "subtitle": "Society of Technical Analysts fireside · reproduced with attribution to the STA",
+        "body": ""
+      },
       "transition": {
         "type": "fade",
         "dur": 0.6
@@ -109,7 +168,7 @@
       },
       "transition": {
         "type": "fade",
-        "dur": 1.0
+        "dur": 1
       }
     },
     {
@@ -147,7 +206,7 @@
       },
       "transition": {
         "type": "fade",
-        "dur": 1.0
+        "dur": 1
       }
     },
     {
@@ -166,7 +225,7 @@
       },
       "transition": {
         "type": "fade",
-        "dur": 1.0
+        "dur": 1
       }
     },
     {
@@ -234,23 +293,23 @@
       "toc_title": "React. Don't predict.",
       "source": "sta",
       "in": 2727.8,
-      "out": 2766.0,
-      "status": "MINED 2026-11-21 for ken-shorts s11 (VTT 00:45:28 to 00:46:04); the twin r23a carries it",
+      "out": 2766,
+      "status": "MINED 2026-11-21 for ken-shorts s11 (VTT 00:45:28 to 00:46:04); the twin r23a carries it · rev 3: out of the cut (Rail 2 at about 60 s, the owner's go on the recommendation); the react bite becomes its own rail",
       "quote_anchor": "I've learned to not predict, not have a directional bias. I've learned to take the emotional loss of the complete trade at the moment of entry ... any exit that's better than a loss of the whole position is still a positive feeling for me. So I've learned to incorporate my monkey nature and my emotions in that way, and that allows me to be systematic.",
       "why": "After the night he could not sleep: what he does instead. Optional; Rail 2 stands without it at about 60 s."
     },
     {
       "id": "r23a",
       "type": "overdub",
-      "include": true,
+      "include": false,
       "label": "ALT animated: I've learned to not predict",
       "toc_title": "React. Don't predict.",
       "source": "sta",
       "in": 2727.8,
-      "out": 2766.0,
+      "out": 2766,
       "pip": true,
       "animation_brief": "ken-shorts s11 scene on the stage with a head question, the in-trading bridge and a focus ring; see anim_gen.py",
-      "status": "twin of r23; the owner picks one of the pair, or drops both",
+      "status": "twin of r23; the owner picks one of the pair, or drops both · rev 3: out of the cut (Rail 2 at about 60 s, the owner's go on the recommendation); the react bite becomes its own rail",
       "transition": {
         "type": "dip",
         "dur": 0.6
@@ -272,7 +331,7 @@
       },
       "transition": {
         "type": "fade",
-        "dur": 1.0
+        "dur": 1
       }
     },
     {
@@ -291,7 +350,7 @@
       },
       "transition": {
         "type": "fade",
-        "dur": 1.0
+        "dur": 1
       }
     },
     {
@@ -359,7 +418,7 @@
       },
       "transition": {
         "type": "fade",
-        "dur": 1.0
+        "dur": 1
       }
     }
   ]
