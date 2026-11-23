@@ -178,7 +178,7 @@ function draw(t){
   if (after(t,8)){ const o=op(t,T(8),.5); let d=''; for(let i=0;i<=13;i++) d+=(i?'L':'M')+X(i).toFixed(1)+' '+Y(30+(UP[i]-30)*.7).toFixed(1); s += path(d,{s:VW,sw:2.5,o,dash:'6 4'}) + tag(X(12),Y(54)+26,'VWAP lags',VW,o,'end'); }
   s += rc(t,8,404,'leads the VWAP:',{sz:17,c:REWARD}) + rc(t,8,428,'holding it for tomorrow',{sz:17,c:REWARD});
   if (after(t,9)){ const o=op(t,T(9),.5); s += glow(arrow(X(12.2),Y(76),X(12.9),Y(60),{s:VW,sw:3,o})); }
-  s += rc(t,9,466,'at the VWAP: tomorrow is normal',{sz:17,c:VW,w:600}) + rc(t,9,492,'far from it: could be amazing',{sz:17,c:KEY,w:600});
+  s += rc(t,9,466,'at the VWAP: tomorrow is normal',{sz:16,c:VW,w:600}) + rc(t,9,492,'far from it: could be amazing',{sz:16,c:KEY,w:600});
   s += head(t,0.2,'What does the close tell you?') + bridge(t,0.2,"at the VWAP, tomorrow is normal; far from it, could be amazing");
   s += focus(t,[[T(0),X(6.5),AY+AH/2],[T(1),X(.5),AY+AH/2],[T(2),X(6.5),AY+AH/2],[T(3),X(3),Y(50)],[T(4),X(13),Y(66)],[T(5),X(10),Y(70)],[T(6),X(11),Y(58)],[T(8),X(9),Y(55)],[T(9),X(12.6),Y(68)]]);
   return s;
