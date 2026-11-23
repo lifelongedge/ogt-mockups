@@ -2,9 +2,9 @@
   "schema": "coursecraft-plan-v2",
   "course": "ken-rail-v1",
   "cutroom": "ken-rail",
-  "revision": 3,
+  "revision": 4,
   "revised": "2026-11-22",
-  "status": "rev 3 (2026-11-22): the owner's cutroom note on r11 acted on (Bollinger bite in four cuts, his words as a lower third and a quote card); Rail 2 without the react beat (owner's go on the recommendations). rev 2 = the owner's pass adopted.",
+  "status": "rev 4 (2026-11-22): the chapter cards' kickers lose the internal 'Rail N of 3' (a visitor sees the card): Rail 1 'Vouched for', Rails 2-3 'In his own words'. Rail 1 rendered on its own (courses/ken-rail-1, derived) for the home page. rev 3 = the owner's r11 note acted on; rev 2 = the owner's pass adopted.",
   "title": "Dr. Ken Long: three clips for the home rail",
   "topic_class": "home rail",
   "store_sku": null,
@@ -58,7 +58,7 @@
       "duration": 3,
       "layout": "chapter",
       "text": {
-        "kicker": "Rail 1 of 3",
+        "kicker": "Vouched for",
         "title": "**John Bollinger** on Ken Long's charts",
         "subtitle": "Society of Technical Analysts fireside",
         "body": ""
@@ -218,7 +218,7 @@
       "duration": 3,
       "layout": "chapter",
       "text": {
-        "kicker": "Rail 2 of 3",
+        "kicker": "In his own words",
         "title": "**His dad's** retirement account",
         "subtitle": "",
         "body": ""
@@ -343,7 +343,7 @@
       "duration": 3,
       "layout": "chapter",
       "text": {
-        "kicker": "Rail 3 of 3",
+        "kicker": "In his own words",
         "title": "**The monkey**",
         "subtitle": "",
         "body": ""
