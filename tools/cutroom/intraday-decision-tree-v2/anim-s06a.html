@@ -143,26 +143,26 @@ function lvl(F,v,label,o={}){const y=F.Y(v),x0=o.x0==null?F.x:F.X(o.x0),x1=o.x1=
 function vbr(x,y0,y1,label,o={}){const c=o.s||ACC,d=o.left?-8:8;return path(`M${x+d} ${y0} L${x} ${y0} L${x} ${y1} L${x+d} ${y1}`,{s:c,sw:o.sw||2,o:o.o})+(label?txt(x+(o.left?-14:14),(y0+y1)/2+6,label,{a:o.left?'end':'start',c,sz:Math.max(o.sz||16,Z),o:o.o,w:600}):'');}
 function chip(x,y,s,o={}){const sz=Math.max(o.sz||17,Z);const w=o.w||Math.max(60,s.length*sz*.64+26);return rect(x,y,w,o.h||34,{f:o.f||'rgba(242,208,107,.10)',s:o.s||ACC,sw:1.2,r:17,o:o.o})+txt(x+w/2,y+(o.h||34)/2+6,s,{a:'middle',c:o.c||FG,sz,o:o.o,w:500});}
 
-const F=fr(140,40,520,440,0,100);
+const F=fr(200,40,470,440,0,100);
 const P=walk([[0,48],[.15,40],[.28,30],[.40,44],[.55,62],[.68,80],[.80,72],[1,58]],6,1.0);
 const HI=80, LO=30, OP=48, CL=58, PC=44;
 function body(t){
   let s='';
   s += plot(F,P,0,1,{s:FG,sw:2.5});
   s += lvl(F,OP,'open',{x0:-.1,x1:0,s:ACC,dash:'',sz:16,left:true}) + dot(F,0,OP,ACC) + dot(F,1,CL,FG) + txt(F.X(1)+12,F.Y(CL)+6,'close',{c:MUT,sz:16});
-  s += tick(F.X(-.18),F.Y(PC),30,MUT) + txt(F.X(-.18)-36,F.Y(PC)+24,'yest. close',{a:'start',c:MUT,sz:16});
-  const RX=760;
+  s += tick(F.X(-.18),F.Y(PC),30,MUT) + txt(F.X(-.18)-36,F.Y(PC)+42,'yest. close',{a:'start',c:MUT,sz:16});
+  const RX=800;
   if (after(t,0)){ const o=op(t,T(0),.5); s += vbr(F.X(.28)+30,F.Y(OP),F.Y(LO),'FailStat',{s:DN,o}) + lvl(F,LO,'',{x0:.28,x1:.35,s:DN,dash:'',o}) + txt(RX,80,'FailStat',{c:DN,sz:22,o,w:600}) + txt(RX,106,'open to low of day',{c:MUT,sz:16,o}); }
   if (after(t,1)){ const o=op(t,T(1),.5); s += vbr(F.X(.68)+30,F.Y(HI),F.Y(OP),'GainStat',{s:OK,o}) + lvl(F,HI,'',{x0:.68,x1:.75,s:OK,dash:'',o}) + txt(RX,150,'GainStat',{c:OK,sz:22,o,w:600}) + txt(RX,176,'open to high of day',{c:MUT,sz:16,o}); }
   if (after(t,2)){ const o=op(t,T(2),.5); s += vbr(F.X(0)-40,F.Y(HI),F.Y(LO),'range',{s:ACC,o,left:true}) + txt(RX,220,'range',{c:ACC,sz:22,o,w:600}) + txt(RX,246,'high to low',{c:MUT,sz:16,o}); }
   if (after(t,3)){ const o=op(t,T(3),.5); s += vbr(F.X(1)+40,F.Y(HI),F.Y(CL),'fade',{s:BLUE,o}) + txt(RX,290,'FadeStat',{c:BLUE,sz:22,o,w:600}) + txt(RX,316,'high of day to close',{c:MUT,sz:16,o}); }
   if (after(t,4)){ const o=op(t,T(4),.5); s += rect(F.X(.46),F.Y(CL),F.X(.54)-F.X(.46),F.Y(OP)-F.Y(CL),{f:'rgba(74,222,128,.25)',s:OK,sw:1.5,r:2,o}) + txt(F.X(.50),F.Y(OP)+20,'body',{a:'middle',c:MUT,sz:16,o}) + txt(RX,360,'open to close',{c:FG,sz:18,o}); }
-  if (after(t,5)){ const o=op(t,T(5),.5); s += vbr(F.X(-.18)-20,F.Y(CL),F.Y(PC),'net',{s:FG,o,left:true}) + line(F.X(-.18),F.Y(CL),F.X(1),F.Y(CL),{s:MUT,sw:1,dash:'3 5',o:o*.6}) + txt(RX,404,'net',{c:FG,sz:22,o,w:600}) + txt(RX,430,'close to close',{c:MUT,sz:16,o}); }
+  if (after(t,5)){ const o=op(t,T(5),.5); s += vbr(F.X(-.18)-44,F.Y(CL),F.Y(PC),'',{s:FG,o,left:true}) + line(F.X(-.18),F.Y(CL),F.X(1),F.Y(CL),{s:MUT,sw:1,dash:'3 5',o:o*.6}) + txt(RX,404,'net',{c:FG,sz:22,o,w:600}) + txt(RX,430,'close to close',{c:MUT,sz:16,o}); }
   return s;
 }
 
 function draw(t){
-  return head(t,0.2,'What do a day’s stats measure?')+bridge(t,0.2,"FailStat and GainStat: how far the day runs from the open")+'<g transform="translate(0 80) scale(0.87)">'+body(t)+focus(t,[[T(0),315,310],[T(1),523,200],[T(2),100,260],[T(3),700,170],[T(4),400,250],[T(5),40,300]])+'</g>';
+  return head(t,0.2,'What do a day’s stats measure?')+bridge(t,0.2,"FailStat and GainStat: how far the day runs from the open")+'<g transform="translate(0 80) scale(0.87)">'+body(t)+focus(t,[[T(0),340,310],[T(1),520,200],[T(2),160,260],[T(3),710,170],[T(4),420,250],[T(5),76,300]])+'</g>';
 }
 
 window.renderFrame = function (t) {
