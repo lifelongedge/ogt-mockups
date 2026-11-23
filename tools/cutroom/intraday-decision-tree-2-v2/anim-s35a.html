@@ -4,45 +4,47 @@
 <meta charset="utf-8">
 <title>s35a · a 3-minute trade that runs becomes a 30-minute trade</title>
 <style>
-  @font-face { font-family:"Inter"; font-weight:400 700; src:local("Inter"), url(https://fonts.gstatic.com/l/font?kit=UcCB3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfU5NJeWUdIOjBeTGiXZdND2M&skey=c491285d6722e4fa&v=v20) format("woff2"); }
-  @font-face { font-family:"JetBrains Mono"; font-weight:400 700; src:local("JetBrains Mono"), url(https://fonts.gstatic.com/l/font?kit=tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYXHKPxDcwg&skey=48ad01c60053c2ae&v=v24) format("woff2"); }
-  :root { --bg:#05070b; --fg:#e6edf3; --muted:#8b98a5; --acc:#3a8f8a; --hi:#5fd3cc; }
+  :root { --bg:#000; --fg:#f2f5f7; --muted:#9aa7b0; --border:rgba(255,255,255,0.12); --accent:#F2D06B;
+          --ok:#4ade80; --dn:#f87171; --card:#000; --blue:#7baad4; }
   html, body { margin:0; background:var(--bg); overflow:hidden; }
-  #stage { position:relative; width:1280px; height:720px; background:var(--bg); color:var(--fg); overflow:hidden;
-           font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; }
-  #stage:after { content:""; position:absolute; inset:0; background:radial-gradient(ellipse at 45% 40%, transparent 55%, rgba(0,0,0,.5)); pointer-events:none; }
-  #scene { position:absolute; left:60px; top:90px; width:1160px; height:530px; overflow:visible; }
-  #third { position:absolute; left:0; right:0; bottom:0; height:124px; z-index:2;
-           background:linear-gradient(90deg, rgba(5,7,11,.97) 0%, rgba(5,7,11,.93) 70%, rgba(5,7,11,.7)); border-top:1px solid rgba(58,143,138,.5); }
-  #third:before { content:""; position:absolute; left:0; top:0; bottom:0; width:6px; background:var(--acc); }
-  #cap { position:absolute; left:34px; right:360px; top:618px; font-size:30px; font-weight:600; line-height:1.15; letter-spacing:-.01em; z-index:3; }
-  #cap em { font-style:normal; color:var(--hi); }
-  #sub { position:absolute; left:34px; width:1000px; top:686px; font-family:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace; font-size:15px; font-weight:500;
-         color:var(--muted); letter-spacing:.04em; text-transform:uppercase; z-index:3; }
+  #stage { position:relative; width:1280px; height:720px; background:var(--bg); color:var(--fg);
+           font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; overflow:hidden; }
+  #cap { position:absolute; left:40px; right:40px; top:22px; font-size:34px; font-weight:600; letter-spacing:-.01em; line-height:1.15; z-index:3; }
+  #cap em { font-style:normal; color:var(--accent); }
+  #sub { position:absolute; left:40px; width:1000px; top:686px; font-size:17px; color:var(--muted); line-height:1.3; z-index:3; }
+  #scene { position:absolute; left:0; top:96px; width:1160px; height:530px; overflow:visible; transform:scale(1.1034); transform-origin:0 0; }
+  #svg { position:absolute; inset:0; }
   #fade { position:absolute; inset:0; background:var(--bg); pointer-events:none; opacity:0; z-index:4; }
-  #pip { position:absolute; left:950px; top:22px; width:300px; height:169px; border:1px solid rgba(95,211,204,.6); box-shadow:0 0 18px rgba(58,143,138,.35);
-         display:none; color:var(--muted); font-size:13px; text-align:center; line-height:169px; z-index:3; }
-  .pip #pip { display:block; }
-  text { font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; fill:#e6edf3; }
-  .mono { font-family:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace; }
+  #pip { position:absolute; left:950px; top:22px; width:300px; height:169px; border:1px solid rgba(255,255,255,0.35); border-radius:4px;
+         display:none; color:var(--muted); font-size:13px; text-align:center; line-height:169px; z-index:3; background:#000; }
+  .pip #pip { display:block; } .pip #cap { right:360px; font-size:31px; }
+  text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; } svg { fill:#f2f5f7; }
+  .mono { font-family:ui-monospace,Menlo,Consolas,monospace; }
+  .serif { font-family:Georgia,"DejaVu Serif","Times New Roman",serif; }
+  .hand { font-family:Caveat,cursive; font-weight:600; }
+  @font-face { font-family:"Caveat"; font-weight:400 700; src:local("Caveat"), url(https://fonts.gstatic.com/s/caveat/v23/Wnz6HAc5bAfYB2Q7ZjYY.woff2) format("woff2"); }
+  /* the seal slot: the chapter counter bottom-right (the brand mark joins it when the owner picks one) */
+  #seal { position:absolute; right:40px; top:688px; font-size:15px; letter-spacing:.08em; color:var(--muted); z-index:3; font-family:ui-monospace,Menlo,Consolas,monospace; }
+  #third { display:none; }
 </style>
 </head>
 <body>
-<div id="stage" class="">
+<div id="stage" class="pip">
   <div id="cap"></div>
   <div id="pip">Ken on camera, composited at render</div>
   <div id="scene"><svg id="svg" width="1160" height="530" viewBox="0 0 1160 530"></svg></div>
   <div id="third"></div>
   <div id="sub"></div>
+  <div id="seal">chapter 5 of 7</div>
   <div id="fade"></div>
 </div>
 <script>
-const BUILD = 's35a-1';
+const BUILD = 's35a-2';
 console.log('[s35a] build', BUILD);
 // Overdub twin of s35: Ken's audio c6k 1293→1441; t is seconds after the in-point.
-// Beat times read from the VTT cues on 2026-11-17 (tools/cutroom/intraday-decision-tree-2-v2/transcript-c6k.json).
+// Beat times read from the VTT cues on 2026-11-22 (tools/cutroom/intraday-decision-tree-2-v2/transcript-c6k.json).
 window.ANIM_DURATION = 148.0;
-const ACC='#5fd3cc', FG='#e6edf3', MUT='#8b98a5', OK='#3ddc97', DN='#ef5a6f', BLUE='#7baad4', BRD='rgba(58,143,138,.45)', CARD='rgba(16,20,28,.85)', TXS=1, WRAP=['<defs><filter id="g" x="-20%" y="-200%" width="140%" height="500%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>',''];
+const ACC='#F2D06B', FG='#f2f5f7', MUT='#9aa7b0', OK='#4ade80', DN='#f87171', BLUE='#7baad4', BRD='rgba(255,255,255,.18)', CARD='#000', TXS=1.1, WRAP=['',''];
 const W=1160, H=530;
 const $ = id => document.getElementById(id);
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
@@ -53,7 +55,7 @@ const on=(t,t0)=>t>=t0;
 const op=(t,t0,d)=>clamp((t-t0)/(d||0.5),0,1);      // linear opacity ramp
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
 const txt=(x,y,s,o={})=>`<text x="${x}" y="${y}" font-size="${(o.sz||20)*TXS}" fill="${o.c||FG}" opacity="${o.o==null?1:o.o}" text-anchor="${o.a||'start'}" font-weight="${o.w||400}" class="${o.cls||''}" ${o.extra||''}>${esc(s)}</text>`;
-const rect=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.r==null?6:o.r}" fill="${o.f||'none'}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}" ${o.extra||''}/>`;
+const rect=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.r==null?6:o.r}" fill="${o.f||'none'}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}" ${o.dash?`stroke-dasharray="${o.dash}"`:''} ${o.extra||''}/>`;
 const circ=(x,y,r,o={})=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${o.f||FG}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}"/>`;
 const line=(x1,y1,x2,y2,o={})=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${o.s||MUT}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" ${o.dash?`stroke-dasharray="${o.dash}"`:''} stroke-linecap="round"/>`;
 const path=(d,o={})=>`<path d="${d}" fill="${o.f||'none'}" stroke="${o.s||FG}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" stroke-linecap="round" stroke-linejoin="round" ${o.dash?`stroke-dasharray="${o.dash}"`:''}/>`;
@@ -68,9 +70,31 @@ const wander=(p,t,amp)=>[p.x+Math.sin(t*0.9+p.p)*amp,p.y+Math.cos(t*0.7+p.q)*amp
 // typewriter: the first k chars of s by time
 const type=(s,t,t0,cps)=>s.slice(0,Math.max(0,Math.floor((t-t0)*(cps||28))));
 // a list that reveals one row per step seconds from t0
+// --- the lesson helpers (2026-11-21, read from the Stanford "Probability for AI" screens) ---
+// the question the window answers, top-left of the scene, serif, amber
+const headY=(o={})=>{const capH=($('cap')||{}).offsetHeight||0;return Math.max(o.y||44,(capH-68)/1.1034+32);};
+const head=(t,t0,q,o={})=>{const a=op(t,t0,.5);if(a<=0)return '';return txt(o.x||40,headY(o),q,{sz:o.sz||30,c:o.c||ACC,w:600,o:a,cls:'serif'});};
+const bridge=(t,t0,s,o={})=>{const a=op(t,t0+.4,.6);if(a<=0)return '';const x=o.x||40,y=headY(o)+(o.dy||33);return txt(x,y,'in trading:',{sz:o.sz||24,c:MUT,o:a,cls:'hand'})+txt(x+(o.gap||128),y,s,{sz:o.sz||24,c:o.c||FG,o:a*.92,cls:'hand'});};   // the metaphor named as the trade, under the head, for the whole scene (lesson rule 8)   // under a three-line caption the question steps down
+// where to look: a soft ring that glides to the element of the beat. pts=[[t0,x,y],...]; it holds for o.hold s (default 5) after each beat
+function focus(t,pts,o={}){let cur=null,prev=null;for(const p of pts){if(t>=p[0]){prev=cur;cur=p;}}if(!cur)return '';const age=t-cur[0];if(age>(o.hold||5))return '';
+  const u=prev?pr(t,cur[0],.6):1;const x=prev?lerp(prev[1],cur[1],u):cur[1],y=prev?lerp(prev[2],cur[2],u):cur[2];const r=(o.r||22)+Math.sin(t*4)*2;const a=op(t,cur[0],.3)*(age>(o.hold||5)-.6?((o.hold||5)-age)/.6:1);
+  return circ(x,y,r,{f:'none',s:o.c||ACC,sw:2.5,o:a*.9})+circ(x,y,4,{f:o.c||ACC,o:a});}
+// the boxed definition, once the intuition has landed: a serif title and his words under it
+function defn(t,t0,x,y,w,title,lines,o={}){const u=pr(t,t0,.6);if(u<=0)return '';const lh=o.lh||28,h=(o.pad||22)*2+34+lines.length*lh;let s=rect(x,y,w,h,{r:8,s:o.s||FG,sw:2,f:o.f||'rgba(255,255,255,.03)',o:u});
+  if(u>.5){const a=op(t,t0+.3,.4);s+=txt(x+(o.pad||22),y+(o.pad||22)+22,title,{sz:o.sz||26,c:o.c||FG,w:600,o:a,cls:'serif'});lines.forEach((ln,i)=>{s+=txt(x+(o.pad||22),y+(o.pad||22)+34+22+i*lh,ln,{sz:o.lsz||20,c:o.lc||FG,o:op(t,t0+.5+i*.25,.4)});});}return s;}
+// the aside, in a second register: handwritten, amber, a little tilted (sparingly: his aside, not the framework)
+const aside=(t,t0,x,y,s,o={})=>{const a=op(t,t0,.5);return a<=0?'':`<g transform="rotate(${o.rot==null?-2:o.rot} ${x} ${y})">`+txt(x,y,s,{sz:o.sz||24,c:o.c||ACC,o:a*(o.o==null?1:o.o),a:o.a||'start',cls:'hand'})+'</g>';};
+// the recall box: an earlier figure back, small, in a corner, for a few seconds (draw the figure with its own helper inside g)
+function recall(t,t0,x,y,w,h,label,inner,o={}){const a=op(t,t0,.5)*(o.until&&t>o.until?clamp(1-(t-o.until)/.6,0,1):1);if(a<=0)return '';
+  return rect(x,y,w,h,{r:8,s:MUT,sw:1.5,f:'rgba(255,255,255,.03)',o:a,dash:'4 4'})+txt(x+12,y+20,label,{sz:14,c:MUT,o:a})+`<g opacity="${a}" transform="translate(${x} ${y+28}) scale(${o.sc||.5})">${inner}</g>`;}
 function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
 
 const BEATS = [[3.4, "I'm primarily a <em>three-minute</em> trader; I set up this trade frame", "growing a trade"], [20.1, "It starts going; it <em>doesn't get me out</em>", ""], [26.8, "Two hours into the day, <em>far away</em> from this exit zone", ""], [39.5, "The original tactical trade is <em>in the bank</em>", ""], [62.8, "Maybe I don't want to watch it <em>every three minutes</em> and suffer", ""], [68.8, "Turn it into a <em>30-minute trade</em>; let it trade forward about three hours", ""], [78.9, "Then decide whether to <em>hold it overnight</em>", ""], [87.9, "Look at the <em>daily chart</em>: where is it in its 10-day range, its 3-day range?", ""], [100.6, "Is it <em>clear of the last resistance</em> zone?", ""], [121.3, "It performed <em>abnormally well</em>: shift to a 30-minute chart", "I've taken a primarily three-minute trade, and because it performed abnormally well, I can now shift to a 30-minute chart"]];
+// WARP (optional): [[t_voice, t_authored], …] knots from the voice-over's words; the scene was authored on an estimate
+const WARP = null;
+const warpT = t => { if (!WARP) return t; for (let i = 1; i < WARP.length; i++) if (t <= WARP[i][0]) {
+  const [a0, b0] = WARP[i - 1], [a1, b1] = WARP[i]; return b0 + (b1 - b0) * (t - a0) / Math.max(1e-6, a1 - a0); }
+  return WARP[WARP.length - 1][1]; };
 
 const T=i=>BEATS[Math.min(i,BEATS.length-1)][0];
 const after=(t,i)=>t>=T(i);
@@ -109,33 +133,61 @@ function noise(x,y,w,h,seed,k,c,o){const r=rng(seed);let d='';for(let i=0;i<k;i+
 // a tag box on a chart still (dark pill, coloured border)
 function tag(x,y,s,c,o,a){const w=s.length*8.8+16;const x0=a==='end'?x-w:x;return rect(x0,y-13,w,24,{f:'rgba(5,7,11,.9)',s:c,sw:1,r:5,o})+txt(x0+w/2,y+5,s,{a:'middle',c:'#fff',sz:14,o,w:600});}
 
-const F=fr(70,60,720,410,0,100), RX=830;
+const GDEF='<defs><filter id="g" x="-20%" y="-200%" width="140%" height="500%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>';
+// one colour per quantity, the whole course
+const PRICE=FG, RL=BLUE, RL30C='#fda4af', RL90C='#bef264', RL270C='#e5e7eb', DRAG='#e8aa5a', PS='#c084fc', VW='#2dd4bf', Z3C='#cbd5e1',
+      RISK=DN, REWARD=OK, KEY=ACC, FROG='#67e8f9', M3='#fb923c', M10='#a3e635', M30='#f472b6', DAILY='#93c5fd',
+      EDGE='#fb7185', LUNCH='#94a3b8', SESS='#86efac', IRR='#f0abfc', GOD='#e879f9', UPC=FG, DNC='#6b7280';
+const RX=790;
+const fa=(c,a)=>c+Math.round(clamp(a,0,1)*255).toString(16).padStart(2,'0');
+// a right-column line that lands on beat k (o.until: fades out on that beat)
+function rc(t,k,y,s,o={}){ if(!after(t,k)) return ''; const a=op(t,T(k)+(o.d||0),.5)*(o.until!=null?1-op(t,T(o.until)-.4,.4):1); return txt(o.x||RX,y,s,{sz:o.sz||19,c:o.c||FG,o:a,w:o.w||400,a:o.a||'start',cls:o.cls||''}); }
+// a label on the figure: dark pill, coloured border, 15 px on the stage
+function tag(x,y,s,c,o,a){const w=s.length*9.4+18;const x0=a==='end'?x-w:a==='middle'?x-w/2:x;return rect(x0,y-14,w,26,{f:'rgba(0,0,0,.85)',s:c,sw:1.2,r:6,o})+txt(x0+w/2,y+5,s,{a:'middle',c:'#fff',sz:14,o,w:600});}
+function chip(x,y,s,o={}){const sz=o.sz||18;const w=o.w||Math.max(60,s.length*sz*.62+28);return rect(x,y,w,o.h||36,{f:o.f||fa(o.s||KEY,.10),s:o.s||KEY,sw:1.5,r:18,o:o.o})+txt(x+w/2,y+(o.h||36)/2+6,s,{a:'middle',c:o.c||FG,sz,o:o.o,w:500});}
+function readout(x,y,label,val,o={},c){return txt(x,y,label,{sz:17,c:MUT,o:o.o})+txt(x,y+(o.sz||34)+6,val,{sz:o.sz||34,c:c||KEY,o:o.o,w:600});}
+function card(x,y,w,h,label,o){return rect(x,y,w,h,{s:'rgba(255,255,255,.25)',f:'rgba(255,255,255,.03)',o:o,r:8})+(label?txt(x+16,y+26,label,{c:MUT,sz:15,o:o}):'');}
+function lvl(F,v,label,o={}){const y=F.Y(v),x0=o.x0==null?F.x:F.X(o.x0),x1=o.x1==null?F.x+F.w:F.X(o.x1);
+  return line(x0,y,x1,y,{s:o.s||MUT,sw:o.sw||2,dash:o.dash===undefined?'6 5':o.dash,o:o.o})+(label?txt(o.left?x0-8:x1+8,y+6,label,{a:o.left?'end':'start',c:o.s||MUT,sz:o.sz||15,o:o.o,w:o.w||500}):'');}
+function vbr(x,y0,y1,label,o={}){const c=o.s||KEY,d=o.left?-8:8;return path(`M${x+d} ${y0} L${x} ${y0} L${x} ${y1} L${x+d} ${y1}`,{s:c,sw:o.sw||2.5,o:o.o})+(label?txt(x+(o.left?-14:14),(y0+y1)/2+6,label,{a:o.left?'end':'start',c,sz:o.sz||16,o:o.o,w:600}):'');}
+function big(s,o,c,y,x){return txt(x==null?580:x,y||270,s,{a:'middle',sz:34,c:c||KEY,o:o,w:600});}
+function noise(x,y,w,h,seed,k,c,o){const r=rng(seed);let d='';for(let i=0;i<k;i++){d+=(i?'L':'M')+(x+r()*w).toFixed(1)+' '+(y+r()*h).toFixed(1);}return path(d,{s:c||MUT,sw:1.4,o:o});}
+function star(x,y,r,c,o){let d='';for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,rr=i%2?r*.45:r;d+=(i?'L':'M')+(x+rr*Math.cos(a)).toFixed(1)+' '+(y+rr*Math.sin(a)).toFixed(1);}return path(d+'Z',{f:c,s:c,sw:1,o});}
+const QT=(t,k)=>T(k);
+
+const F=fr(60,150,640,330,0,100);
 const P=walk([[0,20],[.1,24],[.22,40],[.3,38],[.5,58],[.62,62],[.8,76],[1,84]],79,.8);
 function draw(t){
-  let s=kick('3 to 30');
+  let s=GDEF;
   const k = after(t,5)? 1 : after(t,1)? .3+.2*pr(t,T(1),2) : .12;
   const fine=!after(t,5);
-  if (fine) s += plot(F,P,0,k,{s:FG,sw:2}); else { const n=8; for(let i=0;i<n;i++){ const u0=i/n,u1=(i+1)/n; const a=P(u0),b=P(u1); s += rect(F.X(u0)+6,F.Y(Math.max(a,b)+2),F.X(u1)-F.X(u0)-12,Math.max(3,Math.abs(F.Y(a)-F.Y(b))+4),{f:b>=a?'rgba(61,220,151,.4)':'rgba(239,90,111,.4)',s:b>=a?OK:DN,sw:1.2,r:2,o:op(t,T(5)+i*.12,.3)}); } s += plot(F,P,0,1,{s:FG,sw:1,o:.25}); }
-  if (after(t,0)){ const o=op(t,T(0),.5); s += zone(F,.06,.16,24,16,{o}) + dot(F,.1,24,OK,o) + mono(RX,90,'3-MINUTE',{sz:18,c:ACC,o,w:600}); }
-  if (after(t,2)){ const o=op(t,T(2),.5); s += zone(F,.3,.5,40,32,{f:'rgba(239,90,111,.08)',o,dash:'5 4'}) + tag(F.X(.4),F.Y(30),'exit zone',DN,o); }
-  if (after(t,3)){ const o=op(t,T(3),.5); s += zone(F,.1,1,24,40,{f:'rgba(61,220,151,.10)',s:OK,o}) + txt(RX,140,'tactical trade:',{sz:17,o}) + txt(RX,164,'in the bank',{sz:20,c:OK,o,w:600}); }
-  if (after(t,4)){ const o=ph(t,4,5); s += noise(F.X(.5),F.Y(66),F.X(.62)-F.X(.5),40,81,30,DN,o) + txt(RX,210,'every 3 minutes: suffer',{sz:16,c:DN,o}); }
-  if (after(t,5)){ const o=op(t,T(5),.5); s += mono(RX,250,'30-MINUTE',{sz:18,c:BLUE,o,w:600}) + txt(RX,276,'about three hours forward',{sz:15,c:MUT,o}); }
-  if (after(t,6)){ const o=op(t,T(6),.5); s += glow(line(F.X(1),F.y,F.X(1),F.y+F.h,{s:MUT,sw:2,o,dash:'6 5'})) + tag(F.X(1)-6,F.y+12,'overnight?',MUT,o,'end'); }
-  if (after(t,7)){ const o=op(t,T(7),.5); s += card(RX,300,320,110,'daily chart',o) + mono(RX+16,350,'10-DAY RANGE',{sz:13,c:FG,o}) + mono(RX+16,374,'3-DAY RANGE',{sz:13,c:FG,o}); [[0.82,350],[0.6,374]].forEach(([u,y])=>{ s += line(RX+150,y-5,RX+290,y-5,{s:MUT,sw:2,o}) + circ(RX+150+140*u,y-5,6,{f:ACC,o}); }); }
-  if (after(t,8)){ const o=op(t,T(8),.5); s += lvl(F,70,'last resistance',{s:DN,o,sz:13,x0:.2,x1:.75}) + glow(circ(F.X(.8),F.Y(76),16,{f:'none',s:OK,sw:2.5,o})); }
-  if (after(t,9)){ const o=op(t,T(9),.5); s += txt(RX,450,'abnormally well:',{sz:16,o}) + txt(RX,476,'shift to the 30',{sz:20,c:BLUE,o,w:600}); }
+  if (fine) s += plot(F,P,0,k,{s:PRICE,sw:2}); else { const n=8; for(let i=0;i<n;i++){ const u0=i/n,u1=(i+1)/n; const a=P(u0),b=P(u1); s += rect(F.X(u0)+6,F.Y(Math.max(a,b)+2),F.X(u1)-F.X(u0)-12,Math.max(3,Math.abs(F.Y(a)-F.Y(b))+4),{f:fa(b>=a?UPC:DNC,.4),s:b>=a?UPC:DNC,sw:1.2,r:2,o:op(t,T(5)+i*.12,.3)}); } s += plot(F,P,0,1,{s:PRICE,sw:1,o:.25}); }
+  if (after(t,0)){ const o=op(t,T(0),.5); s += zone(F,.06,.16,24,16,{f:fa(RISK,.16),s:RISK,o}) + dot(F,.1,24,REWARD,o); }
+  s += rc(t,0,164,'3-minute trade frame',{sz:21,c:M3,w:600});
+  if (after(t,2)){ const o=op(t,T(2),.5); s += zone(F,.3,.5,40,32,{f:fa(RISK,.08),s:RISK,o,dash:'5 4'}) + tag(F.X(.4),F.Y(28),'exit zone',RISK,o,'middle'); }
+  if (after(t,3)){ const o=op(t,T(3),.5); s += zone(F,.1,1,24,40,{f:fa(REWARD,.10),s:REWARD,o}); }
+  s += rc(t,3,200,'the tactical trade:',{sz:18}) + rc(t,3,224,'in the bank',{sz:21,c:REWARD,w:600});
+  if (after(t,4)){ const o=ph(t,4,5); s += noise(F.X(.5),F.Y(66),F.X(.62)-F.X(.5),40,81,30,M3,o); }
+  s += rc(t,4,258,'every three minutes: suffer',{sz:17,c:MUT});
+  s += rc(t,5,296,'30-minute',{sz:21,c:M30,w:600}) + rc(t,5,320,'about three hours forward',{sz:17,c:MUT});
+  if (after(t,6)){ const o=op(t,T(6),.5); s += glow(line(F.X(1),F.y,F.X(1),F.y+F.h,{s:MUT,sw:2,o,dash:'6 5'})) + tag(F.X(1)-6,F.y+14,'overnight?',MUT,o,'end'); }
+  if (after(t,7)){ const o=op(t,T(7),.5); s += card(RX,344,330,92,'the daily chart',o) + txt(RX+16,390,'10-day range',{sz:16,o}) + txt(RX+16,418,'3-day range',{sz:16,o}); [[0.82,385],[0.6,413]].forEach(([u,y])=>{ s += line(RX+150,y,RX+300,y,{s:MUT,sw:2,o}) + circ(RX+150+150*u,y,6,{f:DAILY,o}); }); }
+  if (after(t,8)){ const o=op(t,T(8),.5); s += lvl(F,70,'last resistance',{s:RISK,o,sz:15,x0:.2,x1:.72}) + glow(circ(F.X(.8),F.Y(76),14,{f:'none',s:REWARD,sw:2.5,o})); }
+  s += rc(t,9,466,'abnormally well:',{sz:17}) + rc(t,9,492,'shift to the 30',{sz:21,c:M30,w:600});
+  s += head(t,0.2,'When does a 3 become a 30?') + bridge(t,0.2,"a 3-minute trade that runs is managed on the 30");
+  s += focus(t,[[T(0),F.X(.1),F.Y(24)],[T(2),F.X(.4),F.Y(36)],[T(3),F.X(.5),F.Y(32)],[T(5),F.X(.5),F.Y(58)],[T(6),F.X(1),F.y+F.h/2],[T(7),RX+225,400],[T(8),F.X(.8),F.Y(76)]]);
   return s;
 }
 
 window.renderFrame = function (t) {
   t = clamp(t, 0, ANIM_DURATION);
+  const tv = t; t = warpT(t);
   let cap = '', sub = '';
   for (const b of BEATS) if (t >= b[0]) { cap = b[1]; sub = b[2] || ''; }
   $('cap').innerHTML = cap; $('sub').textContent = sub;
   $('svg').innerHTML = WRAP[0] + draw(t) + WRAP[1];
   const f = $('fade');
-  f.style.opacity = t < 0.5 ? 1 - t / 0.5 : (ANIM_DURATION - t < 0.6 ? 1 - (ANIM_DURATION - t) / 0.6 : 0);
+  f.style.opacity = tv < 0.5 ? 1 - tv / 0.5 : (ANIM_DURATION - tv < 0.6 ? 1 - (ANIM_DURATION - tv) / 0.6 : 0);
 };
 renderFrame(0);
 </script>

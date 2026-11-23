@@ -4,45 +4,47 @@
 <meta charset="utf-8">
 <title>s15a · the RL10 wiggle, and why less confirmation is better</title>
 <style>
-  @font-face { font-family:"Inter"; font-weight:400 700; src:local("Inter"), url(https://fonts.gstatic.com/l/font?kit=UcCB3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfU5NJeWUdIOjBeTGiXZdND2M&skey=c491285d6722e4fa&v=v20) format("woff2"); }
-  @font-face { font-family:"JetBrains Mono"; font-weight:400 700; src:local("JetBrains Mono"), url(https://fonts.gstatic.com/l/font?kit=tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYXHKPxDcwg&skey=48ad01c60053c2ae&v=v24) format("woff2"); }
-  :root { --bg:#05070b; --fg:#e6edf3; --muted:#8b98a5; --acc:#3a8f8a; --hi:#5fd3cc; }
+  :root { --bg:#000; --fg:#f2f5f7; --muted:#9aa7b0; --border:rgba(255,255,255,0.12); --accent:#F2D06B;
+          --ok:#4ade80; --dn:#f87171; --card:#000; --blue:#7baad4; }
   html, body { margin:0; background:var(--bg); overflow:hidden; }
-  #stage { position:relative; width:1280px; height:720px; background:var(--bg); color:var(--fg); overflow:hidden;
-           font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; }
-  #stage:after { content:""; position:absolute; inset:0; background:radial-gradient(ellipse at 45% 40%, transparent 55%, rgba(0,0,0,.5)); pointer-events:none; }
-  #scene { position:absolute; left:60px; top:90px; width:1160px; height:530px; overflow:visible; }
-  #third { position:absolute; left:0; right:0; bottom:0; height:124px; z-index:2;
-           background:linear-gradient(90deg, rgba(5,7,11,.97) 0%, rgba(5,7,11,.93) 70%, rgba(5,7,11,.7)); border-top:1px solid rgba(58,143,138,.5); }
-  #third:before { content:""; position:absolute; left:0; top:0; bottom:0; width:6px; background:var(--acc); }
-  #cap { position:absolute; left:34px; right:360px; top:618px; font-size:30px; font-weight:600; line-height:1.15; letter-spacing:-.01em; z-index:3; }
-  #cap em { font-style:normal; color:var(--hi); }
-  #sub { position:absolute; left:34px; width:1000px; top:686px; font-family:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace; font-size:15px; font-weight:500;
-         color:var(--muted); letter-spacing:.04em; text-transform:uppercase; z-index:3; }
+  #stage { position:relative; width:1280px; height:720px; background:var(--bg); color:var(--fg);
+           font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; overflow:hidden; }
+  #cap { position:absolute; left:40px; right:40px; top:22px; font-size:34px; font-weight:600; letter-spacing:-.01em; line-height:1.15; z-index:3; }
+  #cap em { font-style:normal; color:var(--accent); }
+  #sub { position:absolute; left:40px; width:1000px; top:686px; font-size:17px; color:var(--muted); line-height:1.3; z-index:3; }
+  #scene { position:absolute; left:0; top:96px; width:1160px; height:530px; overflow:visible; transform:scale(1.1034); transform-origin:0 0; }
+  #svg { position:absolute; inset:0; }
   #fade { position:absolute; inset:0; background:var(--bg); pointer-events:none; opacity:0; z-index:4; }
-  #pip { position:absolute; left:950px; top:22px; width:300px; height:169px; border:1px solid rgba(95,211,204,.6); box-shadow:0 0 18px rgba(58,143,138,.35);
-         display:none; color:var(--muted); font-size:13px; text-align:center; line-height:169px; z-index:3; }
-  .pip #pip { display:block; }
-  text { font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; fill:#e6edf3; }
-  .mono { font-family:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace; }
+  #pip { position:absolute; left:950px; top:22px; width:300px; height:169px; border:1px solid rgba(255,255,255,0.35); border-radius:4px;
+         display:none; color:var(--muted); font-size:13px; text-align:center; line-height:169px; z-index:3; background:#000; }
+  .pip #pip { display:block; } .pip #cap { right:360px; font-size:31px; }
+  text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; } svg { fill:#f2f5f7; }
+  .mono { font-family:ui-monospace,Menlo,Consolas,monospace; }
+  .serif { font-family:Georgia,"DejaVu Serif","Times New Roman",serif; }
+  .hand { font-family:Caveat,cursive; font-weight:600; }
+  @font-face { font-family:"Caveat"; font-weight:400 700; src:local("Caveat"), url(https://fonts.gstatic.com/s/caveat/v23/Wnz6HAc5bAfYB2Q7ZjYY.woff2) format("woff2"); }
+  /* the seal slot: the chapter counter bottom-right (the brand mark joins it when the owner picks one) */
+  #seal { position:absolute; right:40px; top:688px; font-size:15px; letter-spacing:.08em; color:var(--muted); z-index:3; font-family:ui-monospace,Menlo,Consolas,monospace; }
+  #third { display:none; }
 </style>
 </head>
 <body>
-<div id="stage" class="">
+<div id="stage" class="pip">
   <div id="cap"></div>
   <div id="pip">Ken on camera, composited at render</div>
   <div id="scene"><svg id="svg" width="1160" height="530" viewBox="0 0 1160 530"></svg></div>
   <div id="third"></div>
   <div id="sub"></div>
+  <div id="seal">chapter 2 of 7</div>
   <div id="fade"></div>
 </div>
 <script>
-const BUILD = 's15a-1';
+const BUILD = 's15a-2';
 console.log('[s15a] build', BUILD);
 // Overdub twin of s15: Ken's audio ue6 3260→3441; t is seconds after the in-point.
-// Beat times read from the VTT cues on 2026-11-17 (tools/cutroom/intraday-decision-tree-2-v2/transcript-ue6.json).
+// Beat times read from the VTT cues on 2026-11-22 (tools/cutroom/intraday-decision-tree-2-v2/transcript-ue6.json).
 window.ANIM_DURATION = 181.0;
-const ACC='#5fd3cc', FG='#e6edf3', MUT='#8b98a5', OK='#3ddc97', DN='#ef5a6f', BLUE='#7baad4', BRD='rgba(58,143,138,.45)', CARD='rgba(16,20,28,.85)', TXS=1, WRAP=['<defs><filter id="g" x="-20%" y="-200%" width="140%" height="500%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>',''];
+const ACC='#F2D06B', FG='#f2f5f7', MUT='#9aa7b0', OK='#4ade80', DN='#f87171', BLUE='#7baad4', BRD='rgba(255,255,255,.18)', CARD='#000', TXS=1.1, WRAP=['',''];
 const W=1160, H=530;
 const $ = id => document.getElementById(id);
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
@@ -53,7 +55,7 @@ const on=(t,t0)=>t>=t0;
 const op=(t,t0,d)=>clamp((t-t0)/(d||0.5),0,1);      // linear opacity ramp
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
 const txt=(x,y,s,o={})=>`<text x="${x}" y="${y}" font-size="${(o.sz||20)*TXS}" fill="${o.c||FG}" opacity="${o.o==null?1:o.o}" text-anchor="${o.a||'start'}" font-weight="${o.w||400}" class="${o.cls||''}" ${o.extra||''}>${esc(s)}</text>`;
-const rect=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.r==null?6:o.r}" fill="${o.f||'none'}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}" ${o.extra||''}/>`;
+const rect=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.r==null?6:o.r}" fill="${o.f||'none'}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}" ${o.dash?`stroke-dasharray="${o.dash}"`:''} ${o.extra||''}/>`;
 const circ=(x,y,r,o={})=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${o.f||FG}" stroke="${o.s||'none'}" stroke-width="${o.sw||1.5}" opacity="${o.o==null?1:o.o}"/>`;
 const line=(x1,y1,x2,y2,o={})=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${o.s||MUT}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" ${o.dash?`stroke-dasharray="${o.dash}"`:''} stroke-linecap="round"/>`;
 const path=(d,o={})=>`<path d="${d}" fill="${o.f||'none'}" stroke="${o.s||FG}" stroke-width="${o.sw||2}" opacity="${o.o==null?1:o.o}" stroke-linecap="round" stroke-linejoin="round" ${o.dash?`stroke-dasharray="${o.dash}"`:''}/>`;
@@ -68,9 +70,31 @@ const wander=(p,t,amp)=>[p.x+Math.sin(t*0.9+p.p)*amp,p.y+Math.cos(t*0.7+p.q)*amp
 // typewriter: the first k chars of s by time
 const type=(s,t,t0,cps)=>s.slice(0,Math.max(0,Math.floor((t-t0)*(cps||28))));
 // a list that reveals one row per step seconds from t0
+// --- the lesson helpers (2026-11-21, read from the Stanford "Probability for AI" screens) ---
+// the question the window answers, top-left of the scene, serif, amber
+const headY=(o={})=>{const capH=($('cap')||{}).offsetHeight||0;return Math.max(o.y||44,(capH-68)/1.1034+32);};
+const head=(t,t0,q,o={})=>{const a=op(t,t0,.5);if(a<=0)return '';return txt(o.x||40,headY(o),q,{sz:o.sz||30,c:o.c||ACC,w:600,o:a,cls:'serif'});};
+const bridge=(t,t0,s,o={})=>{const a=op(t,t0+.4,.6);if(a<=0)return '';const x=o.x||40,y=headY(o)+(o.dy||33);return txt(x,y,'in trading:',{sz:o.sz||24,c:MUT,o:a,cls:'hand'})+txt(x+(o.gap||128),y,s,{sz:o.sz||24,c:o.c||FG,o:a*.92,cls:'hand'});};   // the metaphor named as the trade, under the head, for the whole scene (lesson rule 8)   // under a three-line caption the question steps down
+// where to look: a soft ring that glides to the element of the beat. pts=[[t0,x,y],...]; it holds for o.hold s (default 5) after each beat
+function focus(t,pts,o={}){let cur=null,prev=null;for(const p of pts){if(t>=p[0]){prev=cur;cur=p;}}if(!cur)return '';const age=t-cur[0];if(age>(o.hold||5))return '';
+  const u=prev?pr(t,cur[0],.6):1;const x=prev?lerp(prev[1],cur[1],u):cur[1],y=prev?lerp(prev[2],cur[2],u):cur[2];const r=(o.r||22)+Math.sin(t*4)*2;const a=op(t,cur[0],.3)*(age>(o.hold||5)-.6?((o.hold||5)-age)/.6:1);
+  return circ(x,y,r,{f:'none',s:o.c||ACC,sw:2.5,o:a*.9})+circ(x,y,4,{f:o.c||ACC,o:a});}
+// the boxed definition, once the intuition has landed: a serif title and his words under it
+function defn(t,t0,x,y,w,title,lines,o={}){const u=pr(t,t0,.6);if(u<=0)return '';const lh=o.lh||28,h=(o.pad||22)*2+34+lines.length*lh;let s=rect(x,y,w,h,{r:8,s:o.s||FG,sw:2,f:o.f||'rgba(255,255,255,.03)',o:u});
+  if(u>.5){const a=op(t,t0+.3,.4);s+=txt(x+(o.pad||22),y+(o.pad||22)+22,title,{sz:o.sz||26,c:o.c||FG,w:600,o:a,cls:'serif'});lines.forEach((ln,i)=>{s+=txt(x+(o.pad||22),y+(o.pad||22)+34+22+i*lh,ln,{sz:o.lsz||20,c:o.lc||FG,o:op(t,t0+.5+i*.25,.4)});});}return s;}
+// the aside, in a second register: handwritten, amber, a little tilted (sparingly: his aside, not the framework)
+const aside=(t,t0,x,y,s,o={})=>{const a=op(t,t0,.5);return a<=0?'':`<g transform="rotate(${o.rot==null?-2:o.rot} ${x} ${y})">`+txt(x,y,s,{sz:o.sz||24,c:o.c||ACC,o:a*(o.o==null?1:o.o),a:o.a||'start',cls:'hand'})+'</g>';};
+// the recall box: an earlier figure back, small, in a corner, for a few seconds (draw the figure with its own helper inside g)
+function recall(t,t0,x,y,w,h,label,inner,o={}){const a=op(t,t0,.5)*(o.until&&t>o.until?clamp(1-(t-o.until)/.6,0,1):1);if(a<=0)return '';
+  return rect(x,y,w,h,{r:8,s:MUT,sw:1.5,f:'rgba(255,255,255,.03)',o:a,dash:'4 4'})+txt(x+12,y+20,label,{sz:14,c:MUT,o:a})+`<g opacity="${a}" transform="translate(${x} ${y+28}) scale(${o.sc||.5})">${inner}</g>`;}
 function list(t,t0,step,items,x,y,o={}){let out='';items.forEach((s,i)=>{const o1=op(t,t0+i*step,0.4);if(o1>0)out+=txt(x,y+i*(o.lh||34),s,{sz:o.sz||22,c:o.c||FG,o:o1,w:o.w||400});});return out;}
 
 const BEATS = [[0.3, "We call that the <em>RL10 wiggle</em>", "the best short signal there is"], [6.4, "The RL10 down, a <em>momentary pause</em> while some buying happens", ""], [13.4, "Then it fails again: <em>the best short signal</em> there is", ""], [28.3, "The longer it takes to fail, the more <em>persuasive the buyers</em>", ""], [44.9, "Somewhere in the move up, the buying will <em>dry up</em>", ""], [55.7, "How much <em>confirmation</em> do I want before I buy?", ""], [62.4, "My argument: <em>less is better</em>", ""], [83.7, "Enter here: a <em>small risk box</em>, the most reward units", ""], [99.9, "Wait to be the third or fourth mouse: <em>the same exit</em>", ""], [151.9, "Up the stack: a <em>wider stop</em>, fewer reward boxes", "waiting for confirmation reduces your position size and the return on risk"]];
+// WARP (optional): [[t_voice, t_authored], …] knots from the voice-over's words; the scene was authored on an estimate
+const WARP = null;
+const warpT = t => { if (!WARP) return t; for (let i = 1; i < WARP.length; i++) if (t <= WARP[i][0]) {
+  const [a0, b0] = WARP[i - 1], [a1, b1] = WARP[i]; return b0 + (b1 - b0) * (t - a0) / Math.max(1e-6, a1 - a0); }
+  return WARP[WARP.length - 1][1]; };
 
 const T=i=>BEATS[Math.min(i,BEATS.length-1)][0];
 const after=(t,i)=>t>=T(i);
@@ -109,39 +133,64 @@ function noise(x,y,w,h,seed,k,c,o){const r=rng(seed);let d='';for(let i=0;i<k;i+
 // a tag box on a chart still (dark pill, coloured border)
 function tag(x,y,s,c,o,a){const w=s.length*8.8+16;const x0=a==='end'?x-w:x;return rect(x0,y-13,w,24,{f:'rgba(5,7,11,.9)',s:c,sw:1,r:5,o})+txt(x0+w/2,y+5,s,{a:'middle',c:'#fff',sz:14,o,w:600});}
 
-const L=fr(60,70,460,400,0,100), R=fr(620,70,460,400,0,100);
+const GDEF='<defs><filter id="g" x="-20%" y="-200%" width="140%" height="500%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>';
+// one colour per quantity, the whole course
+const PRICE=FG, RL=BLUE, RL30C='#fda4af', RL90C='#bef264', RL270C='#e5e7eb', DRAG='#e8aa5a', PS='#c084fc', VW='#2dd4bf', Z3C='#cbd5e1',
+      RISK=DN, REWARD=OK, KEY=ACC, FROG='#67e8f9', M3='#fb923c', M10='#a3e635', M30='#f472b6', DAILY='#93c5fd',
+      EDGE='#fb7185', LUNCH='#94a3b8', SESS='#86efac', IRR='#f0abfc', GOD='#e879f9', UPC=FG, DNC='#6b7280';
+const RX=790;
+const fa=(c,a)=>c+Math.round(clamp(a,0,1)*255).toString(16).padStart(2,'0');
+// a right-column line that lands on beat k (o.until: fades out on that beat)
+function rc(t,k,y,s,o={}){ if(!after(t,k)) return ''; const a=op(t,T(k)+(o.d||0),.5)*(o.until!=null?1-op(t,T(o.until)-.4,.4):1); return txt(o.x||RX,y,s,{sz:o.sz||19,c:o.c||FG,o:a,w:o.w||400,a:o.a||'start',cls:o.cls||''}); }
+// a label on the figure: dark pill, coloured border, 15 px on the stage
+function tag(x,y,s,c,o,a){const w=s.length*9.4+18;const x0=a==='end'?x-w:a==='middle'?x-w/2:x;return rect(x0,y-14,w,26,{f:'rgba(0,0,0,.85)',s:c,sw:1.2,r:6,o})+txt(x0+w/2,y+5,s,{a:'middle',c:'#fff',sz:14,o,w:600});}
+function chip(x,y,s,o={}){const sz=o.sz||18;const w=o.w||Math.max(60,s.length*sz*.62+28);return rect(x,y,w,o.h||36,{f:o.f||fa(o.s||KEY,.10),s:o.s||KEY,sw:1.5,r:18,o:o.o})+txt(x+w/2,y+(o.h||36)/2+6,s,{a:'middle',c:o.c||FG,sz,o:o.o,w:500});}
+function readout(x,y,label,val,o={},c){return txt(x,y,label,{sz:17,c:MUT,o:o.o})+txt(x,y+(o.sz||34)+6,val,{sz:o.sz||34,c:c||KEY,o:o.o,w:600});}
+function card(x,y,w,h,label,o){return rect(x,y,w,h,{s:'rgba(255,255,255,.25)',f:'rgba(255,255,255,.03)',o:o,r:8})+(label?txt(x+16,y+26,label,{c:MUT,sz:15,o:o}):'');}
+function lvl(F,v,label,o={}){const y=F.Y(v),x0=o.x0==null?F.x:F.X(o.x0),x1=o.x1==null?F.x+F.w:F.X(o.x1);
+  return line(x0,y,x1,y,{s:o.s||MUT,sw:o.sw||2,dash:o.dash===undefined?'6 5':o.dash,o:o.o})+(label?txt(o.left?x0-8:x1+8,y+6,label,{a:o.left?'end':'start',c:o.s||MUT,sz:o.sz||15,o:o.o,w:o.w||500}):'');}
+function vbr(x,y0,y1,label,o={}){const c=o.s||KEY,d=o.left?-8:8;return path(`M${x+d} ${y0} L${x} ${y0} L${x} ${y1} L${x+d} ${y1}`,{s:c,sw:o.sw||2.5,o:o.o})+(label?txt(x+(o.left?-14:14),(y0+y1)/2+6,label,{a:o.left?'end':'start',c,sz:o.sz||16,o:o.o,w:600}):'');}
+function big(s,o,c,y,x){return txt(x==null?580:x,y||270,s,{a:'middle',sz:34,c:c||KEY,o:o,w:600});}
+function noise(x,y,w,h,seed,k,c,o){const r=rng(seed);let d='';for(let i=0;i<k;i++){d+=(i?'L':'M')+(x+r()*w).toFixed(1)+' '+(y+r()*h).toFixed(1);}return path(d,{s:c||MUT,sw:1.4,o:o});}
+function star(x,y,r,c,o){let d='';for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,rr=i%2?r*.45:r;d+=(i?'L':'M')+(x+rr*Math.cos(a)).toFixed(1)+' '+(y+rr*Math.sin(a)).toFixed(1);}return path(d+'Z',{f:c,s:c,sw:1,o});}
+const QT=(t,k)=>T(k);
+
+const L=fr(60,170,300,300,0,100), R=fr(420,170,300,300,0,100);
 const RLW=u=>u<.4?lerp(90,55,u/.4):u<.55?lerp(55,60,(u-.4)/.15):lerp(60,15,(u-.55)/.45);
 const UP=u=>u<.25?lerp(20,14,u/.25):lerp(14,82,(u-.25)/.75);
 function draw(t){
-  let s=kick('the wiggle, then the stack');
-  // left: the wiggle short
+  let s=GDEF;
   const ku = after(t,2)? 1 : after(t,1)? .56 : .42;
-  s += plot(L,RLW,0,Math.min(ku,.4+pr(t,T(0),.8)*(ku-.4)+.0001),{s:BLUE,sw:3.5}) + mono(L.x,L.y-8,'RL10',{sz:12,c:BLUE});
-  if (after(t,1)){ const o=op(t,T(1),.5); s += glow(circ(L.X(.48),L.Y(58),20,{f:'none',s:ACC,sw:2.5,o})) + tag(L.X(.48),L.Y(58)-34,'pause',ACC,o); }
-  if (after(t,2)){ const o=op(t,T(2),.5); s += dot(L,.56,58,DN,o) + tag(L.X(.6),L.Y(64),'short',DN,o) + glow(arrow(L.X(.62),L.Y(50),L.X(.85),L.Y(22),{s:DN,sw:3,o})); }
-  if (after(t,3)){ const o=op(t,T(3),.5); s += txt(L.x,L.Y(0)+20,'quick failure: more selling coming',{sz:15,c:MUT,o}); }
-  // right: the move up and the stack
-  if (after(t,4)){ const o=op(t,T(4),.5); s += plot(R,UP,0,pr(t,T(4),1.2),{s:BLUE,sw:3.5,o}) + lvl(R,82,'previous R10',{x0:.6,x1:1,s:OK,o,sz:14}); }
+  s += plot(L,RLW,0,Math.min(ku,.4+pr(t,T(0),.8)*(ku-.4)+.0001),{s:RL,sw:3.5}) + mono(L.x,L.y-10,'RL10',{sz:15,c:RL});
+  if (after(t,1)){ const o=op(t,T(1),.5); s += glow(circ(L.X(.48),L.Y(58),18,{f:'none',s:KEY,sw:2.5,o})) + tag(L.X(.48),L.Y(58)-34,'pause',KEY,o,'middle'); }
+  if (after(t,2)){ const o=op(t,T(2),.5); s += dot(L,.56,58,RISK,o) + tag(L.X(.6),L.Y(66),'short',RISK,o) + glow(arrow(L.X(.62),L.Y(50),L.X(.85),L.Y(22),{s:RISK,sw:3,o})); }
+  s += rc(t,3,160,'the longer it takes to fail,',{sz:17}) + rc(t,3,184,'the more persuasive the buyers',{sz:17,c:MUT});
+  if (after(t,4)){ const o=op(t,T(4),.5); s += plot(R,UP,0,pr(t,T(4),1.2),{s:RL,sw:3.5,o}) + lvl(R,82,'',{x0:.5,x1:1,s:REWARD,o}) + tag(R.X(1),R.Y(82)-18,'previous R10',REWARD,o,'end'); }
   const STOP=12;
-  if (after(t,5)){ const o=op(t,T(5),.5); s += lvl(R,STOP,'stop: 1¢ below the reversal',{x0:0,x1:1,s:DN,dash:'',o,sz:13}); }
+  if (after(t,5)){ const o=op(t,T(5),.5); s += lvl(R,STOP,'',{x0:0,x1:1,s:RISK,dash:'',o}) + tag(R.X(1),R.Y(STOP)+20,'stop',RISK,o,'end'); }
+  s += big('less is better',after(t,6)?op(t,T(6),.5):0,KEY,250,RX+165);
   const entries=[[.3,22],[.45,30],[.6,38]];
   entries.forEach(([u,v],i)=>{ const k = i===0?7:8; if(!after(t,k)) return; const o=op(t,T(k)+(i===2?1:0),.5);
-    s += rect(R.X(u)-18,R.Y(v),36,R.Y(STOP)-R.Y(v),{f:'rgba(239,90,111,.18)',s:DN,sw:1.5,r:2,o}) + dot(R,u,v,ACC,o);
-    const nb=Math.floor((82-v)/(v-STOP)); for(let j=0;j<Math.min(nb,6);j++) s += rect(R.X(u)+24,R.Y(v+(j+1)*(v-STOP)),14,R.Y(v+j*(v-STOP))-R.Y(v+(j+1)*(v-STOP))-2,{f:'rgba(61,220,151,.3)',s:'none',r:2,o});
-    s += mono(R.X(u),R.Y(STOP)+24,(nb)+'R',{a:'middle',sz:14,c:OK,o}); });
-  if (after(t,6)){ const o=op(t,T(6),.5); s += big('less is better',o,ACC,40,850); }
-  if (after(t,8)){ const o=op(t,T(8),.5); s += txt(R.X(.6)+30,R.Y(52)+40,'third mouse',{sz:15,c:MUT,o}); }
+    s += rect(R.X(u)-16,R.Y(v),32,R.Y(STOP)-R.Y(v),{f:fa(RISK,.18),s:RISK,sw:1.5,r:2,o}) + dot(R,u,v,KEY,o);
+    const nb=Math.floor((82-v)/(v-STOP)); for(let j=0;j<Math.min(nb,6);j++) s += rect(R.X(u)+20,R.Y(v+(j+1)*(v-STOP)),12,R.Y(v+j*(v-STOP))-R.Y(v+(j+1)*(v-STOP))-2,{f:fa(REWARD,.35),s:'none',r:2,o});
+    s += mono(R.X(u),R.Y(STOP)+28,nb+'R',{a:'middle',sz:15,c:REWARD,o}); });
+  s += rc(t,7,300,'enter here: a small risk box,',{sz:17}) + rc(t,7,324,'the most reward units',{sz:17,c:REWARD});
+  s += rc(t,8,366,'the third or fourth mouse:',{sz:17}) + rc(t,8,390,'the same exit',{sz:17,c:MUT});
+  s += defn(t,T(9),RX,408,330,'Up the stack',['a wider stop, fewer boxes'],{pad:12,lsz:18,lh:24,sz:22});
+  s += head(t,0.2,'Why is less confirmation better?') + bridge(t,0.2,"enter early: a small risk box and the most reward units");
+  s += focus(t,[[T(1),L.X(.48),L.Y(58)],[T(2),L.X(.56),L.Y(58)],[T(4),R.X(.5),R.Y(50)],[T(5),R.X(.5),R.Y(12)],[T(7),R.X(.3),R.Y(22)],[T(8),R.X(.6),R.Y(38)],[T(9),R.X(.6),R.Y(25)]]);
   return s;
 }
 
 window.renderFrame = function (t) {
   t = clamp(t, 0, ANIM_DURATION);
+  const tv = t; t = warpT(t);
   let cap = '', sub = '';
   for (const b of BEATS) if (t >= b[0]) { cap = b[1]; sub = b[2] || ''; }
   $('cap').innerHTML = cap; $('sub').textContent = sub;
   $('svg').innerHTML = WRAP[0] + draw(t) + WRAP[1];
   const f = $('fade');
-  f.style.opacity = t < 0.5 ? 1 - t / 0.5 : (ANIM_DURATION - t < 0.6 ? 1 - (ANIM_DURATION - t) / 0.6 : 0);
+  f.style.opacity = tv < 0.5 ? 1 - tv / 0.5 : (ANIM_DURATION - tv < 0.6 ? 1 - (ANIM_DURATION - tv) / 0.6 : 0);
 };
 renderFrame(0);
 </script>
