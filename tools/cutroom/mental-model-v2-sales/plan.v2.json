@@ -1,250 +1,260 @@
 {
- "schema": "coursecraft-plan-v2",
- "course": "mental-model-v2-sales",
- "cutroom": "mental-model-v2-sales",
- "revision": 4,
- "revised": "2026-11-22",
- "status": "DRAFT rev1: a sales clip of mental-model-v2, ~120 s; the owner edits it in the cutroom · 2026-11-22: toc_title set; the label is the editor's, the student reads toc_title (scripts/student_text.py)",
- "title": "The Mental Model, part 1: sales clip",
- "topic_class": "sales clip",
- "store_sku": "mental-model",
- "replaces": null,
- "notes": "2026-11-16 (cutroom-24): transitions on every join, defaults by rule: cut where his speech runs on from the same session, dip to black 0.6 s between separate moments, crossfade 1.0 s into a slide card and 0.6 s out of one; chosen and previewed per join in the cutroom, rendered by build_v2 (xfade, acrossfade).\n\nBites end on a full sentence (cues read 2026-11-16). Each twin starts the parent's scene at the bite's offset, so the captions stay on his words.",
- "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/mental-model-v2/",
- "sources": [
-  {
-   "id": "apk",
-   "label": "really-really-good (Ch1 + Ch1b)",
-   "file": "youtube-apk9GWC17Zw-really-really-good.mp4",
-   "proxy": "youtube-apk9GWC17Zw-really-really-good.proxy.mp4",
-   "url": "https://www.youtube.com/watch?v=apk9GWC17Zw",
-   "pip": {
-    "crop": "iw*0.455:ih*0.454:iw*0.539:ih*0.28",
-    "note": "two-up Zoom gallery, Ken's tile on the right for the whole session; a 16:9 window on his tile (checked at 320, 350, 380, 900, 940, 1160, 1240, 1400, 1480 s)"
-   }
-  },
-  {
-   "id": "keu",
-   "label": "perf-review-market-relationship (Ch3 teeter-totter)",
-   "file": "youtube-keUjMJcneCM-perf-review-market-relationship.mp4",
-   "proxy": "youtube-keUjMJcneCM-perf-review-market-relationship.proxy.mp4",
-   "url": "https://www.youtube.com/watch?v=keUjMJcneCM"
-  },
-  {
-   "id": "kma",
-   "label": "intraday-tactics (Ch4 lions)",
-   "file": "youtube-KMa-sBc_3gg-intraday-tactics.mp4",
-   "proxy": "youtube-KMa-sBc_3gg-intraday-tactics.proxy.mp4",
-   "url": "https://www.youtube.com/watch?v=KMa-sBc_3gg"
-  }
- ],
- "voices": [
-  {
-   "id": "ava",
-   "label": "Ava (US, female, polished)",
-   "sample": "vo-ava.mp3"
-  },
-  {
-   "id": "andrew",
-   "label": "Andrew (US, male, conversational)",
-   "sample": "vo-andrew.mp3"
-  }
- ],
- "segments": [
-  {
-   "id": "s00",
-   "type": "slide",
-   "include": true,
-   "label": "Title card",
-   "slide_id": "title",
-   "duration": 4,
-   "layout": "title",
-   "text": {
-    "kicker": "",
-    "title": "**Mental Model**",
-    "subtitle": "for traders - part 1",
-    "body": "with Dr. Ken Long"
-   }
-  },
-  {
-   "id": "s01",
-   "type": "cut",
-   "include": false,
-   "label": "Cold open: the coaching eye",
-   "source": "apk",
-   "in": 883.0,
-   "out": 905.0,
-   "why": "the hook: the coaching eye, did I follow my own rules, yes or no",
-   "status": "bite of mental-model-v2 s01 (+0.0..+22.0 s); the twin s01a carries it"
-  },
-  {
-   "id": "s01a",
-   "type": "overdub",
-   "include": true,
-   "label": "ALT animated: Cold open: the coaching eye",
-   "source": "apk",
-   "in": 883.0,
-   "out": 905.0,
-   "why": "the hook: the coaching eye, did I follow my own rules, yes or no",
-   "anim_of": {
-    "course": "mental-model-v2",
-    "scene": "s01"
-   },
-   "animation_brief": "the mental-model-v2 s01 scene, started at its +0.0 s",
-   "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
-   "pip": true,
-   "transition": {
-    "type": "fade",
-    "dur": 0.6
-   },
-   "toc_title": "The coaching eye"
-  },
-  {
-   "id": "s02",
-   "type": "cut",
-   "include": false,
-   "label": "★ Tool user vs system architect",
-   "source": "apk",
-   "in": 1159.3,
-   "out": 1177.3,
-   "why": "tool user or system architect",
-   "status": "bite of mental-model-v2 s04 (+14.3..+32.3 s); the twin s02a carries it"
-  },
-  {
-   "id": "s02a",
-   "type": "overdub",
-   "include": true,
-   "label": "ALT animated: ★ Tool user vs system architect",
-   "source": "apk",
-   "in": 1159.3,
-   "out": 1177.3,
-   "why": "tool user or system architect",
-   "anim_of": {
-    "course": "mental-model-v2",
-    "scene": "s04"
-   },
-   "animation_brief": "the mental-model-v2 s04 scene, started at its +14.3 s",
-   "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
-   "pip": true,
-   "transition": {
-    "type": "dip",
-    "dur": 0.6
-   }
-  },
-  {
-   "id": "s03",
-   "type": "cut",
-   "include": false,
-   "label": "★ Trade like an intelligent adaptive machine (the real closing frame)",
-   "source": "apk",
-   "in": 1369.6,
-   "out": 1395.0,
-   "why": "the line the course is named for: an intelligent, adaptive machine with rules",
-   "status": "bite of mental-model-v2 s06 (+0.6..+26.0 s); the twin s03a carries it",
-   "toc_title": "★ Trade like an intelligent adaptive machine"
-  },
-  {
-   "id": "s03a",
-   "type": "overdub",
-   "include": true,
-   "label": "ALT animated: ★ Trade like an intelligent adaptive machine (the real closing frame)",
-   "source": "apk",
-   "in": 1369.6,
-   "out": 1395.0,
-   "why": "the line the course is named for: an intelligent, adaptive machine with rules",
-   "anim_of": {
-    "course": "mental-model-v2",
-    "scene": "s06"
-   },
-   "animation_brief": "the mental-model-v2 s06 scene, started at its +0.6 s",
-   "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
-   "pip": true,
-   "transition": {
-    "type": "dip",
-    "dur": 0.6
-   },
-   "toc_title": "★ Trade like an intelligent adaptive machine"
-  },
-  {
-   "id": "s04",
-   "type": "cut",
-   "include": false,
-   "label": "★ The emotional maniacs; the market never breaks",
-   "source": "keu",
-   "in": 769.4,
-   "out": 789.0,
-   "why": "the teeter-totter: the market never breaks, it accommodates the maniacs",
-   "status": "bite of mental-model-v2 s27 (+20.4..+40.0 s); the twin s04a carries it"
-  },
-  {
-   "id": "s04a",
-   "type": "overdub",
-   "include": true,
-   "label": "ALT animated: ★ The emotional maniacs; the market never breaks",
-   "source": "keu",
-   "in": 769.4,
-   "out": 789.0,
-   "why": "the teeter-totter: the market never breaks, it accommodates the maniacs",
-   "anim_of": {
-    "course": "mental-model-v2",
-    "scene": "s27"
-   },
-   "animation_brief": "the mental-model-v2 s27 scene, started at its +20.4 s",
-   "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
-   "transition": {
-    "type": "dip",
-    "dur": 0.6
-   }
-  },
-  {
-   "id": "s05",
-   "type": "cut",
-   "include": false,
-   "label": "★ Not efficient. Efficient enough. A zebra, not a rabbit",
-   "source": "kma",
-   "in": 699.8,
-   "out": 725.9,
-   "why": "the lions: one in five, as efficient as they need to be",
-   "status": "bite of mental-model-v2 s32 (+7.8..+33.9 s); the twin s05a carries it"
-  },
-  {
-   "id": "s05a",
-   "type": "overdub",
-   "include": true,
-   "label": "ALT animated: ★ Not efficient. Efficient enough. A zebra, not a rabbit",
-   "source": "kma",
-   "in": 699.8,
-   "out": 725.9,
-   "why": "the lions: one in five, as efficient as they need to be",
-   "anim_of": {
-    "course": "mental-model-v2",
-    "scene": "s32"
-   },
-   "animation_brief": "the mental-model-v2 s32 scene, started at its +7.8 s",
-   "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
-   "transition": {
-    "type": "dip",
-    "dur": 0.6
-   }
-  },
-  {
-   "id": "s06",
-   "type": "slide",
-   "include": true,
-   "label": "End card",
-   "slide_id": "end",
-   "duration": 8,
-   "layout": "end",
-   "text": {
-    "kicker": "",
-    "title": "The Mental Model, part 1",
-    "subtitle": "owlgrouptrading.com",
-    "body": "Four chapters, about 28 minutes, with Dr. Ken Long."
-   },
-   "transition": {
-    "type": "fade",
-    "dur": 1.0
-   }
-  }
- ]
+  "schema": "coursecraft-plan-v2",
+  "course": "mental-model-v2-sales",
+  "cutroom": "mental-model-v2-sales",
+  "revision": 5,
+  "revised": "2026-11-22",
+  "status": "rev5 (2026-11-22): the parent's stage scenes (Module 1 rev 8+) from each bite's offset; his still on keu and kma so all five bites carry pip. DRAFT rev1: a sales clip of mental-model-v2, ~120 s; the owner edits it in the cutroom · 2026-11-22: toc_title set; the label is the editor's, the student reads toc_title (scripts/student_text.py)",
+  "title": "The Mental Model, part 1: sales clip",
+  "topic_class": "sales clip",
+  "store_sku": "mental-model",
+  "replaces": null,
+  "notes": "2026-11-16 (cutroom-24): transitions on every join, defaults by rule: cut where his speech runs on from the same session, dip to black 0.6 s between separate moments, crossfade 1.0 s into a slide card and 0.6 s out of one; chosen and previewed per join in the cutroom, rendered by build_v2 (xfade, acrossfade).\n\nBites end on a full sentence (cues read 2026-11-16). Each twin starts the parent's scene at the bite's offset, so the captions stay on his words.",
+  "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/mental-model-v2/",
+  "sources": [
+    {
+      "id": "apk",
+      "label": "really-really-good (Ch1 + Ch1b)",
+      "file": "youtube-apk9GWC17Zw-really-really-good.mp4",
+      "proxy": "youtube-apk9GWC17Zw-really-really-good.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=apk9GWC17Zw",
+      "pip": {
+        "crop": "iw*0.455:ih*0.454:iw*0.539:ih*0.28",
+        "note": "two-up Zoom gallery, Ken's tile on the right for the whole session; a 16:9 window on his tile (checked at 320, 350, 380, 900, 940, 1160, 1240, 1400, 1480 s)"
+      }
+    },
+    {
+      "id": "keu",
+      "label": "perf-review-market-relationship (Ch3 teeter-totter)",
+      "file": "youtube-keUjMJcneCM-perf-review-market-relationship.mp4",
+      "proxy": "youtube-keUjMJcneCM-perf-review-market-relationship.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=keUjMJcneCM",
+      "pip": {
+        "still": "_shared/ken-still.jpg",
+        "note": "no camera tile in this source: his still stands in (owner rule 2026-11-22: 'if the slide has no Ken video, substitute his image')"
+      }
+    },
+    {
+      "id": "kma",
+      "label": "intraday-tactics (Ch4 lions)",
+      "file": "youtube-KMa-sBc_3gg-intraday-tactics.mp4",
+      "proxy": "youtube-KMa-sBc_3gg-intraday-tactics.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=KMa-sBc_3gg",
+      "pip": {
+        "still": "_shared/ken-still.jpg",
+        "note": "no camera tile in this source: his still stands in (owner rule 2026-11-22: 'if the slide has no Ken video, substitute his image')"
+      }
+    }
+  ],
+  "voices": [
+    {
+      "id": "ava",
+      "label": "Ava (US, female, polished)",
+      "sample": "vo-ava.mp3"
+    },
+    {
+      "id": "andrew",
+      "label": "Andrew (US, male, conversational)",
+      "sample": "vo-andrew.mp3"
+    }
+  ],
+  "segments": [
+    {
+      "id": "s00",
+      "type": "slide",
+      "include": true,
+      "label": "Title card",
+      "slide_id": "title",
+      "duration": 4,
+      "layout": "title",
+      "text": {
+        "kicker": "",
+        "title": "**Mental Model**",
+        "subtitle": "for traders - part 1",
+        "body": "with Dr. Ken Long"
+      }
+    },
+    {
+      "id": "s01",
+      "type": "cut",
+      "include": false,
+      "label": "Cold open: the coaching eye",
+      "source": "apk",
+      "in": 883.0,
+      "out": 905.0,
+      "why": "the hook: the coaching eye, did I follow my own rules, yes or no",
+      "status": "bite of mental-model-v2 s01 (+0.0..+22.0 s); the twin s01a carries it"
+    },
+    {
+      "id": "s01a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: Cold open: the coaching eye",
+      "source": "apk",
+      "in": 883.0,
+      "out": 905.0,
+      "why": "the hook: the coaching eye, did I follow my own rules, yes or no",
+      "anim_of": {
+        "course": "mental-model-v2",
+        "scene": "s01"
+      },
+      "animation_brief": "the mental-model-v2 s01 scene, started at its +0.0 s",
+      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
+      "pip": true,
+      "transition": {
+        "type": "fade",
+        "dur": 0.6
+      },
+      "toc_title": "The coaching eye"
+    },
+    {
+      "id": "s02",
+      "type": "cut",
+      "include": false,
+      "label": "★ Tool user vs system architect",
+      "source": "apk",
+      "in": 1159.3,
+      "out": 1177.3,
+      "why": "tool user or system architect",
+      "status": "bite of mental-model-v2 s04 (+14.3..+32.3 s); the twin s02a carries it"
+    },
+    {
+      "id": "s02a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: ★ Tool user vs system architect",
+      "source": "apk",
+      "in": 1159.3,
+      "out": 1177.3,
+      "why": "tool user or system architect",
+      "anim_of": {
+        "course": "mental-model-v2",
+        "scene": "s04"
+      },
+      "animation_brief": "the mental-model-v2 s04 scene, started at its +14.3 s",
+      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
+      "pip": true,
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s03",
+      "type": "cut",
+      "include": false,
+      "label": "★ Trade like an intelligent adaptive machine (the real closing frame)",
+      "source": "apk",
+      "in": 1369.6,
+      "out": 1395.0,
+      "why": "the line the course is named for: an intelligent, adaptive machine with rules",
+      "status": "bite of mental-model-v2 s06 (+0.6..+26.0 s); the twin s03a carries it",
+      "toc_title": "★ Trade like an intelligent adaptive machine"
+    },
+    {
+      "id": "s03a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: ★ Trade like an intelligent adaptive machine (the real closing frame)",
+      "source": "apk",
+      "in": 1369.6,
+      "out": 1395.0,
+      "why": "the line the course is named for: an intelligent, adaptive machine with rules",
+      "anim_of": {
+        "course": "mental-model-v2",
+        "scene": "s06"
+      },
+      "animation_brief": "the mental-model-v2 s06 scene, started at its +0.6 s",
+      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
+      "pip": true,
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      },
+      "toc_title": "★ Trade like an intelligent adaptive machine"
+    },
+    {
+      "id": "s04",
+      "type": "cut",
+      "include": false,
+      "label": "★ The emotional maniacs; the market never breaks",
+      "source": "keu",
+      "in": 769.4,
+      "out": 789.0,
+      "why": "the teeter-totter: the market never breaks, it accommodates the maniacs",
+      "status": "bite of mental-model-v2 s27 (+20.4..+40.0 s); the twin s04a carries it"
+    },
+    {
+      "id": "s04a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: ★ The emotional maniacs; the market never breaks",
+      "source": "keu",
+      "in": 769.4,
+      "out": 789.0,
+      "why": "the teeter-totter: the market never breaks, it accommodates the maniacs",
+      "anim_of": {
+        "course": "mental-model-v2",
+        "scene": "s27"
+      },
+      "animation_brief": "the mental-model-v2 s27 scene, started at its +20.4 s",
+      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      },
+      "pip": true
+    },
+    {
+      "id": "s05",
+      "type": "cut",
+      "include": false,
+      "label": "★ Not efficient. Efficient enough. A zebra, not a rabbit",
+      "source": "kma",
+      "in": 699.8,
+      "out": 725.9,
+      "why": "the lions: one in five, as efficient as they need to be",
+      "status": "bite of mental-model-v2 s32 (+7.8..+33.9 s); the twin s05a carries it"
+    },
+    {
+      "id": "s05a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: ★ Not efficient. Efficient enough. A zebra, not a rabbit",
+      "source": "kma",
+      "in": 699.8,
+      "out": 725.9,
+      "why": "the lions: one in five, as efficient as they need to be",
+      "anim_of": {
+        "course": "mental-model-v2",
+        "scene": "s32"
+      },
+      "animation_brief": "the mental-model-v2 s32 scene, started at its +7.8 s",
+      "status": "sales bite: the parent's animation from this point; trim freely, rerun sales_clip.py",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      },
+      "pip": true
+    },
+    {
+      "id": "s06",
+      "type": "slide",
+      "include": true,
+      "label": "End card",
+      "slide_id": "end",
+      "duration": 8,
+      "layout": "end",
+      "text": {
+        "kicker": "",
+        "title": "The Mental Model, part 1",
+        "subtitle": "owlgrouptrading.com",
+        "body": "Four chapters, about 28 minutes, with Dr. Ken Long."
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 1.0
+      }
+    }
+  ]
 }
