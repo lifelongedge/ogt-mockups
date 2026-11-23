@@ -1,0 +1,649 @@
+{
+  "schema": "coursecraft-plan-v2",
+  "course": "critical-states-v2",
+  "revision": 1,
+  "revised": "2026-11-22",
+  "status": "DRAFT rev1 (2026-11-22): the owner's ask after the corpus intake of rq3bTCXLvIk ('give me cutroom of the 30 min course first with the segments and animated twins; if his chart is usable I prefer using it and animating on it'). One source, the 01:12:02-01:42:10 block of the 2026-11-22 weekend report review: 14 cuts, 13 twins (12 on his own chart, 1 drawn), seven chapter cards, the opener, title, agenda, maxim and end cards. Every twin OFF and every cut ON for the first offer (anim-overdub: the owner picks). s08 (a political aside) OFF with no twin. Windows are the captions' word stamps (yt-dlp 2026.10.26 auto-captions, fetched the day of upload); the Whisper transcript made first that evening heard two more levels in s11 (630, 645) that the captions drop: check by ear.",
+  "title": "Critical States",
+  "topic_class": "market reading; one framework (the Regression Line Fractal Framework); ZERO outcomes (nothing decidable in footage)",
+  "store_sku": "critical-states",
+  "replaces": null,
+  "notes": "Source block picked from the corpus intake (kenlong-transcripts youtube-rq3bTCXLvIk, 567 videos): the most explicit statement of the fractal framework on tape by hit count against the 55 sessions that mention it. Stills: stills/ (chart_still.py; the TC2000 nine-day axis read by OCR, y = 1061.86 - 1.2351 * price at 38 labels, worst residual 0.38 px; the zoomed Nitro nine-day y = 1739.42 - 2.1980 * price, 45 labels, 0.41 px; the 3-day stack's labels are too faint to read, so its twins mark the lines by position and keep the prices in the text column). Ken's camera: a 77x83 px Zoom thumbnail top-right at 720p (measured at 4440 and 5000 s): too small to crop, his still stands in on every twin.",
+  "media_base": "https://storage.googleapis.com/courses.owlgrouptrading.com/_cutroom/critical-states-v2/",
+  "sources": [
+    {
+      "id": "wkr",
+      "label": "Daily Trading Plan 20261122 weekend report review; AI coaching (Ken Long, 2026-11-22)",
+      "file": "youtube-rq3bTCXLvIk-2026-11-22-weekend-report-review-ai-coaching.mp4",
+      "proxy": "youtube-rq3bTCXLvIk-2026-11-22-weekend-report-review-ai-coaching.proxy.mp4",
+      "url": "https://www.youtube.com/watch?v=rq3bTCXLvIk",
+      "pip": {
+        "still": "_shared/ken-still.jpg",
+        "note": "his camera is a Zoom thumbnail top-right, 77x83 px at 720p (x 1202-1279, y 0-83; measured at 4440 and 5000 s): too small to crop; the owner's still stands in (rule of 2026-11-22)"
+      }
+    }
+  ],
+  "voices": [
+    {
+      "id": "ava",
+      "label": "Ava (US, female, polished)",
+      "sample": "vo-ava.mp3"
+    }
+  ],
+  "segments": [
+    {
+      "id": "s000",
+      "type": "explainer",
+      "include": true,
+      "label": "OPENER · The watch (option B): the owl, the lighthouse, the title box",
+      "voice": "ava",
+      "vo_script": "Critical States. With Dr. Ken Long. Owl Group Trading.",
+      "est_duration": 8,
+      "hold": true,
+      "animation_brief": "opener (scripts/opener.py, option B from the Stanford style study): blue hour, the lighthouse beam, the Zero State owl; the frosted title box at 1.2 s, the wordmark at 2.0 s; a slow push-in over the 8 s hold; no tile.",
+      "toc_title": "Critical States",
+      "transition": {
+        "type": "fade",
+        "dur": 1
+      }
+    },
+    {
+      "id": "s01",
+      "type": "slide",
+      "include": true,
+      "label": "Title card",
+      "slide_id": "title",
+      "duration": 4,
+      "layout": "title",
+      "text": {
+        "kicker": "Market reading · the weekend report of November 22, 2026",
+        "title": "**Critical States**",
+        "subtitle": "with Dr. Ken Long",
+        "body": "The Regression Line Fractal Framework on a week of heavy weather."
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 1
+      }
+    },
+    {
+      "id": "s02",
+      "type": "slide",
+      "include": true,
+      "label": "Agenda card",
+      "slide_id": "agenda",
+      "duration": 10,
+      "layout": "agenda",
+      "text": {
+        "kicker": "In this course",
+        "title": "Seven chapters, about 30 minutes",
+        "subtitle": "",
+        "body": "Rig for heavy weather | four regression lines on the 3-day, and the 270 back at its own band\nThe stack chases price | why the fractal framework shows the turning points\nThe downside ladder | support off the stack, and the recovery path back up it\nThe nine-day | the same picture, times three: a 2,500-day regression line\nFive mice | who bought each leg, who is selling now, the correction arithmetic\n2020 on the same lines | the breach of the 270 and the 25 percent after it\nThe engineering specification | traders against buy-and-holders, on any time frame"
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 1
+      }
+    },
+    {
+      "id": "s03",
+      "type": "slide",
+      "include": true,
+      "label": "Chapter 1 card",
+      "slide_id": "ch1",
+      "duration": 2,
+      "layout": "chapter",
+      "text": {
+        "kicker": "Chapter 1",
+        "title": "Rig for heavy weather",
+        "subtitle": "",
+        "body": "Four regression lines on the 3-day SPY. When the 270 comes back to its own band, the last statistical support is thin."
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 1
+      }
+    },
+    {
+      "id": "s04",
+      "type": "cut",
+      "include": false,
+      "label": "The stack: every slope down, the breaches in order, the 270 back at its own band",
+      "source": "wkr",
+      "in": 4322,
+      "out": 4500,
+      "status": "MAPPED on the captions (word stamps): slopes 4322-4331, 'how much boundary and safety' 4339, the breaches in order 4400-4436, 'getting narrow as the 270 comes back' 4446-4463, 'price had better recover or the 270 is going to come through and smash everything' 4475-4499",
+      "quote_anchor": "this slope is down. That slope is down. The dragon is down. The 90 is down"
+    },
+    {
+      "id": "s04a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT on his chart: The stack: every slope down, the breaches in order, the 270 back at its own band",
+      "source": "wkr",
+      "in": 4322,
+      "out": 4500,
+      "animation_brief": "On a frozen frame of his own screen (stills/spy-3d-4639.jpg): his words set the beats; see anim_gen.py",
+      "status": "twin of s04: his audio, his own chart under our marks, his still top-right (no croppable tile in this source); the owner picks one of the pair in the cutroom",
+      "pip": true,
+      "toc_title": "The four lines, and the 270's own band",
+      "quote_anchor": "this slope is down. That slope is down. The dragon is down. The 90 is down",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s05",
+      "type": "cut",
+      "include": false,
+      "label": "Last support, the falling knife, the metamodel at zero",
+      "source": "wkr",
+      "in": 4500,
+      "out": 4637,
+      "status": "MAPPED: 'last support level' 4499, 660 at 4528, 'nations and the global banking collective' 4555-4564, 'volatility to be massive' 4573, swing 0% 4582-4592, BMR 0% 4592-4600, day trading and 1-3 day swings 4611-4628. The '550' turning point is in the Whisper transcript (01:15:33), the captions drop the number: check by ear",
+      "quote_anchor": "there's nothing but the will of the large market participants to come in and catch this falling knife"
+    },
+    {
+      "id": "s05a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT on his chart: Last support, the falling knife, the metamodel at zero",
+      "source": "wkr",
+      "in": 4500,
+      "out": 4637,
+      "animation_brief": "On a frozen frame of his own screen (stills/spy-3d-4639.jpg): his words set the beats; see anim_gen.py",
+      "status": "twin of s05: his audio, his own chart under our marks, his still top-right (no croppable tile in this source); the owner picks one of the pair in the cutroom",
+      "pip": true,
+      "toc_title": "Who catches a falling knife; the metamodel at 0%",
+      "quote_anchor": "there's nothing but the will of the large market participants to come in and catch this falling knife",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s06",
+      "type": "slide",
+      "include": true,
+      "label": "Chapter 2 card",
+      "slide_id": "ch2",
+      "duration": 2,
+      "layout": "chapter",
+      "text": {
+        "kicker": "Chapter 2",
+        "title": "The stack chases price",
+        "subtitle": "",
+        "body": "Price pulls away from the RL10; the 10, the 30, the 90 and the 270 chase it in order. The fractal framework shows the turning points."
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 1
+      }
+    },
+    {
+      "id": "s07",
+      "type": "cut",
+      "include": false,
+      "label": "Price pulls away from the RL10; the four lines chase it; the fractal framework",
+      "source": "wkr",
+      "in": 4637,
+      "out": 4784,
+      "status": "MAPPED: RL10 distance 4637-4682, the chase 4682-4709, the crossings 4709-4737, the framework line 4737-4755, 'turning points' 4755, 'I don't care because I know how to trade this short-term volatility' 4766-4784",
+      "quote_anchor": "the fractal framework of those four regression lines will give you an insight into what happens at the very critical states"
+    },
+    {
+      "id": "s07a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT on his chart: Price pulls away from the RL10; the four lines chase it; the fractal framework",
+      "source": "wkr",
+      "in": 4637,
+      "out": 4784,
+      "animation_brief": "On a frozen frame of his own screen (stills/spy-3d-4639.jpg): his words set the beats; see anim_gen.py",
+      "status": "twin of s07: his audio, his own chart under our marks, his still top-right (no croppable tile in this source); the owner picks one of the pair in the cutroom",
+      "pip": true,
+      "toc_title": "The four lines chase price; the fractal framework",
+      "quote_anchor": "the fractal framework of those four regression lines will give you an insight into what happens at the very critical states",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s08",
+      "type": "cut",
+      "include": false,
+      "label": "Political aside (OFF: a political remark on the week's politics, not course material; the owner decides)",
+      "source": "wkr",
+      "in": 4784,
+      "out": 4838,
+      "status": "OFF by default: 4784-4838 is a remark on the parties and 2028; nothing in it is the framework. The owner can turn it on in the cutroom. No twin drawn.",
+      "quote_anchor": "are the Democrats going to do something like",
+      "toc_title": null
+    },
+    {
+      "id": "s09",
+      "type": "cut",
+      "include": false,
+      "label": "I know how to trade the short-term volatility; protect my wagon and my horses",
+      "source": "wkr",
+      "in": 4838,
+      "out": 4868,
+      "status": "MAPPED: 'I don't care what they do' 4841, the trade he knows 4841-4850, 'a man can only do what he can do' 4850-4866",
+      "quote_anchor": "I know how to trade the short-term volatility and I know what price I've got to see"
+    },
+    {
+      "id": "s09a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT on his chart: I know how to trade the short-term volatility; protect my wagon and my horses",
+      "source": "wkr",
+      "in": 4838,
+      "out": 4868,
+      "animation_brief": "On a frozen frame of his own screen (stills/spy-3d-4639.jpg): his words set the beats; see anim_gen.py",
+      "status": "twin of s09: his audio, his own chart under our marks, his still top-right (no croppable tile in this source); the owner picks one of the pair in the cutroom",
+      "pip": true,
+      "toc_title": "What I know how to trade right now",
+      "quote_anchor": "I know how to trade the short-term volatility and I know what price I've got to see",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s10",
+      "type": "slide",
+      "include": true,
+      "label": "Chapter 3 card",
+      "slide_id": "ch3",
+      "duration": 2,
+      "layout": "chapter",
+      "text": {
+        "kicker": "Chapter 3",
+        "title": "The downside ladder",
+        "subtitle": "",
+        "body": "Support read off the stack: the SMA30 peak, the bottom of the dragon, the bottom of the RL10, the fat tail. The recovery has to fight back up the same stack."
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 1
+      }
+    },
+    {
+      "id": "s11",
+      "type": "cut",
+      "include": false,
+      "label": "Chart three: resistance became support; the ladder down; the recovery fights back up the stack",
+      "source": "wkr",
+      "in": 4868,
+      "out": 5023,
+      "status": "MAPPED on the 3d (fast) panel of the health check (drawn on the zoomed panel he opens at 01:28:16, the same chart, legible): 'magnitude of that move' 4868, resistance became support 4878-4895, the SMA30 peak 4895-4913, bottom of the dragon 4913, bottom of the RL10 4922, the fat tail 4931, '660 … 690' 4948, the recovery back up the stack 4957-4996, 2027 and the final tranche 5004-5023. ATTENTION: the Whisper transcript hears four levels (630, 645, 660, 690 at 01:22:17-01:22:33); the captions carry only 660 and 690. Check by ear before the build",
+      "quote_anchor": "What was once resistance then became support"
+    },
+    {
+      "id": "s11a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT on his chart: Chart three: resistance became support; the ladder down; the recovery fights back up the stack",
+      "source": "wkr",
+      "in": 4868,
+      "out": 5023,
+      "animation_brief": "On a frozen frame of his own screen (stills/health-3d-5296.jpg): his words set the beats; see anim_gen.py",
+      "status": "twin of s11: his audio, his own chart under our marks, his still top-right (no croppable tile in this source); the owner picks one of the pair in the cutroom",
+      "pip": true,
+      "toc_title": "The downside ladder and the recovery path",
+      "quote_anchor": "What was once resistance then became support",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s12",
+      "type": "slide",
+      "include": true,
+      "label": "Chapter 4 card",
+      "slide_id": "ch4",
+      "duration": 2,
+      "layout": "chapter",
+      "text": {
+        "kicker": "Chapter 4",
+        "title": "The nine-day",
+        "subtitle": "",
+        "body": "Four years of nine-day bars: each sell-off, the kata 2 entry, the sideways warning. The 270 times nine is a 2,500-day regression line."
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 1
+      }
+    },
+    {
+      "id": "s13",
+      "type": "cut",
+      "include": false,
+      "label": "The nine-day four years back: each sell-off, the kata 2 entry, the sideways warning, no support yet",
+      "source": "wkr",
+      "in": 5023,
+      "out": 5155,
+      "status": "MAPPED: 'notice the 9-day' 5023, the Trump meltdown and the Iran war 5033, each sell-off 5041, peak RL10 and 30 then a lower high 5059-5067, the kata 2 entry 5076, the emerging dragon 5084, the sideways warning 5093, the one-two entry 5101, 'in the middle of this spike down' 5110, zero evidence 5128-5145. Drawn on the zoomed nine-day he opens at 01:28; the health page's small 9d panel is the same chart",
+      "quote_anchor": "So we have seen no supporting price action yet. zero evidence that this is support"
+    },
+    {
+      "id": "s13a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT on his chart: The nine-day four years back: each sell-off, the kata 2 entry, the sideways warning, no support yet",
+      "source": "wkr",
+      "in": 5023,
+      "out": 5155,
+      "animation_brief": "On a frozen frame of his own screen (stills/spy-9d-5312.jpg): his words set the beats; see anim_gen.py",
+      "status": "twin of s13: his audio, his own chart under our marks, his still top-right (no croppable tile in this source); the owner picks one of the pair in the cutroom",
+      "pip": true,
+      "toc_title": "Four years of nine-day bars; no support yet",
+      "quote_anchor": "So we have seen no supporting price action yet. zero evidence that this is support",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s14",
+      "type": "cut",
+      "include": false,
+      "label": "The 270 times nine is a 2,500-day regression line: that is what fractal means",
+      "source": "wkr",
+      "in": 5155,
+      "out": 5274,
+      "status": "MAPPED: 'the 270 here times 9 days is a 2500 day moving regression line' 5155-5166, 'that's what a fractal framework does for you' 5166-5174, the 30 times 9 is a 270 5191-5200, the factor of three 5209-5226, 'that's what fractal means' 5226, the recovery to the SMA30 5237-5260",
+      "quote_anchor": "That's what a fractal framework does for you"
+    },
+    {
+      "id": "s14a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT on his chart: The 270 times nine is a 2,500-day regression line: that is what fractal means",
+      "source": "wkr",
+      "in": 5155,
+      "out": 5274,
+      "animation_brief": "On a frozen frame of his own screen (stills/spy-9d-5312.jpg): his words set the beats; see anim_gen.py",
+      "status": "twin of s14: his audio, his own chart under our marks, his still top-right (no croppable tile in this source); the owner picks one of the pair in the cutroom",
+      "pip": true,
+      "toc_title": "Times three: that is what fractal means",
+      "quote_anchor": "That's what a fractal framework does for you",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s15",
+      "type": "slide",
+      "include": true,
+      "label": "Chapter 5 card",
+      "slide_id": "ch5",
+      "duration": 2,
+      "layout": "chapter",
+      "text": {
+        "kicker": "Chapter 5",
+        "title": "Five mice",
+        "subtitle": "",
+        "body": "Who bought each leg of the run, who is selling now, and the arithmetic from a correction to a bear."
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 1
+      }
+    },
+    {
+      "id": "s16",
+      "type": "cut",
+      "include": false,
+      "label": "A student asks; the five mice on the nine-day; who is selling now",
+      "source": "wkr",
+      "in": 5274,
+      "out": 5436,
+      "status": "MAPPED: the student's question 5274-5300 (a student, not Ken), the volume of buying 5300-5327, the mice mapped 5337-5380, first mouse shorting 5390-5402, the second stepped aside, the third deciding 5402-5428. Counted picture: five mice, as he counts them",
+      "quote_anchor": "this is where the fifth mouse is buying it"
+    },
+    {
+      "id": "s16a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT on his chart: A student asks; the five mice on the nine-day; who is selling now",
+      "source": "wkr",
+      "in": 5274,
+      "out": 5436,
+      "animation_brief": "On a frozen frame of his own screen (stills/spy-9d-5312.jpg): his words set the beats; see anim_gen.py",
+      "status": "twin of s16: his audio, his own chart under our marks, his still top-right (no croppable tile in this source); the owner picks one of the pair in the cutroom",
+      "pip": true,
+      "toc_title": "The five mice on the nine-day",
+      "quote_anchor": "this is where the fifth mouse is buying it",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s17",
+      "type": "cut",
+      "include": false,
+      "label": "The correction arithmetic: 12 percent so far, a bear at 600, COVID in three nine-day bars",
+      "source": "wkr",
+      "in": 5436,
+      "out": 5567,
+      "status": "MAPPED: 780 to 690 is 90 points 5446-5463, 12% 5473, past the 10% 5482, another 70 points to 600 5491, officially a bear 5499, a flash crash in a week 5510-5519, 20 to 30% fast 5528-5537, COVID three nine-day bars 5537-5556. The captions write COVID as 'CO'",
+      "quote_anchor": "In CO, it made a 30% selloff in 3 weeks, which would be three 9-day bars"
+    },
+    {
+      "id": "s17a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT on his chart: The correction arithmetic: 12 percent so far, a bear at 600, COVID in three nine-day bars",
+      "source": "wkr",
+      "in": 5436,
+      "out": 5567,
+      "animation_brief": "On a frozen frame of his own screen (stills/spy-9d-5312.jpg): his words set the beats; see anim_gen.py",
+      "status": "twin of s17: his audio, his own chart under our marks, his still top-right (no croppable tile in this source); the owner picks one of the pair in the cutroom",
+      "pip": true,
+      "toc_title": "From a correction to a bear: the arithmetic",
+      "quote_anchor": "In CO, it made a 30% selloff in 3 weeks, which would be three 9-day bars",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s18",
+      "type": "slide",
+      "include": true,
+      "label": "Chapter 6 card",
+      "slide_id": "ch6",
+      "duration": 2,
+      "layout": "chapter",
+      "text": {
+        "kicker": "Chapter 6",
+        "title": "2020 on the same lines",
+        "subtitle": "",
+        "body": "Luis brings the March 2020 report. The breach of the 270 was followed by another 25 percent; the same distance today lands near 500."
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 1
+      }
+    },
+    {
+      "id": "s19",
+      "type": "cut",
+      "include": false,
+      "label": "Luis: the March 2020 report, the metamodel says cash, the SuperPinch targets",
+      "source": "wkr",
+      "in": 5567,
+      "out": 5694,
+      "status": "MAPPED: Luis speaks 5567-5689 (a student; credited in the gloss), Ken answers at 5689 'it's probably just going to continue lower eventually' and 'so this was 2020' 5698. SuperPinch 5x = 610-611 at 5619. Drawn: no chart of his is on screen until 5700",
+      "quote_anchor": "there is a super pinch that happened at the top. And that super pinch has two objectives"
+    },
+    {
+      "id": "s19a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT animated: Luis: the March 2020 report, the metamodel says cash, the SuperPinch targets",
+      "source": "wkr",
+      "in": 5567,
+      "out": 5694,
+      "animation_brief": "Drawn from his words in this window; see anim_gen.py",
+      "status": "twin of s19: his audio, our picture, his still top-right (no croppable tile in this source); the owner picks one of the pair in the cutroom · the speaker is Luis for most of the window: the gloss says so",
+      "pip": true,
+      "toc_title": "The 2020 report and the SuperPinch targets",
+      "quote_anchor": "there is a super pinch that happened at the top. And that super pinch has two objectives",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s20",
+      "type": "cut",
+      "include": false,
+      "label": "2020: the breach of the 270, another 25 percent, 285 to 220; the symmetry; 640 to 500",
+      "source": "wkr",
+      "in": 5694,
+      "out": 5905,
+      "status": "MAPPED on the TC2000 nine-day: 'so this was 2020' 5695, the breach of the 270 5698-5708, 'a 2500 day, five years' 5708, minus 25% / 285 to 220 / 65 over 285 5716-5735 (the captions write 255% for 25%), kata 2 second mouse 5744, third fourth fifth 5761, 'this time only a small distance below' 5770-5779, Luis: the symmetry 5788-5805, Ken: 25% below 640 is 160, 480; Luis: 500 even 5847-5891, 'holy smokes' 5891",
+      "quote_anchor": "it went another minus 255%. It went from 285 to 220 which was 65 bucks"
+    },
+    {
+      "id": "s20a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT on his chart: 2020: the breach of the 270, another 25 percent, 285 to 220; the symmetry; 640 to 500",
+      "source": "wkr",
+      "in": 5694,
+      "out": 5905,
+      "animation_brief": "On a frozen frame of his own screen (stills/spy-9d-tc-5805.jpg): his words set the beats; see anim_gen.py",
+      "status": "twin of s20: his audio, his own chart under our marks, his still top-right (no croppable tile in this source); the owner picks one of the pair in the cutroom · Luis speaks 5779-5805 and 5881-5891",
+      "pip": true,
+      "toc_title": "The breach of the 270 and the 25 percent after it",
+      "quote_anchor": "it went another minus 255%. It went from 285 to 220 which was 65 bucks",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s21",
+      "type": "slide",
+      "include": true,
+      "label": "Chapter 7 card",
+      "slide_id": "ch7",
+      "duration": 2,
+      "layout": "chapter",
+      "text": {
+        "kicker": "Chapter 7",
+        "title": "The engineering specification",
+        "subtitle": "",
+        "body": "The difference between the 10 and the 270 is traders against buy-and-holders, whether T is one minute or nine days."
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 1
+      }
+    },
+    {
+      "id": "s22",
+      "type": "cut",
+      "include": false,
+      "label": "The Regression Line Fractal Framework is an engineering specification",
+      "source": "wkr",
+      "in": 5905,
+      "out": 6009,
+      "status": "MAPPED: the definition 5905-5925, traders / confirm / wait-and-see / mice 5925-5945, 'the difference between the 10 and the 270' 5945-5953, 'whether t is 1 minute or 9 days' 5953-5962, the slow pair and the fast pair 5962-5981, fair value and the correct price 5989-6000. Drawn on the frame that carries his own notation f(t) 10 30 90 270",
+      "quote_anchor": "the regression line fractal framework is an engineering specification"
+    },
+    {
+      "id": "s22a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT on his chart: The Regression Line Fractal Framework is an engineering specification",
+      "source": "wkr",
+      "in": 5905,
+      "out": 6009,
+      "animation_brief": "On a frozen frame of his own screen (stills/spy-9d-tc-5960.jpg): his words set the beats; see anim_gen.py",
+      "status": "twin of s22: his audio, his own chart under our marks, his still top-right (no croppable tile in this source); the owner picks one of the pair in the cutroom",
+      "pip": true,
+      "toc_title": "The framework as an engineering specification",
+      "quote_anchor": "the regression line fractal framework is an engineering specification",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s23",
+      "type": "cut",
+      "include": false,
+      "label": "The buy-and-holders: 640, bought at 250, the 20 percent trailing stop, blood in the streets; SuperPinch 10x = 471",
+      "source": "wkr",
+      "in": 6009,
+      "out": 6130,
+      "status": "MAPPED: 'won't go back below 640' 6009, bought around 250 6017, the 20% trailing stop 6026-6036, 'buy at the top with a 20% trailing stop, you never get this' 6048, existential moments 6057, Rothschild 6067, blood at 640, a lot at 500 6075, Luis: SuperPinch 10x is 471 6087, 'only on chart three … all of the other ones are derivative of that insight' 6106-6128",
+      "quote_anchor": "hold your nose and buy it like Rothschild said when there's blood in the streets"
+    },
+    {
+      "id": "s23a",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT on his chart: The buy-and-holders: 640, bought at 250, the 20 percent trailing stop, blood in the streets; SuperPinch 10x = 471",
+      "source": "wkr",
+      "in": 6009,
+      "out": 6130,
+      "animation_brief": "On a frozen frame of his own screen (stills/spy-9d-tc-6080.jpg): his words set the beats; see anim_gen.py",
+      "status": "twin of s23: his audio, his own chart under our marks, his still top-right (no croppable tile in this source); the owner picks one of the pair in the cutroom · Luis speaks 6087-6093",
+      "pip": true,
+      "toc_title": "Blood in the streets: when the buy-and-holder buys",
+      "quote_anchor": "hold your nose and buy it like Rothschild said when there's blood in the streets",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s24",
+      "type": "slide",
+      "include": true,
+      "label": "Maxim card",
+      "slide_id": "maxim",
+      "duration": 6,
+      "layout": "maxim",
+      "text": {
+        "kicker": "",
+        "title": "“I know how to trade this short-term volatility, and my long-term money is protected until this thing resolves in the way it wants to go.”",
+        "subtitle": "Dr. Ken Long",
+        "body": ""
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 1
+      }
+    },
+    {
+      "id": "s25",
+      "type": "slide",
+      "include": true,
+      "label": "End card",
+      "slide_id": "end",
+      "duration": 10,
+      "layout": "end",
+      "text": {
+        "kicker": "",
+        "title": "One idea on the craft most mornings",
+        "subtitle": "owlgrouptrading.com",
+        "body": "Every picture was the trade: the four lines, the 270's own band, the ladder, the nine-day, the mice, 2020, the specification.\nThe Tue to Fri daily note from Owl Group Trading."
+      },
+      "transition": {
+        "type": "fade",
+        "dur": 1
+      }
+    }
+  ]
+}
