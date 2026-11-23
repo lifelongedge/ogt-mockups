@@ -1,9 +1,9 @@
 {
   "schema": "coursecraft-plan-v2",
   "course": "critical-states-v2",
-  "revision": 4,
+  "revision": 5,
   "revised": "2026-11-22",
-  "status": "DRAFT rev4 (2026-11-22, owner's title: 'Market in Critical State with Dr Ken Long: Reading the Regression Line Fractal Framework on a heavy week in November 2026'): the plan title, the title card, the opener's box and spoken line, and the end card carry it. DRAFT rev3 (2026-11-22): the internal context card split in three (s00w, s00x, s00y) so none clips at the prose layout. DRAFT rev2 (2026-11-22, owner: the wordy internal card): s00w, the context and the story arc in prose, at the head of the cutroom, ON for the storyboard and OFF before the build. DRAFT rev1 (2026-11-22): the owner's ask after the corpus intake of rq3bTCXLvIk ('give me cutroom of the 30 min course first with the segments and animated twins; if his chart is usable I prefer using it and animating on it'). One source, the 01:12:02-01:42:10 block of the 2026-11-22 weekend report review: 14 cuts, 13 twins (12 on his own chart, 1 drawn), seven chapter cards, the opener, title, agenda, maxim and end cards. Every twin ON and its cut OFF, the owner's standing pick since the Disciplined Operator rev 3 (flip per segment in the cutroom). s08 (a political aside) OFF with no twin. Windows are the captions' word stamps (yt-dlp 2026.10.26 auto-captions, fetched the day of upload); the Whisper transcript made first that evening heard two more levels in s11 (630, 645) that the captions drop: check by ear.",
+  "status": "rev5 (2026-11-22, owner: 'cut it; then hand it to growogtx'): built from the plan as it stood (no cutroom pass saved), twins ON; the three INTERNAL context cards OFF for the build; 550, 630 and 645 confirmed by a second Whisper model and put on screen; production words removed from three glosses. DRAFT rev4 (2026-11-22, owner's title: 'Market in Critical State with Dr Ken Long: Reading the Regression Line Fractal Framework on a heavy week in November 2026'): the plan title, the title card, the opener's box and spoken line, and the end card carry it. DRAFT rev3 (2026-11-22): the internal context card split in three (s00w, s00x, s00y) so none clips at the prose layout. DRAFT rev2 (2026-11-22, owner: the wordy internal card): s00w, the context and the story arc in prose, at the head of the cutroom, ON for the storyboard and OFF before the build. DRAFT rev1 (2026-11-22): the owner's ask after the corpus intake of rq3bTCXLvIk ('give me cutroom of the 30 min course first with the segments and animated twins; if his chart is usable I prefer using it and animating on it'). One source, the 01:12:02-01:42:10 block of the 2026-11-22 weekend report review: 14 cuts, 13 twins (12 on his own chart, 1 drawn), seven chapter cards, the opener, title, agenda, maxim and end cards. Every twin ON and its cut OFF, the owner's standing pick since the Disciplined Operator rev 3 (flip per segment in the cutroom). s08 (a political aside) OFF with no twin. Windows are the captions' word stamps (yt-dlp 2026.10.26 auto-captions, fetched the day of upload); the Whisper transcript made first that evening heard two more levels in s11 (630, 645) that the captions drop: check by ear.",
   "title": "Market in Critical State",
   "topic_class": "market reading; one framework (the Regression Line Fractal Framework); ZERO outcomes (nothing decidable in footage)",
   "store_sku": "critical-states",
@@ -50,7 +50,7 @@
     {
       "id": "s00w",
       "type": "slide",
-      "include": true,
+      "include": false,
       "label": "INTERNAL · context 1 of 3: Where this course comes from (OFF before the build)",
       "slide_id": "arc-prose-1",
       "duration": 12,
@@ -70,7 +70,7 @@
     {
       "id": "s00x",
       "type": "slide",
-      "include": true,
+      "include": false,
       "label": "INTERNAL · context 2 of 3: The argument, in seven chapters (OFF before the build)",
       "slide_id": "arc-prose-2",
       "duration": 12,
@@ -90,7 +90,7 @@
     {
       "id": "s00y",
       "type": "slide",
-      "include": true,
+      "include": false,
       "label": "INTERNAL · context 3 of 3: What the cut must keep (OFF before the build)",
       "slide_id": "arc-prose-3",
       "duration": 12,
@@ -99,7 +99,7 @@
         "kicker": "INTERNAL · CONTEXT 3 OF 3 · NOT FOR THE CUT",
         "title": "What the cut must keep",
         "subtitle": "A reading method, not a forecast; every number on screen is one he or Luis says.",
-        "body": "He never calls the direction: \"Is it going to do this in a hurry, or that in a hurry? I don't know. I don't care, because I know how to trade this short-term volatility and my long-term money is protected until this thing resolves\" (s07, and the maxim card).\n\nTwelve of the thirteen animated pictures are drawn on frozen frames of his own charts, with the levels placed on his own price axis; the thirteenth is drawn where Luis speaks with no chart on screen. Two rungs of the chapter-3 ladder, 630 and 645, are heard by Whisper and dropped by the captions, and stay marked \"by ear\" until checked. The political aside at 01:19:44 is out of the cut and off by default.\n\nThe hinge for the student, said once per chapter card and under every scene's head: the picture is the trade. The stack is where the market's long and short money sit; the band is the last support; the ladder is where the next bid may stand; the mice are who is buying and who is selling; the specification is why the same reading works on any time frame."
+        "body": "He never calls the direction: \"Is it going to do this in a hurry, or that in a hurry? I don't know. I don't care, because I know how to trade this short-term volatility and my long-term money is protected until this thing resolves\" (s07, and the maxim card).\n\nTwelve of the thirteen animated pictures are drawn on frozen frames of his own charts, with the levels placed on his own price axis; the thirteenth is drawn where Luis speaks with no chart on screen. Three numbers the captions drop (550 in chapter 1, 630 and 645 in chapter 3) were confirmed by two Whisper models and are on screen as his. The political aside at 01:19:44 is out of the cut and off by default.\n\nThe hinge for the student, said once per chapter card and under every scene's head: the picture is the trade. The stack is where the market's long and short money sit; the band is the last support; the ladder is where the next bid may stand; the mice are who is buying and who is selling; the specification is why the same reading works on any time frame."
       },
       "status": "rev2 (2026-11-22, owner: 'we need to add the wordy slide for the internal cut that provides context on this course'); rev3: one card became three so none clips at the prose layout's 27 px. ON so they head the storyboard, OFF before the build.",
       "transition": {
@@ -201,7 +201,7 @@
       "source": "wkr",
       "in": 4500,
       "out": 4637,
-      "status": "MAPPED: 'last support level' 4499, 660 at 4528, 'nations and the global banking collective' 4555-4564, 'volatility to be massive' 4573, swing 0% 4582-4592, BMR 0% 4592-4600, day trading and 1-3 day swings 4611-4628. The '550' turning point is in the Whisper transcript (01:15:33), the captions drop the number: check by ear",
+      "status": "MAPPED: 'last support level' 4499, 660 at 4528, 'nations and the global banking collective' 4555-4564, 'volatility to be massive' 4573, swing 0% 4582-4592, BMR 0% 4592-4600, day trading and 1-3 day swings 4611-4628. rev5: '670, excuse me, no, 660' and 'about 550' confirmed by Whisper small.en and medium.en (the captions drop 550); on screen as his",
       "quote_anchor": "there's nothing but the will of the large market participants to come in and catch this falling knife"
     },
     {
@@ -338,7 +338,7 @@
       "source": "wkr",
       "in": 4868,
       "out": 5023,
-      "status": "MAPPED on the 3d (fast) panel of the health check (drawn on the zoomed panel he opens at 01:28:16, the same chart, legible): 'magnitude of that move' 4868, resistance became support 4878-4895, the SMA30 peak 4895-4913, bottom of the dragon 4913, bottom of the RL10 4922, the fat tail 4931, '660 … 690' 4948, the recovery back up the stack 4957-4996, 2027 and the final tranche 5004-5023. ATTENTION: the Whisper transcript hears four levels (630, 645, 660, 690 at 01:22:17-01:22:33); the captions carry only 660 and 690. Check by ear before the build",
+      "status": "MAPPED on the 3d (fast) panel of the health check (drawn on the zoomed panel he opens at 01:28:16, the same chart, legible): 'magnitude of that move' 4868, resistance became support 4878-4895, the SMA30 peak 4895-4913, bottom of the dragon 4913, bottom of the RL10 4922, the fat tail 4931, '660 … 690' 4948, the recovery back up the stack 4957-4996, 2027 and the final tranche 5004-5023. rev5: the four rungs 630, 645, 660, 690 confirmed by Whisper small.en and medium.en (the captions drop 630 and 645); on screen as his",
       "quote_anchor": "What was once resistance then became support"
     },
     {
