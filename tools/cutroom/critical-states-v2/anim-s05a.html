@@ -167,12 +167,12 @@ function draw(t){
   s += head(t,0.2,'Who catches a falling knife?') + bridge(t,0.2,'swing 0 %, long-term 0 %; the day trade is the open door');
   if (after(t,0)){ const o=op(t,T(0),.5); s += ring(...at(PB),20,KEY,o) + line(PX(560),PYX(58),PX(745),PYX(58),{s:KEY,sw:2,dash:'7 5',o}) + tag(PX(555),PYX(58),'last support: the band',KEY,o,'end'); }
   s += rc(t,0,170,'the ladder down',{c:MUT,sz:17});
-  s += rc(t,0,200,'1  the 270’s band, now',{c:KEY,sz:19,w:600}) + rc(t,1,228,'2  660',{c:FG,sz:19,w:600}) + rc(t,2,256,'3  the last turning point, about 550',{c:FG,sz:19,w:600});
+  s += rc(t,0,200,'1  the 270’s band, now',{c:KEY,sz:19,w:600}) + rc(t,1,228,'2  660',{c:FG,sz:19,w:600}) + rc(t,2,256,'3  last turning point: 550',{c:FG,sz:19,w:600});
   if (after(t,1)){ const o=op(t,T(1),.5); s += line(PX(560),PYX(395),PX(745),PYX(395),{s:FG,sw:2,dash:'7 5',o}) + tag(PX(555),PYX(395),'660',FG,o,'end'); }
   if (after(t,3)){ const o=op(t,T(3),.5); const u=.5+.5*Math.sin(t*3); s += glow(path(`M${PX(735)} ${PYX(250)} L${PX(735)} ${PYX(345+8*u)}`,{s:RISK,sw:5,o})) + tag(PX(725),PYX(300),'a falling knife',RISK,o,'end'); }
   if (after(t,4)){ const o=op(t,T(4),.5); s += aside(t,T(4),RX,312,'nations and the global banking collective',{sz:22}); }
   if (after(t,5)){ const o=op(t,T(5),.5); s += chip(RX,330,'volatility: massive',{s:RISK,c:RISK,o,sz:18}); }
-  s += defn(t,T(6),RX,392,330,'The metamodel now',['swing, short-term sizing: 0 %','long-term (BMR): 0 %','day trades, 1-3 day swings: open'],{lh:26,pad:14});
+  s += defn(t,T(6),RX,392,330,'The metamodel now',['swing, short-term sizing: 0 %','long-term (BMR): 0 %','day trade, 1-3 day swing: open'],{lh:24,pad:12,lsz:17});
   s += focus(t,[[T(0),...at(PB)],[T(1),PX(650),PYX(395)],[T(3),PX(735),PYX(300)],[T(4),RX+120,306],[T(5),RX+80,348],[T(6),RX+150,452],[T(7),RX+150,478],[T(8),RX+150,504],[T(9),RX+150,440]]);
   return s;
 }

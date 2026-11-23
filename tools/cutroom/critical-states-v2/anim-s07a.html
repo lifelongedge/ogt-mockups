@@ -175,7 +175,7 @@ function draw(t){
   if (after(t,6)){ const o=op(t,T(6)+.8,.5); s += ring(...at(EARLY),26,KEY,o) + tag(PX(120),PYX(300),'the same way, over here',KEY,o); }
   if (after(t,7)){ const o=op(t,T(7),.5); s += ring(PX(70),PYX(275),9,RL10,o); }
   if (after(t,8)){ const o=op(t,T(8),.5); s += ring(PX(85),PYX(262),9,RL30,o) + ring(PX(80),PYX(255),9,RL90,o); }
-  s += defn(t,T(9),RX,312,330,'The fractal framework',['four lines: 10, 30, 90, 270','critical: the 270 at its own band','read those as turning points'],{lh:26,pad:14});
+  s += defn(t,T(9),RX,312,330,'The framework',['four lines: 10, 30, 90, 270','critical: 270 at its own band','read those as turning points'],{lh:24,pad:12,lsz:17});
   if (after(t,11)){ const o=op(t,T(11),.5); s += ring(...at(PB),20,KEY,o); }
   s += aside(t,T(12),RX,476,'I don’t know. I don’t care.',{sz:26});
   if (after(t,13)){ const o=op(t,T(13),.5); s += chip(RX,486,'long-term money: protected',{s:SAFE,c:SAFE,o,sz:17,h:32}); }

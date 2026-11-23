@@ -166,11 +166,11 @@ function draw(t){
   s += head(t,0.2,'What does “fractal” mean here?') + bridge(t,0.2,'the same four lines, times three a frame; read them alike');
   if (after(t,0)){ const o=op(t,T(0),.5); s += ring(...at(L270),18,RL270,o) + tag(PX(1050),PYX(290),'the 270, on nine-day bars',RL270,o,'end'); }
   s += rc(t,0,165,'nine-day bars × the lines',{c:MUT,sz:17});
-  s += rc(t,0,197,'270 × 9',{c:RL270,sz:22,w:600}) + rc(t,0,197,'≈ 2,500 days, five years',{x:RX+110,c:RL270,sz:19,d:.4});
-  s += rc(t,3,229,'30 × 9',{c:RL30,sz:22,w:600}) + rc(t,3,229,'= a 270',{x:RX+110,c:RL30,sz:19,d:.4});
-  s += rc(t,4,261,'10 × 9',{c:RL10,sz:22,w:600}) + rc(t,4,261,'= a 90',{x:RX+110,c:RL10,sz:19,d:.4});
+  s += rc(t,0,197,'270 × 9',{c:RL270,sz:22,w:600}) + rc(t,0,197,'\u2248 2,500 days, five years',{x:RX+95,c:RL270,sz:17,d:.4});
+  s += rc(t,3,229,'30 × 9',{c:RL30,sz:22,w:600}) + rc(t,3,229,'= a 270',{x:RX+95,c:RL30,sz:19,d:.4});
+  s += rc(t,4,261,'10 × 9',{c:RL10,sz:22,w:600}) + rc(t,4,261,'= a 90',{x:RX+95,c:RL10,sz:19,d:.4});
   if (after(t,2)){ const o=op(t,T(2),.5); s += lv(640,'long-term value',RL270,o,PX(700),PX(1160),true); }
-  s += defn(t,T(5),RX,300,330,'Fractal',['each line, times three','long and short frames read alike','the 270 here: about five years'],{lh:26,pad:14});
+  s += defn(t,T(5),RX,300,330,'Fractal',['each line, times three','long, short frames read alike','the 270 here: about five years'],{lh:24,pad:12,lsz:17});
   if (after(t,6)){ const o=op(t,T(6),.5); s += ring(PX(1090),PYX(90),16,RL30,o) + tag(PX(1060),PYX(60),'back to the SMA30',RL30,o,'end'); }
   if (after(t,7)){ const o=op(t,T(7),.5); s += aside(t,T(7),RX,462,'it has to fight here first',{sz:24}); }
   s += focus(t,[[T(0),...at(L270)],[T(1),RX+100,190],[T(2),PX(900),PY(640)],[T(3),RX+100,222],[T(4),RX+100,254],[T(5),RX+150,360],[T(6),PX(1090),PYX(90)],[T(7),RX+120,455]]);

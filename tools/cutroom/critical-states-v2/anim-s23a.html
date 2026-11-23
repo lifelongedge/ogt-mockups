@@ -169,14 +169,14 @@ function draw(t){
   s += rc(t,0,195,'“not below 640”',{c:RL270,sz:19,w:600});
   s += rc(t,1,223,'bought around 250',{c:SAFE,sz:19,w:600});
   if (after(t,2)){ const o=op(t,T(2),.5); s += lv(680,'680: the stop',KEY,o,PX(560),PX(805)); }
-  s += rc(t,2,251,'stop at 680: a 20 % trailing stop',{c:KEY,sz:19,w:600});
-  s += defn(t,T(3),RX,282,330,'Rothschild, his way',['buy in the existential moment','20 % trailing stop; leave it alone','never from the top'],{lh:26,pad:14});
+  s += rc(t,2,251,'a 680 stop: 20 % trailing',{c:KEY,sz:19,w:600});
+  s += defn(t,T(3),RX,282,330,'Rothschild, his way',['buy in the existential moment','a 20 % trailing stop','then leave it alone','never from the top'],{lh:22,pad:12,lsz:17});
   if (after(t,4)){ const o=op(t,T(4),.5); s += ring(PX(765),PYX(30),14,RISK,o) + tag(PX(750),PYX(12),'not from the top',RISK,o,'end'); }
-  if (after(t,6)){ const o=op(t,T(6),.5); s += aside(t,T(6),RX,432,'when there’s blood in the streets',{sz:24}); }
+  if (after(t,6)){ const o=op(t,T(6),.5); s += aside(t,T(6),RX,450,'when there\u2019s blood in the streets',{sz:24}); }
   if (after(t,7)){ const o=op(t,T(7),.5); s += lv(500,'500',RISK,o,PX(560),PX(805)); }
-  s += rc(t,7,462,'blood below 640; a lot of it at 500',{c:RISK,sz:18});
+  s += rc(t,7,474,'blood below 640; a lot at 500',{c:RISK,sz:18});
   if (after(t,8)){ const o=op(t,T(8),.5); s += lv(471,'471',LUIS,o,PX(560),PX(805),true); }
-  s += rc(t,8,488,'Luis: SuperPinch 10× = 471',{c:LUIS,sz:18});
+  s += rc(t,8,498,'Luis: SuperPinch 10\u00d7 = 471',{c:LUIS,sz:18});
   if (after(t,10)){ const o=op(t,T(10),.5); s += aside(t,T(10),PX(60),PYX(560),'all the other charts are derivative of that insight',{sz:22}); }
   s += focus(t,[[T(0),PX(700),PY(640)],[T(1),RX+100,217],[T(2),PX(700),PY(680)],[T(3),RX+150,340],[T(4),PX(765),PYX(30)],[T(6),RX+120,426],[T(7),PX(700),PY(500)],[T(8),PX(700),PY(471)],[T(10),PX(300),PYX(550)]]);
   return s;

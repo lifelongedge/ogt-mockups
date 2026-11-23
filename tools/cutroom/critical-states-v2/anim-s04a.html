@@ -178,7 +178,7 @@ function draw(t){
   s += rc(t,5,342,'1  the 10 breached the band',{c:RL10,sz:19,w:600}) + rc(t,6,370,'2  the 30 breached it',{c:RL30,sz:19,w:600}) + rc(t,7,398,'3  the 90 comes in, breaches it',{c:RL90,sz:19,w:600});
   if (after(t,9)){ const o=op(t,T(9),.6); const u=pr(t,T(9),2.5); s += path(`M${PX(600)} ${PYX(36)} L${PX(lerp(600,740,u))} ${PYX(lerp(36,50,u))} M${PX(600)} ${PYX(80)} L${PX(lerp(600,740,u))} ${PYX(lerp(80,66,u))}`,{s:KEY,sw:2.5,o}) ; }
   if (after(t,10)){ const o=op(t,T(10),.5); s += ring(...at(PB),20,KEY,o) + tag(PX(700),PYX(20),'a thin layer of support',KEY,o,'end'); }
-  s += defn(t,T(11),RX,432,330,'The last support',['the 270 back at its own band','price recovers, or it comes through'],{lh:26,pad:14});
+  s += defn(t,T(11),RX,432,330,'The last support',['the 270 at its own band','price had better recover','or the 270 comes through'],{lh:24,pad:12,lsz:17});
   s += focus(t,[[T(0),...at(P10)],[T(1),...at(P270)],[T(2),PX(650),PYX(58)],[T(3),PX(735),PYX(300)],[T(4),...at(X90)],[T(5),...at(B10)],[T(6),...at(B30)],[T(7),...at(B90)],[T(9),PX(700),PYX(58)],[T(10),...at(PB)],[T(11),...at(PPX)]]);
   return s;
 }

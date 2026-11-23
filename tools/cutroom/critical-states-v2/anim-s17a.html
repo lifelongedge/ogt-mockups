@@ -170,11 +170,11 @@ function draw(t){
   s += rc(t,2,250,'−90 points, about −12 %',{c:KEY,sz:21,w:600});
   s += rc(t,3,278,'past −10 %: a correction',{c:FG,sz:19});
   if (after(t,4)){ const o=op(t,T(4),.5); s += lv(600,'600',RISK,o,PX(850),PX(1160)) + vbr(PX(820),690,600,'−70',RISK,o); }
-  s += defn(t,T(5),RX,306,330,'The lines',['−10 %: a correction, passed Friday','−20 %, at 600: a bear market'],{lh:26,pad:12});
+  s += defn(t,T(5),RX,306,330,'The lines',['\u221210 %: a correction (Friday)','\u221220 %, at 600: a bear market'],{lh:24,pad:12,lsz:17});
   if (after(t,6)){ const o=op(t,T(6),.5); s += aside(t,T(6),RX,430,'a flash crash in a week',{sz:22}); }
   // COVID: three nine-day bars; seen: one (two)
-  if (after(t,10)){ const o=op(t,T(10),.5); for(let i=0;i<3;i++){ s += rect(RX+i*44,450,30,56,{s:RISK,sw:2,r:3,f:i<1&&after(t,11)?fa(RISK,.6):(i<2&&after(t,11)?fa(RISK,.22):'none'),o}); } s += txt(RX+140,470,'COVID: −30 % in three bars',{sz:17,c:RISK,o}); }
-  s += rc(t,11,498,'seen: one, two if you count that one',{x:RX+140,c:FG,sz:17});
+  if (after(t,10)){ const o=op(t,T(10),.5); for(let i=0;i<3;i++){ s += rect(RX+i*44,450,30,56,{s:RISK,sw:2,r:3,f:i<1&&after(t,11)?fa(RISK,.6):(i<2&&after(t,11)?fa(RISK,.22):'none'),o}); } s += txt(RX+140,470,'COVID: \u221230 % in 3',{sz:15,c:RISK,o}); }
+  s += rc(t,11,494,'seen so far: 1 (2)',{x:RX+140,c:FG,sz:15});
   s += focus(t,[[T(0),PX(1000),PYX(4)],[T(1),PX(1000),PY(690)],[T(2),RX+120,244],[T(4),PX(1000),PY(600)],[T(5),RX+150,360],[T(6),RX+120,424],[T(9),RX+150,340],[T(10),RX+60,478],[T(11),RX+15,478]]);
   return s;
 }

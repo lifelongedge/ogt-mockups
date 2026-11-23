@@ -170,9 +170,9 @@ function draw(t){
     s += line(x,y0,x,y0+5*d,{s:MUT,sw:2,dash:'6 5',o}) + txt(x+12,y0+5*d+6,'5×',{sz:22,c:FG,o,w:600});
     s += line(x+60,y0,x+60,y0+10*d>F.y+F.h?F.y+F.h:y0+10*d,{s:MUT,sw:2,dash:'6 5',o}) + txt(x+72,Math.min(y0+10*d,F.y+F.h)+6,'10×',{sz:22,c:FG,o,w:600}); }
   if (after(t,4)){ const o=op(t,T(4),.5); s += line(F.x,F.y+40+5*d,F.x+620,F.y+40+5*d,{s:KEY,sw:2,dash:'7 5',o}) + tag(F.x+8,F.y+40+5*d-18,'610 to 611',KEY,o); }
-  s += readout(RX,215,'SuperPinch, 5×','610',{o:after(t,4)?op(t,T(4),.5):0,sz:34},KEY);
-  s += readout(RX+170,215,'SuperPinch, 10×','below',{o:after(t,3)?op(t,T(3),.5):0,sz:22},MUT);
-  s += defn(t,T(5),RX,300,330,'Levels Luis keeps',['SuperPinch 5×: 610 to 611','SuperPinch 10×: further down','targets or support, to know what to do'],{lh:26,pad:14});
+  s += readout(RX,230,'SuperPinch, 5\u00d7','610',{o:after(t,4)?op(t,T(4),.5):0,sz:34},KEY);
+  s += readout(RX+170,230,'SuperPinch, 10\u00d7','below',{o:after(t,3)?op(t,T(3),.5):0,sz:22},MUT);
+  s += defn(t,T(5),RX,300,330,'Levels Luis keeps',['SuperPinch 5\u00d7: 610 to 611','SuperPinch 10\u00d7: further down','as targets or support'],{lh:24,pad:12,lsz:17});
   if (after(t,7)){ const o=op(t,T(7),.5); s += aside(t,T(7),F.x+40,F.y+F.h-10,'after the natural move, the largest correction',{sz:22}); }
   if (after(t,8)){ const o=op(t,T(8),.5); s += glow(arrow(F.x+540,F.y+150,F.x+560,F.y+300,{s:RISK,sw:4,o,dash:'8 6'})) + txt(RX,470,'Ken: probably lower, eventually',{sz:19,c:RISK,o}); }
   s += focus(t,[[T(0),F.x+300,F.y+200],[T(1),RX+110,183],[T(2),F.x+440,F.y+45],[T(3),F.x+600,F.y+200],[T(4),F.x+300,F.y+40+5*d],[T(5),RX+150,360],[T(7),F.x+200,F.y+F.h-20],[T(8),F.x+560,F.y+250]]);

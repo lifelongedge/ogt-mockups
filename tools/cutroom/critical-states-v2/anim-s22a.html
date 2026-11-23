@@ -171,9 +171,9 @@ function draw(t){
   s += rc(t,2,195,'traders',{c:RL10,sz:19,w:600}) + rc(t,2,195,'confirm · wait and see',{x:RX+90,c:MUT,sz:17,d:.4});
   s += rc(t,3,223,'2nd, 3rd, 4th, 5th mouse',{c:MOUSE,sz:19});
   if (after(t,4)){ const o=op(t,T(4),.5); s += ring(...at(H10),16,RL10,o) + ring(...at(H270),18,RL270,o) + glow(line(PX(230),PYX(150),PX(230),PYX(280),{s:KEY,sw:3,o})); }
-  s += defn(t,T(4),RX,252,330,'The specification',['the 10 against the 270','= traders against buy-and-hold','the same at T = 1 min or 9 days'],{lh:26,pad:14});
+  s += defn(t,T(4),RX,252,330,'The specification',['the 10 against the 270','= traders against buy-and-hold','the same at T = 1 min or 9 days'],{lh:24,pad:12,lsz:17});
   if (after(t,6)){ const o=op(t,T(6),.5); s += ring(...at(H90),12,RL90,o) + tag(PX(240),PYX(235),'fast of the slow pair',RL90,o); s += ring(...at(H30),12,RL30,o*op(t,T(6)+2,.5)) + tag(PX(240),PYX(200),'slow of the fast pair',RL30,o*op(t,T(6)+2,.5)); }
-  s += rc(t,8,412,'the 10: fair value, to traders',{c:RL10,sz:19,w:600}) + rc(t,9,440,'the 270: the correct price, to holders',{c:RL270,sz:19,w:600});
+  s += rc(t,8,412,'the 10: fair value, to traders',{c:RL10,sz:19,w:600}) + rc(t,9,440,'the 270: the holders\u2019 price',{c:RL270,sz:19,w:600});
   if (after(t,8)){ const o=op(t,T(8),.5); s += ring(PX(765),PYX(140),12,RL10,o); }
   if (after(t,9)){ const o=op(t,T(9),.5); s += ring(PX(765),PYX(195),12,RL270,o); }
   s += focus(t,[[T(0),PX(170),PYX(170)],[T(2),RX+40,189],[T(3),RX+100,217],[T(4),PX(230),PYX(215)],[T(5),RX+150,330],[T(6),...at(H90)],[T(7),RX+150,300],[T(8),PX(765),PYX(140)],[T(9),PX(765),PYX(195)]]);
