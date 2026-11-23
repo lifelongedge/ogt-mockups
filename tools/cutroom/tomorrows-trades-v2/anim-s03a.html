@@ -18,7 +18,7 @@
   #pip { position:absolute; left:950px; top:22px; width:300px; height:169px; border:1px solid rgba(255,255,255,0.35); border-radius:4px;
          display:none; color:var(--muted); font-size:13px; text-align:center; line-height:169px; z-index:3; background:#000; }
   .pip #pip { display:block; } .pip #cap { right:360px; font-size:31px; }
-  text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; fill:#f2f5f7; }
+  text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; } svg { fill:#f2f5f7; }
   .mono { font-family:ui-monospace,Menlo,Consolas,monospace; }
   .serif { font-family:Georgia,"DejaVu Serif","Times New Roman",serif; }
   .hand { font-family:Caveat,cursive; font-weight:600; }
@@ -185,7 +185,7 @@ function draw(t){let s='';
   if(t>=T(5)){for(let k=0;k<3;k++)s+=rect(800,170+k*58,300,46,{r:8,s:BRD,sw:2,o:A(t,5)});}
   if(t>=T(6))s+=txt(818,201,'open trades',{sz:22,c:OPEN,o:A(t,6)});
   s+=L(t,12,818,201+58,'some number of them',{sz:19,c:MUT});
-  s+=L(t,0,40,515,'small group coaching · 22 January 2024',{sz:17,c:MUT});
+  s+=L(t,0,40,515,'small group coaching',{sz:17,c:MUT});
   s+=focus(t,[[T(2),40,150],[T(3),142,199],[T(4),377,199],[T(5),612,199],[T(6),160,285],[T(9),73,420],[T(11),530,420],[T(12),950,193]]);
   return s;}
 
