@@ -1,9 +1,9 @@
 {
  "schema": "coursecraft-plan-v2",
  "course": "mental-model-v2",
- "revision": 8,
+ "revision": 9,
  "revised": "2026-11-22",
- "status": "rev8 (2026-11-22): every twin re-authored on the stage under the lesson rules, each headed by its question with the 'in trading:' bridge; chapter cards 2-4 and the end card carry the bridge; the ink build frozen in anim_gen_ink.py. rev6: an agenda card after the title card (the parts, for the contents); DRAFT rev3 (2026-11-16): the animated cut, NOT built (owner: 'give me a cut with the animations of module 1; don't build it yet'). Every spoken window has an animated twin ON and its cut OFF (the cut stays in the plan for a per-segment flip back in the cutroom); s26 animated; Ken in the corner (pip) on the five really-really-good windows only, the other three sources show him as a gallery thumbnail too small to composite. Six slide cards rendered. Nothing rendered or assembled; `build_v2 check` lists what a build needs. · 2026-11-22: toc_title set; the label is the editor's, the student reads toc_title (scripts/student_text.py)",
+ "status": "rev9: two contents rows scrubbed of editor notes (s06a, s30a toc_title). rev8 (2026-11-22): every twin re-authored on the stage under the lesson rules, each headed by its question with the 'in trading:' bridge; chapter cards 2-4 and the end card carry the bridge; the ink build frozen in anim_gen_ink.py. rev6: an agenda card after the title card (the parts, for the contents); DRAFT rev3 (2026-11-16): the animated cut, NOT built (owner: 'give me a cut with the animations of module 1; don't build it yet'). Every spoken window has an animated twin ON and its cut OFF (the cut stays in the plan for a per-segment flip back in the cutroom); s26 animated; Ken in the corner (pip) on the five really-really-good windows only, the other three sources show him as a gallery thumbnail too small to composite. Six slide cards rendered. Nothing rendered or assembled; `build_v2 check` lists what a build needs. · 2026-11-22: toc_title set; the label is the editor's, the student reads toc_title (scripts/student_text.py)",
  "title": "The Mental Model (v2)",
  "topic_class": "psychology (cut-heavy; ONE decidable claim; no other outcomes)",
  "store_sku": "mental-model",
@@ -232,7 +232,8 @@
    "transition": {
     "type": "dip",
     "dur": 0.6
-   }
+   },
+   "toc_title": "★ Trade like an intelligent adaptive machine"
   },
   {
    "id": "s07",
@@ -794,7 +795,8 @@
    "transition": {
     "type": "fade",
     "dur": 0.6
-   }
+   },
+   "toc_title": "30 names: trading whatever I see"
   },
   {
    "id": "s31",

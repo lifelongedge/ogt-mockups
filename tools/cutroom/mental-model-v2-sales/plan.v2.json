@@ -2,7 +2,7 @@
  "schema": "coursecraft-plan-v2",
  "course": "mental-model-v2-sales",
  "cutroom": "mental-model-v2-sales",
- "revision": 3,
+ "revision": 4,
  "revised": "2026-11-22",
  "status": "DRAFT rev1: a sales clip of mental-model-v2, ~120 s; the owner edits it in the cutroom · 2026-11-22: toc_title set; the label is the editor's, the student reads toc_title (scripts/student_text.py)",
  "title": "The Mental Model, part 1: sales clip",
@@ -140,7 +140,8 @@
    "in": 1369.6,
    "out": 1395.0,
    "why": "the line the course is named for: an intelligent, adaptive machine with rules",
-   "status": "bite of mental-model-v2 s06 (+0.6..+26.0 s); the twin s03a carries it"
+   "status": "bite of mental-model-v2 s06 (+0.6..+26.0 s); the twin s03a carries it",
+   "toc_title": "★ Trade like an intelligent adaptive machine"
   },
   {
    "id": "s03a",
@@ -161,7 +162,8 @@
    "transition": {
     "type": "dip",
     "dur": 0.6
-   }
+   },
+   "toc_title": "★ Trade like an intelligent adaptive machine"
   },
   {
    "id": "s04",
