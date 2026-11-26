@@ -172,6 +172,11 @@
                transform-origin:top left; border-radius:6px; background:#000;
                display:none; pointer-events:none; }
   .vstack.anim .animlayer { display:block; }
+  /* cutroom-34: full screen takes the whole stack (owner 2026-11-25: "I can't actually see in full screen in the
+     cutroom"); the video fills the viewport with object-fit:contain and fitAnim() lays the twin and the tile on it */
+  .vstack:fullscreen { width:100vw; height:100vh; background:#000; }
+  .vstack:fullscreen video { width:100vw; height:100vh; max-height:100vh; border-radius:0; }
+  .vstack:fullscreen .animlayer { border-radius:0; }
   /* cutroom-17: the picture-in-picture corner. A twin with pip:true on a source with pip.crop shows Ken's camera
      tile live over the animation, cropped from the playing video, exactly where build_v2 composites it (950,22 300x169). */
   .piplayer { position:absolute; top:0; left:0; width:300px; height:169px; transform-origin:top left; border:1px solid rgba(56,225,255,.35);
@@ -273,7 +278,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const BUILD = 'cutroom-33';
+const BUILD = 'cutroom-34';
 console.log('[cutroom] build', BUILD);
 window.__edgeBuild = BUILD;
 
@@ -715,6 +720,16 @@ function setupAnim(s) {
   animLayer.src = `${COURSE}/anim-${s.id}.html`;
 }
 window.addEventListener('resize', fitAnim);
+// cutroom-34: full screen on the stack; the browser lays the video out first, then the twin is fitted to it
+function toggleFull() {
+  const st = $('vstack');
+  if (!st) return;
+  if (document.fullscreenElement) { document.exitFullscreen(); return; }
+  const req = st.requestFullscreen || st.webkitRequestFullscreen;
+  if (req) req.call(st);
+}
+document.addEventListener('fullscreenchange', () => { requestAnimationFrame(fitAnim); setTimeout(fitAnim, 300); });
+document.addEventListener('click', e => { if (e.target && e.target.id === 'fullBtn') toggleFull(); });
 
 // ---------- transition inspector (cutroom-24) ----------
 function edgeUrl(s, edge) { return `${COURSE}/edges/${s.id}-${edge}.jpg?r=${plan.revision || 0}`; }
@@ -825,6 +840,7 @@ function select(i) {
         <div class="rowbtns">
           <button id="playSeg" class="primary">▶ Play segment</button>
           <button id="playCtx">▶ ±5s context</button>
+          <button id="fullBtn" title="The video, the animation and Ken's tile together, at the size of the screen (f; Esc leaves)">Full screen</button>
           ${segBtns}
         </div>
       </div>
@@ -1466,6 +1482,7 @@ document.addEventListener('keydown', e => {
   if (e.key==='ArrowDown'){ e.preventDefault(); select(Math.min(plan.segments.length-1, selIdx+1)); }
   if (e.key==='ArrowUp'){ e.preventDefault(); select(Math.max(0, selIdx-1)); }
   if (e.key===' ' && videoEl){ e.preventDefault(); videoEl.paused ? videoEl.play() : videoEl.pause(); }
+  if (e.key==='f' && videoEl){ e.preventDefault(); toggleFull(); }
   if (e.key==='x' && selIdx>=0){ const s=plan.segments[selIdx]; snapshot(`${s.include?'exclude':'include'} ${s.label}`); s.include=!s.include; persist(); select(selIdx); }
   if ((e.metaKey||e.ctrlKey) && e.key.toLowerCase()==='z'){ e.preventDefault(); e.shiftKey ? doRedo() : doUndo(); }
   if ((e.metaKey||e.ctrlKey) && e.key.toLowerCase()==='y'){ e.preventDefault(); doRedo(); }
