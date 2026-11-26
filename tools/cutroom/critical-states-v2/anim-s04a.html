@@ -157,10 +157,11 @@ const IMGS=['data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAGCQYIAAD//gAQTGF2YzYyLjEx
 const PX=x=>IX+x*S, PYX=y=>IY+y*S;
 const base=(o,k)=>`<image href="${IMGS[k||0]}" x="${IX}" y="${IY}" width="${IW}" height="${IH}" preserveAspectRatio="none" opacity="${o==null?1:o}"/>`;
 
-const P270=[730,52], PB=[715,58], X90=[685,60], B10=[705,70], B30=[718,84], B90=[728,100], P90=[730,115], P30=[728,200], P10=[730,275], PPX=[735,349], EARLY=[80,255];
-const at=p=>[PX(p[0]),PYX(p[1])];
 function legend(t,k,y){ const rows=[['RL10 · the dragon',RL10],['SMA30',RL30],['RL90',RL90],['RL270 · its own band',RL270]]; let s='';
   rows.forEach((r,i)=>{ s+=rc(t,k,y+i*30,'—',{c:r[1],w:700,sz:22,d:i*.3})+rc(t,k,y+i*30,r[0],{x:RX+28,c:r[1],sz:19,d:i*.3}); }); return s; }
+
+const P270=[730,52], PB=[715,58], X90=[685,60], B10=[705,70], B30=[718,84], B90=[728,100], P90=[730,115], P30=[728,200], P10=[730,275], PPX=[735,349], EARLY=[80,255];
+const at=p=>[PX(p[0]),PYX(p[1])];
 
 function draw(t){
   let s=GDEF+base(.95);
@@ -174,11 +175,13 @@ function draw(t){
   if (after(t,6)){ const o=op(t,T(6),.5); s += ring(...at(B30),11,RL30,o); }
   if (after(t,7)){ const o=op(t,T(7),.5); s += ring(...at(B90),12,RL90,o); }
   // the breach order, right column
+  
   s += rc(t,4,312,'the breaches, in order',{c:MUT,sz:17});
   s += rc(t,5,342,'1  the 10 breached the band',{c:RL10,sz:19,w:600}) + rc(t,6,370,'2  the 30 breached it',{c:RL30,sz:19,w:600}) + rc(t,7,398,'3  the 90 comes in, breaches it',{c:RL90,sz:19,w:600});
+  s += defn(t,T(11),RX,432,330,'The last support',['the 270 at its own band','price had better recover','or the 270 comes through'],{lh:24,pad:12,lsz:17});
+
   if (after(t,9)){ const o=op(t,T(9),.6); const u=pr(t,T(9),2.5); s += path(`M${PX(600)} ${PYX(36)} L${PX(lerp(600,740,u))} ${PYX(lerp(36,50,u))} M${PX(600)} ${PYX(80)} L${PX(lerp(600,740,u))} ${PYX(lerp(80,66,u))}`,{s:KEY,sw:2.5,o}) ; }
   if (after(t,10)){ const o=op(t,T(10),.5); s += ring(...at(PB),20,KEY,o) + tag(PX(700),PYX(20),'a thin layer of support',KEY,o,'end'); }
-  s += defn(t,T(11),RX,432,330,'The last support',['the 270 at its own band','price had better recover','or the 270 comes through'],{lh:24,pad:12,lsz:17});
   s += focus(t,[[T(0),...at(P10)],[T(1),...at(P270)],[T(2),PX(650),PYX(58)],[T(3),PX(735),PYX(300)],[T(4),...at(X90)],[T(5),...at(B10)],[T(6),...at(B30)],[T(7),...at(B90)],[T(9),PX(700),PYX(58)],[T(10),...at(PB)],[T(11),...at(PPX)]]);
   return s;
 }

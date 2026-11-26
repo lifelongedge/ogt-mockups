@@ -182,6 +182,10 @@
   .piplayer { position:absolute; top:0; left:0; width:300px; height:169px; transform-origin:top left; border:1px solid rgba(56,225,255,.35);
               border-radius:4px; background:#000; display:none; pointer-events:none; }
   .vstack.anim.pip .piplayer { display:block; }
+  /* cutroom-35: a twin with `window` (plan) shows his live screen inside the stage: a canvas at the window's box, painted
+     from the playing video every frame like the tile, so his pen moves under the stage's head and captions */
+  .winlayer { position:absolute; top:0; left:0; transform-origin:top left; display:none; pointer-events:none; background:#000; }
+  .vstack.anim.win .winlayer { display:block; }
   /* ---- the Voice panel: an animation-only viewer (no source video), the prompter, the recorder ---- */
   .vstack.solo { width:100%; aspect-ratio:16/9; background:#000; border-radius:6px; overflow:hidden; }
   .vstack.solo .animlayer { display:block; }
@@ -278,7 +282,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const BUILD = 'cutroom-34';
+const BUILD = 'cutroom-35';
 console.log('[cutroom] build', BUILD);
 window.__edgeBuild = BUILD;
 
@@ -603,7 +607,7 @@ function render() {
 // an animation for segment <id> lives at `${COURSE}/anim-<id>.html` and exposes
 // a deterministic renderFrame(t) plus ANIM_DURATION. If it is not there, the
 // toggle simply never appears.
-let animLayer = null, animMode = 'source', animDur = 40, animReady = false, animRaf = null;
+let animLayer = null, animMode = 'source', animDur = 40, animReady = false, animRaf = null, curWin = null;
 
 // The iframe stays intrinsically 1280x720 and is scaled by transform only.
 // Setting an explicit height as well scaled it twice. The video can also be
@@ -619,6 +623,15 @@ function fitAnim() {
   f.style.transform = `translate(${dx}px, ${dy}px) scale(${k})`;
   const pl = $('pipLayer');
   if (pl) pl.style.transform = `translate(${dx + PIP.x * k}px, ${dy + PIP.y * k}px) scale(${k})`;
+  const wl = $('winLayer');
+  if (wl && curWin) { const [bx, by, bw, bh] = curWin.box; wl.style.width = bw + 'px'; wl.style.height = bh + 'px'; wl.style.transform = `translate(${dx + bx * k}px, ${dy + by * k}px) scale(${k})`; }
+}
+// cutroom-35: the window on his live screen (plan `window`: crop in 720p source px, box in stage px)
+function paintWin(s) {
+  const wl = $('winLayer'), win = s.window;
+  if (!wl || !win || !videoEl || !videoEl.videoWidth) return;
+  const [cx, cy, cw, ch] = win.crop, fx = videoEl.videoWidth / 1280, fy = videoEl.videoHeight / 720;
+  wl.getContext('2d').drawImage(videoEl, cx * fx, cy * fy, cw * fx, ch * fy, 0, 0, wl.width, wl.height);
 }
 
 // ---------- picture-in-picture (cutroom-17) ----------
@@ -675,6 +688,7 @@ function paintAnim(s) {
   const inside = ct >= s.in && ct <= s.out;
   w.renderFrame(inside ? animTime(s) : animDur * ANIM_POSTER);
   paintPip(s);
+  paintWin(s);
 }
 
 // rAF only while the video is actually rolling; timeupdate alone is ~4Hz and
@@ -695,6 +709,10 @@ function setupAnim(s) {
   if (!animLayer || !tabs) return;
   stack.classList.remove('anim');
   stack.classList.toggle('pip', !!pipCrop(s));
+  curWin = (s.window && s.window.crop && s.window.box) ? s.window : null;
+  stack.classList.toggle('win', !!curWin);
+  const wl = $('winLayer');
+  if (wl && curWin) { wl.width = curWin.box[2] * 2; wl.height = curWin.box[3] * 2; }   // 2x: sharp on a dense display
   tabs.style.display = 'none';
 
   animLayer.onload = () => {
@@ -830,6 +848,7 @@ function select(i) {
           <video id="vid" src="${mediaUrl(src.proxy)}" preload="metadata" controls></video>
           <iframe class="animlayer" id="animLayer" scrolling="no" title="animation"></iframe>
           <canvas class="piplayer" id="pipLayer" width="300" height="169"></canvas>
+          <canvas class="winlayer" id="winLayer" width="1312" height="796"></canvas>
         </div>
         <div class="viewtabs" id="viewtabs" style="display:none">
           <button data-view="source" class="on">Ken's screen</button>

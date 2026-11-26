@@ -157,10 +157,11 @@ const IMGS=['data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAGCQYIAAD//gAQTGF2YzYyLjEx
 const PX=x=>IX+x*S, PYX=y=>IY+y*S;
 const base=(o,k)=>`<image href="${IMGS[k||0]}" x="${IX}" y="${IY}" width="${IW}" height="${IH}" preserveAspectRatio="none" opacity="${o==null?1:o}"/>`;
 
-const P270=[730,52], PB=[715,58], X90=[685,60], B10=[705,70], B30=[718,84], B90=[728,100], P90=[730,115], P30=[728,200], P10=[730,275], PPX=[735,349], EARLY=[80,255];
-const at=p=>[PX(p[0]),PYX(p[1])];
 function legend(t,k,y){ const rows=[['RL10 · the dragon',RL10],['SMA30',RL30],['RL90',RL90],['RL270 · its own band',RL270]]; let s='';
   rows.forEach((r,i)=>{ s+=rc(t,k,y+i*30,'—',{c:r[1],w:700,sz:22,d:i*.3})+rc(t,k,y+i*30,r[0],{x:RX+28,c:r[1],sz:19,d:i*.3}); }); return s; }
+
+const P270=[730,52], PB=[715,58], X90=[685,60], B10=[705,70], B30=[718,84], B90=[728,100], P90=[730,115], P30=[728,200], P10=[730,275], PPX=[735,349], EARLY=[80,255];
+const at=p=>[PX(p[0]),PYX(p[1])];
 
 function draw(t){
   let s=GDEF+base(.95);
