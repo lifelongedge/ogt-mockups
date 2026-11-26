@@ -1,9 +1,9 @@
 {
   "schema": "coursecraft-plan-v2",
   "course": "critical-states-v2",
-  "revision": 7,
+  "revision": 8,
   "revised": "2026-11-25",
-  "status": "rev7 (2026-11-25, owner: 'keep Ken's original drawing but in the frame and title of the animated slide'): s04b, a second twin of s04 with a live window on his screen (`window`, the first use of the field) ON, s04a OFF for the owner to compare; nothing else moved. rev6 (2026-11-25, owner: 'the chart you have used is barely legible while Dr Long's original in HD is crisp'): the seven chart stills regrabbed from the 2160p original (yt-dlp format 313) at twice the old pixel size, the same crop geometry (the 720p source download is 1280x720 at 289 kbit/s, which smeared his axis text); every twin regenerated on them; no window, order or text change. rev5 (2026-11-22, owner: 'cut it; then hand it to growogtx'): built from the plan as it stood (no cutroom pass saved), twins ON; the three INTERNAL context cards OFF for the build; 550, 630 and 645 confirmed by a second Whisper model and put on screen; production words removed from three glosses. DRAFT rev4 (2026-11-22, owner's title: 'Market in Critical State with Dr Ken Long: Reading the Regression Line Fractal Framework on a heavy week in November 2026'): the plan title, the title card, the opener's box and spoken line, and the end card carry it. DRAFT rev3 (2026-11-22): the internal context card split in three (s00w, s00x, s00y) so none clips at the prose layout. DRAFT rev2 (2026-11-22, owner: the wordy internal card): s00w, the context and the story arc in prose, at the head of the cutroom, ON for the storyboard and OFF before the build. DRAFT rev1 (2026-11-22): the owner's ask after the corpus intake of rq3bTCXLvIk ('give me cutroom of the 30 min course first with the segments and animated twins; if his chart is usable I prefer using it and animating on it'). One source, the 01:12:02-01:42:10 block of the 2026-11-22 weekend report review: 14 cuts, 13 twins (12 on his own chart, 1 drawn), seven chapter cards, the opener, title, agenda, maxim and end cards. Every twin ON and its cut OFF, the owner's standing pick since the Disciplined Operator rev 3 (flip per segment in the cutroom). s08 (a political aside) OFF with no twin. Windows are the captions' word stamps (yt-dlp 2026.10.26 auto-captions, fetched the day of upload); the Whisper transcript made first that evening heard two more levels in s11 (630, 645) that the captions drop: check by ear.",
+  "status": "rev8 (2026-11-25, owner: 'do the same for s05a, s07a, s09a'): s05b, s07b, s09b, live-window twins ON, their drawn twins OFF; nothing else moved. rev7 (2026-11-25, owner: 'keep Ken's original drawing but in the frame and title of the animated slide'): s04b, a second twin of s04 with a live window on his screen (`window`, the first use of the field) ON, s04a OFF for the owner to compare; nothing else moved. rev6 (2026-11-25, owner: 'the chart you have used is barely legible while Dr Long's original in HD is crisp'): the seven chart stills regrabbed from the 2160p original (yt-dlp format 313) at twice the old pixel size, the same crop geometry (the 720p source download is 1280x720 at 289 kbit/s, which smeared his axis text); every twin regenerated on them; no window, order or text change. rev5 (2026-11-22, owner: 'cut it; then hand it to growogtx'): built from the plan as it stood (no cutroom pass saved), twins ON; the three INTERNAL context cards OFF for the build; 550, 630 and 645 confirmed by a second Whisper model and put on screen; production words removed from three glosses. DRAFT rev4 (2026-11-22, owner's title: 'Market in Critical State with Dr Ken Long: Reading the Regression Line Fractal Framework on a heavy week in November 2026'): the plan title, the title card, the opener's box and spoken line, and the end card carry it. DRAFT rev3 (2026-11-22): the internal context card split in three (s00w, s00x, s00y) so none clips at the prose layout. DRAFT rev2 (2026-11-22, owner: the wordy internal card): s00w, the context and the story arc in prose, at the head of the cutroom, ON for the storyboard and OFF before the build. DRAFT rev1 (2026-11-22): the owner's ask after the corpus intake of rq3bTCXLvIk ('give me cutroom of the 30 min course first with the segments and animated twins; if his chart is usable I prefer using it and animating on it'). One source, the 01:12:02-01:42:10 block of the 2026-11-22 weekend report review: 14 cuts, 13 twins (12 on his own chart, 1 drawn), seven chapter cards, the opener, title, agenda, maxim and end cards. Every twin ON and its cut OFF, the owner's standing pick since the Disciplined Operator rev 3 (flip per segment in the cutroom). s08 (a political aside) OFF with no twin. Windows are the captions' word stamps (yt-dlp 2026.10.26 auto-captions, fetched the day of upload); the Whisper transcript made first that evening heard two more levels in s11 (630, 645) that the captions drop: check by ear.",
   "title": "Market in Critical State",
   "topic_class": "market reading; one framework (the Regression Line Fractal Framework); ZERO outcomes (nothing decidable in footage)",
   "store_sku": "critical-states",
@@ -240,13 +240,46 @@
     {
       "id": "s05a",
       "type": "overdub",
-      "include": true,
+      "include": false,
       "label": "ALT on his chart: Last support, the falling knife, the metamodel at zero",
       "source": "wkr",
       "in": 4500,
       "out": 4637,
       "animation_brief": "On a frozen frame of his own screen (stills/spy-3d-4639.jpg): his words set the beats; see anim_gen.py",
       "status": "twin of s05: his audio, his own chart under our marks, his still top-right (no croppable tile in this source); the owner picks one of the pair in the cutroom",
+      "pip": true,
+      "toc_title": "Who catches a falling knife; the metamodel at 0%",
+      "quote_anchor": "there's nothing but the will of the large market participants to come in and catch this falling knife",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s05b",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT on his chart, his own hand: Last support, the falling knife, the metamodel at zero",
+      "source": "wkr",
+      "in": 4500,
+      "out": 4637,
+      "window": {
+        "crop": [
+          220,
+          100,
+          850,
+          515
+        ],
+        "box": [
+          33,
+          250,
+          656,
+          398
+        ],
+        "note": "crop x,y,w,h in 720p source px (scaled by iw/1280 for any rendition), box x,y,w,h in stage px: his live screen, pen and all, plays inside the stage; the cutroom paints it from the playing proxy, build_v2 overlays it from the source"
+      },
+      "animation_brief": "The stage of s05a (head question, captions, the right column) around a live window on his own screen: no marks of ours, his pen does the pointing; anim_gen.py s05b",
+      "status": "twin of s05, second kind (owner 2026-11-25: 'do the same for s05a, s07a, s09a'): his audio, his live chart in the window, his still top-right. ON for the owner to judge it against s05a (OFF); flip either with x",
       "pip": true,
       "toc_title": "Who catches a falling knife; the metamodel at 0%",
       "quote_anchor": "there's nothing but the will of the large market participants to come in and catch this falling knife",
@@ -288,13 +321,46 @@
     {
       "id": "s07a",
       "type": "overdub",
-      "include": true,
+      "include": false,
       "label": "ALT on his chart: Price pulls away from the RL10; the four lines chase it; the fractal framework",
       "source": "wkr",
       "in": 4637,
       "out": 4784,
       "animation_brief": "On a frozen frame of his own screen (stills/spy-3d-4639.jpg): his words set the beats; see anim_gen.py",
       "status": "twin of s07: his audio, his own chart under our marks, his still top-right (no croppable tile in this source); the owner picks one of the pair in the cutroom",
+      "pip": true,
+      "toc_title": "The four lines chase price; the fractal framework",
+      "quote_anchor": "the fractal framework of those four regression lines will give you an insight into what happens at the very critical states",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s07b",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT on his chart, his own hand: Price pulls away from the RL10; the four lines chase it; the fractal framework",
+      "source": "wkr",
+      "in": 4637,
+      "out": 4784,
+      "window": {
+        "crop": [
+          220,
+          100,
+          850,
+          515
+        ],
+        "box": [
+          33,
+          250,
+          656,
+          398
+        ],
+        "note": "crop x,y,w,h in 720p source px (scaled by iw/1280 for any rendition), box x,y,w,h in stage px: his live screen, pen and all, plays inside the stage; the cutroom paints it from the playing proxy, build_v2 overlays it from the source"
+      },
+      "animation_brief": "The stage of s07a (head question, captions, the right column) around a live window on his own screen: no marks of ours, his pen does the pointing; anim_gen.py s07b",
+      "status": "twin of s07, second kind (owner 2026-11-25: 'do the same for s05a, s07a, s09a'): his audio, his live chart in the window, his still top-right. ON for the owner to judge it against s07a (OFF); flip either with x",
       "pip": true,
       "toc_title": "The four lines chase price; the fractal framework",
       "quote_anchor": "the fractal framework of those four regression lines will give you an insight into what happens at the very critical states",
@@ -329,13 +395,46 @@
     {
       "id": "s09a",
       "type": "overdub",
-      "include": true,
+      "include": false,
       "label": "ALT on his chart: I know how to trade the short-term volatility; protect my wagon and my horses",
       "source": "wkr",
       "in": 4838,
       "out": 4868,
       "animation_brief": "On a frozen frame of his own screen (stills/spy-3d-4639.jpg): his words set the beats; see anim_gen.py",
       "status": "twin of s09: his audio, his own chart under our marks, his still top-right (no croppable tile in this source); the owner picks one of the pair in the cutroom",
+      "pip": true,
+      "toc_title": "What I know how to trade right now",
+      "quote_anchor": "I know how to trade the short-term volatility and I know what price I've got to see",
+      "transition": {
+        "type": "dip",
+        "dur": 0.6
+      }
+    },
+    {
+      "id": "s09b",
+      "type": "overdub",
+      "include": true,
+      "label": "ALT on his chart, his own hand: I know how to trade the short-term volatility; protect my wagon and my horses",
+      "source": "wkr",
+      "in": 4838,
+      "out": 4868,
+      "window": {
+        "crop": [
+          220,
+          100,
+          850,
+          515
+        ],
+        "box": [
+          33,
+          250,
+          656,
+          398
+        ],
+        "note": "crop x,y,w,h in 720p source px (scaled by iw/1280 for any rendition), box x,y,w,h in stage px: his live screen, pen and all, plays inside the stage; the cutroom paints it from the playing proxy, build_v2 overlays it from the source"
+      },
+      "animation_brief": "The stage of s09a (head question, captions, the right column) around a live window on his own screen: no marks of ours, his pen does the pointing; anim_gen.py s09b",
+      "status": "twin of s09, second kind (owner 2026-11-25: 'do the same for s05a, s07a, s09a'): his audio, his live chart in the window, his still top-right. ON for the owner to judge it against s09a (OFF); flip either with x",
       "pip": true,
       "toc_title": "What I know how to trade right now",
       "quote_anchor": "I know how to trade the short-term volatility and I know what price I've got to see",
